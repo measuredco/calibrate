@@ -1,0 +1,12 @@
+{
+  "$description": "Forced-colors overrides for msrd semantic color tokens.",
+  "$type": "color",
+  "logo": {
+    "default": {
+      "$value": "CanvasText"
+    },
+    "neutral": {
+      "$value": "CanvasText"
+    }
+  }
+}

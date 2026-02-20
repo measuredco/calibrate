@@ -1,0 +1,12 @@
+{
+  "square": {
+    "aspectRatio": {
+      "$type": "string",
+      "$value": "1 / 1"
+    },
+    "cornerRatio": {
+      "$type": "number",
+      "$value": 0.16666667
+    }
+  }
+}

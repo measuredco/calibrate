@@ -1,0 +1,47 @@
+{
+  "$description": "Primitive effect tokens for msrd.",
+  "opacity": {
+    "$type": "number",
+    "40": {
+      "$value": 0.4
+    }
+  },
+  "shadow": {
+    "blur": {
+      "$type": "dimension",
+      "100": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "offsetX": {
+      "$type": "dimension",
+      "100": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      }
+    },
+    "offsetY": {
+      "$type": "dimension",
+      "100": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      }
+    },
+    "spread": {
+      "$type": "dimension",
+      "0": {
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    }
+  }
+}
