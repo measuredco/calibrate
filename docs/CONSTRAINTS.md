@@ -7,7 +7,7 @@ Planning and sequencing live in `docs/PLANNING.md`.
 
 ## Program Goals
 
-- Define a stable public tokens API in `tokens/<brand>/semantic`.
+- Define a stable public tokens API in `tokens/src/<brand>/semantic`.
 - Support color themes (light/dark).
 - Support surfaces within themes.
 - Support responsive token behavior.
@@ -17,45 +17,59 @@ Planning and sequencing live in `docs/PLANNING.md`.
 ## API And Ownership
 
 - Ensure `*.tokens.json` files conform to `docs/w3c-dtcg-spec`.
-- `tokens/<brand>/primitive` is private; public API is `tokens/<brand>/semantic`.
+- `tokens/src/<brand>/primitive` is private; public API is `tokens/src/<brand>/semantic`.
 - Semantic tokens are the only public API surface; consumers should not bind to primitive paths.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
-- Shared system-shell domains live in `tokens/core/{primitive,semantic}`.
-- Brand-specific domains live in `tokens/<brand>/{primitive,semantic}`.
+- Shared system-shell domains live in `tokens/src/core/{primitive,semantic}`.
+- Brand-specific domains live in `tokens/src/<brand>/{primitive,semantic}`.
 
 ## Folder And File Conventions
 
 - Semantic folder convention (axis-first where applicable):
-  - base pattern: `tokens/<brand>/semantic/<domain>/<axis>/<context>...`
-  - optional override pattern (only when needed): `tokens/<brand>/semantic/<domain>/override/<axis>/<context>...`
+  - base pattern: `tokens/src/<brand>/semantic/<domain>/<axis>/<context>...`
+  - optional override pattern (only when needed): `tokens/src/<brand>/semantic/<domain>/override/<axis>/<context>...`
 - Core folder convention mirrors brand convention where applicable:
-  - base pattern: `tokens/core/semantic/<domain>/<axis>/<context>...`
-  - primitive pattern: `tokens/core/primitive/<domain>.tokens.json`
+  - base pattern: `tokens/src/core/semantic/<domain>/<axis>/<context>...`
+  - primitive pattern: `tokens/src/core/primitive/<domain>.tokens.json`
 
-- Semantic color file convention: `tokens/<brand>/semantic/color/theme/<theme>/<surface>.tokens.json`.
-- Semantic color forced-colors convention (current normalized path): `tokens/<brand>/semantic/color/forced-colors/<context>.tokens.json`.
-- Semantic effect file convention: `tokens/<brand>/semantic/effect/theme/<theme>/<surface>.tokens.json`.
-- Semantic typography size convention: `tokens/<brand>/semantic/typography/size/<context>.tokens.json`.
-- Semantic layout size convention: `tokens/<brand>/semantic/layout/size/<context>.tokens.json`.
-- Semantic layout root convention: `tokens/<brand>/semantic/layout/tokens.json`.
-- Semantic spacing root convention: `tokens/<brand>/semantic/spacing.tokens.json`.
+- Semantic color file convention: `tokens/src/<brand>/semantic/color/theme/<theme>/<surface>.tokens.json`.
+- Semantic color forced-colors convention (current normalized path): `tokens/src/<brand>/semantic/color/forced-colors/<context>.tokens.json`.
+- Semantic effect file convention: `tokens/src/<brand>/semantic/effect/theme/<theme>/<surface>.tokens.json`.
+- Semantic typography size convention: `tokens/src/<brand>/semantic/typography/size/<context>.tokens.json`.
+- Semantic layout size convention: `tokens/src/<brand>/semantic/layout/size/<context>.tokens.json`.
+- Semantic layout root convention: `tokens/src/<brand>/semantic/layout/tokens.json`.
+- Semantic spacing root convention: `tokens/src/<brand>/semantic/spacing.tokens.json`.
+- Resolver documents should follow DTCG resolver spec file naming:
+  - use `.resolver.json`
+  - keep resolver/build config colocated under `tokens/` (not repo root) as this repo evolves.
+- Vendored schema convention:
+  - store official DTCG schemas under `tokens/schemas/<version>/...`
+  - token/resolver files should carry local `$schema` paths into `tokens/schemas/...`
+
+## Repository Packaging Direction
+
+- Anticipated monorepo direction:
+  - `tokens/` becomes a standalone package boundary.
+  - source tokens live under `tokens/src/...` (including `core` and brand folders).
+  - generated artifacts output to `tokens/build/...`.
+- Resolver documents and build/transforms should live inside the `tokens/` package tree.
 
 ## Canonical Semantic File Map (Alpha, `msrd`)
 
-- `tokens/msrd/semantic/color/theme/light/{default,brand}.tokens.json`
-- `tokens/msrd/semantic/color/theme/dark/{default,brand}.tokens.json`
-- `tokens/msrd/semantic/color/forced-colors/on.tokens.json`
-- `tokens/msrd/semantic/effect/theme/light/{default,brand}.tokens.json`
-- `tokens/msrd/semantic/effect/theme/dark/{default,brand}.tokens.json`
-- `tokens/core/semantic/spacing.tokens.json`
-- `tokens/core/semantic/layout/tokens.json`
-- `tokens/core/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
-- `tokens/core/semantic/breakpoint.tokens.json`
-- `tokens/msrd/semantic/typography/tokens.json`
-- `tokens/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
-- `tokens/msrd/semantic/motion/tokens.json`
-- `tokens/msrd/semantic/radius/tokens.json`
-- `tokens/msrd/semantic/shape/tokens.json`
+- `tokens/src/msrd/semantic/color/theme/light/{default,brand}.tokens.json`
+- `tokens/src/msrd/semantic/color/theme/dark/{default,brand}.tokens.json`
+- `tokens/src/msrd/semantic/color/forced-colors/on.tokens.json`
+- `tokens/src/msrd/semantic/effect/theme/light/{default,brand}.tokens.json`
+- `tokens/src/msrd/semantic/effect/theme/dark/{default,brand}.tokens.json`
+- `tokens/src/core/semantic/spacing.tokens.json`
+- `tokens/src/core/semantic/layout/tokens.json`
+- `tokens/src/core/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
+- `tokens/src/core/semantic/breakpoint.tokens.json`
+- `tokens/src/msrd/semantic/typography/tokens.json`
+- `tokens/src/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
+- `tokens/src/msrd/semantic/motion/tokens.json`
+- `tokens/src/msrd/semantic/radius/tokens.json`
+- `tokens/src/msrd/semantic/shape/tokens.json`
 
 ## Authoring Rules
 
@@ -72,11 +86,14 @@ Planning and sequencing live in `docs/PLANNING.md`.
   - brand primitive tokens may alias core primitive tokens when values are intentionally shared
   - keep explicit literals where design intent intentionally diverges
 - Build outputs must be generated from tokens (no hand-maintained CSS token files as source of truth).
+- Prefer vendored schema URLs for `$schema` where possible after vendoring (`tokens/schemas/...`) to reduce drift/network dependency.
 
 ## Resolution And Build Rules
 
 - Light/dark and responsive behavior should be implemented at semantic/resolution layer, not by mutating primitive intent.
 - Surface variants must be supported as a first-class semantic concern alongside brand and theme.
+- Resolver source-of-truth is DTCG resolver manifests in `tokens/resolver/*.resolver.json`.
+- Build tooling (e.g. Style Dictionary) should consume resolver-selected sources via adapter/config; do not duplicate context contracts ad hoc.
 - Resolver/build order must satisfy semantic dependencies:
   - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing

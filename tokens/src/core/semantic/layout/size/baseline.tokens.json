@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../../../schemas/2025.10/format.json",
+  "$description": "Semantic layout tokens for msrd baseline size context.",
+  "container": {
+    "gutter": {
+      "$type": "dimension",
+      "default": {
+        "$value": "{spacing.horizontal.600}"
+      },
+      "sm": {
+        "$value": "{container.gutter.default}"
+      }
+    }
+  },
+  "grid": {
+    "gap": {
+      "$type": "dimension",
+      "default": {
+        "column": {
+          "$value": "{spacing.horizontal.600}"
+        },
+        "row": {
+          "$value": "{spacing.vertical.700}"
+        }
+      },
+      "lg": {
+        "column": {
+          "$value": "{grid.gap.default.column}"
+        },
+        "row": {
+          "$value": "{grid.gap.default.row}"
+        }
+      }
+    }
+  },
+  "spacing": {
+    "vertical": {
+      "250": {
+        "$value": "{spacing.vertical.250}",
+        "$description": "3"
+      },
+      "400": {
+        "$value": "{spacing.vertical.400}",
+        "$description": "6"
+      },
+      "500": {
+        "$value": "{spacing.vertical.500}",
+        "$description": "12"
+      },
+      "600": {
+        "$value": "{spacing.vertical.600}",
+        "$description": "18"
+      },
+      "700": {
+        "$value": "{spacing.vertical.700}",
+        "$description": "24"
+      },
+      "800": {
+        "$value": "{spacing.vertical.800}",
+        "$description": "36"
+      },
+      "900": {
+        "$value": "{spacing.vertical.900}",
+        "$description": "48"
+      },
+      "950": {
+        "$value": "{spacing.vertical.950}",
+        "$description": "60"
+      },
+      "1000": {
+        "$value": "{spacing.vertical.1000}",
+        "$description": "72"
+      },
+      "1100": {
+        "$value": "{spacing.vertical.1100}",
+        "$description": "84"
+      },
+      "1200": {
+        "$value": "{spacing.vertical.1200}",
+        "$description": "96"
+      },
+      "$type": "dimension"
+    }
+  }
+}

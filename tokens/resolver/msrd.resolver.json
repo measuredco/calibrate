@@ -1,0 +1,201 @@
+{
+  "$schema": "../schemas/2025.10/resolver.json",
+  "name": "MSRD resolver",
+  "version": "2025.10",
+  "description": "Resolver contexts for msrd tokens (appearance, size, forced-colors).",
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/size"
+    },
+    {
+      "$ref": "#/modifiers/themeSurface"
+    },
+    {
+      "$ref": "#/modifiers/forcedColors"
+    }
+  ],
+  "sets": {
+    "base": {
+      "description": "Core + msrd non-context token sources.",
+      "sources": [
+        {
+          "$ref": "../src/core/primitive/breakpoint.tokens.json"
+        },
+        {
+          "$ref": "../src/core/primitive/spacing.tokens.json"
+        },
+        {
+          "$ref": "../src/core/primitive/layout.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/breakpoint.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/spacing.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/layout/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/color.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/effect.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/motion.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/radius.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/shape.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/typography.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/motion/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/radius/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/shape/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/typography/tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "themeSurface": {
+      "description": "Theme/surface combinations represented as a single context axis.",
+      "default": "lightDefault",
+      "contexts": {
+        "lightDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/default.tokens.json"
+          }
+        ],
+        "lightBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/brand.tokens.json"
+          }
+        ],
+        "darkDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/default.tokens.json"
+          }
+        ],
+        "darkBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/brand.tokens.json"
+          }
+        ]
+      }
+    },
+    "size": {
+      "description": "Responsive size contexts.",
+      "default": "baseline",
+      "contexts": {
+        "baseline": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          }
+        ],
+        "tablet": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ],
+        "notebook": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ],
+        "laptop": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/laptop.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ]
+      }
+    },
+    "forcedColors": {
+      "description": "forced-colors accessibility mode.",
+      "default": "off",
+      "contexts": {
+        "off": [],
+        "on": [
+          {
+            "$ref": "../src/msrd/semantic/color/forced-colors/on.tokens.json"
+          }
+        ]
+      }
+    }
+  }
+}

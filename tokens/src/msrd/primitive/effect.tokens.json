@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/2025.10/format.json",
+  "$description": "Primitive effect tokens for msrd.",
+  "opacity": {
+    "40": {
+      "$value": 0.4
+    },
+    "64": {
+      "$value": 0.64
+    },
+    "84": {
+      "$value": 0.84
+    },
+    "$type": "number"
+  },
+  "shadow": {
+    "blur": {
+      "100": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    },
+    "offsetX": {
+      "100": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    },
+    "offsetY": {
+      "100": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    },
+    "spread": {
+      "0": {
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    }
+  }
+}

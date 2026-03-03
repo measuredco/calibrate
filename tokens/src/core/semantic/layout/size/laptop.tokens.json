@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../schemas/2025.10/format.json",
+  "$description": "Semantic layout tokens for msrd laptop size context.",
+  "grid": {
+    "gap": {
+      "$type": "dimension",
+      "lg": {
+        "column": {
+          "$value": "{spacing.horizontal.800}"
+        },
+        "row": {
+          "$value": "{grid.gap.lg.column}"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../schemas/2025.10/format.json",
+  "container": {
+    "maxWidth": {
+      "$type": "dimension",
+      "lg": {
+        "$value": {
+          "value": 1280,
+          "unit": "px"
+        }
+      },
+      "xl": {
+        "$value": {
+          "value": 1440,
+          "unit": "px"
+        }
+      }
+    }
+  },
+  "focusRing": {
+    "offset": {
+      "$type": "dimension",
+      "default": {
+        "$value": "{primitive.spacing.200}"
+      },
+      "inset": {
+        "$value": {
+          "value": -4,
+          "unit": "px"
+        }
+      }
+    }
+  },
+  "grid": {
+    "columns": {
+      "$type": "number",
+      "$value": 12
+    },
+    "item": {
+      "minWidth": {
+        "$type": "dimension",
+        "$value": {
+          "value": 288,
+          "unit": "px"
+        }
+      }
+    }
+  }
+}

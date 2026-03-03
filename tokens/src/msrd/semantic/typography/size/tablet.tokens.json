@@ -1,0 +1,166 @@
+{
+  "$schema": "../../../../../schemas/2025.10/format.json",
+  "text": {
+    "$type": "typography",
+    "body": {
+      "sm": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/300/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.400}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/300/$value/lineHeight"
+          }
+        }
+      },
+      "md": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/450/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.400}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/450/$value/lineHeight"
+          }
+        }
+      },
+      "lg": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/500/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.400}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/500/$value/lineHeight"
+          }
+        }
+      }
+    },
+    "heading": {
+      "xs": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/300/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.650}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/300/$value/lineHeight"
+          }
+        }
+      },
+      "sm": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/400/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.600}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/400/$value/lineHeight"
+          }
+        }
+      },
+      "md": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/500/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.500}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/500/$value/lineHeight"
+          }
+        }
+      },
+      "lg": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/600/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.450}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/600/$value/lineHeight"
+          }
+        }
+      },
+      "xl": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/800/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.400}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/800/$value/lineHeight"
+          }
+        }
+      },
+      "2xl": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1000/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.350}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1000/$value/lineHeight"
+          }
+        }
+      },
+      "3xl": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1100/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.300}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1100/$value/lineHeight"
+          }
+        }
+      },
+      "4xl": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1200/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.250}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1200/$value/lineHeight"
+          }
+        }
+      },
+      "5xl": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1300/$value/fontSize"
+          },
+          "fontWeight": "{primitive.typography.fontWeight.200}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": {
+            "$ref": "../../../primitive/typography.tokens.json#/typeStep/1300/$value/lineHeight"
+          }
+        }
+      }
+    }
+  }
+}

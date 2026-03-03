@@ -6,24 +6,22 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Create the resolver model. Decisions:
-  - authored vs resolved reference-path strategy (including final local-only vs global namespaced authored semantic reference strategy)
-  - whether responsive/theme logic remains in semantic authoring vs dedicated resolver docs
-  - load/composition order contract
-  - output namespace contract (`primitive.*` / `semantic.*`)
+- Implement Style Dictionary 4 adapter/pipeline using resolver manifest as source-of-truth:
+  - consume `tokens/resolver/msrd.resolver.json` and selected modifier inputs
+  - produce deterministic source lists/order for SD builds
+  - generate CSS custom properties bundles for `themeSurface` + `size` + `forcedColors`
+  - define output namespace/prefix contract for generated vars
+  - finalize multi-bundle output structure (`:root`, brand class, dark media query layering)
+  - add build scripts/docs for context selection inputs
+  - run parity checks against expected light/dark + surface outputs
 
 ## Next
 
 What we could start work on next.
 
-- Style Dictionary 4 MVP pipeline:
-  - one brand (`msrd`)
-  - CSS custom properties output
-  - theme, surface + size context wiring
-
 - Add `wireframe` brand to validate multi-brand portability:
-  - `tokens/wireframe/primitive/*`
-  - `tokens/wireframe/semantic/*` with matching public API shape
+  - `tokens/src/wireframe/primitive/*`
+  - `tokens/src/wireframe/semantic/*` with matching public API shape
 
 - Add validation and CI checks:
   - JSON/schema/spec checks
@@ -31,7 +29,7 @@ What we could start work on next.
   - circular reference checks
   - generated CSS snapshot/golden checks
 
-- Start a component token layer (`tokens/<brand>/components/...`) after pipeline + validation are stable.
+- Start a component token layer (`tokens/src/<brand>/components/...`) after pipeline + validation are stable.
   - finalize surface taxonomy contract and whether all components bind to explicit surface context
   - one component initially
   - then more
@@ -54,7 +52,7 @@ What we've done.
 - semantic effect theme/surface files for `msrd` (`light|dark` × `default|brand`).
 - semantic effect files now expose `opacity.demoted` mapped from `primitive.effect.opacity.40`.
 - semantic folder structure is axis-first for color/effect, with typography and layout using `size` contexts.
-- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `tokens/core/semantic/spacing.tokens.json`.
+- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `tokens/src/core/semantic/spacing.tokens.json`.
 - responsive vertical rhythm moved to `layout/size/*` as `verticalSpacing` (not duplicated in spacing size files).
 - layout grid gap semantics authored by size context (`baseline`, `tablet`, `laptop`), with `laptop` currently override-only.
 - layout vertical spacing escalation now begins at `notebook` (split from `tablet`).
@@ -67,3 +65,6 @@ What we've done.
 - semantic typography baseline/tablet size files populated for body + heading scales.
 - brand `shape` domain introduced (`square.aspectRatio`, `square.cornerRatio`) with semantic exposure.
 - external typography size `$ref` paths corrected to current folder structure.
+- source token tree moved under `tokens/src` (core + brand).
+- spec-shaped resolver manifest added at `tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
+- DTCG schemas vendored under `tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
