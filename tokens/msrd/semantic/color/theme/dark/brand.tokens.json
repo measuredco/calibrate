@@ -33,6 +33,10 @@
     "subtle": {
       "$description": "rgba(255, 255, 255, 0.08)",
       "$value": "{primitive.color.alpha.white.08}"
+    },
+    "inverse": {
+      "$description": "#edf6fe",
+      "$value": "{primitive.color.azure.100}"
     }
   },
   "foreground": {

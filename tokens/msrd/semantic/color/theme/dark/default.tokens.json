@@ -33,6 +33,10 @@
     "subtle": {
       "$description": "#191a1a",
       "$value": "{primitive.color.neutral.1000}"
+    },
+    "inverse": {
+      "$description": "#ffffff",
+      "$value": "{primitive.color.white}"
     }
   },
   "foreground": {
