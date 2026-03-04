@@ -9,8 +9,8 @@ const cwd = process.cwd();
 function parseArgs(argv) {
   const args = {
     resolver: "tokens/resolver/msrd.resolver.json",
-    outTokens: "tokens/build/json/clbrt.msrd.contexts.json",
-    outManifest: "tokens/build/sd/clbrt.msrd.css-manifest.json",
+    outTokens: "tokens/dist/json/clbr.msrd.contexts.json",
+    outManifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -215,7 +215,7 @@ function buildSurfaceOrder(surfaceContexts, defs) {
       throw new Error(`Cycle detected in surface base graph at "${context}".`);
     }
     visiting.add(context);
-    const base = defs?.[context]?.diffFrom ?? null;
+    const base = defs?.[context]?.baseContext ?? null;
     if (base) visit(base);
     visiting.delete(context);
     visited.add(context);
@@ -224,6 +224,40 @@ function buildSurfaceOrder(surfaceContexts, defs) {
 
   for (const context of surfaceContexts) visit(context);
   return ordered;
+}
+
+function inferCssAxes(modifierOrder, modifierBuildDefs) {
+  const overlayAxes = modifierOrder.filter((modifierName) =>
+    isObject(modifierBuildDefs?.[modifierName]?.scope),
+  );
+  const baseAxes = modifierOrder.filter((modifierName) => !overlayAxes.includes(modifierName));
+
+  if (baseAxes.length === 0) {
+    throw new Error("Resolver css build metadata requires at least one non-overlay modifier.");
+  }
+
+  const hasSelector = (modifierName) =>
+    Object.values(modifierBuildDefs?.[modifierName]?.contexts ?? {}).some(
+      (ctx) =>
+        (typeof ctx?.selector === "string" && ctx.selector.length > 0) ||
+        (typeof ctx?.selectorRef === "string" && ctx.selectorRef.length > 0),
+    );
+  const hasMedia = (modifierName) =>
+    Object.values(modifierBuildDefs?.[modifierName]?.contexts ?? {}).some(
+      (ctx) => Array.isArray(ctx?.media) && ctx.media.length > 0,
+    );
+
+  const surfaceAxis = baseAxes.find(hasSelector) ?? baseAxes[0];
+  const responsiveAxis =
+    baseAxes.find((axis) => axis !== surfaceAxis && hasMedia(axis)) ??
+    baseAxes.find((axis) => axis !== surfaceAxis) ??
+    surfaceAxis;
+
+  return {
+    surfaceAxis,
+    responsiveAxis,
+    stateAxes: overlayAxes,
+  };
 }
 
 async function resolveContextSources(ctx, modifierOrder) {
@@ -331,6 +365,103 @@ function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupR
   return out;
 }
 
+function buildContextMediaMap(contexts, defaultContext, modifierDef, lookupRoot) {
+  const mediaByContext = {};
+  for (const context of contexts) {
+    const media = modifierDef?.contexts?.[context]?.media;
+    if (!Array.isArray(media) || media.length === 0) continue;
+    const resolved = media
+      .map((entry) => resolveMediaSpec(entry, lookupRoot))
+      .filter((value) => typeof value === "string" && value.length > 0);
+    if (resolved.length > 0) mediaByContext[context] = resolved.join(" and ");
+  }
+  return resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot);
+}
+
+function applyNamingTemplate(value, naming = {}) {
+  if (typeof value !== "string") return value;
+  const replacements = {
+    namespace: naming.namespace ?? "",
+    brand: naming.brand ?? "",
+  };
+  return value.replace(/\{([a-zA-Z0-9_]+)\}/g, (match, key) => {
+    if (!Object.prototype.hasOwnProperty.call(replacements, key)) return match;
+    return String(replacements[key]);
+  });
+}
+
+function resolveSelectorFromSpec(spec, contextName, selectorsMap = {}, naming = {}) {
+  if (!isObject(spec)) return null;
+  if (typeof spec.selector === "string" && spec.selector.length > 0) {
+    return applyNamingTemplate(spec.selector, naming);
+  }
+  if (typeof spec.selectorRef === "string" && spec.selectorRef.length > 0) {
+    const resolved = selectorsMap?.[spec.selectorRef];
+    if (typeof resolved !== "string" || resolved.length === 0) {
+      throw new Error(
+        `Unknown selectorRef "${spec.selectorRef}" for context "${contextName}".`,
+      );
+    }
+    return applyNamingTemplate(resolved, naming);
+  }
+  return null;
+}
+
+function resolveMediaList(spec, lookupRoot) {
+  const media = spec?.media;
+  if (!Array.isArray(media) || media.length === 0) return [];
+  return media
+    .map((entry) => resolveMediaSpec(entry, lookupRoot))
+    .filter((value) => typeof value === "string" && value.length > 0);
+}
+
+function mergeScope(defaultScope, overrideScope) {
+  if (!isObject(defaultScope) && !isObject(overrideScope)) return null;
+  if (!isObject(defaultScope)) return overrideScope;
+  if (!isObject(overrideScope)) return defaultScope;
+  return { ...defaultScope, ...overrideScope };
+}
+
+function resolveContextEmitTargets(modifierDef, contextName, selectorsMap = {}, naming = {}, lookupRoot) {
+  const ctx = modifierDef?.contexts?.[contextName] ?? {};
+  const variantDefaultsScope = isObject(modifierDef?.variantDefaults?.scope)
+    ? modifierDef.variantDefaults.scope
+    : null;
+  const out = [];
+
+  const baseSelector = resolveSelectorFromSpec(ctx, contextName, selectorsMap, naming);
+  if (baseSelector) {
+    out.push({
+      kind: "base",
+      selector: baseSelector,
+      media: resolveMediaList(ctx, lookupRoot),
+    });
+  }
+
+  const variants = Array.isArray(ctx.variants) ? ctx.variants : [];
+  for (const variant of variants) {
+    const selector = resolveSelectorFromSpec(variant, contextName, selectorsMap, naming);
+    if (!selector) continue;
+    out.push({
+      kind: "variant",
+      variantName:
+        typeof variant.name === "string" && variant.name.length > 0 ? variant.name : undefined,
+      deltaFromContext:
+        typeof variant.deltaFromContext === "string" && variant.deltaFromContext.length > 0
+          ? variant.deltaFromContext
+          : null,
+      scope: mergeScope(
+        variantDefaultsScope,
+        isObject(variant.scope) ? variant.scope : null,
+      ),
+      selector,
+      media: resolveMediaList(variant, lookupRoot),
+    });
+  }
+
+  return out;
+}
+
 function buildBaseContext(modifierOrder, modifiers, overrides = {}) {
   const out = {};
   for (const modifierName of modifierOrder) {
@@ -344,6 +475,15 @@ function buildBaseContext(modifierOrder, modifiers, overrides = {}) {
   return out;
 }
 
+function matchesScope(selection, scope) {
+  if (!isObject(scope)) return true;
+  for (const [axis, allowed] of Object.entries(scope)) {
+    if (!Array.isArray(allowed) || allowed.length === 0) continue;
+    if (!allowed.includes(selection[axis])) return false;
+  }
+  return true;
+}
+
 async function main() {
   await fs.rm(tmpDir, { recursive: true, force: true });
   await fs.mkdir(tmpDir, { recursive: true });
@@ -354,22 +494,29 @@ async function main() {
   const modifierOrder = getResolutionModifierNames(resolverDoc);
   const modifiers = resolverDoc?.modifiers ?? {};
   const buildDefs = resolverDoc?.$defs?.build ?? {};
-  const namingDefs = buildDefs?.naming ?? {};
-  const tokenPrefix =
-    typeof namingDefs?.tokenPrefix === "string" && namingDefs.tokenPrefix.trim().length > 0
-      ? namingDefs.tokenPrefix.trim()
+  const namespace =
+    typeof buildDefs?.namespace === "string" && buildDefs.namespace.trim().length > 0
+      ? buildDefs.namespace.trim()
+      : null;
+  const brand =
+    typeof buildDefs?.brand === "string" && buildDefs.brand.trim().length > 0
+      ? buildDefs.brand.trim()
       : null;
   const cssBuildDefs = buildDefs?.targets?.css;
   const layerDefs = buildDefs?.layers ?? {};
-  const axes = cssBuildDefs?.axes;
   const modifierBuildDefs = cssBuildDefs?.modifiers ?? {};
-  if (!axes?.surface || !axes?.responsive) {
-    throw new Error("Resolver missing $defs.build.targets.css.axes.surface/responsive metadata.");
-  }
-  const surfaceAxis = axes.surface;
-  const responsiveAxis = axes.responsive;
-  const stateAxes = Array.isArray(axes.state) ? axes.state : [];
-  const surfaceDefs = modifierBuildDefs?.[surfaceAxis];
+  const selectorDefs = cssBuildDefs?.selectors ?? {};
+  const resolvedSelectorDefs = Object.fromEntries(
+    Object.entries(selectorDefs).map(([key, value]) => [
+      key,
+      applyNamingTemplate(value, { namespace, brand }),
+    ]),
+  );
+  const { surfaceAxis, responsiveAxis, stateAxes } = inferCssAxes(
+    modifierOrder,
+    modifierBuildDefs,
+  );
+  const surfaceDefs = modifierBuildDefs?.[surfaceAxis]?.contexts ?? {};
 
   const surfaceModifier = modifiers?.[surfaceAxis];
   const responsiveModifier = modifiers?.[responsiveAxis];
@@ -389,14 +536,17 @@ async function main() {
   const surfaceOrder = buildSurfaceOrder(surfaceContexts, surfaceDefs);
   const defaultResponsive = getAxisDefault(responsiveModifier, responsiveContexts);
   const responsiveDef = modifierBuildDefs?.[responsiveAxis] ?? null;
-  if (!responsiveDef?.mediaByContext) {
-    throw new Error(
-      `Resolver missing $defs.build.targets.css.modifiers.${responsiveAxis}.mediaByContext metadata.`,
-    );
-  }
 
-  const fullSourcesByContextId = new Map();
   const fullDocsByContextId = new Map();
+
+  const getFullDoc = async (ctx) => {
+    const id = contextId(ctx, modifierOrder);
+    if (fullDocsByContextId.has(id)) return fullDocsByContextId.get(id);
+    const sources = await resolveContextSources(ctx, modifierOrder);
+    const doc = await buildMergedDoc(id, sources);
+    fullDocsByContextId.set(id, doc);
+    return doc;
+  };
 
   const defaultStateByAxis = {};
   for (const axis of stateAxes) {
@@ -414,13 +564,8 @@ async function main() {
         [responsiveAxis]: responsiveContext,
         ...defaultStateByAxis,
       });
-      const id = contextId(ctx, modifierOrder);
       // eslint-disable-next-line no-await-in-loop
-      const sources = await resolveContextSources(ctx, modifierOrder);
-      fullSourcesByContextId.set(id, sources);
-      // eslint-disable-next-line no-await-in-loop
-      const doc = await buildMergedDoc(id, sources);
-      fullDocsByContextId.set(id, doc);
+      await getFullDoc(ctx);
     }
   }
 
@@ -429,10 +574,10 @@ async function main() {
   if (!mediaLookupRoot) {
     throw new Error(`Unable to resolve default context document for media lookup: ${defaultContextDocId}`);
   }
-  const responsiveMedia = resolveMediaByContext(
+  const responsiveMedia = buildContextMediaMap(
     responsiveContexts,
     defaultResponsive,
-    responsiveDef.mediaByContext,
+    responsiveDef,
     mediaLookupRoot,
   );
 
@@ -443,6 +588,7 @@ async function main() {
   for (const surfaceContext of surfaceContexts) offOwnOverlayBySurface.set(surfaceContext, {});
 
   for (const responsiveContext of responsiveContexts) {
+    const deferredVariantBlocks = [];
     for (const surfaceContext of surfaceOrder) {
       const ctx = buildBaseContext(modifierOrder, modifiers, {
         [surfaceAxis]: surfaceContext,
@@ -452,7 +598,7 @@ async function main() {
       const id = contextId(ctx, modifierOrder);
       const fullDoc = fullDocsByContextId.get(id);
       const def = surfaceDefs?.[surfaceContext];
-      const baseSurface = def?.diffFrom ?? null;
+      const baseSurface = def?.baseContext ?? null;
       const baseDoc = baseSurface
         ? offEffectiveByContextId.get(
             contextId(
@@ -472,19 +618,56 @@ async function main() {
       let emittedRaw = null;
       if (prunedRaw && Object.keys(prunedRaw).length > 0) {
         emittedRaw = prunedRaw;
-        contextsRoot[id] = resolveAliasValues(prunedRaw, fullDoc);
 
-        if (def?.selector) {
-          const media = Array.isArray(def.media) ? [...def.media] : [];
+        const emitTargets = resolveContextEmitTargets(
+          modifierBuildDefs?.[surfaceAxis],
+          surfaceContext,
+          resolvedSelectorDefs,
+          { namespace, brand },
+          mediaLookupRoot,
+        );
+        let variantIndex = 0;
+        for (const target of emitTargets) {
+          if (target.kind === "variant" && target.scope && !matchesScope(ctx, target.scope)) {
+            continue;
+          }
+          let blockId = id;
+          let blockDocRaw = emittedRaw;
+
+          if (target.kind === "variant" && target.deltaFromContext) {
+            const compareCtx = buildBaseContext(modifierOrder, modifiers, {
+              [surfaceAxis]: target.deltaFromContext,
+              [responsiveAxis]: responsiveContext,
+              ...defaultStateByAxis,
+            });
+            // eslint-disable-next-line no-await-in-loop
+            const compareDoc = await getFullDoc(compareCtx);
+            const variantRaw = pruneUnchanged(fullDoc, compareDoc);
+            blockDocRaw = variantRaw && Object.keys(variantRaw).length > 0 ? variantRaw : null;
+            if (!blockDocRaw) continue;
+            variantIndex += 1;
+            blockId = `${id}__variant${variantIndex}`;
+            contextsRoot[blockId] = resolveAliasValues(blockDocRaw, fullDoc);
+          }
+
+          if (target.kind === "base") {
+            contextsRoot[blockId] = resolveAliasValues(blockDocRaw, fullDoc);
+          }
+
+          const media = [...target.media];
           const responsiveCond = responsiveMedia[responsiveContext];
           if (responsiveCond) media.push(responsiveCond);
 
-          blocks.push({
-            id,
-            comment: `${surfaceContext} | ${responsiveContext} | default-states`,
-            selector: def.selector,
+          const block = {
+            id: blockId,
+            comment: `${surfaceContext} | ${responsiveContext} | default-states${
+              target.variantName ? ` | variant:${target.variantName}` : ""
+            }`,
+            selector: target.selector,
             media,
-          });
+          };
+          if (target.kind === "variant") deferredVariantBlocks.push(block);
+          else blocks.push(block);
         }
       }
 
@@ -494,6 +677,7 @@ async function main() {
       const nextOverlay = offOwnOverlayBySurface.get(surfaceContext) || {};
       offEffectiveByContextId.set(id, deepMerge(baseDoc, nextOverlay));
     }
+    blocks.push(...deferredVariantBlocks);
   }
 
   for (const stateAxis of stateAxes) {
@@ -507,23 +691,22 @@ async function main() {
     if (!stateDef) continue;
 
     const emitContexts =
-      Array.isArray(stateDef.emitContexts) && stateDef.emitContexts.length > 0
-        ? stateDef.emitContexts
+      stateContexts.length === 1
+        ? [...stateContexts]
         : stateContexts.filter((ctx) => ctx !== defaultState);
-    const surfaceScopeKey = `${surfaceAxis}Contexts`;
-    const responsiveScopeKey = `${responsiveAxis}Contexts`;
+    const scopeDef = isObject(stateDef.scope) ? stateDef.scope : {};
     const surfaceScope =
-      Array.isArray(stateDef[surfaceScopeKey]) && stateDef[surfaceScopeKey].length > 0
-        ? stateDef[surfaceScopeKey]
+      Array.isArray(scopeDef[surfaceAxis]) && scopeDef[surfaceAxis].length > 0
+        ? scopeDef[surfaceAxis]
         : surfaceContexts;
     const responsiveScope =
-      Array.isArray(stateDef[responsiveScopeKey]) && stateDef[responsiveScopeKey].length > 0
-        ? stateDef[responsiveScopeKey]
+      Array.isArray(scopeDef[responsiveAxis]) && scopeDef[responsiveAxis].length > 0
+        ? scopeDef[responsiveAxis]
         : [defaultResponsive];
-    const mediaByStateContext = resolveMediaByContext(
+    const mediaByStateContext = buildContextMediaMap(
       stateContexts,
       defaultState,
-      stateDef.mediaByContext ?? {},
+      stateDef,
       mediaLookupRoot,
     );
 
@@ -541,11 +724,10 @@ async function main() {
             [stateAxis]: stateContext,
           });
           const onId = contextId(onCtx, modifierOrder);
-          const onSources = await resolveContextSources(onCtx, modifierOrder);
-          const onFullDoc = await buildMergedDoc(onId, onSources);
+          const onFullDoc = await getFullDoc(onCtx);
 
           const surfaceBuildDef = surfaceDefs?.[surfaceContext];
-          const baseSurface = surfaceBuildDef?.diffFrom ?? null;
+          const baseSurface = surfaceBuildDef?.baseContext ?? null;
           const offDoc = offEffectiveByContextId.get(
             contextId(
               buildBaseContext(modifierOrder, modifiers, {
@@ -570,19 +752,54 @@ async function main() {
             continue;
           }
 
-          contextsRoot[onId] = resolveAliasValues(emittedRaw, onFullDoc);
+          const emitTargets = resolveContextEmitTargets(
+            modifierBuildDefs?.[surfaceAxis],
+            surfaceContext,
+            resolvedSelectorDefs,
+            { namespace, brand },
+            mediaLookupRoot,
+          );
+          let variantIndex = 0;
+          for (const target of emitTargets) {
+            if (target.kind === "variant" && target.scope && !matchesScope(onCtx, target.scope)) {
+              continue;
+            }
+            let blockId = onId;
+            let blockDocRaw = emittedRaw;
 
-          if (surfaceBuildDef?.selector) {
-            const media = Array.isArray(surfaceBuildDef.media) ? [...surfaceBuildDef.media] : [];
+            if (target.kind === "variant" && target.deltaFromContext) {
+              const compareCtx = buildBaseContext(modifierOrder, modifiers, {
+                [surfaceAxis]: target.deltaFromContext,
+                [responsiveAxis]: responsiveContext,
+                ...defaultStateByAxis,
+                [stateAxis]: stateContext,
+              });
+              // eslint-disable-next-line no-await-in-loop
+              const compareDoc = await getFullDoc(compareCtx);
+              const variantRaw = pruneUnchanged(onFullDoc, compareDoc);
+              blockDocRaw = variantRaw && Object.keys(variantRaw).length > 0 ? variantRaw : null;
+              if (!blockDocRaw) continue;
+              variantIndex += 1;
+              blockId = `${onId}__variant${variantIndex}`;
+              contextsRoot[blockId] = resolveAliasValues(blockDocRaw, onFullDoc);
+            }
+
+            if (target.kind === "base") {
+              contextsRoot[blockId] = resolveAliasValues(blockDocRaw, onFullDoc);
+            }
+
+            const media = [...target.media];
             const responsiveCond = responsiveMedia[responsiveContext];
             const stateCond = mediaByStateContext[stateContext] ?? null;
             if (responsiveCond) media.push(responsiveCond);
             if (stateCond) media.push(stateCond);
 
             blocks.push({
-              id: onId,
-              comment: `${surfaceContext} | ${responsiveContext} | ${stateAxis}:${stateContext}`,
-              selector: surfaceBuildDef.selector,
+              id: blockId,
+              comment: `${surfaceContext} | ${responsiveContext} | ${stateAxis}:${stateContext}${
+                target.variantName ? ` | variant:${target.variantName}` : ""
+              }`,
+              selector: target.selector,
               media,
             });
           }
@@ -594,13 +811,15 @@ async function main() {
   }
 
   const contextsDoc = {
-    ...(tokenPrefix ? { naming: { tokenPrefix } } : {}),
+    ...(namespace ? { namespace } : {}),
+    ...(brand ? { brand } : {}),
     contexts: contextsRoot,
   };
 
   const manifest = {
     source: path.relative(cwd, resolverPath),
-    ...(tokenPrefix ? { naming: { tokenPrefix } } : {}),
+    ...(namespace ? { namespace } : {}),
+    ...(brand ? { brand } : {}),
     layers: layerDefs,
     targets: {
       css: {

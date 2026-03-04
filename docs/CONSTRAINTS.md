@@ -51,7 +51,8 @@ Planning and sequencing live in `docs/PLANNING.md`.
 - Anticipated monorepo direction:
   - `tokens/` becomes a standalone package boundary.
   - source tokens live under `tokens/src/...` (including `core` and brand folders).
-  - generated artifacts output to `tokens/build/...`.
+  - generated public artifacts output to `tokens/dist/...`.
+  - disposable pipeline artifacts output to `tokens/build/...`.
 - Resolver documents and build/transforms should live inside the `tokens/` package tree.
 
 ## Canonical Semantic File Map (Alpha, `msrd`)
@@ -99,6 +100,10 @@ Planning and sequencing live in `docs/PLANNING.md`.
   - mapping resolver + context inputs -> ordered SD source/include entries
   - generating SD config inputs from resolver decisions where required
 - Do not reimplement Style Dictionary core behavior (token transforms, formatting, output writing) in custom scripts unless a documented SD gap requires it.
+- Resolver build metadata conventions used by current adapter:
+  - context inheritance uses `baseContext`
+  - variant diff target uses `deltaFromContext`
+  - shared variant filters should be declared via `variantDefaults.scope` where possible
 - Resolver/build order must satisfy semantic dependencies:
   - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing
@@ -108,6 +113,11 @@ Planning and sequencing live in `docs/PLANNING.md`.
 
 - For each brand + surface combination, semantic color `light` and `dark` files must be path-identical and type-identical; only `$value` may differ.
 - Theme parity also applies to effect tokens where surface files exist in both themes.
+
+## Build Artifact Policy
+
+- Commit and version outputs under `tokens/dist/**` (public contract).
+- Treat `tokens/build/**` as disposable/intermediate pipeline output.
 
 ## Domain Conventions
 

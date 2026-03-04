@@ -100,7 +100,7 @@
         "$value": "{primitive.color.violet.600}"
       },
       "hover": {
-        "$value": "{interactive.hover}"
+        "$value": "{interactive.prose.default}"
       },
       "hoverDecoration": {
         "$value": "{brand.support}"

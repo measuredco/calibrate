@@ -6,28 +6,47 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Implement Style Dictionary 4 adapter/pipeline using resolver manifest as source-of-truth:
-  - consume `tokens/resolver/msrd.resolver.json` and selected modifier inputs
-  - produce deterministic source lists/order for SD builds
-  - generate CSS custom properties bundles for `themeSurface` + `size` + `forcedColors`
-  - define output namespace/prefix contract for generated vars
-  - finalize multi-bundle output structure (`:root`, brand class, dark media query layering)
-  - add build scripts/docs for context selection inputs
-  - run parity checks against expected light/dark + surface outputs
+- Stabilize resolver->SD bridge API and docs:
+  - document custom resolver build keys used by the adapter (`baseContext`, `deltaFromContext`, selector refs, variant defaults)
+  - confirm naming/authoring conventions for future brands and modifiers
+- Decide committed artifact policy:
+  - commit `tokens/dist/**` as versioned/public artifacts
+  - keep `tokens/build/**` disposable pipeline artifacts
+  - add CI check that `tokens:build` produces no dirty diff in `tokens/dist/**`
 
 ## Next
 
 What we could start work on next.
 
-- Add `wireframe` brand to validate multi-brand portability:
-  - `tokens/src/wireframe/primitive/*`
-  - `tokens/src/wireframe/semantic/*` with matching public API shape
+- Add `wireframe` brand and validate multi-brand packaging/layering contract:
+  - add `tokens/src/wrfr/primitive/*`
+  - add `tokens/src/wrfr/semantic/*` with matching public API shape
+  - keep shared shell/system domains in `tokens/src/core/**`; keep brand folders brand-only
+  - split resolver/build into independent outputs:
+    - `core` output
+    - `msrd` brand output
+    - `wrfr` brand output
+  - define resolver/package structure for multi-brand builds:
+    - `tokens/resolver/core.resolver.json`
+    - `tokens/resolver/msrd.resolver.json`
+    - `tokens/resolver/wrfr.resolver.json`
+  - introduce CSS layer contract to make include order deterministic in consumer builds:
+    - declare ordered layers (e.g. `@layer clbr.core, clbr.brand;`)
+    - emit core tokens in `clbr.core`
+    - emit brand tokens in `clbr.brand`
+  - document consumer contract (required includes, expected layer names, override strategy)
 
 - Add validation and CI checks:
   - JSON/schema/spec checks
   - unresolved alias checks
   - circular reference checks
-  - generated CSS snapshot/golden checks
+  - generated `tokens/dist/**` snapshot/golden checks
+
+- Add optional private primitive output for maintainer/discovery workflows (after resolver+multi-brand packaging stabilize):
+  - output path: `tokens/dist/private/css/`
+  - file naming: `clbr.<brand>.primitives.css`
+  - variable guard prefix: `--clbr-primitive-*`
+  - document as non-public/non-stable contract (semantic remains the public API)
 
 - Start a component token layer (`tokens/src/<brand>/components/...`) after pipeline + validation are stable.
   - finalize surface taxonomy contract and whether all components bind to explicit surface context
@@ -41,7 +60,7 @@ Everything we could attempt given sufficient time and resources.
 - Prove end-to-end token consumption in a target stylesheet/component slice.
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
-- Define cross-target export contract from `tokens/build/json/clbrt.msrd.contexts.json`:
+- Define cross-target export contract from `tokens/dist/json/clbr.msrd.contexts.json`:
   - context selection strategy per target (full matrix vs selected contexts)
   - naming strategy per target (path-preserving vs flattened aliases)
   - mode mapping strategy (`theme`/`size`/`state`) per target format
@@ -77,3 +96,11 @@ What we've done.
 - source token tree moved under `tokens/src` (core + brand).
 - spec-shaped resolver manifest added at `tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
 - DTCG schemas vendored under `tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
+- Style Dictionary bridge/pipeline implemented:
+  - `tokens/scripts/resolve-token-sources.mjs` resolves resolver context source ordering
+  - `tokens/scripts/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
+  - `tokens/scripts/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
+  - `tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
+- Output contracts established:
+  - committed/public outputs in `tokens/dist/{css,json}`
+  - disposable pipeline artifacts in `tokens/build/{sd,tmp}`

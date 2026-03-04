@@ -31,7 +31,6 @@ const TOKEN_PATH = {
   ROOT: 0,
   CONTEXT_ID: 1,
   DOMAIN: 2,
-  GROUP: 3,
 };
 const MIN_CONTEXT_TOKEN_PATH = 3;
 
@@ -43,14 +42,14 @@ const toKebab = (segment) =>
     .replace(/^-+|-+$/g, "")
     .toLowerCase();
 
-const tokenPrefix =
-  typeof manifest?.naming?.tokenPrefix === "string" && manifest.naming.tokenPrefix.trim().length > 0
-    ? toKebab(manifest.naming.tokenPrefix)
+const namespace =
+  typeof manifest?.namespace === "string" && manifest.namespace.trim().length > 0
+    ? toKebab(manifest.namespace)
     : "";
 
 const varNameForPath = (pathSegments) => {
   const core = pathSegments.map(toKebab).join("-");
-  return tokenPrefix ? `--${tokenPrefix}-${core}` : `--${core}`;
+  return namespace ? `--${namespace}-${core}` : `--${core}`;
 };
 
 const indent = (text, spaces = 2) => {
@@ -112,7 +111,7 @@ const shouldEmitContextToken = (tokenPath) => {
 };
 
 StyleDictionary.registerFormat({
-  name: "css/clbrt-contexts",
+  name: "css/clbr-contexts",
   format: ({ dictionary }) => {
     const byContext = new Map();
 
@@ -159,7 +158,7 @@ export default {
       files: [
         {
           destination: outName,
-          format: "css/clbrt-contexts",
+          format: "css/clbr-contexts",
         },
       ],
     },

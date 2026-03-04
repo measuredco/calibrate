@@ -8,9 +8,9 @@ const cwd = process.cwd();
 function parseArgs(argv) {
   const args = {
     resolver: "tokens/resolver/msrd.resolver.json",
-    out: "tokens/build/css/clbrt.msrd.tokens.css",
-    contexts: "tokens/build/json/clbrt.msrd.contexts.json",
-    manifest: "tokens/build/sd/clbrt.msrd.css-manifest.json",
+    out: "tokens/dist/css/clbr.msrd.tokens.css",
+    contexts: "tokens/dist/json/clbr.msrd.contexts.json",
+    manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
   };
 
   for (let i = 0; i < argv.length; i += 1) {

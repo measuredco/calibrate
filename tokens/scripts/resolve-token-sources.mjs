@@ -53,9 +53,11 @@ function getByPointer(root, pointer) {
 
 function normalizeRef(baseFile, ref) {
   if (ref.startsWith("#/")) return ref;
-  const fileOnly = ref.split("#")[0];
+  const hashIndex = ref.indexOf("#");
+  const fileOnly = hashIndex === -1 ? ref : ref.slice(0, hashIndex);
+  const fragment = hashIndex === -1 ? "" : ref.slice(hashIndex);
   const abs = path.resolve(path.dirname(baseFile), fileOnly);
-  return path.relative(cwd, abs).replaceAll(path.sep, "/");
+  return `${path.relative(cwd, abs).replaceAll(path.sep, "/")}${fragment}`;
 }
 
 function pushUnique(list, seen, value) {
