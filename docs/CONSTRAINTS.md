@@ -125,6 +125,24 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
   - core bundle emits in `@layer clbr`
   - brand bundles emit in `@layer clbr.brand`
 
+## Consumer Integration Contract
+
+- Include order for CSS bundles:
+  - load `tokens/dist/css/clbr.core.tokens.css` first
+  - then load one or more brand bundles (for example `clbr.msrd.tokens.css`, `clbr.wrfr.tokens.css`)
+- CSS layering contract (`@layer clbr, clbr.brand;`) is normative and must be preserved in distributed bundles.
+- Root scoping contract:
+  - all token usage must live under a `.clbr` scope root
+  - select a brand via `.clbr-brand-<brand>` on the same scope root
+- Theme forcing contract:
+  - `.clbr-theme-dark` and `.clbr-theme-light` force mode on the scoped brand root
+  - without force classes, theme follows authored media query behavior
+- Surface contract:
+  - `.clbr-surface-brand` is a descendant surface scope inside a brand root
+- Multi-brand on one page is supported:
+  - use isolated wrapper roots per brand (`.clbr.clbr-brand-msrd`, `.clbr.clbr-brand-wrfr`, etc.)
+  - do not mix multiple brand classes on the same scope root
+
 ## Domain Conventions
 
 - Contextual ramp key parity:

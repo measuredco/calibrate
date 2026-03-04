@@ -6,30 +6,11 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Prepare multi-brand expansion:
-  - define resolver split (`core`, `msrd`, `wrfr`) implementation order
+- No active `Now` tasks.
 
 ## Next
 
 What we could start work on next.
-
-- Add `wireframe` brand and validate multi-brand packaging/layering contract:
-  - add `tokens/src/wrfr/primitive/*`
-  - add `tokens/src/wrfr/semantic/*` with matching public API shape
-  - keep shared shell/system domains in `tokens/src/core/**`; keep brand folders brand-only
-  - split resolver/build into independent outputs:
-    - `core` output
-    - `msrd` brand output
-    - `wrfr` brand output
-  - define resolver/package structure for multi-brand builds:
-    - `tokens/resolver/core.resolver.json`
-    - `tokens/resolver/msrd.resolver.json`
-    - `tokens/resolver/wrfr.resolver.json`
-  - introduce CSS layer contract to make include order deterministic in consumer builds:
-    - declare ordered layers (e.g. `@layer clbr, clbr.brand;`)
-    - emit core tokens in `clbr`
-    - emit brand tokens in `clbr.brand`
-  - document consumer contract (required includes, expected layer names, override strategy)
 
 - Add validation and CI checks:
   - JSON/schema/spec checks
@@ -111,3 +92,14 @@ What we've done.
   - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/dist/json/clbr.core.contexts.json`
   - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/dist/json/clbr.msrd.contexts.json`
   - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`
+- Wireframe brand onboarding completed:
+  - resolver added: `tokens/resolver/wrfr.resolver.json`
+  - brand source added under `tokens/src/wrfr/{primitive,semantic}`
+  - build target wired in `tokens/scripts/build.mjs`
+  - brand artifacts emit and verify:
+    - `tokens/dist/css/clbr.wrfr.tokens.css`
+    - `tokens/dist/json/clbr.wrfr.contexts.json`
+- Consumer include/override strategy documented in constraints:
+  - load contract for `core` + brand bundles
+  - scoped multi-brand usage on one page
+  - class contracts for brand/theme/surface selectors

@@ -48,6 +48,12 @@ function main() {
       contexts: "tokens/dist/json/clbr.msrd.contexts.json",
       manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
     },
+    wrfr: {
+      resolver: "tokens/resolver/wrfr.resolver.json",
+      out: "tokens/dist/css/clbr.wrfr.tokens.css",
+      contexts: "tokens/dist/json/clbr.wrfr.contexts.json",
+      manifest: "tokens/build/sd/clbr.wrfr.css-manifest.json",
+    },
   };
 
   let selectedTargets;
