@@ -1,41 +1,24 @@
 {
   "$schema": "../../../schemas/2025.10/format.json",
   "decorationOffset": {
+    "$type": "number",
     "100": {
-      "$value": {
-        "value": 0.34,
-        "unit": "em"
-      }
+      "$value": 0.34
     },
     "150": {
-      "$value": {
-        "value": 0.39,
-        "unit": "em"
-      }
+      "$value": 0.39
     },
     "200": {
-      "$value": {
-        "value": 0.5,
-        "unit": "em"
-      }
-    },
-    "$type": "dimension"
+      "$value": 0.5
+    }
   },
   "fontFamily": {
     "$type": "fontFamily",
     "mono": {
-      "$value": [
-        "Roboto Mono",
-        "ui-monospace",
-        "monospace"
-      ]
+      "$value": ["Roboto Mono", "ui-monospace", "monospace"]
     },
     "sans": {
-      "$value": [
-        "InterVariable",
-        "system-ui",
-        "sans-serif"
-      ]
+      "$value": ["InterVariable", "system-ui", "sans-serif"]
     }
   },
   "fontSize": {
@@ -163,8 +146,7 @@
   },
   "leading": {
     "100": {
-      "$value": "{primitive.spacing.900}",
-      "$description": "24"
+      "$value": "{primitive.spacing.900}"
     },
     "133": {
       "$value": {
@@ -179,8 +161,7 @@
       }
     },
     "166": {
-      "$value": "{primitive.spacing.966}",
-      "$description": "30"
+      "$value": "{primitive.spacing.966}"
     },
     "175": {
       "$value": {
@@ -189,8 +170,7 @@
       }
     },
     "200": {
-      "$value": "{primitive.spacing.1100}",
-      "$description": "36"
+      "$value": "{primitive.spacing.1100}"
     },
     "250": {
       "$value": {
@@ -199,8 +179,7 @@
       }
     },
     "300": {
-      "$value": "{primitive.spacing.1200}",
-      "$description": "48"
+      "$value": "{primitive.spacing.1200}"
     },
     "350": {
       "$value": {
@@ -209,20 +188,16 @@
       }
     },
     "400": {
-      "$value": "{primitive.spacing.1300}",
-      "$description": "60"
+      "$value": "{primitive.spacing.1300}"
     },
     "500": {
-      "$value": "{primitive.spacing.1400}",
-      "$description": "72"
+      "$value": "{primitive.spacing.1400}"
     },
     "600": {
-      "$value": "{primitive.spacing.1600}",
-      "$description": "96"
+      "$value": "{primitive.spacing.1600}"
     },
     "700": {
-      "$value": "{primitive.spacing.1800}",
-      "$description": "120"
+      "$value": "{primitive.spacing.1800}"
     },
     "$type": "dimension"
   },
@@ -269,103 +244,153 @@
     "$type": "number"
   },
   "measure": {
-    "$type": "dimension",
+    "$type": "number",
     "default": {
-      "$value": {
-        "value": 35.25,
-        "unit": "em"
-      }
+      "$value": 35.25
     },
     "sm": {
-      "$value": {
-        "value": 31.75,
-        "unit": "em"
-      }
+      "$value": 31.75
     }
   },
   "typeStep": {
     "100": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.100}",
-        "lineHeight": "{primitive.typography.lineHeight.900}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.100}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.900}"
       }
     },
     "200": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.200}",
-        "lineHeight": "{primitive.typography.lineHeight.800}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.200}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
       }
     },
     "300": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.300}",
-        "lineHeight": "{primitive.typography.lineHeight.800}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.300}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
       }
     },
     "400": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.400}",
-        "lineHeight": "{primitive.typography.lineHeight.800}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.400}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
       }
     },
     "450": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.400}",
-        "lineHeight": "{primitive.typography.lineHeight.1000}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.400}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.1000}"
       }
     },
     "500": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.500}",
-        "lineHeight": "{primitive.typography.lineHeight.800}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.500}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
       }
     },
     "600": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.600}",
-        "lineHeight": "{primitive.typography.lineHeight.800}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.600}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
       }
     },
     "700": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.700}",
-        "lineHeight": "{primitive.typography.lineHeight.700}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.700}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.700}"
       }
     },
     "800": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.800}",
-        "lineHeight": "{primitive.typography.lineHeight.600}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.800}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.600}"
       }
     },
     "900": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.900}",
-        "lineHeight": "{primitive.typography.lineHeight.500}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.900}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.500}"
       }
     },
     "1000": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.1000}",
-        "lineHeight": "{primitive.typography.lineHeight.400}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.1000}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.400}"
       }
     },
     "1100": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.1100}",
-        "lineHeight": "{primitive.typography.lineHeight.300}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.1100}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.300}"
       }
     },
     "1200": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.1200}",
-        "lineHeight": "{primitive.typography.lineHeight.200}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.1200}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.200}"
       }
     },
     "1300": {
-      "$value": {
-        "fontSize": "{primitive.typography.fontSize.1300}",
-        "lineHeight": "{primitive.typography.lineHeight.100}"
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.1300}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.100}"
       }
     }
   }

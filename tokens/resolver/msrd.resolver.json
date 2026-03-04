@@ -3,12 +3,95 @@
   "name": "MSRD resolver",
   "version": "2025.10",
   "description": "Resolver contexts for msrd tokens (appearance, size, forced-colors).",
+  "$defs": {
+    "build": {
+      "naming": {
+        "tokenPrefix": "clbrt-msrd"
+      },
+      "layers": {
+        "private": [
+          "primitive"
+        ],
+        "public": [
+          "semantic",
+          "components"
+        ]
+      },
+      "targets": {
+        "css": {
+          "axes": {
+            "surface": "theme",
+            "responsive": "size",
+            "state": [
+              "forcedColors"
+            ]
+          },
+          "modifiers": {
+            "theme": {
+              "lightDefault": {
+                "selector": ":root",
+                "diffFrom": null,
+                "media": []
+              },
+              "lightBrand": {
+                "selector": ".brand",
+                "diffFrom": "lightDefault",
+                "media": []
+              },
+              "darkDefault": {
+                "selector": ":root",
+                "diffFrom": "lightDefault",
+                "media": [
+                  "(prefers-color-scheme: dark)"
+                ]
+              },
+              "darkBrand": {
+                "selector": ".brand",
+                "diffFrom": "darkDefault",
+                "media": [
+                  "(prefers-color-scheme: dark)"
+                ]
+              }
+            },
+            "size": {
+              "mediaByContext": {
+                "tablet": {
+                  "minWidth": "{breakpoint.tablet}"
+                },
+                "notebook": {
+                  "minWidth": "{breakpoint.notebook}"
+                },
+                "laptop": {
+                  "minWidth": "{breakpoint.laptop}"
+                }
+              }
+            },
+            "forcedColors": {
+              "emitContexts": [
+                "on"
+              ],
+              "themeContexts": [
+                "lightDefault",
+                "lightBrand"
+              ],
+              "sizeContexts": [
+                "baseline"
+              ],
+              "mediaByContext": {
+                "on": "(forced-colors: active)"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "resolutionOrder": [
     {
       "$ref": "#/modifiers/size"
     },
     {
-      "$ref": "#/modifiers/themeSurface"
+      "$ref": "#/modifiers/theme"
     },
     {
       "$ref": "#/modifiers/forcedColors"
@@ -70,7 +153,7 @@
     }
   },
   "modifiers": {
-    "themeSurface": {
+    "theme": {
       "description": "Theme/surface combinations represented as a single context axis.",
       "default": "lightDefault",
       "contexts": {

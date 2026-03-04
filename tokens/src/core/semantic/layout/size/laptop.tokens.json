@@ -4,12 +4,14 @@
   "grid": {
     "gap": {
       "$type": "dimension",
-      "lg": {
-        "column": {
+      "column": {
+        "lg": {
           "$value": "{spacing.horizontal.800}"
-        },
-        "row": {
-          "$value": "{grid.gap.lg.column}"
+        }
+      },
+      "row": {
+        "lg": {
+          "$value": "{grid.gap.column.lg}"
         }
       }
     }

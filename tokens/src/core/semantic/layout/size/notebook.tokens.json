@@ -4,48 +4,37 @@
   "spacing": {
     "vertical": {
       "250": {
-        "$value": "{spacing.vertical.400}",
-        "$description": "6"
+        "$value": "{spacing.vertical.400}"
       },
       "400": {
-        "$value": "{spacing.vertical.500}",
-        "$description": "12"
+        "$value": "{spacing.vertical.500}"
       },
       "500": {
-        "$value": "{spacing.vertical.600}",
-        "$description": "18"
+        "$value": "{spacing.vertical.600}"
       },
       "600": {
-        "$value": "{spacing.vertical.700}",
-        "$description": "24"
+        "$value": "{spacing.vertical.700}"
       },
       "700": {
-        "$value": "{spacing.vertical.800}",
-        "$description": "36"
+        "$value": "{spacing.vertical.800}"
       },
       "800": {
-        "$value": "{spacing.vertical.900}",
-        "$description": "48"
+        "$value": "{spacing.vertical.900}"
       },
       "900": {
-        "$value": "{spacing.vertical.1000}",
-        "$description": "72"
+        "$value": "{spacing.vertical.1000}"
       },
       "950": {
-        "$value": "{spacing.vertical.1200}",
-        "$description": "96"
+        "$value": "{spacing.vertical.1200}"
       },
       "1000": {
-        "$value": "{spacing.vertical.1250}",
-        "$description": "108"
+        "$value": "{spacing.vertical.1250}"
       },
       "1100": {
-        "$value": "{spacing.vertical.1300}",
-        "$description": "120"
+        "$value": "{spacing.vertical.1300}"
       },
       "1200": {
-        "$value": "{spacing.vertical.1400}",
-        "$description": "144"
+        "$value": "{spacing.vertical.1400}"
       },
       "$type": "dimension"
     }

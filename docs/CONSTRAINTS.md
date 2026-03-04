@@ -94,6 +94,11 @@ Planning and sequencing live in `docs/PLANNING.md`.
 - Surface variants must be supported as a first-class semantic concern alongside brand and theme.
 - Resolver source-of-truth is DTCG resolver manifests in `tokens/resolver/*.resolver.json`.
 - Build tooling (e.g. Style Dictionary) should consume resolver-selected sources via adapter/config; do not duplicate context contracts ad hoc.
+- Prefer standard Style Dictionary configuration/build flow over custom build scripts.
+- Custom logic is limited to resolver adaptation only:
+  - mapping resolver + context inputs -> ordered SD source/include entries
+  - generating SD config inputs from resolver decisions where required
+- Do not reimplement Style Dictionary core behavior (token transforms, formatting, output writing) in custom scripts unless a documented SD gap requires it.
 - Resolver/build order must satisfy semantic dependencies:
   - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing

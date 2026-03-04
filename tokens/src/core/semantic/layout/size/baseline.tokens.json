@@ -15,20 +15,20 @@
   "grid": {
     "gap": {
       "$type": "dimension",
-      "default": {
-        "column": {
+      "column": {
+        "default": {
           "$value": "{spacing.horizontal.600}"
         },
-        "row": {
-          "$value": "{spacing.vertical.700}"
+        "lg": {
+          "$value": "{grid.gap.column.default}"
         }
       },
-      "lg": {
-        "column": {
-          "$value": "{grid.gap.default.column}"
+      "row": {
+        "default": {
+          "$value": "{spacing.vertical.700}"
         },
-        "row": {
-          "$value": "{grid.gap.default.row}"
+        "lg": {
+          "$value": "{grid.gap.row.default}"
         }
       }
     }
@@ -36,48 +36,37 @@
   "spacing": {
     "vertical": {
       "250": {
-        "$value": "{spacing.vertical.250}",
-        "$description": "3"
+        "$value": "{spacing.vertical.250}"
       },
       "400": {
-        "$value": "{spacing.vertical.400}",
-        "$description": "6"
+        "$value": "{spacing.vertical.400}"
       },
       "500": {
-        "$value": "{spacing.vertical.500}",
-        "$description": "12"
+        "$value": "{spacing.vertical.500}"
       },
       "600": {
-        "$value": "{spacing.vertical.600}",
-        "$description": "18"
+        "$value": "{spacing.vertical.600}"
       },
       "700": {
-        "$value": "{spacing.vertical.700}",
-        "$description": "24"
+        "$value": "{spacing.vertical.700}"
       },
       "800": {
-        "$value": "{spacing.vertical.800}",
-        "$description": "36"
+        "$value": "{spacing.vertical.800}"
       },
       "900": {
-        "$value": "{spacing.vertical.900}",
-        "$description": "48"
+        "$value": "{spacing.vertical.900}"
       },
       "950": {
-        "$value": "{spacing.vertical.950}",
-        "$description": "60"
+        "$value": "{spacing.vertical.950}"
       },
       "1000": {
-        "$value": "{spacing.vertical.1000}",
-        "$description": "72"
+        "$value": "{spacing.vertical.1000}"
       },
       "1100": {
-        "$value": "{spacing.vertical.1100}",
-        "$description": "84"
+        "$value": "{spacing.vertical.1100}"
       },
       "1200": {
-        "$value": "{spacing.vertical.1200}",
-        "$description": "96"
+        "$value": "{spacing.vertical.1200}"
       },
       "$type": "dimension"
     }

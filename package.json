@@ -2,8 +2,14 @@
   "name": "calibrate",
   "version": "0.0.0",
   "private": "true",
+  "scripts": {
+    "tokens:build": "node tokens/scripts/build.mjs"
+  },
   "packageManager": "pnpm@10.29.3",
   "engines": {
     "node": "24.13.1"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.3.3"
   }
 }

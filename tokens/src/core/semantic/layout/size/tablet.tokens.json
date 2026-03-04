@@ -15,20 +15,20 @@
   "grid": {
     "gap": {
       "$type": "dimension",
-      "default": {
-        "column": {
+      "column": {
+        "default": {
           "$value": "{spacing.horizontal.700}"
         },
-        "row": {
-          "$value": "{spacing.vertical.700}"
+        "lg": {
+          "$value": "{grid.gap.column.default}"
         }
       },
-      "lg": {
-        "column": {
-          "$value": "{grid.gap.default.column}"
+      "row": {
+        "default": {
+          "$value": "{spacing.vertical.700}"
         },
-        "row": {
-          "$value": "{grid.gap.default.row}"
+        "lg": {
+          "$value": "{grid.gap.row.default}"
         }
       }
     }

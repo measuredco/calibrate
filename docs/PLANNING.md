@@ -41,6 +41,15 @@ Everything we could attempt given sufficient time and resources.
 - Prove end-to-end token consumption in a target stylesheet/component slice.
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
+- Define cross-target export contract from `tokens/build/json/clbrt.msrd.contexts.json`:
+  - context selection strategy per target (full matrix vs selected contexts)
+  - naming strategy per target (path-preserving vs flattened aliases)
+  - mode mapping strategy (`theme`/`size`/`state`) per target format
+  - type/unit coercion policy for non-CSS targets
+- Prototype Penpot export adapter from resolved contexts.
+- Assess Figma export pathway and required schema mapping.
+- Define iOS/Android export subset and conversion rules.
+- Add optional VS Code token lookup artifact generation for authoring ergonomics.
 
 ## Done
 

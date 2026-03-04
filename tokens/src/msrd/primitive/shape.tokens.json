@@ -2,7 +2,6 @@
   "$schema": "../../../schemas/2025.10/format.json",
   "square": {
     "aspectRatio": {
-      "$type": "string",
       "$value": "1 / 1"
     },
     "cornerRatio": {
