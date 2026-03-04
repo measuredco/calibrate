@@ -61,6 +61,8 @@ Per-variant `scope` may still be used for exceptions.
 
 Run:
 
+- `pnpm run tokens:validate`
 - `pnpm run tokens:verify`
 
-This command rebuilds tokens and fails if `tokens/dist/**` changes.
+- `tokens:validate` checks authored token/resolver JSON parseability, local `$schema` wiring, resolver sanity, and resolver context preparation.
+- `tokens:verify` rebuilds tokens and fails if `tokens/dist/**` changes.
