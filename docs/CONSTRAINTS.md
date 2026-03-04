@@ -4,6 +4,7 @@
 
 This document defines the stable constraints for token authoring, structure, and resolution.
 Planning and sequencing live in `docs/PLANNING.md`.
+Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 
 ## Program Goals
 
@@ -118,6 +119,7 @@ Planning and sequencing live in `docs/PLANNING.md`.
 
 - Commit and version outputs under `tokens/dist/**` (public contract).
 - Treat `tokens/build/**` as disposable/intermediate pipeline output.
+- Keep the repository-level `build` ignore convention to avoid committing transient build folders.
 
 ## Domain Conventions
 

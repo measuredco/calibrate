@@ -6,13 +6,10 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Stabilize resolver->SD bridge API and docs:
-  - document custom resolver build keys used by the adapter (`baseContext`, `deltaFromContext`, selector refs, variant defaults)
-  - confirm naming/authoring conventions for future brands and modifiers
-- Decide committed artifact policy:
-  - commit `tokens/dist/**` as versioned/public artifacts
-  - keep `tokens/build/**` disposable pipeline artifacts
-  - add CI check that `tokens:build` produces no dirty diff in `tokens/dist/**`
+- Prepare multi-brand packaging/layering implementation:
+  - finalize `core` + per-brand output split
+  - finalize CSS layer contract for deterministic consumer cascade behavior
+  - define resolver split (`core`, `msrd`, `wrfr`) implementation order
 
 ## Next
 
@@ -104,3 +101,10 @@ What we've done.
 - Output contracts established:
   - committed/public outputs in `tokens/dist/{css,json}`
   - disposable pipeline artifacts in `tokens/build/{sd,tmp}`
+- Resolver->SD bridge API and docs stabilized:
+  - adapter keys documented (`baseContext`, `deltaFromContext`, selector refs, variant defaults)
+  - naming and authoring conventions documented for future brands/modifiers
+- Artifact policy decided and enforced:
+  - `tokens/dist/**` is versioned/public
+  - `tokens/build/**` is disposable
+  - `tokens:verify` added to fail when `tokens/dist/**` is out of date after build
