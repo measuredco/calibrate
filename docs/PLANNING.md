@@ -12,11 +12,8 @@ What we're working on now.
 
 What we could start work on next.
 
-- Add validation and CI checks:
-  - JSON/schema/spec checks
-  - unresolved alias checks
-  - circular reference checks
-  - generated `tokens/dist/**` snapshot/golden checks
+- Expand validation coverage after baseline gate is in place:
+  - add optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`
 
 - Add optional private primitive output for maintainer/discovery workflows (after resolver+multi-brand packaging stabilize):
   - output path: `tokens/dist/private/css/`
@@ -103,3 +100,9 @@ What we've done.
   - load contract for `core` + brand bundles
   - scoped multi-brand usage on one page
   - class contracts for brand/theme/surface selectors
+- Baseline validation + CI checks implemented:
+  - `tokens:validate` added for authored token/resolver JSON checks and resolver-context preparation checks
+  - CI workflow added at `.github/workflows/tokens.yml`
+  - CI runs:
+    - `pnpm run tokens:validate`
+    - `pnpm run tokens:verify`

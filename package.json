@@ -4,6 +4,7 @@
   "private": "true",
   "scripts": {
     "tokens:build": "node tokens/scripts/build.mjs",
+    "tokens:validate": "node tokens/scripts/validate.mjs",
     "tokens:verify": "node tokens/scripts/verify.mjs"
   },
   "packageManager": "pnpm@10.29.3",
