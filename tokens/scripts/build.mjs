@@ -7,18 +7,12 @@ const cwd = process.cwd();
 
 function parseArgs(argv) {
   const args = {
-    resolver: "tokens/resolver/msrd.resolver.json",
-    out: "tokens/dist/css/clbr.msrd.tokens.css",
-    contexts: "tokens/dist/json/clbr.msrd.contexts.json",
-    manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
+    target: "all",
   };
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
-    if (arg === "--resolver") args.resolver = argv[i + 1];
-    if (arg === "--out") args.out = argv[i + 1];
-    if (arg === "--contexts") args.contexts = argv[i + 1];
-    if (arg === "--manifest") args.manifest = argv[i + 1];
+    if (arg === "--target") args.target = argv[i + 1];
   }
 
   return args;
@@ -41,33 +35,64 @@ function run(cmd, args, opts = {}) {
 
 function main() {
   const cli = parseArgs(process.argv.slice(2));
-
-  run("node", [
-    "tokens/scripts/prepare-sd-contexts.mjs",
-    "--resolver",
-    cli.resolver,
-    "--out-tokens",
-    cli.contexts,
-    "--out-manifest",
-    cli.manifest,
-  ]);
-
-  run(
-    "pnpm",
-    ["exec", "style-dictionary", "build", "--config", "tokens/style-dictionary.config.mjs"],
-    {
-      env: {
-        ...process.env,
-        TOKENS_CONTEXTS_FILE: path.resolve(cwd, cli.contexts),
-        TOKENS_MANIFEST_FILE: path.resolve(cwd, cli.manifest),
-        TOKENS_CSS_OUT: path.resolve(cwd, cli.out),
-      },
+  const buildTargets = {
+    core: {
+      resolver: "tokens/resolver/core.resolver.json",
+      out: "tokens/dist/css/clbr.core.tokens.css",
+      contexts: "tokens/dist/json/clbr.core.contexts.json",
+      manifest: "tokens/build/sd/clbr.core.css-manifest.json",
     },
-  );
+    msrd: {
+      resolver: "tokens/resolver/msrd.resolver.json",
+      out: "tokens/dist/css/clbr.msrd.tokens.css",
+      contexts: "tokens/dist/json/clbr.msrd.contexts.json",
+      manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
+    },
+  };
+
+  let selectedTargets;
+  if (cli.target === "all") selectedTargets = Object.keys(buildTargets);
+  else if (Object.prototype.hasOwnProperty.call(buildTargets, cli.target)) selectedTargets = [cli.target];
+  else {
+    throw new Error(`Unknown --target "${cli.target}". Use one of: all, ${Object.keys(buildTargets).join(", ")}`);
+  }
+
+  const outputs = [];
+  for (const target of selectedTargets) {
+    const cfg = buildTargets[target];
+    run("node", [
+      "tokens/scripts/prepare-sd-contexts.mjs",
+      "--resolver",
+      cfg.resolver,
+      "--out-tokens",
+      cfg.contexts,
+      "--out-manifest",
+      cfg.manifest,
+    ]);
+
+    run(
+      "pnpm",
+      ["exec", "style-dictionary", "build", "--config", "tokens/style-dictionary.config.mjs"],
+      {
+        env: {
+          ...process.env,
+          TOKENS_CONTEXTS_FILE: path.resolve(cwd, cfg.contexts),
+          TOKENS_MANIFEST_FILE: path.resolve(cwd, cfg.manifest),
+          TOKENS_CSS_OUT: path.resolve(cwd, cfg.out),
+        },
+      },
+    );
+    outputs.push(cfg);
+  }
 
   // eslint-disable-next-line no-console
   console.log(
-    `Built token artifacts:\n- CSS: ${cli.out}\n- Contexts JSON: ${cli.contexts}\n- CSS manifest: ${cli.manifest}`,
+    `Built token artifacts:\n${outputs
+      .map(
+        (cfg) =>
+          `- CSS: ${cfg.out}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
+      )
+      .join("\n")}`,
   );
 }
 

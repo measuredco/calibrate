@@ -1,0 +1,156 @@
+{
+  "$schema": "../schemas/2025.10/resolver.json",
+  "name": "Core resolver",
+  "version": "2025.10",
+  "description": "Resolver contexts for core tokens (size + scope).",
+  "$defs": {
+    "build": {
+      "namespace": "clbr",
+      "shared": {
+        "mediaRef": "./shared/media.json#/size"
+      },
+      "layers": {
+        "private": ["primitive"],
+        "public": ["semantic", "components"]
+      },
+      "targets": {
+        "css": {
+          "layer": "clbr",
+          "layerOrder": ["clbr", "clbr.brand"],
+          "selectors": {
+            "root": ":where(.{namespace})"
+          },
+          "modifiers": {
+            "size": {
+              "contexts": {
+                "baseline": {},
+                "tablet": {
+                  "baseContext": "baseline",
+                  "media": [{ "mediaRef": "tablet" }]
+                },
+                "notebook": {
+                  "baseContext": "tablet",
+                  "media": [{ "mediaRef": "notebook" }]
+                },
+                "laptop": {
+                  "baseContext": "notebook",
+                  "media": [{ "mediaRef": "laptop" }]
+                }
+              }
+            },
+            "surface": {
+              "contexts": {
+                "default": {
+                  "selectorRef": "root"
+                },
+                "scoped": {
+                  "baseContext": "default",
+                  "selectorRef": "root"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/size"
+    },
+    {
+      "$ref": "#/modifiers/surface"
+    }
+  ],
+  "sets": {
+    "base": {
+      "description": "Core non-context token sources.",
+      "sources": [
+        {
+          "$ref": "../src/core/primitive/breakpoint.tokens.json"
+        },
+        {
+          "$ref": "../src/core/primitive/spacing.tokens.json"
+        },
+        {
+          "$ref": "../src/core/primitive/layout.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/breakpoint.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/spacing.tokens.json"
+        },
+        {
+          "$ref": "../src/core/semantic/layout/tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "size": {
+      "description": "Responsive size contexts.",
+      "default": "baseline",
+      "contexts": {
+        "baseline": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          }
+        ],
+        "tablet": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          }
+        ],
+        "notebook": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+          }
+        ],
+        "laptop": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+          },
+          {
+            "$ref": "../src/core/semantic/layout/size/laptop.tokens.json"
+          }
+        ]
+      }
+    },
+    "surface": {
+      "description": "Core scope context.",
+      "default": "default",
+      "contexts": {
+        "default": [],
+        "scoped": []
+      }
+    }
+  }
+}

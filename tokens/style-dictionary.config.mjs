@@ -27,6 +27,10 @@ const outName = path.basename(outFile);
 const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
 const privateLayers = new Set(Array.isArray(manifest?.layers?.private) ? manifest.layers.private : []);
 const cssIncludeLayerRole = manifest?.targets?.css?.includeLayerRole ?? "public";
+const cssLayer = manifest?.targets?.css?.layer;
+const cssLayerOrder = Array.isArray(manifest?.targets?.css?.layerOrder)
+  ? manifest.targets.css.layerOrder
+  : [];
 const TOKEN_PATH = {
   ROOT: 0,
   CONTEXT_ID: 1,
@@ -145,7 +149,15 @@ StyleDictionary.registerFormat({
 
     const sourceLine = manifest.source ? ` * Source: ${manifest.source} + context manifest.\n` : "";
 
-    return `/**\n * Do not edit directly, this file was auto-generated.\n${sourceLine} */\n\n${blocks.join("\n\n")}\n`;
+    const content = blocks.join("\n\n");
+    const layerOrderDecl =
+      cssLayerOrder.length > 0 ? `@layer ${cssLayerOrder.join(", ")};\n\n` : "";
+    const layeredContent =
+      typeof cssLayer === "string" && cssLayer.length > 0
+        ? `@layer ${cssLayer} {\n${indent(content, 2)}\n}\n`
+        : `${content}\n`;
+
+    return `/**\n * Do not edit directly, this file was auto-generated.\n${sourceLine} */\n\n${layerOrderDecl}${layeredContent}`;
   },
 });
 

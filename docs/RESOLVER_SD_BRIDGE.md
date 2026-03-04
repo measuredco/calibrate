@@ -17,6 +17,8 @@ The adapter reads custom metadata under:
 - `$defs.build.layers`
 - `$defs.build.targets.css.selectors`
 - `$defs.build.targets.css.modifiers`
+- `$defs.build.targets.css.layer`
+- `$defs.build.targets.css.layerOrder`
 
 ### Context graph keys
 
@@ -45,6 +47,15 @@ Per-variant `scope` may still be used for exceptions.
 - Disposable pipeline artifacts:
   - `tokens/build/sd/*`
   - `tokens/build/tmp/*`
+
+## CSS layer contract
+
+- Resolver may declare:
+  - `$defs.build.targets.css.layer` (layer for this output)
+  - `$defs.build.targets.css.layerOrder` (global layer order declaration)
+- Formatter behavior:
+  - emits `@layer <order...>;` when `layerOrder` is present
+  - wraps all emitted blocks in `@layer <layer> { ... }` when `layer` is present
 
 ## CI guardrail
 

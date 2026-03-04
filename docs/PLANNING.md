@@ -6,9 +6,7 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Prepare multi-brand packaging/layering implementation:
-  - finalize `core` + per-brand output split
-  - finalize CSS layer contract for deterministic consumer cascade behavior
+- Prepare multi-brand expansion:
   - define resolver split (`core`, `msrd`, `wrfr`) implementation order
 
 ## Next
@@ -28,8 +26,8 @@ What we could start work on next.
     - `tokens/resolver/msrd.resolver.json`
     - `tokens/resolver/wrfr.resolver.json`
   - introduce CSS layer contract to make include order deterministic in consumer builds:
-    - declare ordered layers (e.g. `@layer clbr.core, clbr.brand;`)
-    - emit core tokens in `clbr.core`
+    - declare ordered layers (e.g. `@layer clbr, clbr.brand;`)
+    - emit core tokens in `clbr`
     - emit brand tokens in `clbr.brand`
   - document consumer contract (required includes, expected layer names, override strategy)
 
@@ -108,3 +106,8 @@ What we've done.
   - `tokens/dist/**` is versioned/public
   - `tokens/build/**` is disposable
   - `tokens:verify` added to fail when `tokens/dist/**` is out of date after build
+- Multi-brand packaging/layering foundation implemented:
+  - `core` and `msrd` outputs now build independently
+  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/dist/json/clbr.core.contexts.json`
+  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/dist/json/clbr.msrd.contexts.json`
+  - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`

@@ -6,6 +6,9 @@
   "$defs": {
     "build": {
       "brand": "msrd",
+      "shared": {
+        "mediaRef": "./shared/media.json#/size"
+      },
       "layers": {
         "private": ["primitive"],
         "public": ["semantic", "components"]
@@ -13,6 +16,8 @@
       "namespace": "clbr",
       "targets": {
         "css": {
+          "layer": "clbr.brand",
+          "layerOrder": ["clbr", "clbr.brand"],
           "selectors": {
             "root": ":where(.{namespace}.{namespace}-brand-{brand})",
             "surfaceBrand": ":where(.{namespace}.{namespace}-brand-{brand} .{namespace}-surface-brand)",
@@ -27,15 +32,15 @@
                 "baseline": {},
                 "tablet": {
                   "baseContext": "baseline",
-                  "media": [{ "minWidth": "{breakpoint.tablet}" }]
+                  "media": [{ "mediaRef": "tablet" }]
                 },
                 "notebook": {
                   "baseContext": "tablet",
-                  "media": [{ "minWidth": "{breakpoint.notebook}" }]
+                  "media": [{ "mediaRef": "notebook" }]
                 },
                 "laptop": {
                   "baseContext": "notebook",
-                  "media": [{ "minWidth": "{breakpoint.laptop}" }]
+                  "media": [{ "mediaRef": "laptop" }]
                 }
               }
             },
@@ -121,25 +126,10 @@
   ],
   "sets": {
     "base": {
-      "description": "Core + msrd non-context token sources.",
+      "description": "MSRD non-context token sources.",
       "sources": [
         {
-          "$ref": "../src/core/primitive/breakpoint.tokens.json"
-        },
-        {
           "$ref": "../src/core/primitive/spacing.tokens.json"
-        },
-        {
-          "$ref": "../src/core/primitive/layout.tokens.json"
-        },
-        {
-          "$ref": "../src/core/semantic/breakpoint.tokens.json"
-        },
-        {
-          "$ref": "../src/core/semantic/spacing.tokens.json"
-        },
-        {
-          "$ref": "../src/core/semantic/layout/tokens.json"
         },
         {
           "$ref": "../src/msrd/primitive/color.tokens.json"
@@ -184,21 +174,12 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
-          },
-          {
             "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
           }
         ],
         "tablet": [
           {
             "$ref": "#/sets/base"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
           },
           {
             "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
@@ -212,15 +193,6 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
-          },
-          {
             "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
           },
           {
@@ -230,18 +202,6 @@
         "laptop": [
           {
             "$ref": "#/sets/base"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
-          },
-          {
-            "$ref": "../src/core/semantic/layout/size/laptop.tokens.json"
           },
           {
             "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"

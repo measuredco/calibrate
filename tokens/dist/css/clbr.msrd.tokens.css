@@ -3,259 +3,309 @@
  * Source: tokens/resolver/msrd.resolver.json + context manifest.
  */
 
-/* lightDefault | baseline | default-states */
-:where(.clbr.clbr-brand-msrd) {
-  --clbr-breakpoint-baseline: 20rem;
-  --clbr-breakpoint-desktop: 90rem;
-  --clbr-breakpoint-laptop: 80rem;
-  --clbr-breakpoint-mobile: 24rem;
-  --clbr-breakpoint-notebook: 64rem;
-  --clbr-breakpoint-tablet: 48rem;
-  --clbr-breakpoint-widescreen: 96rem;
-  --clbr-color-background-default: #f9fafb;
-  --clbr-color-background-inverse: #0b0c0d;
-  --clbr-color-background-panel: #ffffff;
-  --clbr-color-background-subtle: #f2f3f4;
-  --clbr-color-base16-00: #fef4e8;
-  --clbr-color-base16-01: #ffe9d4;
-  --clbr-color-base16-02: #ffdfc1;
-  --clbr-color-base16-03: #656667;
-  --clbr-color-base16-04: #434444;
-  --clbr-color-base16-05: #232424;
-  --clbr-color-base16-06: #191a1a;
-  --clbr-color-base16-07: #0e0f10;
-  --clbr-color-base16-08: #b40d05;
-  --clbr-color-base16-09: #8e4501;
-  --clbr-color-base16-0a: #6a5801;
-  --clbr-color-base16-0b: #336502;
-  --clbr-color-base16-0c: #03636b;
-  --clbr-color-base16-0d: #0158ad;
-  --clbr-color-base16-0e: #3c01ad;
-  --clbr-color-base16-0f: #a81a66;
-  --clbr-color-border-default: #c8c9ca;
-  --clbr-color-border-subtle: #e3e4e5;
-  --clbr-color-brand-primary: #0158ad;
-  --clbr-color-brand-support: #6db5f8;
-  --clbr-color-foreground-contrast: #f9fafb;
-  --clbr-color-foreground-default: #0b0c0d;
-  --clbr-color-foreground-muted-non-text: #898a8b;
-  --clbr-color-foreground-muted-text: #656667;
-  --clbr-color-foreground-prose: #0e0f10;
-  --clbr-color-interactive-active: #042467;
-  --clbr-color-interactive-default: #0158ad;
-  --clbr-color-interactive-focus: #d15294;
-  --clbr-color-interactive-hover: #083c8a;
-  --clbr-color-interactive-neutral-active: #042467;
-  --clbr-color-interactive-neutral-default: #0b0c0d;
-  --clbr-color-interactive-neutral-focus: #d15294;
-  --clbr-color-interactive-neutral-hover: #0158ad;
-  --clbr-color-interactive-neutral-visited: #0b0c0d;
-  --clbr-color-interactive-prose-active: #042467;
-  --clbr-color-interactive-prose-active-decoration: #042467;
-  --clbr-color-interactive-prose-default: #1666bb;
-  --clbr-color-interactive-prose-focus: #d15294;
-  --clbr-color-interactive-prose-hover: #1666bb;
-  --clbr-color-interactive-prose-hover-decoration: #6db5f8;
-  --clbr-color-interactive-prose-visited: #813eda;
-  --clbr-color-interactive-visited: #0158ad;
-  --clbr-color-logo-default: #0158ad;
-  --clbr-color-logo-neutral: #000000;
-  --clbr-effect-opacity-demoted: 0.4;
-  --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
-  --clbr-layout-border-width-default: 0.0625rem;
-  --clbr-layout-border-width-thick: 0.125rem;
-  --clbr-layout-container-gutter-default: 1rem;
-  --clbr-layout-container-gutter-sm: 1rem;
-  --clbr-layout-container-max-width-lg: 80rem;
-  --clbr-layout-container-max-width-xl: 90rem;
-  --clbr-layout-focus-ring-offset-default: 0.125rem;
-  --clbr-layout-focus-ring-offset-inset: -0.25rem;
-  --clbr-layout-focus-ring-width: 0.125rem;
-  --clbr-layout-grid-columns: 12;
-  --clbr-layout-grid-gap-column-default: 1rem;
-  --clbr-layout-grid-gap-column-lg: 1rem;
-  --clbr-layout-grid-gap-row-default: 1.5rem;
-  --clbr-layout-grid-gap-row-lg: 1.5rem;
-  --clbr-layout-grid-item-min-width: 18rem;
-  --clbr-layout-icon-size-default: 1.5rem;
-  --clbr-layout-icon-size-sm: 1.125rem;
-  --clbr-layout-spacing-vertical-1000: 4.5rem;
-  --clbr-layout-spacing-vertical-1100: 5.25rem;
-  --clbr-layout-spacing-vertical-1200: 6rem;
-  --clbr-layout-spacing-vertical-250: 0.1875rem;
-  --clbr-layout-spacing-vertical-400: 0.375rem;
-  --clbr-layout-spacing-vertical-500: 0.75rem;
-  --clbr-layout-spacing-vertical-600: 1.125rem;
-  --clbr-layout-spacing-vertical-700: 1.5rem;
-  --clbr-layout-spacing-vertical-800: 2.25rem;
-  --clbr-layout-spacing-vertical-900: 3rem;
-  --clbr-layout-spacing-vertical-950: 3.75rem;
-  --clbr-motion-duration-100: 100ms;
-  --clbr-motion-duration-150: 150ms;
-  --clbr-motion-duration-200: 200ms;
-  --clbr-motion-duration-300: 300ms;
-  --clbr-motion-duration-50: 50ms;
-  --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
-  --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
-  --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
-  --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-  --clbr-radius-100: 0.0625rem;
-  --clbr-radius-200: 0.25rem;
-  --clbr-radius-300: 0.5rem;
-  --clbr-radius-400: 1.125rem;
-  --clbr-radius-focus-ring: 0.0625rem;
-  --clbr-shape-square-aspect-ratio: 1 / 1;
-  --clbr-shape-square-corner-ratio: 0.16666667;
-  --clbr-spacing-horizontal-100: 0.0625rem;
-  --clbr-spacing-horizontal-1000: 4.5rem;
-  --clbr-spacing-horizontal-1100: 5.25rem;
-  --clbr-spacing-horizontal-1200: 6rem;
-  --clbr-spacing-horizontal-1300: 7.5rem;
-  --clbr-spacing-horizontal-1400: 9rem;
-  --clbr-spacing-horizontal-1500: 10.5rem;
-  --clbr-spacing-horizontal-1600: 12rem;
-  --clbr-spacing-horizontal-200: 0.125rem;
-  --clbr-spacing-horizontal-300: 0.25rem;
-  --clbr-spacing-horizontal-400: 0.5rem;
-  --clbr-spacing-horizontal-500: 0.75rem;
-  --clbr-spacing-horizontal-600: 1rem;
-  --clbr-spacing-horizontal-700: 1.5rem;
-  --clbr-spacing-horizontal-800: 2rem;
-  --clbr-spacing-horizontal-900: 3rem;
-  --clbr-spacing-vertical-100: 0.0625rem;
-  --clbr-spacing-vertical-1000: 4.5rem;
-  --clbr-spacing-vertical-1100: 5.25rem;
-  --clbr-spacing-vertical-1200: 6rem;
-  --clbr-spacing-vertical-1250: 6.75rem;
-  --clbr-spacing-vertical-1300: 7.5rem;
-  --clbr-spacing-vertical-1400: 9rem;
-  --clbr-spacing-vertical-1500: 10.5rem;
-  --clbr-spacing-vertical-1600: 12rem;
-  --clbr-spacing-vertical-200: 0.125rem;
-  --clbr-spacing-vertical-250: 0.1875rem;
-  --clbr-spacing-vertical-300: 0.25rem;
-  --clbr-spacing-vertical-400: 0.375rem;
-  --clbr-spacing-vertical-500: 0.75rem;
-  --clbr-spacing-vertical-600: 1.125rem;
-  --clbr-spacing-vertical-700: 1.5rem;
-  --clbr-spacing-vertical-775: 1.875rem;
-  --clbr-spacing-vertical-800: 2.25rem;
-  --clbr-spacing-vertical-900: 3rem;
-  --clbr-spacing-vertical-950: 3.75rem;
-  --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif;
-  --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace;
-  --clbr-typography-font-weight-bold: 566;
-  --clbr-typography-font-weight-medium: 466;
-  --clbr-typography-font-weight-regular: 400;
-  --clbr-typography-font-weight-regular-plus: 433;
-  --clbr-typography-leading-1000: 4.5rem;
-  --clbr-typography-leading-1200: 6rem;
-  --clbr-typography-leading-1300: 7.5rem;
-  --clbr-typography-leading-700: 1.5rem;
-  --clbr-typography-leading-750: 1.6875rem;
-  --clbr-typography-leading-775: 1.875rem;
-  --clbr-typography-leading-800: 2.25rem;
-  --clbr-typography-leading-850: 2.625rem;
-  --clbr-typography-leading-900: 3rem;
-  --clbr-typography-leading-925: 3.375rem;
-  --clbr-typography-leading-950: 3.75rem;
-  --clbr-typography-leading-default: 1.5rem;
-  --clbr-typography-measure-default: 35.25em;
-  --clbr-typography-measure-tight: 31.75em;
-  --clbr-typography-paragraph-spacing-default: 1.5rem;
-  --clbr-typography-paragraph-spacing-lg: 2.25rem;
-  --clbr-typography-paragraph-spacing-sm: 0.75rem;
-  --clbr-typography-prose-link-active-decoration-offset: 0.39em;
-  --clbr-typography-prose-link-decoration-thickness: 0.125rem;
-  --clbr-typography-prose-link-hover-decoration-offset: 0.34em;
-  --clbr-typography-text-body-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-body-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-body-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
-  --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
-  --clbr-typography-type-step-100-font-size: 0.875rem;
-  --clbr-typography-type-step-100-line-height: 1.714286;
-  --clbr-typography-type-step-1000-font-size: 3rem;
-  --clbr-typography-type-step-1000-line-height: 1.25;
-  --clbr-typography-type-step-1100-font-size: 3.875rem;
-  --clbr-typography-type-step-1100-line-height: 1.16129;
-  --clbr-typography-type-step-1200-font-size: 5.25rem;
-  --clbr-typography-type-step-1200-line-height: 1.142857;
-  --clbr-typography-type-step-1300-font-size: 7.5rem;
-  --clbr-typography-type-step-1300-line-height: 1;
-  --clbr-typography-type-step-200-font-size: 1rem;
-  --clbr-typography-type-step-200-line-height: 1.5;
-  --clbr-typography-type-step-300-font-size: 1.125rem;
-  --clbr-typography-type-step-300-line-height: 1.5;
-  --clbr-typography-type-step-400-font-size: 1.25rem;
-  --clbr-typography-type-step-400-line-height: 1.5;
-  --clbr-typography-type-step-450-font-size: 1.25rem;
-  --clbr-typography-type-step-450-line-height: 1.8;
-  --clbr-typography-type-step-500-font-size: 1.5rem;
-  --clbr-typography-type-step-500-line-height: 1.5;
-  --clbr-typography-type-step-600-font-size: 1.75rem;
-  --clbr-typography-type-step-600-line-height: 1.5;
-  --clbr-typography-type-step-700-font-size: 2rem;
-  --clbr-typography-type-step-700-line-height: 1.354839;
-  --clbr-typography-type-step-800-font-size: 2.25rem;
-  --clbr-typography-type-step-800-line-height: 1.333333;
-  --clbr-typography-type-step-900-font-size: 2.625rem;
-  --clbr-typography-type-step-900-line-height: 1.285714;
-  --clbr-typography-type-step-default-font-size: 1rem;
-  --clbr-typography-type-step-default-line-height: 1.5;
-}
+@layer clbr, clbr.brand;
 
-/* lightBrand | baseline | default-states */
-:where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
-  --clbr-color-background-default: #031f60;
-  --clbr-color-background-inverse: #edf6fe;
-  --clbr-color-background-panel: #042467;
-  --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
-  --clbr-color-base16-00: #00161a;
-  --clbr-color-base16-01: #04242a;
-  --clbr-color-base16-02: #00333c;
-  --clbr-color-base16-03: #a6a7a8;
-  --clbr-color-base16-04: #c8c9ca;
-  --clbr-color-base16-05: #e3e4e5;
-  --clbr-color-base16-06: #f2f3f4;
-  --clbr-color-base16-07: #f9fafb;
-  --clbr-color-base16-08: #fb625b;
-  --clbr-color-base16-09: #f89435;
-  --clbr-color-base16-0a: #b19202;
-  --clbr-color-base16-0b: #55a803;
-  --clbr-color-base16-0c: #05a5ad;
-  --clbr-color-base16-0d: #3598f8;
-  --clbr-color-base16-0e: #b776fb;
-  --clbr-color-base16-0f: #e56aac;
-  --clbr-color-border-default: rgba(255, 255, 255, 0.16);
-  --clbr-color-border-subtle: rgba(255, 255, 255, 0.08);
-  --clbr-color-brand-primary: #3598f8;
-  --clbr-color-brand-support: #0158ad;
-  --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
-  --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
-  --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
-  --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
-  --clbr-color-interactive-active: #93c5fa;
-  --clbr-color-interactive-focus: #e56aac;
-  --clbr-color-interactive-hover: #6db5f8;
-  --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
-  --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
-  --clbr-color-interactive-prose-default: #3598f8;
-  --clbr-color-interactive-prose-visited: #b776fb;
-  --clbr-color-logo-default: #ffffff;
-  --clbr-color-logo-neutral: #ffffff;
-}
-
-/* darkDefault | baseline | default-states */
-@media (prefers-color-scheme: dark) {
+@layer clbr.brand {
+  /* lightDefault | baseline | default-states */
   :where(.clbr.clbr-brand-msrd) {
+    --clbr-color-background-default: #f9fafb;
+    --clbr-color-background-inverse: #0b0c0d;
+    --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-subtle: #f2f3f4;
+    --clbr-color-base16-00: #fef4e8;
+    --clbr-color-base16-01: #ffe9d4;
+    --clbr-color-base16-02: #ffdfc1;
+    --clbr-color-base16-03: #656667;
+    --clbr-color-base16-04: #434444;
+    --clbr-color-base16-05: #232424;
+    --clbr-color-base16-06: #191a1a;
+    --clbr-color-base16-07: #0e0f10;
+    --clbr-color-base16-08: #b40d05;
+    --clbr-color-base16-09: #8e4501;
+    --clbr-color-base16-0a: #6a5801;
+    --clbr-color-base16-0b: #336502;
+    --clbr-color-base16-0c: #03636b;
+    --clbr-color-base16-0d: #0158ad;
+    --clbr-color-base16-0e: #3c01ad;
+    --clbr-color-base16-0f: #a81a66;
+    --clbr-color-border-default: #c8c9ca;
+    --clbr-color-border-subtle: #e3e4e5;
+    --clbr-color-brand-primary: #0158ad;
+    --clbr-color-brand-support: #6db5f8;
+    --clbr-color-foreground-contrast: #f9fafb;
+    --clbr-color-foreground-default: #0b0c0d;
+    --clbr-color-foreground-muted-non-text: #898a8b;
+    --clbr-color-foreground-muted-text: #656667;
+    --clbr-color-foreground-prose: #0e0f10;
+    --clbr-color-interactive-active: #042467;
+    --clbr-color-interactive-default: #0158ad;
+    --clbr-color-interactive-focus: #d15294;
+    --clbr-color-interactive-hover: #083c8a;
+    --clbr-color-interactive-neutral-active: #042467;
+    --clbr-color-interactive-neutral-default: #0b0c0d;
+    --clbr-color-interactive-neutral-focus: #d15294;
+    --clbr-color-interactive-neutral-hover: #0158ad;
+    --clbr-color-interactive-neutral-visited: #0b0c0d;
+    --clbr-color-interactive-prose-active: #042467;
+    --clbr-color-interactive-prose-active-decoration: #042467;
+    --clbr-color-interactive-prose-default: #1666bb;
+    --clbr-color-interactive-prose-focus: #d15294;
+    --clbr-color-interactive-prose-hover: #1666bb;
+    --clbr-color-interactive-prose-hover-decoration: #6db5f8;
+    --clbr-color-interactive-prose-visited: #813eda;
+    --clbr-color-interactive-visited: #0158ad;
+    --clbr-color-logo-default: #0158ad;
+    --clbr-color-logo-neutral: #000000;
+    --clbr-effect-opacity-demoted: 0.4;
+    --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+    --clbr-motion-duration-100: 100ms;
+    --clbr-motion-duration-150: 150ms;
+    --clbr-motion-duration-200: 200ms;
+    --clbr-motion-duration-300: 300ms;
+    --clbr-motion-duration-50: 50ms;
+    --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
+    --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
+    --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
+    --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
+    --clbr-radius-100: 0.0625rem;
+    --clbr-radius-200: 0.25rem;
+    --clbr-radius-300: 0.5rem;
+    --clbr-radius-400: 1.125rem;
+    --clbr-radius-focus-ring: 0.0625rem;
+    --clbr-shape-square-aspect-ratio: 1 / 1;
+    --clbr-shape-square-corner-ratio: 0.16666667;
+    --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif;
+    --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace;
+    --clbr-typography-font-weight-bold: 566;
+    --clbr-typography-font-weight-medium: 466;
+    --clbr-typography-font-weight-regular: 400;
+    --clbr-typography-font-weight-regular-plus: 433;
+    --clbr-typography-leading-1000: 4.5rem;
+    --clbr-typography-leading-1200: 6rem;
+    --clbr-typography-leading-1300: 7.5rem;
+    --clbr-typography-leading-700: 1.5rem;
+    --clbr-typography-leading-750: 1.6875rem;
+    --clbr-typography-leading-775: 1.875rem;
+    --clbr-typography-leading-800: 2.25rem;
+    --clbr-typography-leading-850: 2.625rem;
+    --clbr-typography-leading-900: 3rem;
+    --clbr-typography-leading-925: 3.375rem;
+    --clbr-typography-leading-950: 3.75rem;
+    --clbr-typography-leading-default: 1.5rem;
+    --clbr-typography-measure-default: 35.25em;
+    --clbr-typography-measure-tight: 31.75em;
+    --clbr-typography-paragraph-spacing-default: 1.5rem;
+    --clbr-typography-paragraph-spacing-lg: 2.25rem;
+    --clbr-typography-paragraph-spacing-sm: 0.75rem;
+    --clbr-typography-prose-link-active-decoration-offset: 0.39em;
+    --clbr-typography-prose-link-decoration-thickness: 0.125rem;
+    --clbr-typography-prose-link-hover-decoration-offset: 0.34em;
+    --clbr-typography-text-body-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-type-step-100-font-size: 0.875rem;
+    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-1000-font-size: 3rem;
+    --clbr-typography-type-step-1000-line-height: 1.25;
+    --clbr-typography-type-step-1100-font-size: 3.875rem;
+    --clbr-typography-type-step-1100-line-height: 1.16129;
+    --clbr-typography-type-step-1200-font-size: 5.25rem;
+    --clbr-typography-type-step-1200-line-height: 1.142857;
+    --clbr-typography-type-step-1300-font-size: 7.5rem;
+    --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-200-font-size: 1rem;
+    --clbr-typography-type-step-200-line-height: 1.5;
+    --clbr-typography-type-step-300-font-size: 1.125rem;
+    --clbr-typography-type-step-300-line-height: 1.5;
+    --clbr-typography-type-step-400-font-size: 1.25rem;
+    --clbr-typography-type-step-400-line-height: 1.5;
+    --clbr-typography-type-step-450-font-size: 1.25rem;
+    --clbr-typography-type-step-450-line-height: 1.8;
+    --clbr-typography-type-step-500-font-size: 1.5rem;
+    --clbr-typography-type-step-500-line-height: 1.5;
+    --clbr-typography-type-step-600-font-size: 1.75rem;
+    --clbr-typography-type-step-600-line-height: 1.5;
+    --clbr-typography-type-step-700-font-size: 2rem;
+    --clbr-typography-type-step-700-line-height: 1.354839;
+    --clbr-typography-type-step-800-font-size: 2.25rem;
+    --clbr-typography-type-step-800-line-height: 1.333333;
+    --clbr-typography-type-step-900-font-size: 2.625rem;
+    --clbr-typography-type-step-900-line-height: 1.285714;
+    --clbr-typography-type-step-default-font-size: 1rem;
+    --clbr-typography-type-step-default-line-height: 1.5;
+  }
+
+  /* lightBrand | baseline | default-states */
+  :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+    --clbr-color-background-default: #031f60;
+    --clbr-color-background-inverse: #edf6fe;
+    --clbr-color-background-panel: #042467;
+    --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
+    --clbr-color-base16-00: #00161a;
+    --clbr-color-base16-01: #04242a;
+    --clbr-color-base16-02: #00333c;
+    --clbr-color-base16-03: #a6a7a8;
+    --clbr-color-base16-04: #c8c9ca;
+    --clbr-color-base16-05: #e3e4e5;
+    --clbr-color-base16-06: #f2f3f4;
+    --clbr-color-base16-07: #f9fafb;
+    --clbr-color-base16-08: #fb625b;
+    --clbr-color-base16-09: #f89435;
+    --clbr-color-base16-0a: #b19202;
+    --clbr-color-base16-0b: #55a803;
+    --clbr-color-base16-0c: #05a5ad;
+    --clbr-color-base16-0d: #3598f8;
+    --clbr-color-base16-0e: #b776fb;
+    --clbr-color-base16-0f: #e56aac;
+    --clbr-color-border-default: rgba(255, 255, 255, 0.16);
+    --clbr-color-border-subtle: rgba(255, 255, 255, 0.08);
+    --clbr-color-brand-primary: #3598f8;
+    --clbr-color-brand-support: #0158ad;
+    --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
+    --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
+    --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
+    --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
+    --clbr-color-interactive-active: #93c5fa;
+    --clbr-color-interactive-focus: #e56aac;
+    --clbr-color-interactive-hover: #6db5f8;
+    --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
+    --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
+    --clbr-color-interactive-prose-default: #3598f8;
+    --clbr-color-interactive-prose-visited: #b776fb;
+    --clbr-color-logo-default: #ffffff;
+    --clbr-color-logo-neutral: #ffffff;
+  }
+
+  /* darkDefault | baseline | default-states */
+  @media (prefers-color-scheme: dark) {
+    :where(.clbr.clbr-brand-msrd) {
+      --clbr-color-background-default: #0e0f10;
+      --clbr-color-background-inverse: #ffffff;
+      --clbr-color-background-panel: #0b0c0d;
+      --clbr-color-background-subtle: #191a1a;
+      --clbr-color-base16-00: #00161a;
+      --clbr-color-base16-01: #04242a;
+      --clbr-color-base16-02: #00333c;
+      --clbr-color-base16-03: #a6a7a8;
+      --clbr-color-base16-04: #c8c9ca;
+      --clbr-color-base16-05: #e3e4e5;
+      --clbr-color-base16-06: #f2f3f4;
+      --clbr-color-base16-07: #f9fafb;
+      --clbr-color-base16-08: #fb625b;
+      --clbr-color-base16-09: #f89435;
+      --clbr-color-base16-0a: #b19202;
+      --clbr-color-base16-0b: #55a803;
+      --clbr-color-base16-0c: #05a5ad;
+      --clbr-color-base16-0d: #3598f8;
+      --clbr-color-base16-0e: #b776fb;
+      --clbr-color-base16-0f: #e56aac;
+      --clbr-color-border-default: #434444;
+      --clbr-color-border-subtle: #232424;
+      --clbr-color-brand-primary: #3598f8;
+      --clbr-color-brand-support: #083c8a;
+      --clbr-color-foreground-default: #f2f3f4;
+      --clbr-color-foreground-muted-non-text: #656667;
+      --clbr-color-foreground-muted-text: #898a8b;
+      --clbr-color-foreground-prose: #e3e4e5;
+      --clbr-color-interactive-active: #1666bb;
+      --clbr-color-interactive-focus: #bc397d;
+      --clbr-color-interactive-hover: #2a84e1;
+      --clbr-color-interactive-neutral-active: #a6a7a8;
+      --clbr-color-interactive-neutral-default: #f9fafb;
+      --clbr-color-interactive-neutral-hover: #c8c9ca;
+      --clbr-color-interactive-prose-active-decoration: #083c8a;
+      --clbr-color-interactive-prose-default: #2a84e1;
+      --clbr-color-interactive-prose-visited: #a35ff0;
+      --clbr-color-logo-neutral: #ffffff;
+      --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
+    }
+  }
+
+  /* darkBrand | baseline | default-states */
+  @media (prefers-color-scheme: dark) {
+    :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+      --clbr-color-background-default: #031f60;
+      --clbr-color-background-inverse: #edf6fe;
+      --clbr-color-background-panel: #042467;
+      --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
+      --clbr-color-border-default: rgba(255, 255, 255, 0.16);
+      --clbr-color-border-subtle: rgba(255, 255, 255, 0.08);
+      --clbr-color-brand-support: #0158ad;
+      --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
+      --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
+      --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
+      --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
+      --clbr-color-interactive-active: #93c5fa;
+      --clbr-color-interactive-focus: #e56aac;
+      --clbr-color-interactive-hover: #6db5f8;
+      --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
+      --clbr-color-interactive-neutral-default: rgba(255, 255, 255, 0.94);
+      --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
+      --clbr-color-interactive-prose-active-decoration: #93c5fa;
+      --clbr-color-interactive-prose-default: #3598f8;
+      --clbr-color-interactive-prose-visited: #b776fb;
+      --clbr-color-logo-default: #ffffff;
+      --clbr-color-logo-neutral: #ffffff;
+      --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+    }
+  }
+
+  /* lightDefault | baseline | default-states | variant:forcedLight */
+  @media (prefers-color-scheme: dark) {
+    :where(.clbr.clbr-brand-msrd.clbr-theme-light) {
+      --clbr-color-background-default: #f9fafb;
+      --clbr-color-background-inverse: #0b0c0d;
+      --clbr-color-background-panel: #ffffff;
+      --clbr-color-background-subtle: #f2f3f4;
+      --clbr-color-base16-00: #fef4e8;
+      --clbr-color-base16-01: #ffe9d4;
+      --clbr-color-base16-02: #ffdfc1;
+      --clbr-color-base16-03: #656667;
+      --clbr-color-base16-04: #434444;
+      --clbr-color-base16-05: #232424;
+      --clbr-color-base16-06: #191a1a;
+      --clbr-color-base16-07: #0e0f10;
+      --clbr-color-base16-08: #b40d05;
+      --clbr-color-base16-09: #8e4501;
+      --clbr-color-base16-0a: #6a5801;
+      --clbr-color-base16-0b: #336502;
+      --clbr-color-base16-0c: #03636b;
+      --clbr-color-base16-0d: #0158ad;
+      --clbr-color-base16-0e: #3c01ad;
+      --clbr-color-base16-0f: #a81a66;
+      --clbr-color-border-default: #c8c9ca;
+      --clbr-color-border-subtle: #e3e4e5;
+      --clbr-color-brand-primary: #0158ad;
+      --clbr-color-brand-support: #6db5f8;
+      --clbr-color-foreground-default: #0b0c0d;
+      --clbr-color-foreground-muted-non-text: #898a8b;
+      --clbr-color-foreground-muted-text: #656667;
+      --clbr-color-foreground-prose: #0e0f10;
+      --clbr-color-interactive-active: #042467;
+      --clbr-color-interactive-focus: #d15294;
+      --clbr-color-interactive-hover: #083c8a;
+      --clbr-color-interactive-neutral-active: #042467;
+      --clbr-color-interactive-neutral-default: #0b0c0d;
+      --clbr-color-interactive-neutral-hover: #0158ad;
+      --clbr-color-interactive-prose-active-decoration: #042467;
+      --clbr-color-interactive-prose-default: #1666bb;
+      --clbr-color-interactive-prose-visited: #813eda;
+      --clbr-color-logo-neutral: #000000;
+      --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+    }
+  }
+
+  /* darkDefault | baseline | default-states | variant:forcedDark */
+  :where(.clbr.clbr-brand-msrd.clbr-theme-dark) {
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
@@ -296,183 +346,38 @@
     --clbr-color-logo-neutral: #ffffff;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
   }
-}
 
-/* darkBrand | baseline | default-states */
-@media (prefers-color-scheme: dark) {
-  :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
-    --clbr-color-background-default: #031f60;
-    --clbr-color-background-inverse: #edf6fe;
-    --clbr-color-background-panel: #042467;
-    --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
-    --clbr-color-border-default: rgba(255, 255, 255, 0.16);
-    --clbr-color-border-subtle: rgba(255, 255, 255, 0.08);
-    --clbr-color-brand-support: #0158ad;
-    --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
-    --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
-    --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
-    --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
-    --clbr-color-interactive-active: #93c5fa;
-    --clbr-color-interactive-focus: #e56aac;
-    --clbr-color-interactive-hover: #6db5f8;
-    --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
-    --clbr-color-interactive-neutral-default: rgba(255, 255, 255, 0.94);
-    --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
-    --clbr-color-interactive-prose-active-decoration: #93c5fa;
-    --clbr-color-interactive-prose-default: #3598f8;
-    --clbr-color-interactive-prose-visited: #b776fb;
-    --clbr-color-logo-default: #ffffff;
-    --clbr-color-logo-neutral: #ffffff;
-    --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+  /* lightDefault | tablet | default-states */
+  @media (min-width: 48em) {
+    :where(.clbr.clbr-brand-msrd) {
+      --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-2xl: 366 3rem/1.25 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-3xl: 300 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-4xl: 250 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-5xl: 200 7.5rem/1 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-lg: 433 1.75rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-md: 466 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-sm: 500 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-xl: 400 2.25rem/1.333333 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-xs: 533 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    }
   }
-}
 
-/* lightDefault | baseline | default-states | variant:forcedLight */
-@media (prefers-color-scheme: dark) {
-  :where(.clbr.clbr-brand-msrd.clbr-theme-light) {
-    --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
-    --clbr-color-background-panel: #ffffff;
-    --clbr-color-background-subtle: #f2f3f4;
-    --clbr-color-base16-00: #fef4e8;
-    --clbr-color-base16-01: #ffe9d4;
-    --clbr-color-base16-02: #ffdfc1;
-    --clbr-color-base16-03: #656667;
-    --clbr-color-base16-04: #434444;
-    --clbr-color-base16-05: #232424;
-    --clbr-color-base16-06: #191a1a;
-    --clbr-color-base16-07: #0e0f10;
-    --clbr-color-base16-08: #b40d05;
-    --clbr-color-base16-09: #8e4501;
-    --clbr-color-base16-0a: #6a5801;
-    --clbr-color-base16-0b: #336502;
-    --clbr-color-base16-0c: #03636b;
-    --clbr-color-base16-0d: #0158ad;
-    --clbr-color-base16-0e: #3c01ad;
-    --clbr-color-base16-0f: #a81a66;
-    --clbr-color-border-default: #c8c9ca;
-    --clbr-color-border-subtle: #e3e4e5;
-    --clbr-color-brand-primary: #0158ad;
-    --clbr-color-brand-support: #6db5f8;
-    --clbr-color-foreground-default: #0b0c0d;
-    --clbr-color-foreground-muted-non-text: #898a8b;
-    --clbr-color-foreground-muted-text: #656667;
-    --clbr-color-foreground-prose: #0e0f10;
-    --clbr-color-interactive-active: #042467;
-    --clbr-color-interactive-focus: #d15294;
-    --clbr-color-interactive-hover: #083c8a;
-    --clbr-color-interactive-neutral-active: #042467;
-    --clbr-color-interactive-neutral-default: #0b0c0d;
-    --clbr-color-interactive-neutral-hover: #0158ad;
-    --clbr-color-interactive-prose-active-decoration: #042467;
-    --clbr-color-interactive-prose-default: #1666bb;
-    --clbr-color-interactive-prose-visited: #813eda;
-    --clbr-color-logo-neutral: #000000;
-    --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+  /* lightDefault | baseline | forcedColors:on */
+  @media (forced-colors: active) {
+    :where(.clbr.clbr-brand-msrd) {
+      --clbr-color-logo-default: CanvasText;
+      --clbr-color-logo-neutral: CanvasText;
+    }
   }
-}
 
-/* darkDefault | baseline | default-states | variant:forcedDark */
-:where(.clbr.clbr-brand-msrd.clbr-theme-dark) {
-  --clbr-color-background-default: #0e0f10;
-  --clbr-color-background-inverse: #ffffff;
-  --clbr-color-background-panel: #0b0c0d;
-  --clbr-color-background-subtle: #191a1a;
-  --clbr-color-base16-00: #00161a;
-  --clbr-color-base16-01: #04242a;
-  --clbr-color-base16-02: #00333c;
-  --clbr-color-base16-03: #a6a7a8;
-  --clbr-color-base16-04: #c8c9ca;
-  --clbr-color-base16-05: #e3e4e5;
-  --clbr-color-base16-06: #f2f3f4;
-  --clbr-color-base16-07: #f9fafb;
-  --clbr-color-base16-08: #fb625b;
-  --clbr-color-base16-09: #f89435;
-  --clbr-color-base16-0a: #b19202;
-  --clbr-color-base16-0b: #55a803;
-  --clbr-color-base16-0c: #05a5ad;
-  --clbr-color-base16-0d: #3598f8;
-  --clbr-color-base16-0e: #b776fb;
-  --clbr-color-base16-0f: #e56aac;
-  --clbr-color-border-default: #434444;
-  --clbr-color-border-subtle: #232424;
-  --clbr-color-brand-primary: #3598f8;
-  --clbr-color-brand-support: #083c8a;
-  --clbr-color-foreground-default: #f2f3f4;
-  --clbr-color-foreground-muted-non-text: #656667;
-  --clbr-color-foreground-muted-text: #898a8b;
-  --clbr-color-foreground-prose: #e3e4e5;
-  --clbr-color-interactive-active: #1666bb;
-  --clbr-color-interactive-focus: #bc397d;
-  --clbr-color-interactive-hover: #2a84e1;
-  --clbr-color-interactive-neutral-active: #a6a7a8;
-  --clbr-color-interactive-neutral-default: #f9fafb;
-  --clbr-color-interactive-neutral-hover: #c8c9ca;
-  --clbr-color-interactive-prose-active-decoration: #083c8a;
-  --clbr-color-interactive-prose-default: #2a84e1;
-  --clbr-color-interactive-prose-visited: #a35ff0;
-  --clbr-color-logo-neutral: #ffffff;
-  --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
-}
-
-/* lightDefault | tablet | default-states */
-@media (min-width: 48em) {
-  :where(.clbr.clbr-brand-msrd) {
-    --clbr-layout-container-gutter-default: 2rem;
-    --clbr-layout-container-gutter-sm: 1.5rem;
-    --clbr-layout-grid-gap-column-default: 1.5rem;
-    --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-2xl: 366 3rem/1.25 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-3xl: 300 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-4xl: 250 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-5xl: 200 7.5rem/1 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-lg: 433 1.75rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-md: 466 1.5rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-sm: 500 1.25rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-xl: 400 2.25rem/1.333333 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-xs: 533 1.125rem/1.5 InterVariable, system-ui, sans-serif;
-  }
-}
-
-/* lightDefault | notebook | default-states */
-@media (min-width: 64em) {
-  :where(.clbr.clbr-brand-msrd) {
-    --clbr-layout-spacing-vertical-1000: 6.75rem;
-    --clbr-layout-spacing-vertical-1100: 7.5rem;
-    --clbr-layout-spacing-vertical-1200: 9rem;
-    --clbr-layout-spacing-vertical-250: 0.375rem;
-    --clbr-layout-spacing-vertical-400: 0.75rem;
-    --clbr-layout-spacing-vertical-500: 1.125rem;
-    --clbr-layout-spacing-vertical-600: 1.5rem;
-    --clbr-layout-spacing-vertical-700: 2.25rem;
-    --clbr-layout-spacing-vertical-800: 3rem;
-    --clbr-layout-spacing-vertical-900: 4.5rem;
-    --clbr-layout-spacing-vertical-950: 6rem;
-  }
-}
-
-/* lightDefault | laptop | default-states */
-@media (min-width: 80em) {
-  :where(.clbr.clbr-brand-msrd) {
-    --clbr-layout-grid-gap-column-lg: 2rem;
-    --clbr-layout-grid-gap-row-lg: 2rem;
-  }
-}
-
-/* lightDefault | baseline | forcedColors:on */
-@media (forced-colors: active) {
-  :where(.clbr.clbr-brand-msrd) {
-    --clbr-color-logo-default: CanvasText;
-    --clbr-color-logo-neutral: CanvasText;
-  }
-}
-
-/* lightBrand | baseline | forcedColors:on */
-@media (forced-colors: active) {
-  :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
-    --clbr-color-logo-default: CanvasText;
-    --clbr-color-logo-neutral: CanvasText;
+  /* lightBrand | baseline | forcedColors:on */
+  @media (forced-colors: active) {
+    :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+      --clbr-color-logo-default: CanvasText;
+      --clbr-color-logo-neutral: CanvasText;
+    }
   }
 }

@@ -120,6 +120,10 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 - Commit and version outputs under `tokens/dist/**` (public contract).
 - Treat `tokens/build/**` as disposable/intermediate pipeline output.
 - Keep the repository-level `build` ignore convention to avoid committing transient build folders.
+- CSS outputs should declare deterministic layer ordering when multiple bundles compose together:
+  - layer order: `clbr`, then `clbr.brand`
+  - core bundle emits in `@layer clbr`
+  - brand bundles emit in `@layer clbr.brand`
 
 ## Domain Conventions
 

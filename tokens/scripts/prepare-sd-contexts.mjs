@@ -155,6 +155,33 @@ function getByDottedPath(root, dotted) {
   return current;
 }
 
+function getByDottedPathOrUndefined(root, dotted) {
+  if (!isObject(root) || typeof dotted !== "string" || dotted.length === 0) return undefined;
+  return getByDottedPath(root, dotted);
+}
+
+function parseJsonPointer(pointer) {
+  if (!pointer || pointer === "#") return [];
+  if (!pointer.startsWith("#/")) {
+    throw new Error(`Unsupported JSON pointer: ${pointer}`);
+  }
+  return pointer
+    .slice(2)
+    .split("/")
+    .map((segment) => segment.replace(/~1/g, "/").replace(/~0/g, "~"));
+}
+
+function getByJsonPointer(root, pointer) {
+  const segments = parseJsonPointer(pointer);
+  let current = root;
+  for (const segment of segments) {
+    if (!isObject(current) && !Array.isArray(current)) return undefined;
+    current = current[segment];
+    if (current === undefined) return undefined;
+  }
+  return current;
+}
+
 function resolveAliasValues(node, lookupRoot, stack = []) {
   const resolveValue = (value, localStack) => {
     if (Array.isArray(value)) return value.map((item) => resolveValue(item, localStack));
@@ -326,7 +353,7 @@ function resolveAliasOrLiteral(value, lookupRoot, seen = new Set()) {
   return resolveAliasOrLiteral(target, lookupRoot, nextSeen);
 }
 
-function resolveMediaSpec(spec, lookupRoot) {
+function resolveMediaSpec(spec, lookupRoot, sharedMedia = null) {
   if (spec == null) return null;
 
   if (typeof spec === "string") {
@@ -338,6 +365,13 @@ function resolveMediaSpec(spec, lookupRoot) {
   }
 
   if (isObject(spec)) {
+    if (typeof spec.mediaRef === "string" && spec.mediaRef.length > 0) {
+      const referenced = getByDottedPathOrUndefined(sharedMedia, spec.mediaRef);
+      if (referenced === undefined) {
+        throw new Error(`Unknown mediaRef: ${spec.mediaRef}`);
+      }
+      return resolveMediaSpec(referenced, lookupRoot, sharedMedia);
+    }
     if (typeof spec.query === "string") return spec.query;
     if (Object.prototype.hasOwnProperty.call(spec, "minWidth")) {
       const minWidthValue = resolveAliasOrLiteral(spec.minWidth, lookupRoot);
@@ -352,7 +386,7 @@ function resolveMediaSpec(spec, lookupRoot) {
   throw new Error(`Unsupported mediaByContext spec: ${JSON.stringify(spec)}`);
 }
 
-function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot) {
+function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot, sharedMedia = null) {
   const out = {};
   for (const context of contexts) {
     if (context === defaultContext) {
@@ -360,22 +394,22 @@ function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupR
       continue;
     }
     const spec = mediaByContext?.[context];
-    out[context] = spec == null ? null : resolveMediaSpec(spec, lookupRoot);
+    out[context] = spec == null ? null : resolveMediaSpec(spec, lookupRoot, sharedMedia);
   }
   return out;
 }
 
-function buildContextMediaMap(contexts, defaultContext, modifierDef, lookupRoot) {
+function buildContextMediaMap(contexts, defaultContext, modifierDef, lookupRoot, sharedMedia = null) {
   const mediaByContext = {};
   for (const context of contexts) {
     const media = modifierDef?.contexts?.[context]?.media;
     if (!Array.isArray(media) || media.length === 0) continue;
     const resolved = media
-      .map((entry) => resolveMediaSpec(entry, lookupRoot))
+      .map((entry) => resolveMediaSpec(entry, lookupRoot, sharedMedia))
       .filter((value) => typeof value === "string" && value.length > 0);
     if (resolved.length > 0) mediaByContext[context] = resolved.join(" and ");
   }
-  return resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot);
+  return resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot, sharedMedia);
 }
 
 function applyNamingTemplate(value, naming = {}) {
@@ -407,11 +441,11 @@ function resolveSelectorFromSpec(spec, contextName, selectorsMap = {}, naming = 
   return null;
 }
 
-function resolveMediaList(spec, lookupRoot) {
+function resolveMediaList(spec, lookupRoot, sharedMedia = null) {
   const media = spec?.media;
   if (!Array.isArray(media) || media.length === 0) return [];
   return media
-    .map((entry) => resolveMediaSpec(entry, lookupRoot))
+    .map((entry) => resolveMediaSpec(entry, lookupRoot, sharedMedia))
     .filter((value) => typeof value === "string" && value.length > 0);
 }
 
@@ -422,7 +456,14 @@ function mergeScope(defaultScope, overrideScope) {
   return { ...defaultScope, ...overrideScope };
 }
 
-function resolveContextEmitTargets(modifierDef, contextName, selectorsMap = {}, naming = {}, lookupRoot) {
+function resolveContextEmitTargets(
+  modifierDef,
+  contextName,
+  selectorsMap = {},
+  naming = {},
+  lookupRoot,
+  sharedMedia = null,
+) {
   const ctx = modifierDef?.contexts?.[contextName] ?? {};
   const variantDefaultsScope = isObject(modifierDef?.variantDefaults?.scope)
     ? modifierDef.variantDefaults.scope
@@ -434,7 +475,7 @@ function resolveContextEmitTargets(modifierDef, contextName, selectorsMap = {}, 
     out.push({
       kind: "base",
       selector: baseSelector,
-      media: resolveMediaList(ctx, lookupRoot),
+      media: resolveMediaList(ctx, lookupRoot, sharedMedia),
     });
   }
 
@@ -455,7 +496,7 @@ function resolveContextEmitTargets(modifierDef, contextName, selectorsMap = {}, 
         isObject(variant.scope) ? variant.scope : null,
       ),
       selector,
-      media: resolveMediaList(variant, lookupRoot),
+      media: resolveMediaList(variant, lookupRoot, sharedMedia),
     });
   }
 
@@ -484,6 +525,26 @@ function matchesScope(selection, scope) {
   return true;
 }
 
+async function resolveSharedMediaFromBuild(buildDefs, resolverFilePath) {
+  const inlineMedia = buildDefs?.shared?.media;
+  if (isObject(inlineMedia)) return inlineMedia;
+
+  const mediaRef = buildDefs?.shared?.mediaRef;
+  if (typeof mediaRef !== "string" || mediaRef.length === 0) return null;
+
+  const [filePart, pointerPart] = mediaRef.split("#");
+  const pointer = pointerPart ? `#${pointerPart}` : "#";
+  const targetPath = path.resolve(path.dirname(resolverFilePath), filePart);
+  const targetDoc = await readJson(targetPath);
+  const targetValue = getByJsonPointer(targetDoc, pointer);
+  if (!isObject(targetValue)) {
+    throw new Error(
+      `Resolver shared.mediaRef did not resolve to an object: ${mediaRef}`,
+    );
+  }
+  return targetValue;
+}
+
 async function main() {
   await fs.rm(tmpDir, { recursive: true, force: true });
   await fs.mkdir(tmpDir, { recursive: true });
@@ -504,6 +565,7 @@ async function main() {
       : null;
   const cssBuildDefs = buildDefs?.targets?.css;
   const layerDefs = buildDefs?.layers ?? {};
+  const sharedMedia = await resolveSharedMediaFromBuild(buildDefs, resolverPath);
   const modifierBuildDefs = cssBuildDefs?.modifiers ?? {};
   const selectorDefs = cssBuildDefs?.selectors ?? {};
   const resolvedSelectorDefs = Object.fromEntries(
@@ -579,6 +641,7 @@ async function main() {
     defaultResponsive,
     responsiveDef,
     mediaLookupRoot,
+    sharedMedia,
   );
 
   const contextsRoot = {};
@@ -625,6 +688,7 @@ async function main() {
           resolvedSelectorDefs,
           { namespace, brand },
           mediaLookupRoot,
+          sharedMedia,
         );
         let variantIndex = 0;
         for (const target of emitTargets) {
@@ -708,6 +772,7 @@ async function main() {
       defaultState,
       stateDef,
       mediaLookupRoot,
+      sharedMedia,
     );
 
     for (const stateContext of emitContexts) {
@@ -758,6 +823,7 @@ async function main() {
             resolvedSelectorDefs,
             { namespace, brand },
             mediaLookupRoot,
+            sharedMedia,
           );
           let variantIndex = 0;
           for (const target of emitTargets) {
@@ -824,6 +890,12 @@ async function main() {
     targets: {
       css: {
         includeLayerRole: "public",
+        ...(typeof cssBuildDefs?.layer === "string" && cssBuildDefs.layer.length > 0
+          ? { layer: cssBuildDefs.layer }
+          : {}),
+        ...(Array.isArray(cssBuildDefs?.layerOrder) && cssBuildDefs.layerOrder.length > 0
+          ? { layerOrder: cssBuildDefs.layerOrder }
+          : {}),
       },
     },
     blocks,
