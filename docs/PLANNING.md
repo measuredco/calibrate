@@ -6,14 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Explore authoring ergonomics to reduce repeated context token declarations:
-  - allow sparse/override-only context files as first-class authoring pattern
-  - focus this pass on semantic theme/surface files first (`color`/`effect`), where duplication is highest
-  - rework `theme` context source composition to cumulative `baseContext` inheritance (like `size`)
-  - keep authored theme files unchanged in this pass; first prove cumulative logic + output parity
-  - define guardrails so required alias anchors are preserved while removing pure duplicates
-  - evaluate helper tooling/lint rule to suggest safe duplicate pruning
-
 ## Next
 
 What we could start work on next.
@@ -120,6 +112,10 @@ What we've done.
   - file naming: `clbr.<brand>.primitives.css`
   - variable guard prefix: `--clbr-primitive-*`
   - documented as non-public/non-stable contract (semantic remains the public API)
+- Authoring ergonomics for context declarations improved:
+  - sparse/override-only context files are supported as first-class authoring for cumulative axes
+  - `theme` source composition now uses cumulative `baseContext` inheritance (aligned with `size`)
+  - constraints now document when duplicate declarations should be retained (alias-anchor/readability cases)
 - Component token layer architecture proved with Card pilot:
   - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
   - component tokens resolve across theme/surface/state contexts with correct diff behavior

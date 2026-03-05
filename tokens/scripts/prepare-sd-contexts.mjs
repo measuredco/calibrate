@@ -456,7 +456,22 @@ function mergeScope(defaultScope, overrideScope) {
   return { ...defaultScope, ...overrideScope };
 }
 
+function buildDefaultScopeForModifier(modifierName, modifierOrder, modifiers) {
+  const scope = {};
+  for (const axis of modifierOrder) {
+    if (axis === modifierName) continue;
+    const modifierDoc = modifiers?.[axis];
+    const contexts = Object.keys(modifierDoc?.contexts ?? {});
+    if (contexts.length === 0) continue;
+    scope[axis] = [getAxisDefault(modifierDoc, contexts)];
+  }
+  return Object.keys(scope).length > 0 ? scope : null;
+}
+
 function resolveContextEmitTargets(
+  modifierName,
+  modifierOrder,
+  modifiers,
   modifierDef,
   contextName,
   selectorsMap = {},
@@ -465,6 +480,14 @@ function resolveContextEmitTargets(
   sharedMedia = null,
 ) {
   const ctx = modifierDef?.contexts?.[contextName] ?? {};
+  const variantDefaultsMode =
+    typeof modifierDef?.variantDefaults?.scopeMode === "string"
+      ? modifierDef.variantDefaults.scopeMode
+      : "defaults";
+  const variantDefaultsModeScope =
+    variantDefaultsMode === "defaults"
+      ? buildDefaultScopeForModifier(modifierName, modifierOrder, modifiers)
+      : null;
   const variantDefaultsScope = isObject(modifierDef?.variantDefaults?.scope)
     ? modifierDef.variantDefaults.scope
     : null;
@@ -492,7 +515,7 @@ function resolveContextEmitTargets(
           ? variant.deltaFromContext
           : null,
       scope: mergeScope(
-        variantDefaultsScope,
+        mergeScope(variantDefaultsModeScope, variantDefaultsScope),
         isObject(variant.scope) ? variant.scope : null,
       ),
       selector,
@@ -564,7 +587,7 @@ async function main() {
       ? buildDefs.brand.trim()
       : null;
   const cssBuildDefs = buildDefs?.targets?.css;
-  const layerDefs = buildDefs?.layers ?? {};
+  const tokenLayerDefs = buildDefs?.tokenLayers ?? {};
   const sharedMedia = await resolveSharedMediaFromBuild(buildDefs, resolverPath);
   const modifierBuildDefs = cssBuildDefs?.modifiers ?? {};
   const selectorDefs = cssBuildDefs?.selectors ?? {};
@@ -692,6 +715,9 @@ async function main() {
         emittedResolved = prunedResolved;
 
         const emitTargets = resolveContextEmitTargets(
+          surfaceAxis,
+          modifierOrder,
+          modifiers,
           modifierBuildDefs?.[surfaceAxis],
           surfaceContext,
           resolvedSelectorDefs,
@@ -816,6 +842,9 @@ async function main() {
         }
 
           const emitTargets = resolveContextEmitTargets(
+            surfaceAxis,
+            modifierOrder,
+            modifiers,
             modifierBuildDefs?.[surfaceAxis],
             surfaceContext,
             resolvedSelectorDefs,
@@ -883,7 +912,7 @@ async function main() {
     source: path.relative(cwd, resolverPath),
     ...(namespace ? { namespace } : {}),
     ...(brand ? { brand } : {}),
-    layers: layerDefs,
+    tokenLayers: tokenLayerDefs,
     targets: {
       css: {
         includeLayerRole: "public",

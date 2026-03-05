@@ -226,7 +226,7 @@ async function buildMergedTokenObject(sources, layerConfig) {
   const privateLayers = new Set(layerConfig?.private ?? []);
   const publicLayers = new Set(layerConfig?.public ?? []);
   if (knownLayers.size === 0) {
-    throw new Error("Resolver build.layers is required and cannot be empty.");
+    throw new Error("Resolver build.tokenLayers is required and cannot be empty.");
   }
   for (const sourcePath of sources) {
     // eslint-disable-next-line no-await-in-loop
@@ -269,9 +269,9 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const sourcesDoc = JSON.parse(await fs.readFile(path.resolve(cwd, args.sourcesFile), "utf8"));
   const resolverDoc = JSON.parse(await fs.readFile(path.resolve(cwd, args.resolver), "utf8"));
-  const layerConfig = resolverDoc?.$defs?.build?.layers;
+  const layerConfig = resolverDoc?.$defs?.build?.tokenLayers;
   if (!isObject(layerConfig)) {
-    throw new Error("Resolver missing $defs.build.layers metadata.");
+    throw new Error("Resolver missing $defs.build.tokenLayers metadata.");
   }
 
   if (!Array.isArray(sourcesDoc.sources)) {

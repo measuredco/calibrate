@@ -25,7 +25,9 @@ if (!fs.existsSync(manifestFile)) {
 const outDir = path.dirname(outFile).replaceAll(path.sep, "/");
 const outName = path.basename(outFile);
 const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-const privateLayers = new Set(Array.isArray(manifest?.layers?.private) ? manifest.layers.private : []);
+const privateLayers = new Set(
+  Array.isArray(manifest?.tokenLayers?.private) ? manifest.tokenLayers.private : [],
+);
 const cssIncludeLayerRole = manifest?.targets?.css?.includeLayerRole ?? "public";
 const cssLayer = manifest?.targets?.css?.layer;
 const cssLayerOrder = Array.isArray(manifest?.targets?.css?.layerOrder)
