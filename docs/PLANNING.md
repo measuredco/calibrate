@@ -6,16 +6,17 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active `Now` items. Pick up from `Next`.
+- Explore authoring ergonomics to reduce repeated context token declarations:
+  - allow sparse/override-only context files as first-class authoring pattern
+  - focus this pass on semantic theme/surface files first (`color`/`effect`), where duplication is highest
+  - rework `theme` context source composition to cumulative `baseContext` inheritance (like `size`)
+  - keep authored theme files unchanged in this pass; first prove cumulative logic + output parity
+  - define guardrails so required alias anchors are preserved while removing pure duplicates
+  - evaluate helper tooling/lint rule to suggest safe duplicate pruning
 
 ## Next
 
 What we could start work on next.
-
-- Explore authoring ergonomics to reduce repeated context token declarations:
-  - allow sparse/override-only context files as first-class authoring pattern
-  - define guardrails so required alias anchors are preserved while removing pure duplicates
-  - evaluate helper tooling/lint rule to suggest safe duplicate pruning
 
 - ideas
   - maybe move resolver_sd_bridge docs to colocate with the code?

@@ -66,6 +66,66 @@ function pushUnique(list, seen, value) {
   list.push(value);
 }
 
+function getModifierBuildContextDef(resolverDoc, modifierName, contextName) {
+  const defs = resolverDoc?.$defs?.build;
+  if (!isObject(defs)) return null;
+  const targets = defs.targets;
+  if (!isObject(targets)) return null;
+
+  // Current adapter stores modifier build metadata under targets.css.modifiers.
+  // If future targets are added, this can be generalized.
+  const cssTarget = targets.css;
+  if (!isObject(cssTarget)) return null;
+  const modifiers = cssTarget.modifiers;
+  if (!isObject(modifiers)) return null;
+  const modifierDef = modifiers[modifierName];
+  if (!isObject(modifierDef)) return null;
+  const contexts = modifierDef.contexts;
+  if (!isObject(contexts)) return null;
+  const contextDef = contexts[contextName];
+  return isObject(contextDef) ? contextDef : null;
+}
+
+function resolveModifierContextSourceArrays({
+  resolverDoc,
+  modifierName,
+  selectedContext,
+  sourceContexts,
+}) {
+  const out = [];
+  const visiting = new Set();
+  const visited = new Set();
+
+  const visit = (contextName) => {
+    if (visited.has(contextName)) return;
+    if (visiting.has(contextName)) {
+      throw new Error(
+        `Cycle detected in modifier "${modifierName}" baseContext chain at "${contextName}".`,
+      );
+    }
+
+    const sourceArray = sourceContexts[contextName];
+    if (!Array.isArray(sourceArray)) {
+      throw new Error(
+        `Modifier "${modifierName}" does not contain context "${contextName}".`,
+      );
+    }
+
+    visiting.add(contextName);
+    const buildContextDef = getModifierBuildContextDef(resolverDoc, modifierName, contextName);
+    const baseContext = buildContextDef?.baseContext;
+    if (typeof baseContext === "string" && baseContext.length > 0) {
+      visit(baseContext);
+    }
+    visiting.delete(contextName);
+    visited.add(contextName);
+    out.push({ contextName, sourceArray });
+  };
+
+  visit(selectedContext);
+  return out;
+}
+
 function resolveSourceArray({
   resolverDoc,
   resolverPath,
@@ -182,14 +242,23 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
       );
     }
 
-    resolveSourceArray({
+    const sourceArrays = resolveModifierContextSourceArrays({
       resolverDoc,
-      resolverPath,
-      sourceArray,
-      output,
-      seen,
-      stack: [ref, `#/modifiers/${modifierName}/contexts/${selected}`],
+      modifierName,
+      selectedContext: selected,
+      sourceContexts: modifierObj.contexts,
     });
+
+    for (const entry of sourceArrays) {
+      resolveSourceArray({
+        resolverDoc,
+        resolverPath,
+        sourceArray: entry.sourceArray,
+        output,
+        seen,
+        stack: [ref, `#/modifiers/${modifierName}/contexts/${entry.contextName}`],
+      });
+    }
   }
 
   return output;
