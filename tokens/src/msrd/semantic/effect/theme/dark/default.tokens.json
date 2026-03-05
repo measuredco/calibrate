@@ -1,12 +1,6 @@
 {
   "$schema": "../../../../../../schemas/2025.10/format.json",
   "$description": "Semantic effect tokens for msrd dark/default surface.",
-  "opacity": {
-    "$type": "number",
-    "demoted": {
-      "$value": "{primitive.effect.opacity.40}"
-    }
-  },
   "shadow": {
     "$type": "shadow",
     "default": {

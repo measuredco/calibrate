@@ -3172,7 +3172,7 @@
           },
           "$type": "shadow"
         },
-        "$description": "Semantic effect tokens for msrd dark/default surface."
+        "$description": "Semantic effect tokens for wrfr dark/default surface."
       },
       "color": {
         "brand": {
@@ -3761,7 +3761,7 @@
           },
           "$type": "shadow"
         },
-        "$description": "Semantic effect tokens for msrd dark/default surface."
+        "$description": "Semantic effect tokens for wrfr dark/default surface."
       },
       "color": {
         "brand": {
@@ -4350,7 +4350,7 @@
           },
           "$type": "shadow"
         },
-        "$description": "Semantic effect tokens for msrd dark/brand surface."
+        "$description": "Semantic effect tokens for wrfr dark/brand surface."
       },
       "color": {
         "brand": {
