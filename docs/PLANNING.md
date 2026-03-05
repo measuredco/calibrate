@@ -10,8 +10,6 @@ What we're working on now.
 
 What we could start work on next.
 
-- key sort order in tokens/src
-
 ## Later
 
 Everything we could attempt given sufficient time and resources.
@@ -40,6 +38,10 @@ Everything we could attempt given sufficient time and resources.
 - Prototype Penpot export adapter from resolved contexts.
 - Assess Figma export pathway and required schema mapping.
 - Define iOS/Android export subset and conversion rules.
+- Evaluate deterministic sorting linting/formatting policy:
+  - JS import/export ordering via ESLint autofix
+  - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type`)
+  - keep any sorting additions fixable and low-noise
 
 ## Done
 
@@ -114,7 +116,7 @@ What we've done.
   - `theme` source composition now uses cumulative `baseContext` inheritance (aligned with `size`)
   - constraints now document when duplicate declarations should be retained (alias-anchor/readability cases)
 - Resolver bridge docs now co-locate with bridge code:
-  - canonical bridge doc lives at `tokens/scripts/pipeline/README.md`
+  - canonical bridge doc lives at `tokens/scripts/README.md`
 - Bridge scripts now use a dedicated subfolder structure:
   - pipeline scripts moved to `tokens/scripts/pipeline/*`
   - build entrypoint is `tokens/scripts/pipeline/index.mjs`

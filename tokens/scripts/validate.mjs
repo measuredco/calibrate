@@ -92,7 +92,7 @@ async function validateTokenFile(filePath, errors) {
   checkSchemaRefPath(
     filePath,
     doc.$schema,
-    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}format.json`,
+    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}format.json`,
     errors,
   );
 
@@ -125,7 +125,7 @@ async function validateResolverFile(filePath, errors) {
   checkSchemaRefPath(
     filePath,
     doc.$schema,
-    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}resolver.json`,
+    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}resolver.json`,
     errors,
   );
 
