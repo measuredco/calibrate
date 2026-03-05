@@ -44,6 +44,9 @@ Per-variant `scope` may still be used for exceptions.
 - Public/versioned outputs:
   - `tokens/dist/css/*.css`
   - `tokens/dist/json/*.json`
+- Private/versioned maintainer outputs:
+  - `tokens/dist/private/css/*.primitives.css`
+  - non-stable/non-public contract for discovery workflows
 - Disposable pipeline artifacts:
   - `tokens/build/sd/*`
   - `tokens/build/tmp/*`

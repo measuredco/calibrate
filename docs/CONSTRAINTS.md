@@ -117,7 +117,12 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 
 ## Build Artifact Policy
 
-- Commit and version outputs under `tokens/dist/**` (public contract).
+- Commit and version outputs under `tokens/dist/**`.
+- Public/stable artifact contract:
+  - `tokens/dist/css/*.tokens.css`
+  - `tokens/dist/json/*.contexts.json`
+- Private/non-stable maintainer artifact contract:
+  - `tokens/dist/private/css/*.primitives.css`
 - Treat `tokens/build/**` as disposable/intermediate pipeline output.
 - Keep the repository-level `build` ignore convention to avoid committing transient build folders.
 - CSS outputs should declare deterministic layer ordering when multiple bundles compose together:
