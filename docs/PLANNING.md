@@ -10,10 +10,8 @@ What we're working on now.
 
 What we could start work on next.
 
-- ideas
-  - maybe move resolver_sd_bridge docs to colocate with the code?
-  - maybe put the 4 build scripts in a build folder with index?
-  - do we still need the specs in docs?
+- install and configure eslint and prettier
+- key sort order in tokens/src
 
 ## Later
 
@@ -39,10 +37,10 @@ Everything we could attempt given sufficient time and resources.
   - naming strategy per target (path-preserving vs flattened aliases)
   - mode mapping strategy (`theme`/`size`/`state`) per target format
   - type/unit coercion policy for non-CSS targets
+- Add optional VS Code token lookup artifact generation for authoring ergonomics.
 - Prototype Penpot export adapter from resolved contexts.
 - Assess Figma export pathway and required schema mapping.
 - Define iOS/Android export subset and conversion rules.
-- Add optional VS Code token lookup artifact generation for authoring ergonomics.
 
 ## Done
 
@@ -71,9 +69,9 @@ What we've done.
 - spec-shaped resolver manifest added at `tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
 - DTCG schemas vendored under `tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
 - Style Dictionary bridge/pipeline implemented:
-  - `tokens/scripts/resolve-token-sources.mjs` resolves resolver context source ordering
-  - `tokens/scripts/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
-  - `tokens/scripts/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
+  - `tokens/scripts/pipeline/resolve-token-sources.mjs` resolves resolver context source ordering
+  - `tokens/scripts/pipeline/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
+  - `tokens/scripts/pipeline/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
   - `tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
 - Output contracts established:
   - committed/public outputs in `tokens/dist/{css,json}`
@@ -93,7 +91,7 @@ What we've done.
 - Wireframe brand onboarding completed:
   - resolver added: `tokens/resolver/wrfr.resolver.json`
   - brand source added under `tokens/src/wrfr/{primitive,semantic}`
-  - build target wired in `tokens/scripts/build.mjs`
+  - build target wired in `tokens/scripts/pipeline/index.mjs`
   - brand artifacts emit and verify:
     - `tokens/dist/css/clbr.wrfr.tokens.css`
     - `tokens/dist/json/clbr.wrfr.contexts.json`
@@ -116,6 +114,12 @@ What we've done.
   - sparse/override-only context files are supported as first-class authoring for cumulative axes
   - `theme` source composition now uses cumulative `baseContext` inheritance (aligned with `size`)
   - constraints now document when duplicate declarations should be retained (alias-anchor/readability cases)
+- Resolver bridge docs now co-locate with bridge code:
+  - canonical bridge doc lives at `tokens/scripts/pipeline/README.md`
+- Bridge scripts now use a dedicated subfolder structure:
+  - pipeline scripts moved to `tokens/scripts/pipeline/*`
+  - build entrypoint is `tokens/scripts/pipeline/index.mjs`
+- Vendored DTCG spec reference docs relocated under `tokens/schemas/2025.10/spec`.
 - Component token layer architecture proved with Card pilot:
   - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
   - component tokens resolve across theme/surface/state contexts with correct diff behavior

@@ -90,7 +90,7 @@ async function main() {
   for (const target of selectedTargets) {
     const cfg = buildTargets[target];
     run("node", [
-      "tokens/scripts/prepare-sd-contexts.mjs",
+      "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
       "--resolver",
       cfg.resolver,
       "--out-tokens",

@@ -153,7 +153,7 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
     const outManifest = path.join(TMP_VALIDATE_DIR, `${base}.css-manifest.json`);
     try {
       run("node", [
-        "tokens/scripts/prepare-sd-contexts.mjs",
+        "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
         "--resolver",
         rel(resolverPath),
         "--out-tokens",

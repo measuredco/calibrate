@@ -21,7 +21,7 @@ function parseArgs(argv) {
 
   if (!args.resolver || !args.context || !args.out) {
     throw new Error(
-      "Usage: node tokens/scripts/resolve-token-sources.mjs --resolver <resolver.json> --context <context.json> --out <sources.json>",
+      "Usage: node tokens/scripts/pipeline/resolve-token-sources.mjs --resolver <resolver.json> --context <context.json> --out <sources.json>",
     );
   }
 

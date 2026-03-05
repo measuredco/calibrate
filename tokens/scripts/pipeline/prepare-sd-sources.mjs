@@ -20,7 +20,7 @@ function parseArgs(argv) {
 
   if (!args.sourcesFile || !args.outFile) {
     throw new Error(
-      "Usage: node tokens/scripts/prepare-sd-sources.mjs --sources-file <sources.json> --out-file <tokens.json>",
+      "Usage: node tokens/scripts/pipeline/prepare-sd-sources.mjs --sources-file <sources.json> --out-file <tokens.json>",
     );
   }
 
