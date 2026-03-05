@@ -4,7 +4,7 @@
 
 This document defines the stable constraints for token authoring, structure, and resolution.
 Planning and sequencing live in `docs/PLANNING.md`.
-Resolver adapter details live in `tokens/scripts/pipeline/README.md`.
+Resolver adapter details live in `tokens/scripts/README.md`.
 
 ## Program Goals
 

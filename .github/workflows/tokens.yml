@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  validate-and-verify:
+  quality-gates:
     runs-on: ubuntu-latest
 
     steps:
