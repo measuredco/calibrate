@@ -14,7 +14,7 @@ The adapter reads custom metadata under:
 
 - `$defs.build.namespace`
 - `$defs.build.brand`
-- `$defs.build.layers`
+- `$defs.build.tokenLayers`
 - `$defs.build.targets.css.selectors`
 - `$defs.build.targets.css.modifiers`
 - `$defs.build.targets.css.layer`
@@ -25,13 +25,13 @@ The adapter reads custom metadata under:
 - `baseContext`: context inheritance within an axis.
 - `deltaFromContext`: comparison context for a variant emission delta.
 
-### Variant defaults
+### Variant scope defaults
 
-Shared variant filters should be declared at axis level:
+For CSS modifier variants, the bridge applies an implicit default scope:
 
-- `$defs.build.targets.css.modifiers.<axis>.variantDefaults.scope`
+- variants are emitted only at default contexts for all other axes.
 
-Per-variant `scope` may still be used for exceptions.
+Per-variant `scope` may be provided for exceptions/expansion.
 
 ## Naming conventions
 

@@ -106,7 +106,10 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 - Resolver build metadata conventions used by current adapter:
   - context inheritance uses `baseContext`
   - variant diff target uses `deltaFromContext`
-  - shared variant filters should be declared via `variantDefaults.scope` where possible
+  - variant scope defaults are implicit (variants emit at default contexts for other axes)
+  - declare per-variant `scope` only when overriding that default behavior
+  - context files may be authored sparse/override-only when axis composition is cumulative (`baseContext`)
+  - keep duplicate declarations only when required to preserve local alias anchors or explicit readability intent
 - Resolver/build order must satisfy semantic dependencies:
   - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing
