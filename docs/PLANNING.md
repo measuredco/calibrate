@@ -10,7 +10,6 @@ What we're working on now.
 
 What we could start work on next.
 
-- install and configure eslint and prettier
 - key sort order in tokens/src
 
 ## Later
@@ -120,6 +119,10 @@ What we've done.
   - pipeline scripts moved to `tokens/scripts/pipeline/*`
   - build entrypoint is `tokens/scripts/pipeline/index.mjs`
 - Vendored DTCG spec reference docs relocated under `tokens/schemas/2025.10/spec`.
+- ESLint and Prettier baseline tooling added:
+  - `eslint` configured via `eslint.config.mjs` for token pipeline scripts
+  - `prettier` configured via `.prettierrc.json` and `.prettierignore`
+  - scripts added in `package.json`: `lint`, `lint:fix`, `format`, `format:check`
 - Component token layer architecture proved with Card pilot:
   - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
   - component tokens resolve across theme/surface/state contexts with correct diff behavior

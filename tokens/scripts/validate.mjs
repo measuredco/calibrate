@@ -55,7 +55,9 @@ function checkSchemaRefPath(filePath, schemaRef, expectedSchemaTail, errors) {
   }
 
   if (schemaRef.startsWith("http://") || schemaRef.startsWith("https://")) {
-    errors.push(`${rel(filePath)}: "$schema" must be local vendored path, got remote URL`);
+    errors.push(
+      `${rel(filePath)}: "$schema" must be local vendored path, got remote URL`,
+    );
     return;
   }
 
@@ -82,17 +84,26 @@ async function validateTokenFile(filePath, errors) {
   }
 
   if (Object.prototype.hasOwnProperty.call(doc, "")) {
-    errors.push(`${rel(filePath)}: invalid empty-string key found at top level`);
+    errors.push(
+      `${rel(filePath)}: invalid empty-string key found at top level`,
+    );
   }
 
-  checkSchemaRefPath(filePath, doc.$schema, `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}format.json`, errors);
+  checkSchemaRefPath(
+    filePath,
+    doc.$schema,
+    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}format.json`,
+    errors,
+  );
 
   if (typeof doc.$schema === "string" && !doc.$schema.startsWith("http")) {
     const resolved = path.resolve(path.dirname(filePath), doc.$schema);
     try {
       await fs.access(resolved);
     } catch {
-      errors.push(`${rel(filePath)}: "$schema" path not found (${doc.$schema})`);
+      errors.push(
+        `${rel(filePath)}: "$schema" path not found (${doc.$schema})`,
+      );
     }
   }
 }
@@ -111,14 +122,21 @@ async function validateResolverFile(filePath, errors) {
     return;
   }
 
-  checkSchemaRefPath(filePath, doc.$schema, `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}resolver.json`, errors);
+  checkSchemaRefPath(
+    filePath,
+    doc.$schema,
+    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}resolver.json`,
+    errors,
+  );
 
   if (typeof doc.$schema === "string" && !doc.$schema.startsWith("http")) {
     const resolved = path.resolve(path.dirname(filePath), doc.$schema);
     try {
       await fs.access(resolved);
     } catch {
-      errors.push(`${rel(filePath)}: "$schema" path not found (${doc.$schema})`);
+      errors.push(
+        `${rel(filePath)}: "$schema" path not found (${doc.$schema})`,
+      );
     }
   }
 
@@ -127,7 +145,9 @@ async function validateResolverFile(filePath, errors) {
   }
 
   if (!Array.isArray(doc.resolutionOrder) || doc.resolutionOrder.length === 0) {
-    errors.push(`${rel(filePath)}: resolver must define non-empty "resolutionOrder"`);
+    errors.push(
+      `${rel(filePath)}: resolver must define non-empty "resolutionOrder"`,
+    );
   }
 
   if (typeof doc.modifiers !== "object" || doc.modifiers === null) {
@@ -138,10 +158,13 @@ async function validateResolverFile(filePath, errors) {
   const modifierNames = new Set(Object.keys(doc.modifiers));
   for (const entry of doc.resolutionOrder ?? []) {
     const ref = entry?.$ref;
-    const match = typeof ref === "string" ? ref.match(/^#\/modifiers\/(.+)$/) : null;
+    const match =
+      typeof ref === "string" ? ref.match(/^#\/modifiers\/(.+)$/) : null;
     if (!match) continue;
     if (!modifierNames.has(match[1])) {
-      errors.push(`${rel(filePath)}: resolutionOrder references missing modifier "${match[1]}"`);
+      errors.push(
+        `${rel(filePath)}: resolutionOrder references missing modifier "${match[1]}"`,
+      );
     }
   }
 }
@@ -150,7 +173,10 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
   for (const resolverPath of resolverFiles) {
     const base = path.basename(resolverPath, ".resolver.json");
     const outTokens = path.join(TMP_VALIDATE_DIR, `${base}.contexts.json`);
-    const outManifest = path.join(TMP_VALIDATE_DIR, `${base}.css-manifest.json`);
+    const outManifest = path.join(
+      TMP_VALIDATE_DIR,
+      `${base}.css-manifest.json`,
+    );
     try {
       run("node", [
         "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
@@ -172,44 +198,38 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
 async function main() {
   const errors = [];
 
-  const tokenFiles = await listFiles(
-    TOKENS_SRC_DIR,
-    (filePath) => filePath.endsWith(".json"),
+  const tokenFiles = await listFiles(TOKENS_SRC_DIR, (filePath) =>
+    filePath.endsWith(".json"),
   );
 
-  const resolverFiles = await listFiles(
-    TOKENS_RESOLVER_DIR,
-    (filePath) => filePath.endsWith(".resolver.json"),
+  const resolverFiles = await listFiles(TOKENS_RESOLVER_DIR, (filePath) =>
+    filePath.endsWith(".resolver.json"),
   );
 
   for (const tokenFile of tokenFiles) {
-    // eslint-disable-next-line no-await-in-loop
     await validateTokenFile(tokenFile, errors);
   }
 
   for (const resolverFile of resolverFiles) {
-    // eslint-disable-next-line no-await-in-loop
     await validateResolverFile(resolverFile, errors);
   }
 
   ensureNoResolverSelectionErrors(resolverFiles, errors);
 
   if (errors.length > 0) {
-    // eslint-disable-next-line no-console
     console.error("Token validation failed:");
     for (const err of errors) {
-      // eslint-disable-next-line no-console
       console.error(`- ${err}`);
     }
     process.exit(1);
   }
 
-  // eslint-disable-next-line no-console
-  console.log(`Validated ${tokenFiles.length} token files and ${resolverFiles.length} resolver files.`);
+  console.log(
+    `Validated ${tokenFiles.length} token files and ${resolverFiles.length} resolver files.`,
+  );
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 });

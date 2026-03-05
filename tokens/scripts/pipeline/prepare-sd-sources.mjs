@@ -36,7 +36,8 @@ function deepMerge(target, source) {
   if (!isObject(source)) return source;
   const out = isObject(target) ? { ...target } : {};
   for (const [key, value] of Object.entries(source)) {
-    if (isObject(value) && isObject(out[key])) out[key] = deepMerge(out[key], value);
+    if (isObject(value) && isObject(out[key]))
+      out[key] = deepMerge(out[key], value);
     else out[key] = deepMerge(undefined, value);
   }
   return out;
@@ -44,7 +45,8 @@ function deepMerge(target, source) {
 
 function parsePointer(pointer) {
   if (!pointer || pointer === "#") return [];
-  if (!pointer.startsWith("#/")) throw new Error(`Unsupported JSON pointer: ${pointer}`);
+  if (!pointer.startsWith("#/"))
+    throw new Error(`Unsupported JSON pointer: ${pointer}`);
   return pointer
     .slice(2)
     .split("/")
@@ -65,7 +67,6 @@ async function resolveRefsInDocument(value, ownerFile, loader, stack = []) {
   if (Array.isArray(value)) {
     const items = [];
     for (const item of value) {
-      // eslint-disable-next-line no-await-in-loop
       items.push(await resolveRefsInDocument(item, ownerFile, loader, stack));
     }
     return items;
@@ -77,28 +78,42 @@ async function resolveRefsInDocument(value, ownerFile, loader, stack = []) {
     const ref = value.$ref;
     const [filePart, pointerPart] = ref.split("#");
     const pointer = pointerPart ? `#${pointerPart}` : "#";
-    const targetFile = filePart ? path.resolve(path.dirname(ownerFile), filePart) : ownerFile;
+    const targetFile = filePart
+      ? path.resolve(path.dirname(ownerFile), filePart)
+      : ownerFile;
     const stackKey = `${ownerFile}->${ref}`;
     if (stack.includes(stackKey)) {
-      throw new Error(`$ref cycle detected: ${stack.concat(stackKey).join(" | ")}`);
+      throw new Error(
+        `$ref cycle detected: ${stack.concat(stackKey).join(" | ")}`,
+      );
     }
     const targetDoc = await loader(targetFile);
     const targetValue = getPath(targetDoc, parsePointer(pointer));
     if (targetValue === undefined) {
       throw new Error(`$ref target not found: ${ref} (from ${ownerFile})`);
     }
-    return resolveRefsInDocument(targetValue, targetFile, loader, stack.concat(stackKey));
+    return resolveRefsInDocument(
+      targetValue,
+      targetFile,
+      loader,
+      stack.concat(stackKey),
+    );
   }
 
   const out = {};
   for (const [key, child] of Object.entries(value)) {
-    // eslint-disable-next-line no-await-in-loop
     out[key] = await resolveRefsInDocument(child, ownerFile, loader, stack);
   }
   return out;
 }
 
-function normalizePublicLayerAliases(node, domain, localRootKeys, semanticDomainRoots, knownLayers) {
+function normalizePublicLayerAliases(
+  node,
+  domain,
+  localRootKeys,
+  semanticDomainRoots,
+  knownLayers,
+) {
   const normalizeAliasString = (raw) => {
     const exactAlias = raw.match(/^\{([^}]+)\}$/);
     if (!exactAlias) return raw;
@@ -116,7 +131,8 @@ function normalizePublicLayerAliases(node, domain, localRootKeys, semanticDomain
 
   const visit = (value) => {
     if (Array.isArray(value)) return value.map(visit);
-    if (!isObject(value)) return typeof value === "string" ? normalizeAliasString(value) : value;
+    if (!isObject(value))
+      return typeof value === "string" ? normalizeAliasString(value) : value;
     const out = {};
     for (const [key, child] of Object.entries(value)) out[key] = visit(child);
     return out;
@@ -134,7 +150,6 @@ async function discoverSemanticDomainRoots() {
     for (const entry of entries) {
       const full = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        // eslint-disable-next-line no-await-in-loop
         await walk(full);
         continue;
       }
@@ -167,7 +182,10 @@ function normalizeDtcgValueObjects(node) {
     Object.prototype.hasOwnProperty.call(node.$value, "unit")
   ) {
     const { value, unit } = node.$value;
-    if ((typeof value === "number" || typeof value === "string") && typeof unit === "string") {
+    if (
+      (typeof value === "number" || typeof value === "string") &&
+      typeof unit === "string"
+    ) {
       node.$value = `${value}${unit}`;
     }
   }
@@ -182,11 +200,14 @@ function normalizeDtcgValueObjects(node) {
 function deriveLayerAndDomain(relPath, knownLayers) {
   const parts = relPath.split("/");
   const layerIndex = parts.findIndex((part) => knownLayers.has(part));
-  if (layerIndex === -1) throw new Error(`Cannot infer layer/domain for source: ${relPath}`);
+  if (layerIndex === -1)
+    throw new Error(`Cannot infer layer/domain for source: ${relPath}`);
   const layer = parts[layerIndex];
   const next = parts[layerIndex + 1];
   if (!next) throw new Error(`Cannot infer domain for source: ${relPath}`);
-  const domain = next.endsWith(".tokens.json") ? path.basename(next, ".tokens.json") : next;
+  const domain = next.endsWith(".tokens.json")
+    ? path.basename(next, ".tokens.json")
+    : next;
   let subdomain = null;
   if (layer === "component") {
     const maybeSubdomain = parts[layerIndex + 2];
@@ -222,17 +243,24 @@ async function buildMergedTokenObject(sources, layerConfig) {
 
   let merged = {};
   const semanticDomainRoots = await discoverSemanticDomainRoots();
-  const knownLayers = new Set([...(layerConfig?.private ?? []), ...(layerConfig?.public ?? [])]);
+  const knownLayers = new Set([
+    ...(layerConfig?.private ?? []),
+    ...(layerConfig?.public ?? []),
+  ]);
   const privateLayers = new Set(layerConfig?.private ?? []);
   const publicLayers = new Set(layerConfig?.public ?? []);
   if (knownLayers.size === 0) {
-    throw new Error("Resolver build.tokenLayers is required and cannot be empty.");
+    throw new Error(
+      "Resolver build.tokenLayers is required and cannot be empty.",
+    );
   }
   for (const sourcePath of sources) {
-    // eslint-disable-next-line no-await-in-loop
     const resolvedDoc = await loadResolved(sourcePath);
     const relPath = sourcePath.replaceAll(path.sep, "/");
-    const { layer, domain, subdomain } = deriveLayerAndDomain(relPath, knownLayers);
+    const { layer, domain, subdomain } = deriveLayerAndDomain(
+      relPath,
+      knownLayers,
+    );
 
     const docBody = Object.fromEntries(
       Object.entries(resolvedDoc).filter(([k]) => k !== "$schema"),
@@ -241,23 +269,23 @@ async function buildMergedTokenObject(sources, layerConfig) {
       Object.keys(docBody).filter((key) => !key.startsWith("$")),
     );
 
-    const normalizedDoc =
-      publicLayers.has(layer)
-        ? normalizePublicLayerAliases(
-            docBody,
-            domain,
-            localRootKeys,
-            semanticDomainRoots,
-            knownLayers,
-          )
-        : docBody;
+    const normalizedDoc = publicLayers.has(layer)
+      ? normalizePublicLayerAliases(
+          docBody,
+          domain,
+          localRootKeys,
+          semanticDomainRoots,
+          knownLayers,
+        )
+      : docBody;
 
-    const wrapped =
-      privateLayers.has(layer)
-        ? { [layer]: { [domain]: normalizedDoc } }
-        : layer === "component" && typeof subdomain === "string" && subdomain.length > 0
-          ? { [domain]: { [subdomain]: normalizedDoc } }
-          : { [domain]: normalizedDoc };
+    const wrapped = privateLayers.has(layer)
+      ? { [layer]: { [domain]: normalizedDoc } }
+      : layer === "component" &&
+          typeof subdomain === "string" &&
+          subdomain.length > 0
+        ? { [domain]: { [subdomain]: normalizedDoc } }
+        : { [domain]: normalizedDoc };
 
     merged = deepMerge(merged, wrapped);
   }
@@ -267,8 +295,12 @@ async function buildMergedTokenObject(sources, layerConfig) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const sourcesDoc = JSON.parse(await fs.readFile(path.resolve(cwd, args.sourcesFile), "utf8"));
-  const resolverDoc = JSON.parse(await fs.readFile(path.resolve(cwd, args.resolver), "utf8"));
+  const sourcesDoc = JSON.parse(
+    await fs.readFile(path.resolve(cwd, args.sourcesFile), "utf8"),
+  );
+  const resolverDoc = JSON.parse(
+    await fs.readFile(path.resolve(cwd, args.resolver), "utf8"),
+  );
   const layerConfig = resolverDoc?.$defs?.build?.tokenLayers;
   if (!isObject(layerConfig)) {
     throw new Error("Resolver missing $defs.build.tokenLayers metadata.");
@@ -285,7 +317,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 });

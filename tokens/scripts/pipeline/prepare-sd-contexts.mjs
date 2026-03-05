@@ -45,7 +45,9 @@ function run(cmd, args, opts = {}) {
 }
 
 function getResolutionModifierNames(resolverDoc) {
-  const refs = Array.isArray(resolverDoc?.resolutionOrder) ? resolverDoc.resolutionOrder : [];
+  const refs = Array.isArray(resolverDoc?.resolutionOrder)
+    ? resolverDoc.resolutionOrder
+    : [];
   const names = refs
     .map((entry) => {
       const ref = entry?.$ref;
@@ -69,7 +71,9 @@ function contextId(context, modifierOrder) {
     .map((modifierName) => {
       const value = context?.[modifierName];
       if (value === undefined) {
-        throw new Error(`Context is missing modifier "${modifierName}" required by resolutionOrder.`);
+        throw new Error(
+          `Context is missing modifier "${modifierName}" required by resolutionOrder.`,
+        );
       }
       return String(value);
     })
@@ -87,7 +91,10 @@ function toCssDimensionValue(rawValue) {
   if (rawValue && typeof rawValue === "object") {
     const value = rawValue.value;
     const unit = rawValue.unit;
-    if ((typeof value === "number" || typeof value === "string") && typeof unit === "string") {
+    if (
+      (typeof value === "number" || typeof value === "string") &&
+      typeof unit === "string"
+    ) {
       return `${value}${unit}`;
     }
   }
@@ -99,18 +106,9 @@ function isObject(value) {
 }
 
 function isTokenObject(value) {
-  return isObject(value) && Object.prototype.hasOwnProperty.call(value, "$value");
-}
-
-function deepMerge(target, source) {
-  if (Array.isArray(source)) return source.slice();
-  if (!isObject(source)) return source;
-  const out = isObject(target) ? { ...target } : {};
-  for (const [key, value] of Object.entries(source)) {
-    if (isObject(value) && isObject(out[key])) out[key] = deepMerge(out[key], value);
-    else out[key] = deepMerge(undefined, value);
-  }
-  return out;
+  return (
+    isObject(value) && Object.prototype.hasOwnProperty.call(value, "$value")
+  );
 }
 
 function deepEqual(a, b) {
@@ -121,7 +119,10 @@ function pruneUnchanged(sourceNode, baseNode) {
   if (!isObject(sourceNode)) return sourceNode;
 
   if (isTokenObject(sourceNode)) {
-    if (isTokenObject(baseNode) && deepEqual(sourceNode.$value, baseNode.$value)) {
+    if (
+      isTokenObject(baseNode) &&
+      deepEqual(sourceNode.$value, baseNode.$value)
+    ) {
       return null;
     }
     return sourceNode;
@@ -131,7 +132,10 @@ function pruneUnchanged(sourceNode, baseNode) {
 
   for (const [key, value] of Object.entries(sourceNode)) {
     if (key.startsWith("$")) continue;
-    const pruned = pruneUnchanged(value, isObject(baseNode) ? baseNode[key] : undefined);
+    const pruned = pruneUnchanged(
+      value,
+      isObject(baseNode) ? baseNode[key] : undefined,
+    );
     if (pruned !== null) out[key] = pruned;
   }
 
@@ -156,7 +160,8 @@ function getByDottedPath(root, dotted) {
 }
 
 function getByDottedPathOrUndefined(root, dotted) {
-  if (!isObject(root) || typeof dotted !== "string" || dotted.length === 0) return undefined;
+  if (!isObject(root) || typeof dotted !== "string" || dotted.length === 0)
+    return undefined;
   return getByDottedPath(root, dotted);
 }
 
@@ -184,10 +189,12 @@ function getByJsonPointer(root, pointer) {
 
 function resolveAliasValues(node, lookupRoot, stack = []) {
   const resolveValue = (value, localStack) => {
-    if (Array.isArray(value)) return value.map((item) => resolveValue(item, localStack));
+    if (Array.isArray(value))
+      return value.map((item) => resolveValue(item, localStack));
     if (isObject(value)) {
       const out = {};
-      for (const [k, v] of Object.entries(value)) out[k] = resolveValue(v, localStack);
+      for (const [k, v] of Object.entries(value))
+        out[k] = resolveValue(v, localStack);
       return out;
     }
     if (typeof value === "string") {
@@ -200,9 +207,14 @@ function resolveAliasValues(node, lookupRoot, stack = []) {
         }
         const target = getByDottedPath(lookupRoot, alias);
         if (target === undefined) {
-          throw new Error(`Alias target not found while resolving context token: {${alias}}`);
+          throw new Error(
+            `Alias target not found while resolving context token: {${alias}}`,
+          );
         }
-        if (isObject(target) && Object.prototype.hasOwnProperty.call(target, "$value")) {
+        if (
+          isObject(target) &&
+          Object.prototype.hasOwnProperty.call(target, "$value")
+        ) {
           return resolveValue(target.$value, localStack.concat(alias));
         }
         return resolveValue(target, localStack.concat(alias));
@@ -257,10 +269,14 @@ function inferCssAxes(modifierOrder, modifierBuildDefs) {
   const overlayAxes = modifierOrder.filter((modifierName) =>
     isObject(modifierBuildDefs?.[modifierName]?.scope),
   );
-  const baseAxes = modifierOrder.filter((modifierName) => !overlayAxes.includes(modifierName));
+  const baseAxes = modifierOrder.filter(
+    (modifierName) => !overlayAxes.includes(modifierName),
+  );
 
   if (baseAxes.length === 0) {
-    throw new Error("Resolver css build metadata requires at least one non-overlay modifier.");
+    throw new Error(
+      "Resolver css build metadata requires at least one non-overlay modifier.",
+    );
   }
 
   const hasSelector = (modifierName) =>
@@ -315,7 +331,11 @@ async function buildMergedDoc(id, sources) {
   const sourcesPath = path.join(tmpDir, `${id}.merge.sources.json`);
   const tokensPath = path.join(tmpDir, `${id}.merge.tokens.json`);
 
-  await fs.writeFile(sourcesPath, `${JSON.stringify({ sources }, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    sourcesPath,
+    `${JSON.stringify({ sources }, null, 2)}\n`,
+    "utf8",
+  );
 
   run("node", [
     "tokens/scripts/pipeline/prepare-sd-sources.mjs",
@@ -339,15 +359,22 @@ function resolveAliasOrLiteral(value, lookupRoot, seen = new Set()) {
   const alias = parseAliasRef(value);
   if (!alias) return value;
   if (seen.has(alias)) {
-    throw new Error(`Alias cycle detected while resolving media condition: ${Array.from(seen).join(" -> ")} -> ${alias}`);
+    throw new Error(
+      `Alias cycle detected while resolving media condition: ${Array.from(seen).join(" -> ")} -> ${alias}`,
+    );
   }
   const target = getByDottedPath(lookupRoot, alias);
   if (target === undefined) {
-    throw new Error(`Alias target not found while resolving media condition: {${alias}}`);
+    throw new Error(
+      `Alias target not found while resolving media condition: {${alias}}`,
+    );
   }
   const nextSeen = new Set(seen);
   nextSeen.add(alias);
-  if (isObject(target) && Object.prototype.hasOwnProperty.call(target, "$value")) {
+  if (
+    isObject(target) &&
+    Object.prototype.hasOwnProperty.call(target, "$value")
+  ) {
     return resolveAliasOrLiteral(target.$value, lookupRoot, nextSeen);
   }
   return resolveAliasOrLiteral(target, lookupRoot, nextSeen);
@@ -358,7 +385,8 @@ function resolveMediaSpec(spec, lookupRoot, sharedMedia = null) {
 
   if (typeof spec === "string") {
     const resolved = resolveAliasOrLiteral(spec, lookupRoot);
-    if (typeof resolved === "string" && resolved.trim().startsWith("(")) return resolved;
+    if (typeof resolved === "string" && resolved.trim().startsWith("("))
+      return resolved;
     const dimension = toCssDimensionValue(resolved);
     if (dimension) return `(min-width: ${dimension})`;
     throw new Error(`Unsupported mediaByContext string spec: ${spec}`);
@@ -377,7 +405,9 @@ function resolveMediaSpec(spec, lookupRoot, sharedMedia = null) {
       const minWidthValue = resolveAliasOrLiteral(spec.minWidth, lookupRoot);
       const dimension = toCssDimensionValue(minWidthValue);
       if (!dimension) {
-        throw new Error(`Unsupported minWidth media spec value: ${JSON.stringify(spec.minWidth)}`);
+        throw new Error(
+          `Unsupported minWidth media spec value: ${JSON.stringify(spec.minWidth)}`,
+        );
       }
       return `(min-width: ${dimension})`;
     }
@@ -386,7 +416,13 @@ function resolveMediaSpec(spec, lookupRoot, sharedMedia = null) {
   throw new Error(`Unsupported mediaByContext spec: ${JSON.stringify(spec)}`);
 }
 
-function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot, sharedMedia = null) {
+function resolveMediaByContext(
+  contexts,
+  defaultContext,
+  mediaByContext,
+  lookupRoot,
+  sharedMedia = null,
+) {
   const out = {};
   for (const context of contexts) {
     if (context === defaultContext) {
@@ -394,12 +430,19 @@ function resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupR
       continue;
     }
     const spec = mediaByContext?.[context];
-    out[context] = spec == null ? null : resolveMediaSpec(spec, lookupRoot, sharedMedia);
+    out[context] =
+      spec == null ? null : resolveMediaSpec(spec, lookupRoot, sharedMedia);
   }
   return out;
 }
 
-function buildContextMediaMap(contexts, defaultContext, modifierDef, lookupRoot, sharedMedia = null) {
+function buildContextMediaMap(
+  contexts,
+  defaultContext,
+  modifierDef,
+  lookupRoot,
+  sharedMedia = null,
+) {
   const mediaByContext = {};
   for (const context of contexts) {
     const media = modifierDef?.contexts?.[context]?.media;
@@ -409,7 +452,13 @@ function buildContextMediaMap(contexts, defaultContext, modifierDef, lookupRoot,
       .filter((value) => typeof value === "string" && value.length > 0);
     if (resolved.length > 0) mediaByContext[context] = resolved.join(" and ");
   }
-  return resolveMediaByContext(contexts, defaultContext, mediaByContext, lookupRoot, sharedMedia);
+  return resolveMediaByContext(
+    contexts,
+    defaultContext,
+    mediaByContext,
+    lookupRoot,
+    sharedMedia,
+  );
 }
 
 function applyNamingTemplate(value, naming = {}) {
@@ -424,7 +473,12 @@ function applyNamingTemplate(value, naming = {}) {
   });
 }
 
-function resolveSelectorFromSpec(spec, contextName, selectorsMap = {}, naming = {}) {
+function resolveSelectorFromSpec(
+  spec,
+  contextName,
+  selectorsMap = {},
+  naming = {},
+) {
   if (!isObject(spec)) return null;
   if (typeof spec.selector === "string" && spec.selector.length > 0) {
     return applyNamingTemplate(spec.selector, naming);
@@ -493,7 +547,12 @@ function resolveContextEmitTargets(
     : null;
   const out = [];
 
-  const baseSelector = resolveSelectorFromSpec(ctx, contextName, selectorsMap, naming);
+  const baseSelector = resolveSelectorFromSpec(
+    ctx,
+    contextName,
+    selectorsMap,
+    naming,
+  );
   if (baseSelector) {
     out.push({
       kind: "base",
@@ -504,14 +563,22 @@ function resolveContextEmitTargets(
 
   const variants = Array.isArray(ctx.variants) ? ctx.variants : [];
   for (const variant of variants) {
-    const selector = resolveSelectorFromSpec(variant, contextName, selectorsMap, naming);
+    const selector = resolveSelectorFromSpec(
+      variant,
+      contextName,
+      selectorsMap,
+      naming,
+    );
     if (!selector) continue;
     out.push({
       kind: "variant",
       variantName:
-        typeof variant.name === "string" && variant.name.length > 0 ? variant.name : undefined,
+        typeof variant.name === "string" && variant.name.length > 0
+          ? variant.name
+          : undefined,
       deltaFromContext:
-        typeof variant.deltaFromContext === "string" && variant.deltaFromContext.length > 0
+        typeof variant.deltaFromContext === "string" &&
+        variant.deltaFromContext.length > 0
           ? variant.deltaFromContext
           : null,
       scope: mergeScope(
@@ -534,7 +601,8 @@ function buildBaseContext(modifierOrder, modifiers, overrides = {}) {
     if (contexts.length === 0) {
       throw new Error(`Modifier "${modifierName}" has no contexts.`);
     }
-    out[modifierName] = overrides[modifierName] ?? getAxisDefault(modifierDoc, contexts);
+    out[modifierName] =
+      overrides[modifierName] ?? getAxisDefault(modifierDoc, contexts);
   }
   return out;
 }
@@ -579,7 +647,8 @@ async function main() {
   const modifiers = resolverDoc?.modifiers ?? {};
   const buildDefs = resolverDoc?.$defs?.build ?? {};
   const namespace =
-    typeof buildDefs?.namespace === "string" && buildDefs.namespace.trim().length > 0
+    typeof buildDefs?.namespace === "string" &&
+    buildDefs.namespace.trim().length > 0
       ? buildDefs.namespace.trim()
       : null;
   const brand =
@@ -588,7 +657,10 @@ async function main() {
       : null;
   const cssBuildDefs = buildDefs?.targets?.css;
   const tokenLayerDefs = buildDefs?.tokenLayers ?? {};
-  const sharedMedia = await resolveSharedMediaFromBuild(buildDefs, resolverPath);
+  const sharedMedia = await resolveSharedMediaFromBuild(
+    buildDefs,
+    resolverPath,
+  );
   const modifierBuildDefs = cssBuildDefs?.modifiers ?? {};
   const selectorDefs = cssBuildDefs?.selectors ?? {};
   const resolvedSelectorDefs = Object.fromEntries(
@@ -619,7 +691,10 @@ async function main() {
   const surfaceContexts = Object.keys(surfaceModifier.contexts);
   const responsiveContexts = Object.keys(responsiveModifier.contexts);
   const surfaceOrder = buildSurfaceOrder(surfaceContexts, surfaceDefs);
-  const defaultResponsive = getAxisDefault(responsiveModifier, responsiveContexts);
+  const defaultResponsive = getAxisDefault(
+    responsiveModifier,
+    responsiveContexts,
+  );
   const responsiveDef = modifierBuildDefs?.[responsiveAxis] ?? null;
 
   const fullDocsByContextId = new Map();
@@ -659,15 +734,20 @@ async function main() {
         [responsiveAxis]: responsiveContext,
         ...defaultStateByAxis,
       });
-      // eslint-disable-next-line no-await-in-loop
+
       await getFullDoc(ctx);
     }
   }
 
-  const defaultContextDocId = contextId(buildBaseContext(modifierOrder, modifiers), modifierOrder);
+  const defaultContextDocId = contextId(
+    buildBaseContext(modifierOrder, modifiers),
+    modifierOrder,
+  );
   const mediaLookupRoot = fullDocsByContextId.get(defaultContextDocId);
   if (!mediaLookupRoot) {
-    throw new Error(`Unable to resolve default context document for media lookup: ${defaultContextDocId}`);
+    throw new Error(
+      `Unable to resolve default context document for media lookup: ${defaultContextDocId}`,
+    );
   }
   const responsiveMedia = buildContextMediaMap(
     responsiveContexts,
@@ -680,9 +760,14 @@ async function main() {
   const contextsRoot = {};
   const blocks = [];
   const previousOffOverlayBySurface = new Map();
-  for (const surfaceContext of surfaceContexts) previousOffOverlayBySurface.set(surfaceContext, {});
+  for (const surfaceContext of surfaceContexts)
+    previousOffOverlayBySurface.set(surfaceContext, {});
 
-  for (let responsiveIndex = 0; responsiveIndex < responsiveContexts.length; responsiveIndex += 1) {
+  for (
+    let responsiveIndex = 0;
+    responsiveIndex < responsiveContexts.length;
+    responsiveIndex += 1
+  ) {
     const responsiveContext = responsiveContexts[responsiveIndex];
     const deferredVariantBlocks = [];
     for (const surfaceContext of surfaceOrder) {
@@ -706,13 +791,17 @@ async function main() {
         : {};
 
       // Overlay for this surface at this responsive context (removes inherited/base tokens).
-      const currentOverlayResolved = pruneUnchanged(fullDocResolved, baseDocResolved) || {};
-      const previousOverlayResolved = previousOffOverlayBySurface.get(surfaceContext) || {};
+      const currentOverlayResolved =
+        pruneUnchanged(fullDocResolved, baseDocResolved) || {};
+      const previousOverlayResolved =
+        previousOffOverlayBySurface.get(surfaceContext) || {};
       // Emit only the delta from previous responsive overlay for this surface.
-      const prunedResolved = pruneUnchanged(currentOverlayResolved, previousOverlayResolved);
-      let emittedResolved = null;
+      const prunedResolved = pruneUnchanged(
+        currentOverlayResolved,
+        previousOverlayResolved,
+      );
       if (prunedResolved && Object.keys(prunedResolved).length > 0) {
-        emittedResolved = prunedResolved;
+        const emittedResolved = prunedResolved;
 
         const emitTargets = resolveContextEmitTargets(
           surfaceAxis,
@@ -727,7 +816,11 @@ async function main() {
         );
         let variantIndex = 0;
         for (const target of emitTargets) {
-          if (target.kind === "variant" && target.scope && !matchesScope(ctx, target.scope)) {
+          if (
+            target.kind === "variant" &&
+            target.scope &&
+            !matchesScope(ctx, target.scope)
+          ) {
             continue;
           }
           let blockId = id;
@@ -739,11 +832,16 @@ async function main() {
               [responsiveAxis]: responsiveContext,
               ...defaultStateByAxis,
             });
-            // eslint-disable-next-line no-await-in-loop
+
             const compareResolved = await getResolvedDoc(compareCtx);
-            const variantResolved = pruneUnchanged(fullDocResolved, compareResolved);
+            const variantResolved = pruneUnchanged(
+              fullDocResolved,
+              compareResolved,
+            );
             blockDocResolved =
-              variantResolved && Object.keys(variantResolved).length > 0 ? variantResolved : null;
+              variantResolved && Object.keys(variantResolved).length > 0
+                ? variantResolved
+                : null;
             if (!blockDocResolved) continue;
             variantIndex += 1;
             blockId = `${id}__variant${variantIndex}`;
@@ -796,7 +894,8 @@ async function main() {
         ? scopeDef[surfaceAxis]
         : surfaceContexts;
     const responsiveScope =
-      Array.isArray(scopeDef[responsiveAxis]) && scopeDef[responsiveAxis].length > 0
+      Array.isArray(scopeDef[responsiveAxis]) &&
+      scopeDef[responsiveAxis].length > 0
         ? scopeDef[responsiveAxis]
         : [defaultResponsive];
     const mediaByStateContext = buildContextMediaMap(
@@ -813,14 +912,14 @@ async function main() {
         if (!surfaceScopeSet.has(surfaceContext)) continue;
 
         for (const responsiveContext of responsiveScope) {
-        const onCtx = buildBaseContext(modifierOrder, modifiers, {
-          [surfaceAxis]: surfaceContext,
-          [responsiveAxis]: responsiveContext,
-          ...defaultStateByAxis,
-          [stateAxis]: stateContext,
-        });
-        const onId = contextId(onCtx, modifierOrder);
-        const onFullDocResolved = await getResolvedDoc(onCtx);
+          const onCtx = buildBaseContext(modifierOrder, modifiers, {
+            [surfaceAxis]: surfaceContext,
+            [responsiveAxis]: responsiveContext,
+            ...defaultStateByAxis,
+            [stateAxis]: stateContext,
+          });
+          const onId = contextId(onCtx, modifierOrder);
+          const onFullDocResolved = await getResolvedDoc(onCtx);
 
           const offCtx = buildBaseContext(modifierOrder, modifiers, {
             [surfaceAxis]: surfaceContext,
@@ -830,16 +929,21 @@ async function main() {
           });
           // Compare state overrides against the fully resolved default-state context,
           // not incremental emitted overlays, to avoid over-emitting unchanged tokens.
-          // eslint-disable-next-line no-await-in-loop
-          const offDoc = await getResolvedDoc(offCtx);
-        const comparisonBase = offDoc;
-        const prunedResolved = pruneUnchanged(onFullDocResolved, comparisonBase);
-        const emittedResolved =
-          prunedResolved && Object.keys(prunedResolved).length > 0 ? prunedResolved : null;
 
-        if (!emittedResolved) {
-          continue;
-        }
+          const offDoc = await getResolvedDoc(offCtx);
+          const comparisonBase = offDoc;
+          const prunedResolved = pruneUnchanged(
+            onFullDocResolved,
+            comparisonBase,
+          );
+          const emittedResolved =
+            prunedResolved && Object.keys(prunedResolved).length > 0
+              ? prunedResolved
+              : null;
+
+          if (!emittedResolved) {
+            continue;
+          }
 
           const emitTargets = resolveContextEmitTargets(
             surfaceAxis,
@@ -854,7 +958,11 @@ async function main() {
           );
           let variantIndex = 0;
           for (const target of emitTargets) {
-            if (target.kind === "variant" && target.scope && !matchesScope(onCtx, target.scope)) {
+            if (
+              target.kind === "variant" &&
+              target.scope &&
+              !matchesScope(onCtx, target.scope)
+            ) {
               continue;
             }
             let blockId = onId;
@@ -867,11 +975,16 @@ async function main() {
                 ...defaultStateByAxis,
                 [stateAxis]: stateContext,
               });
-              // eslint-disable-next-line no-await-in-loop
+
               const compareResolved = await getResolvedDoc(compareCtx);
-              const variantResolved = pruneUnchanged(onFullDocResolved, compareResolved);
+              const variantResolved = pruneUnchanged(
+                onFullDocResolved,
+                compareResolved,
+              );
               blockDocResolved =
-                variantResolved && Object.keys(variantResolved).length > 0 ? variantResolved : null;
+                variantResolved && Object.keys(variantResolved).length > 0
+                  ? variantResolved
+                  : null;
               if (!blockDocResolved) continue;
               variantIndex += 1;
               blockId = `${onId}__variant${variantIndex}`;
@@ -916,10 +1029,12 @@ async function main() {
     targets: {
       css: {
         includeLayerRole: "public",
-        ...(typeof cssBuildDefs?.layer === "string" && cssBuildDefs.layer.length > 0
+        ...(typeof cssBuildDefs?.layer === "string" &&
+        cssBuildDefs.layer.length > 0
           ? { layer: cssBuildDefs.layer }
           : {}),
-        ...(Array.isArray(cssBuildDefs?.layerOrder) && cssBuildDefs.layerOrder.length > 0
+        ...(Array.isArray(cssBuildDefs?.layerOrder) &&
+        cssBuildDefs.layerOrder.length > 0
           ? { layerOrder: cssBuildDefs.layerOrder }
           : {}),
       },
@@ -927,18 +1042,24 @@ async function main() {
     blocks,
   };
 
-  await fs.writeFile(outTokensPath, `${JSON.stringify(contextsDoc, null, 2)}\n`, "utf8");
-  await fs.writeFile(outManifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    outTokensPath,
+    `${JSON.stringify(contextsDoc, null, 2)}\n`,
+    "utf8",
+  );
+  await fs.writeFile(
+    outManifestPath,
+    `${JSON.stringify(manifest, null, 2)}\n`,
+    "utf8",
+  );
   await fs.rm(tmpDir, { recursive: true, force: true });
 
-  // eslint-disable-next-line no-console
   console.log(`Wrote SD context tokens: ${path.relative(cwd, outTokensPath)}`);
-  // eslint-disable-next-line no-console
+
   console.log(`Wrote SD manifest: ${path.relative(cwd, outManifestPath)}`);
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 });

@@ -33,7 +33,8 @@ function isObject(value) {
 }
 
 function parsePointer(pointer) {
-  if (!pointer.startsWith("#/")) throw new Error(`Unsupported pointer: ${pointer}`);
+  if (!pointer.startsWith("#/"))
+    throw new Error(`Unsupported pointer: ${pointer}`);
   return pointer
     .slice(2)
     .split("/")
@@ -112,7 +113,11 @@ function resolveModifierContextSourceArrays({
     }
 
     visiting.add(contextName);
-    const buildContextDef = getModifierBuildContextDef(resolverDoc, modifierName, contextName);
+    const buildContextDef = getModifierBuildContextDef(
+      resolverDoc,
+      modifierName,
+      contextName,
+    );
     const baseContext = buildContextDef?.baseContext;
     if (typeof baseContext === "string" && baseContext.length > 0) {
       visit(baseContext);
@@ -151,11 +156,14 @@ function resolveSourceArray({
       }
 
       if (stack.includes(ref)) {
-        throw new Error(`Circular internal resolver reference: ${stack.join(" -> ")} -> ${ref}`);
+        throw new Error(
+          `Circular internal resolver reference: ${stack.join(" -> ")} -> ${ref}`,
+        );
       }
 
       const target = getByPointer(resolverDoc, ref);
-      if (!target) throw new Error(`Resolver internal reference not found: ${ref}`);
+      if (!target)
+        throw new Error(`Resolver internal reference not found: ${ref}`);
 
       // Set reference.
       if (ref.startsWith("#/sets/")) {
@@ -232,7 +240,9 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
     const modifierName = ref.split("/").at(-1);
     const selected = contextInput[modifierName] ?? modifierObj.default;
     if (typeof selected !== "string" || selected.length === 0) {
-      throw new Error(`No selected context for modifier "${modifierName}" and no default provided.`);
+      throw new Error(
+        `No selected context for modifier "${modifierName}" and no default provided.`,
+      );
     }
 
     const sourceArray = modifierObj.contexts[selected];
@@ -256,7 +266,10 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
         sourceArray: entry.sourceArray,
         output,
         seen,
-        stack: [ref, `#/modifiers/${modifierName}/contexts/${entry.contextName}`],
+        stack: [
+          ref,
+          `#/modifiers/${modifierName}/contexts/${entry.contextName}`,
+        ],
       });
     }
   }
@@ -288,17 +301,19 @@ async function run() {
   if (args.out) {
     const outPath = path.resolve(cwd, args.out);
     await fs.mkdir(path.dirname(outPath), { recursive: true });
-    await fs.writeFile(outPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
-    // eslint-disable-next-line no-console
+    await fs.writeFile(
+      outPath,
+      `${JSON.stringify(payload, null, 2)}\n`,
+      "utf8",
+    );
+
     console.log(`Wrote ordered sources to ${path.relative(cwd, outPath)}`);
   } else {
-    // eslint-disable-next-line no-console
     console.log(JSON.stringify(payload, null, 2));
   }
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 });

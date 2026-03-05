@@ -28,23 +28,20 @@ try {
   });
 
   if (diff.status !== 0) {
-    // eslint-disable-next-line no-console
-    console.error("tokens/dist is not up to date. Run `pnpm run tokens:build` and commit updated dist artifacts.");
+    console.error(
+      "tokens/dist is not up to date. Run `pnpm run tokens:build` and commit updated dist artifacts.",
+    );
     if (diff.stdout) {
-      // eslint-disable-next-line no-console
       console.error(diff.stdout);
     }
     if (diff.stderr) {
-      // eslint-disable-next-line no-console
       console.error(diff.stderr);
     }
     process.exit(1);
   }
 
-  // eslint-disable-next-line no-console
   console.log("tokens/dist is up to date.");
 } catch (error) {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 }
