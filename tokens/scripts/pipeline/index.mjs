@@ -34,8 +34,13 @@ function run(cmd, args, opts = {}) {
   return res;
 }
 
-async function writePrivateCssManifest(publicManifestPath, privateManifestPath) {
-  const publicManifest = JSON.parse(await fs.readFile(publicManifestPath, "utf8"));
+async function writePrivateCssManifest(
+  publicManifestPath,
+  privateManifestPath,
+) {
+  const publicManifest = JSON.parse(
+    await fs.readFile(publicManifestPath, "utf8"),
+  );
   const privateManifest = {
     ...publicManifest,
     targets: {
@@ -47,7 +52,11 @@ async function writePrivateCssManifest(publicManifestPath, privateManifestPath) 
     },
   };
   await fs.mkdir(path.dirname(privateManifestPath), { recursive: true });
-  await fs.writeFile(privateManifestPath, `${JSON.stringify(privateManifest, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    privateManifestPath,
+    `${JSON.stringify(privateManifest, null, 2)}\n`,
+    "utf8",
+  );
 }
 
 async function main() {
@@ -81,9 +90,12 @@ async function main() {
 
   let selectedTargets;
   if (cli.target === "all") selectedTargets = Object.keys(buildTargets);
-  else if (Object.prototype.hasOwnProperty.call(buildTargets, cli.target)) selectedTargets = [cli.target];
+  else if (Object.prototype.hasOwnProperty.call(buildTargets, cli.target))
+    selectedTargets = [cli.target];
   else {
-    throw new Error(`Unknown --target "${cli.target}". Use one of: all, ${Object.keys(buildTargets).join(", ")}`);
+    throw new Error(
+      `Unknown --target "${cli.target}". Use one of: all, ${Object.keys(buildTargets).join(", ")}`,
+    );
   }
 
   const outputs = [];
@@ -101,7 +113,13 @@ async function main() {
 
     run(
       "pnpm",
-      ["exec", "style-dictionary", "build", "--config", "tokens/style-dictionary.config.mjs"],
+      [
+        "exec",
+        "style-dictionary",
+        "build",
+        "--config",
+        "tokens/style-dictionary.config.mjs",
+      ],
       {
         env: {
           ...process.env,
@@ -112,11 +130,20 @@ async function main() {
       },
     );
 
-    await writePrivateCssManifest(path.resolve(cwd, cfg.manifest), path.resolve(cwd, cfg.manifestPrivate));
+    await writePrivateCssManifest(
+      path.resolve(cwd, cfg.manifest),
+      path.resolve(cwd, cfg.manifestPrivate),
+    );
 
     run(
       "pnpm",
-      ["exec", "style-dictionary", "build", "--config", "tokens/style-dictionary.config.mjs"],
+      [
+        "exec",
+        "style-dictionary",
+        "build",
+        "--config",
+        "tokens/style-dictionary.config.mjs",
+      ],
       {
         env: {
           ...process.env,
@@ -129,7 +156,6 @@ async function main() {
     outputs.push(cfg);
   }
 
-  // eslint-disable-next-line no-console
   console.log(
     `Built token artifacts:\n${outputs
       .map(
@@ -141,7 +167,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
 });
