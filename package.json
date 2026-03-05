@@ -1,9 +1,9 @@
 {
   "name": "calibrate",
   "version": "0.0.0",
-  "private": "true",
+  "private": true,
   "scripts": {
-    "tokens:build": "node tokens/scripts/build.mjs",
+    "tokens:build": "node tokens/scripts/pipeline/index.mjs",
     "tokens:validate": "node tokens/scripts/validate.mjs",
     "tokens:verify": "node tokens/scripts/verify.mjs"
   },

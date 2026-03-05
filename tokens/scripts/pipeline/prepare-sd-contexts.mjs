@@ -295,7 +295,7 @@ async function resolveContextSources(ctx, modifierOrder) {
   await fs.writeFile(contextPath, `${JSON.stringify(ctx, null, 2)}\n`, "utf8");
 
   run("node", [
-    "tokens/scripts/resolve-token-sources.mjs",
+    "tokens/scripts/pipeline/resolve-token-sources.mjs",
     "--resolver",
     path.relative(cwd, resolverPath),
     "--context",
@@ -318,7 +318,7 @@ async function buildMergedDoc(id, sources) {
   await fs.writeFile(sourcesPath, `${JSON.stringify({ sources }, null, 2)}\n`, "utf8");
 
   run("node", [
-    "tokens/scripts/prepare-sd-sources.mjs",
+    "tokens/scripts/pipeline/prepare-sd-sources.mjs",
     "--sources-file",
     path.relative(cwd, sourcesPath),
     "--resolver",

@@ -4,7 +4,7 @@
 
 This document defines the stable constraints for token authoring, structure, and resolution.
 Planning and sequencing live in `docs/PLANNING.md`.
-Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
+Resolver adapter details live in `tokens/scripts/pipeline/README.md`.
 
 ## Program Goals
 
@@ -18,7 +18,7 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 
 ## API And Ownership
 
-- Ensure `*.tokens.json` files conform to `docs/w3c-dtcg-spec`.
+- Ensure `*.tokens.json` files conform to `tokens/schemas/2025.10/spec`.
 - `tokens/src/<brand>/primitive` is private; public API is `tokens/src/<brand>/semantic`.
 - Semantic tokens are the only public API surface; consumers should not bind to primitive paths.
 - Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
