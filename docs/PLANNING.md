@@ -6,16 +6,16 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active `Now` tasks.
+- No active `Now` items. Pick up from `Next`.
 
 ## Next
 
 What we could start work on next.
 
-- Start a component token layer (`tokens/src/<brand>/components/...`) after pipeline + validation are stable.
-  - finalize surface taxonomy contract and whether all components bind to explicit surface context
-  - one component initially
-  - then more
+- Explore authoring ergonomics to reduce repeated context token declarations:
+  - allow sparse/override-only context files as first-class authoring pattern
+  - define guardrails so required alias anchors are preserved while removing pure duplicates
+  - evaluate helper tooling/lint rule to suggest safe duplicate pruning
 
 - ideas
   - maybe move resolver_sd_bridge docs to colocate with the code?
@@ -27,7 +27,18 @@ What we could start work on next.
 Everything we could attempt given sufficient time and resources.
 
 - Expand validation coverage with optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`.
+- Add machine-readable intent metadata across semantic tokens/groups:
+  - usage guidance for humans/agents
+  - token selection hints and anti-pattern notes
+  - context expectations where relevant
 - Prove end-to-end token consumption in a target stylesheet/component slice.
+- Define and prototype framework-agnostic component recipes/specs:
+  - canonical HTML snippets and usage patterns aligned with token API
+  - evaluate web-component-style specs as recipe artifacts
+  - assess adapter paths from canonical recipes to framework-specific implementations
+- Component expansion follow-up (recipe-led, not token-first):
+  - validate second-component patterns via recipes/specs before adding broader component token APIs
+  - only promote reusable component-axis/context tokens where recipe evidence shows clear value
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
 - Define cross-target export contract from `tokens/dist/json/clbr.msrd.contexts.json`:
@@ -108,3 +119,11 @@ What we've done.
   - file naming: `clbr.<brand>.primitives.css`
   - variable guard prefix: `--clbr-primitive-*`
   - documented as non-public/non-stable contract (semantic remains the public API)
+- Component token layer architecture proved with Card pilot:
+  - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
+  - component tokens resolve across theme/surface/state contexts with correct diff behavior
+  - forced-colors component overrides emit correctly without leaking unrelated semantic tokens
+  - output naming and scoping conventions validated in generated CSS
+- Card and `wrfr` are intentionally retained as architecture probes for now:
+  - Card remains in-tree to validate component-theme/surface/state support and resolver->SD behavior
+  - `wrfr` remains in-tree to validate multi-brand packaging and runtime scoping patterns

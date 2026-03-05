@@ -426,6 +426,9 @@
             "column": {
               "default": {
                 "$value": "24px"
+              },
+              "lg": {
+                "$value": "24px"
               }
             },
             "$type": "dimension"

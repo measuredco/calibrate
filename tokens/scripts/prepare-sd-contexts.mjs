@@ -600,6 +600,7 @@ async function main() {
   const responsiveDef = modifierBuildDefs?.[responsiveAxis] ?? null;
 
   const fullDocsByContextId = new Map();
+  const resolvedDocsByContextId = new Map();
 
   const getFullDoc = async (ctx) => {
     const id = contextId(ctx, modifierOrder);
@@ -608,6 +609,15 @@ async function main() {
     const doc = await buildMergedDoc(id, sources);
     fullDocsByContextId.set(id, doc);
     return doc;
+  };
+
+  const getResolvedDoc = async (ctx) => {
+    const id = contextId(ctx, modifierOrder);
+    if (resolvedDocsByContextId.has(id)) return resolvedDocsByContextId.get(id);
+    const fullDoc = await getFullDoc(ctx);
+    const resolved = resolveAliasValues(fullDoc, fullDoc);
+    resolvedDocsByContextId.set(id, resolved);
+    return resolved;
   };
 
   const defaultStateByAxis = {};
@@ -646,11 +656,11 @@ async function main() {
 
   const contextsRoot = {};
   const blocks = [];
-  const offEffectiveByContextId = new Map();
-  const offOwnOverlayBySurface = new Map();
-  for (const surfaceContext of surfaceContexts) offOwnOverlayBySurface.set(surfaceContext, {});
+  const previousOffOverlayBySurface = new Map();
+  for (const surfaceContext of surfaceContexts) previousOffOverlayBySurface.set(surfaceContext, {});
 
-  for (const responsiveContext of responsiveContexts) {
+  for (let responsiveIndex = 0; responsiveIndex < responsiveContexts.length; responsiveIndex += 1) {
+    const responsiveContext = responsiveContexts[responsiveIndex];
     const deferredVariantBlocks = [];
     for (const surfaceContext of surfaceOrder) {
       const ctx = buildBaseContext(modifierOrder, modifiers, {
@@ -659,28 +669,27 @@ async function main() {
         ...defaultStateByAxis,
       });
       const id = contextId(ctx, modifierOrder);
-      const fullDoc = fullDocsByContextId.get(id);
+      const fullDocResolved = await getResolvedDoc(ctx);
       const def = surfaceDefs?.[surfaceContext];
       const baseSurface = def?.baseContext ?? null;
-      const baseDoc = baseSurface
-        ? offEffectiveByContextId.get(
-            contextId(
-              buildBaseContext(modifierOrder, modifiers, {
-                [surfaceAxis]: baseSurface,
-                [responsiveAxis]: responsiveContext,
-                ...defaultStateByAxis,
-              }),
-              modifierOrder,
-            ),
-          ) || {}
+      const baseDocResolved = baseSurface
+        ? await getResolvedDoc(
+            buildBaseContext(modifierOrder, modifiers, {
+              [surfaceAxis]: baseSurface,
+              [responsiveAxis]: responsiveContext,
+              ...defaultStateByAxis,
+            }),
+          )
         : {};
-      const ownOverlay = offOwnOverlayBySurface.get(surfaceContext) || {};
-      const comparisonBase = deepMerge(baseDoc, ownOverlay);
 
-      const prunedRaw = pruneUnchanged(fullDoc, comparisonBase);
-      let emittedRaw = null;
-      if (prunedRaw && Object.keys(prunedRaw).length > 0) {
-        emittedRaw = prunedRaw;
+      // Overlay for this surface at this responsive context (removes inherited/base tokens).
+      const currentOverlayResolved = pruneUnchanged(fullDocResolved, baseDocResolved) || {};
+      const previousOverlayResolved = previousOffOverlayBySurface.get(surfaceContext) || {};
+      // Emit only the delta from previous responsive overlay for this surface.
+      const prunedResolved = pruneUnchanged(currentOverlayResolved, previousOverlayResolved);
+      let emittedResolved = null;
+      if (prunedResolved && Object.keys(prunedResolved).length > 0) {
+        emittedResolved = prunedResolved;
 
         const emitTargets = resolveContextEmitTargets(
           modifierBuildDefs?.[surfaceAxis],
@@ -696,7 +705,7 @@ async function main() {
             continue;
           }
           let blockId = id;
-          let blockDocRaw = emittedRaw;
+          let blockDocResolved = emittedResolved;
 
           if (target.kind === "variant" && target.deltaFromContext) {
             const compareCtx = buildBaseContext(modifierOrder, modifiers, {
@@ -705,17 +714,18 @@ async function main() {
               ...defaultStateByAxis,
             });
             // eslint-disable-next-line no-await-in-loop
-            const compareDoc = await getFullDoc(compareCtx);
-            const variantRaw = pruneUnchanged(fullDoc, compareDoc);
-            blockDocRaw = variantRaw && Object.keys(variantRaw).length > 0 ? variantRaw : null;
-            if (!blockDocRaw) continue;
+            const compareResolved = await getResolvedDoc(compareCtx);
+            const variantResolved = pruneUnchanged(fullDocResolved, compareResolved);
+            blockDocResolved =
+              variantResolved && Object.keys(variantResolved).length > 0 ? variantResolved : null;
+            if (!blockDocResolved) continue;
             variantIndex += 1;
             blockId = `${id}__variant${variantIndex}`;
-            contextsRoot[blockId] = resolveAliasValues(blockDocRaw, fullDoc);
+            contextsRoot[blockId] = blockDocResolved;
           }
 
           if (target.kind === "base") {
-            contextsRoot[blockId] = resolveAliasValues(blockDocRaw, fullDoc);
+            contextsRoot[blockId] = blockDocResolved;
           }
 
           const media = [...target.media];
@@ -735,11 +745,7 @@ async function main() {
         }
       }
 
-      if (emittedRaw) {
-        offOwnOverlayBySurface.set(surfaceContext, deepMerge(ownOverlay, emittedRaw));
-      }
-      const nextOverlay = offOwnOverlayBySurface.get(surfaceContext) || {};
-      offEffectiveByContextId.set(id, deepMerge(baseDoc, nextOverlay));
+      previousOffOverlayBySurface.set(surfaceContext, currentOverlayResolved);
     }
     blocks.push(...deferredVariantBlocks);
   }
@@ -776,46 +782,38 @@ async function main() {
     );
 
     for (const stateContext of emitContexts) {
-      const stateEffectiveBySurface = new Map();
       const surfaceScopeSet = new Set(surfaceScope);
       for (const surfaceContext of surfaceOrder) {
         if (!surfaceScopeSet.has(surfaceContext)) continue;
 
         for (const responsiveContext of responsiveScope) {
-          const onCtx = buildBaseContext(modifierOrder, modifiers, {
+        const onCtx = buildBaseContext(modifierOrder, modifiers, {
+          [surfaceAxis]: surfaceContext,
+          [responsiveAxis]: responsiveContext,
+          ...defaultStateByAxis,
+          [stateAxis]: stateContext,
+        });
+        const onId = contextId(onCtx, modifierOrder);
+        const onFullDocResolved = await getResolvedDoc(onCtx);
+
+          const offCtx = buildBaseContext(modifierOrder, modifiers, {
             [surfaceAxis]: surfaceContext,
             [responsiveAxis]: responsiveContext,
             ...defaultStateByAxis,
-            [stateAxis]: stateContext,
+            [stateAxis]: defaultState,
           });
-          const onId = contextId(onCtx, modifierOrder);
-          const onFullDoc = await getFullDoc(onCtx);
+          // Compare state overrides against the fully resolved default-state context,
+          // not incremental emitted overlays, to avoid over-emitting unchanged tokens.
+          // eslint-disable-next-line no-await-in-loop
+          const offDoc = await getResolvedDoc(offCtx);
+        const comparisonBase = offDoc;
+        const prunedResolved = pruneUnchanged(onFullDocResolved, comparisonBase);
+        const emittedResolved =
+          prunedResolved && Object.keys(prunedResolved).length > 0 ? prunedResolved : null;
 
-          const surfaceBuildDef = surfaceDefs?.[surfaceContext];
-          const baseSurface = surfaceBuildDef?.baseContext ?? null;
-          const offDoc = offEffectiveByContextId.get(
-            contextId(
-              buildBaseContext(modifierOrder, modifiers, {
-                [surfaceAxis]: surfaceContext,
-                [responsiveAxis]: responsiveContext,
-                ...defaultStateByAxis,
-                [stateAxis]: defaultState,
-              }),
-              modifierOrder,
-            ),
-          ) || {};
-          const baseStateDoc =
-            baseSurface && surfaceScopeSet.has(baseSurface)
-              ? stateEffectiveBySurface.get(baseSurface) || {}
-              : {};
-          const comparisonBase = deepMerge(baseStateDoc, offDoc);
-          const prunedRaw = pruneUnchanged(onFullDoc, comparisonBase);
-          const emittedRaw = prunedRaw && Object.keys(prunedRaw).length > 0 ? prunedRaw : null;
-
-          if (!emittedRaw) {
-            stateEffectiveBySurface.set(surfaceContext, comparisonBase);
-            continue;
-          }
+        if (!emittedResolved) {
+          continue;
+        }
 
           const emitTargets = resolveContextEmitTargets(
             modifierBuildDefs?.[surfaceAxis],
@@ -831,7 +829,7 @@ async function main() {
               continue;
             }
             let blockId = onId;
-            let blockDocRaw = emittedRaw;
+            let blockDocResolved = emittedResolved;
 
             if (target.kind === "variant" && target.deltaFromContext) {
               const compareCtx = buildBaseContext(modifierOrder, modifiers, {
@@ -841,17 +839,18 @@ async function main() {
                 [stateAxis]: stateContext,
               });
               // eslint-disable-next-line no-await-in-loop
-              const compareDoc = await getFullDoc(compareCtx);
-              const variantRaw = pruneUnchanged(onFullDoc, compareDoc);
-              blockDocRaw = variantRaw && Object.keys(variantRaw).length > 0 ? variantRaw : null;
-              if (!blockDocRaw) continue;
+              const compareResolved = await getResolvedDoc(compareCtx);
+              const variantResolved = pruneUnchanged(onFullDocResolved, compareResolved);
+              blockDocResolved =
+                variantResolved && Object.keys(variantResolved).length > 0 ? variantResolved : null;
+              if (!blockDocResolved) continue;
               variantIndex += 1;
               blockId = `${onId}__variant${variantIndex}`;
-              contextsRoot[blockId] = resolveAliasValues(blockDocRaw, onFullDoc);
+              contextsRoot[blockId] = blockDocResolved;
             }
 
             if (target.kind === "base") {
-              contextsRoot[blockId] = resolveAliasValues(blockDocRaw, onFullDoc);
+              contextsRoot[blockId] = blockDocResolved;
             }
 
             const media = [...target.media];
@@ -869,8 +868,6 @@ async function main() {
               media,
             });
           }
-
-          stateEffectiveBySurface.set(surfaceContext, deepMerge(comparisonBase, emittedRaw));
         }
       }
     }
