@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import json from "@eslint/json";
 import globals from "globals";
 
 export default [
@@ -10,12 +11,18 @@ export default [
       "tokens/schemas/**",
     ],
   },
-  js.configs.recommended,
   {
+    files: ["**/*.mjs"],
+    ...js.configs.recommended,
     languageOptions: {
       globals: {
         ...globals.node,
       },
     },
+  },
+  {
+    files: ["**/*.json"],
+    ...json.configs.recommended,
+    language: "json/json",
   },
 ];
