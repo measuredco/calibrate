@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -33,26 +34,48 @@ function run(cmd, args, opts = {}) {
   return res;
 }
 
-function main() {
+async function writePrivateCssManifest(publicManifestPath, privateManifestPath) {
+  const publicManifest = JSON.parse(await fs.readFile(publicManifestPath, "utf8"));
+  const privateManifest = {
+    ...publicManifest,
+    targets: {
+      ...publicManifest.targets,
+      css: {
+        ...(publicManifest?.targets?.css ?? {}),
+        includeLayerRole: "private",
+      },
+    },
+  };
+  await fs.mkdir(path.dirname(privateManifestPath), { recursive: true });
+  await fs.writeFile(privateManifestPath, `${JSON.stringify(privateManifest, null, 2)}\n`, "utf8");
+}
+
+async function main() {
   const cli = parseArgs(process.argv.slice(2));
   const buildTargets = {
     core: {
       resolver: "tokens/resolver/core.resolver.json",
       out: "tokens/dist/css/clbr.core.tokens.css",
+      outPrivate: "tokens/dist/private/css/clbr.core.primitives.css",
       contexts: "tokens/dist/json/clbr.core.contexts.json",
       manifest: "tokens/build/sd/clbr.core.css-manifest.json",
+      manifestPrivate: "tokens/build/sd/clbr.core.css-private-manifest.json",
     },
     msrd: {
       resolver: "tokens/resolver/msrd.resolver.json",
       out: "tokens/dist/css/clbr.msrd.tokens.css",
+      outPrivate: "tokens/dist/private/css/clbr.msrd.primitives.css",
       contexts: "tokens/dist/json/clbr.msrd.contexts.json",
       manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
+      manifestPrivate: "tokens/build/sd/clbr.msrd.css-private-manifest.json",
     },
     wrfr: {
       resolver: "tokens/resolver/wrfr.resolver.json",
       out: "tokens/dist/css/clbr.wrfr.tokens.css",
+      outPrivate: "tokens/dist/private/css/clbr.wrfr.primitives.css",
       contexts: "tokens/dist/json/clbr.wrfr.contexts.json",
       manifest: "tokens/build/sd/clbr.wrfr.css-manifest.json",
+      manifestPrivate: "tokens/build/sd/clbr.wrfr.css-private-manifest.json",
     },
   };
 
@@ -88,6 +111,21 @@ function main() {
         },
       },
     );
+
+    await writePrivateCssManifest(path.resolve(cwd, cfg.manifest), path.resolve(cwd, cfg.manifestPrivate));
+
+    run(
+      "pnpm",
+      ["exec", "style-dictionary", "build", "--config", "tokens/style-dictionary.config.mjs"],
+      {
+        env: {
+          ...process.env,
+          TOKENS_CONTEXTS_FILE: path.resolve(cwd, cfg.contexts),
+          TOKENS_MANIFEST_FILE: path.resolve(cwd, cfg.manifestPrivate),
+          TOKENS_CSS_OUT: path.resolve(cwd, cfg.outPrivate),
+        },
+      },
+    );
     outputs.push(cfg);
   }
 
@@ -96,16 +134,14 @@ function main() {
     `Built token artifacts:\n${outputs
       .map(
         (cfg) =>
-          `- CSS: ${cfg.out}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
+          `- CSS: ${cfg.out}\n  Private primitive CSS: ${cfg.outPrivate}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
       )
       .join("\n")}`,
   );
 }
 
-try {
-  main();
-} catch (error) {
+main().catch((error) => {
   // eslint-disable-next-line no-console
   console.error(error.message);
   process.exit(1);
-}
+});

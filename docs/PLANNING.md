@@ -12,24 +12,21 @@ What we're working on now.
 
 What we could start work on next.
 
-- Expand validation coverage after baseline gate is in place:
-  - add optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`
-
-- Add optional private primitive output for maintainer/discovery workflows (after resolver+multi-brand packaging stabilize):
-  - output path: `tokens/dist/private/css/`
-  - file naming: `clbr.<brand>.primitives.css`
-  - variable guard prefix: `--clbr-primitive-*`
-  - document as non-public/non-stable contract (semantic remains the public API)
-
 - Start a component token layer (`tokens/src/<brand>/components/...`) after pipeline + validation are stable.
   - finalize surface taxonomy contract and whether all components bind to explicit surface context
   - one component initially
   - then more
 
+- ideas
+  - maybe move resolver_sd_bridge docs to colocate with the code?
+  - maybe put the 4 build scripts in a build folder with index?
+  - do we still need the specs in docs?
+
 ## Later
 
 Everything we could attempt given sufficient time and resources.
 
+- Expand validation coverage with optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`.
 - Prove end-to-end token consumption in a target stylesheet/component slice.
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
@@ -106,3 +103,8 @@ What we've done.
   - CI runs:
     - `pnpm run tokens:validate`
     - `pnpm run tokens:verify`
+- Optional private primitive output implemented for maintainer/discovery workflows:
+  - output path: `tokens/dist/private/css/`
+  - file naming: `clbr.<brand>.primitives.css`
+  - variable guard prefix: `--clbr-primitive-*`
+  - documented as non-public/non-stable contract (semantic remains the public API)
