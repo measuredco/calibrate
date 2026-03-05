@@ -32,6 +32,15 @@
       }
     },
     "heading": {
+      "panel": {
+        "$value": {
+          "fontFamily": "{primitive.typography.fontFamily.sans}",
+          "fontSize": "{primitive.typography.typeStep.500.fontSize}",
+          "fontWeight": "{primitive.typography.fontWeight.450}",
+          "letterSpacing": "{primitive.typography.letterSpacing.0}",
+          "lineHeight": "{primitive.typography.typeStep.500.lineHeight}"
+        }
+      },
       "xs": {
         "$value": {
           "fontFamily": "{primitive.typography.fontFamily.sans}",

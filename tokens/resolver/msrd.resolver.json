@@ -11,7 +11,7 @@
       },
       "layers": {
         "private": ["primitive"],
-        "public": ["semantic", "components"]
+        "public": ["semantic", "component"]
       },
       "namespace": "clbr",
       "targets": {
@@ -222,6 +222,9 @@
           },
           {
             "$ref": "../src/msrd/semantic/color/theme/light/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/component/card/color/theme/light/default.tokens.json"
           }
         ],
         "lightBrand": [
@@ -230,6 +233,9 @@
           },
           {
             "$ref": "../src/msrd/semantic/color/theme/light/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/component/card/color/theme/light/brand.tokens.json"
           }
         ],
         "darkDefault": [
@@ -238,6 +244,9 @@
           },
           {
             "$ref": "../src/msrd/semantic/color/theme/dark/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/component/card/color/theme/dark/default.tokens.json"
           }
         ],
         "darkBrand": [
@@ -246,6 +255,9 @@
           },
           {
             "$ref": "../src/msrd/semantic/color/theme/dark/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/component/card/color/theme/dark/brand.tokens.json"
           }
         ]
       }
@@ -258,6 +270,9 @@
         "on": [
           {
             "$ref": "../src/msrd/semantic/color/forced-colors/on.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/component/card/color/forced-colors/on.tokens.json"
           }
         ]
       }

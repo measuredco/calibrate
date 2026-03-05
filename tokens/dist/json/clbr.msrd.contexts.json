@@ -1996,6 +1996,9 @@
         "400": {
           "$value": "18px"
         },
+        "panel": {
+          "$value": "18px"
+        },
         "focusRing": {
           "$value": "1px"
         },
@@ -2350,6 +2353,19 @@
             }
           },
           "heading": {
+            "panel": {
+              "$value": {
+                "fontFamily": [
+                  "InterVariable",
+                  "system-ui",
+                  "sans-serif"
+                ],
+                "fontSize": "24px",
+                "fontWeight": 433,
+                "letterSpacing": "0px",
+                "lineHeight": 1.5
+              }
+            },
             "xs": {
               "$value": {
                 "fontFamily": [
@@ -2666,6 +2682,17 @@
                 0.792157
               ],
               "hex": "#c8c9ca"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.427451,
+                0.709804,
+                0.972549
+              ],
+              "hex": "#6db5f8"
             }
           },
           "subtle": {
@@ -3053,6 +3080,47 @@
         },
         "$description": "Semantic color tokens for msrd light/default surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.890196,
+                  0.894118,
+                  0.898039
+                ],
+                "hex": "#e3e4e5"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.427451,
+                  0.709804,
+                  0.972549
+                ],
+                "hex": "#6db5f8"
+              }
+            }
+          },
+          "interactive": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
+            }
+          },
+          "$description": "Card component color tokens for msrd light/default context.",
+          "$type": "color"
+        }
       }
     },
     "baseline-lightDefault-off__variant1": {
@@ -3106,6 +3174,17 @@
           }
         },
         "logo": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
+            }
+          },
           "neutral": {
             "$value": {
               "colorSpace": "srgb",
@@ -3210,6 +3289,17 @@
                 "hex": "#898a8b"
               }
             }
+          },
+          "contrast": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.976471,
+                0.980392,
+                0.984314
+              ],
+              "hex": "#f9fafb"
+            }
           }
         },
         "border": {
@@ -3222,6 +3312,17 @@
                 0.792157
               ],
               "hex": "#c8c9ca"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.427451,
+                0.709804,
+                0.972549
+              ],
+              "hex": "#6db5f8"
             }
           },
           "subtle": {
@@ -3237,6 +3338,28 @@
           }
         },
         "interactive": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
+            }
+          },
+          "visited": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
+            }
+          },
           "hover": {
             "$value": {
               "colorSpace": "srgb",
@@ -3282,6 +3405,17 @@
                 "hex": "#0b0c0d"
               }
             },
+            "visited": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.043137,
+                  0.047059,
+                  0.05098
+                ],
+                "hex": "#0b0c0d"
+              }
+            },
             "hover": {
               "$value": {
                 "colorSpace": "srgb",
@@ -3291,6 +3425,17 @@
                   0.678431
                 ],
                 "hex": "#0158ad"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.819608,
+                  0.321569,
+                  0.580392
+                ],
+                "hex": "#d15294"
               }
             },
             "active": {
@@ -3326,6 +3471,50 @@
                   0.854902
                 ],
                 "hex": "#813eda"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.086275,
+                  0.4,
+                  0.733333
+                ],
+                "hex": "#1666bb"
+              }
+            },
+            "hoverDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.427451,
+                  0.709804,
+                  0.972549
+                ],
+                "hex": "#6db5f8"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.819608,
+                  0.321569,
+                  0.580392
+                ],
+                "hex": "#d15294"
+              }
+            },
+            "active": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.015686,
+                  0.141176,
+                  0.403922
+                ],
+                "hex": "#042467"
               }
             },
             "activeDecoration": {
@@ -3521,6 +3710,47 @@
         },
         "$description": "Semantic color tokens for msrd light/default surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.890196,
+                  0.894118,
+                  0.898039
+                ],
+                "hex": "#e3e4e5"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.427451,
+                  0.709804,
+                  0.972549
+                ],
+                "hex": "#6db5f8"
+              }
+            }
+          },
+          "interactive": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
+            }
+          },
+          "$description": "Card component color tokens for msrd light/default context.",
+          "$type": "color"
+        }
       }
     },
     "baseline-lightBrand-off": {
@@ -3670,6 +3900,17 @@
                 "hex": "#ffffff"
               }
             }
+          },
+          "contrast": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.011765,
+                0.121569,
+                0.376471
+              ],
+              "hex": "#031f60"
+            }
           }
         },
         "border": {
@@ -3683,6 +3924,17 @@
               ],
               "alpha": 0.16,
               "hex": "#ffffff"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
             }
           },
           "subtle": {
@@ -3699,6 +3951,28 @@
           }
         },
         "interactive": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "visited": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
           "hover": {
             "$value": {
               "colorSpace": "srgb",
@@ -3733,6 +4007,30 @@
             }
           },
           "neutral": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1
+                ],
+                "alpha": 0.94,
+                "hex": "#ffffff"
+              }
+            },
+            "visited": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1
+                ],
+                "alpha": 0.94,
+                "hex": "#ffffff"
+              }
+            },
             "hover": {
               "$value": {
                 "colorSpace": "srgb",
@@ -3743,6 +4041,17 @@
                 ],
                 "alpha": 0.8,
                 "hex": "#ffffff"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.898039,
+                  0.415686,
+                  0.67451
+                ],
+                "hex": "#e56aac"
               }
             },
             "active": {
@@ -3779,6 +4088,61 @@
                   0.984314
                 ],
                 "hex": "#b776fb"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.207843,
+                  0.596078,
+                  0.972549
+                ],
+                "hex": "#3598f8"
+              }
+            },
+            "hoverDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.003922,
+                  0.345098,
+                  0.678431
+                ],
+                "hex": "#0158ad"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.898039,
+                  0.415686,
+                  0.67451
+                ],
+                "hex": "#e56aac"
+              }
+            },
+            "active": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.576471,
+                  0.772549,
+                  0.980392
+                ],
+                "hex": "#93c5fa"
+              }
+            },
+            "activeDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.576471,
+                  0.772549,
+                  0.980392
+                ],
+                "hex": "#93c5fa"
               }
             }
           }
@@ -3963,6 +4327,47 @@
         },
         "$description": "Semantic color tokens for msrd light/brand surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.003922,
+                  0.345098,
+                  0.678431
+                ],
+                "hex": "#0158ad"
+              }
+            }
+          },
+          "interactive": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "$description": "Card component color tokens for msrd light/brand context.",
+          "$type": "color"
+        }
       }
     },
     "baseline-darkDefault-off": {
@@ -4016,6 +4421,17 @@
           }
         },
         "logo": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
           "neutral": {
             "$value": {
               "colorSpace": "srgb",
@@ -4120,6 +4536,17 @@
                 "hex": "#656667"
               }
             }
+          },
+          "contrast": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.054902,
+                0.058824,
+                0.062745
+              ],
+              "hex": "#0e0f10"
+            }
           }
         },
         "border": {
@@ -4132,6 +4559,17 @@
                 0.266667
               ],
               "hex": "#434444"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.031373,
+                0.235294,
+                0.541176
+              ],
+              "hex": "#083c8a"
             }
           },
           "subtle": {
@@ -4147,6 +4585,28 @@
           }
         },
         "interactive": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "visited": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
           "hover": {
             "$value": {
               "colorSpace": "srgb",
@@ -4192,6 +4652,17 @@
                 "hex": "#f9fafb"
               }
             },
+            "visited": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.976471,
+                  0.980392,
+                  0.984314
+                ],
+                "hex": "#f9fafb"
+              }
+            },
             "hover": {
               "$value": {
                 "colorSpace": "srgb",
@@ -4201,6 +4672,17 @@
                   0.792157
                 ],
                 "hex": "#c8c9ca"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.737255,
+                  0.223529,
+                  0.490196
+                ],
+                "hex": "#bc397d"
               }
             },
             "active": {
@@ -4236,6 +4718,50 @@
                   0.941176
                 ],
                 "hex": "#a35ff0"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.164706,
+                  0.517647,
+                  0.882353
+                ],
+                "hex": "#2a84e1"
+              }
+            },
+            "hoverDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.737255,
+                  0.223529,
+                  0.490196
+                ],
+                "hex": "#bc397d"
+              }
+            },
+            "active": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.086275,
+                  0.4,
+                  0.733333
+                ],
+                "hex": "#1666bb"
               }
             },
             "activeDecoration": {
@@ -4431,6 +4957,47 @@
         },
         "$description": "Semantic color tokens for msrd dark/default surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.137255,
+                  0.141176,
+                  0.141176
+                ],
+                "hex": "#232424"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            }
+          },
+          "interactive": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "$description": "Card component color tokens for msrd dark/default context.",
+          "$type": "color"
+        }
       }
     },
     "baseline-darkDefault-off__variant1": {
@@ -4484,6 +5051,17 @@
           }
         },
         "logo": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
           "neutral": {
             "$value": {
               "colorSpace": "srgb",
@@ -4588,6 +5166,17 @@
                 "hex": "#656667"
               }
             }
+          },
+          "contrast": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.054902,
+                0.058824,
+                0.062745
+              ],
+              "hex": "#0e0f10"
+            }
           }
         },
         "border": {
@@ -4600,6 +5189,17 @@
                 0.266667
               ],
               "hex": "#434444"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.031373,
+                0.235294,
+                0.541176
+              ],
+              "hex": "#083c8a"
             }
           },
           "subtle": {
@@ -4615,6 +5215,28 @@
           }
         },
         "interactive": {
+          "default": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "visited": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
           "hover": {
             "$value": {
               "colorSpace": "srgb",
@@ -4660,6 +5282,17 @@
                 "hex": "#f9fafb"
               }
             },
+            "visited": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.976471,
+                  0.980392,
+                  0.984314
+                ],
+                "hex": "#f9fafb"
+              }
+            },
             "hover": {
               "$value": {
                 "colorSpace": "srgb",
@@ -4669,6 +5302,17 @@
                   0.792157
                 ],
                 "hex": "#c8c9ca"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.737255,
+                  0.223529,
+                  0.490196
+                ],
+                "hex": "#bc397d"
               }
             },
             "active": {
@@ -4704,6 +5348,50 @@
                   0.941176
                 ],
                 "hex": "#a35ff0"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.164706,
+                  0.517647,
+                  0.882353
+                ],
+                "hex": "#2a84e1"
+              }
+            },
+            "hoverDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.737255,
+                  0.223529,
+                  0.490196
+                ],
+                "hex": "#bc397d"
+              }
+            },
+            "active": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.086275,
+                  0.4,
+                  0.733333
+                ],
+                "hex": "#1666bb"
               }
             },
             "activeDecoration": {
@@ -4899,6 +5587,47 @@
         },
         "$description": "Semantic color tokens for msrd dark/default surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.137255,
+                  0.141176,
+                  0.141176
+                ],
+                "hex": "#232424"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            }
+          },
+          "interactive": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.207843,
+                0.596078,
+                0.972549
+              ],
+              "hex": "#3598f8"
+            }
+          },
+          "$description": "Card component color tokens for msrd dark/default context.",
+          "$type": "color"
+        }
       }
     },
     "baseline-darkBrand-off": {
@@ -4942,17 +5671,6 @@
         },
         "logo": {
           "default": {
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                1,
-                1,
-                1
-              ],
-              "hex": "#ffffff"
-            }
-          },
-          "neutral": {
             "$value": {
               "colorSpace": "srgb",
               "components": [
@@ -5061,6 +5779,17 @@
                 "hex": "#ffffff"
               }
             }
+          },
+          "contrast": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.011765,
+                0.121569,
+                0.376471
+              ],
+              "hex": "#031f60"
+            }
           }
         },
         "border": {
@@ -5074,6 +5803,17 @@
               ],
               "alpha": 0.16,
               "hex": "#ffffff"
+            }
+          },
+          "brand": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.003922,
+                0.345098,
+                0.678431
+              ],
+              "hex": "#0158ad"
             }
           },
           "subtle": {
@@ -5136,6 +5876,18 @@
                 "hex": "#ffffff"
               }
             },
+            "visited": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  1,
+                  1
+                ],
+                "alpha": 0.94,
+                "hex": "#ffffff"
+              }
+            },
             "hover": {
               "$value": {
                 "colorSpace": "srgb",
@@ -5146,6 +5898,17 @@
                 ],
                 "alpha": 0.8,
                 "hex": "#ffffff"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.898039,
+                  0.415686,
+                  0.67451
+                ],
+                "hex": "#e56aac"
               }
             },
             "active": {
@@ -5184,6 +5947,50 @@
                 "hex": "#b776fb"
               }
             },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.207843,
+                  0.596078,
+                  0.972549
+                ],
+                "hex": "#3598f8"
+              }
+            },
+            "hoverDecoration": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.003922,
+                  0.345098,
+                  0.678431
+                ],
+                "hex": "#0158ad"
+              }
+            },
+            "focus": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.898039,
+                  0.415686,
+                  0.67451
+                ],
+                "hex": "#e56aac"
+              }
+            },
+            "active": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.576471,
+                  0.772549,
+                  0.980392
+                ],
+                "hex": "#93c5fa"
+              }
+            },
             "activeDecoration": {
               "$value": {
                 "colorSpace": "srgb",
@@ -5199,6 +6006,36 @@
         },
         "$description": "Semantic color tokens for msrd dark/brand surface.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.031373,
+                  0.235294,
+                  0.541176
+                ],
+                "hex": "#083c8a"
+              }
+            },
+            "hover": {
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.003922,
+                  0.345098,
+                  0.678431
+                ],
+                "hex": "#0158ad"
+              }
+            }
+          },
+          "$description": "Card component color tokens for msrd dark/brand context.",
+          "$type": "color"
+        }
       }
     },
     "tablet-lightDefault-off": {
@@ -5381,6 +6218,23 @@
         },
         "$description": "Forced-colors overrides for msrd semantic color tokens.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": "ButtonBorder"
+            },
+            "hover": {
+              "$value": "ButtonBorder"
+            }
+          },
+          "interactive": {
+            "$value": "LinkText"
+          },
+          "$description": "",
+          "$type": "color"
+        }
       }
     },
     "baseline-lightBrand-on": {
@@ -5395,6 +6249,23 @@
         },
         "$description": "Forced-colors overrides for msrd semantic color tokens.",
         "$type": "color"
+      },
+      "card": {
+        "color": {
+          "dots": {
+            "default": {
+              "$value": "ButtonBorder"
+            },
+            "hover": {
+              "$value": "ButtonBorder"
+            }
+          },
+          "interactive": {
+            "$value": "LinkText"
+          },
+          "$description": "",
+          "$type": "color"
+        }
       }
     }
   }

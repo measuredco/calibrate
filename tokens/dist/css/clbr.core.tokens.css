@@ -87,6 +87,7 @@
       --clbr-layout-container-gutter-default: 2rem;
       --clbr-layout-container-gutter-sm: 1.5rem;
       --clbr-layout-grid-gap-column-default: 1.5rem;
+      --clbr-layout-grid-gap-column-lg: 1.5rem;
     }
   }
 

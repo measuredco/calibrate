@@ -187,7 +187,16 @@ function deriveLayerAndDomain(relPath, knownLayers) {
   const next = parts[layerIndex + 1];
   if (!next) throw new Error(`Cannot infer domain for source: ${relPath}`);
   const domain = next.endsWith(".tokens.json") ? path.basename(next, ".tokens.json") : next;
-  return { layer, domain };
+  let subdomain = null;
+  if (layer === "component") {
+    const maybeSubdomain = parts[layerIndex + 2];
+    if (typeof maybeSubdomain === "string" && maybeSubdomain.length > 0) {
+      subdomain = maybeSubdomain.endsWith(".tokens.json")
+        ? path.basename(maybeSubdomain, ".tokens.json")
+        : maybeSubdomain;
+    }
+  }
+  return { layer, domain, subdomain };
 }
 
 async function buildMergedTokenObject(sources, layerConfig) {
@@ -223,7 +232,7 @@ async function buildMergedTokenObject(sources, layerConfig) {
     // eslint-disable-next-line no-await-in-loop
     const resolvedDoc = await loadResolved(sourcePath);
     const relPath = sourcePath.replaceAll(path.sep, "/");
-    const { layer, domain } = deriveLayerAndDomain(relPath, knownLayers);
+    const { layer, domain, subdomain } = deriveLayerAndDomain(relPath, knownLayers);
 
     const docBody = Object.fromEntries(
       Object.entries(resolvedDoc).filter(([k]) => k !== "$schema"),
@@ -244,7 +253,11 @@ async function buildMergedTokenObject(sources, layerConfig) {
         : docBody;
 
     const wrapped =
-      privateLayers.has(layer) ? { [layer]: { [domain]: normalizedDoc } } : { [domain]: normalizedDoc };
+      privateLayers.has(layer)
+        ? { [layer]: { [domain]: normalizedDoc } }
+        : layer === "component" && typeof subdomain === "string" && subdomain.length > 0
+          ? { [domain]: { [subdomain]: normalizedDoc } }
+          : { [domain]: normalizedDoc };
 
     merged = deepMerge(merged, wrapped);
   }

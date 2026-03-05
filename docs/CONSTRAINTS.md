@@ -14,12 +14,14 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 - Support responsive token behavior.
 - Prove multi-brand support by adding a second brand (`wireframe`).
 - Build a transform pipeline (Style Dictionary 4) to output usable CSS.
+- Card component tokens and wireframe brand are currently used as capability probes; treat them as architecture-validation artifacts until explicitly promoted to long-term public API commitments.
 
 ## API And Ownership
 
 - Ensure `*.tokens.json` files conform to `docs/w3c-dtcg-spec`.
 - `tokens/src/<brand>/primitive` is private; public API is `tokens/src/<brand>/semantic`.
 - Semantic tokens are the only public API surface; consumers should not bind to primitive paths.
+- Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
 - Shared system-shell domains live in `tokens/src/core/{primitive,semantic}`.
 - Brand-specific domains live in `tokens/src/<brand>/{primitive,semantic}`.
@@ -173,3 +175,4 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
   - default sans semantic family emits Inter feature settings (`"calt" 1, "ccmp" 1, "ss03" 1`)
   - mono semantic family emits `font-feature-settings: normal` reset
 - Avoid platform-specific formatting in semantic intent (platform formatting belongs in transforms).
+- Authoring and API evolution should optimize for human/agent token selection clarity; see `docs/PLANNING.md` for planned metadata and framework-agnostic component recipe/spec work.

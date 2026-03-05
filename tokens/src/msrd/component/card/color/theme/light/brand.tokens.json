@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../schemas/2025.10/format.json",
+  "$description": "Card component color tokens for msrd light/brand context.",
+  "$type": "color",
+  "dots": {
+    "default": {
+      "$value": "{primitive.color.azure.1000}"
+    },
+    "hover": {
+      "$value": "{color.brand.support}"
+    }
+  },
+  "interactive": {
+    "$value": "{color.interactive.default}"
+  }
+}

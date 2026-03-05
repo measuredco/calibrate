@@ -55,6 +55,9 @@
     "default": {
       "$value": "{primitive.color.neutral.400}"
     },
+    "brand": {
+      "$value": "{brand.support}"
+    },
     "subtle": {
       "$value": "{primitive.color.neutral.300}"
     }

@@ -11,7 +11,7 @@
       },
       "layers": {
         "private": ["primitive"],
-        "public": ["semantic", "components"]
+        "public": ["semantic", "component"]
       },
       "targets": {
         "css": {
