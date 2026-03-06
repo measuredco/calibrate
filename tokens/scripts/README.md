@@ -2,6 +2,21 @@
 
 This project uses DTCG resolver files as the source of truth, plus a small adapter layer that prepares deterministic SD inputs.
 
+## Script index
+
+- `tokens/scripts/pipeline/index.mjs`
+  - build entrypoint used by `pnpm run tokens:build`
+- `tokens/scripts/validate.mjs`
+  - validation entrypoint used by `pnpm run tokens:validate`
+- `tokens/scripts/verify.mjs`
+  - verification entrypoint used by `pnpm run tokens:verify`
+- `tokens/scripts/pipeline/prepare-sd-contexts.mjs`
+  - resolver context preparation + CSS manifest generation
+- `tokens/scripts/pipeline/prepare-sd-sources.mjs`
+  - source merge/normalization for Style Dictionary input
+- `tokens/scripts/pipeline/resolve-token-sources.mjs`
+  - ordered source resolution for a concrete resolver context
+
 ## Purpose
 
 - Keep authoring in resolver format (`tokens/resolver/*.resolver.json`).
@@ -43,7 +58,6 @@ Per-variant `scope` may be provided for exceptions/expansion.
 
 - Public/versioned outputs:
   - `tokens/dist/css/*.css`
-  - `tokens/dist/json/*.json`
 - Private/versioned maintainer outputs:
   - `tokens/dist/private/css/*.primitives.css`
   - non-stable/non-public contract for discovery workflows
@@ -64,8 +78,12 @@ Per-variant `scope` may be provided for exceptions/expansion.
 
 Run:
 
+- `pnpm run lint`
+- `pnpm run format:check`
 - `pnpm run tokens:validate`
 - `pnpm run tokens:verify`
 
-- `tokens:validate` checks authored token/resolver JSON parseability, local `$schema` wiring, resolver sanity, and resolver context preparation.
+- `lint` enforces script/config quality via ESLint.
+- `format:check` enforces deterministic formatting via Prettier.
+- `tokens:validate` checks authored token/resolver JSON validity, local `$schema` wiring, resolver sanity, and resolver context preparation.
 - `tokens:verify` rebuilds tokens and fails if `tokens/dist/**` changes.

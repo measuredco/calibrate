@@ -125,7 +125,6 @@ Resolver adapter details live in `tokens/scripts/README.md`.
 - Commit and version outputs under `tokens/dist/**`.
 - Public/stable artifact contract:
   - `tokens/dist/css/*.tokens.css`
-  - `tokens/dist/json/*.contexts.json`
 - Private/non-stable maintainer artifact contract:
   - `tokens/dist/private/css/*.primitives.css`
 - Treat `tokens/build/**` as disposable/intermediate pipeline output.

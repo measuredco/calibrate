@@ -1,18 +1,40 @@
 #!/usr/bin/env node
 
+import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
+
+/**
+ * Validation entrypoint for token and resolver authoring inputs.
+ *
+ * This script validates JSON parseability, schema path wiring, resolver
+ * structural sanity, and runs context preparation as a functional sanity check
+ * to catch unresolved alias/cycle errors before build.
+ */
 
 const cwd = process.cwd();
 const TOKENS_SRC_DIR = path.join(cwd, "tokens", "src");
 const TOKENS_RESOLVER_DIR = path.join(cwd, "tokens", "resolver");
 const TMP_VALIDATE_DIR = path.join(cwd, "tokens", "build", "tmp", "validate");
 
+/**
+ * Returns a workspace-relative POSIX path for readable diagnostics.
+ *
+ * @param {string} file
+ * @returns {string}
+ */
 function rel(file) {
   return path.relative(cwd, file).replaceAll(path.sep, "/");
 }
 
+/**
+ * Runs a subprocess and throws with captured output when it fails.
+ *
+ * @param {string} cmd
+ * @param {string[]} args
+ * @param {import("node:child_process").SpawnSyncOptions} opts
+ * @returns {import("node:child_process").SpawnSyncReturns<string>}
+ */
 function run(cmd, args, opts = {}) {
   const result = spawnSync(cmd, args, {
     cwd,
@@ -25,16 +47,26 @@ function run(cmd, args, opts = {}) {
       `${cmd} ${args.join(" ")} failed.\n${result.stdout || ""}\n${result.stderr || ""}`,
     );
   }
+
   return result;
 }
 
+/**
+ * Recursively lists files under a root directory using a filter predicate.
+ *
+ * @param {string} rootDir
+ * @param {(filePath: string) => boolean} predicate
+ * @returns {Promise<string[]>}
+ */
 async function listFiles(rootDir, predicate) {
   const out = [];
 
   async function walk(dir) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
+
     for (const entry of entries) {
       const full = path.join(dir, entry.name);
+
       if (entry.isDirectory()) {
         await walk(full);
       } else if (predicate(full)) {
@@ -44,10 +76,21 @@ async function listFiles(rootDir, predicate) {
   }
 
   await walk(rootDir);
+
   out.sort((a, b) => a.localeCompare(b));
+
   return out;
 }
 
+/**
+ * Validates that a local `$schema` ref exists and resolves to the expected path.
+ *
+ * @param {string} filePath
+ * @param {unknown} schemaRef
+ * @param {string} expectedSchemaTail
+ * @param {string[]} errors
+ * @returns {void}
+ */
 function checkSchemaRefPath(filePath, schemaRef, expectedSchemaTail, errors) {
   if (typeof schemaRef !== "string" || schemaRef.length === 0) {
     errors.push(`${rel(filePath)}: missing or invalid "$schema"`);
@@ -62,6 +105,7 @@ function checkSchemaRefPath(filePath, schemaRef, expectedSchemaTail, errors) {
   }
 
   const resolved = path.resolve(path.dirname(filePath), schemaRef);
+
   if (!resolved.endsWith(expectedSchemaTail)) {
     errors.push(
       `${rel(filePath)}: "$schema" should resolve to "${expectedSchemaTail}", got "${schemaRef}"`,
@@ -69,8 +113,16 @@ function checkSchemaRefPath(filePath, schemaRef, expectedSchemaTail, errors) {
   }
 }
 
+/**
+ * Validates one token file for JSON structure and schema path correctness.
+ *
+ * @param {string} filePath
+ * @param {string[]} errors
+ * @returns {Promise<void>}
+ */
 async function validateTokenFile(filePath, errors) {
   let doc;
+
   try {
     doc = JSON.parse(await fs.readFile(filePath, "utf8"));
   } catch (error) {
@@ -98,6 +150,7 @@ async function validateTokenFile(filePath, errors) {
 
   if (typeof doc.$schema === "string" && !doc.$schema.startsWith("http")) {
     const resolved = path.resolve(path.dirname(filePath), doc.$schema);
+
     try {
       await fs.access(resolved);
     } catch {
@@ -108,8 +161,16 @@ async function validateTokenFile(filePath, errors) {
   }
 }
 
+/**
+ * Validates one resolver file for JSON/schema correctness and minimal semantics.
+ *
+ * @param {string} filePath
+ * @param {string[]} errors
+ * @returns {Promise<void>}
+ */
 async function validateResolverFile(filePath, errors) {
   let doc;
+
   try {
     doc = JSON.parse(await fs.readFile(filePath, "utf8"));
   } catch (error) {
@@ -131,6 +192,7 @@ async function validateResolverFile(filePath, errors) {
 
   if (typeof doc.$schema === "string" && !doc.$schema.startsWith("http")) {
     const resolved = path.resolve(path.dirname(filePath), doc.$schema);
+
     try {
       await fs.access(resolved);
     } catch {
@@ -160,6 +222,7 @@ async function validateResolverFile(filePath, errors) {
     const ref = entry?.$ref;
     const match =
       typeof ref === "string" ? ref.match(/^#\/modifiers\/(.+)$/) : null;
+
     if (!match) continue;
     if (!modifierNames.has(match[1])) {
       errors.push(
@@ -169,6 +232,13 @@ async function validateResolverFile(filePath, errors) {
   }
 }
 
+/**
+ * Runs context-preparation checks for each resolver to catch resolution failures.
+ *
+ * @param {string[]} resolverFiles
+ * @param {string[]} errors
+ * @returns {void}
+ */
 function ensureNoResolverSelectionErrors(resolverFiles, errors) {
   for (const resolverPath of resolverFiles) {
     const base = path.basename(resolverPath, ".resolver.json");
@@ -177,6 +247,7 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
       TMP_VALIDATE_DIR,
       `${base}.css-manifest.json`,
     );
+
     try {
       run("node", [
         "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
@@ -195,13 +266,16 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
   }
 }
 
+/**
+ * Executes full validation and exits non-zero when any validation fails.
+ *
+ * @returns {Promise<void>}
+ */
 async function main() {
   const errors = [];
-
   const tokenFiles = await listFiles(TOKENS_SRC_DIR, (filePath) =>
     filePath.endsWith(".json"),
   );
-
   const resolverFiles = await listFiles(TOKENS_RESOLVER_DIR, (filePath) =>
     filePath.endsWith(".resolver.json"),
   );
@@ -209,7 +283,6 @@ async function main() {
   for (const tokenFile of tokenFiles) {
     await validateTokenFile(tokenFile, errors);
   }
-
   for (const resolverFile of resolverFiles) {
     await validateResolverFile(resolverFile, errors);
   }
