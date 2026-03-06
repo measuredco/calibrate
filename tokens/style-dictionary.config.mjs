@@ -1,10 +1,10 @@
 import fs from "node:fs";
-import path from "node:path";
 import StyleDictionary from "style-dictionary";
 
 const contextsFile = process.env.TOKENS_CONTEXTS_FILE;
 const manifestFile = process.env.TOKENS_MANIFEST_FILE;
-const outFile = process.env.TOKENS_CSS_OUT;
+const outPrivateFile = process.env.TOKENS_CSS_PRIVATE_OUT;
+const outPublicFile = process.env.TOKENS_CSS_OUT;
 
 if (!contextsFile) {
   throw new Error("Missing TOKENS_CONTEXTS_FILE env var.");
@@ -12,7 +12,10 @@ if (!contextsFile) {
 if (!manifestFile) {
   throw new Error("Missing TOKENS_MANIFEST_FILE env var.");
 }
-if (!outFile) {
+if (!outPrivateFile) {
+  throw new Error("Missing TOKENS_CSS_PRIVATE_OUT env var.");
+}
+if (!outPublicFile) {
   throw new Error("Missing TOKENS_CSS_OUT env var.");
 }
 if (!fs.existsSync(contextsFile)) {
@@ -22,21 +25,44 @@ if (!fs.existsSync(manifestFile)) {
   throw new Error(`Missing manifest input file: ${manifestFile}`);
 }
 
-const outDir = path.dirname(outFile).replaceAll(path.sep, "/");
-const outName = path.basename(outFile);
+const getBridgeMeta = (token) => {
+  const meta =
+    token?.original?.$extensions?.["dev.msrd.calibrate.bridge"] ??
+    token?.$extensions?.["dev.msrd.calibrate.bridge"] ??
+    null;
+
+  if (
+    !meta ||
+    typeof meta.contextId !== "string" ||
+    typeof meta.role !== "string" ||
+    !Array.isArray(meta.path)
+  ) {
+    return null;
+  }
+
+  return meta;
+};
+
+StyleDictionary.registerFilter({
+  name: "clbr/role-public",
+  filter: (token) => getBridgeMeta(token)?.role === "public",
+});
+
+StyleDictionary.registerFilter({
+  name: "clbr/role-private",
+  filter: (token) => getBridgeMeta(token)?.role === "private",
+});
+
 const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-const privateLayers = new Set(Array.isArray(manifest?.layers?.private) ? manifest.layers.private : []);
-const cssIncludeLayerRole = manifest?.targets?.css?.includeLayerRole ?? "public";
 const cssLayer = manifest?.targets?.css?.layer;
 const cssLayerOrder = Array.isArray(manifest?.targets?.css?.layerOrder)
   ? manifest.targets.css.layerOrder
   : [];
-const TOKEN_PATH = {
-  ROOT: 0,
-  CONTEXT_ID: 1,
-  DOMAIN: 2,
-};
-const MIN_CONTEXT_TOKEN_PATH = 3;
+const cssTransformGroup = Array.isArray(
+  StyleDictionary.hooks?.transformGroups?.css,
+)
+  ? StyleDictionary.hooks.transformGroups.css
+  : [];
 
 const toKebab = (segment) =>
   String(segment)
@@ -46,18 +72,39 @@ const toKebab = (segment) =>
     .replace(/^-+|-+$/g, "")
     .toLowerCase();
 
-const namespace =
-  typeof manifest?.namespace === "string" && manifest.namespace.trim().length > 0
+const namespacePrefix =
+  typeof manifest?.namespace === "string" && manifest.namespace.length > 0
     ? toKebab(manifest.namespace)
     : "";
 
-const varNameForPath = (pathSegments) => {
+const cssVarNameFromBridgePath = (pathSegments) => {
   const core = pathSegments.map(toKebab).join("-");
-  return namespace ? `--${namespace}-${core}` : `--${core}`;
+  return namespacePrefix ? `--${namespacePrefix}-${core}` : `--${core}`;
 };
+
+StyleDictionary.registerTransform({
+  name: "name/clbr-bridge-css-var",
+  type: "name",
+  transform: (token) => {
+    const bridgeMeta = getBridgeMeta(token);
+    if (!bridgeMeta) return token.name;
+    return cssVarNameFromBridgePath(bridgeMeta.path);
+  },
+});
+
+StyleDictionary.registerTransformGroup({
+  name: "css-clbr",
+  transforms: [
+    ...cssTransformGroup.filter(
+      (transformName) => !String(transformName).startsWith("name/"),
+    ),
+    "name/clbr-bridge-css-var",
+  ],
+});
 
 const indent = (text, spaces = 2) => {
   const pad = " ".repeat(spaces);
+
   return text
     .split("\n")
     .map((line) => (line.length ? `${pad}${line}` : line))
@@ -66,21 +113,33 @@ const indent = (text, spaces = 2) => {
 
 const normalizeNumber = (value) => {
   const rounded = Math.round(value * 1000000) / 1000000;
-  return Number.isInteger(rounded) ? String(rounded) : String(rounded).replace(/\.?0+$/, "");
+
+  return Number.isInteger(rounded)
+    ? String(rounded)
+    : String(rounded).replace(/\.?0+$/, "");
 };
 
 const pxToUnit = (raw, unit) =>
-  raw.replace(/(-?\d*\.?\d+)px\b/g, (_, n) => `${normalizeNumber(Number(n) / 16)}${unit}`);
+  raw.replace(
+    /(-?\d*\.?\d+)px\b/g,
+    (_, n) => `${normalizeNumber(Number(n) / 16)}${unit}`,
+  );
 
 const formatTokenValueForCss = (token) => {
-  const value = token.$value;
+  const value = token.value ?? token.$value;
+
   if (value === undefined || value === null) return value;
 
-  const forcedUnit = token.original?.$extensions?.["dev.msrd.calibrate.css"]?.unit;
-  if (typeof value === "number" && typeof forcedUnit === "string" && forcedUnit.length > 0) {
+  const forcedUnit =
+    token.original?.$extensions?.["dev.msrd.calibrate.css"]?.unit;
+
+  if (
+    typeof value === "number" &&
+    typeof forcedUnit === "string" &&
+    forcedUnit.length > 0
+  ) {
     return `${normalizeNumber(value)}${forcedUnit}`;
   }
-
   if (typeof value === "string") {
     return pxToUnit(value, "rem");
   }
@@ -90,28 +149,20 @@ const formatTokenValueForCss = (token) => {
 
 const formatMediaConditionForCss = (condition) => {
   if (typeof condition !== "string") return condition;
+
   return pxToUnit(condition, "em");
 };
 
 const wrapMedia = (block, mediaConditions = []) => {
   let out = block;
+
   for (let i = mediaConditions.length - 1; i >= 0; i -= 1) {
     const cond = formatMediaConditionForCss(mediaConditions[i]);
+
     out = `@media ${cond} {\n${indent(out, 2)}\n}`;
   }
+
   return out;
-};
-
-const isContextTokenPath = (tokenPath) =>
-  Array.isArray(tokenPath) &&
-  tokenPath.length >= MIN_CONTEXT_TOKEN_PATH &&
-  tokenPath[TOKEN_PATH.ROOT] === "contexts";
-
-const shouldEmitContextToken = (tokenPath) => {
-  const layerOrDomain = tokenPath[TOKEN_PATH.DOMAIN];
-  if (cssIncludeLayerRole === "public") return !privateLayers.has(layerOrDomain);
-  if (cssIncludeLayerRole === "private") return privateLayers.has(layerOrDomain);
-  return true;
 };
 
 StyleDictionary.registerFormat({
@@ -120,18 +171,25 @@ StyleDictionary.registerFormat({
     const byContext = new Map();
 
     for (const token of dictionary.allTokens) {
-      if (!isContextTokenPath(token.path)) continue;
-      if (!shouldEmitContextToken(token.path)) continue;
+      const bridgeMeta = getBridgeMeta(token);
 
-      const ctxId = token.path[TOKEN_PATH.CONTEXT_ID];
-      const varPath = token.path.slice(TOKEN_PATH.DOMAIN).map(toKebab).join("-");
+      if (!bridgeMeta) continue;
+
+      const ctxId = bridgeMeta.contextId;
+      const varPath = token.name;
       const description = token.original?.$description;
       const value = formatTokenValueForCss(token);
+
       if (value === undefined) continue;
-      const comment = typeof description === "string" && description.length > 0 ? ` /** ${description} */` : "";
-      const declaration = `${varNameForPath(token.path.slice(TOKEN_PATH.DOMAIN))}: ${value};${comment}`;
+
+      const comment =
+        typeof description === "string" && description.length > 0
+          ? ` /** ${description} */`
+          : "";
+      const declaration = `${token.name}: ${value};${comment}`;
 
       if (!byContext.has(ctxId)) byContext.set(ctxId, []);
+
       byContext.get(ctxId).push({ key: varPath, declaration });
     }
 
@@ -139,16 +197,24 @@ StyleDictionary.registerFormat({
 
     for (const block of manifest.blocks || []) {
       const items = byContext.get(block.id) || [];
+
       if (items.length === 0) continue;
+
       items.sort((a, b) => a.key.localeCompare(b.key));
+
       const declarations = items.map((item) => item.declaration).join("\n");
       const wrapped = `${block.selector} {\n${indent(declarations, 2)}\n}`;
-      const withMedia = wrapMedia(wrapped, Array.isArray(block.media) ? block.media : []);
+      const withMedia = wrapMedia(
+        wrapped,
+        Array.isArray(block.media) ? block.media : [],
+      );
+
       blocks.push(`/* ${block.comment} */\n${withMedia}`);
     }
 
-    const sourceLine = manifest.source ? ` * Source: ${manifest.source} + context manifest.\n` : "";
-
+    const sourceLine = manifest.source
+      ? ` * Source: ${manifest.source} + context manifest.\n`
+      : "";
     const content = blocks.join("\n\n");
     const layerOrderDecl =
       cssLayerOrder.length > 0 ? `@layer ${cssLayerOrder.join(", ")};\n\n` : "";
@@ -164,13 +230,25 @@ StyleDictionary.registerFormat({
 export default {
   source: [contextsFile],
   platforms: {
-    css: {
-      transformGroup: "css",
-      buildPath: `${outDir}/`,
+    cssPublic: {
+      transformGroup: "css-clbr",
+      buildPath: "",
       files: [
         {
-          destination: outName,
+          destination: outPublicFile,
           format: "css/clbr-contexts",
+          filter: "clbr/role-public",
+        },
+      ],
+    },
+    cssPrivate: {
+      transformGroup: "css-clbr",
+      buildPath: "",
+      files: [
+        {
+          destination: outPrivateFile,
+          format: "css/clbr-contexts",
+          filter: "clbr/role-private",
         },
       ],
     },

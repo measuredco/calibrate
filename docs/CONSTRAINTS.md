@@ -4,7 +4,7 @@
 
 This document defines the stable constraints for token authoring, structure, and resolution.
 Planning and sequencing live in `docs/PLANNING.md`.
-Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
+Resolver adapter details live in `tokens/scripts/README.md`.
 
 ## Program Goals
 
@@ -14,12 +14,14 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 - Support responsive token behavior.
 - Prove multi-brand support by adding a second brand (`wireframe`).
 - Build a transform pipeline (Style Dictionary 4) to output usable CSS.
+- Card component tokens and wireframe brand are currently used as capability probes; treat them as architecture-validation artifacts until explicitly promoted to long-term public API commitments.
 
 ## API And Ownership
 
-- Ensure `*.tokens.json` files conform to `docs/w3c-dtcg-spec`.
+- Ensure `*.tokens.json` files conform to `tokens/schemas/2025.10/spec`.
 - `tokens/src/<brand>/primitive` is private; public API is `tokens/src/<brand>/semantic`.
 - Semantic tokens are the only public API surface; consumers should not bind to primitive paths.
+- Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
 - Shared system-shell domains live in `tokens/src/core/{primitive,semantic}`.
 - Brand-specific domains live in `tokens/src/<brand>/{primitive,semantic}`.
@@ -101,10 +103,17 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
   - mapping resolver + context inputs -> ordered SD source/include entries
   - generating SD config inputs from resolver decisions where required
 - Do not reimplement Style Dictionary core behavior (token transforms, formatting, output writing) in custom scripts unless a documented SD gap requires it.
+- Temporary documented SD-gap shim:
+  - bridge currently normalizes nested DTCG `{ value, unit }` objects to scalar strings before SD shorthand transforms
+  - scope: compatibility for current composite CSS transform behavior (not a change to authoring model)
+  - removal target: when upstream SD DTCG support is complete (tracked: https://github.com/style-dictionary/style-dictionary/issues/1590)
 - Resolver build metadata conventions used by current adapter:
   - context inheritance uses `baseContext`
   - variant diff target uses `deltaFromContext`
-  - shared variant filters should be declared via `variantDefaults.scope` where possible
+  - variant scope defaults are implicit (variants emit at default contexts for other axes)
+  - declare per-variant `scope` only when overriding that default behavior
+  - context files may be authored sparse/override-only when axis composition is cumulative (`baseContext`)
+  - keep duplicate declarations only when required to preserve local alias anchors or explicit readability intent
 - Resolver/build order must satisfy semantic dependencies:
   - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing
@@ -117,7 +126,11 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
 
 ## Build Artifact Policy
 
-- Commit and version outputs under `tokens/dist/**` (public contract).
+- Commit and version outputs under `tokens/dist/**`.
+- Public/stable artifact contract:
+  - `tokens/dist/css/*.tokens.css`
+- Private/non-stable maintainer artifact contract:
+  - `tokens/dist/private/css/*.primitives.css`
 - Treat `tokens/build/**` as disposable/intermediate pipeline output.
 - Keep the repository-level `build` ignore convention to avoid committing transient build folders.
 - CSS outputs should declare deterministic layer ordering when multiple bundles compose together:
@@ -168,3 +181,4 @@ Resolver adapter details live in `docs/RESOLVER_SD_BRIDGE.md`.
   - default sans semantic family emits Inter feature settings (`"calt" 1, "ccmp" 1, "ss03" 1`)
   - mono semantic family emits `font-feature-settings: normal` reset
 - Avoid platform-specific formatting in semantic intent (platform formatting belongs in transforms).
+- Authoring and API evolution should optimize for human/agent token selection clarity; see `docs/PLANNING.md` for planned metadata and framework-agnostic component recipe/spec work.

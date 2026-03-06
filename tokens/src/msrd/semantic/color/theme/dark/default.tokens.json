@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../schemas/2025.10/format.json",
+  "$schema": "../../../../../../schemas/2025.10/schema/format.json",
   "$description": "Semantic color tokens for msrd dark/default surface.",
   "$type": "color",
   "brand": {
@@ -54,6 +54,9 @@
   "border": {
     "default": {
       "$value": "{primitive.color.neutral.800}"
+    },
+    "brand": {
+      "$value": "{brand.support}"
     },
     "subtle": {
       "$value": "{primitive.color.neutral.900}"

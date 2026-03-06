@@ -23,6 +23,6 @@
       "unit": "px"
     }
   },
-  "$schema": "../../../schemas/2025.10/format.json",
+  "$schema": "../../../schemas/2025.10/schema/format.json",
   "$type": "dimension"
 }

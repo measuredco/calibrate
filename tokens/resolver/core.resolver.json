@@ -1,17 +1,17 @@
 {
-  "$schema": "../schemas/2025.10/resolver.json",
+  "$schema": "../schemas/2025.10/schema/resolver.json",
   "name": "Core resolver",
   "version": "2025.10",
-  "description": "Resolver contexts for core tokens (size + scope).",
+  "description": "Resolver contexts for core tokens (size + root).",
   "$defs": {
     "build": {
       "namespace": "clbr",
       "shared": {
         "mediaRef": "./shared/media.json#/size"
       },
-      "layers": {
+      "tokenLayers": {
         "private": ["primitive"],
-        "public": ["semantic", "components"]
+        "public": ["semantic", "component"]
       },
       "targets": {
         "css": {
@@ -38,7 +38,7 @@
                 }
               }
             },
-            "surface": {
+            "root": {
               "contexts": {
                 "default": {
                   "selectorRef": "root"
@@ -59,7 +59,7 @@
       "$ref": "#/modifiers/size"
     },
     {
-      "$ref": "#/modifiers/surface"
+      "$ref": "#/modifiers/root"
     }
   ],
   "sets": {
@@ -144,8 +144,8 @@
         ]
       }
     },
-    "surface": {
-      "description": "Core scope context.",
+    "root": {
+      "description": "Core root context.",
       "default": "default",
       "contexts": {
         "default": [],

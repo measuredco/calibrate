@@ -6,42 +6,55 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active `Now` tasks.
+- No active `Now` item. Next step is a manual review pass of constraints and planning.
 
 ## Next
 
 What we could start work on next.
 
-- Expand validation coverage after baseline gate is in place:
-  - add optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`
-
-- Add optional private primitive output for maintainer/discovery workflows (after resolver+multi-brand packaging stabilize):
-  - output path: `tokens/dist/private/css/`
-  - file naming: `clbr.<brand>.primitives.css`
-  - variable guard prefix: `--clbr-primitive-*`
-  - document as non-public/non-stable contract (semantic remains the public API)
-
-- Start a component token layer (`tokens/src/<brand>/components/...`) after pipeline + validation are stable.
-  - finalize surface taxonomy contract and whether all components bind to explicit surface context
-  - one component initially
-  - then more
-
 ## Later
 
 Everything we could attempt given sufficient time and resources.
 
+- Expand validation coverage with optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`.
+- Add machine-readable intent metadata across semantic tokens/groups:
+  - usage guidance for humans/agents
+  - token selection hints and anti-pattern notes
+  - context expectations where relevant
 - Prove end-to-end token consumption in a target stylesheet/component slice.
+- Define and prototype framework-agnostic component recipes/specs:
+  - canonical HTML snippets and usage patterns aligned with token API
+  - evaluate web-component-style specs as recipe artifacts
+  - assess adapter paths from canonical recipes to framework-specific implementations
+- Component expansion follow-up (recipe-led, not token-first):
+  - validate second-component patterns via recipes/specs before adding broader component token APIs
+  - only promote reusable component-axis/context tokens where recipe evidence shows clear value
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
-- Define cross-target export contract from `tokens/dist/json/clbr.msrd.contexts.json`:
+- Add optional pipeline format selection in `tokens/scripts/pipeline/index.mjs`:
+  - support `--formats` argument (default `css`)
+  - keep per-format output conventions isolated behind a small format map/handler boundary
+  - use this only as an extension seam; avoid over-generalizing until a second output is active
+- Define cross-target export contract from `tokens/build/sd/clbr.msrd.contexts.json`:
   - context selection strategy per target (full matrix vs selected contexts)
   - naming strategy per target (path-preserving vs flattened aliases)
   - mode mapping strategy (`theme`/`size`/`state`) per target format
   - type/unit coercion policy for non-CSS targets
+- Add optional VS Code token lookup artifact generation for authoring ergonomics.
 - Prototype Penpot export adapter from resolved contexts.
 - Assess Figma export pathway and required schema mapping.
 - Define iOS/Android export subset and conversion rules.
-- Add optional VS Code token lookup artifact generation for authoring ergonomics.
+- Evaluate deterministic sorting linting/formatting policy:
+  - JS import/export ordering via ESLint autofix
+  - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type`)
+  - keep any sorting additions fixable and low-noise
+- Revisit bridge-side DTCG `$dimension` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
+  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
+  - keep emitted CSS output contract unchanged while migrating responsibility to SD transforms
+- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
+  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
+  - preserve emitted artifact contracts while shrinking bridge code to the minimum required integration layer
+- Border and Transition DTCG Composites
 
 ## Done
 
@@ -70,10 +83,15 @@ What we've done.
 - spec-shaped resolver manifest added at `tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
 - DTCG schemas vendored under `tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
 - Style Dictionary bridge/pipeline implemented:
-  - `tokens/scripts/resolve-token-sources.mjs` resolves resolver context source ordering
-  - `tokens/scripts/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
-  - `tokens/scripts/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
+  - `tokens/scripts/pipeline/resolve-token-sources.mjs` resolves resolver context source ordering
+  - `tokens/scripts/pipeline/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
+  - `tokens/scripts/pipeline/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
   - `tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
+- Resolver->SD boundary refactor completed (bridge outputs SD-ready with minimal SD-config shaping):
+  - formatter path-index assumptions removed in favor of bridge metadata (`dev.msrd.calibrate.bridge`)
+  - public/private split now handled by SD role filters
+  - single SD run per target for public+private outputs
+  - docs and constraints updated to reflect current bridge contract and temporary SD `$dimension` compatibility shim
 - Output contracts established:
   - committed/public outputs in `tokens/dist/{css,json}`
   - disposable pipeline artifacts in `tokens/build/{sd,tmp}`
@@ -86,16 +104,16 @@ What we've done.
   - `tokens:verify` added to fail when `tokens/dist/**` is out of date after build
 - Multi-brand packaging/layering foundation implemented:
   - `core` and `msrd` outputs now build independently
-  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/dist/json/clbr.core.contexts.json`
-  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/dist/json/clbr.msrd.contexts.json`
+  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/build/sd/clbr.core.contexts.json`
+  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/build/sd/clbr.msrd.contexts.json`
   - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`
 - Wireframe brand onboarding completed:
   - resolver added: `tokens/resolver/wrfr.resolver.json`
   - brand source added under `tokens/src/wrfr/{primitive,semantic}`
-  - build target wired in `tokens/scripts/build.mjs`
+  - build target wired in `tokens/scripts/pipeline/index.mjs`
   - brand artifacts emit and verify:
     - `tokens/dist/css/clbr.wrfr.tokens.css`
-    - `tokens/dist/json/clbr.wrfr.contexts.json`
+    - `tokens/build/sd/clbr.wrfr.contexts.json`
 - Consumer include/override strategy documented in constraints:
   - load contract for `core` + brand bundles
   - scoped multi-brand usage on one page
@@ -106,3 +124,30 @@ What we've done.
   - CI runs:
     - `pnpm run tokens:validate`
     - `pnpm run tokens:verify`
+- Optional private primitive output implemented for maintainer/discovery workflows:
+  - output path: `tokens/dist/private/css/`
+  - file naming: `clbr.<brand>.primitives.css`
+  - variable guard prefix: `--clbr-primitive-*`
+  - documented as non-public/non-stable contract (semantic remains the public API)
+- Authoring ergonomics for context declarations improved:
+  - sparse/override-only context files are supported as first-class authoring for cumulative axes
+  - `theme` source composition now uses cumulative `baseContext` inheritance (aligned with `size`)
+  - constraints now document when duplicate declarations should be retained (alias-anchor/readability cases)
+- Resolver bridge docs now co-locate with bridge code:
+  - canonical bridge doc lives at `tokens/scripts/README.md`
+- Bridge scripts now use a dedicated subfolder structure:
+  - pipeline scripts moved to `tokens/scripts/pipeline/*`
+  - build entrypoint is `tokens/scripts/pipeline/index.mjs`
+- Vendored DTCG spec reference docs relocated under `tokens/schemas/2025.10/spec`.
+- ESLint and Prettier baseline tooling added:
+  - `eslint` configured via `eslint.config.mjs` for token pipeline scripts
+  - `prettier` configured via `.prettierrc.json` and `.prettierignore`
+  - scripts added in `package.json`: `lint`, `lint:fix`, `format`, `format:check`
+- Component token layer architecture proved with Card pilot:
+  - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
+  - component tokens resolve across theme/surface/state contexts with correct diff behavior
+  - forced-colors component overrides emit correctly without leaking unrelated semantic tokens
+  - output naming and scoping conventions validated in generated CSS
+- Card and `wrfr` are intentionally retained as architecture probes for now:
+  - Card remains in-tree to validate component-theme/surface/state support and resolver->SD behavior
+  - `wrfr` remains in-tree to validate multi-brand packaging and runtime scoping patterns
