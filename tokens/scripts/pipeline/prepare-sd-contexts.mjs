@@ -1512,7 +1512,6 @@ async function main() {
     tokenLayers: tokenLayerDefs,
     targets: {
       css: {
-        includeLayerRole: "public",
         ...(typeof cssBuildDefs?.layer === "string" &&
         cssBuildDefs.layer.length > 0
           ? { layer: cssBuildDefs.layer }
