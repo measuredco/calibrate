@@ -227,6 +227,108 @@ function pruneUnchanged(sourceNode, baseNode) {
 }
 
 /**
+ * Splits a context token tree into explicit public/private role buckets.
+ *
+ * This removes SD-side role inference based on domain names and makes the
+ * bridge contract explicit for formatter/filter consumers.
+ *
+ * @param {Record<string, unknown>} contextNode
+ * @param {Set<string>} privateTokenLayers
+ * @returns {{ public: Record<string, unknown>, private: Record<string, unknown> }}
+ */
+function splitContextByLayerRole(contextNode, privateTokenLayers) {
+  const out = { public: {}, private: {} };
+
+  if (!isObject(contextNode)) return out;
+
+  for (const [key, value] of Object.entries(contextNode)) {
+    if (key.startsWith("$")) continue;
+    if (privateTokenLayers.has(key)) out.private[key] = value;
+    else out.public[key] = value;
+  }
+
+  return out;
+}
+
+/**
+ * Clones a token subtree and annotates token leaves with bridge metadata.
+ *
+ * @param {unknown} node
+ * @param {{ contextId: string, role: "public" | "private", path: string[] }} meta
+ * @returns {unknown}
+ */
+function annotateTokensWithBridgeMeta(node, meta) {
+  if (Array.isArray(node)) {
+    return node.map((entry) => annotateTokensWithBridgeMeta(entry, meta));
+  }
+  if (!isObject(node)) return node;
+
+  if (Object.prototype.hasOwnProperty.call(node, "$value")) {
+    const existingExtensions = isObject(node.$extensions)
+      ? node.$extensions
+      : {};
+    return {
+      ...node,
+      $extensions: {
+        ...existingExtensions,
+        "dev.msrd.calibrate.bridge": {
+          contextId: meta.contextId,
+          role: meta.role,
+          path: meta.path,
+        },
+      },
+    };
+  }
+
+  const out = {};
+  for (const [key, value] of Object.entries(node)) {
+    if (key.startsWith("$")) {
+      out[key] = value;
+      continue;
+    }
+    out[key] = annotateTokensWithBridgeMeta(value, {
+      ...meta,
+      path: meta.path.concat(key),
+    });
+  }
+  return out;
+}
+
+/**
+ * Splits a context token tree into public/private buckets and annotates leaves.
+ *
+ * @param {string} contextId
+ * @param {Record<string, unknown>} contextNode
+ * @param {Set<string>} privateTokenLayers
+ * @returns {{ public: Record<string, unknown>, private: Record<string, unknown> }}
+ */
+function splitAndAnnotateContextByLayerRole(
+  contextId,
+  contextNode,
+  privateTokenLayers,
+) {
+  const split = splitContextByLayerRole(contextNode, privateTokenLayers);
+  const out = { public: {}, private: {} };
+
+  for (const [key, value] of Object.entries(split.public)) {
+    out.public[key] = annotateTokensWithBridgeMeta(value, {
+      contextId,
+      role: "public",
+      path: [key],
+    });
+  }
+  for (const [key, value] of Object.entries(split.private)) {
+    out.private[key] = annotateTokensWithBridgeMeta(value, {
+      contextId,
+      role: "private",
+      path: [key],
+    });
+  }
+
+  return out;
+}
+
+/**
  * Reads a nested value by dotted path lookup.
  *
  * @param {unknown} root
@@ -1003,6 +1105,9 @@ async function main() {
       : null;
   const cssBuildDefs = buildDefs?.targets?.css;
   const tokenLayerDefs = buildDefs?.tokenLayers ?? {};
+  const privateTokenLayers = new Set(
+    Array.isArray(tokenLayerDefs?.private) ? tokenLayerDefs.private : [],
+  );
   const sharedMedia = await resolveSharedMediaFromBuild(
     buildDefs,
     resolverPath,
@@ -1199,11 +1304,19 @@ async function main() {
 
             variantIndex += 1;
             blockId = `${id}__variant${variantIndex}`;
-            contextsRoot[blockId] = blockDocResolved;
+            contextsRoot[blockId] = splitAndAnnotateContextByLayerRole(
+              blockId,
+              blockDocResolved,
+              privateTokenLayers,
+            );
           }
 
           if (target.kind === "base") {
-            contextsRoot[blockId] = blockDocResolved;
+            contextsRoot[blockId] = splitAndAnnotateContextByLayerRole(
+              blockId,
+              blockDocResolved,
+              privateTokenLayers,
+            );
           }
 
           const media = [...target.media];
@@ -1350,11 +1463,19 @@ async function main() {
 
               variantIndex += 1;
               blockId = `${onId}__variant${variantIndex}`;
-              contextsRoot[blockId] = blockDocResolved;
+              contextsRoot[blockId] = splitAndAnnotateContextByLayerRole(
+                blockId,
+                blockDocResolved,
+                privateTokenLayers,
+              );
             }
 
             if (target.kind === "base") {
-              contextsRoot[blockId] = blockDocResolved;
+              contextsRoot[blockId] = splitAndAnnotateContextByLayerRole(
+                blockId,
+                blockDocResolved,
+                privateTokenLayers,
+              );
             }
 
             const media = [...target.media];

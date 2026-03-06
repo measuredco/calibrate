@@ -103,6 +103,10 @@ Resolver adapter details live in `tokens/scripts/README.md`.
   - mapping resolver + context inputs -> ordered SD source/include entries
   - generating SD config inputs from resolver decisions where required
 - Do not reimplement Style Dictionary core behavior (token transforms, formatting, output writing) in custom scripts unless a documented SD gap requires it.
+- Temporary documented SD-gap shim:
+  - bridge currently normalizes nested DTCG `{ value, unit }` objects to scalar strings before SD shorthand transforms
+  - scope: compatibility for current composite CSS transform behavior (not a change to authoring model)
+  - removal target: when upstream SD DTCG support is complete (tracked: https://github.com/style-dictionary/style-dictionary/issues/1590)
 - Resolver build metadata conventions used by current adapter:
   - context inheritance uses `baseContext`
   - variant diff target uses `deltaFromContext`
