@@ -29,7 +29,11 @@ Everything we could attempt given sufficient time and resources.
   - only promote reusable component-axis/context tokens where recipe evidence shows clear value
 - Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
 - Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
-- Define cross-target export contract from `tokens/dist/json/clbr.msrd.contexts.json`:
+- Add optional pipeline format selection in `tokens/scripts/pipeline/index.mjs`:
+  - support `--formats` argument (default `css`)
+  - keep per-format output conventions isolated behind a small format map/handler boundary
+  - use this only as an extension seam; avoid over-generalizing until a second output is active
+- Define cross-target export contract from `tokens/build/sd/clbr.msrd.contexts.json`:
   - context selection strategy per target (full matrix vs selected contexts)
   - naming strategy per target (path-preserving vs flattened aliases)
   - mode mapping strategy (`theme`/`size`/`state`) per target format
@@ -42,6 +46,7 @@ Everything we could attempt given sufficient time and resources.
   - JS import/export ordering via ESLint autofix
   - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type`)
   - keep any sorting additions fixable and low-noise
+- Border and Transition DTCG Composites
 
 ## Done
 
@@ -86,8 +91,8 @@ What we've done.
   - `tokens:verify` added to fail when `tokens/dist/**` is out of date after build
 - Multi-brand packaging/layering foundation implemented:
   - `core` and `msrd` outputs now build independently
-  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/dist/json/clbr.core.contexts.json`
-  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/dist/json/clbr.msrd.contexts.json`
+  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/build/sd/clbr.core.contexts.json`
+  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/build/sd/clbr.msrd.contexts.json`
   - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`
 - Wireframe brand onboarding completed:
   - resolver added: `tokens/resolver/wrfr.resolver.json`
@@ -95,7 +100,7 @@ What we've done.
   - build target wired in `tokens/scripts/pipeline/index.mjs`
   - brand artifacts emit and verify:
     - `tokens/dist/css/clbr.wrfr.tokens.css`
-    - `tokens/dist/json/clbr.wrfr.contexts.json`
+    - `tokens/build/sd/clbr.wrfr.contexts.json`
 - Consumer include/override strategy documented in constraints:
   - load contract for `core` + brand bundles
   - scoped multi-brand usage on one page

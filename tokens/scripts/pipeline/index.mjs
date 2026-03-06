@@ -1,24 +1,137 @@
 #!/usr/bin/env node
 
+import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
+
+/**
+ * Pipeline entrypoint for building all resolver-discovered token targets.
+ *
+ * This script prepares context/manifest inputs, runs Style Dictionary for
+ * public CSS output, derives a private manifest variant, and runs Style
+ * Dictionary again for private primitive CSS output.
+ */
 
 const cwd = process.cwd();
 
-function parseArgs(argv) {
-  const args = {
-    target: "all",
-  };
-
-  for (let i = 0; i < argv.length; i += 1) {
-    const arg = argv[i];
-    if (arg === "--target") args.target = argv[i + 1];
-  }
-
-  return args;
+/**
+ * Builds a normalized POSIX-style path for stable CLI/env handoff.
+ *
+ * @param {...string} parts
+ * @returns {string}
+ */
+function normalizePath(...parts) {
+  return path.join(...parts).replaceAll(path.sep, "/");
 }
 
+/**
+ * Derives output artifact paths for a resolver using naming conventions.
+ *
+ * @param {string} resolverPath
+ * @param {Record<string, unknown>} resolverDoc
+ * @returns {{
+ *  key: string,
+ *  resolver: string,
+ *  out: string,
+ *  outPrivate: string,
+ *  contexts: string,
+ *  manifest: string,
+ *  manifestPrivate: string
+ * }}
+ */
+function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
+  const resolverBase = path.basename(resolverPath);
+  const resolverName = resolverBase.replace(/\.resolver\.json$/, "");
+  const buildDefs = resolverDoc?.$defs?.build ?? {};
+  const namespace =
+    typeof buildDefs.namespace === "string" && buildDefs.namespace.length > 0
+      ? buildDefs.namespace
+      : "clbr";
+  const brand =
+    typeof buildDefs.brand === "string" && buildDefs.brand.length > 0
+      ? buildDefs.brand
+      : null;
+  const outputKey = brand ?? resolverName;
+  const fileBase = `${namespace}.${outputKey}`;
+
+  return {
+    key: outputKey,
+    resolver: normalizePath("tokens", "resolver", resolverBase),
+    out: normalizePath("tokens", "dist", "css", `${fileBase}.tokens.css`),
+    outPrivate: normalizePath(
+      "tokens",
+      "dist",
+      "private",
+      "css",
+      `${fileBase}.primitives.css`,
+    ),
+    contexts: normalizePath(
+      "tokens",
+      "build",
+      "sd",
+      `${fileBase}.contexts.json`,
+    ),
+    manifest: normalizePath(
+      "tokens",
+      "build",
+      "sd",
+      `${fileBase}.css-manifest.json`,
+    ),
+    manifestPrivate: normalizePath(
+      "tokens",
+      "build",
+      "sd",
+      `${fileBase}.css-private-manifest.json`,
+    ),
+  };
+}
+
+/**
+ * Discovers resolver files and returns ordered build target configs.
+ *
+ * @returns {Promise<Array<{
+ *  key: string,
+ *  resolver: string,
+ *  out: string,
+ *  outPrivate: string,
+ *  contexts: string,
+ *  manifest: string,
+ *  manifestPrivate: string
+ * }>>}
+ */
+async function discoverBuildTargets() {
+  const resolverDir = path.join(cwd, "tokens", "resolver");
+  const entries = await fs.readdir(resolverDir, { withFileTypes: true });
+  const resolvers = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".resolver.json"))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+  const targets = [];
+
+  for (const resolverFile of resolvers) {
+    const resolverPath = path.join(resolverDir, resolverFile);
+    const resolverDoc = JSON.parse(await fs.readFile(resolverPath, "utf8"));
+    targets.push(buildTargetConfigFromResolver(resolverPath, resolverDoc));
+  }
+
+  // Keep dependency-aware and deterministic build order: core first, then other targets alphabetically.
+  targets.sort((a, b) => {
+    if (a.key === "core") return -1;
+    if (b.key === "core") return 1;
+    return a.key.localeCompare(b.key);
+  });
+
+  return targets;
+}
+
+/**
+ * Executes a command and throws with captured output on failure.
+ *
+ * @param {string} cmd
+ * @param {string[]} args
+ * @param {import("node:child_process").SpawnSyncOptions} [opts={}]
+ * @returns {import("node:child_process").SpawnSyncReturns<string>}
+ */
 function run(cmd, args, opts = {}) {
   const res = spawnSync(cmd, args, {
     cwd,
@@ -26,14 +139,23 @@ function run(cmd, args, opts = {}) {
     encoding: "utf8",
     ...opts,
   });
+
   if (res.status !== 0) {
     throw new Error(
       `${cmd} ${args.join(" ")} failed.\n${res.stdout || ""}\n${res.stderr || ""}`,
     );
   }
+
   return res;
 }
 
+/**
+ * Writes a private CSS manifest variant from the public CSS manifest.
+ *
+ * @param {string} publicManifestPath
+ * @param {string} privateManifestPath
+ * @returns {Promise<void>}
+ */
 async function writePrivateCssManifest(
   publicManifestPath,
   privateManifestPath,
@@ -51,6 +173,7 @@ async function writePrivateCssManifest(
       },
     },
   };
+
   await fs.mkdir(path.dirname(privateManifestPath), { recursive: true });
   await fs.writeFile(
     privateManifestPath,
@@ -59,48 +182,16 @@ async function writePrivateCssManifest(
   );
 }
 
+/**
+ * Builds all discovered token targets and emits public/private CSS artifacts.
+ *
+ * @returns {Promise<void>}
+ */
 async function main() {
-  const cli = parseArgs(process.argv.slice(2));
-  const buildTargets = {
-    core: {
-      resolver: "tokens/resolver/core.resolver.json",
-      out: "tokens/dist/css/clbr.core.tokens.css",
-      outPrivate: "tokens/dist/private/css/clbr.core.primitives.css",
-      contexts: "tokens/dist/json/clbr.core.contexts.json",
-      manifest: "tokens/build/sd/clbr.core.css-manifest.json",
-      manifestPrivate: "tokens/build/sd/clbr.core.css-private-manifest.json",
-    },
-    msrd: {
-      resolver: "tokens/resolver/msrd.resolver.json",
-      out: "tokens/dist/css/clbr.msrd.tokens.css",
-      outPrivate: "tokens/dist/private/css/clbr.msrd.primitives.css",
-      contexts: "tokens/dist/json/clbr.msrd.contexts.json",
-      manifest: "tokens/build/sd/clbr.msrd.css-manifest.json",
-      manifestPrivate: "tokens/build/sd/clbr.msrd.css-private-manifest.json",
-    },
-    wrfr: {
-      resolver: "tokens/resolver/wrfr.resolver.json",
-      out: "tokens/dist/css/clbr.wrfr.tokens.css",
-      outPrivate: "tokens/dist/private/css/clbr.wrfr.primitives.css",
-      contexts: "tokens/dist/json/clbr.wrfr.contexts.json",
-      manifest: "tokens/build/sd/clbr.wrfr.css-manifest.json",
-      manifestPrivate: "tokens/build/sd/clbr.wrfr.css-private-manifest.json",
-    },
-  };
-
-  let selectedTargets;
-  if (cli.target === "all") selectedTargets = Object.keys(buildTargets);
-  else if (Object.prototype.hasOwnProperty.call(buildTargets, cli.target))
-    selectedTargets = [cli.target];
-  else {
-    throw new Error(
-      `Unknown --target "${cli.target}". Use one of: all, ${Object.keys(buildTargets).join(", ")}`,
-    );
-  }
-
+  const buildTargets = await discoverBuildTargets();
   const outputs = [];
-  for (const target of selectedTargets) {
-    const cfg = buildTargets[target];
+
+  for (const cfg of buildTargets) {
     run("node", [
       "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
       "--resolver",
@@ -153,6 +244,7 @@ async function main() {
         },
       },
     );
+
     outputs.push(cfg);
   }
 

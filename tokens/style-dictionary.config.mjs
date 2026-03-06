@@ -72,6 +72,7 @@ const indent = (text, spaces = 2) => {
 
 const normalizeNumber = (value) => {
   const rounded = Math.round(value * 1000000) / 1000000;
+
   return Number.isInteger(rounded)
     ? String(rounded)
     : String(rounded).replace(/\.?0+$/, "");
@@ -85,10 +86,12 @@ const pxToUnit = (raw, unit) =>
 
 const formatTokenValueForCss = (token) => {
   const value = token.$value;
+
   if (value === undefined || value === null) return value;
 
   const forcedUnit =
     token.original?.$extensions?.["dev.msrd.calibrate.css"]?.unit;
+
   if (
     typeof value === "number" &&
     typeof forcedUnit === "string" &&
@@ -96,7 +99,6 @@ const formatTokenValueForCss = (token) => {
   ) {
     return `${normalizeNumber(value)}${forcedUnit}`;
   }
-
   if (typeof value === "string") {
     return pxToUnit(value, "rem");
   }
@@ -106,15 +108,19 @@ const formatTokenValueForCss = (token) => {
 
 const formatMediaConditionForCss = (condition) => {
   if (typeof condition !== "string") return condition;
+
   return pxToUnit(condition, "em");
 };
 
 const wrapMedia = (block, mediaConditions = []) => {
   let out = block;
+
   for (let i = mediaConditions.length - 1; i >= 0; i -= 1) {
     const cond = formatMediaConditionForCss(mediaConditions[i]);
+
     out = `@media ${cond} {\n${indent(out, 2)}\n}`;
   }
+
   return out;
 };
 
@@ -125,10 +131,12 @@ const isContextTokenPath = (tokenPath) =>
 
 const shouldEmitContextToken = (tokenPath) => {
   const layerOrDomain = tokenPath[TOKEN_PATH.DOMAIN];
+
   if (cssIncludeLayerRole === "public")
     return !privateLayers.has(layerOrDomain);
   if (cssIncludeLayerRole === "private")
     return privateLayers.has(layerOrDomain);
+
   return true;
 };
 
@@ -148,7 +156,9 @@ StyleDictionary.registerFormat({
         .join("-");
       const description = token.original?.$description;
       const value = formatTokenValueForCss(token);
+
       if (value === undefined) continue;
+
       const comment =
         typeof description === "string" && description.length > 0
           ? ` /** ${description} */`
@@ -156,6 +166,7 @@ StyleDictionary.registerFormat({
       const declaration = `${varNameForPath(token.path.slice(TOKEN_PATH.DOMAIN))}: ${value};${comment}`;
 
       if (!byContext.has(ctxId)) byContext.set(ctxId, []);
+
       byContext.get(ctxId).push({ key: varPath, declaration });
     }
 
@@ -163,14 +174,18 @@ StyleDictionary.registerFormat({
 
     for (const block of manifest.blocks || []) {
       const items = byContext.get(block.id) || [];
+
       if (items.length === 0) continue;
+
       items.sort((a, b) => a.key.localeCompare(b.key));
+
       const declarations = items.map((item) => item.declaration).join("\n");
       const wrapped = `${block.selector} {\n${indent(declarations, 2)}\n}`;
       const withMedia = wrapMedia(
         wrapped,
         Array.isArray(block.media) ? block.media : [],
       );
+
       blocks.push(`/* ${block.comment} */\n${withMedia}`);
     }
 
