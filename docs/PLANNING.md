@@ -6,6 +6,8 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+- No active `Now` item. Next step is a manual review pass of constraints and planning.
+
 ## Next
 
 What we could start work on next.
@@ -46,6 +48,12 @@ Everything we could attempt given sufficient time and resources.
   - JS import/export ordering via ESLint autofix
   - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type`)
   - keep any sorting additions fixable and low-noise
+- Revisit bridge-side DTCG `$dimension` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
+  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
+  - keep emitted CSS output contract unchanged while migrating responsibility to SD transforms
+- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
+  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
+  - preserve emitted artifact contracts while shrinking bridge code to the minimum required integration layer
 - Border and Transition DTCG Composites
 
 ## Done
@@ -79,6 +87,11 @@ What we've done.
   - `tokens/scripts/pipeline/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
   - `tokens/scripts/pipeline/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
   - `tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
+- Resolver->SD boundary refactor completed (bridge outputs SD-ready with minimal SD-config shaping):
+  - formatter path-index assumptions removed in favor of bridge metadata (`dev.msrd.calibrate.bridge`)
+  - public/private split now handled by SD role filters
+  - single SD run per target for public+private outputs
+  - docs and constraints updated to reflect current bridge contract and temporary SD `$dimension` compatibility shim
 - Output contracts established:
   - committed/public outputs in `tokens/dist/{css,json}`
   - disposable pipeline artifacts in `tokens/build/{sd,tmp}`

@@ -66,6 +66,37 @@ function deepMerge(target, source) {
 }
 
 /**
+ * Converts DTCG `{ value, unit }` objects into SD-friendly scalar strings.
+ *
+ * Temporary compatibility shim while SD DTCG support is still converging for
+ * nested dimension fields inside composite CSS transforms (e.g. typography/shadow):
+ * https://github.com/style-dictionary/style-dictionary/issues/1590
+ *
+ * @param {unknown} node
+ * @returns {unknown}
+ */
+function normalizeDtcgValueObjects(node) {
+  if (Array.isArray(node)) return node.map(normalizeDtcgValueObjects);
+  if (!isObject(node)) return node;
+
+  if (
+    Object.prototype.hasOwnProperty.call(node, "value") &&
+    Object.prototype.hasOwnProperty.call(node, "unit") &&
+    (typeof node.value === "number" || typeof node.value === "string") &&
+    typeof node.unit === "string"
+  ) {
+    return `${node.value}${node.unit}`;
+  }
+
+  const out = {};
+  for (const [key, value] of Object.entries(node)) {
+    out[key] = normalizeDtcgValueObjects(value);
+  }
+
+  return out;
+}
+
+/**
  * Reads a nested value by path segment array.
  *
  * @param {unknown} obj
@@ -242,39 +273,6 @@ async function discoverSemanticDomainRoots() {
   await walk(root);
 
   return domains;
-}
-
-/**
- * Converts DTCG `{value, unit}` objects into CSS-ready string values.
- *
- * @param {unknown} node
- * @returns {unknown}
- */
-function normalizeDtcgValueObjects(node) {
-  if (Array.isArray(node)) return node.map(normalizeDtcgValueObjects);
-  if (!isObject(node)) return node;
-  if (
-    Object.prototype.hasOwnProperty.call(node, "$value") &&
-    isObject(node.$value) &&
-    Object.prototype.hasOwnProperty.call(node.$value, "value") &&
-    Object.prototype.hasOwnProperty.call(node.$value, "unit")
-  ) {
-    const { value, unit } = node.$value;
-
-    if (
-      (typeof value === "number" || typeof value === "string") &&
-      typeof unit === "string"
-    ) {
-      node.$value = `${value}${unit}`;
-    }
-  }
-
-  for (const [key, child] of Object.entries(node)) {
-    if (key.startsWith("$")) continue;
-
-    node[key] = normalizeDtcgValueObjects(child);
-  }
-  return node;
 }
 
 /**

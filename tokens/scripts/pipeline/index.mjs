@@ -8,8 +8,7 @@ import path from "node:path";
  * Pipeline entrypoint for building all resolver-discovered token targets.
  *
  * This script prepares context/manifest inputs, runs Style Dictionary for
- * public CSS output, derives a private manifest variant, and runs Style
- * Dictionary again for private primitive CSS output.
+ * public + private CSS outputs in a single invocation per resolver target.
  */
 
 const cwd = process.cwd();
@@ -35,8 +34,7 @@ function normalizePath(...parts) {
  *  out: string,
  *  outPrivate: string,
  *  contexts: string,
- *  manifest: string,
- *  manifestPrivate: string
+ *  manifest: string
  * }}
  */
 function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
@@ -77,12 +75,6 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
       "sd",
       `${fileBase}.css-manifest.json`,
     ),
-    manifestPrivate: normalizePath(
-      "tokens",
-      "build",
-      "sd",
-      `${fileBase}.css-private-manifest.json`,
-    ),
   };
 }
 
@@ -95,8 +87,7 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
  *  out: string,
  *  outPrivate: string,
  *  contexts: string,
- *  manifest: string,
- *  manifestPrivate: string
+ *  manifest: string
  * }>>}
  */
 async function discoverBuildTargets() {
@@ -150,39 +141,6 @@ function run(cmd, args, opts = {}) {
 }
 
 /**
- * Writes a private CSS manifest variant from the public CSS manifest.
- *
- * @param {string} publicManifestPath
- * @param {string} privateManifestPath
- * @returns {Promise<void>}
- */
-async function writePrivateCssManifest(
-  publicManifestPath,
-  privateManifestPath,
-) {
-  const publicManifest = JSON.parse(
-    await fs.readFile(publicManifestPath, "utf8"),
-  );
-  const privateManifest = {
-    ...publicManifest,
-    targets: {
-      ...publicManifest.targets,
-      css: {
-        ...(publicManifest?.targets?.css ?? {}),
-        includeLayerRole: "private",
-      },
-    },
-  };
-
-  await fs.mkdir(path.dirname(privateManifestPath), { recursive: true });
-  await fs.writeFile(
-    privateManifestPath,
-    `${JSON.stringify(privateManifest, null, 2)}\n`,
-    "utf8",
-  );
-}
-
-/**
  * Builds all discovered token targets and emits public/private CSS artifacts.
  *
  * @returns {Promise<void>}
@@ -217,30 +175,7 @@ async function main() {
           TOKENS_CONTEXTS_FILE: path.resolve(cwd, cfg.contexts),
           TOKENS_MANIFEST_FILE: path.resolve(cwd, cfg.manifest),
           TOKENS_CSS_OUT: path.resolve(cwd, cfg.out),
-        },
-      },
-    );
-
-    await writePrivateCssManifest(
-      path.resolve(cwd, cfg.manifest),
-      path.resolve(cwd, cfg.manifestPrivate),
-    );
-
-    run(
-      "pnpm",
-      [
-        "exec",
-        "style-dictionary",
-        "build",
-        "--config",
-        "tokens/style-dictionary.config.mjs",
-      ],
-      {
-        env: {
-          ...process.env,
-          TOKENS_CONTEXTS_FILE: path.resolve(cwd, cfg.contexts),
-          TOKENS_MANIFEST_FILE: path.resolve(cwd, cfg.manifestPrivate),
-          TOKENS_CSS_OUT: path.resolve(cwd, cfg.outPrivate),
+          TOKENS_CSS_PRIVATE_OUT: path.resolve(cwd, cfg.outPrivate),
         },
       },
     );

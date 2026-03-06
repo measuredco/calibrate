@@ -22,6 +22,81 @@ This project uses DTCG resolver files as the source of truth, plus a small adapt
 - Keep authoring in resolver format (`tokens/resolver/*.resolver.json`).
 - Keep Style Dictionary responsible for formatting/output.
 - Limit custom logic to resolver adaptation only.
+- Patch only the current resolver-support gap in SD, while staying aligned with SD's DTCG direction.
+
+## Bridge intermediate contract (Phase 1)
+
+The bridge emits two JSON artifacts per resolver target:
+
+- `tokens/build/sd/<namespace>.<target>.contexts.json`
+- `tokens/build/sd/<namespace>.<target>.css-manifest.json`
+
+These are the SD inputs for current CSS builds. The contract below is the
+required shape that formatter code may rely on.
+
+### `contexts.json` contract
+
+Top-level:
+
+- `namespace` (`string`, optional)
+- `brand` (`string`, optional)
+- `contexts` (`object`, required)
+
+`contexts` map:
+
+- key: `contextId` (`string`) produced from resolver modifier order
+- value: role-bucketed token object (DTCG-compatible object tree)
+  - `public` (`object`, required)
+  - `private` (`object`, required)
+
+Rules:
+
+- each context value must be a plain object token tree (not an array)
+- aliases must already be resolver-expanded for emitted context overlays
+- output may contain only delta tokens (bridge decides pruning)
+- bridge output must be SD-source compatible without SD-side structural rewrites
+- token leaves include bridge metadata in `$extensions["dev.msrd.calibrate.bridge"]`:
+  - `contextId` (`string`)
+  - `role` (`"public" | "private"`)
+  - `path` (`string[]`, token path segments below token layer/domain roots)
+
+### `css-manifest.json` contract
+
+Top-level:
+
+- `source` (`string`, required) resolver path used for generation
+- `namespace` (`string`, optional)
+- `brand` (`string`, optional)
+- `tokenLayers` (`object`, required)
+- `targets.css` (`object`, required)
+- `blocks` (`array`, required)
+
+`targets.css`:
+
+- `layer` (`string`, optional)
+- `layerOrder` (`string[]`, optional)
+
+`blocks[]`:
+
+- `id` (`string`, required): context ID that exists in `contexts`
+- `comment` (`string`, required): deterministic debug annotation
+- `selector` (`string`, required): final CSS selector
+- `media` (`string[]`, required): ordered media conditions
+
+Rules:
+
+- no formatter inference from resolver structure should be required
+- block ordering is authoritative and must be deterministic
+- manifest contains resolver-derived CSS block metadata (selector/media/layer), not token payload transformation logic
+- formatter relies on bridge metadata extensions for context/role/path grouping, not path-index assumptions
+- public/private output split is performed by SD filters (`clbr/role-public`, `clbr/role-private`) using bridge metadata, not by manifest target role flags
+
+## Current constraints to preserve during refactor
+
+- CSS output must remain byte-stable under `pnpm run tokens:verify`.
+- Public artifact paths/names under `tokens/dist/**` are unchanged.
+- Resolver authoring model and `$defs.build` metadata contract are unchanged.
+- Any bridge/formatter boundary changes must keep the above contract explicit and documented.
 
 ## Resolver build metadata used by the adapter
 
