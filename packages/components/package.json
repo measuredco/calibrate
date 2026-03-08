@@ -2,7 +2,42 @@
   "name": "@calibrate/components",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/components.css"
+  },
+  "scripts": {
+    "build": "pnpm run build:types && vite build",
+    "build:types": "tsc -p tsconfig.build.json",
+    "lint": "eslint .",
+    "storybook": "storybook dev -p 6006 --ci",
+    "storybook:build": "storybook build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@calibrate/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.2.16",
+    "@storybook/web-components": "^10.2.16",
+    "@storybook/web-components-vite": "^10.2.16",
+    "@testing-library/dom": "^10.4.1",
+    "@types/node": "^25.3.5",
+    "jsdom": "^28.1.0",
+    "storybook": "^10.2.16",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "vitest": "^4.0.18"
   }
 }

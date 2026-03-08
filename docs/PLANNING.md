@@ -6,21 +6,48 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active items.
+### Build Initial Components (`packages/components`)
+
+Requirements:
+
+- Components that do not require JS behavior should be authored as pure SSR renderers emitting native HTML.
+- Components that do require JS behavior may be authored as web-components.
+- Package uses TypeScript.
+- Public component contracts (renderer props and/or component attributes/properties/events) have JSDoc.
+- Every component has tests (Testing Library).
+- Every component has Storybook stories.
+- Package uses repo-level Prettier and ESLint (including TS support).
+- All component paths support SSR (render meaningful inner HTML without requiring client JS for initial render).
+
+Current decisions/working assumptions:
+
+- Initial stack: Vite, Vitest, Testing Library, Storybook.
+- Initial primitives use pure SSR renderers (no custom-element runtime).
+- Initial implemented primitives: `root` and `button` (renderer + CSS + tests + stories).
+- Lit is reserved for components that need runtime JS behavior.
+- Runtime web-components (when used) should use light DOM (no Shadow DOM) and keep SSR-safe inner HTML behavior.
+- Distribution target: dual output (ESM + CJS) for initial compatibility.
+- Browser support baseline: Browserslist `baseline widely available`; use esbuild shim/polyfill approach if needed; Autoprefixer enabled.
+- Testing depth for v1: behavior + accessibility; no visual regression in initial phase
+- Storybook: package-local for now, treated as a development tool (docs-app integration can come later).
+- Public API policy: full alpha mode for now (no stability guarantees until versioning/publish policy is formalized).
+- Accessibility baseline target: WCAG 2.2 AA.
+- Framework strategy: SSR renderer contracts first; add web-component runtime only where needed; wrappers/adapters later.
+- Token CSS loading: components package auto-imports token CSS; direct tokens package consumption remains for non-component consumers.
+- Initial token CSS strategy: include both brands by default for now (brand/tree-shaking optimization can follow later).
+- Components package also ships a light CSS reset entrypoint that can compose token CSS imports.
+
+Open questions to resolve:
+
+- None currently.
 
 ## Next
 
-What we could start work on next.
+### Components and Recipes
 
 ## Later
 
 Everything we could attempt given sufficient time and resources.
-
-### Components and Recipes
-
-- Define and prototype framework-agnostic component recipes/specs:
-  - canonical HTML snippets and usage patterns aligned with token API
-  - evaluate web-component-style specs as recipe artifacts
 
 ### Deterministic sorting (linting)
 
