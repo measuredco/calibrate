@@ -6,7 +6,20 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active `Now` item. Next step is a manual review pass of constraints and planning.
+- Monorepo architecture
+  - use pnpm workspace only for this phase (no Turborepo)
+  - Phase 1: workspace foundation
+    - add `pnpm-workspace.yaml`
+    - move current root token package to `packages/tokens`
+    - keep existing token scripts callable via workspace filters
+  - Phase 2: stabilize `tokens` package execution
+    - ensure pipeline/build/validate/verify run from package boundary
+    - preserve current output contracts while migrating paths
+  - Phase 3: introduce `components` package scaffold
+    - add `packages/components` as first-class boundary
+    - wire minimal consumption of `@calibrate/tokens` outputs/contracts
+  - decision rule:
+    - keep pnpm-only unless multi-package orchestration/caching pain becomes material
 
 ## Next
 
@@ -16,49 +29,61 @@ What we could start work on next.
 
 Everything we could attempt given sufficient time and resources.
 
-- Expand validation coverage with optional generated `tokens/dist/**` snapshot/golden checks beyond `tokens:verify`.
-- Add machine-readable intent metadata across semantic tokens/groups:
-  - usage guidance for humans/agents
-  - token selection hints and anti-pattern notes
-  - context expectations where relevant
-- Prove end-to-end token consumption in a target stylesheet/component slice.
+### Components and Recipes
+
 - Define and prototype framework-agnostic component recipes/specs:
   - canonical HTML snippets and usage patterns aligned with token API
   - evaluate web-component-style specs as recipe artifacts
   - assess adapter paths from canonical recipes to framework-specific implementations
-- Component expansion follow-up (recipe-led, not token-first):
-  - validate second-component patterns via recipes/specs before adding broader component token APIs
-  - only promote reusable component-axis/context tokens where recipe evidence shows clear value
-- Evaluate introducing a neutral semantic `layout.dimension` namespace for non-axis sizing aliases (icons, square sizes, etc.).
-- Evaluate adding a `layout` axis/context for full-viewport surfaces (`fullScreen` / `canvas`) and composition rules with existing `size` contexts.
-- Add optional pipeline format selection in `tokens/scripts/pipeline/index.mjs`:
-  - support `--formats` argument (default `css`)
-  - keep per-format output conventions isolated behind a small format map/handler boundary
-  - use this only as an extension seam; avoid over-generalizing until a second output is active
-- Define cross-target export contract from `tokens/build/sd/clbr.msrd.contexts.json`:
-  - context selection strategy per target (full matrix vs selected contexts)
-  - naming strategy per target (path-preserving vs flattened aliases)
-  - mode mapping strategy (`theme`/`size`/`state`) per target format
-  - type/unit coercion policy for non-CSS targets
-- Add optional VS Code token lookup artifact generation for authoring ergonomics.
-- Prototype Penpot export adapter from resolved contexts.
-- Assess Figma export pathway and required schema mapping.
-- Define iOS/Android export subset and conversion rules.
-- Evaluate deterministic sorting linting/formatting policy:
-  - JS import/export ordering via ESLint autofix
-  - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type`)
-  - keep any sorting additions fixable and low-noise
+
+### Deterministic sorting (linting)
+
+- JS import/export ordering via ESLint autofix
+- JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type` / `$description` / `default`)
+- Alphabetical sorting
+
+### Machine-readable intent
+
+- Expand token/group `$description` coverage for intent guidance:
+  - usage guidance for humans/agents
+  - token selection hints and anti-pattern notes
+  - context expectations where relevant
+- Define structured token/group `$extensions` for machine-readable intent:
+  - stable fields for tooling/agents beyond prose descriptions
+  - worked examples where intent is easy to misuse
+
+### Design model evolution
+
+- Light brand surface (current example is a duplicate of dark brand)
+- Light/dark inverse surfaces
+- `density` context (class-based in CSS) — current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
+- Border and Transition DTCG Composites
+
+### Style Dictionary DTCG 2025.10 gaps
+
+[Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
+
 - Revisit bridge-side DTCG `$dimension` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
   - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
-  - keep emitted CSS output contract unchanged while migrating responsibility to SD transforms
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
-  - preserve emitted artifact contracts while shrinking bridge code to the minimum required integration layer
-- Border and Transition DTCG Composites
+
+### Export target evolution
+
+1. JSON
+1. Penpot
+1. VS Code token lookup artifact
+1. Figma
+1. iOS
+1. Android
+
+Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `tokens/scripts/pipeline/index.mjs` when implementing a second export target.
 
 ## Done
 
 What we've done.
+
+_This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
 - Phase complete: Semantic API baseline (core + brand semantic coverage, responsive semantics included).
 - semantic color theme/surface files for `msrd` (`light|dark` × `default|brand`).

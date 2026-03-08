@@ -8,13 +8,13 @@ Resolver adapter details live in `tokens/scripts/README.md`.
 
 ## Program Goals
 
-- Define a stable public tokens API in `tokens/src/<brand>/semantic`.
-- Support color themes (light/dark).
-- Support surfaces within themes.
-- Support responsive token behavior.
-- Prove multi-brand support by adding a second brand (`wireframe`).
-- Build a transform pipeline (Style Dictionary 4) to output usable CSS.
-- Card component tokens and wireframe brand are currently used as capability probes; treat them as architecture-validation artifacts until explicitly promoted to long-term public API commitments.
+- Maintain a stable public design-system API, starting with semantic tokens and extending to component consumption contracts.
+- Keep monorepo architecture as the default repo model for system evolution.
+- Establish `tokens` and `components` as first-class package boundaries in the repo.
+- Use lockstep versioning across design-system packages by default to reduce token/component drift.
+- Preserve core token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
+- Keep current bridge/build pipeline robust while resolver/SD support gaps are being closed upstream.
+- Treat probe artifacts (for example Card component tokens and wireframe brand) as architecture-validation assets until explicitly promoted to long-term API commitments.
 
 ## API And Ownership
 
@@ -51,8 +51,15 @@ Resolver adapter details live in `tokens/scripts/README.md`.
 
 ## Repository Packaging Direction
 
-- Anticipated monorepo direction:
-  - `tokens/` becomes a standalone package boundary.
+- Monorepo direction is normative.
+- Package boundaries:
+  - `tokens/` is a first-class package boundary.
+  - `components/` is a first-class package boundary and should consume published token outputs/contracts.
+  - additional boundaries (for example `assets`, docs site, bootstrap CLI) are expected but remain exploratory until concrete constraints are defined.
+- Versioning/distribution policy:
+  - lockstep versioning is the default across design-system packages.
+  - support both full-system consumption and selective package consumption where practical.
+- `tokens` package structure remains:
   - source tokens live under `tokens/src/...` (including `core` and brand folders).
   - generated public artifacts output to `tokens/dist/...`.
   - disposable pipeline artifacts output to `tokens/build/...`.
