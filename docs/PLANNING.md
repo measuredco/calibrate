@@ -21,7 +21,6 @@ Everything we could attempt given sufficient time and resources.
 - Define and prototype framework-agnostic component recipes/specs:
   - canonical HTML snippets and usage patterns aligned with token API
   - evaluate web-component-style specs as recipe artifacts
-  - assess adapter paths from canonical recipes to framework-specific implementations
 
 ### Deterministic sorting (linting)
 
@@ -57,7 +56,6 @@ Everything we could attempt given sufficient time and resources.
 
 ### Export target evolution
 
-1. JSON
 1. Penpot
 1. VS Code token lookup artifact
 1. Figma
@@ -65,6 +63,34 @@ Everything we could attempt given sufficient time and resources.
 1. Android
 
 Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/tokens/scripts/pipeline/index.mjs` when implementing a second export target.
+
+### JSON export target
+
+Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates.
+
+### Minimal viable publish
+
+Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
+
+### Documentation website (`apps/documentation`)
+
+Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples.
+
+### Assets package
+
+Decide whether shared fonts/images should ship as a dedicated package and define what is stable asset API vs implementation detail.
+
+### CLI bootstrap tool
+
+Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
+
+### Framework adapters
+
+Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
+
+### MCP/API
+
+Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
 
 ## Done
 
