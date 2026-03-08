@@ -1,0 +1,13 @@
+{
+  "name": "@calibrate/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/pipeline/index.mjs",
+    "validate": "node scripts/validate.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.3.3"
+  }
+}

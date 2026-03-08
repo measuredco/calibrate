@@ -7,9 +7,9 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "tokens:build": "node tokens/scripts/pipeline/index.mjs",
-    "tokens:validate": "node tokens/scripts/validate.mjs",
-    "tokens:verify": "node tokens/scripts/verify.mjs"
+    "tokens:build": "pnpm --filter @calibrate/tokens run build",
+    "tokens:validate": "pnpm --filter @calibrate/tokens run validate",
+    "tokens:verify": "pnpm --filter @calibrate/tokens run verify"
   },
   "packageManager": "pnpm@10.29.3",
   "engines": {
@@ -20,7 +20,6 @@
     "@eslint/json": "^1.0.1",
     "eslint": "^10.0.2",
     "globals": "^17.4.0",
-    "prettier": "^3.8.1",
-    "style-dictionary": "^5.3.3"
+    "prettier": "^3.8.1"
   }
 }

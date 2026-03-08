@@ -6,20 +6,7 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- Monorepo architecture
-  - use pnpm workspace only for this phase (no Turborepo)
-  - Phase 1: workspace foundation
-    - add `pnpm-workspace.yaml`
-    - move current root token package to `packages/tokens`
-    - keep existing token scripts callable via workspace filters
-  - Phase 2: stabilize `tokens` package execution
-    - ensure pipeline/build/validate/verify run from package boundary
-    - preserve current output contracts while migrating paths
-  - Phase 3: introduce `components` package scaffold
-    - add `packages/components` as first-class boundary
-    - wire minimal consumption of `@calibrate/tokens` outputs/contracts
-  - decision rule:
-    - keep pnpm-only unless multi-package orchestration/caching pain becomes material
+- No active items.
 
 ## Next
 
@@ -77,7 +64,7 @@ Everything we could attempt given sufficient time and resources.
 1. iOS
 1. Android
 
-Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `tokens/scripts/pipeline/index.mjs` when implementing a second export target.
+Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/tokens/scripts/pipeline/index.mjs` when implementing a second export target.
 
 ## Done
 
@@ -91,7 +78,7 @@ _This section is a historical completion record; some entries may describe decis
 - semantic effect theme/surface files for `msrd` (`light|dark` × `default|brand`).
 - semantic effect files now expose `opacity.demoted` mapped from `primitive.effect.opacity.40`.
 - semantic folder structure is axis-first for color/effect, with typography and layout using `size` contexts.
-- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `tokens/src/core/semantic/spacing.tokens.json`.
+- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `packages/tokens/src/core/semantic/spacing.tokens.json`.
 - responsive vertical rhythm moved to `layout/size/*` as `verticalSpacing` (not duplicated in spacing size files).
 - layout grid gap semantics authored by size context (`baseline`, `tablet`, `laptop`), with `laptop` currently override-only.
 - layout vertical spacing escalation now begins at `notebook` (split from `tablet`).
@@ -104,41 +91,41 @@ _This section is a historical completion record; some entries may describe decis
 - semantic typography baseline/tablet size files populated for body + heading scales.
 - brand `shape` domain introduced (`square.aspectRatio`, `square.cornerRatio`) with semantic exposure.
 - external typography size `$ref` paths corrected to current folder structure.
-- source token tree moved under `tokens/src` (core + brand).
-- spec-shaped resolver manifest added at `tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
-- DTCG schemas vendored under `tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
+- source token tree moved under `packages/tokens/src` (core + brand).
+- spec-shaped resolver manifest added at `packages/tokens/resolver/msrd.resolver.json` with `resolutionOrder`.
+- DTCG schemas vendored under `packages/tokens/schemas/2025.10` and local `$schema` paths applied across authored token/resolver files.
 - Style Dictionary bridge/pipeline implemented:
-  - `tokens/scripts/pipeline/resolve-token-sources.mjs` resolves resolver context source ordering
-  - `tokens/scripts/pipeline/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
-  - `tokens/scripts/pipeline/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
-  - `tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
+  - `packages/tokens/scripts/pipeline/resolve-token-sources.mjs` resolves resolver context source ordering
+  - `packages/tokens/scripts/pipeline/prepare-sd-sources.mjs` merges/normalizes token sources for SD consumption
+  - `packages/tokens/scripts/pipeline/prepare-sd-contexts.mjs` emits context token doc + CSS manifest
+  - `packages/tokens/style-dictionary.config.mjs` formats CSS from generated context + manifest inputs
 - Resolver->SD boundary refactor completed (bridge outputs SD-ready with minimal SD-config shaping):
   - formatter path-index assumptions removed in favor of bridge metadata (`dev.msrd.calibrate.bridge`)
   - public/private split now handled by SD role filters
   - single SD run per target for public+private outputs
   - docs and constraints updated to reflect current bridge contract and temporary SD `$dimension` compatibility shim
 - Output contracts established:
-  - committed/public outputs in `tokens/dist/{css,json}`
-  - disposable pipeline artifacts in `tokens/build/{sd,tmp}`
+  - committed/public outputs in `packages/tokens/dist/{css,json}`
+  - disposable pipeline artifacts in `packages/tokens/build/{sd,tmp}`
 - Resolver->SD bridge API and docs stabilized:
   - adapter keys documented (`baseContext`, `deltaFromContext`, selector refs, variant defaults)
   - naming and authoring conventions documented for future brands/modifiers
 - Artifact policy decided and enforced:
-  - `tokens/dist/**` is versioned/public
-  - `tokens/build/**` is disposable
-  - `tokens:verify` added to fail when `tokens/dist/**` is out of date after build
+  - `packages/tokens/dist/**` is versioned/public
+  - `packages/tokens/build/**` is disposable
+  - `tokens:verify` added to fail when `packages/tokens/dist/**` is out of date after build
 - Multi-brand packaging/layering foundation implemented:
   - `core` and `msrd` outputs now build independently
-  - core artifacts: `tokens/dist/css/clbr.core.tokens.css`, `tokens/build/sd/clbr.core.contexts.json`
-  - msrd artifacts: `tokens/dist/css/clbr.msrd.tokens.css`, `tokens/build/sd/clbr.msrd.contexts.json`
+  - core artifacts: `packages/tokens/dist/css/clbr.core.tokens.css`, `packages/tokens/build/sd/clbr.core.contexts.json`
+  - msrd artifacts: `packages/tokens/dist/css/clbr.msrd.tokens.css`, `packages/tokens/build/sd/clbr.msrd.contexts.json`
   - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`
 - Wireframe brand onboarding completed:
-  - resolver added: `tokens/resolver/wrfr.resolver.json`
-  - brand source added under `tokens/src/wrfr/{primitive,semantic}`
-  - build target wired in `tokens/scripts/pipeline/index.mjs`
+  - resolver added: `packages/tokens/resolver/wrfr.resolver.json`
+  - brand source added under `packages/tokens/src/wrfr/{primitive,semantic}`
+  - build target wired in `packages/tokens/scripts/pipeline/index.mjs`
   - brand artifacts emit and verify:
-    - `tokens/dist/css/clbr.wrfr.tokens.css`
-    - `tokens/build/sd/clbr.wrfr.contexts.json`
+    - `packages/tokens/dist/css/clbr.wrfr.tokens.css`
+    - `packages/tokens/build/sd/clbr.wrfr.contexts.json`
 - Consumer include/override strategy documented in constraints:
   - load contract for `core` + brand bundles
   - scoped multi-brand usage on one page
@@ -150,7 +137,7 @@ _This section is a historical completion record; some entries may describe decis
     - `pnpm run tokens:validate`
     - `pnpm run tokens:verify`
 - Optional private primitive output implemented for maintainer/discovery workflows:
-  - output path: `tokens/dist/private/css/`
+  - output path: `packages/tokens/dist/private/css/`
   - file naming: `clbr.<brand>.primitives.css`
   - variable guard prefix: `--clbr-primitive-*`
   - documented as non-public/non-stable contract (semantic remains the public API)
@@ -159,20 +146,25 @@ _This section is a historical completion record; some entries may describe decis
   - `theme` source composition now uses cumulative `baseContext` inheritance (aligned with `size`)
   - constraints now document when duplicate declarations should be retained (alias-anchor/readability cases)
 - Resolver bridge docs now co-locate with bridge code:
-  - canonical bridge doc lives at `tokens/scripts/README.md`
+  - canonical bridge doc lives at `packages/tokens/scripts/README.md`
 - Bridge scripts now use a dedicated subfolder structure:
-  - pipeline scripts moved to `tokens/scripts/pipeline/*`
-  - build entrypoint is `tokens/scripts/pipeline/index.mjs`
-- Vendored DTCG spec reference docs relocated under `tokens/schemas/2025.10/spec`.
+  - pipeline scripts moved to `packages/tokens/scripts/pipeline/*`
+  - build entrypoint is `packages/tokens/scripts/pipeline/index.mjs`
+- Vendored DTCG spec reference docs relocated under `packages/tokens/schemas/2025.10/spec`.
 - ESLint and Prettier baseline tooling added:
   - `eslint` configured via `eslint.config.mjs` for token pipeline scripts
   - `prettier` configured via `.prettierrc.json` and `.prettierignore`
   - scripts added in `package.json`: `lint`, `lint:fix`, `format`, `format:check`
 - Component token layer architecture proved with Card pilot:
-  - `tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
+  - `packages/tokens/src/<brand>/component/...` path shape integrated into resolver->SD bridge
   - component tokens resolve across theme/surface/state contexts with correct diff behavior
   - forced-colors component overrides emit correctly without leaking unrelated semantic tokens
   - output naming and scoping conventions validated in generated CSS
 - Card and `wrfr` are intentionally retained as architecture probes for now:
   - Card remains in-tree to validate component-theme/surface/state support and resolver->SD behavior
   - `wrfr` remains in-tree to validate multi-brand packaging and runtime scoping patterns
+- Monorepo architecture baseline completed (pnpm workspace, lockstep versioning):
+  - `pnpm-workspace.yaml` added with `packages/*`
+  - tokens package moved to `packages/tokens` with package-local build/validate/verify scripts
+  - root scripts now delegate via workspace filters (`@calibrate/tokens`)
+  - `packages/components` scaffold added as the next package boundary

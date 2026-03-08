@@ -36,7 +36,7 @@ function parseArgs(argv) {
 
   if (!args.sourcesFile || !args.outFile || !args.resolver) {
     throw new Error(
-      "Usage: node tokens/scripts/pipeline/prepare-sd-sources.mjs --sources-file <sources.json> --out-file <tokens.json> --resolver <resolver.json>",
+      "Usage: node scripts/pipeline/prepare-sd-sources.mjs --sources-file <sources.json> --out-file <tokens.json> --resolver <resolver.json>",
     );
   }
 
@@ -236,7 +236,7 @@ function normalizePublicLayerAliases(
  * @returns {Promise<Set<string>>}
  */
 async function discoverSemanticDomainRoots() {
-  const root = path.join(cwd, "tokens", "src");
+  const root = path.join(cwd, "src");
   const domains = new Set();
 
   async function walk(dir) {
