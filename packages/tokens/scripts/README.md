@@ -4,22 +4,22 @@ This project uses DTCG resolver files as the source of truth, plus a small adapt
 
 ## Script index
 
-- `tokens/scripts/pipeline/index.mjs`
+- `packages/tokens/scripts/pipeline/index.mjs`
   - build entrypoint used by `pnpm run tokens:build`
-- `tokens/scripts/validate.mjs`
+- `packages/tokens/scripts/validate.mjs`
   - validation entrypoint used by `pnpm run tokens:validate`
-- `tokens/scripts/verify.mjs`
+- `packages/tokens/scripts/verify.mjs`
   - verification entrypoint used by `pnpm run tokens:verify`
-- `tokens/scripts/pipeline/prepare-sd-contexts.mjs`
+- `packages/tokens/scripts/pipeline/prepare-sd-contexts.mjs`
   - resolver context preparation + CSS manifest generation
-- `tokens/scripts/pipeline/prepare-sd-sources.mjs`
+- `packages/tokens/scripts/pipeline/prepare-sd-sources.mjs`
   - source merge/normalization for Style Dictionary input
-- `tokens/scripts/pipeline/resolve-token-sources.mjs`
+- `packages/tokens/scripts/pipeline/resolve-token-sources.mjs`
   - ordered source resolution for a concrete resolver context
 
 ## Purpose
 
-- Keep authoring in resolver format (`tokens/resolver/*.resolver.json`).
+- Keep authoring in resolver format (`packages/tokens/resolver/*.resolver.json`).
 - Keep Style Dictionary responsible for formatting/output.
 - Limit custom logic to resolver adaptation only.
 - Patch only the current resolver-support gap in SD, while staying aligned with SD's DTCG direction.
@@ -28,8 +28,8 @@ This project uses DTCG resolver files as the source of truth, plus a small adapt
 
 The bridge emits two JSON artifacts per resolver target:
 
-- `tokens/build/sd/<namespace>.<target>.contexts.json`
-- `tokens/build/sd/<namespace>.<target>.css-manifest.json`
+- `packages/tokens/build/sd/<namespace>.<target>.contexts.json`
+- `packages/tokens/build/sd/<namespace>.<target>.css-manifest.json`
 
 These are the SD inputs for current CSS builds. The contract below is the
 required shape that formatter code may rely on.
@@ -94,7 +94,7 @@ Rules:
 ## Current constraints to preserve during refactor
 
 - CSS output must remain byte-stable under `pnpm run tokens:verify`.
-- Public artifact paths/names under `tokens/dist/**` are unchanged.
+- Public artifact paths/names under `packages/tokens/dist/**` are unchanged.
 - Resolver authoring model and `$defs.build` metadata contract are unchanged.
 - Any bridge/formatter boundary changes must keep the above contract explicit and documented.
 
@@ -132,13 +132,13 @@ Per-variant `scope` may be provided for exceptions/expansion.
 ## Artifact contract
 
 - Public/versioned outputs:
-  - `tokens/dist/css/*.css`
+  - `packages/tokens/dist/css/*.css`
 - Private/versioned maintainer outputs:
-  - `tokens/dist/private/css/*.primitives.css`
+  - `packages/tokens/dist/private/css/*.primitives.css`
   - non-stable/non-public contract for discovery workflows
 - Disposable pipeline artifacts:
-  - `tokens/build/sd/*`
-  - `tokens/build/tmp/*`
+  - `packages/tokens/build/sd/*`
+  - `packages/tokens/build/tmp/*`
 
 ## CSS layer contract
 
@@ -161,4 +161,4 @@ Run:
 - `lint` enforces script/config quality via ESLint.
 - `format:check` enforces deterministic formatting via Prettier.
 - `tokens:validate` checks authored token/resolver JSON validity, local `$schema` wiring, resolver sanity, and resolver context preparation.
-- `tokens:verify` rebuilds tokens and fails if `tokens/dist/**` changes.
+- `tokens:verify` rebuilds tokens and fails if `packages/tokens/dist/**` changes.

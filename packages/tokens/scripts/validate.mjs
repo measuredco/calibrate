@@ -13,9 +13,9 @@ import path from "node:path";
  */
 
 const cwd = process.cwd();
-const TOKENS_SRC_DIR = path.join(cwd, "tokens", "src");
-const TOKENS_RESOLVER_DIR = path.join(cwd, "tokens", "resolver");
-const TMP_VALIDATE_DIR = path.join(cwd, "tokens", "build", "tmp", "validate");
+const TOKENS_SRC_DIR = path.join(cwd, "src");
+const TOKENS_RESOLVER_DIR = path.join(cwd, "resolver");
+const TMP_VALIDATE_DIR = path.join(cwd, "build", "validate");
 
 /**
  * Returns a workspace-relative POSIX path for readable diagnostics.
@@ -144,7 +144,7 @@ async function validateTokenFile(filePath, errors) {
   checkSchemaRefPath(
     filePath,
     doc.$schema,
-    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}format.json`,
+    `${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}format.json`,
     errors,
   );
 
@@ -186,7 +186,7 @@ async function validateResolverFile(filePath, errors) {
   checkSchemaRefPath(
     filePath,
     doc.$schema,
-    `${path.sep}tokens${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}resolver.json`,
+    `${path.sep}schemas${path.sep}2025.10${path.sep}schema${path.sep}resolver.json`,
     errors,
   );
 
@@ -250,7 +250,7 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
 
     try {
       run("node", [
-        "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
+        "scripts/pipeline/prepare-sd-contexts.mjs",
         "--resolver",
         rel(resolverPath),
         "--out-tokens",
@@ -273,6 +273,8 @@ function ensureNoResolverSelectionErrors(resolverFiles, errors) {
  */
 async function main() {
   const errors = [];
+  await fs.rm(TMP_VALIDATE_DIR, { recursive: true, force: true });
+  await fs.mkdir(TMP_VALIDATE_DIR, { recursive: true });
   const tokenFiles = await listFiles(TOKENS_SRC_DIR, (filePath) =>
     filePath.endsWith(".json"),
   );

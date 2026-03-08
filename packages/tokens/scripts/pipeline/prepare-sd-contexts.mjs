@@ -39,7 +39,7 @@ function parseArgs(argv) {
     typeof args.outManifest !== "string"
   ) {
     throw new Error(
-      "Usage: node tokens/scripts/pipeline/prepare-sd-contexts.mjs --resolver <resolver.json> --out-tokens <contexts.json> --out-manifest <manifest.json>",
+      "Usage: node scripts/pipeline/prepare-sd-contexts.mjs --resolver <resolver.json> --out-tokens <contexts.json> --out-manifest <manifest.json>",
     );
   }
 
@@ -50,7 +50,7 @@ const cli = parseArgs(process.argv.slice(2));
 const outManifestPath = path.resolve(cwd, cli.outManifest);
 const outTokensPath = path.resolve(cwd, cli.outTokens);
 const resolverPath = path.resolve(cwd, cli.resolver);
-const tmpDir = path.join(cwd, "tokens", "build", "tmp");
+const tmpDir = path.join(cwd, "build", "tmp");
 
 /**
  * Runs a subprocess and throws with captured stdout/stderr on failure.
@@ -577,7 +577,7 @@ async function buildMergedDoc(id, sources) {
   );
 
   run("node", [
-    "tokens/scripts/pipeline/prepare-sd-sources.mjs",
+    "scripts/pipeline/prepare-sd-sources.mjs",
     "--sources-file",
     path.relative(cwd, sourcesPath),
     "--resolver",
@@ -604,7 +604,7 @@ async function resolveContextSources(ctx, modifierOrder) {
   await fs.writeFile(contextPath, `${JSON.stringify(ctx, null, 2)}\n`, "utf8");
 
   run("node", [
-    "tokens/scripts/pipeline/resolve-token-sources.mjs",
+    "scripts/pipeline/resolve-token-sources.mjs",
     "--resolver",
     path.relative(cwd, resolverPath),
     "--context",

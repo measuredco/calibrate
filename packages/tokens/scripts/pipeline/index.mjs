@@ -54,27 +54,16 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
 
   return {
     key: outputKey,
-    resolver: normalizePath("tokens", "resolver", resolverBase),
-    out: normalizePath("tokens", "dist", "css", `${fileBase}.tokens.css`),
+    resolver: normalizePath("resolver", resolverBase),
+    out: normalizePath("dist", "css", `${fileBase}.tokens.css`),
     outPrivate: normalizePath(
-      "tokens",
       "dist",
       "private",
       "css",
       `${fileBase}.primitives.css`,
     ),
-    contexts: normalizePath(
-      "tokens",
-      "build",
-      "sd",
-      `${fileBase}.contexts.json`,
-    ),
-    manifest: normalizePath(
-      "tokens",
-      "build",
-      "sd",
-      `${fileBase}.css-manifest.json`,
-    ),
+    contexts: normalizePath("build", "sd", `${fileBase}.contexts.json`),
+    manifest: normalizePath("build", "sd", `${fileBase}.css-manifest.json`),
   };
 }
 
@@ -91,7 +80,7 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
  * }>>}
  */
 async function discoverBuildTargets() {
-  const resolverDir = path.join(cwd, "tokens", "resolver");
+  const resolverDir = path.join(cwd, "resolver");
   const entries = await fs.readdir(resolverDir, { withFileTypes: true });
   const resolvers = entries
     .filter((entry) => entry.isFile() && entry.name.endsWith(".resolver.json"))
@@ -151,7 +140,7 @@ async function main() {
 
   for (const cfg of buildTargets) {
     run("node", [
-      "tokens/scripts/pipeline/prepare-sd-contexts.mjs",
+      "scripts/pipeline/prepare-sd-contexts.mjs",
       "--resolver",
       cfg.resolver,
       "--out-tokens",
@@ -167,7 +156,7 @@ async function main() {
         "style-dictionary",
         "build",
         "--config",
-        "tokens/style-dictionary.config.mjs",
+        "style-dictionary.config.mjs",
       ],
       {
         env: {

@@ -1,6 +1,6 @@
 node_modules
 **/build/**
-tokens/dist
-tokens/schemas/*/
-tokens/schemas/*/**
+packages/tokens/dist
+packages/tokens/schemas/*/
+packages/tokens/schemas/*/**
 pnpm-lock.yaml

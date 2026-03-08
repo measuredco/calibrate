@@ -1,15 +1,17 @@
 /**
  * Do not edit directly, this file was auto-generated.
- * Source: tokens/resolver/wrfr.resolver.json + context manifest.
+ * Source: resolver/msrd.resolver.json + context manifest.
  */
 
 @layer clbr, clbr.brand;
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr.clbr-brand-wrfr) {
+  :where(.clbr.clbr-brand-msrd) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
+    --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
+    --clbr-primitive-color-alpha-brand-20: rgba(1, 88, 173, 0.2);
     --clbr-primitive-color-alpha-white-08: rgba(255, 255, 255, 0.08);
     --clbr-primitive-color-alpha-white-16: rgba(255, 255, 255, 0.16);
     --clbr-primitive-color-alpha-white-40: rgba(255, 255, 255, 0.4);
@@ -18,7 +20,43 @@
     --clbr-primitive-color-alpha-white-80: rgba(255, 255, 255, 0.8);
     --clbr-primitive-color-alpha-white-88: rgba(255, 255, 255, 0.88);
     --clbr-primitive-color-alpha-white-94: rgba(255, 255, 255, 0.94);
+    --clbr-primitive-color-azure-100: #edf6fe;
+    --clbr-primitive-color-azure-1000: #083c8a;
+    --clbr-primitive-color-azure-1100: #042467;
+    --clbr-primitive-color-azure-1200: #031f60;
+    --clbr-primitive-color-azure-200: #d1e5fd;
+    --clbr-primitive-color-azure-300: #b3d5fb;
+    --clbr-primitive-color-azure-400: #93c5fa;
+    --clbr-primitive-color-azure-500: #6db5f8;
+    --clbr-primitive-color-azure-600: #3598f8;
+    --clbr-primitive-color-azure-700: #2a84e1;
+    --clbr-primitive-color-azure-800: #1666bb;
+    --clbr-primitive-color-azure-900: #0158ad;
     --clbr-primitive-color-black: #000000;
+    --clbr-primitive-color-cyan-100: #eaf8f9;
+    --clbr-primitive-color-cyan-1000: #00333c;
+    --clbr-primitive-color-cyan-1100: #04242a;
+    --clbr-primitive-color-cyan-1200: #00161a;
+    --clbr-primitive-color-cyan-200: #c9eced;
+    --clbr-primitive-color-cyan-300: #a5dadd;
+    --clbr-primitive-color-cyan-400: #80c8cd;
+    --clbr-primitive-color-cyan-500: #55b7bd;
+    --clbr-primitive-color-cyan-600: #05a5ad;
+    --clbr-primitive-color-cyan-700: #048e96;
+    --clbr-primitive-color-cyan-800: #03636b;
+    --clbr-primitive-color-cyan-900: #014a53;
+    --clbr-primitive-color-green-100: #f0f7e8;
+    --clbr-primitive-color-green-1000: #285303;
+    --clbr-primitive-color-green-1100: #1d4204;
+    --clbr-primitive-color-green-1200: #133100;
+    --clbr-primitive-color-green-200: #d9ebc5;
+    --clbr-primitive-color-green-300: #bbda9b;
+    --clbr-primitive-color-green-400: #9bca71;
+    --clbr-primitive-color-green-500: #7ab945;
+    --clbr-primitive-color-green-600: #55a803;
+    --clbr-primitive-color-green-700: #499103;
+    --clbr-primitive-color-green-800: #3e7b02;
+    --clbr-primitive-color-green-900: #336502;
     --clbr-primitive-color-neutral-100: #f9fafb;
     --clbr-primitive-color-neutral-1000: #191a1a;
     --clbr-primitive-color-neutral-1100: #0e0f10;
@@ -31,7 +69,67 @@
     --clbr-primitive-color-neutral-700: #656667;
     --clbr-primitive-color-neutral-800: #434444;
     --clbr-primitive-color-neutral-900: #232424;
+    --clbr-primitive-color-orange-100: #fef4e8;
+    --clbr-primitive-color-orange-1000: #773604;
+    --clbr-primitive-color-orange-1100: #612804;
+    --clbr-primitive-color-orange-1200: #4c1a00;
+    --clbr-primitive-color-orange-200: #ffe9d4;
+    --clbr-primitive-color-orange-300: #ffdfc1;
+    --clbr-primitive-color-orange-400: #ffba7d;
+    --clbr-primitive-color-orange-500: #f89435;
+    --clbr-primitive-color-orange-600: #ea7407;
+    --clbr-primitive-color-orange-700: #cb6503;
+    --clbr-primitive-color-orange-800: #ad5601;
+    --clbr-primitive-color-orange-900: #8e4501;
+    --clbr-primitive-color-red-100: #fff3f2;
+    --clbr-primitive-color-red-1000: #960706;
+    --clbr-primitive-color-red-1100: #790304;
+    --clbr-primitive-color-red-1200: #5d0000;
+    --clbr-primitive-color-red-200: #ffdcda;
+    --clbr-primitive-color-red-300: #ffc1ba;
+    --clbr-primitive-color-red-400: #ffa49a;
+    --clbr-primitive-color-red-500: #ff847a;
+    --clbr-primitive-color-red-600: #fb625b;
+    --clbr-primitive-color-red-700: #e44a3f;
+    --clbr-primitive-color-red-800: #cc3024;
+    --clbr-primitive-color-red-900: #b40d05;
+    --clbr-primitive-color-rose-100: #fdf2f8;
+    --clbr-primitive-color-rose-1000: #8b1254;
+    --clbr-primitive-color-rose-1100: #700b43;
+    --clbr-primitive-color-rose-1200: #550532;
+    --clbr-primitive-color-rose-200: #f9ddec;
+    --clbr-primitive-color-rose-300: #f6c1dc;
+    --clbr-primitive-color-rose-400: #f1a5cc;
+    --clbr-primitive-color-rose-500: #ec89bc;
+    --clbr-primitive-color-rose-600: #e56aac;
+    --clbr-primitive-color-rose-700: #d15294;
+    --clbr-primitive-color-rose-800: #bc397d;
+    --clbr-primitive-color-rose-900: #a81a66;
+    --clbr-primitive-color-violet-100: #f9f4ff;
+    --clbr-primitive-color-violet-1000: #551abc;
+    --clbr-primitive-color-violet-1100: #3c01ad;
+    --clbr-primitive-color-violet-1200: #300187;
+    --clbr-primitive-color-violet-200: #eedefe;
+    --clbr-primitive-color-violet-300: #e2c4fe;
+    --clbr-primitive-color-violet-400: #d5aafd;
+    --clbr-primitive-color-violet-500: #c790fc;
+    --clbr-primitive-color-violet-600: #b776fb;
+    --clbr-primitive-color-violet-700: #a35ff0;
+    --clbr-primitive-color-violet-800: #813eda;
+    --clbr-primitive-color-violet-900: #6c2dcb;
     --clbr-primitive-color-white: #ffffff;
+    --clbr-primitive-color-yellow-100: #f7f6e9;
+    --clbr-primitive-color-yellow-1000: #574803;
+    --clbr-primitive-color-yellow-1100: #453803;
+    --clbr-primitive-color-yellow-1200: #342900;
+    --clbr-primitive-color-yellow-200: #ece5c2;
+    --clbr-primitive-color-yellow-300: #e0cf98;
+    --clbr-primitive-color-yellow-400: #d2ba6e;
+    --clbr-primitive-color-yellow-500: #c2a643;
+    --clbr-primitive-color-yellow-600: #b19202;
+    --clbr-primitive-color-yellow-700: #997e02;
+    --clbr-primitive-color-yellow-800: #816b01;
+    --clbr-primitive-color-yellow-900: #6a5801;
     --clbr-primitive-effect-opacity-40: 0.4;
     --clbr-primitive-effect-opacity-64: 0.64;
     --clbr-primitive-effect-opacity-84: 0.84;

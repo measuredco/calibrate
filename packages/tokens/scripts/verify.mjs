@@ -5,7 +5,7 @@ import { spawnSync } from "node:child_process";
 /**
  * Verification entrypoint for generated distribution artifacts.
  *
- * This script rebuilds token outputs and fails if `tokens/dist` differs from
+ * This script rebuilds token outputs and fails if `dist` differs from
  * the checked-in state, ensuring generated artifacts stay committed and current.
  */
 
@@ -42,17 +42,21 @@ function run(cmd, args, opts = {}) {
  * @returns {void}
  */
 function main() {
-  run("pnpm", ["run", "tokens:build"], { stdio: "inherit" });
+  run("pnpm", ["run", "build"], { stdio: "inherit" });
 
-  const diff = spawnSync("git", ["diff", "--exit-code", "--", "tokens/dist"], {
-    cwd,
-    stdio: "pipe",
-    encoding: "utf8",
-  });
+  const diff = spawnSync(
+    "git",
+    ["diff", "--exit-code", "--", "packages/tokens/dist"],
+    {
+      cwd,
+      stdio: "pipe",
+      encoding: "utf8",
+    },
+  );
 
   if (diff.status !== 0) {
     console.error(
-      "tokens/dist is not up to date. Run `pnpm run tokens:build` and commit updated dist artifacts.",
+      "packages/tokens/dist is not up to date. Run `pnpm run build` in packages/tokens and commit updated dist artifacts.",
     );
 
     if (diff.stdout) {
@@ -65,7 +69,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log("tokens/dist is up to date.");
+  console.log("packages/tokens/dist is up to date.");
 }
 
 try {

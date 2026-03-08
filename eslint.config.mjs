@@ -7,8 +7,8 @@ export default [
     ignores: [
       "node_modules/**",
       "**/build/**",
-      "tokens/dist/**",
-      "tokens/schemas/**",
+      "packages/tokens/dist/**",
+      "packages/tokens/schemas/**",
     ],
   },
   {
