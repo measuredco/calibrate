@@ -1,6 +1,7 @@
 node_modules
 **/build/**
-packages/tokens/dist
+**/dist/**
+**/storybook-static/**
 packages/tokens/schemas/*/
 packages/tokens/schemas/*/**
 pnpm-lock.yaml

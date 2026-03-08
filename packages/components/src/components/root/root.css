@@ -1,0 +1,36 @@
+@layer clbr.root {
+  .clbr {
+    background-color: var(--clbr-color-background-default);
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    color: var(--clbr-color-foreground-default);
+    font-family: var(--clbr-typography-font-family-default);
+    font-size: var(--clbr-typography-type-step-200-font-size);
+    font-weight: var(--clbr-typography-font-weight-regular);
+    line-height: var(--clbr-typography-type-step-200-line-height);
+  }
+
+  :where(body:has(> .clbr:first-child)) {
+    margin: 0;
+  }
+
+  :where(body > .clbr:first-child) {
+    min-block-size: 100dvb;
+  }
+
+  :where(.clbr) {
+    *,
+    *::before,
+    *::after {
+      background-repeat: no-repeat;
+      box-sizing: border-box;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+      font: inherit;
+    }
+  }
+}

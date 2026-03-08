@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "components:build": "pnpm --filter @calibrate/components run build",
+    "components:lint": "pnpm --filter @calibrate/components run lint",
+    "components:test": "pnpm --filter @calibrate/components run test",
+    "components:typecheck": "pnpm --filter @calibrate/components run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -19,7 +23,9 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
     "eslint": "^10.0.2",
+    "eslint-plugin-storybook": "10.2.16",
     "globals": "^17.4.0",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "typescript-eslint": "^8.43.0"
   }
 }
