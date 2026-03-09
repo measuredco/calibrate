@@ -8,9 +8,9 @@ importers:
 
   .:
     devDependencies:
-      '@calibrate/browserslist-config':
+      '@measured/calibrate-browserslist':
         specifier: workspace:*
-        version: link:packages/browserslist-config
+        version: link:packages/browserslist
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.0.2)
@@ -33,15 +33,15 @@ importers:
         specifier: ^8.43.0
         version: 8.56.1(eslint@10.0.2)(typescript@5.9.3)
 
-  packages/browserslist-config: {}
+  packages/browserslist: {}
 
   packages/components:
     dependencies:
-      '@calibrate/tokens':
+      '@measured/calibrate-tokens':
         specifier: workspace:*
         version: link:../tokens
     devDependencies:
-      '@calibrate/browserslist-config':
+      '@measured/calibrate-browserslist':
         specifier: workspace:*
         version: link:../browserslist-config
       '@storybook/addon-docs':

@@ -1,9 +1,9 @@
-# @calibrate/tokens
+# @measured/calibrate-tokens
 
 Token artifacts package for Calibrate.
 
 ## CSS entry points
 
-- `@calibrate/tokens/css/core`
-- `@calibrate/tokens/css/msrd`
-- `@calibrate/tokens/css/wrfr`
+- `@measured/calibrate-tokens/css/core`
+- `@measured/calibrate-tokens/css/msrd`
+- `@measured/calibrate-tokens/css/wrfr`

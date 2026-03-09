@@ -2,9 +2,9 @@
 @layer clbr, clbr.brand, clbr.root, clbr.components;
 
 /* tokens */
-@import "@calibrate/tokens/css/core";
-@import "@calibrate/tokens/css/wrfr";
-@import "@calibrate/tokens/css/msrd";
+@import "@measured/calibrate-tokens/css/core";
+@import "@measured/calibrate-tokens/css/wrfr";
+@import "@measured/calibrate-tokens/css/msrd";
 
 /* root */
 @import "./components/root/root.css";
