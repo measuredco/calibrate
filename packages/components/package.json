@@ -38,6 +38,7 @@
     "autoprefixer": "^10.4.21",
     "jsdom": "^28.1.0",
     "postcss": "^8.5.6",
+    "prettier": "catalog:",
     "storybook": "^10.2.16",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",

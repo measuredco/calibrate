@@ -11,12 +11,12 @@
     -webkit-font-smoothing: antialiased;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);
-    text-size-adjust: none;
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
       transparent
     );
+    text-size-adjust: none;
   }
 
   :where(.translated-rtl:has(.clbr)) {
