@@ -1,4 +1,4 @@
-# @calibrate/components
+# @measured/calibrate-components
 
 Web components package for Calibrate.
 
@@ -8,7 +8,7 @@ Web components package for Calibrate.
 - Light DOM components (no Shadow DOM)
 - Storybook stories for component development
 - Vitest + Testing Library coverage
-- Token CSS auto-import via `@calibrate/tokens`
+- Token CSS auto-import via `@measured/calibrate-tokens`
 
 ## Scripts
 

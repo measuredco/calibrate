@@ -3,27 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "components:build": "pnpm --filter @calibrate/components run build",
-    "components:lint": "pnpm --filter @calibrate/components run lint",
-    "components:test": "pnpm --filter @calibrate/components run test",
-    "components:typecheck": "pnpm --filter @calibrate/components run typecheck",
+    "components:build": "pnpm --filter @measured/calibrate-components run build",
+    "components:lint": "pnpm --filter @measured/calibrate-components run lint",
+    "components:test": "pnpm --filter @measured/calibrate-components run test",
+    "components:typecheck": "pnpm --filter @measured/calibrate-components run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "tokens:build": "pnpm --filter @calibrate/tokens run build",
-    "tokens:validate": "pnpm --filter @calibrate/tokens run validate",
-    "tokens:verify": "pnpm --filter @calibrate/tokens run verify"
+    "tokens:build": "pnpm --filter @measured/calibrate-tokens run build",
+    "tokens:validate": "pnpm --filter @measured/calibrate-tokens run validate",
+    "tokens:verify": "pnpm --filter @measured/calibrate-tokens run verify"
   },
   "packageManager": "pnpm@10.29.3",
   "engines": {
     "node": "24.13.1"
   },
   "browserslist": [
-    "extends @calibrate/browserslist-config"
+    "extends @measured/calibrate-browserslist/browserslist-config"
   ],
   "devDependencies": {
-    "@calibrate/browserslist-config": "workspace:*",
+    "@measured/calibrate-browserslist": "workspace:*",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
     "eslint": "^10.0.2",

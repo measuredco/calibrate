@@ -1,4 +1,4 @@
-import target from "@calibrate/browserslist-config/esbuild";
+import target from "@measured/calibrate-browserslist/esbuild";
 import path from "node:path";
 import { defineConfig } from "vite";
 

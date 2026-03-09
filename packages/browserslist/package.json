@@ -1,9 +1,10 @@
 {
-  "name": "@calibrate/browserslist-config",
+  "name": "@measured/calibrate-browserslist",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "files": [
+    "browserslist-config.cjs",
     "index.mjs",
     "index.d.ts",
     "esbuild.mjs",
@@ -19,7 +20,8 @@
     "./esbuild": {
       "types": "./esbuild.d.ts",
       "default": "./esbuild.mjs"
-    }
+    },
+    "./browserslist-config": "./browserslist-config.cjs"
   },
   "browserslist": [
     "baseline widely available"

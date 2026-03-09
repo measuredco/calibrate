@@ -1,5 +1,5 @@
 {
-  "name": "@calibrate/components",
+  "name": "@measured/calibrate-components",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -26,10 +26,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@calibrate/tokens": "workspace:*"
+    "@measured/calibrate-tokens": "workspace:*"
   },
   "devDependencies": {
-    "@calibrate/browserslist-config": "workspace:*",
+    "@measured/calibrate-browserslist": "workspace:*",
     "@storybook/addon-docs": "^10.2.16",
     "@storybook/web-components": "^10.2.16",
     "@storybook/web-components-vite": "^10.2.16",

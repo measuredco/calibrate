@@ -27,7 +27,7 @@ Current decisions/working assumptions:
 - Lit is reserved for components that need runtime JS behavior.
 - Runtime web-components (when used) should use light DOM (no Shadow DOM) and keep SSR-safe inner HTML behavior.
 - Distribution target: dual output (ESM + CJS) for initial compatibility.
-- Browser support baseline: centralized in `@calibrate/browserslist-config` (`baseline widely available` query + Vite/esbuild target), with PostCSS+Autoprefixer enabled in `@calibrate/components`; add shims/polyfills only if a concrete requirement emerges.
+- Browser support baseline: centralized in `@measured/calibrate-browserslist` (`baseline widely available` query + Vite/esbuild target), with PostCSS+Autoprefixer enabled in `@measured/calibrate-components`; add shims/polyfills only if a concrete requirement emerges.
 - Testing depth for v1: behavior + accessibility; no visual regression in initial phase
 - Storybook: package-local for now, treated as a development tool (docs-app integration can come later).
 - Public API policy: full alpha mode for now (no stability guarantees until versioning/publish policy is formalized).
@@ -219,5 +219,5 @@ _This section is a historical completion record; some entries may describe decis
 - Monorepo architecture baseline completed (pnpm workspace, lockstep versioning):
   - `pnpm-workspace.yaml` added with `packages/*`
   - tokens package moved to `packages/tokens` with package-local build/validate/verify scripts
-  - root scripts now delegate via workspace filters (`@calibrate/tokens`)
+  - root scripts now delegate via workspace filters (`@measured/calibrate-tokens`)
   - `packages/components` scaffold added as the next package boundary
