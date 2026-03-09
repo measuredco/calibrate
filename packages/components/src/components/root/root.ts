@@ -17,10 +17,10 @@ export interface ClbrRootProps {
   children: string;
   /** Optional explicit text direction for the root wrapper. */
   dir?: ClbrDirection;
-  /** Optional explicit theme variant class to apply on the root wrapper. */
-  theme?: ClbrTheme;
   /** Optional BCP47 language tag for the root wrapper (e.g. `en-GB`). */
   lang?: string;
+  /** Optional explicit theme variant class to apply on the root wrapper. */
+  theme?: ClbrTheme;
 }
 
 /**
@@ -33,7 +33,7 @@ export interface ClbrRootProps {
  * @returns HTML string for the Calibrate root wrapper.
  */
 export function renderClbrRoot(props: ClbrRootProps): string {
-  const { brand = "msrd", children, dir, theme, lang } = props;
+  const { brand = "msrd", children, dir, lang, theme } = props;
 
   const classAttr = cx(
     "clbr",

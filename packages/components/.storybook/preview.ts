@@ -30,7 +30,7 @@ const preview: Preview = {
       const padding =
         typeof context.parameters.padding !== "undefined"
           ? context.parameters.padding
-          : "1em";
+          : "1.75rem 1.25rem";
       const storyHtml = String(Story());
       const withRoot = context.parameters?.withRoot !== false;
 

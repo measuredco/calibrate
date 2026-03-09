@@ -41,6 +41,11 @@ const meta = {
     },
   },
   parameters: {
+    docs: {
+      description: {
+        story: "Toolbar globals are ignored here; use Controls for root props.",
+      },
+    },
     padding: 0,
     withRoot: false,
   },
@@ -52,7 +57,7 @@ export default meta;
 export const Default = {
   args: {
     brand: "msrd",
-    children: `<div style="padding: 1em">Example content</div>`,
+    children: `<div style="padding: 1.75rem 1.25rem">Example content</div>`,
     dir: "",
     lang: undefined,
     theme: "",
