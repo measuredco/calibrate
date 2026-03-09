@@ -1,19 +1,21 @@
+import target from "@calibrate/browserslist-config/esbuild";
 import path from "node:path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
+    target,
     lib: {
       cssFileName: "components",
       entry: path.resolve(__dirname, "src/index.ts"),
-      formats: ["es", "cjs"],
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
+      formats: ["es", "cjs"],
     },
-    sourcemap: true,
     rollupOptions: {
       output: {
         exports: "named",
       },
     },
+    sourcemap: true,
   },
 });

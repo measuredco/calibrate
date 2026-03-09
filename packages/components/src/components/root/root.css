@@ -5,16 +5,33 @@
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);
     font-family: var(--clbr-typography-font-family-default);
+    font-feature-settings: "ss03" 1;
+    font-optical-sizing: none;
     font-size: var(--clbr-typography-type-step-200-font-size);
+    -webkit-font-smoothing: antialiased;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: color-mix(
+      in srgb,
+      var(--clbr-color-brand-primary) 20%,
+      transparent
+    );
   }
 
-  :where(body:has(> .clbr:first-child)) {
+  :where(.translated-rtl:has(.clbr)) {
+    direction: rtl;
+  }
+
+  :where(:root:has(body > .clbr)) {
+    overscroll-behavior: none;
+  }
+
+  :where(body:has(> .clbr)) {
     margin: 0;
   }
 
-  :where(body > .clbr:first-child) {
+  :where(body > .clbr) {
     min-block-size: 100dvb;
   }
 
@@ -26,11 +43,90 @@
       box-sizing: border-box;
     }
 
-    input,
+    :focus {
+      outline: none;
+    }
+
+    :focus-visible {
+      border-radius: var(--clbr-radius-focus-ring);
+      outline: var(--clbr-layout-focus-ring-width) solid
+        var(--clbr-color-interactive-focus);
+      outline-offset: var(--clbr-layout-focus-ring-offset-default);
+    }
+
+    a {
+      color: var(--clbr-color-interactive-default);
+    }
+
+    @media (any-hover: hover) {
+      a:hover {
+        color: var(--clbr-color-interactive-hover);
+      }
+    }
+
+    a:active {
+      color: var(--clbr-color-interactive-active);
+    }
+
+    b,
+    strong {
+      font-weight: var(--clbr-typography-font-weight-bold);
+    }
+
     button,
-    textarea,
-    select {
+    input,
+    select,
+    textarea {
       font: inherit;
+    }
+
+    canvas,
+    img,
+    picture,
+    svg,
+    video {
+      block-size: auto;
+      display: block;
+      max-inline-size: 100%;
+    }
+
+    code {
+      font-family: var(--clbr-typography-font-family-mono);
+    }
+
+    fieldset {
+      border: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      text-wrap: balance;
+    }
+
+    p {
+      text-wrap: pretty;
+    }
+
+    math,
+    time,
+    table {
+      font-variant-numeric: slashed-zero tabular-nums;
+    }
+
+    svg:not([fill]) {
+      fill: currentColor;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    textarea {
+      resize: vertical;
     }
   }
 }

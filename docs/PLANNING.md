@@ -27,7 +27,7 @@ Current decisions/working assumptions:
 - Lit is reserved for components that need runtime JS behavior.
 - Runtime web-components (when used) should use light DOM (no Shadow DOM) and keep SSR-safe inner HTML behavior.
 - Distribution target: dual output (ESM + CJS) for initial compatibility.
-- Browser support baseline: Browserslist `baseline widely available`; use esbuild shim/polyfill approach if needed; Autoprefixer enabled.
+- Browser support baseline: centralized in `@calibrate/browserslist-config` (`baseline widely available` query + Vite/esbuild target), with PostCSS+Autoprefixer enabled in `@calibrate/components`; add shims/polyfills only if a concrete requirement emerges.
 - Testing depth for v1: behavior + accessibility; no visual regression in initial phase
 - Storybook: package-local for now, treated as a development tool (docs-app integration can come later).
 - Public API policy: full alpha mode for now (no stability guarantees until versioning/publish policy is formalized).
