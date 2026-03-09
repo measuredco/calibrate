@@ -1,6 +1,6 @@
-# Browserslist Baseline (`@measured/calibrate-browserslist`)
+# @measured/calibrate-browserslist
 
-Shared browser support baseline for Calibrate workspace tooling.
+Shared browser support baseline for Calibrate packages and downstream consumers.
 
 ## Browserslist
 

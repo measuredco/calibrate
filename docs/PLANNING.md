@@ -6,44 +6,18 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Build Initial Components (`packages/components`)
-
-Requirements:
-
-- Components that do not require JS behavior should be authored as pure SSR renderers emitting native HTML.
-- Components that do require JS behavior may be authored as web-components.
-- Package uses TypeScript.
-- Public component contracts (renderer props and/or component attributes/properties/events) have JSDoc.
-- Every component has tests (Testing Library).
-- Every component has Storybook stories.
-- Package uses repo-level Prettier and ESLint (including TS support).
-- All component paths support SSR (render meaningful inner HTML without requiring client JS for initial render).
-
-Current decisions/working assumptions:
-
-- Initial stack: Vite, Vitest, Testing Library, Storybook.
-- Initial primitives use pure SSR renderers (no custom-element runtime).
-- Initial implemented primitives: `root` and `button` (renderer + CSS + tests + stories).
-- Lit is reserved for components that need runtime JS behavior.
-- Runtime web-components (when used) should use light DOM (no Shadow DOM) and keep SSR-safe inner HTML behavior.
-- Distribution target: dual output (ESM + CJS) for initial compatibility.
-- Browser support baseline: centralized in `@measured/calibrate-browserslist` (`baseline widely available` query + Vite/esbuild target), with PostCSS+Autoprefixer enabled in `@measured/calibrate-components`; add shims/polyfills only if a concrete requirement emerges.
-- Testing depth for v1: behavior + accessibility; no visual regression in initial phase
-- Storybook: package-local for now, treated as a development tool (docs-app integration can come later).
-- Public API policy: full alpha mode for now (no stability guarantees until versioning/publish policy is formalized).
-- Accessibility baseline target: WCAG 2.2 AA.
-- Framework strategy: SSR renderer contracts first; add web-component runtime only where needed; wrappers/adapters later.
-- Token CSS loading: components package auto-imports token CSS; direct tokens package consumption remains for non-component consumers.
-- Initial token CSS strategy: include both brands by default for now (brand/tree-shaking optimization can follow later).
-- Components package also ships a light CSS reset entrypoint that can compose token CSS imports.
-
-Open questions to resolve:
-
-- None currently.
-
 ## Next
 
 ### Components and Recipes
+
+- Add surface component, inc. story global type
+- Review and refine one-shot button component
+- Add Storybook accessibility test runner in CI:
+  - keep addon-a11y panel in Storybook UI for local feedback
+  - run story-level a11y checks in CI as a package-level gate
+- Define a shared `data-*` passthrough contract for renderer components:
+  - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
+  - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
 
 ## Later
 
@@ -84,8 +58,8 @@ Everything we could attempt given sufficient time and resources.
 ### Export target evolution
 
 1. Penpot
-1. VS Code token lookup artifact
 1. Figma
+1. VS Code token lookup artifact
 1. iOS
 1. Android
 
@@ -125,6 +99,10 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Initial `packages/components` baseline completed:
+  - SSR-first renderer architecture established with `root` and `button` primitives
+  - package-level TypeScript/testing/Storybook/quality gates in place
+  - stable component-package constraints moved to `docs/CONSTRAINTS.md`
 - Phase complete: Semantic API baseline (core + brand semantic coverage, responsive semantics included).
 - semantic color theme/surface files for `msrd` (`light|dark` × `default|brand`).
 - semantic color theme files include `base16` groups (`00`..`0F`) with hex descriptions.
