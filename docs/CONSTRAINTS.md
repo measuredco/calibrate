@@ -20,7 +20,7 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 
 - Ensure `*.tokens.json` files conform to `packages/tokens/schemas/2025.10/spec`.
 - `packages/tokens/src/<brand>/primitive` is private; public API is `packages/tokens/src/<brand>/semantic`.
-- Semantic tokens are the only public API surface; consumers should not bind to primitive paths.
+- For the tokens package, semantic tokens are the only public API surface; consumers should not bind to primitive paths.
 - Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
 - Shared system-shell domains live in `packages/tokens/src/core/{primitive,semantic}`.
@@ -55,6 +55,7 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 - Package boundaries:
   - `packages/tokens/` is a first-class package boundary.
   - `packages/components/` is a first-class package boundary and should consume published token outputs/contracts.
+  - `packages/browserslist/` is a first-class support package boundary for shared browser target policy.
   - additional boundaries (for example `assets`, docs site, bootstrap CLI) are expected but remain exploratory until concrete constraints are defined.
 - Versioning/distribution policy:
   - lockstep versioning is the default across design-system packages.
@@ -64,6 +65,31 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
   - generated public artifacts output to `packages/tokens/dist/...`.
   - disposable pipeline artifacts output to `packages/tokens/build/...`.
 - Resolver documents and build/transforms should live inside the `packages/tokens/` package tree.
+
+## Components Package Constraints (Alpha)
+
+- `packages/components/` is the canonical package boundary for component contracts built on token outputs.
+- Component implementation model:
+  - components that do not require runtime JS behavior should be authored as pure SSR renderers that emit native HTML.
+  - components that do require runtime JS behavior may be authored as web-components.
+  - runtime web-components (when used) should use light DOM and preserve SSR-safe meaningful initial HTML.
+- TypeScript is required for component contract authoring.
+- Public component contracts (renderer props and/or component attributes/properties/events) must include JSDoc.
+- Public renderers should include a co-located declarative spec mirror for tooling/docs/adapter use.
+- Every component must include tests with contract/behavior coverage.
+  - use Testing Library where semantic DOM behavior is under test.
+- Every component must include Storybook stories.
+- Component package quality gates use repo-level ESLint and Prettier.
+- Component package browser support baseline is centralized in `@measured/calibrate-browserslist` (`baseline widely available` query + Vite/esbuild target) with PostCSS+Autoprefixer enabled.
+- Shims/polyfills should only be introduced when a concrete support requirement emerges.
+- Accessibility baseline target is WCAG 2.2 AA.
+- Storybook is package-local and treated as a development tool; docs-site integration remains optional/future.
+- Components package token CSS loading model:
+  - components package auto-imports token CSS by default.
+  - direct tokens package consumption remains supported for non-component consumers.
+  - initial strategy includes both brands by default (brand/tree-shaking optimization can follow later).
+- Components package should ship a light root/reset CSS entrypoint that composes token CSS imports.
+- Components package public API remains alpha (no stability guarantees until publish/version policy is formalized).
 
 ## Canonical Semantic File Map (Alpha, `msrd`)
 
@@ -148,8 +174,8 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 ## Consumer Integration Contract
 
 - Include order for CSS bundles:
-  - load `packages/tokens/dist/css/clbr.core.tokens.css` first
-  - then load one or more brand bundles (for example `clbr.msrd.tokens.css`, `clbr.wrfr.tokens.css`)
+  - load `@measured/calibrate-tokens/css/core` first
+  - then load one or more brand bundles (for example `@measured/calibrate-tokens/css/msrd`, `@measured/calibrate-tokens/css/wrfr`)
 - CSS layering contract (`@layer clbr, clbr.brand;`) is normative and must be preserved in distributed bundles.
 - Root scoping contract:
   - all token usage must live under a `.clbr` scope root
