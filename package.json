@@ -19,7 +19,11 @@
   "engines": {
     "node": "24.13.1"
   },
+  "browserslist": [
+    "extends @calibrate/browserslist-config"
+  ],
   "devDependencies": {
+    "@calibrate/browserslist-config": "workspace:*",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
     "eslint": "^10.0.2",
