@@ -4,19 +4,25 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    prettier:
+      specifier: ^3.8.1
+      version: 3.8.1
+
 importers:
 
   .:
     devDependencies:
-      '@measured/calibrate-browserslist':
-        specifier: workspace:*
-        version: link:packages/browserslist
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.0.2)
       '@eslint/json':
         specifier: ^1.0.1
         version: 1.0.1
+      '@measured/calibrate-browserslist':
+        specifier: workspace:*
+        version: link:packages/browserslist
       eslint:
         specifier: ^10.0.2
         version: 10.0.2
@@ -27,7 +33,7 @@ importers:
         specifier: ^17.4.0
         version: 17.4.0
       prettier:
-        specifier: ^3.8.1
+        specifier: 'catalog:'
         version: 3.8.1
       typescript-eslint:
         specifier: ^8.43.0
@@ -43,7 +49,7 @@ importers:
     devDependencies:
       '@measured/calibrate-browserslist':
         specifier: workspace:*
-        version: link:../browserslist-config
+        version: link:../browserslist
       '@storybook/addon-docs':
         specifier: ^10.2.16
         version: 10.2.16(@types/react@19.2.14)(esbuild@0.27.3)(rollup@4.59.0)(storybook@10.2.16(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@25.3.5))
@@ -68,6 +74,9 @@ importers:
       postcss:
         specifier: ^8.5.6
         version: 8.5.8
+      prettier:
+        specifier: 'catalog:'
+        version: 3.8.1
       storybook:
         specifier: ^10.2.16
         version: 10.2.16(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

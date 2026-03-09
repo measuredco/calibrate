@@ -1,3 +1,5 @@
+import { cx } from "../../helpers/cx";
+
 export type ClbrButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ClbrButtonSize = "sm" | "md" | "lg";
 export type ClbrButtonType = "button" | "submit" | "reset";
@@ -31,10 +33,6 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-}
-
-function cx(...parts: Array<string | false | null | undefined>): string {
-  return parts.filter(Boolean).join(" ");
 }
 
 function attrs(record: Record<string, string | boolean | undefined>): string {

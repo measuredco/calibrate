@@ -2,7 +2,6 @@ import { renderClbrButton } from "./button";
 
 const meta = {
   title: "Components/Button",
-  tags: ["autodocs"],
 };
 
 export default meta;
