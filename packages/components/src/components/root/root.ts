@@ -26,8 +26,9 @@ export interface ClbrRootProps {
 /**
  * SSR renderer for the Calibrate root wrapper.
  *
- * Emits a `<div>` with the Calibrate root classes and optional `dir`/`lang`
- * attributes, then injects the provided HTML content inside.
+ * Emits a `<div>` with Calibrate root classes, optional `dir`/`lang`
+ * attributes, and optional `clbr-theme-{theme}` class, then injects the
+ * provided HTML content inside.
  *
  * @param props - Root wrapper configuration and inner HTML content.
  * @returns HTML string for the Calibrate root wrapper.
@@ -45,3 +46,67 @@ export function renderClbrRoot(props: ClbrRootProps): string {
 
   return `<div class="${classAttr}"${dirAttr}${langAttr}>${children}</div>`;
 }
+
+/** Declarative root contract mirror for tooling, docs, and adapters. */
+export const CLBR_ROOT_SPEC = {
+  name: "root",
+  output: {
+    element: "div",
+  },
+  props: {
+    brand: {
+      default: "msrd",
+      required: false,
+      type: "enum",
+      values: ["msrd", "wrfr"],
+    },
+    children: {
+      required: true,
+      type: "html",
+    },
+    dir: {
+      required: false,
+      type: "enum",
+      values: ["ltr", "rtl"],
+    },
+    lang: {
+      format: "bcp47",
+      required: false,
+      type: "string",
+    },
+    theme: {
+      required: false,
+      type: "enum",
+      values: ["light", "dark"],
+    },
+  },
+  rules: {
+    attributes: [
+      {
+        behavior: "emit",
+        target: "dir",
+        when: "dir is provided",
+      },
+      {
+        behavior: "emit",
+        target: "lang",
+        when: "lang is provided",
+      },
+    ],
+    classes: [
+      {
+        behavior: "always",
+        value: "clbr",
+      },
+      {
+        behavior: "always",
+        value: "clbr-brand-{brand}",
+      },
+      {
+        behavior: "emit",
+        value: "clbr-theme-{theme}",
+        when: "theme is provided",
+      },
+    ],
+  },
+} as const;

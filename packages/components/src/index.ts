@@ -9,8 +9,10 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_ROOT_SPEC,
   type ClbrBrand,
   type ClbrDirection,
   type ClbrRootProps,
+  type ClbrTheme,
   renderClbrRoot,
 } from "./components/root/root";
