@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@measured/calibrate-browserslist": "workspace:*",
+    "@storybook/addon-a11y": "^10.2.16",
     "@storybook/addon-docs": "^10.2.16",
     "@storybook/web-components": "^10.2.16",
     "@storybook/web-components-vite": "^10.2.16",
