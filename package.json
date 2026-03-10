@@ -13,6 +13,7 @@
     "lint:fix": "eslint . --fix",
     "storybook": "pnpm --filter @measured/calibrate-storybook run storybook",
     "storybook:build": "pnpm --filter @measured/calibrate-storybook run storybook:build",
+    "storybook:test": "pnpm --filter @measured/calibrate-storybook run storybook:test",
     "system:build": "pnpm --filter @measured/calibrate-system run build",
     "system:validate": "pnpm --filter @measured/calibrate-system run validate",
     "system:verify": "pnpm --filter @measured/calibrate-system run verify"
