@@ -27,7 +27,7 @@
     "@measured/calibrate-system": "workspace:*"
   },
   "devDependencies": {
-    "@measured/calibrate-browserslist": "workspace:*",
+    "@measured/calibrate-config": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@types/node": "^25.3.5",
     "autoprefixer": "^10.4.21",

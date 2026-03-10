@@ -44,7 +44,7 @@ Everything we could attempt given sufficient time and resources.
 #### Design model evolution
 
 - Light/dark inverse surfaces
-- `density` context (class-based in CSS) — current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
+- `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Give wireframe theme an actual design
 
@@ -77,9 +77,9 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 
 Expand `@measured/calibrate-assets` beyond v1 fonts scope (for example favicons/images) and define stable vs implementation-detail asset APIs.
 
-#### Shareable automated checks
+#### Shared config package evolution
 
-Stylelint/ESLint/axe configs; token-name lint rules; forbid raw hex/px; PR templates require a11y notes, screenshots, and before/after diffs.
+Expand `@measured/calibrate-config` beyond the current browserslist/esbuild baseline to include additional consumer-installable subpath presets (for example ESLint, Stylelint, axe; token-name lint rules, raw hex/px guards), plus optional starter assets for contribution workflows (for example PR template/checklist files).
 
 #### Minimal viable publish
 
@@ -225,7 +225,7 @@ _This section is a historical completion record; some entries may describe decis
   - `@measured/calibrate-core` positioned as the primary runtime consumption contract
   - `@measured/calibrate-core/styles.css` established as the single CSS entrypoint (composing token + component CSS)
   - cross-package deps/scripts/CI/docs updated to new names and boundaries
-  - publish intent clarified: `@measured/calibrate-core` and `@measured/calibrate-browserslist` publishable, `@measured/calibrate-system` internal
+  - publish intent clarified: `@measured/calibrate-core` and `@measured/calibrate-config` publishable, `@measured/calibrate-system` internal
 - Storybook runtime extracted to app boundary:
   - moved Storybook config/runtime from `packages/core/.storybook` to `apps/storybook/.storybook`
   - preserved story co-location in package source (`packages/*/src/**/*.stories.ts`)
