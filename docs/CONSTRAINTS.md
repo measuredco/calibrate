@@ -85,7 +85,8 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Component package browser support baseline is centralized in `@measured/calibrate-browserslist` (`baseline widely available` query + Vite/esbuild target) with PostCSS+Autoprefixer enabled.
 - Shims/polyfills should only be introduced when a concrete support requirement emerges.
 - Accessibility baseline target is WCAG 2.2 AA.
-- Storybook is package-local and treated as a development tool; docs-site integration remains optional/future.
+- Storybook runtime is app-local (`apps/storybook`) and treated as a development/publishing tool; docs-site integration remains optional/future.
+- Story files remain co-located with package source (`packages/*/src/**/*.stories.*`).
 - Components package token CSS loading model:
   - components package auto-imports token CSS by default.
   - token CSS composition is handled by `core` for consumer runtime integration by default.

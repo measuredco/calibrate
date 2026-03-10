@@ -5,13 +5,14 @@
   "scripts": {
     "core:build": "pnpm --filter @measured/calibrate-core run build",
     "core:lint": "pnpm --filter @measured/calibrate-core run lint",
-    "core:storybook": "pnpm --filter @measured/calibrate-core run storybook",
     "core:test": "pnpm --filter @measured/calibrate-core run test",
     "core:typecheck": "pnpm --filter @measured/calibrate-core run typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "storybook": "pnpm --filter @measured/calibrate-storybook run storybook",
+    "storybook:build": "pnpm --filter @measured/calibrate-storybook run storybook:build",
     "system:build": "pnpm --filter @measured/calibrate-system run build",
     "system:validate": "pnpm --filter @measured/calibrate-system run validate",
     "system:verify": "pnpm --filter @measured/calibrate-system run verify"

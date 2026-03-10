@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/web-components-vite";
-import { renderClbrRoot } from "../src/components/root/root";
-import { renderClbrSurface } from "../src/components/surface/surface";
-import "../src/styles.css";
+import { renderClbrRoot } from "../../../packages/core/src/components/root/root";
+import { renderClbrSurface } from "../../../packages/core/src/components/surface/surface";
+import "../../../packages/core/src/styles.css";
 
 const decodeHtmlEntities = (source: string): string =>
   source
