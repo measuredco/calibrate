@@ -1,50 +1,50 @@
 {
   "$schema": "../../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic color tokens for msrd light/brand surface.",
+  "$description": "Semantic color tokens for wrfr light/brand surface.",
   "$type": "color",
   "brand": {
     "primary": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "support": {
-      "$value": "{primitive.color.neutral.900}"
+      "$value": "{primitive.color.neutral.500}"
     }
   },
   "logo": {
     "default": {
-      "$value": "{primitive.color.white}"
+      "$value": "{brand.primary}"
     },
     "neutral": {
-      "$value": "{logo.default}"
+      "$value": "{primitive.color.black}"
     }
   },
   "background": {
     "default": {
-      "$value": "{primitive.color.neutral.1200}"
+      "$value": "{primitive.color.neutral.100}"
     },
     "panel": {
-      "$value": "{primitive.color.neutral.1100}"
+      "$value": "{primitive.color.neutral.200}"
     },
     "subtle": {
-      "$value": "{primitive.color.alpha.white.08}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "inverse": {
-      "$value": "{primitive.color.neutral.100}"
+      "$value": "{primitive.color.neutral.1200}"
     }
   },
   "foreground": {
     "default": {
-      "$value": "{primitive.color.alpha.white.94}"
+      "$value": "{primitive.color.neutral.1200}"
     },
     "prose": {
-      "$value": "{primitive.color.alpha.white.88}"
+      "$value": "{primitive.color.neutral.1100}"
     },
     "muted": {
       "text": {
-        "$value": "{primitive.color.alpha.white.56}"
+        "$value": "{primitive.color.neutral.700}"
       },
       "nonText": {
-        "$value": "{primitive.color.alpha.white.40}"
+        "$value": "{primitive.color.neutral.600}"
       }
     },
     "contrast": {
@@ -70,13 +70,13 @@
       "$value": "{interactive.default}"
     },
     "hover": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.1000}"
     },
     "focus": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.700}"
     },
     "active": {
-      "$value": "{primitive.color.neutral.400}"
+      "$value": "{primitive.color.neutral.1100}"
     },
     "neutral": {
       "default": {
@@ -86,21 +86,21 @@
         "$value": "{interactive.neutral.default}"
       },
       "hover": {
-        "$value": "{primitive.color.alpha.white.80}"
+        "$value": "{interactive.default}"
       },
       "focus": {
         "$value": "{interactive.focus}"
       },
       "active": {
-        "$value": "{primitive.color.alpha.white.68}"
+        "$value": "{interactive.active}"
       }
     },
     "prose": {
       "default": {
-        "$value": "{interactive.default}"
+        "$value": "{primitive.color.neutral.800}"
       },
       "visited": {
-        "$value": "{primitive.color.neutral.600}"
+        "$value": "{primitive.color.neutral.800}"
       },
       "hover": {
         "$value": "{interactive.prose.default}"
@@ -121,52 +121,52 @@
   },
   "base16": {
     "00": {
-      "$value": "{primitive.color.neutral.1200}"
-    },
-    "01": {
-      "$value": "{primitive.color.neutral.1100}"
-    },
-    "02": {
-      "$value": "{primitive.color.neutral.1000}"
-    },
-    "03": {
-      "$value": "{primitive.color.neutral.500}"
-    },
-    "04": {
-      "$value": "{primitive.color.neutral.400}"
-    },
-    "05": {
-      "$value": "{primitive.color.neutral.300}"
-    },
-    "06": {
-      "$value": "{primitive.color.neutral.200}"
-    },
-    "07": {
       "$value": "{primitive.color.neutral.100}"
     },
+    "01": {
+      "$value": "{primitive.color.neutral.200}"
+    },
+    "02": {
+      "$value": "{primitive.color.neutral.300}"
+    },
+    "03": {
+      "$value": "{primitive.color.neutral.700}"
+    },
+    "04": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "05": {
+      "$value": "{primitive.color.neutral.900}"
+    },
+    "06": {
+      "$value": "{primitive.color.neutral.1000}"
+    },
+    "07": {
+      "$value": "{primitive.color.neutral.1100}"
+    },
     "08": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "09": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "0a": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "0b": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "0c": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.800}"
     },
     "0d": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "0e": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.1100}"
     },
     "0f": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.900}"
     }
   }
 }

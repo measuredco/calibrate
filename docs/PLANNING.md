@@ -8,9 +8,22 @@ What we're working on now.
 
 ## Next
 
+### Reconsider monorepo structure
+
+Possible restructure?
+
+- move `/packages/tokens` to `/{tokens}` (naming?)
+  - no longer a package (repo root)
+  - role: authored source-of-truth tokens in DTCG format + pipeline
+  - frees up `/packages/tokens`, and `calibrate-tokens` namespace for later JSON export target
+  - alternative names `/system`, `/language`, `/pipeline` ?
+  - pipeline (still) builds CSS tokens to `/{tokens}/dist`
+- replace `@measured/calibrate-tokens` in `/packages/components` with imports from `/{tokens}/dist`
+- rename `/packages/components` / `@measured/calibrate-components` to `/packages/core` / `@measured/calibrate-core`
+  - and CSS entrypoint from `component.css` to `core.css`
+
 ### Components and Recipes
 
-- Add surface component, inc. story global type
 - Review and refine one-shot button component
 - Add Storybook accessibility test runner in CI:
   - keep addon-a11y panel in Storybook UI for local feedback
@@ -65,6 +78,10 @@ Everything we could attempt given sufficient time and resources.
 
 Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/tokens/scripts/pipeline/index.mjs` when implementing a second export target.
 
+### Automated checks
+
+Stylelint/ESLint/axe; token-name lint rules; forbid raw hex/px; PR templates require a11y notes, screenshots, and before/after diffs.
+
 ### JSON export target
 
 Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates.
@@ -99,6 +116,10 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Surface component baseline completed:
+  - added `surface` renderer + CSS + tests + stories
+  - integrated `surface` global toolbar control in Storybook preview
+  - added story-level `withSurface` parameter support for wrapper control
 - Initial `packages/components` baseline completed:
   - SSR-first renderer architecture established with `root` and `button` primitives
   - package-level TypeScript/testing/Storybook/quality gates in place

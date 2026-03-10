@@ -43,10 +43,9 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        story: "Toolbar globals are ignored here; use Controls for root props.",
+        component: "Toolbar globals are ignored here; use Controls for root props.",
       },
     },
-    padding: 0,
     withRoot: false,
   },
   title: "Components/Root",

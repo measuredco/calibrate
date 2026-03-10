@@ -4,7 +4,7 @@
   "$type": "color",
   "dots": {
     "default": {
-      "$value": "{primitive.color.azure.1000}"
+      "$value": "{primitive.color.azure.400}"
     },
     "hover": {
       "$value": "{color.brand.support}"

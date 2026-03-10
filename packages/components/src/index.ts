@@ -9,6 +9,13 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_SURFACE_SPEC,
+  type ClbrSurface,
+  type ClbrSurfaceProps,
+  renderClbrSurface,
+} from "./components/surface/surface";
+
+export {
   CLBR_ROOT_SPEC,
   type ClbrBrand,
   type ClbrDirection,
