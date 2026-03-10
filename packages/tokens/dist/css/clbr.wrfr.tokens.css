@@ -149,55 +149,10 @@
 
   /* lightBrand | baseline | default-states */
   :where(.clbr.clbr-brand-wrfr .clbr-surface-brand) {
-    --clbr-color-background-default: #0b0c0d;
-    --clbr-color-background-inverse: #f9fafb;
-    --clbr-color-background-panel: #0e0f10;
-    --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
-    --clbr-color-base16-00: #0b0c0d;
-    --clbr-color-base16-01: #0e0f10;
-    --clbr-color-base16-02: #191a1a;
-    --clbr-color-base16-03: #a6a7a8;
-    --clbr-color-base16-04: #c8c9ca;
-    --clbr-color-base16-05: #e3e4e5;
-    --clbr-color-base16-06: #f2f3f4;
-    --clbr-color-base16-07: #f9fafb;
-    --clbr-color-base16-08: #898a8b;
-    --clbr-color-base16-09: #a6a7a8;
-    --clbr-color-base16-0a: #898a8b;
-    --clbr-color-base16-0b: #898a8b;
-    --clbr-color-base16-0c: #898a8b;
-    --clbr-color-base16-0d: #898a8b;
-    --clbr-color-base16-0e: #898a8b;
-    --clbr-color-base16-0f: #898a8b;
-    --clbr-color-border-brand: #232424;
+    --clbr-color-background-panel: #f2f3f4;
+    --clbr-color-background-subtle: #e3e4e5;
     --clbr-color-border-default: rgba(255, 255, 255, 0.16);
     --clbr-color-border-subtle: rgba(255, 255, 255, 0.08);
-    --clbr-color-brand-primary: #898a8b;
-    --clbr-color-brand-support: #232424;
-    --clbr-color-foreground-contrast: #0b0c0d;
-    --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
-    --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
-    --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
-    --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
-    --clbr-color-interactive-active: #c8c9ca;
-    --clbr-color-interactive-default: #898a8b;
-    --clbr-color-interactive-focus: #898a8b;
-    --clbr-color-interactive-hover: #a6a7a8;
-    --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
-    --clbr-color-interactive-neutral-default: rgba(255, 255, 255, 0.94);
-    --clbr-color-interactive-neutral-focus: #898a8b;
-    --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
-    --clbr-color-interactive-neutral-visited: rgba(255, 255, 255, 0.94);
-    --clbr-color-interactive-prose-active: #c8c9ca;
-    --clbr-color-interactive-prose-active-decoration: #c8c9ca;
-    --clbr-color-interactive-prose-default: #898a8b;
-    --clbr-color-interactive-prose-focus: #898a8b;
-    --clbr-color-interactive-prose-hover: #898a8b;
-    --clbr-color-interactive-prose-hover-decoration: #232424;
-    --clbr-color-interactive-prose-visited: #898a8b;
-    --clbr-color-interactive-visited: #898a8b;
-    --clbr-color-logo-default: #ffffff;
-    --clbr-color-logo-neutral: #ffffff;
   }
 
   /* darkDefault | baseline | default-states */
@@ -348,6 +303,59 @@
     }
   }
 
+  /* lightBrand | baseline | default-states | variant:forcedLight */
+  @media (prefers-color-scheme: dark) {
+    :where(.clbr.clbr-brand-wrfr.clbr-theme-light .clbr-surface-brand) {
+      --clbr-color-background-default: #f9fafb;
+      --clbr-color-background-inverse: #0b0c0d;
+      --clbr-color-background-panel: #f2f3f4;
+      --clbr-color-background-subtle: #e3e4e5;
+      --clbr-color-base16-00: #f9fafb;
+      --clbr-color-base16-01: #f2f3f4;
+      --clbr-color-base16-02: #e3e4e5;
+      --clbr-color-base16-03: #656667;
+      --clbr-color-base16-04: #434444;
+      --clbr-color-base16-05: #232424;
+      --clbr-color-base16-06: #191a1a;
+      --clbr-color-base16-07: #0e0f10;
+      --clbr-color-base16-08: #232424;
+      --clbr-color-base16-09: #232424;
+      --clbr-color-base16-0a: #232424;
+      --clbr-color-base16-0b: #232424;
+      --clbr-color-base16-0c: #434444;
+      --clbr-color-base16-0d: #232424;
+      --clbr-color-base16-0e: #0e0f10;
+      --clbr-color-base16-0f: #232424;
+      --clbr-color-border-brand: #a6a7a8;
+      --clbr-color-brand-primary: #232424;
+      --clbr-color-brand-support: #a6a7a8;
+      --clbr-color-foreground-contrast: #f9fafb;
+      --clbr-color-foreground-default: #0b0c0d;
+      --clbr-color-foreground-muted-non-text: #898a8b;
+      --clbr-color-foreground-muted-text: #656667;
+      --clbr-color-foreground-prose: #0e0f10;
+      --clbr-color-interactive-active: #0e0f10;
+      --clbr-color-interactive-default: #232424;
+      --clbr-color-interactive-focus: #656667;
+      --clbr-color-interactive-hover: #191a1a;
+      --clbr-color-interactive-neutral-active: #0e0f10;
+      --clbr-color-interactive-neutral-default: #0b0c0d;
+      --clbr-color-interactive-neutral-focus: #656667;
+      --clbr-color-interactive-neutral-hover: #232424;
+      --clbr-color-interactive-neutral-visited: #0b0c0d;
+      --clbr-color-interactive-prose-active: #0e0f10;
+      --clbr-color-interactive-prose-active-decoration: #0e0f10;
+      --clbr-color-interactive-prose-default: #434444;
+      --clbr-color-interactive-prose-focus: #656667;
+      --clbr-color-interactive-prose-hover: #434444;
+      --clbr-color-interactive-prose-hover-decoration: #a6a7a8;
+      --clbr-color-interactive-prose-visited: #434444;
+      --clbr-color-interactive-visited: #232424;
+      --clbr-color-logo-default: #232424;
+      --clbr-color-logo-neutral: #000000;
+    }
+  }
+
   /* darkDefault | baseline | default-states | variant:forcedDark */
   :where(.clbr.clbr-brand-wrfr.clbr-theme-dark) {
     --clbr-color-background-default: #0e0f10;
@@ -400,6 +408,57 @@
     --clbr-color-logo-default: #898a8b;
     --clbr-color-logo-neutral: #ffffff;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
+  }
+
+  /* darkBrand | baseline | default-states | variant:forcedDark */
+  :where(.clbr.clbr-brand-wrfr.clbr-theme-dark .clbr-surface-brand) {
+    --clbr-color-background-default: #0b0c0d;
+    --clbr-color-background-inverse: #f9fafb;
+    --clbr-color-background-panel: #0e0f10;
+    --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
+    --clbr-color-base16-00: #0b0c0d;
+    --clbr-color-base16-01: #0e0f10;
+    --clbr-color-base16-02: #191a1a;
+    --clbr-color-base16-03: #a6a7a8;
+    --clbr-color-base16-04: #c8c9ca;
+    --clbr-color-base16-05: #e3e4e5;
+    --clbr-color-base16-06: #f2f3f4;
+    --clbr-color-base16-07: #f9fafb;
+    --clbr-color-base16-08: #898a8b;
+    --clbr-color-base16-09: #a6a7a8;
+    --clbr-color-base16-0a: #898a8b;
+    --clbr-color-base16-0b: #898a8b;
+    --clbr-color-base16-0c: #898a8b;
+    --clbr-color-base16-0d: #898a8b;
+    --clbr-color-base16-0e: #898a8b;
+    --clbr-color-base16-0f: #898a8b;
+    --clbr-color-border-brand: #232424;
+    --clbr-color-brand-primary: #898a8b;
+    --clbr-color-brand-support: #232424;
+    --clbr-color-foreground-contrast: #0b0c0d;
+    --clbr-color-foreground-default: rgba(255, 255, 255, 0.94);
+    --clbr-color-foreground-muted-non-text: rgba(255, 255, 255, 0.4);
+    --clbr-color-foreground-muted-text: rgba(255, 255, 255, 0.56);
+    --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
+    --clbr-color-interactive-active: #c8c9ca;
+    --clbr-color-interactive-default: #898a8b;
+    --clbr-color-interactive-focus: #898a8b;
+    --clbr-color-interactive-hover: #a6a7a8;
+    --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);
+    --clbr-color-interactive-neutral-default: rgba(255, 255, 255, 0.94);
+    --clbr-color-interactive-neutral-focus: #898a8b;
+    --clbr-color-interactive-neutral-hover: rgba(255, 255, 255, 0.8);
+    --clbr-color-interactive-neutral-visited: rgba(255, 255, 255, 0.94);
+    --clbr-color-interactive-prose-active: #c8c9ca;
+    --clbr-color-interactive-prose-active-decoration: #c8c9ca;
+    --clbr-color-interactive-prose-default: #898a8b;
+    --clbr-color-interactive-prose-focus: #898a8b;
+    --clbr-color-interactive-prose-hover: #898a8b;
+    --clbr-color-interactive-prose-hover-decoration: #232424;
+    --clbr-color-interactive-prose-visited: #898a8b;
+    --clbr-color-interactive-visited: #898a8b;
+    --clbr-color-logo-default: #ffffff;
+    --clbr-color-logo-neutral: #ffffff;
   }
 
   /* lightDefault | tablet | default-states */

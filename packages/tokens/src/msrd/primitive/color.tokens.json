@@ -184,29 +184,29 @@
     "100": {
       "$value": {
         "colorSpace": "srgb",
-        "components": [0.929412, 0.964706, 0.996078],
-        "hex": "#edf6fe"
+        "components": [0.933333, 0.968627, 0.996078],
+        "hex": "#eef7fe"
       }
     },
     "200": {
       "$value": {
         "colorSpace": "srgb",
-        "components": [0.819608, 0.898039, 0.992157],
-        "hex": "#d1e5fd"
+        "components": [0.913725, 0.956863, 0.996078],
+        "hex": "#e9f4fe"
       }
     },
     "300": {
       "$value": {
         "colorSpace": "srgb",
-        "components": [0.701961, 0.835294, 0.984314],
-        "hex": "#b3d5fb"
+        "components": [0.894118, 0.945098, 0.996078],
+        "hex": "#e4f1fe"
       }
     },
     "400": {
       "$value": {
         "colorSpace": "srgb",
-        "components": [0.576471, 0.772549, 0.980392],
-        "hex": "#93c5fa"
+        "components": [0.682353, 0.823529, 0.984314],
+        "hex": "#aed2fb"
       }
     },
     "500": {

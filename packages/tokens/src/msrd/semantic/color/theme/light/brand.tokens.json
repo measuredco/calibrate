@@ -4,47 +4,47 @@
   "$type": "color",
   "brand": {
     "primary": {
-      "$value": "{primitive.color.azure.600}"
+      "$value": "{primitive.color.azure.900}"
     },
     "support": {
-      "$value": "{primitive.color.azure.900}"
+      "$value": "{primitive.color.azure.500}"
     }
   },
   "logo": {
     "default": {
-      "$value": "{primitive.color.white}"
+      "$value": "{brand.primary}"
     },
     "neutral": {
-      "$value": "{logo.default}"
+      "$value": "{primitive.color.black}"
     }
   },
   "background": {
     "default": {
-      "$value": "{primitive.color.azure.1200}"
+      "$value": "{primitive.color.azure.100}"
     },
     "panel": {
-      "$value": "{primitive.color.azure.1100}"
+      "$value": "{primitive.color.azure.200}"
     },
     "subtle": {
-      "$value": "{primitive.color.alpha.white.08}"
+      "$value": "{primitive.color.azure.300}"
     },
     "inverse": {
-      "$value": "{primitive.color.azure.100}"
+      "$value": "{primitive.color.azure.1200}"
     }
   },
   "foreground": {
     "default": {
-      "$value": "{primitive.color.alpha.white.94}"
+      "$value": "{primitive.color.neutral.1200}"
     },
     "prose": {
-      "$value": "{primitive.color.alpha.white.88}"
+      "$value": "{primitive.color.neutral.1100}"
     },
     "muted": {
       "text": {
-        "$value": "{primitive.color.alpha.white.56}"
+        "$value": "{primitive.color.neutral.700}"
       },
       "nonText": {
-        "$value": "{primitive.color.alpha.white.40}"
+        "$value": "{primitive.color.neutral.600}"
       }
     },
     "contrast": {
@@ -53,13 +53,13 @@
   },
   "border": {
     "default": {
-      "$value": "{primitive.color.alpha.white.16}"
+      "$value": "{primitive.color.neutral.400}"
     },
     "brand": {
       "$value": "{brand.support}"
     },
     "subtle": {
-      "$value": "{primitive.color.alpha.white.08}"
+      "$value": "{primitive.color.neutral.300}"
     }
   },
   "interactive": {
@@ -70,13 +70,13 @@
       "$value": "{interactive.default}"
     },
     "hover": {
-      "$value": "{primitive.color.azure.500}"
+      "$value": "{primitive.color.azure.1000}"
     },
     "focus": {
-      "$value": "{primitive.color.rose.600}"
+      "$value": "{primitive.color.rose.700}"
     },
     "active": {
-      "$value": "{primitive.color.azure.400}"
+      "$value": "{primitive.color.azure.1100}"
     },
     "neutral": {
       "default": {
@@ -86,21 +86,21 @@
         "$value": "{interactive.neutral.default}"
       },
       "hover": {
-        "$value": "{primitive.color.alpha.white.80}"
+        "$value": "{interactive.default}"
       },
       "focus": {
         "$value": "{interactive.focus}"
       },
       "active": {
-        "$value": "{primitive.color.alpha.white.68}"
+        "$value": "{interactive.active}"
       }
     },
     "prose": {
       "default": {
-        "$value": "{interactive.default}"
+        "$value": "{primitive.color.azure.800}"
       },
       "visited": {
-        "$value": "{primitive.color.violet.600}"
+        "$value": "{primitive.color.violet.800}"
       },
       "hover": {
         "$value": "{interactive.prose.default}"
@@ -121,52 +121,52 @@
   },
   "base16": {
     "00": {
-      "$value": "{primitive.color.cyan.1200}"
+      "$value": "{primitive.color.orange.100}"
     },
     "01": {
-      "$value": "{primitive.color.cyan.1100}"
+      "$value": "{primitive.color.orange.200}"
     },
     "02": {
-      "$value": "{primitive.color.cyan.1000}"
+      "$value": "{primitive.color.orange.300}"
     },
     "03": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.700}"
     },
     "04": {
-      "$value": "{primitive.color.neutral.400}"
+      "$value": "{primitive.color.neutral.800}"
     },
     "05": {
-      "$value": "{primitive.color.neutral.300}"
+      "$value": "{primitive.color.neutral.900}"
     },
     "06": {
-      "$value": "{primitive.color.neutral.200}"
+      "$value": "{primitive.color.neutral.1000}"
     },
     "07": {
-      "$value": "{primitive.color.neutral.100}"
+      "$value": "{primitive.color.neutral.1100}"
     },
     "08": {
-      "$value": "{primitive.color.red.600}"
+      "$value": "{primitive.color.red.900}"
     },
     "09": {
-      "$value": "{primitive.color.orange.500}"
+      "$value": "{primitive.color.orange.900}"
     },
     "0a": {
-      "$value": "{primitive.color.yellow.600}"
+      "$value": "{primitive.color.yellow.900}"
     },
     "0b": {
-      "$value": "{primitive.color.green.600}"
+      "$value": "{primitive.color.green.900}"
     },
     "0c": {
-      "$value": "{primitive.color.cyan.600}"
+      "$value": "{primitive.color.cyan.800}"
     },
     "0d": {
-      "$value": "{primitive.color.azure.600}"
+      "$value": "{primitive.color.azure.900}"
     },
     "0e": {
-      "$value": "{primitive.color.violet.600}"
+      "$value": "{primitive.color.violet.1100}"
     },
     "0f": {
-      "$value": "{primitive.color.rose.600}"
+      "$value": "{primitive.color.rose.900}"
     }
   }
 }

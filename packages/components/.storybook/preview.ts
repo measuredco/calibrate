@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/web-components-vite";
 import { renderClbrRoot } from "../src/components/root/root";
+import { renderClbrSurface } from "../src/components/surface/surface";
 import "../src/styles.css";
 
 const decodeHtmlEntities = (source: string): string =>
@@ -21,9 +22,6 @@ const formatSourceForDocs = async (source: string): Promise<string> => {
   });
 };
 
-const toTheme = (value: unknown): "dark" | "light" | undefined =>
-  value === "dark" || value === "light" ? value : undefined;
-
 const preview: Preview = {
   decorators: [
     (Story, context) => {
@@ -33,19 +31,32 @@ const preview: Preview = {
           : "1.75rem 1.25rem";
       const storyHtml = String(Story());
       const withRoot = context.parameters?.withRoot !== false;
+      const withSurface = context.parameters?.withSurface !== false;
 
-      if (!withRoot)
-        return `<div style="padding: ${padding}">
-          ${storyHtml}
-        </div>`;
+      if (!withRoot) return storyHtml;
+
+      if (!withSurface)
+        return renderClbrRoot({
+          brand: context.globals.brand,
+          children: storyHtml,
+          dir: context.globals.direction,
+          theme: context.globals.theme,
+        });
 
       return renderClbrRoot({
         brand: context.globals.brand,
-        children: `<div style="padding: ${padding}; width: 100%;">
-          ${storyHtml}
-        </div>`,
+        children: `
+          ${renderClbrSurface({
+            children: `
+              <div style="padding: ${padding}">
+                ${storyHtml}
+              </div>
+            `,
+            surface: context.globals.surface,
+          })}
+        `,
         dir: context.globals.direction,
-        theme: toTheme(context.globals.theme),
+        theme: context.globals.theme,
       });
     },
   ],
@@ -72,6 +83,18 @@ const preview: Preview = {
           { title: "auto", value: undefined },
           { title: "light", value: "light" },
           { title: "dark", value: "dark" },
+        ],
+      },
+    },
+    surface: {
+      description: "Surface",
+      defaultValue: "default",
+      toolbar: {
+        title: "Surface",
+        icon: "stacked",
+        items: [
+          { title: "default", value: "default" },
+          { title: "brand", value: "brand" },
         ],
       },
     },
@@ -102,6 +125,7 @@ const preview: Preview = {
     },
     layout: "fullscreen",
     withRoot: true,
+    withSurface: true,
   },
   tags: ["autodocs"],
 };
