@@ -105,6 +105,10 @@ Evaluate whether an MCP/API distribution path adds clear value beyond package an
 
 Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract.
 
+#### Optional core private discovery bundle
+
+Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows.
+
 ## Done
 
 What we've done.
