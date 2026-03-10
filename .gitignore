@@ -2,5 +2,5 @@
 node_modules
 build
 .pnpm-store
-packages/components/dist
+packages/core/dist
 storybook-static

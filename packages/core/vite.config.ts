@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     target,
     lib: {
-      cssFileName: "components",
+      cssFileName: "core",
       entry: path.resolve(__dirname, "src/index.ts"),
       fileName: (format) => (format === "es" ? "index.js" : "index.cjs"),
       formats: ["es", "cjs"],

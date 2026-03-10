@@ -4,13 +4,14 @@
 
 This document defines the stable constraints for token authoring, structure, and resolution.
 Planning and sequencing live in `docs/PLANNING.md`.
-Resolver adapter details live in `packages/tokens/scripts/README.md`.
+Resolver adapter details live in `packages/system/scripts/README.md`.
 
 ## Program Goals
 
 - Maintain a stable public design-system API, starting with semantic tokens and extending to component consumption contracts.
 - Keep monorepo architecture as the default repo model for system evolution.
-- Establish `tokens` and `components` as first-class package boundaries in the repo.
+- Establish `system`, `core`, and shared support packages as first-class package boundaries in the repo.
+- Treat `core` as the primary published runtime contract; keep token authoring/pipeline concerns internal by default.
 - Use lockstep versioning across design-system packages by default to reduce token/component drift.
 - Preserve core token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
 - Keep current bridge/build pipeline robust while resolver/SD support gaps are being closed upstream.
@@ -18,57 +19,58 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 
 ## API And Ownership
 
-- Ensure `*.tokens.json` files conform to `packages/tokens/schemas/2025.10/spec`.
-- `packages/tokens/src/<brand>/primitive` is private; public API is `packages/tokens/src/<brand>/semantic`.
-- For the tokens package, semantic tokens are the only public API surface; consumers should not bind to primitive paths.
+- Ensure `*.tokens.json` files conform to `packages/system/schemas/2025.10/spec`.
+- `packages/system/src/<brand>/primitive` is private; public API is `packages/system/src/<brand>/semantic`.
+- For the internal system package, semantic tokens remain the intended API layer (not primitives) for any downstream transforms/contracts.
 - Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
-- Shared system-shell domains live in `packages/tokens/src/core/{primitive,semantic}`.
-- Brand-specific domains live in `packages/tokens/src/<brand>/{primitive,semantic}`.
+- Shared system-shell domains live in `packages/system/src/core/{primitive,semantic}`.
+- Brand-specific domains live in `packages/system/src/<brand>/{primitive,semantic}`.
 
 ## Folder And File Conventions
 
 - Semantic folder convention (axis-first where applicable):
-  - base pattern: `packages/tokens/src/<brand>/semantic/<domain>/<axis>/<context>...`
-  - optional override pattern (only when needed): `packages/tokens/src/<brand>/semantic/<domain>/override/<axis>/<context>...`
+  - base pattern: `packages/system/src/<brand>/semantic/<domain>/<axis>/<context>...`
+  - optional override pattern (only when needed): `packages/system/src/<brand>/semantic/<domain>/override/<axis>/<context>...`
 - Core folder convention mirrors brand convention where applicable:
-  - base pattern: `packages/tokens/src/core/semantic/<domain>/<axis>/<context>...`
-  - primitive pattern: `packages/tokens/src/core/primitive/<domain>.tokens.json`
+  - base pattern: `packages/system/src/core/semantic/<domain>/<axis>/<context>...`
+  - primitive pattern: `packages/system/src/core/primitive/<domain>.tokens.json`
 
-- Semantic color file convention: `packages/tokens/src/<brand>/semantic/color/theme/<theme>/<surface>.tokens.json`.
-- Semantic color forced-colors convention (current normalized path): `packages/tokens/src/<brand>/semantic/color/forced-colors/<context>.tokens.json`.
-- Semantic effect file convention: `packages/tokens/src/<brand>/semantic/effect/theme/<theme>/<surface>.tokens.json`.
-- Semantic typography size convention: `packages/tokens/src/<brand>/semantic/typography/size/<context>.tokens.json`.
-- Semantic layout size convention: `packages/tokens/src/<brand>/semantic/layout/size/<context>.tokens.json`.
-- Semantic layout root convention: `packages/tokens/src/<brand>/semantic/layout/tokens.json`.
-- Semantic spacing root convention: `packages/tokens/src/<brand>/semantic/spacing.tokens.json`.
+- Semantic color file convention: `packages/system/src/<brand>/semantic/color/theme/<theme>/<surface>.tokens.json`.
+- Semantic color forced-colors convention (current normalized path): `packages/system/src/<brand>/semantic/color/forced-colors/<context>.tokens.json`.
+- Semantic effect file convention: `packages/system/src/<brand>/semantic/effect/theme/<theme>/<surface>.tokens.json`.
+- Semantic typography size convention: `packages/system/src/<brand>/semantic/typography/size/<context>.tokens.json`.
+- Semantic layout size convention: `packages/system/src/<brand>/semantic/layout/size/<context>.tokens.json`.
+- Semantic layout root convention: `packages/system/src/<brand>/semantic/layout/tokens.json`.
+- Semantic spacing root convention: `packages/system/src/<brand>/semantic/spacing.tokens.json`.
 - Resolver documents should follow DTCG resolver spec file naming:
   - use `.resolver.json`
-  - keep resolver/build config colocated under `packages/tokens/` (not repo root) as this repo evolves.
+  - keep resolver/build config colocated under `packages/system/` (not repo root) as this repo evolves.
 - Vendored schema convention:
-  - store official DTCG schemas under `packages/tokens/schemas/<version>/...`
-  - token/resolver files should carry local `$schema` paths into `packages/tokens/schemas/...`
+  - store official DTCG schemas under `packages/system/schemas/<version>/...`
+  - token/resolver files should carry local `$schema` paths into `packages/system/schemas/...`
 
 ## Repository Packaging Direction
 
 - Monorepo direction is normative.
 - Package boundaries:
-  - `packages/tokens/` is a first-class package boundary.
-  - `packages/components/` is a first-class package boundary and should consume published token outputs/contracts.
+  - `packages/system/` is a first-class package boundary.
+  - `packages/system/` is internal authoring + pipeline infrastructure and remains private by default.
+  - `packages/core/` is a first-class package boundary and the primary published runtime consumption contract.
   - `packages/browserslist/` is a first-class support package boundary for shared browser target policy.
   - additional boundaries (for example `assets`, docs site, bootstrap CLI) are expected but remain exploratory until concrete constraints are defined.
 - Versioning/distribution policy:
   - lockstep versioning is the default across design-system packages.
-  - support both full-system consumption and selective package consumption where practical.
+  - support full-system consumption through `core`; selective package publication remains optional and should not leak internal authoring boundaries by default.
 - `tokens` package structure remains:
-  - source tokens live under `packages/tokens/src/...` (including `core` and brand folders).
-  - generated public artifacts output to `packages/tokens/dist/...`.
-  - disposable pipeline artifacts output to `packages/tokens/build/...`.
-- Resolver documents and build/transforms should live inside the `packages/tokens/` package tree.
+  - source tokens live under `packages/system/src/...` (including `core` and brand folders).
+  - generated public artifacts output to `packages/system/dist/...`.
+  - disposable pipeline artifacts output to `packages/system/build/...`.
+- Resolver documents and build/transforms should live inside the `packages/system/` package tree.
 
 ## Components Package Constraints (Alpha)
 
-- `packages/components/` is the canonical package boundary for component contracts built on token outputs.
+- `packages/core/` is the canonical package boundary for component contracts built on token outputs.
 - Component implementation model:
   - components that do not require runtime JS behavior should be authored as pure SSR renderers that emit native HTML.
   - components that do require runtime JS behavior may be authored as web-components.
@@ -86,27 +88,28 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 - Storybook is package-local and treated as a development tool; docs-site integration remains optional/future.
 - Components package token CSS loading model:
   - components package auto-imports token CSS by default.
-  - direct tokens package consumption remains supported for non-component consumers.
+  - token CSS composition is handled by `core` for consumer runtime integration by default.
+  - direct `system` consumption is an internal/maintainer workflow, not the primary public contract.
   - initial strategy includes both brands by default (brand/tree-shaking optimization can follow later).
 - Components package should ship a light root/reset CSS entrypoint that composes token CSS imports.
 - Components package public API remains alpha (no stability guarantees until publish/version policy is formalized).
 
 ## Canonical Semantic File Map (Alpha, `msrd`)
 
-- `packages/tokens/src/msrd/semantic/color/theme/light/{default,brand}.tokens.json`
-- `packages/tokens/src/msrd/semantic/color/theme/dark/{default,brand}.tokens.json`
-- `packages/tokens/src/msrd/semantic/color/forced-colors/on.tokens.json`
-- `packages/tokens/src/msrd/semantic/effect/theme/light/{default,brand}.tokens.json`
-- `packages/tokens/src/msrd/semantic/effect/theme/dark/{default,brand}.tokens.json`
-- `packages/tokens/src/core/semantic/spacing.tokens.json`
-- `packages/tokens/src/core/semantic/layout/tokens.json`
-- `packages/tokens/src/core/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
-- `packages/tokens/src/core/semantic/breakpoint.tokens.json`
-- `packages/tokens/src/msrd/semantic/typography/tokens.json`
-- `packages/tokens/src/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
-- `packages/tokens/src/msrd/semantic/motion/tokens.json`
-- `packages/tokens/src/msrd/semantic/radius/tokens.json`
-- `packages/tokens/src/msrd/semantic/shape/tokens.json`
+- `packages/system/src/msrd/semantic/color/theme/light/{default,brand}.tokens.json`
+- `packages/system/src/msrd/semantic/color/theme/dark/{default,brand}.tokens.json`
+- `packages/system/src/msrd/semantic/color/forced-colors/on.tokens.json`
+- `packages/system/src/msrd/semantic/effect/theme/light/{default,brand}.tokens.json`
+- `packages/system/src/msrd/semantic/effect/theme/dark/{default,brand}.tokens.json`
+- `packages/system/src/core/semantic/spacing.tokens.json`
+- `packages/system/src/core/semantic/layout/tokens.json`
+- `packages/system/src/core/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
+- `packages/system/src/core/semantic/breakpoint.tokens.json`
+- `packages/system/src/msrd/semantic/typography/tokens.json`
+- `packages/system/src/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
+- `packages/system/src/msrd/semantic/motion/tokens.json`
+- `packages/system/src/msrd/semantic/radius/tokens.json`
+- `packages/system/src/msrd/semantic/shape/tokens.json`
 
 ## Authoring Rules
 
@@ -123,13 +126,13 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
   - brand primitive tokens may alias core primitive tokens when values are intentionally shared
   - keep explicit literals where design intent intentionally diverges
 - Build outputs must be generated from tokens (no hand-maintained CSS token files as source of truth).
-- Prefer vendored schema URLs for `$schema` where possible after vendoring (`packages/tokens/schemas/...`) to reduce drift/network dependency.
+- Prefer vendored schema URLs for `$schema` where possible after vendoring (`packages/system/schemas/...`) to reduce drift/network dependency.
 
 ## Resolution And Build Rules
 
 - Light/dark and responsive behavior should be implemented at semantic/resolution layer, not by mutating primitive intent.
 - Surface variants must be supported as a first-class semantic concern alongside brand and theme.
-- Resolver source-of-truth is DTCG resolver manifests in `packages/tokens/resolver/*.resolver.json`.
+- Resolver source-of-truth is DTCG resolver manifests in `packages/system/resolver/*.resolver.json`.
 - Build tooling (e.g. Style Dictionary) should consume resolver-selected sources via adapter/config; do not duplicate context contracts ad hoc.
 - Prefer standard Style Dictionary configuration/build flow over custom build scripts.
 - Custom logic is limited to resolver adaptation only:
@@ -159,12 +162,12 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 
 ## Build Artifact Policy
 
-- Commit and version outputs under `packages/tokens/dist/**`.
+- Commit and version outputs under `packages/system/dist/**`.
 - Public/stable artifact contract:
-  - `packages/tokens/dist/css/*.tokens.css`
+  - `packages/system/dist/css/*.tokens.css`
 - Private/non-stable maintainer artifact contract:
-  - `packages/tokens/dist/private/css/*.primitives.css`
-- Treat `packages/tokens/build/**` as disposable/intermediate pipeline output.
+  - `packages/system/dist/private/css/*.primitives.css`
+- Treat `packages/system/build/**` as disposable/intermediate pipeline output.
 - Keep the repository-level `build` ignore convention to avoid committing transient build folders.
 - CSS outputs should declare deterministic layer ordering when multiple bundles compose together:
   - layer order: `clbr`, then `clbr.brand`
@@ -173,10 +176,10 @@ Resolver adapter details live in `packages/tokens/scripts/README.md`.
 
 ## Consumer Integration Contract
 
-- Include order for CSS bundles:
-  - load `@measured/calibrate-tokens/css/core` first
-  - then load one or more brand bundles (for example `@measured/calibrate-tokens/css/msrd`, `@measured/calibrate-tokens/css/wrfr`)
-- CSS layering contract (`@layer clbr, clbr.brand;`) is normative and must be preserved in distributed bundles.
+- Primary CSS entrypoint:
+  - consumers should load `@measured/calibrate-core/styles.css` as the default integration path.
+  - this entrypoint composes token + component CSS so consumers do not take a long-term dependency on a separate published token-CSS package.
+- CSS layering contract (`@layer clbr, clbr.brand, clbr.root, clbr.components;`) is normative and must be preserved in distributed bundles.
 - Root scoping contract:
   - all token usage must live under a `.clbr` scope root
   - select a brand via `.clbr-brand-<brand>` on the same scope root

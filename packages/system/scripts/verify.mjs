@@ -46,7 +46,7 @@ function main() {
 
   const diff = spawnSync(
     "git",
-    ["diff", "--exit-code", "--", "packages/tokens/dist"],
+    ["diff", "--exit-code", "--", "packages/system/dist"],
     {
       cwd,
       stdio: "pipe",
@@ -56,7 +56,7 @@ function main() {
 
   if (diff.status !== 0) {
     console.error(
-      "packages/tokens/dist is not up to date. Run `pnpm run build` in packages/tokens and commit updated dist artifacts.",
+      "packages/system/dist is not up to date. Run `pnpm run build` in packages/system and commit updated dist artifacts.",
     );
 
     if (diff.stdout) {
@@ -69,7 +69,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log("packages/tokens/dist is up to date.");
+  console.log("packages/system/dist is up to date.");
 }
 
 try {
