@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr.clbr-brand-msrd) {
+  :where(.clbr[data-brand="msrd"]) {
     --clbr-card-color-dots-default: #e3e4e5;
     --clbr-card-color-dots-hover: #6db5f8;
     --clbr-card-color-interactive: #0158ad;
@@ -151,7 +151,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+  :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
     --clbr-card-color-dots-default: #aed2fb;
     --clbr-color-background-default: #eef7fe;
     --clbr-color-background-inverse: #031f60;
@@ -162,7 +162,7 @@
 
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-msrd) {
+    :where(.clbr[data-brand="msrd"]) {
       --clbr-card-color-dots-default: #232424;
       --clbr-card-color-dots-hover: #083c8a;
       --clbr-card-color-interactive: #3598f8;
@@ -221,7 +221,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+    :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
       --clbr-card-color-dots-default: #083c8a;
       --clbr-card-color-dots-hover: #0158ad;
       --clbr-color-background-default: #031f60;
@@ -259,7 +259,7 @@
 
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-msrd.clbr-theme-light) {
+    :where(.clbr[data-brand="msrd"][data-theme="light"]) {
       --clbr-card-color-dots-default: #e3e4e5;
       --clbr-card-color-dots-hover: #6db5f8;
       --clbr-card-color-interactive: #0158ad;
@@ -318,7 +318,7 @@
 
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-msrd.clbr-theme-light .clbr-surface-brand) {
+    :where(.clbr[data-brand="msrd"][data-theme="light"] .surface[data-variant="brand"]) {
       --clbr-card-color-dots-default: #aed2fb;
       --clbr-card-color-dots-hover: #6db5f8;
       --clbr-card-color-interactive: #0158ad;
@@ -375,7 +375,7 @@
   }
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
-  :where(.clbr.clbr-brand-msrd.clbr-theme-dark) {
+  :where(.clbr[data-brand="msrd"][data-theme="dark"]) {
     --clbr-card-color-dots-default: #232424;
     --clbr-card-color-dots-hover: #083c8a;
     --clbr-card-color-interactive: #3598f8;
@@ -432,7 +432,7 @@
   }
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
-  :where(.clbr.clbr-brand-msrd.clbr-theme-dark .clbr-surface-brand) {
+  :where(.clbr[data-brand="msrd"][data-theme="dark"] .surface[data-variant="brand"]) {
     --clbr-card-color-dots-default: #083c8a;
     --clbr-card-color-dots-hover: #0158ad;
     --clbr-card-color-interactive: #3598f8;
@@ -489,7 +489,7 @@
 
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr.clbr-brand-msrd) {
+    :where(.clbr[data-brand="msrd"]) {
       --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -507,7 +507,7 @@
 
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr.clbr-brand-msrd) {
+    :where(.clbr[data-brand="msrd"]) {
       --clbr-card-color-dots-default: ButtonBorder;
       --clbr-card-color-dots-hover: ButtonBorder;
       --clbr-card-color-interactive: LinkText;
@@ -518,7 +518,7 @@
 
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr.clbr-brand-msrd .clbr-surface-brand) {
+    :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
       --clbr-card-color-dots-default: ButtonBorder;
       --clbr-card-color-dots-hover: ButtonBorder;
       --clbr-card-color-interactive: LinkText;

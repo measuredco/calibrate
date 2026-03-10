@@ -71,6 +71,10 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 ## Components Package Constraints (Alpha)
 
 - `packages/core/` is the canonical package boundary for component contracts built on token outputs.
+- Component markup grammar (SSR-first):
+  - structural semantics use classes (function-focused nouns, not appearance naming).
+  - state/variant semantics use attributes (for example `data-variant`, `data-size`, ARIA state attrs).
+  - public renderer props should map directly to emitted DOM semantics (props -> attributes).
 - Component implementation model:
   - components that do not require runtime JS behavior should be authored as pure SSR renderers that emit native HTML.
   - components that do require runtime JS behavior may be authored as web-components.
@@ -183,15 +187,15 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - CSS layering contract (`@layer clbr, clbr.brand, clbr.root, clbr.components;`) is normative and must be preserved in distributed bundles.
 - Root scoping contract:
   - all token usage must live under a `.clbr` scope root
-  - select a brand via `.clbr-brand-<brand>` on the same scope root
+  - select a brand via `data-brand="<brand>"` on the same scope root
 - Theme forcing contract:
-  - `.clbr-theme-dark` and `.clbr-theme-light` force mode on the scoped brand root
-  - without force classes, theme follows authored media query behavior
+  - `data-theme="dark"` and `data-theme="light"` force mode on the scoped brand root
+  - without force attributes, theme follows authored media query behavior
 - Surface contract:
-  - `.clbr-surface-brand` is a descendant surface scope inside a brand root
+  - `.surface[data-variant="brand"]` is a descendant surface scope inside a brand root
 - Multi-brand on one page is supported:
-  - use isolated wrapper roots per brand (`.clbr.clbr-brand-msrd`, `.clbr.clbr-brand-wrfr`, etc.)
-  - do not mix multiple brand classes on the same scope root
+  - use isolated wrapper roots per brand (`.clbr[data-brand="msrd"]`, `.clbr[data-brand="wrfr"]`, etc.)
+  - do not mix multiple brands on the same scope root
 
 ## Domain Conventions
 

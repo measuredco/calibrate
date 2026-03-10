@@ -27,13 +27,15 @@ What we could working on next.
 
 Everything we could attempt given sufficient time and resources.
 
-### Deterministic sorting (linting)
+### Tokens evolution
+
+#### Deterministic sorting (linting)
 
 - JS import/export ordering via ESLint autofix
 - JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type` / `$description` / `default`)
 - Alphabetical sorting
 
-### Machine-readable intent
+#### Machine-readable intent
 
 - Expand token/group `$description` coverage for intent guidance:
   - usage guidance for humans/agents
@@ -43,14 +45,14 @@ Everything we could attempt given sufficient time and resources.
   - stable fields for tooling/agents beyond prose descriptions
   - worked examples where intent is easy to misuse
 
-### Design model evolution
+#### Design model evolution
 
 - Light/dark inverse surfaces
 - `density` context (class-based in CSS) — current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Give wireframe theme an actual design
 
-### Style Dictionary DTCG 2025.10 gaps
+#### Style Dictionary DTCG 2025.10 gaps
 
 [Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
 
@@ -59,7 +61,13 @@ Everything we could attempt given sufficient time and resources.
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
 
-### Export target evolution
+#### JSON export target
+
+Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates. Likely `packages/tokens` / `@measured/calibrate-tokens`.
+
+Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/system/scripts/pipeline/index.mjs` when implementing a second export target.
+
+#### Export target evolution
 
 1. Penpot
 1. Figma
@@ -67,37 +75,33 @@ Everything we could attempt given sufficient time and resources.
 1. iOS
 1. Android
 
-Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/system/scripts/pipeline/index.mjs` when implementing a second export target.
+### Further evolution
 
-### Automated checks
-
-Stylelint/ESLint/axe; token-name lint rules; forbid raw hex/px; PR templates require a11y notes, screenshots, and before/after diffs.
-
-### JSON export target
-
-Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates.
-
-### Minimal viable publish
-
-Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
-
-### Documentation website (`apps/documentation`)
-
-Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples.
-
-### Assets package
+#### Assets package
 
 Decide whether shared fonts/images should ship as a dedicated package and define what is stable asset API vs implementation detail.
 
-### CLI bootstrap tool
+#### Shareable automated checks
+
+Stylelint/ESLint/axe configs; token-name lint rules; forbid raw hex/px; PR templates require a11y notes, screenshots, and before/after diffs.
+
+#### Minimal viable publish
+
+Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
+
+#### Documentation website (`apps/documentation`)
+
+Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples. Deploy to `http://calibrate.msrd.dev`, `apps/storybook` can deploy to `http://calibrate.msrd.dev/storybook/`
+
+#### CLI bootstrap tool (`@measured/calibrate`)
 
 Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
 
-### Framework adapters
+#### Framework adapters (e.g. `@measured/calibrate-react`)
 
 Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
 
-### MCP/API
+#### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
 
@@ -224,3 +228,8 @@ _This section is a historical completion record; some entries may describe decis
   - script ownership moved to `apps/storybook`, with root convenience aliases (`storybook`, `storybook:build`)
   - static output normalized to `apps/storybook/storybook-static`
   - CI expanded with dedicated Storybook build job
+- Class/attribute grammar applied to root + surface contracts:
+  - structural semantics use classes; state/variant semantics use attributes
+  - `root` now emits `.clbr` + `data-brand` (+ optional `data-theme`)
+  - `surface` now emits `.surface` + `data-variant` (default included)
+  - token resolver selectors and generated brand CSS updated to match attribute grammar

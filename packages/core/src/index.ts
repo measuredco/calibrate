@@ -10,8 +10,8 @@ export {
 
 export {
   CLBR_SURFACE_SPEC,
-  type ClbrSurface,
   type ClbrSurfaceProps,
+  type ClbrSurfaceVariant,
   renderClbrSurface,
 } from "./components/surface/surface";
 

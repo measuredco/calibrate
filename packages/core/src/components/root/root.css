@@ -1,9 +1,11 @@
 @layer clbr.root {
   .clbr {
+    all: initial;
     background-color: var(--clbr-color-background-default);
     background-repeat: no-repeat;
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);
+    display: block;
     font-family: var(--clbr-typography-font-family-default);
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
@@ -36,6 +38,12 @@
   }
 
   :where(.clbr) {
+    :where(:not(svg, svg *)),
+    :where(*::before),
+    :where(*::after) {
+      all: revert;
+    }
+
     *,
     *::before,
     *::after {

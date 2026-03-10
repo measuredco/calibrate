@@ -1,5 +1,3 @@
-import { cx } from "../../helpers/cx";
-
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
 export type ClbrTheme = "light" | "dark";
@@ -26,9 +24,9 @@ export interface ClbrRootProps {
 /**
  * SSR renderer for the Calibrate root wrapper.
  *
- * Emits a `<div>` with Calibrate root classes, optional `dir`/`lang`
- * attributes, and optional `clbr-theme-{theme}` class, then injects the
- * provided HTML content inside.
+ * Emits a `<div>` with the Calibrate root class, required `data-brand`,
+ * optional `data-theme`, and optional `dir`/`lang` attributes, then injects
+ * the provided HTML content inside.
  *
  * @param props - Root wrapper configuration and inner HTML content.
  * @returns HTML string for the Calibrate root wrapper.
@@ -36,15 +34,13 @@ export interface ClbrRootProps {
 export function renderClbrRoot(props: ClbrRootProps): string {
   const { brand = "msrd", children, dir, lang, theme } = props;
 
-  const classAttr = cx(
-    "clbr",
-    `clbr-brand-${brand}`,
-    theme ? `clbr-theme-${theme}` : undefined,
-  );
+  const brandAttr = ` data-brand="${brand}"`;
+  const classAttr = "clbr";
   const dirAttr = dir ? ` dir="${dir}"` : "";
   const langAttr = lang ? ` lang="${lang}"` : "";
+  const themeAttr = theme ? ` data-theme="${theme}"` : "";
 
-  return `<div class="${classAttr}"${dirAttr}${langAttr}>${children}</div>`;
+  return `<div class="${classAttr}"${brandAttr}${themeAttr}${langAttr}${dirAttr}>${children}</div>`;
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */
@@ -83,6 +79,17 @@ export const CLBR_ROOT_SPEC = {
   rules: {
     attributes: [
       {
+        behavior: "always",
+        target: "data-brand",
+        value: "{brand}",
+      },
+      {
+        behavior: "emit",
+        target: "data-theme",
+        value: "{theme}",
+        when: "theme is provided",
+      },
+      {
         behavior: "emit",
         target: "dir",
         when: "dir is provided",
@@ -97,15 +104,6 @@ export const CLBR_ROOT_SPEC = {
       {
         behavior: "always",
         value: "clbr",
-      },
-      {
-        behavior: "always",
-        value: "clbr-brand-{brand}",
-      },
-      {
-        behavior: "emit",
-        value: "clbr-theme-{theme}",
-        when: "theme is provided",
       },
     ],
   },

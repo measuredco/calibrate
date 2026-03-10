@@ -5,7 +5,7 @@ const meta = {
     children: {
       control: false,
     },
-    surface: {
+    variant: {
       control: { type: "select" },
       options: ["default", "brand"],
     },
@@ -29,7 +29,7 @@ const exampleContent = `<div style="padding: 1.75rem 1.25rem">Example content</d
 export const Default = {
   args: {
     children: exampleContent,
-    surface: "default",
+    variant: "default",
   },
   render: (args: ClbrSurfaceProps) => renderClbrSurface(args),
 };
@@ -37,7 +37,7 @@ export const Default = {
 export const Brand = {
   args: {
     children: exampleContent,
-    surface: "brand",
+    variant: "brand",
   },
   render: (args: ClbrSurfaceProps) => renderClbrSurface(args),
 };

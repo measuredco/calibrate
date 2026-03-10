@@ -2,30 +2,31 @@ import { describe, expect, it } from "vitest";
 import { renderClbrRoot } from "./root";
 
 describe("renderClbrRoot", () => {
-  it("uses msrd brand by default", () => {
+  it("renders root class and default data-brand when brand is omitted", () => {
     const html = renderClbrRoot({ children: "<p>content</p>" });
-    expect(html).toContain('class="clbr clbr-brand-msrd"');
+    expect(html).toContain('class="clbr"');
+    expect(html).toContain('data-brand="msrd"');
   });
 
-  it("applies explicit brand class", () => {
+  it("applies explicit brand attribute", () => {
     const html = renderClbrRoot({
       brand: "wrfr",
       children: "<p>content</p>",
     });
-    expect(html).toContain('class="clbr clbr-brand-wrfr"');
+    expect(html).toContain('data-brand="wrfr"');
   });
 
-  it("renders theme class when provided", () => {
+  it("renders theme attribute when provided", () => {
     const html = renderClbrRoot({
       children: "<p>content</p>",
       theme: "dark",
     });
-    expect(html).toContain("clbr-theme-dark");
+    expect(html).toContain('data-theme="dark"');
   });
 
-  it("does not render theme class when omitted", () => {
+  it("does not render theme attribute when omitted", () => {
     const html = renderClbrRoot({ children: "<p>content</p>" });
-    expect(html).not.toContain("clbr-theme-");
+    expect(html).not.toContain("data-theme=");
   });
 
   it("renders dir when provided", () => {

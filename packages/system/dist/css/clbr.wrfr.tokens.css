@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr.clbr-brand-wrfr) {
+  :where(.clbr[data-brand="wrfr"]) {
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
@@ -148,7 +148,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr.clbr-brand-wrfr .clbr-surface-brand) {
+  :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
     --clbr-color-background-panel: #f2f3f4;
     --clbr-color-background-subtle: #e3e4e5;
     --clbr-color-border-default: rgba(255, 255, 255, 0.16);
@@ -157,7 +157,7 @@
 
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-wrfr) {
+    :where(.clbr[data-brand="wrfr"]) {
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
@@ -213,7 +213,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-wrfr .clbr-surface-brand) {
+    :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
       --clbr-color-background-default: #0b0c0d;
       --clbr-color-background-inverse: #f9fafb;
       --clbr-color-background-panel: #0e0f10;
@@ -249,7 +249,7 @@
 
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-wrfr.clbr-theme-light) {
+    :where(.clbr[data-brand="wrfr"][data-theme="light"]) {
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
@@ -305,7 +305,7 @@
 
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr.clbr-brand-wrfr.clbr-theme-light .clbr-surface-brand) {
+    :where(.clbr[data-brand="wrfr"][data-theme="light"] .surface[data-variant="brand"]) {
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #f2f3f4;
@@ -357,7 +357,7 @@
   }
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
-  :where(.clbr.clbr-brand-wrfr.clbr-theme-dark) {
+  :where(.clbr[data-brand="wrfr"][data-theme="dark"]) {
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
@@ -411,7 +411,7 @@
   }
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
-  :where(.clbr.clbr-brand-wrfr.clbr-theme-dark .clbr-surface-brand) {
+  :where(.clbr[data-brand="wrfr"][data-theme="dark"] .surface[data-variant="brand"]) {
     --clbr-color-background-default: #0b0c0d;
     --clbr-color-background-inverse: #f9fafb;
     --clbr-color-background-panel: #0e0f10;
@@ -463,7 +463,7 @@
 
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr.clbr-brand-wrfr) {
+    :where(.clbr[data-brand="wrfr"]) {
       --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -481,7 +481,7 @@
 
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr.clbr-brand-wrfr) {
+    :where(.clbr[data-brand="wrfr"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }
@@ -489,7 +489,7 @@
 
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr.clbr-brand-wrfr .clbr-surface-brand) {
+    :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }

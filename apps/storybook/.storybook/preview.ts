@@ -52,7 +52,7 @@ const preview: Preview = {
                 ${storyHtml}
               </div>
             `,
-            surface: context.globals.surface,
+            variant: context.globals.surface,
           })}
         `,
         dir: context.globals.direction,
