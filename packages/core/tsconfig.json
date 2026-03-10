@@ -12,5 +12,5 @@
     "types": ["vitest/globals", "vite/client", "node"],
     "useDefineForClassFields": false
   },
-  "include": [".storybook", "src", "vite.config.ts", "vitest.config.ts"]
+  "include": ["src", "vite.config.ts", "vitest.config.ts"]
 }

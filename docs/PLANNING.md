@@ -218,3 +218,9 @@ _This section is a historical completion record; some entries may describe decis
   - `@measured/calibrate-core/styles.css` established as the single CSS entrypoint (composing token + component CSS)
   - cross-package deps/scripts/CI/docs updated to new names and boundaries
   - publish intent clarified: `@measured/calibrate-core` and `@measured/calibrate-browserslist` publishable, `@measured/calibrate-system` internal
+- Storybook runtime extracted to app boundary:
+  - moved Storybook config/runtime from `packages/core/.storybook` to `apps/storybook/.storybook`
+  - preserved story co-location in package source (`packages/*/src/**/*.stories.ts`)
+  - script ownership moved to `apps/storybook`, with root convenience aliases (`storybook`, `storybook:build`)
+  - static output normalized to `apps/storybook/storybook-static`
+  - CI expanded with dedicated Storybook build job

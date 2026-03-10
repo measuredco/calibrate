@@ -24,5 +24,5 @@ Component contract package for Calibrate.
 - `pnpm run test`
 - `pnpm run test:watch`
 - `pnpm run typecheck`
-- `pnpm run storybook`
-- `pnpm run storybook:build`
+
+Storybook runtime lives in `apps/storybook` (run via root scripts: `pnpm run storybook`, `pnpm run storybook:build`).
