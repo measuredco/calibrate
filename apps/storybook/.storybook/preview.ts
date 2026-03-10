@@ -1,6 +1,8 @@
 import type { Preview } from "@storybook/web-components-vite";
 import { renderClbrRoot } from "../../../packages/core/src/components/root/root";
 import { renderClbrSurface } from "../../../packages/core/src/components/surface/surface";
+
+import "@measured/calibrate-assets/fonts.css";
 import "../../../packages/core/src/styles.css";
 
 const decodeHtmlEntities = (source: string): string =>

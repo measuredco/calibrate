@@ -15,7 +15,6 @@ What we could working on next.
 ### Components and Recipes
 
 - Review and refine one-shot button component
-- Add fonts
 - Add Storybook accessibility test runner in CI:
   - keep addon-a11y panel in Storybook UI for local feedback
   - run story-level a11y checks in CI as a package-level gate
@@ -79,7 +78,7 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 
 #### Assets package
 
-Decide whether shared fonts/images should ship as a dedicated package and define what is stable asset API vs implementation detail.
+Expand `@measured/calibrate-assets` beyond v1 fonts scope (for example favicons/images) and define stable vs implementation-detail asset APIs.
 
 #### Shareable automated checks
 
@@ -104,6 +103,10 @@ Identify the minimum adapter surface needed to consume token/component contracts
 #### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
+
+#### Brand tree-shaking strategy
+
+Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract.
 
 ## Done
 
@@ -233,3 +236,8 @@ _This section is a historical completion record; some entries may describe decis
   - `root` now emits `.clbr` + `data-brand` (+ optional `data-theme`)
   - `surface` now emits `.surface` + `data-variant` (default included)
   - token resolver selectors and generated brand CSS updated to match attribute grammar
+- Font distribution contract implemented:
+  - `@measured/calibrate-assets` package added for runtime font assets
+  - vendored variable Inter + Roboto Mono font files and `@font-face` entrypoint at `@measured/calibrate-assets/fonts.css`
+  - Storybook now imports package fonts entrypoint and validates packaged font loading
+  - `core` docs updated to define font load order (`assets/fonts.css` before `core/styles.css`)
