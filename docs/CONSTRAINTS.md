@@ -57,6 +57,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - `packages/system/` is a first-class package boundary.
   - `packages/system/` is internal authoring + pipeline infrastructure and remains private by default.
   - `packages/core/` is a first-class package boundary and the primary published runtime consumption contract.
+  - `packages/assets/` is a first-class package boundary for shared runtime assets (for example fonts).
   - `packages/browserslist/` is a first-class support package boundary for shared browser target policy.
   - additional boundaries (for example `assets`, docs site, bootstrap CLI) are expected but remain exploratory until concrete constraints are defined.
 - Versioning/distribution policy:
@@ -98,6 +99,10 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - initial strategy includes both brands by default (brand/tree-shaking optimization can follow later).
 - Components package should ship a light root/reset CSS entrypoint that composes token CSS imports.
 - Components package public API remains alpha (no stability guarantees until publish/version policy is formalized).
+- Asset package font contract:
+  - `@measured/calibrate-assets/fonts.css` is the canonical package entrypoint for font-face declarations.
+  - exposed family names should remain stable so consumers can self-host/override fonts without changing typography token contracts.
+  - font-face declarations in assets should remain unlayered unless non-font style rules are introduced.
 
 ## Canonical Semantic File Map (Alpha, `msrd`)
 
@@ -184,6 +189,8 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Primary CSS entrypoint:
   - consumers should load `@measured/calibrate-core/styles.css` as the default integration path.
   - this entrypoint composes token + component CSS so consumers do not take a long-term dependency on a separate published token-CSS package.
+- Font loading contract:
+  - when using package-provided fonts, load `@measured/calibrate-assets/fonts.css` before `@measured/calibrate-core/styles.css`.
 - CSS layering contract (`@layer clbr, clbr.brand, clbr.root, clbr.components;`) is normative and must be preserved in distributed bundles.
 - Root scoping contract:
   - all token usage must live under a `.clbr` scope root

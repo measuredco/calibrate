@@ -16,6 +16,15 @@ Component contract package for Calibrate.
 - JS/TS: `@measured/calibrate-core`
 - CSS: `@measured/calibrate-core/styles.css`
 
+## Font loading
+
+Load fonts before core styles:
+
+```css
+@import "@measured/calibrate-assets/fonts.css";
+@import "@measured/calibrate-core/styles.css";
+```
+
 ## Scripts
 
 - `pnpm run build`
