@@ -58,7 +58,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - `packages/system/` is internal authoring + pipeline infrastructure and remains private by default.
   - `packages/core/` is a first-class package boundary and the primary published runtime consumption contract.
   - `packages/assets/` is a first-class package boundary for shared runtime assets (for example fonts).
-  - `packages/browserslist/` is a first-class support package boundary for shared browser target policy.
+  - `packages/config/` is a first-class support package boundary for shared consumer/tooling policy.
   - additional boundaries (for example `assets`, docs site, bootstrap CLI) are expected but remain exploratory until concrete constraints are defined.
 - Versioning/distribution policy:
   - lockstep versioning is the default across design-system packages.
@@ -87,7 +87,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - use Testing Library where semantic DOM behavior is under test.
 - Every component must include Storybook stories.
 - Component package quality gates use repo-level ESLint and Prettier.
-- Component package browser support baseline is centralized in `@measured/calibrate-browserslist` (`baseline widely available` query + Vite/esbuild target) with PostCSS+Autoprefixer enabled.
+- Component package browser support baseline is centralized in `@measured/calibrate-config/browserslist` (`baseline widely available` query + Vite/esbuild target) with PostCSS+Autoprefixer enabled.
 - Shims/polyfills should only be introduced when a concrete support requirement emerges.
 - Accessibility baseline target is WCAG 2.2 AA.
 - Storybook runtime is app-local (`apps/storybook`) and treated as a development/publishing tool; docs-site integration remains optional/future.

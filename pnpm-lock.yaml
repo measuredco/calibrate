@@ -23,9 +23,9 @@ importers:
       '@eslint/json':
         specifier: ^1.0.1
         version: 1.0.1
-      '@measured/calibrate-browserslist':
+      '@measured/calibrate-config':
         specifier: workspace:*
-        version: link:packages/browserslist
+        version: link:packages/config
       eslint:
         specifier: ^10.0.2
         version: 10.0.2
@@ -83,7 +83,7 @@ importers:
 
   packages/assets: {}
 
-  packages/browserslist: {}
+  packages/config: {}
 
   packages/core:
     dependencies:
@@ -91,9 +91,9 @@ importers:
         specifier: workspace:*
         version: link:../system
     devDependencies:
-      '@measured/calibrate-browserslist':
+      '@measured/calibrate-config':
         specifier: workspace:*
-        version: link:../browserslist
+        version: link:../config
       '@testing-library/dom':
         specifier: ^10.4.1
         version: 10.4.1

@@ -1,9 +1,8 @@
 {
-  "name": "@measured/calibrate-browserslist",
+  "name": "@measured/calibrate-config",
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "browserslist-config.cjs",
     "index.mjs",
     "index.d.ts",
     "esbuild.mjs",
@@ -12,15 +11,14 @@
   ],
   "types": "./index.d.ts",
   "exports": {
-    ".": {
+    "./browserslist": {
       "types": "./index.d.ts",
       "default": "./index.mjs"
     },
-    "./esbuild": {
+    "./browserslist/esbuild": {
       "types": "./esbuild.d.ts",
       "default": "./esbuild.mjs"
-    },
-    "./browserslist-config": "./browserslist-config.cjs"
+    }
   },
   "browserslist": [
     "baseline widely available"

@@ -9,7 +9,7 @@ Component contract package for Calibrate.
 - Storybook stories for component development
 - Vitest + Testing Library coverage
 - Token CSS auto-import via `@measured/calibrate-system`
-- Browser baseline wired via `@measured/calibrate-browserslist`
+- Browser baseline wired via `@measured/calibrate-config/browserslist`
 
 ## Public API
 
