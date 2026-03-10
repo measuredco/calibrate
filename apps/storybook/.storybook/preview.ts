@@ -115,6 +115,15 @@ const preview: Preview = {
     },
   },
   parameters: {
+    a11y: {
+      options: {
+        runOnly: {
+          type: "tag",
+          values: ["wcag22aa"],
+        },
+      },
+      test: "error",
+    },
     backgrounds: {
       disable: true,
       grid: { disable: true },

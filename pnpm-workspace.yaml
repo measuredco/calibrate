@@ -4,3 +4,4 @@ packages:
 
 catalog:
   prettier: ^3.8.1
+  vitest: ^4.0.18

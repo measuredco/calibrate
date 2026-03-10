@@ -15,9 +15,6 @@ What we could working on next.
 ### Components and Recipes
 
 - Review and refine one-shot button component
-- Add Storybook accessibility test runner in CI:
-  - keep addon-a11y panel in Storybook UI for local feedback
-  - run story-level a11y checks in CI as a package-level gate
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
@@ -241,3 +238,8 @@ _This section is a historical completion record; some entries may describe decis
   - vendored variable Inter + Roboto Mono font files and `@font-face` entrypoint at `@measured/calibrate-assets/fonts.css`
   - Storybook now imports package fonts entrypoint and validates packaged font loading
   - `core` docs updated to define font load order (`assets/fonts.css` before `core/styles.css`)
+- Storybook accessibility CI gate implemented:
+  - Storybook addon-a11y retained for local interactive checks
+  - Storybook Vitest addon wired for automated accessibility testing (WCAG 2.2 AA, no exclusions)
+  - Storybook CI job now executes Storybook a11y tests as a dedicated gate
+  - local reproducible scripts added for a11y runs

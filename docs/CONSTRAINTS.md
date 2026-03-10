@@ -92,6 +92,9 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Accessibility baseline target is WCAG 2.2 AA.
 - Storybook runtime is app-local (`apps/storybook`) and treated as a development/publishing tool; docs-site integration remains optional/future.
 - Story files remain co-located with package source (`packages/*/src/**/*.stories.*`).
+- Accessibility CI contract:
+  - Storybook a11y checks run via Storybook Vitest addon in CI.
+  - baseline is WCAG 2.2 AA with no exclusions.
 - Components package token CSS loading model:
   - components package auto-imports token CSS by default.
   - token CSS composition is handled by `core` for consumer runtime integration by default.
