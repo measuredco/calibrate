@@ -15,7 +15,7 @@ export default [
       "**/build/**",
       "**/dist/**",
       "**/storybook-static/**",
-      "packages/tokens/schemas/**",
+      "packages/system/schemas/**",
     ],
   },
   {
@@ -37,7 +37,7 @@ export default [
     },
   })),
   {
-    files: ["packages/components/src/**/*.ts"],
+    files: ["packages/core/src/**/*.ts"],
     languageOptions: { globals: { ...nodeGlobalsOff, ...globals.browser } },
   },
   ...storybook.configs["flat/recommended"].map((config) => ({

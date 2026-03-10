@@ -1,8 +1,8 @@
 {
-  "name": "@measured/calibrate-components",
+  "name": "@measured/calibrate-core",
   "version": "0.0.0",
-  "private": true,
   "type": "module",
+  "style": "./dist/core.css",
   "files": [
     "dist",
     "README.md"
@@ -13,7 +13,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/components.css"
+    "./styles.css": "./dist/core.css"
   },
   "scripts": {
     "build": "pnpm run build:types && vite build",
@@ -26,7 +26,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@measured/calibrate-tokens": "workspace:*"
+    "@measured/calibrate-system": "workspace:*"
   },
   "devDependencies": {
     "@measured/calibrate-browserslist": "workspace:*",

@@ -1,4 +1,4 @@
-# @measured/calibrate-components
+# @measured/calibrate-core
 
 Component contract package for Calibrate.
 
@@ -8,13 +8,13 @@ Component contract package for Calibrate.
 - Co-located CSS contract via `styles.css` (tokens + root + component styles)
 - Storybook stories for component development
 - Vitest + Testing Library coverage
-- Token CSS auto-import via `@measured/calibrate-tokens`
+- Token CSS auto-import via `@measured/calibrate-system`
 - Browser baseline wired via `@measured/calibrate-browserslist`
 
 ## Public API
 
-- JS/TS: `@measured/calibrate-components`
-- CSS: `@measured/calibrate-components/styles.css`
+- JS/TS: `@measured/calibrate-core`
+- CSS: `@measured/calibrate-core/styles.css`
 
 ## Scripts
 

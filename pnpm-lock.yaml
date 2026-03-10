@@ -41,11 +41,11 @@ importers:
 
   packages/browserslist: {}
 
-  packages/components:
+  packages/core:
     dependencies:
-      '@measured/calibrate-tokens':
+      '@measured/calibrate-system':
         specifier: workspace:*
-        version: link:../tokens
+        version: link:../system
     devDependencies:
       '@measured/calibrate-browserslist':
         specifier: workspace:*
@@ -93,7 +93,7 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@25.3.5)(jsdom@28.1.0)
 
-  packages/tokens:
+  packages/system:
     devDependencies:
       style-dictionary:
         specifier: ^5.3.3

@@ -4,22 +4,22 @@ This project uses DTCG resolver files as the source of truth, plus a small adapt
 
 ## Script index
 
-- `packages/tokens/scripts/pipeline/index.mjs`
-  - build entrypoint used by `pnpm run tokens:build`
-- `packages/tokens/scripts/validate.mjs`
-  - validation entrypoint used by `pnpm run tokens:validate`
-- `packages/tokens/scripts/verify.mjs`
-  - verification entrypoint used by `pnpm run tokens:verify`
-- `packages/tokens/scripts/pipeline/prepare-sd-contexts.mjs`
+- `packages/system/scripts/pipeline/index.mjs`
+  - build entrypoint used by `pnpm run system:build`
+- `packages/system/scripts/validate.mjs`
+  - validation entrypoint used by `pnpm run system:validate`
+- `packages/system/scripts/verify.mjs`
+  - verification entrypoint used by `pnpm run system:verify`
+- `packages/system/scripts/pipeline/prepare-sd-contexts.mjs`
   - resolver context preparation + CSS manifest generation
-- `packages/tokens/scripts/pipeline/prepare-sd-sources.mjs`
+- `packages/system/scripts/pipeline/prepare-sd-sources.mjs`
   - source merge/normalization for Style Dictionary input
-- `packages/tokens/scripts/pipeline/resolve-token-sources.mjs`
+- `packages/system/scripts/pipeline/resolve-token-sources.mjs`
   - ordered source resolution for a concrete resolver context
 
 ## Purpose
 
-- Keep authoring in resolver format (`packages/tokens/resolver/*.resolver.json`).
+- Keep authoring in resolver format (`packages/system/resolver/*.resolver.json`).
 - Keep Style Dictionary responsible for formatting/output.
 - Limit custom logic to resolver adaptation only.
 - Patch only the current resolver-support gap in SD, while staying aligned with SD's DTCG direction.
@@ -28,8 +28,8 @@ This project uses DTCG resolver files as the source of truth, plus a small adapt
 
 The bridge emits two JSON artifacts per resolver target:
 
-- `packages/tokens/build/sd/<namespace>.<target>.contexts.json`
-- `packages/tokens/build/sd/<namespace>.<target>.css-manifest.json`
+- `packages/system/build/sd/<namespace>.<target>.contexts.json`
+- `packages/system/build/sd/<namespace>.<target>.css-manifest.json`
 
 These are the SD inputs for current CSS builds. The contract below is the
 required shape that formatter code may rely on.
@@ -93,8 +93,8 @@ Rules:
 
 ## Current constraints to preserve during refactor
 
-- CSS output must remain byte-stable under `pnpm run tokens:verify`.
-- Public artifact paths/names under `packages/tokens/dist/**` are unchanged.
+- CSS output must remain byte-stable under `pnpm run system:verify`.
+- Public artifact paths/names under `packages/system/dist/**` are unchanged.
 - Resolver authoring model and `$defs.build` metadata contract are unchanged.
 - Any bridge/formatter boundary changes must keep the above contract explicit and documented.
 
@@ -132,13 +132,13 @@ Per-variant `scope` may be provided for exceptions/expansion.
 ## Artifact contract
 
 - Public/versioned outputs:
-  - `packages/tokens/dist/css/*.css`
+  - `packages/system/dist/css/*.css`
 - Private/versioned maintainer outputs:
-  - `packages/tokens/dist/private/css/*.primitives.css`
+  - `packages/system/dist/private/css/*.primitives.css`
   - non-stable/non-public contract for discovery workflows
 - Disposable pipeline artifacts:
-  - `packages/tokens/build/sd/*`
-  - `packages/tokens/build/tmp/*`
+  - `packages/system/build/sd/*`
+  - `packages/system/build/tmp/*`
 
 ## CSS layer contract
 
@@ -155,10 +155,10 @@ Run:
 
 - `pnpm run lint`
 - `pnpm run format:check`
-- `pnpm run tokens:validate`
-- `pnpm run tokens:verify`
+- `pnpm run system:validate`
+- `pnpm run system:verify`
 
 - `lint` enforces script/config quality via ESLint.
 - `format:check` enforces deterministic formatting via Prettier.
-- `tokens:validate` checks authored token/resolver JSON validity, local `$schema` wiring, resolver sanity, and resolver context preparation.
-- `tokens:verify` rebuilds tokens and fails if `packages/tokens/dist/**` changes.
+- `system:validate` checks authored token/resolver JSON validity, local `$schema` wiring, resolver sanity, and resolver context preparation.
+- `system:verify` rebuilds tokens and fails if `packages/system/dist/**` changes.
