@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr.clbr-brand-msrd) {
+  :where(.clbr[data-brand="msrd"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);

@@ -19,12 +19,12 @@
           "layer": "clbr.brand",
           "layerOrder": ["clbr", "clbr.brand"],
           "selectors": {
-            "root": ":where(.{namespace}.{namespace}-brand-{brand})",
-            "surfaceBrand": ":where(.{namespace}.{namespace}-brand-{brand} .{namespace}-surface-brand)",
-            "themeDark": ":where(.{namespace}.{namespace}-brand-{brand}.{namespace}-theme-dark)",
-            "themeLight": ":where(.{namespace}.{namespace}-brand-{brand}.{namespace}-theme-light)",
-            "themeDarkSurfaceBrand": ":where(.{namespace}.{namespace}-brand-{brand}.{namespace}-theme-dark .{namespace}-surface-brand)",
-            "themeLightSurfaceBrand": ":where(.{namespace}.{namespace}-brand-{brand}.{namespace}-theme-light .{namespace}-surface-brand)"
+            "root": ":where(.{namespace}[data-brand=\"{brand}\"])",
+            "surfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"] .surface[data-variant=\"brand\"])",
+            "themeDark": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"])",
+            "themeLight": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"])",
+            "themeDarkSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"] .surface[data-variant=\"brand\"])",
+            "themeLightSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"] .surface[data-variant=\"brand\"])"
           },
           "modifiers": {
             "size": {

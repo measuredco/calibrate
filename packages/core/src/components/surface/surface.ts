@@ -1,6 +1,4 @@
-import { cx } from "../../helpers/cx";
-
-export type ClbrSurface = "default" | "brand";
+export type ClbrSurfaceVariant = "default" | "brand";
 
 /**
  * Props for the Calibrate surface renderer.
@@ -9,29 +7,28 @@ export interface ClbrSurfaceProps {
   /** Inner HTML content to render inside the surface wrapper. */
   children: string;
   /**
-   * Surface variant class applied to the wrapper.
+   * Surface variant applied to the wrapper.
    * @default "default"
    */
-  surface?: ClbrSurface;
+  variant?: ClbrSurfaceVariant;
 }
 
 /**
  * SSR renderer for the Calibrate surface wrapper.
  *
- * Emits a `<div>` with `clbr-surface` and, for non-default variants,
- * `clbr-surface-{surface}`, then injects the provided HTML content inside.
+ * Emits a `<div>` with `surface` and a `data-variant` attribute, then injects
+ * the provided HTML content inside.
  *
  * @param props - Surface wrapper configuration and inner HTML content.
  * @returns HTML string for the Calibrate surface wrapper.
  */
 export function renderClbrSurface(props: ClbrSurfaceProps): string {
-  const { children, surface = "default" } = props;
-  const classAttr = cx(
-    "clbr-surface",
-    surface === "default" ? undefined : `clbr-surface-${surface}`,
-  );
+  const { children, variant = "default" } = props;
 
-  return `<div class="${classAttr}">${children}</div>`;
+  const classAttr = "surface";
+  const variantAttr = ` data-variant="${variant}"`;
+
+  return `<div class="${classAttr}"${variantAttr}>${children}</div>`;
 }
 
 /** Declarative surface contract mirror for tooling, docs, and adapters. */
@@ -45,7 +42,7 @@ export const CLBR_SURFACE_SPEC = {
       required: true,
       type: "html",
     },
-    surface: {
+    variant: {
       default: "default",
       required: false,
       type: "enum",
@@ -53,15 +50,17 @@ export const CLBR_SURFACE_SPEC = {
     },
   },
   rules: {
+    attributes: [
+      {
+        behavior: "always",
+        target: "data-variant",
+        value: "{variant}",
+      },
+    ],
     classes: [
       {
         behavior: "always",
-        value: "clbr-surface",
-      },
-      {
-        behavior: "emit",
-        value: "clbr-surface-{surface}",
-        when: "surface is not default",
+        value: "surface",
       },
     ],
   },
