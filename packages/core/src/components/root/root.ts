@@ -1,3 +1,5 @@
+import { attrs } from "../../helpers/html";
+
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
 export type ClbrAppOverscrollBehavior = "auto" | "none";
@@ -35,14 +37,14 @@ export interface ClbrRootProps {
 }
 
 /**
- * SSR renderer for the Calibrate root wrapper.
+ * SSR renderer for the Calibrate root component.
  *
  * Emits a `<div>` with the Calibrate root class, required `data-brand`,
  * optional `data-theme`, and optional `dir`/`lang` attributes, then injects
  * the provided HTML content inside.
  *
- * @param props - Root wrapper configuration and inner HTML content.
- * @returns HTML string for the Calibrate root wrapper.
+ * @param props - Root component props.
+ * @returns HTML string for the Calibrate root component.
  */
 export function renderClbrRoot(props: ClbrRootProps): string {
   const {
@@ -55,18 +57,18 @@ export function renderClbrRoot(props: ClbrRootProps): string {
     theme,
   } = props;
 
-  const appOverscrollBehaviorAttr =
-    appOverscrollBehavior === "none"
-      ? ' data-app-overscroll-behavior="none"'
-      : "";
-  const appRootAttr = appRoot ? " data-app-root" : "";
-  const brandAttr = ` data-brand="${brand}"`;
-  const classAttr = "clbr";
-  const dirAttr = dir ? ` dir="${dir}"` : "";
-  const langAttr = lang ? ` lang="${lang}"` : "";
-  const themeAttr = theme ? ` data-theme="${theme}"` : "";
+  const rootAttrs = attrs({
+    class: "clbr",
+    "data-app-root": appRoot,
+    "data-app-overscroll-behavior":
+      appOverscrollBehavior === "none" ? "none" : undefined,
+    "data-brand": brand,
+    "data-theme": theme,
+    lang,
+    dir,
+  });
 
-  return `<div class="${classAttr}"${langAttr}${dirAttr}${appOverscrollBehaviorAttr}${appRootAttr}${brandAttr}${themeAttr}>${children}</div>`;
+  return `<div ${rootAttrs}>${children}</div>`;
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */
