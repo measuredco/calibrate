@@ -1,3 +1,5 @@
+import { attrs } from "../../helpers/html";
+
 export type ClbrSurfaceVariant = "default" | "brand";
 
 /**
@@ -14,21 +16,23 @@ export interface ClbrSurfaceProps {
 }
 
 /**
- * SSR renderer for the Calibrate surface wrapper.
+ * SSR renderer for the Calibrate surface component.
  *
  * Emits a `<div>` with `surface` and a `data-variant` attribute, then injects
  * the provided HTML content inside.
  *
- * @param props - Surface wrapper configuration and inner HTML content.
- * @returns HTML string for the Calibrate surface wrapper.
+ * @param props - Surface component props.
+ * @returns HTML string for the Calibrate surface component.
  */
 export function renderClbrSurface(props: ClbrSurfaceProps): string {
   const { children, variant = "default" } = props;
 
-  const classAttr = "surface";
-  const variantAttr = ` data-variant="${variant}"`;
+  const surfaceAttrs = attrs({
+    class: "surface",
+    "data-variant": variant,
+  });
 
-  return `<div class="${classAttr}"${variantAttr}>${children}</div>`;
+  return `<div ${surfaceAttrs}>${children}</div>`;
 }
 
 /** Declarative surface contract mirror for tooling, docs, and adapters. */

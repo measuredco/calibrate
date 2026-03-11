@@ -14,7 +14,6 @@ What we could working on next.
 
 ### Components and Recipes
 
-- Review and refine one-shot button component
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
@@ -115,6 +114,10 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Button component review/refinement completed:
+  - mode-explicit API (`mode: "button" | "link"`) with clear per-mode prop contracts
+  - renderer/spec/docs/story/tests aligned around omission/normalization rules
+  - tests rewritten around stable contract (button mode, link mode, robustness, escaping)
 - Surface component baseline completed:
   - added `surface` renderer + CSS + tests + stories
   - integrated `surface` global toolbar control in Storybook preview

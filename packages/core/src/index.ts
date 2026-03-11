@@ -1,10 +1,17 @@
 import "./styles.css";
 
 export {
+  CLBR_BUTTON_SPEC,
+  type ClbrButtonAppearance,
+  type ClbrButtonCommonProps,
+  type ClbrButtonElementProps,
+  type ClbrButtonLinkProps,
+  type ClbrButtonMode,
   type ClbrButtonProps,
   type ClbrButtonSize,
+  type ClbrButtonTone,
   type ClbrButtonType,
-  type ClbrButtonVariant,
+  type ClbrLinkTarget,
   renderClbrButton,
 } from "./components/button/button";
 
