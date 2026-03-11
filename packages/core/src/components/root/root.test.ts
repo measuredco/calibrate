@@ -8,6 +8,43 @@ describe("renderClbrRoot", () => {
     expect(html).toContain('data-brand="msrd"');
   });
 
+  it("does not render data-app-root by default", () => {
+    const html = renderClbrRoot({ children: "<p>content</p>" });
+    expect(html).not.toContain("data-app-root");
+  });
+
+  it("renders data-app-root when appRoot is true", () => {
+    const html = renderClbrRoot({
+      appRoot: true,
+      children: "<p>content</p>",
+    });
+    expect(html).toContain("data-app-root");
+  });
+
+  it("does not render data-app-root when appRoot is false", () => {
+    const html = renderClbrRoot({
+      appRoot: false,
+      children: "<p>content</p>",
+    });
+    expect(html).not.toContain("data-app-root");
+  });
+
+  it('does not render data-app-overscroll-behavior when behavior is "auto"', () => {
+    const html = renderClbrRoot({
+      appOverscrollBehavior: "auto",
+      children: "<p>content</p>",
+    });
+    expect(html).not.toContain("data-app-overscroll-behavior=");
+  });
+
+  it('renders data-app-overscroll-behavior when behavior is "none"', () => {
+    const html = renderClbrRoot({
+      appOverscrollBehavior: "none",
+      children: "<p>content</p>",
+    });
+    expect(html).toContain('data-app-overscroll-behavior="none"');
+  });
+
   it("applies explicit brand attribute", () => {
     const html = renderClbrRoot({
       brand: "wrfr",
