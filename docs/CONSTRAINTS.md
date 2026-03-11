@@ -102,6 +102,19 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - initial strategy includes both brands by default (brand/tree-shaking optimization can follow later).
 - Components package should ship a light root/reset CSS entrypoint that composes token CSS imports.
 - Components package public API remains alpha (no stability guarantees until publish/version policy is formalized).
+- Component CSS scoping and specificity strategy:
+  - `.clbr` is the explicit styling boundary and uses `all: initial` to wipe host-page inheritance.
+  - descendants/pseudo-elements are restored with scoped `all: revert` so component defaults start from browser baseline, not host CSS.
+  - specificity model is intentionally flat:
+    - environment hooks use `:where(...)` only (`0-0-0`)
+    - root defaults and component root selectors target `0-1-0`
+    - component internals may rise to `0-2-0` as needed
+  - `:where(...)` should be preferred in scoped descendant selectors to avoid accidental specificity inflation.
+  - protection from host CSS is partial by design (very broad/low-specificity host selectors are neutralized; higher-specificity contextual host selectors can still win when they match).
+  - deterministic layer/source order is required for expected behavior:
+    - host CSS
+    - `@layer clbr.root`
+    - `@layer clbr.components`
 - Asset package font contract:
   - `@measured/calibrate-assets/fonts.css` is the canonical package entrypoint for font-face declarations.
   - exposed family names should remain stable so consumers can self-host/override fonts without changing typography token contracts.

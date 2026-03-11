@@ -28,11 +28,9 @@
     display: block;
 
     /* Preserve document writing semantics. */
-    direction: inherit;
     quotes: inherit;
     text-combine-upright: inherit;
     text-orientation: inherit;
-    unicode-bidi: inherit;
     writing-mode: inherit;
 
     /* Establish system defaults. */
