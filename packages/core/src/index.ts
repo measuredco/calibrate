@@ -17,6 +17,7 @@ export {
 
 export {
   CLBR_ROOT_SPEC,
+  type ClbrAppOverscrollBehavior,
   type ClbrBrand,
   type ClbrDirection,
   type ClbrRootProps,

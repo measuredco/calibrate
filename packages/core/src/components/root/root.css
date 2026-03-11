@@ -1,11 +1,44 @@
 @layer clbr.root {
+  /*
+   * Environment hooks
+   */
+
+  /* Set RTL when Google Translate wraps Calibrate. */
+  :where(.translated-rtl .clbr) {
+    direction: rtl;
+  }
+
+  /* Allow Calibrate to control page overscroll. */
+  :where(:root:has(.clbr[data-app-overscroll-behavior="none"])) {
+    overscroll-behavior: none;
+  }
+
+  /* Remove default page margin when Calibrate owns the page. */
+  :where(body:has(.clbr[data-app-root])) {
+    margin: 0;
+  }
+
+  /*
+   * Calibrate root
+   */
+
   .clbr {
+    /* Establish an isolated styling boundary. */
     all: initial;
+    display: block;
+
+    /* Preserve document writing semantics. */
+    direction: inherit;
+    quotes: inherit;
+    text-combine-upright: inherit;
+    text-orientation: inherit;
+    unicode-bidi: inherit;
+    writing-mode: inherit;
+
+    /* Establish system defaults. */
     background-color: var(--clbr-color-background-default);
-    background-repeat: no-repeat;
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);
-    display: block;
     font-family: var(--clbr-typography-font-family-default);
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
@@ -18,122 +51,91 @@
       var(--clbr-color-brand-primary) 20%,
       transparent
     );
-    text-size-adjust: none;
-  }
 
-  :where(.translated-rtl:has(.clbr)) {
-    direction: rtl;
-  }
+    /* Fill the viewport when mounted as the app root */
+    &[data-app-root] {
+      min-block-size: 100dvb;
+    }
 
-  :where(:root:has(body > .clbr)) {
-    overscroll-behavior: none;
-  }
-
-  :where(body:has(> .clbr)) {
-    margin: 0;
-  }
-
-  :where(body > .clbr) {
-    min-block-size: 100dvb;
-  }
-
-  :where(.clbr) {
-    :where(:not(svg, svg *)),
-    :where(*::before),
-    :where(*::after) {
+    /* Revert descendants and pseudo-elements to browser defaults. */
+    :where(:not(svg, svg *), *::after, *::before, *::marker) {
       all: revert;
     }
 
-    *,
-    *::before,
-    *::after {
+    /* Apply opinionated baseline defaults. */
+    :where(*, *::after, *::before) {
       background-repeat: no-repeat;
       box-sizing: border-box;
     }
 
-    :focus {
+    :where(:focus) {
       outline: none;
     }
 
-    :focus-visible {
+    :where(:focus-visible) {
       border-radius: var(--clbr-radius-focus-ring);
       outline: var(--clbr-layout-focus-ring-width) solid
         var(--clbr-color-interactive-focus);
       outline-offset: var(--clbr-layout-focus-ring-offset-default);
     }
 
-    a {
+    :where(a) {
       color: var(--clbr-color-interactive-default);
+      text-decoration: none;
     }
 
-    @media (any-hover: hover) {
-      a:hover {
-        color: var(--clbr-color-interactive-hover);
-      }
+    :where(a:visited) {
+      color: var(--clbr-color-interactive-visited);
     }
 
-    a:active {
+    :where(a:hover) {
+      color: var(--clbr-color-interactive-hover);
+    }
+
+    :where(a:active) {
       color: var(--clbr-color-interactive-active);
     }
 
-    b,
-    strong {
+    :where(b, strong) {
       font-weight: var(--clbr-typography-font-weight-bold);
     }
 
-    button,
-    input,
-    select,
-    textarea {
+    :where(button, input, select, textarea) {
       font: inherit;
     }
 
-    canvas,
-    img,
-    picture,
-    svg,
-    video {
+    :where(canvas, img, picture, svg, video) {
       block-size: auto;
       display: block;
       max-inline-size: 100%;
     }
 
-    code {
+    :where(code) {
       font-family: var(--clbr-typography-font-family-mono);
     }
 
-    fieldset {
-      border: none;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    :where(h1, h2, h3, h4, h5, h6) {
       text-wrap: balance;
     }
 
-    p {
+    :where(p) {
       text-wrap: pretty;
     }
 
-    math,
-    time,
-    table {
-      font-variant-numeric: slashed-zero tabular-nums;
-    }
-
-    svg:not([fill]) {
+    :where(svg:not([fill])) {
       fill: currentColor;
     }
 
-    table {
+    :where(table) {
       border-collapse: collapse;
+      font-variant-numeric: slashed-zero tabular-nums;
     }
 
-    textarea {
+    :where(time) {
+      font-variant-numeric: slashed-zero tabular-nums;
+    }
+
+    :where(textarea) {
       resize: vertical;
     }
   }

@@ -7,6 +7,19 @@ type RootStoryArgs = Omit<ClbrRootProps, "dir" | "theme"> & {
 
 const meta = {
   argTypes: {
+    appOverscrollBehavior: {
+      control: {
+        labels: {
+          auto: "auto",
+          none: "none",
+        },
+        type: "select",
+      },
+      options: ["auto", "none"],
+    },
+    appRoot: {
+      control: { type: "boolean" },
+    },
     brand: {
       control: { type: "select" },
       options: ["msrd", "wrfr"],
@@ -56,6 +69,8 @@ export default meta;
 
 export const Default = {
   args: {
+    appOverscrollBehavior: "auto",
+    appRoot: false,
     brand: "msrd",
     children: `<div style="padding: 1.75rem 1.25rem">Example content</div>`,
     dir: "",
@@ -65,6 +80,7 @@ export const Default = {
   render: (args: RootStoryArgs) =>
     renderClbrRoot({
       ...args,
+      appOverscrollBehavior: args.appOverscrollBehavior,
       dir: args.dir === "" ? undefined : args.dir,
       theme: args.theme === "" ? undefined : args.theme,
     }),

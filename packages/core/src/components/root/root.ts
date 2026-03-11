@@ -1,11 +1,24 @@
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
+export type ClbrAppOverscrollBehavior = "auto" | "none";
 export type ClbrTheme = "light" | "dark";
 
 /**
  * Props for the Calibrate root wrapper renderer.
  */
 export interface ClbrRootProps {
+  /**
+   * Marks this root as the owning app root.
+   * Emits `data-app-root` only when `true`.
+   * @default false
+   */
+  appRoot?: boolean;
+  /**
+   * Controls page-level overscroll behavior when this root opts in.
+   * Emits `data-app-overscroll-behavior="none"` only when set to `"none"`.
+   * @default "auto"
+   */
+  appOverscrollBehavior?: ClbrAppOverscrollBehavior;
   /**
    * Brand variant applied to the root wrapper.
    * @default "msrd"
@@ -32,15 +45,28 @@ export interface ClbrRootProps {
  * @returns HTML string for the Calibrate root wrapper.
  */
 export function renderClbrRoot(props: ClbrRootProps): string {
-  const { brand = "msrd", children, dir, lang, theme } = props;
+  const {
+    appOverscrollBehavior = "auto",
+    appRoot = false,
+    brand = "msrd",
+    children,
+    dir,
+    lang,
+    theme,
+  } = props;
 
+  const appOverscrollBehaviorAttr =
+    appOverscrollBehavior === "none"
+      ? ' data-app-overscroll-behavior="none"'
+      : "";
+  const appRootAttr = appRoot ? " data-app-root" : "";
   const brandAttr = ` data-brand="${brand}"`;
   const classAttr = "clbr";
   const dirAttr = dir ? ` dir="${dir}"` : "";
   const langAttr = lang ? ` lang="${lang}"` : "";
   const themeAttr = theme ? ` data-theme="${theme}"` : "";
 
-  return `<div class="${classAttr}"${brandAttr}${themeAttr}${langAttr}${dirAttr}>${children}</div>`;
+  return `<div class="${classAttr}"${langAttr}${dirAttr}${appOverscrollBehaviorAttr}${appRootAttr}${brandAttr}${themeAttr}>${children}</div>`;
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */
@@ -50,6 +76,17 @@ export const CLBR_ROOT_SPEC = {
     element: "div",
   },
   props: {
+    appOverscrollBehavior: {
+      default: "auto",
+      required: false,
+      type: "enum",
+      values: ["auto", "none"],
+    },
+    appRoot: {
+      default: false,
+      required: false,
+      type: "boolean",
+    },
     brand: {
       default: "msrd",
       required: false,
@@ -78,6 +115,17 @@ export const CLBR_ROOT_SPEC = {
   },
   rules: {
     attributes: [
+      {
+        behavior: "emit",
+        target: "data-app-overscroll-behavior",
+        value: "none",
+        when: 'appOverscrollBehavior is "none"',
+      },
+      {
+        behavior: "emit",
+        target: "data-app-root",
+        when: "appRoot is true",
+      },
       {
         behavior: "always",
         target: "data-brand",

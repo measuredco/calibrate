@@ -18,9 +18,7 @@ For plain `package.json` `browserslist` fields, use the equivalent query:
 
 ```json
 {
-  "browserslist": [
-    "baseline widely available"
-  ]
+  "browserslist": ["baseline widely available"]
 }
 ```
 
