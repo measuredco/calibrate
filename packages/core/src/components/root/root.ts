@@ -2,7 +2,7 @@ import { attrs } from "../../helpers/html";
 
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
-export type ClbrAppOverscrollBehavior = "auto" | "none";
+export type ClbrAppOverscrollBehavior = "none";
 export type ClbrTheme = "light" | "dark";
 
 /**
@@ -16,9 +16,8 @@ export interface ClbrRootProps {
    */
   appRoot?: boolean;
   /**
-   * Controls page-level overscroll behavior when this root opts in.
-   * Emits `data-app-overscroll-behavior="none"` only when set to `"none"`.
-   * @default "auto"
+   * Opts this root into `overscroll-behavior: none` integration hooks.
+   * Emits `data-app-overscroll-behavior="none"` when provided.
    */
   appOverscrollBehavior?: ClbrAppOverscrollBehavior;
   /**
@@ -47,15 +46,8 @@ export interface ClbrRootProps {
  * @returns HTML string for the Calibrate root component.
  */
 export function renderClbrRoot(props: ClbrRootProps): string {
-  const {
-    appOverscrollBehavior = "auto",
-    appRoot = false,
-    brand = "msrd",
-    children,
-    dir,
-    lang,
-    theme,
-  } = props;
+  const { appOverscrollBehavior, appRoot, brand = "msrd", children, dir, lang, theme } =
+    props;
 
   const rootAttrs = attrs({
     class: "clbr",
@@ -79,10 +71,9 @@ export const CLBR_ROOT_SPEC = {
   },
   props: {
     appOverscrollBehavior: {
-      default: "auto",
       required: false,
       type: "enum",
-      values: ["auto", "none"],
+      values: ["none"],
     },
     appRoot: {
       default: false,
@@ -121,7 +112,7 @@ export const CLBR_ROOT_SPEC = {
         behavior: "emit",
         target: "data-app-overscroll-behavior",
         value: "none",
-        when: 'appOverscrollBehavior is "none"',
+        when: "appOverscrollBehavior is provided",
       },
       {
         behavior: "emit",

@@ -1,6 +1,7 @@
 import { type ClbrRootProps, renderClbrRoot } from "./root";
 
-type RootStoryArgs = Omit<ClbrRootProps, "dir" | "theme"> & {
+type RootStoryArgs = Omit<ClbrRootProps, "appOverscrollBehavior" | "dir" | "theme"> & {
+  appOverscrollBehavior?: "" | "none";
   dir?: "" | "ltr" | "rtl";
   theme?: "" | "light" | "dark";
 };
@@ -10,12 +11,11 @@ const meta = {
     appOverscrollBehavior: {
       control: {
         labels: {
-          auto: "auto",
           none: "none",
         },
         type: "select",
       },
-      options: ["auto", "none"],
+      options: ["", "none"],
     },
     appRoot: {
       control: { type: "boolean" },
@@ -30,7 +30,6 @@ const meta = {
     dir: {
       control: {
         labels: {
-          "": "inherit",
           ltr: "ltr",
           rtl: "rtl",
         },
@@ -44,7 +43,6 @@ const meta = {
     theme: {
       control: {
         labels: {
-          "": "auto",
           dark: "dark",
           light: "light",
         },
@@ -69,7 +67,7 @@ export default meta;
 
 export const Default = {
   args: {
-    appOverscrollBehavior: "auto",
+    appOverscrollBehavior: "",
     appRoot: false,
     brand: "msrd",
     children: `<div style="padding: 1.75rem 1.25rem">Example content</div>`,
@@ -80,7 +78,8 @@ export const Default = {
   render: (args: RootStoryArgs) =>
     renderClbrRoot({
       ...args,
-      appOverscrollBehavior: args.appOverscrollBehavior,
+      appOverscrollBehavior:
+        args.appOverscrollBehavior === "" ? undefined : args.appOverscrollBehavior,
       dir: args.dir === "" ? undefined : args.dir,
       theme: args.theme === "" ? undefined : args.theme,
     }),

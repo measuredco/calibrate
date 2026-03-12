@@ -24,7 +24,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@measured/calibrate-system": "workspace:*"
+    "@measured/calibrate-system": "workspace:*",
+    "lucide": "0.577.0"
   },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
