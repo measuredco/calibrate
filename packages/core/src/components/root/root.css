@@ -71,7 +71,7 @@
     }
 
     :where(:focus-visible) {
-      border-radius: var(--clbr-radius-focus-ring);
+      border-radius: var(--clbr-radius-100);
       outline: var(--clbr-layout-focus-ring-width) solid
         var(--clbr-color-interactive-focus);
       outline-offset: var(--clbr-layout-focus-ring-offset-default);

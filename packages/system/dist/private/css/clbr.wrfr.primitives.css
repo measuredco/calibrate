@@ -52,8 +52,8 @@
     --clbr-primitive-radius-200: 0.25rem;
     --clbr-primitive-radius-300: 0.5rem;
     --clbr-primitive-radius-400: 1.125rem;
-    --clbr-primitive-shape-square-aspect-ratio: 1 / 1;
-    --clbr-primitive-shape-square-corner-ratio: 0.16666667;
+    --clbr-primitive-radius-ratio-default: 0.16666667;
+    --clbr-primitive-radius-ratio-lg: 0.311;
     --clbr-primitive-spacing-100: 0.0625rem;
     --clbr-primitive-spacing-1000: 2rem;
     --clbr-primitive-spacing-1100: 2.25rem;

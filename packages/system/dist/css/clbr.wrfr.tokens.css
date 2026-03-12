@@ -72,10 +72,9 @@
     --clbr-radius-200: 0.25rem;
     --clbr-radius-300: 0.5rem;
     --clbr-radius-400: 1.125rem;
-    --clbr-radius-focus-ring: 0.0625rem;
     --clbr-radius-panel: 1.125rem;
-    --clbr-shape-square-aspect-ratio: 1 / 1;
-    --clbr-shape-square-corner-ratio: 0.16666667;
+    --clbr-radius-ratio-default: 0.16666667;
+    --clbr-radius-ratio-lg: 0.311;
     --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif;
     --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace;
     --clbr-typography-font-weight-bold: 566;
