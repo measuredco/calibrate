@@ -25,18 +25,12 @@
   .clbr {
     /* Establish an isolated styling boundary. */
     all: initial;
-    display: block;
-
-    /* Preserve document writing semantics. */
-    quotes: inherit;
-    text-combine-upright: inherit;
-    text-orientation: inherit;
-    writing-mode: inherit;
 
     /* Establish system defaults. */
     background-color: var(--clbr-color-background-default);
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);
+    display: block;
     font-family: var(--clbr-typography-font-family-default);
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
@@ -44,11 +38,17 @@
     -webkit-font-smoothing: antialiased;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);
+
+    /* Preserve document writing semantics. */
+    quotes: inherit;
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
       transparent
     );
+    text-combine-upright: inherit;
+    text-orientation: inherit;
+    writing-mode: inherit;
 
     /* Fill the viewport when mounted as the app root */
     &[data-app-root] {
@@ -120,10 +120,6 @@
       text-wrap: pretty;
     }
 
-    :where(svg:not([fill])) {
-      fill: currentColor;
-    }
-
     :where(table) {
       border-collapse: collapse;
       font-variant-numeric: slashed-zero tabular-nums;
@@ -135,6 +131,19 @@
 
     :where(textarea) {
       resize: vertical;
+    }
+
+    /* Define utility classes. */
+    :where(.visually-hidden) {
+      block-size: 1px;
+      border: none;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      white-space: nowrap;
     }
   }
 }

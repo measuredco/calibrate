@@ -6,7 +6,40 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- None currently.
+### Add icon props to button
+
+- Define button icon API (renderer + spec + stories) with explicit layout intent:
+  - no icon
+  - icon + label
+  - icon-only
+  - responsive swap (icon-only on narrow, label-only on wide)
+- Keep icon source aligned with `renderClbrIcon`:
+  - accept icon by Lucide `name` (same naming semantics as icon component)
+  - ensure button does not duplicate icon rendering logic
+- Add clear accessibility rules for each mode:
+  - icon+label: visible label is accessible name
+  - icon-only: require non-empty accessible label on button
+  - responsive swap: keep icon `aria-hidden="true"` and keep label text in DOM; at narrow breakpoints use visually-hidden styling (not `display: none`) so accessible name stays stable
+- Define attribute/class contract additions for button styling hooks:
+  - presence hooks for leading/trailing icon
+  - icon-only and responsive-state hooks
+  - no unnecessary attrs emitted for default/no-icon path
+- Implement renderer rules and omission behavior:
+  - preserve existing mode split (`button` vs `link`)
+  - keep existing “ignored in mode” rules coherent with icon props
+  - normalize empty-string optional props to omitted attrs where applicable
+- Add Storybook coverage with separated scenarios:
+  - base button (no icon)
+  - icon+label
+  - icon-only
+  - responsive icon/text example
+- Expand tests to cover settled contract:
+  - renders expected icon markup hooks per scenario
+  - enforces accessibility requirements (especially icon-only)
+  - validates omission/precedence rules across button/link modes
+- Update docs/spec artifacts after implementation:
+  - button JSDoc and `CLBR_BUTTON_SPEC`
+  - any constraints guidance impacted by icon-in-button rules
 
 ## Next
 
@@ -14,10 +47,10 @@ What we could working on next.
 
 ### Components and Recipes
 
-- Figure out Icons
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
+  - also consider `id`
 
 ## Later
 

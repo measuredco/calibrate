@@ -16,6 +16,15 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_ICON_RECOMMENDED,
+  CLBR_ICON_SPEC,
+  type ClbrIconMirrorMode,
+  type ClbrIconProps,
+  type ClbrIconSize,
+  renderClbrIcon,
+} from "./components/icon/icon";
+
+export {
   CLBR_SURFACE_SPEC,
   type ClbrSurfaceProps,
   type ClbrSurfaceVariant,

@@ -29,9 +29,8 @@ describe("renderClbrRoot", () => {
     expect(html).not.toContain("data-app-root");
   });
 
-  it('does not render data-app-overscroll-behavior when behavior is "auto"', () => {
+  it("does not render data-app-overscroll-behavior when behavior is omitted", () => {
     const html = renderClbrRoot({
-      appOverscrollBehavior: "auto",
       children: "<p>content</p>",
     });
     expect(html).not.toContain("data-app-overscroll-behavior=");

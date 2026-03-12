@@ -28,3 +28,10 @@ export function escapeHtml(value: string): string {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
+
+/**
+ * Validates whether a string is a safe HTML id token.
+ */
+export function isValidHtmlId(value: string): boolean {
+  return /^[A-Za-z][\w:-]*$/.test(value);
+}
