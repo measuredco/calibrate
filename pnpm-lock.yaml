@@ -90,6 +90,9 @@ importers:
       '@measured/calibrate-system':
         specifier: workspace:*
         version: link:../system
+      lucide:
+        specifier: 0.577.0
+        version: 0.577.0
     devDependencies:
       '@measured/calibrate-config':
         specifier: workspace:*
@@ -1519,6 +1522,9 @@ packages:
   lru-cache@11.2.6:
     resolution: {integrity: sha512-ESL2CrkS/2wTPfuend7Zhkzo2u0daGJ/A2VucJOgQ/C48S/zB8MMeMHSGKYpXhIjbPxfuezITkaBH1wqv00DDQ==}
     engines: {node: 20 || >=22}
+
+  lucide@0.577.0:
+    resolution: {integrity: sha512-PpC/m5eOItp/WU/GlQPFBXDOhq6HibL73KzYP37OX3LM7VmzWQF8voEj8QRWUFvy9FIKfeDQkWYoyS1D/MdWFA==}
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -3446,6 +3452,8 @@ snapshots:
   loupe@3.2.1: {}
 
   lru-cache@11.2.6: {}
+
+  lucide@0.577.0: {}
 
   lz-string@1.5.0: {}
 

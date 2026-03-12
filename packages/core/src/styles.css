@@ -11,4 +11,5 @@
 
 /* components */
 @import "./components/button/button.css";
+@import "./components/icon/icon.css";
 @import "./components/surface/surface.css";
