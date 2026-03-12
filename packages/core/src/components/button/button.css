@@ -1,9 +1,12 @@
 @layer clbr.components {
   :where(.clbr) .button {
+    --clbr-button-block-size: var(--clbr-spacing-vertical-800);
     background-color: var(--clbr-color-background-panel);
     border: var(--clbr-layout-border-width-default) solid
       var(--clbr-color-interactive-default);
-    border-radius: var(--clbr-radius-300);
+    border-radius: calc(
+      var(--clbr-button-block-size) * var(--clbr-radius-ratio-default)
+    );
     box-shadow: var(--clbr-effect-shadow-default);
     color: var(--clbr-color-interactive-neutral-default);
     cursor: pointer;
@@ -20,7 +23,13 @@
     );
 
     &:focus-visible {
-      border-radius: var(--clbr-radius-300);
+      border-radius: calc(
+        (
+            var(--clbr-button-block-size) +
+              (var(--clbr-spacing-vertical-300) * 2)
+          ) *
+          var(--clbr-radius-ratio-default)
+      );
     }
 
     @media (any-hover: hover) {
@@ -35,6 +44,7 @@
     }
 
     &[data-size="sm"] {
+      --clbr-button-block-size: var(--clbr-spacing-vertical-775);
       box-shadow: none;
       font-size: var(--clbr-typography-type-step-100-font-size);
       line-height: var(--clbr-typography-type-step-100-line-height);
@@ -49,6 +59,7 @@
     }
 
     &[data-size="lg"] {
+      --clbr-button-block-size: var(--clbr-spacing-vertical-900);
       padding-block: calc(
         var(--clbr-spacing-vertical-500) -
           var(--clbr-layout-border-width-default)

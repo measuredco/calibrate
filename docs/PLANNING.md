@@ -14,6 +14,7 @@ What we could working on next.
 
 ### Components and Recipes
 
+- Figure out Icons
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
@@ -55,6 +56,10 @@ Everything we could attempt given sufficient time and resources.
   - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
+
+#### Explore $extensions
+
+[Understanding $extensions in the Design Tokens Specification](www.alwaystwisted.com/articles/understanding-extensions-in-the-design-tokens-spec)
 
 #### JSON export target
 
@@ -143,7 +148,7 @@ _This section is a historical completion record; some entries may describe decis
   - `typography.prose.link.active.decoration.offset`
   - shared `typography.prose.link.decoration.thickness`.
 - semantic typography baseline/tablet size files populated for body + heading scales.
-- brand `shape` domain introduced (`square.aspectRatio`, `square.cornerRatio`) with semantic exposure.
+- brand radius ratio primitives introduced (migrated from earlier shape-domain corner-ratio modeling) with semantic exposure.
 - external typography size `$ref` paths corrected to current folder structure.
 - source token tree moved under `packages/system/src` (core + brand).
 - spec-shaped resolver manifest added at `packages/system/resolver/msrd.resolver.json` with `resolutionOrder`.

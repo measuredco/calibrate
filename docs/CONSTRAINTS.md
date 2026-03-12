@@ -135,7 +135,6 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - `packages/system/src/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
 - `packages/system/src/msrd/semantic/motion/tokens.json`
 - `packages/system/src/msrd/semantic/radius/tokens.json`
-- `packages/system/src/msrd/semantic/shape/tokens.json`
 
 ## Authoring Rules
 

@@ -23,6 +23,16 @@
       "unit": "px"
     }
   },
+  "ratio": {
+    "default": {
+      "$type": "number",
+      "$value": 0.16666667
+    },
+    "lg": {
+      "$type": "number",
+      "$value": 0.311
+    }
+  },
   "$schema": "../../../schemas/2025.10/schema/format.json",
   "$type": "dimension"
 }
