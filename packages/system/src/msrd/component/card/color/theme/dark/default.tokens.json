@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../../schemas/2025.10/schema/format.json",
+  "$description": "Card component color tokens for msrd dark/default context.",
+  "$type": "color",
+  "dots": {
+    "default": {
+      "$value": "{color.border.subtle}"
+    },
+    "hover": {
+      "$value": "{color.brand.support}"
+    }
+  },
+  "interactive": {
+    "$value": "{color.interactive.default}"
+  }
+}

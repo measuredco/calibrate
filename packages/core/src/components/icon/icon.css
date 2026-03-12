@@ -1,0 +1,32 @@
+@layer clbr.components {
+  :where(.clbr) .icon {
+    aspect-ratio: 1 / 1;
+    block-size: var(--clbr-spacing-vertical-700);
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+
+    &[data-size="sm"] {
+      block-size: var(--clbr-spacing-vertical-600);
+    }
+
+    &[data-size="lg"] {
+      block-size: var(--clbr-spacing-vertical-775);
+    }
+
+    &[data-size="fill"] {
+      block-size: 100%;
+      inline-size: 100%;
+    }
+
+    &[data-mirrored="always"] {
+      transform: scaleX(-1);
+    }
+
+    &[data-mirrored="rtl"] {
+      :where([dir="rtl"], .translated-rtl) & {
+        transform: scaleX(-1);
+      }
+    }
+  }
+}

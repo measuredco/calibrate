@@ -1,0 +1,24 @@
+{
+  "name": "@measured/calibrate-system",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "dist/css",
+    "dist/private/css",
+    "README.md"
+  ],
+  "style": "./dist/css/clbr.core.tokens.css",
+  "exports": {
+    "./css/core": "./dist/css/clbr.core.tokens.css",
+    "./css/msrd": "./dist/css/clbr.msrd.tokens.css",
+    "./css/wrfr": "./dist/css/clbr.wrfr.tokens.css"
+  },
+  "scripts": {
+    "build": "node scripts/pipeline/index.mjs",
+    "validate": "node scripts/validate.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.3.3"
+  }
+}

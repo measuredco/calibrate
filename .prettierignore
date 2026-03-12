@@ -1,0 +1,7 @@
+node_modules
+**/build/**
+**/dist/**
+**/storybook-static/**
+packages/system/schemas/*/
+packages/system/schemas/*/**
+pnpm-lock.yaml

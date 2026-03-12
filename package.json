@@ -1,17 +1,38 @@
 {
   "name": "calibrate",
   "version": "0.0.0",
-  "private": "true",
+  "private": true,
   "scripts": {
-    "tokens:build": "node tokens/scripts/build.mjs",
-    "tokens:validate": "node tokens/scripts/validate.mjs",
-    "tokens:verify": "node tokens/scripts/verify.mjs"
+    "core:build": "pnpm --filter @measured/calibrate-core run build",
+    "core:lint": "pnpm --filter @measured/calibrate-core run lint",
+    "core:test": "pnpm --filter @measured/calibrate-core run test",
+    "core:typecheck": "pnpm --filter @measured/calibrate-core run typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "storybook": "pnpm --filter @measured/calibrate-storybook run storybook",
+    "storybook:build": "pnpm --filter @measured/calibrate-storybook run storybook:build",
+    "storybook:test": "pnpm --filter @measured/calibrate-storybook run storybook:test",
+    "system:build": "pnpm --filter @measured/calibrate-system run build",
+    "system:validate": "pnpm --filter @measured/calibrate-system run validate",
+    "system:verify": "pnpm --filter @measured/calibrate-system run verify"
   },
-  "packageManager": "pnpm@10.29.3",
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
   "engines": {
-    "node": "24.13.1"
+    "node": "24.14.0"
   },
+  "browserslist": [
+    "baseline widely available"
+  ],
   "devDependencies": {
-    "style-dictionary": "^5.3.3"
+    "@measured/calibrate-config": "workspace:*",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.0.1",
+    "eslint": "^10.0.2",
+    "eslint-plugin-storybook": "10.2.16",
+    "globals": "^17.4.0",
+    "prettier": "catalog:",
+    "typescript-eslint": "^8.43.0"
   }
 }

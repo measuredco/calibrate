@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../schemas/2025.10/schema/format.json",
+  "$description": "",
+  "$type": "color",
+  "dots": {
+    "default": {
+      "$value": "ButtonBorder"
+    },
+    "hover": {
+      "$value": "ButtonBorder"
+    }
+  },
+  "interactive": {
+    "$value": "LinkText"
+  }
+}

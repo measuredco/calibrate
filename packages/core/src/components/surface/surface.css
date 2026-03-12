@@ -1,0 +1,6 @@
+@layer clbr.components {
+  :where(.clbr) .surface {
+    background-color: var(--clbr-color-background-default);
+    color: var(--clbr-color-foreground-default);
+  }
+}

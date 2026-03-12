@@ -1,7 +1,0 @@
-{
-  "size": {
-    "tablet": "(min-width: 48em)",
-    "notebook": "(min-width: 64em)",
-    "laptop": "(min-width: 80em)"
-  }
-}
