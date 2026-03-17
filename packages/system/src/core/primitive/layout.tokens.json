@@ -45,5 +45,51 @@
         }
       }
     }
+  },
+  "icon": {
+    "size": {
+      "$type": "dimension",
+      "2xs": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "xs": {
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "sm": {
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        }
+      }
+    },
+    "viewbox": {
+      "$description": "Ratios for icon viewbox edge compensation; 1/12 inset and -1/12 outset.",
+      "insetRatio": {
+        "$type": "number",
+        "$value": 0.0833333333
+      },
+      "outsetRatio": {
+        "$type": "number",
+        "$value": -0.0833333333
+      }
+    }
   }
 }

@@ -1,7 +1,10 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";
 export type ClbrButtonMode = "button" | "link";
+export type ClbrButtonOnlyBelow = "tablet";
+export type ClbrButtonPlacement = "start" | "end";
 export type ClbrButtonSize = "sm" | "md" | "lg";
 export type ClbrButtonTone = "brand" | "neutral";
 export type ClbrButtonType = "button" | "submit";
@@ -13,6 +16,20 @@ export interface ClbrButtonCommonProps {
    * @default "outline"
    */
   appearance?: ClbrButtonAppearance;
+  /** Optional icon name (Lucide naming semantics). */
+  icon?: string;
+  /** Optional icon mirroring mode. Ignored when `icon` is omitted. */
+  iconMirrored?: ClbrIconMirrorMode;
+  /**
+   * Collapse to icon-only below the named breakpoint.
+   * Ignored when `icon` is omitted.
+   */
+  iconOnlyBelow?: ClbrButtonOnlyBelow;
+  /**
+   * Icon placement when icon is present.
+   * @default "start"
+   */
+  iconPlacement?: ClbrButtonPlacement;
   /** Accessible name text rendered as content (escaped before render). */
   label: string;
   /**
@@ -90,13 +107,41 @@ function normalizeDownload(
  * - link mode ignores `rel` and `target` when `download` is set
  */
 export function renderClbrButton(props: ClbrButtonProps): string {
-  const { appearance = "outline", label, size = "md", tone = "brand" } = props;
+  const {
+    appearance = "outline",
+    icon,
+    iconMirrored,
+    iconOnlyBelow,
+    iconPlacement = "start",
+    label,
+    size = "md",
+    tone = "brand",
+  } = props;
 
-  const content = `${escapeHtml(label)}`;
+  const normalizedIconName = icon?.trim() || undefined;
+  const hasIcon = Boolean(normalizedIconName);
+  let iconMarkup = "";
+
+  if (hasIcon && normalizedIconName) {
+    iconMarkup = `<span class="icon-wrapper">${renderClbrIcon({
+      ariaHidden: true,
+      mirrored: iconMirrored,
+      name: normalizedIconName,
+      size: "fill",
+    })}</span>`;
+  }
+
+  const labelMarkup = `<span class="label">${escapeHtml(label)}</span>`;
+  const content = hasIcon
+    ? iconPlacement === "end"
+      ? `${labelMarkup}${iconMarkup}`
+      : `${iconMarkup}${labelMarkup}`
+    : labelMarkup;
 
   const commonAttrs = {
     class: "button",
     "data-appearance": appearance,
+    "data-icon-only-below": hasIcon ? iconOnlyBelow : undefined,
     "data-size": size,
     "data-tone": tone,
   };
@@ -169,6 +214,29 @@ export const CLBR_BUTTON_SPEC = {
       required: false,
       requiredWhen: "mode is link",
       type: "string",
+    },
+    icon: {
+      required: false,
+      type: "string",
+    },
+    iconMirrored: {
+      ignoredWhen: "icon is omitted",
+      required: false,
+      type: "enum",
+      values: ["always", "rtl"],
+    },
+    iconOnlyBelow: {
+      ignoredWhen: "icon is omitted",
+      required: false,
+      type: "enum",
+      values: ["tablet"],
+    },
+    iconPlacement: {
+      default: "start",
+      ignoredWhen: "icon is omitted",
+      required: false,
+      type: "enum",
+      values: ["start", "end"],
     },
     label: {
       required: true,
@@ -247,6 +315,12 @@ export const CLBR_BUTTON_SPEC = {
       },
       {
         behavior: "emit",
+        target: "data-icon-only-below",
+        value: "{iconOnlyBelow}",
+        when: "icon is a non-empty string and iconOnlyBelow is provided",
+      },
+      {
+        behavior: "emit",
         target: "data-mode",
         value: "button",
         when: "mode is button or omitted",
@@ -320,6 +394,30 @@ export const CLBR_BUTTON_SPEC = {
         target: "value",
         value: "{value}",
         when: "mode is button and value is non-empty",
+      },
+    ],
+    content: [
+      {
+        behavior: "always",
+        element: "span.label",
+        value: "{label}",
+      },
+      {
+        behavior: "emit",
+        element: "span.icon-wrapper",
+        value:
+          "renderClbrIcon({ name: icon, ariaHidden: true, mirrored: iconMirrored, size: 'fill' })",
+        when: "icon is a non-empty string",
+      },
+      {
+        behavior: "order",
+        value: ["span.icon-wrapper", "span.label"],
+        when: "icon is a non-empty string and iconPlacement is start or omitted",
+      },
+      {
+        behavior: "order",
+        value: ["span.label", "span.icon-wrapper"],
+        when: "icon is a non-empty string and iconPlacement is end",
       },
     ],
   },

@@ -25,13 +25,14 @@ export const CLBR_ICON_RECOMMENDED = [
   "menu",
   "settings",
   "shuffle",
+  "square",
   "sun-moon",
   "swatch-book",
   "x",
 ] as const;
 
 export type ClbrIconMirrorMode = "always" | "rtl";
-export type ClbrIconSize = "sm" | "md" | "lg" | "fill";
+export type ClbrIconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "fill";
 
 /** Props for the Calibrate icon renderer. */
 export interface ClbrIconProps {
@@ -198,7 +199,7 @@ export const CLBR_ICON_SPEC = {
       default: "md",
       required: false,
       type: "enum",
-      values: ["sm", "md", "lg", "fill"],
+      values: ["2xs", "xs", "sm", "md", "lg", "fill"],
     },
     title: {
       required: false,

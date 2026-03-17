@@ -7,6 +7,8 @@ export {
   type ClbrButtonElementProps,
   type ClbrButtonLinkProps,
   type ClbrButtonMode,
+  type ClbrButtonOnlyBelow,
+  type ClbrButtonPlacement,
   type ClbrButtonProps,
   type ClbrButtonSize,
   type ClbrButtonTone,

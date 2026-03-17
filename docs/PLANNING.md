@@ -6,41 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Add icon props to button
-
-- Define button icon API (renderer + spec + stories) with explicit layout intent:
-  - no icon
-  - icon + label
-  - icon-only
-  - responsive swap (icon-only on narrow, label-only on wide)
-- Keep icon source aligned with `renderClbrIcon`:
-  - accept icon by Lucide `name` (same naming semantics as icon component)
-  - ensure button does not duplicate icon rendering logic
-- Add clear accessibility rules for each mode:
-  - icon+label: visible label is accessible name
-  - icon-only: require non-empty accessible label on button
-  - responsive swap: keep icon `aria-hidden="true"` and keep label text in DOM; at narrow breakpoints use visually-hidden styling (not `display: none`) so accessible name stays stable
-- Define attribute/class contract additions for button styling hooks:
-  - presence hooks for leading/trailing icon
-  - icon-only and responsive-state hooks
-  - no unnecessary attrs emitted for default/no-icon path
-- Implement renderer rules and omission behavior:
-  - preserve existing mode split (`button` vs `link`)
-  - keep existing “ignored in mode” rules coherent with icon props
-  - normalize empty-string optional props to omitted attrs where applicable
-- Add Storybook coverage with separated scenarios:
-  - base button (no icon)
-  - icon+label
-  - icon-only
-  - responsive icon/text example
-- Expand tests to cover settled contract:
-  - renders expected icon markup hooks per scenario
-  - enforces accessibility requirements (especially icon-only)
-  - validates omission/precedence rules across button/link modes
-- Update docs/spec artifacts after implementation:
-  - button JSDoc and `CLBR_BUTTON_SPEC`
-  - any constraints guidance impacted by icon-in-button rules
-
 ## Next
 
 What we could working on next.
@@ -152,6 +117,14 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Button icon props implemented and aligned across core:
+  - button API expanded with `icon`, `iconPlacement`, `iconOnlyBelow`, `iconMirrored`
+  - button renderer composes `renderClbrIcon` (decorative icon path, shared icon validation/render behavior)
+  - responsive collapse behavior implemented for `iconOnlyBelow="tablet"` with visually-hidden label at narrow widths
+  - button spec updated with icon props, omission rules, and content ordering rules
+  - Storybook button stories updated for icon controls in button/link modes
+  - button tests expanded for icon rendering, ordering, collapse/mirroring, omission handling, and link-mode parity
+  - icon sizing moved to core layout tokens (`2xs`..`lg` + `default`) and wired into icon/button CSS
 - Button component review/refinement completed:
   - mode-explicit API (`mode: "button" | "link"`) with clear per-mode prop contracts
   - renderer/spec/docs/story/tests aligned around omission/normalization rules

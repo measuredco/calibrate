@@ -1,17 +1,25 @@
 @layer clbr.components {
   :where(.clbr) .icon {
     aspect-ratio: 1 / 1;
-    block-size: var(--clbr-spacing-vertical-700);
+    block-size: var(--clbr-layout-icon-size-md);
     display: inline-block;
     flex: none;
     vertical-align: middle;
 
+    &[data-size="2xs"] {
+      block-size: var(--clbr-layout-icon-size-2xs);
+    }
+
+    &[data-size="xs"] {
+      block-size: var(--clbr-layout-icon-size-xs);
+    }
+
     &[data-size="sm"] {
-      block-size: var(--clbr-spacing-vertical-600);
+      block-size: var(--clbr-layout-icon-size-sm);
     }
 
     &[data-size="lg"] {
-      block-size: var(--clbr-spacing-vertical-775);
+      block-size: var(--clbr-layout-icon-size-lg);
     }
 
     &[data-size="fill"] {
