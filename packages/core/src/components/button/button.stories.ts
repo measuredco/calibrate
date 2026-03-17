@@ -1,3 +1,4 @@
+import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
 import {
   type ClbrButtonElementProps,
   type ClbrButtonLinkProps,
@@ -22,6 +23,22 @@ const commonArgTypes = {
   appearance: {
     control: { type: "select" },
     options: ["outline", "solid", "text"],
+  },
+  icon: {
+    control: { type: "select" },
+    options: CLBR_ICON_RECOMMENDED,
+  },
+  iconOnlyBelow: {
+    control: { type: "select" },
+    options: ["tablet"],
+  },
+  iconMirrored: {
+    control: { type: "select" },
+    options: ["always", "rtl"],
+  },
+  iconPlacement: {
+    control: { type: "select" },
+    options: ["start", "end"],
   },
   label: {
     control: { type: "text" },
@@ -93,6 +110,10 @@ export const ButtonMode = {
     appearance: "outline",
     tone: "brand",
     size: "md",
+    icon: undefined,
+    iconPlacement: "start",
+    iconOnlyBelow: undefined,
+    iconMirrored: undefined,
     disabled: false,
     type: "button",
     form: "",
@@ -117,6 +138,10 @@ export const LinkMode = {
     appearance: "outline",
     tone: "brand",
     size: "md",
+    icon: undefined,
+    iconPlacement: "start",
+    iconOnlyBelow: undefined,
+    iconMirrored: undefined,
     rel: "noreferrer",
     target: "_self",
   } satisfies ClbrButtonLinkProps,
@@ -133,6 +158,10 @@ export const LinkModeDownload = {
     appearance: "outline",
     tone: "brand",
     size: "md",
+    icon: "download",
+    iconPlacement: "start",
+    iconOnlyBelow: undefined,
+    iconMirrored: undefined,
   } satisfies ClbrButtonLinkProps,
   argTypes: downloadLinkArgTypes,
   render: (args: ClbrButtonLinkProps) => renderClbrButton({ ...args }),
@@ -147,6 +176,10 @@ export const LinkModeNamedDownload = {
     appearance: "outline",
     tone: "brand",
     size: "md",
+    icon: "download",
+    iconPlacement: "start",
+    iconOnlyBelow: undefined,
+    iconMirrored: undefined,
   } satisfies ClbrButtonLinkProps,
   argTypes: downloadLinkArgTypes,
   render: (args: ClbrButtonLinkProps) => renderClbrButton({ ...args }),

@@ -21,6 +21,13 @@
     --clbr-primitive-layout-focus-ring-offset-inset: -0.25rem;
     --clbr-primitive-layout-grid-columns: 12;
     --clbr-primitive-layout-grid-item-min-width: 18rem;
+    --clbr-primitive-layout-icon-size-2xs: 1rem;
+    --clbr-primitive-layout-icon-size-lg: 1.75rem;
+    --clbr-primitive-layout-icon-size-md: 1.5rem;
+    --clbr-primitive-layout-icon-size-sm: 1.25rem;
+    --clbr-primitive-layout-icon-size-xs: 1.125rem;
+    --clbr-primitive-layout-icon-viewbox-inset-ratio: 0.0833333333;
+    --clbr-primitive-layout-icon-viewbox-outset-ratio: -0.0833333333;
     --clbr-primitive-spacing-100: 0.0625rem;
     --clbr-primitive-spacing-1000: 2rem;
     --clbr-primitive-spacing-1100: 2.25rem;

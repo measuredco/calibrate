@@ -41,6 +41,82 @@ describe("renderClbrButton", () => {
       expect(button.getAttribute("name")).toBeNull();
       expect(button.getAttribute("value")).toBe("save");
     });
+
+    it("renders icon at start by default when icon is provided", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        icon: "arrow-right",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+      const firstChild = button.firstElementChild;
+
+      expect(firstChild?.className).toBe("icon-wrapper");
+      expect(button.querySelector(".icon-wrapper .icon")).toBeTruthy();
+    });
+
+    it("renders icon at end when iconPlacement is end", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        icon: "arrow-right",
+        iconPlacement: "end",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+      const lastChild = button.lastElementChild;
+
+      expect(lastChild?.className).toBe("icon-wrapper");
+    });
+
+    it("emits collapse and mirrored attrs when provided", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        iconOnlyBelow: "tablet",
+        iconMirrored: "rtl",
+        icon: "arrow-right",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+      const icon = button.querySelector("svg.icon");
+
+      expect(button.getAttribute("data-icon-only-below")).toBe("tablet");
+      expect(icon?.getAttribute("data-mirrored")).toBe("rtl");
+    });
+
+    it("ignores icon props when icon is omitted", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        iconOnlyBelow: "tablet",
+        iconMirrored: "always",
+        iconPlacement: "end",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+
+      expect(button.getAttribute("data-icon-only-below")).toBeNull();
+      expect(button.querySelector(".icon-wrapper")).toBeNull();
+    });
+
+    it("treats empty icon string as omitted", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        icon: "",
+        iconOnlyBelow: "tablet",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+
+      expect(button.getAttribute("data-icon-only-below")).toBeNull();
+      expect(button.querySelector(".icon-wrapper")).toBeNull();
+    });
+
+    it("renders button icon as decorative (aria-hidden)", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        icon: "arrow-right",
+        label: "Continue",
+      })}</div>`;
+      const button = getByRole(document.body, "button", { name: "Continue" });
+      const icon = button.querySelector("svg.icon");
+
+      expect(icon?.getAttribute("aria-hidden")).toBe("true");
+      expect(icon?.getAttribute("role")).toBeNull();
+      expect(icon?.querySelector("title")).toBeNull();
+    });
   });
 
   describe("link mode", () => {
@@ -54,6 +130,48 @@ describe("renderClbrButton", () => {
 
       expect(link.getAttribute("data-mode")).toBe("link");
       expect(link.getAttribute("href")).toBe("/docs");
+    });
+
+    it("supports icon rendering in link mode", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        href: "/docs",
+        icon: "arrow-right",
+        label: "Docs",
+        mode: "link",
+      })}</div>`;
+      const link = getByRole(document.body, "link", { name: "Docs" });
+
+      expect(link.querySelector(".icon-wrapper .icon")).toBeTruthy();
+    });
+
+    it("supports end placement for link icon", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        href: "/docs",
+        icon: "arrow-right",
+        iconPlacement: "end",
+        label: "Docs",
+        mode: "link",
+      })}</div>`;
+      const link = getByRole(document.body, "link", { name: "Docs" });
+      const lastChild = link.lastElementChild;
+
+      expect(lastChild?.className).toBe("icon-wrapper");
+    });
+
+    it("emits collapse and mirrored behavior for link icon", () => {
+      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
+        href: "/docs",
+        icon: "arrow-right",
+        iconOnlyBelow: "tablet",
+        iconMirrored: "rtl",
+        label: "Docs",
+        mode: "link",
+      })}</div>`;
+      const link = getByRole(document.body, "link", { name: "Docs" });
+      const icon = link.querySelector("svg.icon");
+
+      expect(link.getAttribute("data-icon-only-below")).toBe("tablet");
+      expect(icon?.getAttribute("data-mirrored")).toBe("rtl");
     });
 
     it("renders an anchor when href is empty string", () => {

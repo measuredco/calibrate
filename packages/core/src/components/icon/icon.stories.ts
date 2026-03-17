@@ -20,7 +20,7 @@ const meta = {
     },
     size: {
       control: { type: "select" },
-      options: ["sm", "md", "lg", "fill"],
+      options: ["2xs", "xs", "sm", "md", "lg", "fill"],
     },
     title: {
       control: { type: "text" },

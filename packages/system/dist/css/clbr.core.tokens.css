@@ -30,8 +30,14 @@
     --clbr-layout-grid-gap-row-default: 1.5rem;
     --clbr-layout-grid-gap-row-lg: 1.5rem;
     --clbr-layout-grid-item-min-width: 18rem;
+    --clbr-layout-icon-size-2xs: 1rem;
     --clbr-layout-icon-size-default: 1.5rem;
-    --clbr-layout-icon-size-sm: 1.125rem;
+    --clbr-layout-icon-size-lg: 1.75rem;
+    --clbr-layout-icon-size-md: 1.5rem;
+    --clbr-layout-icon-size-sm: 1.25rem;
+    --clbr-layout-icon-size-xs: 1.125rem;
+    --clbr-layout-icon-viewbox-inset-ratio: 0.0833333333;
+    --clbr-layout-icon-viewbox-outset-ratio: -0.0833333333;
     --clbr-layout-spacing-vertical-1000: 4.5rem;
     --clbr-layout-spacing-vertical-1100: 5.25rem;
     --clbr-layout-spacing-vertical-1200: 6rem;
