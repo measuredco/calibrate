@@ -113,7 +113,15 @@
     --clbr-typography-text-heading-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif;
-    --clbr-typography-text-heading-panel: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-heading-responsive-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
@@ -492,15 +500,15 @@
       --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-2xl: 366 3rem/1.25 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-3xl: 300 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-4xl: 250 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-5xl: 200 7.5rem/1 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-lg: 433 1.75rem/1.5 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-md: 466 1.5rem/1.5 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-sm: 500 1.25rem/1.5 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-xl: 400 2.25rem/1.333333 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-heading-xs: 533 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-2xl: 366 3rem/1.25 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-3xl: 300 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-4xl: 250 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-5xl: 200 7.5rem/1 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-lg: 433 1.75rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-md: 466 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-sm: 500 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-xl: 400 2.25rem/1.333333 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-heading-responsive-xs: 533 1.125rem/1.5 InterVariable, system-ui, sans-serif;
     }
   }
 
