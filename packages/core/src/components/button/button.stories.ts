@@ -40,9 +40,6 @@ const commonArgTypes = {
     control: { type: "select" },
     options: ["start", "end"],
   },
-  label: {
-    control: { type: "text" },
-  },
   mode: {
     control: false,
   },
@@ -58,21 +55,9 @@ const commonArgTypes = {
 
 const buttonArgTypes = {
   ...commonArgTypes,
-  disabled: {
-    control: { type: "boolean" },
-  },
-  form: {
-    control: { type: "text" },
-  },
-  name: {
-    control: { type: "text" },
-  },
   type: {
     control: { type: "select" },
     options: ["button", "submit"],
-  },
-  value: {
-    control: { type: "text" },
   },
 };
 
@@ -80,12 +65,6 @@ const linkArgTypes = {
   ...commonArgTypes,
   download: {
     control: false,
-  },
-  href: {
-    control: { type: "text" },
-  },
-  rel: {
-    control: { type: "text" },
   },
   target: {
     control: { type: "select" },

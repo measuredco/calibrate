@@ -7,9 +7,6 @@ import { isValidHtmlId } from "../../helpers/html";
 
 const meta = {
   argTypes: {
-    ariaHidden: {
-      control: { type: "boolean" },
-    },
     name: {
       control: { type: "select" },
       options: CLBR_ICON_RECOMMENDED,
@@ -21,12 +18,6 @@ const meta = {
     size: {
       control: { type: "select" },
       options: ["2xs", "xs", "sm", "md", "lg", "fill"],
-    },
-    title: {
-      control: { type: "text" },
-    },
-    titleId: {
-      control: { type: "text" },
     },
   },
   parameters: {
