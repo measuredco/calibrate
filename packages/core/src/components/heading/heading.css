@@ -1,0 +1,84 @@
+@layer clbr.components {
+  :where(.clbr) .heading {
+    display: block;
+    font: var(--clbr-typography-text-heading-md);
+    margin: 0;
+    text-wrap: balance;
+
+    &[data-size="xs"] {
+      font: var(--clbr-typography-text-heading-xs);
+    }
+
+    &[data-size="sm"] {
+      font: var(--clbr-typography-text-heading-sm);
+    }
+
+    &[data-size="lg"] {
+      font: var(--clbr-typography-text-heading-lg);
+    }
+
+    &[data-size="xl"] {
+      font: var(--clbr-typography-text-heading-xl);
+    }
+
+    &[data-size="2xl"] {
+      font: var(--clbr-typography-text-heading-2xl);
+    }
+
+    &[data-size="3xl"] {
+      font: var(--clbr-typography-text-heading-3xl);
+    }
+
+    &[data-size="4xl"] {
+      font: var(--clbr-typography-text-heading-4xl);
+    }
+
+    &[data-size="5xl"] {
+      font: var(--clbr-typography-text-heading-5xl);
+    }
+
+    &[data-align="center"] {
+      text-align: center;
+    }
+
+    &[data-align="end"] {
+      text-align: end;
+    }
+
+    &[data-responsive] {
+      font: var(--clbr-typography-text-heading-responsive-md);
+
+      &[data-size="xs"] {
+        font: var(--clbr-typography-text-heading-responsive-xs);
+      }
+
+      &[data-size="sm"] {
+        font: var(--clbr-typography-text-heading-responsive-sm);
+      }
+
+      &[data-size="lg"] {
+        font: var(--clbr-typography-text-heading-responsive-lg);
+      }
+
+      &[data-size="xl"] {
+        font: var(--clbr-typography-text-heading-responsive-xl);
+      }
+
+      &[data-size="2xl"] {
+        font: var(--clbr-typography-text-heading-responsive-2xl);
+      }
+
+      &[data-size="3xl"] {
+        font: var(--clbr-typography-text-heading-responsive-3xl);
+      }
+
+      &[data-size="4xl"] {
+        font: var(--clbr-typography-text-heading-responsive-4xl);
+      }
+
+      &[data-size="5xl"] {
+        font: var(--clbr-typography-text-heading-responsive-5xl);
+      }
+    }
+  }
+}

@@ -33,11 +33,3 @@ export const Default = {
   },
   render: (args: ClbrSurfaceProps) => renderClbrSurface(args),
 };
-
-export const Brand = {
-  args: {
-    children: exampleContent,
-    variant: "brand",
-  },
-  render: (args: ClbrSurfaceProps) => renderClbrSurface(args),
-};

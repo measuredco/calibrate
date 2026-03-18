@@ -18,6 +18,15 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_HEADING_SPEC,
+  type ClbrHeadingAlign,
+  type ClbrHeadingLevel,
+  type ClbrHeadingProps,
+  type ClbrHeadingSize,
+  renderClbrHeading,
+} from "./components/heading/heading";
+
+export {
   CLBR_ICON_RECOMMENDED,
   CLBR_ICON_SPEC,
   type ClbrIconMirrorMode,

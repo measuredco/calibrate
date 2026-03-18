@@ -16,6 +16,7 @@ What we could working on next.
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
   - also consider `id`
+- Consider namespacing of component classes
 
 ## Later
 
@@ -129,6 +130,14 @@ _This section is a historical completion record; some entries may describe decis
   - Storybook button stories updated for icon controls in button/link modes
   - button tests expanded for icon rendering, ordering, collapse/mirroring, omission handling, and link-mode parity
   - icon sizing moved to core layout tokens (`2xs`..`lg` + `default`) and wired into icon/button CSS
+- Heading component implemented and aligned across core/system:
+  - added `heading` renderer + CSS + stories + tests
+  - API includes `children`, optional `level`, `size`, `align`, and `responsive`
+  - emits semantic heading elements (`h1`..`h6`) when `level` is set, otherwise renders `span`
+  - fixed heading typography moved to root semantic tokens (`typography.text.heading.*`)
+  - responsive heading typography exposed via contextual tokens (`typography.text.heading.responsive.*`)
+  - heading CSS supports fixed/default typography and opt-in responsive typography via `data-responsive`
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Button component review/refinement completed:
   - mode-explicit API (`mode: "button" | "link"`) with clear per-mode prop contracts
   - renderer/spec/docs/story/tests aligned around omission/normalization rules
