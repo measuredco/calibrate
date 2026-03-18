@@ -11,9 +11,6 @@ const meta = {
       },
       options: ["none"],
     },
-    appRoot: {
-      control: { type: "boolean" },
-    },
     brand: {
       control: { type: "select" },
       options: ["msrd", "wrfr"],
@@ -30,9 +27,6 @@ const meta = {
         type: "select",
       },
       options: ["ltr", "rtl"],
-    },
-    lang: {
-      control: { type: "text" },
     },
     theme: {
       control: {

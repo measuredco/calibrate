@@ -111,6 +111,10 @@ Define a selective-brand distribution model across tokens, core CSS, and assets/
 
 Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows.
 
+#### Storybook docs fidelity
+
+Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components.
+
 ## Done
 
 What we've done.
