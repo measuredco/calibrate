@@ -38,14 +38,14 @@
     -webkit-font-smoothing: antialiased;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);
-
-    /* Preserve document writing semantics. */
-    quotes: inherit;
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
       transparent
     );
+
+    /* Preserve document writing semantics. */
+    quotes: inherit;
     text-combine-upright: inherit;
     text-orientation: inherit;
     writing-mode: inherit;
@@ -118,6 +118,10 @@
 
     :where(p) {
       text-wrap: pretty;
+    }
+
+    :where(sup, sub) {
+      line-height: 0;
     }
 
     :where(table) {

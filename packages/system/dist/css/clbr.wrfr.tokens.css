@@ -103,7 +103,12 @@
     --clbr-typography-prose-link-hover-decoration-offset: 0.34em;
     --clbr-typography-text-body-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-body-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-responsive-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-responsive-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-responsive-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-responsive-xs: 400 0.875rem/1.714286 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-body-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif;
+    --clbr-typography-text-body-xs: 400 0.875rem/1.714286 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
@@ -471,9 +476,10 @@
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
     :where(.clbr[data-brand="wrfr"]) {
-      --clbr-typography-text-body-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-body-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
-      --clbr-typography-text-body-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
+      --clbr-typography-text-body-responsive-xs: 400 1rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-responsive-2xl: 366 3rem/1.25 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-responsive-3xl: 300 3.875rem/1.16129 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-responsive-4xl: 250 5.25rem/1.142857 InterVariable, system-ui, sans-serif;
