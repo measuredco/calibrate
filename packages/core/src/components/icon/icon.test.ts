@@ -1,23 +1,31 @@
 import { describe, expect, it } from "vitest";
 import { renderClbrIcon } from "./icon";
 
+function mountIcon(html: string): SVGElement {
+  document.body.innerHTML = html;
+  return document.body.querySelector("svg") as SVGElement;
+}
+
 describe("renderClbrIcon", () => {
   describe("decorative mode (ariaHidden true)", () => {
     it("renders decorative attributes and omits named-icon attributes", () => {
-      const html = renderClbrIcon({ ariaHidden: true, name: "check" });
+      const icon = mountIcon(
+        renderClbrIcon({ ariaHidden: true, name: "check" }),
+      );
 
-      expect(html).toContain("<svg");
-      expect(html).toContain('class="icon"');
-      expect(html).toContain('data-size="md"');
-      expect(html).toContain('aria-hidden="true"');
-      expect(html).not.toContain("aria-labelledby=");
-      expect(html).not.toContain('role="img"');
-      expect(html).not.toContain("<title");
+      expect(icon.classList.contains("icon")).toBe(true);
+      expect(icon.getAttribute("data-size")).toBe("md");
+      expect(icon.getAttribute("aria-hidden")).toBe("true");
+      expect(icon.hasAttribute("aria-labelledby")).toBe(false);
+      expect(icon.getAttribute("role")).toBeNull();
+      expect(icon.querySelector("title")).toBeNull();
     });
 
     it("still renders when title props are omitted", () => {
-      const html = renderClbrIcon({ ariaHidden: true, name: "menu" });
-      expect(html).toContain("<svg");
+      const icon = mountIcon(
+        renderClbrIcon({ ariaHidden: true, name: "menu" }),
+      );
+      expect(icon).toBeTruthy();
     });
   });
 
@@ -29,43 +37,54 @@ describe("renderClbrIcon", () => {
     });
 
     it("renders role/img labelling and title", () => {
-      const html = renderClbrIcon({
-        ariaHidden: false,
-        name: "search",
-        size: "lg",
-        title: "Search",
-        titleId: "search-icon-title",
-      });
+      const icon = mountIcon(
+        renderClbrIcon({
+          ariaHidden: false,
+          name: "search",
+          size: "lg",
+          title: "Search",
+          titleId: "search-icon-title",
+        }),
+      );
+      const title = icon.querySelector("title");
 
-      expect(html).toContain('role="img"');
-      expect(html).toContain('aria-labelledby="search-icon-title"');
-      expect(html).toContain('<title id="search-icon-title">Search</title>');
-      expect(html).not.toContain('aria-hidden="true"');
-      expect(html).toContain('data-size="lg"');
+      expect(icon.getAttribute("role")).toBe("img");
+      expect(icon.getAttribute("aria-labelledby")).toBe("search-icon-title");
+      expect(icon.getAttribute("aria-hidden")).toBeNull();
+      expect(icon.getAttribute("data-size")).toBe("lg");
+      expect(title?.getAttribute("id")).toBe("search-icon-title");
+      expect(title?.textContent).toBe("Search");
     });
 
     it("trims title and titleId input", () => {
-      const html = renderClbrIcon({
-        ariaHidden: false,
-        name: "x",
-        title: "  Close  ",
-        titleId: "  close-icon-title  ",
-      });
+      const icon = mountIcon(
+        renderClbrIcon({
+          ariaHidden: false,
+          name: "x",
+          title: "  Close  ",
+          titleId: "  close-icon-title  ",
+        }),
+      );
+      const title = icon.querySelector("title");
 
-      expect(html).toContain('aria-labelledby="close-icon-title"');
-      expect(html).toContain('<title id="close-icon-title">Close</title>');
+      expect(icon.getAttribute("aria-labelledby")).toBe("close-icon-title");
+      expect(title?.getAttribute("id")).toBe("close-icon-title");
+      expect(title?.textContent).toBe("Close");
     });
 
     it("escapes title text", () => {
-      const html = renderClbrIcon({
-        ariaHidden: false,
-        name: "x",
-        title: '"quoted" <unsafe>',
-        titleId: "close-icon-title",
-      });
+      const icon = mountIcon(
+        renderClbrIcon({
+          ariaHidden: false,
+          name: "x",
+          title: '"quoted" <unsafe>',
+          titleId: "close-icon-title",
+        }),
+      );
+      const title = icon.querySelector("title");
 
-      expect(html).toContain("&quot;quoted&quot; &lt;unsafe&gt;");
-      expect(html).not.toContain('>"quoted" <unsafe></title>');
+      expect(title?.textContent).toBe('"quoted" <unsafe>');
+      expect(title?.querySelector("unsafe")).toBeNull();
     });
   });
 
@@ -113,56 +132,70 @@ describe("renderClbrIcon", () => {
 
   describe("icon name normalization", () => {
     it("accepts kebab-case names", () => {
-      const html = renderClbrIcon({ ariaHidden: true, name: "arrow-right" });
-      expect(html).toContain("<path");
+      const icon = mountIcon(
+        renderClbrIcon({ ariaHidden: true, name: "arrow-right" }),
+      );
+      expect(icon.querySelector("path")).toBeTruthy();
     });
 
     it("accepts camelCase names", () => {
-      const html = renderClbrIcon({ ariaHidden: true, name: "arrowRight" });
-      expect(html).toContain("<path");
+      const icon = mountIcon(
+        renderClbrIcon({ ariaHidden: true, name: "arrowRight" }),
+      );
+      expect(icon.querySelector("path")).toBeTruthy();
     });
 
     it("accepts PascalCase names", () => {
-      const html = renderClbrIcon({ ariaHidden: true, name: "ArrowRight" });
-      expect(html).toContain("<path");
+      const icon = mountIcon(
+        renderClbrIcon({ ariaHidden: true, name: "ArrowRight" }),
+      );
+      expect(icon.querySelector("path")).toBeTruthy();
     });
   });
 
   describe("rendered attribute contract", () => {
     it("emits mirrored modes and omits when absent", () => {
-      const always = renderClbrIcon({
-        ariaHidden: true,
-        mirrored: "always",
-        name: "arrow-right",
-      });
-      const rtl = renderClbrIcon({
-        ariaHidden: true,
-        mirrored: "rtl",
-        name: "arrow-right",
-      });
-      const none = renderClbrIcon({
-        ariaHidden: true,
-        name: "arrow-right",
-      });
+      const always = mountIcon(
+        renderClbrIcon({
+          ariaHidden: true,
+          mirrored: "always",
+          name: "arrow-right",
+        }),
+      );
+      const rtl = mountIcon(
+        renderClbrIcon({
+          ariaHidden: true,
+          mirrored: "rtl",
+          name: "arrow-right",
+        }),
+      );
+      const none = mountIcon(
+        renderClbrIcon({
+          ariaHidden: true,
+          name: "arrow-right",
+        }),
+      );
 
-      expect(always).toContain('data-mirrored="always"');
-      expect(rtl).toContain('data-mirrored="rtl"');
-      expect(none).not.toContain("data-mirrored=");
+      expect(always.getAttribute("data-mirrored")).toBe("always");
+      expect(rtl.getAttribute("data-mirrored")).toBe("rtl");
+      expect(none.hasAttribute("data-mirrored")).toBe(false);
     });
 
     it("always emits the base SVG attributes", () => {
-      const html = renderClbrIcon({
-        ariaHidden: true,
-        name: "menu",
-        size: "fill",
-      });
+      const icon = mountIcon(
+        renderClbrIcon({
+          ariaHidden: true,
+          name: "menu",
+          size: "fill",
+        }),
+      );
 
-      expect(html).toContain('xmlns="http://www.w3.org/2000/svg"');
-      expect(html).toContain('viewBox="0 0 24 24"');
-      expect(html).toContain('height="24"');
-      expect(html).toContain('stroke="currentColor"');
-      expect(html).toContain('fill="none"');
-      expect(html).toContain('data-size="fill"');
+      expect(icon.getAttribute("xmlns")).toBe("http://www.w3.org/2000/svg");
+      expect(icon.getAttribute("viewBox")).toBe("0 0 24 24");
+      expect(icon.getAttribute("height")).toBe("24");
+      expect(icon.getAttribute("stroke")).toBe("currentColor");
+      expect(icon.getAttribute("fill")).toBe("none");
+      expect(icon.getAttribute("data-size")).toBe("fill");
     });
   });
 });
