@@ -107,6 +107,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Build Storybook
+        run: pnpm run storybook:build
+
       - name: Install Playwright Chromium
         run: pnpm --filter @measured/calibrate-storybook exec playwright install --with-deps chromium
 

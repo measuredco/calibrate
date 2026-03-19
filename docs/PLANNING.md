@@ -100,6 +100,10 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 
 Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
 
+#### Content package (`@measured/calibrate-content`)
+
+Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers.
+
 #### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
