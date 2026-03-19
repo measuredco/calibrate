@@ -6,7 +6,10 @@ export type ClbrSurfaceVariant = "default" | "brand";
  * Props for the Calibrate surface renderer.
  */
 export interface ClbrSurfaceProps {
-  /** Inner HTML content to render inside the surface wrapper. */
+  /**
+   * Inner HTML content to render inside the surface wrapper.
+   * Caller is responsible for sanitizing untrusted content.
+   */
   children: string;
   /**
    * Surface variant applied to the wrapper.

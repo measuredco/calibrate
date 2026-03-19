@@ -25,7 +25,10 @@ export interface ClbrRootProps {
    * @default "msrd"
    */
   brand?: ClbrBrand;
-  /** Inner HTML content to render inside the root wrapper. */
+  /**
+   * Inner HTML content to render inside the root wrapper.
+   * Caller is responsible for sanitizing untrusted content.
+   */
   children: string;
   /** Optional explicit text direction for the root wrapper. */
   dir?: ClbrDirection;

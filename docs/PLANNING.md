@@ -138,6 +138,11 @@ _This section is a historical completion record; some entries may describe decis
   - responsive heading typography exposed via contextual tokens (`typography.text.heading.responsive.*`)
   - heading CSS supports fixed/default typography and opt-in responsive typography via `data-responsive`
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Text component implemented and aligned across core/system:
+  - added `text` renderer + CSS + stories + tests with `span` (default) and `p` modes
+  - added body typography `xs` and responsive body scale tokens (`baseline`/`tablet`) and wired them into Text sizes
+  - added prose link controls (`linkVisited`) and inline code styling
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Button component review/refinement completed:
   - mode-explicit API (`mode: "button" | "link"`) with clear per-mode prop contracts
   - renderer/spec/docs/story/tests aligned around omission/normalization rules

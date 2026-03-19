@@ -43,6 +43,19 @@ export {
 } from "./components/surface/surface";
 
 export {
+  CLBR_TEXT_SPEC,
+  type ClbrTextAs,
+  type ClbrTextAlign,
+  type ClbrTextCommonProps,
+  type ClbrTextParagraphProps,
+  type ClbrTextProps,
+  type ClbrTextSize,
+  type ClbrTextSpanProps,
+  type ClbrTextTone,
+  renderClbrText,
+} from "./components/text/text";
+
+export {
   CLBR_ROOT_SPEC,
   type ClbrAppOverscrollBehavior,
   type ClbrBrand,
