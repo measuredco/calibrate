@@ -23,6 +23,7 @@
     --clbr-layout-container-max-width-xl: 90rem;
     --clbr-layout-focus-ring-offset-default: 0.125rem;
     --clbr-layout-focus-ring-offset-inset: -0.25rem;
+    --clbr-layout-focus-ring-outset: 0.5rem;
     --clbr-layout-focus-ring-width: 0.125rem;
     --clbr-layout-grid-columns: 12;
     --clbr-layout-grid-gap-column-default: 1rem;

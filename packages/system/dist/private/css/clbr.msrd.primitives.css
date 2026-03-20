@@ -189,6 +189,7 @@
     --clbr-primitive-typography-font-size-25: 0.625rem;
     --clbr-primitive-typography-font-size-300: 1.125rem;
     --clbr-primitive-typography-font-size-400: 1.25rem;
+    --clbr-primitive-typography-font-size-50: 0.75rem;
     --clbr-primitive-typography-font-size-500: 1.5rem;
     --clbr-primitive-typography-font-size-600: 1.75rem;
     --clbr-primitive-typography-font-size-700: 2rem;
@@ -249,6 +250,8 @@
     --clbr-primitive-typography-type-step-400-line-height: 1.5;
     --clbr-primitive-typography-type-step-450-font-size: 1.25rem;
     --clbr-primitive-typography-type-step-450-line-height: 1.8;
+    --clbr-primitive-typography-type-step-50-font-size: 0.75rem;
+    --clbr-primitive-typography-type-step-50-line-height: 1.5;
     --clbr-primitive-typography-type-step-500-font-size: 1.5rem;
     --clbr-primitive-typography-type-step-500-line-height: 1.5;
     --clbr-primitive-typography-type-step-600-font-size: 1.75rem;

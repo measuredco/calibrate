@@ -6,6 +6,8 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+- No active `Now` items at the moment.
+
 ## Next
 
 What we could working on next.
@@ -146,6 +148,13 @@ _This section is a historical completion record; some entries may describe decis
   - added `text` renderer + CSS + stories + tests with `span` (default) and `p` modes
   - added body typography `xs` and responsive body scale tokens (`baseline`/`tablet`) and wired them into Text sizes
   - added prose link controls (`linkVisited`) and inline code styling
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Checkbox component implemented and aligned across core/system:
+  - added `checkbox` renderer + CSS + stories + tests
+  - API includes `label` (required), optional `size`, `checked`, `disabled`, `required`, `name`, `value`, `description`, and `descriptionId`
+  - description wiring enforces non-empty valid `descriptionId` when `description` is provided and maps via `aria-describedby`
+  - renderer/spec/tests aligned for normalization and escaping behavior
+  - added Storybook-only `Indeterminate` scenario (via `play` state) for styling `:indeterminate` without changing SSR contract
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Button component review/refinement completed:
   - mode-explicit API (`mode: "button" | "link"`) with clear per-mode prop contracts

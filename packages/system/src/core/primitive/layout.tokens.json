@@ -18,6 +18,10 @@
     }
   },
   "focusRing": {
+    "outset": {
+      "$type": "dimension",
+      "$value": "{primitive.spacing.500}"
+    },
     "offset": {
       "$type": "dimension",
       "default": {

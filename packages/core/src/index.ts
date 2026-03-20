@@ -18,6 +18,13 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_CHECKBOX_SPEC,
+  type ClbrCheckboxProps,
+  type ClbrCheckboxSize,
+  renderClbrCheckbox,
+} from "./components/checkbox/checkbox";
+
+export {
   CLBR_HEADING_SPEC,
   type ClbrHeadingAlign,
   type ClbrHeadingLevel,

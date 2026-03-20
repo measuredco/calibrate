@@ -26,10 +26,7 @@
 
     &:focus-visible {
       border-radius: calc(
-        (
-            var(--clbr-button-block-size) +
-              (var(--clbr-spacing-vertical-300) * 2)
-          ) *
+        (var(--clbr-button-block-size) + var(--clbr-layout-focus-ring-outset)) *
           var(--clbr-radius-ratio-default)
       );
     }

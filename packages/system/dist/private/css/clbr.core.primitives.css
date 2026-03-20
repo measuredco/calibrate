@@ -19,6 +19,7 @@
     --clbr-primitive-layout-container-max-width-xl: 90rem;
     --clbr-primitive-layout-focus-ring-offset-default: 0.125rem;
     --clbr-primitive-layout-focus-ring-offset-inset: -0.25rem;
+    --clbr-primitive-layout-focus-ring-outset: 0.5rem;
     --clbr-primitive-layout-grid-columns: 12;
     --clbr-primitive-layout-grid-item-min-width: 18rem;
     --clbr-primitive-layout-icon-size-2xs: 1rem;

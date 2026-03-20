@@ -28,6 +28,12 @@
         "unit": "px"
       }
     },
+    "50": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
     "100": {
       "$value": {
         "value": 14,
@@ -253,6 +259,16 @@
     }
   },
   "typeStep": {
+    "50": {
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.50}"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": "{primitive.typography.lineHeight.800}"
+      }
+    },
     "100": {
       "fontSize": {
         "$type": "dimension",
