@@ -1,12 +1,6 @@
 import { type ClbrCheckboxProps, renderClbrCheckbox } from "./checkbox";
 
 const meta = {
-  argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-  },
   title: "Components/Checkbox",
 };
 
@@ -15,13 +9,13 @@ export default meta;
 export const Default = {
   args: {
     checked: false,
-    description: "",
+    description: "Description",
     descriptionId: "",
     disabled: false,
-    label: "Checkbox",
+    invalid: false,
+    label: "Label",
     name: "",
     required: false,
-    size: "md",
     value: "",
   } satisfies ClbrCheckboxProps,
   render: (args: ClbrCheckboxProps) => {

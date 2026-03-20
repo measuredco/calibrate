@@ -66,6 +66,14 @@
     "default": {
       "$value": "{brand.primary}"
     },
+    "error": {
+      "default": {
+        "$value": "{primitive.color.red.900}"
+      },
+      "subtle": {
+        "$value": "{primitive.color.red.100}"
+      }
+    },
     "visited": {
       "$value": "{interactive.default}"
     },

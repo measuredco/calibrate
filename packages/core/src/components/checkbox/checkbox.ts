@@ -1,7 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 
-export type ClbrCheckboxSize = "sm" | "md";
-
 /** Props for the Calibrate checkbox renderer. */
 export interface ClbrCheckboxProps {
   /**
@@ -24,6 +22,13 @@ export interface ClbrCheckboxProps {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * Invalid state.
+   * Emits `aria-invalid="true"` only when true and checkbox is enabled.
+   * Ignored when `disabled` is true.
+   * @default false
+   */
+  invalid?: boolean;
   /** Label text content (escaped before render). */
   label: string;
   /** Optional form field name. */
@@ -33,11 +38,6 @@ export interface ClbrCheckboxProps {
    * @default false
    */
   required?: boolean;
-  /**
-   * Size variant.
-   * @default "md"
-   */
-  size?: ClbrCheckboxSize;
   /** Optional submitted field value. */
   value?: string;
 }
@@ -53,10 +53,10 @@ export function renderClbrCheckbox({
   description,
   descriptionId,
   disabled,
+  invalid,
   label,
   name,
   required,
-  size = "md",
   value,
 }: ClbrCheckboxProps): string {
   const normalizedDescription = description?.trim();
@@ -74,12 +74,17 @@ export function renderClbrCheckbox({
     );
   }
 
+  const isDisabled = Boolean(disabled);
+  const isInvalid = !isDisabled && Boolean(invalid);
+
   const inputAttrs = attrs({
     "aria-describedby": normalizedDescription
       ? normalizedDescriptionId
       : undefined,
+    "aria-invalid": isInvalid ? "true" : undefined,
     checked: Boolean(checked),
-    disabled: Boolean(disabled),
+    class: "checkbox",
+    disabled: isDisabled,
     name: name || undefined,
     required: Boolean(required),
     type: "checkbox",
@@ -92,7 +97,7 @@ export function renderClbrCheckbox({
       )}</p>`
     : "";
 
-  return `<div class="checkbox" data-size="${size}"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
+  return `<div class="checkbox-field"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
     label,
   )}</span></label>${descriptionMarkup}</div>`;
 }
@@ -114,12 +119,19 @@ export const CLBR_CHECKBOX_SPEC = {
       type: "string",
     },
     descriptionId: {
+      constraints: ["non-empty", "validHtmlId"],
       required: false,
       requiredWhen: "description is provided",
       type: "string",
     },
     disabled: {
       default: false,
+      required: false,
+      type: "boolean",
+    },
+    invalid: {
+      default: false,
+      ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
     },
@@ -136,12 +148,6 @@ export const CLBR_CHECKBOX_SPEC = {
       required: false,
       type: "boolean",
     },
-    size: {
-      default: "md",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
-    },
     value: {
       required: false,
       type: "string",
@@ -152,12 +158,29 @@ export const CLBR_CHECKBOX_SPEC = {
       {
         behavior: "always",
         target: "class",
+        value: "checkbox-field",
+      },
+      {
+        behavior: "emit",
+        target: "input[aria-describedby]",
+        value: "{descriptionId}",
+        when: "description is provided",
+      },
+      {
+        behavior: "emit",
+        target: "input[aria-invalid]",
+        value: "true",
+        when: "invalid is true and disabled is false",
+      },
+      {
+        behavior: "always",
+        target: "input[class]",
         value: "checkbox",
       },
       {
         behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: "input[type]",
+        value: "checkbox",
       },
       {
         behavior: "emit",
@@ -171,24 +194,18 @@ export const CLBR_CHECKBOX_SPEC = {
       },
       {
         behavior: "emit",
-        target: "input[required]",
-        when: "required is true",
-      },
-      {
-        behavior: "emit",
         target: "input[name]",
         when: "name is a non-empty string",
       },
       {
         behavior: "emit",
-        target: "input[value]",
-        when: "value is a non-empty string",
+        target: "input[required]",
+        when: "required is true",
       },
       {
         behavior: "emit",
-        target: "input[aria-describedby]",
-        value: "{descriptionId}",
-        when: "description is provided",
+        target: "input[value]",
+        when: "value is a non-empty string",
       },
     ],
     content: [

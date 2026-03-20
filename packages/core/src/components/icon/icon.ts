@@ -207,6 +207,7 @@ export const CLBR_ICON_SPEC = {
       type: "string",
     },
     titleId: {
+      constraints: ["non-empty", "validHtmlId"],
       required: false,
       requiredWhen: "ariaHidden is false or omitted",
       type: "string",

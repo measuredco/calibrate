@@ -8,12 +8,12 @@ function mountCheckbox(html: string): HTMLElement {
 }
 
 describe("renderClbrCheckbox", () => {
-  it("renders checkbox with label and default size", () => {
+  it("renders checkbox with label", () => {
     const root = mountCheckbox(renderClbrCheckbox({ label: "Subscribe" }));
     const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
-    const field = root.querySelector(".checkbox");
+    const field = root.querySelector(".checkbox-field");
 
-    expect(field?.getAttribute("data-size")).toBe("md");
+    expect(field).toBeTruthy();
     expect(checkbox.getAttribute("type")).toBe("checkbox");
   });
 
@@ -31,6 +31,54 @@ describe("renderClbrCheckbox", () => {
     expect(checkbox.hasAttribute("checked")).toBe(true);
     expect(checkbox.hasAttribute("disabled")).toBe(true);
     expect(checkbox.hasAttribute("required")).toBe(true);
+  });
+
+  it("omits checked when checked is false", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({
+        checked: false,
+        label: "Subscribe",
+      }),
+    );
+    const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
+
+    expect(checkbox.hasAttribute("checked")).toBe(false);
+  });
+
+  it("emits aria-invalid only when invalid is true", () => {
+    const validRoot = mountCheckbox(
+      renderClbrCheckbox({
+        label: "Subscribe",
+      }),
+    );
+    const validCheckbox = getByRole(validRoot, "checkbox", {
+      name: "Subscribe",
+    });
+    expect(validCheckbox.getAttribute("aria-invalid")).toBeNull();
+
+    const invalidRoot = mountCheckbox(
+      renderClbrCheckbox({
+        invalid: true,
+        label: "Subscribe",
+      }),
+    );
+    const invalidCheckbox = getByRole(invalidRoot, "checkbox", {
+      name: "Subscribe",
+    });
+    expect(invalidCheckbox.getAttribute("aria-invalid")).toBe("true");
+  });
+
+  it("suppresses aria-invalid when disabled is true", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({
+        disabled: true,
+        invalid: true,
+        label: "Subscribe",
+      }),
+    );
+    const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
+
+    expect(checkbox.getAttribute("aria-invalid")).toBeNull();
   });
 
   it("emits name/value and omits empty values", () => {
@@ -109,6 +157,18 @@ describe("renderClbrCheckbox", () => {
 
     expect(checkbox.getAttribute("aria-describedby")).toBeNull();
     expect(root.querySelector(".description")).toBeNull();
+  });
+
+  it("ignores descriptionId when description is omitted", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({
+        descriptionId: "subscribe-description",
+        label: "Subscribe",
+      }),
+    );
+    const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
+
+    expect(checkbox.getAttribute("aria-describedby")).toBeNull();
   });
 
   it("throws when description is provided without descriptionId", () => {

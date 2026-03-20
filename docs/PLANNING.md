@@ -149,10 +149,18 @@ _This section is a historical completion record; some entries may describe decis
   - added body typography `xs` and responsive body scale tokens (`baseline`/`tablet`) and wired them into Text sizes
   - added prose link controls (`linkVisited`) and inline code styling
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Input component implemented and aligned across core/system:
+  - added `input` renderer + CSS + stories + tests
+  - API includes `id`/`label` (required), optional `description`, `size`, `width`, `type`, `autocomplete`, `pattern`, `name`, `value`, `disabled`, `readOnly`, `required`, `spellcheck`, and `invalid`
+  - `numeric` type maps to `type="text"` with `inputmode="numeric"` and default numeric `pattern` (overridable)
+  - single `description` slot is reused for hint or validation guidance; invalid state remains app-controlled
+  - invalid precedence aligned with input editability (`disabled`/`readOnly` suppress `aria-invalid`)
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests
-  - API includes `label` (required), optional `size`, `checked`, `disabled`, `required`, `name`, `value`, `description`, and `descriptionId`
+  - API includes `label` (required), optional `checked`, `disabled`, `invalid`, `required`, `name`, `value`, `description`, and `descriptionId`
   - description wiring enforces non-empty valid `descriptionId` when `description` is provided and maps via `aria-describedby`
+  - invalid state support added with disabled precedence (`disabled` suppresses `aria-invalid`)
   - renderer/spec/tests aligned for normalization and escaping behavior
   - added Storybook-only `Indeterminate` scenario (via `play` state) for styling `:indeterminate` without changing SSR contract
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint

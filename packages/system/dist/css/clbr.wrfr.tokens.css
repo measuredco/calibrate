@@ -40,6 +40,8 @@
     --clbr-color-foreground-prose: #0e0f10;
     --clbr-color-interactive-active: #0e0f10;
     --clbr-color-interactive-default: #232424;
+    --clbr-color-interactive-error-default: #b40d05;
+    --clbr-color-interactive-error-subtle: #fff3f2;
     --clbr-color-interactive-focus: #656667;
     --clbr-color-interactive-hover: #191a1a;
     --clbr-color-interactive-neutral-active: #0e0f10;
@@ -204,6 +206,8 @@
       --clbr-color-foreground-prose: #e3e4e5;
       --clbr-color-interactive-active: #434444;
       --clbr-color-interactive-default: #898a8b;
+      --clbr-color-interactive-error-default: #fb625b;
+      --clbr-color-interactive-error-subtle: #5d0000;
       --clbr-color-interactive-focus: #434444;
       --clbr-color-interactive-hover: #656667;
       --clbr-color-interactive-neutral-active: #a6a7a8;
@@ -296,6 +300,8 @@
       --clbr-color-foreground-prose: #0e0f10;
       --clbr-color-interactive-active: #0e0f10;
       --clbr-color-interactive-default: #232424;
+      --clbr-color-interactive-error-default: #b40d05;
+      --clbr-color-interactive-error-subtle: #fff3f2;
       --clbr-color-interactive-focus: #656667;
       --clbr-color-interactive-hover: #191a1a;
       --clbr-color-interactive-neutral-active: #0e0f10;
@@ -350,6 +356,8 @@
       --clbr-color-foreground-prose: #0e0f10;
       --clbr-color-interactive-active: #0e0f10;
       --clbr-color-interactive-default: #232424;
+      --clbr-color-interactive-error-default: #b40d05;
+      --clbr-color-interactive-error-subtle: #fff3f2;
       --clbr-color-interactive-focus: #656667;
       --clbr-color-interactive-hover: #191a1a;
       --clbr-color-interactive-neutral-active: #0e0f10;
@@ -404,6 +412,8 @@
     --clbr-color-foreground-prose: #e3e4e5;
     --clbr-color-interactive-active: #434444;
     --clbr-color-interactive-default: #898a8b;
+    --clbr-color-interactive-error-default: #fb625b;
+    --clbr-color-interactive-error-subtle: #5d0000;
     --clbr-color-interactive-focus: #434444;
     --clbr-color-interactive-hover: #656667;
     --clbr-color-interactive-neutral-active: #a6a7a8;
@@ -456,6 +466,8 @@
     --clbr-color-foreground-prose: rgba(255, 255, 255, 0.88);
     --clbr-color-interactive-active: #c8c9ca;
     --clbr-color-interactive-default: #898a8b;
+    --clbr-color-interactive-error-default: #fb625b;
+    --clbr-color-interactive-error-subtle: #5d0000;
     --clbr-color-interactive-focus: #898a8b;
     --clbr-color-interactive-hover: #a6a7a8;
     --clbr-color-interactive-neutral-active: rgba(255, 255, 255, 0.68);

@@ -1,16 +1,18 @@
 @layer clbr.components {
-  :where(.clbr) .checkbox {
+  :where(.clbr) .checkbox-field {
     --clbr-checkbox-gap: var(--clbr-spacing-horizontal-400);
-    --clbr-checkbox-inset: var(--clbr-spacing-horizontal-200);
-    --clbr-checkbox-size: var(--clbr-layout-icon-size-sm);
+    --clbr-checkbox-inset: var(--clbr-spacing-vertical-200);
+    --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);
 
-    inline-size: fit-content;
+    font-size: var(--clbr-typography-type-step-100-font-size);
+    line-height: var(--clbr-typography-type-step-100-line-height);
 
     .label {
       color: var(--clbr-color-interactive-neutral-default);
       cursor: pointer;
       display: flex;
       gap: var(--clbr-checkbox-gap);
+      inline-size: fit-content;
 
       @media (any-hover: hover) {
         &:hover {
@@ -21,19 +23,29 @@
       &:active {
         color: var(--clbr-color-interactive-neutral-active);
       }
+
+      &:has(:disabled) {
+        color: var(--clbr-color-foreground-muted-text);
+        cursor: not-allowed;
+
+        @media (forced-colors: active) {
+          color: GrayText;
+        }
+      }
     }
 
-    [type="checkbox"] {
+    .checkbox {
       appearance: none;
       aspect-ratio: 1 / 1;
       block-size: var(--clbr-checkbox-size);
-      border: var(--clbr-layout-border-width-thick) solid
+      border: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-interactive-neutral-default);
       border-radius: calc(
         var(--clbr-checkbox-size) * var(--clbr-radius-ratio-default)
       );
+      box-shadow: var(--clbr-effect-shadow-default);
       cursor: pointer;
-      margin-block: var(--clbr-spacing-vertical-200);
+      margin-block: var(--clbr-spacing-vertical-250);
       margin-inline: 0;
       position: relative;
 
@@ -66,6 +78,12 @@
         }
       }
 
+      &::after {
+        content: "";
+        position: absolute;
+        inset: calc(0rem - var(--clbr-checkbox-inset));
+      }
+
       &:checked::before {
         transform: scale(1);
       }
@@ -74,47 +92,15 @@
         inset-block: var(--clbr-spacing-vertical-400);
         transform: scale(1);
       }
-    }
 
-    .description {
-      color: var(--clbr-color-foreground-prose);
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
-      margin-block: 0;
-      margin-inline-start: calc(
-        var(--clbr-checkbox-size) + var(--clbr-checkbox-gap)
-      );
-      max-width: var(--clbr-typography-measure-default);
-    }
-
-    &[data-size="sm"] {
-      --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
-
-      [type="checkbox"] {
-        margin-block: var(--clbr-spacing-vertical-250);
+      &[aria-invalid="true"] {
+        background-color: var(--clbr-color-interactive-error-subtle);
+        border-color: var(--clbr-color-interactive-error-default);
       }
 
-      .description {
-        font-size: var(--clbr-typography-type-step-50-font-size);
-        line-height: var(--clbr-typography-type-step-50-line-height);
-      }
-    }
-
-    &:has([disabled]) {
-      .description,
-      .label {
-        color: var(--clbr-color-foreground-muted-text);
-        cursor: not-allowed;
-
-        @media (forced-colors: active) {
-          color: GrayText;
-        }
-      }
-
-      [type="checkbox"] {
+      &[disabled] {
         border-color: var(--clbr-color-foreground-muted-non-text);
+        box-shadow: none;
         cursor: not-allowed;
 
         @media (forced-colors: active) {
@@ -128,6 +114,21 @@
             background-color: GrayText;
           }
         }
+      }
+    }
+
+    .description {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-50-font-size);
+      line-height: var(--clbr-typography-type-step-50-line-height);
+      margin-block: 0;
+      margin-inline-start: calc(
+        var(--clbr-checkbox-size) + var(--clbr-checkbox-gap)
+      );
+      max-width: var(--clbr-typography-measure-default);
+
+      :where(.label:has([aria-invalid="true"])) + & {
+        color: var(--clbr-color-interactive-error-default);
       }
     }
   }

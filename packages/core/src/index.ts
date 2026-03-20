@@ -20,7 +20,6 @@ export {
 export {
   CLBR_CHECKBOX_SPEC,
   type ClbrCheckboxProps,
-  type ClbrCheckboxSize,
   renderClbrCheckbox,
 } from "./components/checkbox/checkbox";
 
@@ -32,6 +31,15 @@ export {
   type ClbrHeadingSize,
   renderClbrHeading,
 } from "./components/heading/heading";
+
+export {
+  CLBR_INPUT_SPEC,
+  type ClbrInputProps,
+  type ClbrInputSize,
+  type ClbrInputType,
+  type ClbrInputWidth,
+  renderClbrInput,
+} from "./components/input/input";
 
 export {
   CLBR_ICON_RECOMMENDED,
