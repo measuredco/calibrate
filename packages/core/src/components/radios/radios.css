@@ -1,19 +1,46 @@
 @layer clbr.components {
-  :where(.clbr) .checkbox-field {
-    --clbr-checkbox-gap: var(--clbr-spacing-horizontal-400);
-    --clbr-checkbox-inset: var(--clbr-spacing-vertical-200);
-    --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);
+  :where(.clbr) .radio-fieldset {
+    --clbr-radio-gap: var(--clbr-spacing-horizontal-400);
+    --clbr-radio-inset: var(--clbr-spacing-vertical-200);
+    --clbr-radio-size: var(--clbr-layout-icon-size-xs);
 
-    font-size: var(--clbr-typography-type-step-100-font-size);
-    line-height: var(--clbr-typography-type-step-100-line-height);
+    border: none;
+    margin: 0;
+    padding: 0;
+
+    .description {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-50-font-size);
+      line-height: var(--clbr-typography-type-step-50-line-height);
+      margin-block: 0;
+      max-width: var(--clbr-typography-measure-default);
+      padding-block-end: var(--clbr-spacing-vertical-100);
+
+      [aria-invalid="true"] & {
+        color: var(--clbr-color-interactive-error-default);
+      }
+    }
+
+    .radios {
+      [data-orientation="horizontal"] & {
+        display: flex;
+        column-gap: var(--clbr-spacing-horizontal-600);
+        flex-wrap: wrap;
+      }
+    }
+
+    .radio-field {
+      padding-block-start: var(--clbr-spacing-vertical-250);
+    }
 
     .label {
       color: var(--clbr-color-interactive-neutral-default);
-      column-gap: var(--clbr-checkbox-gap);
+      column-gap: var(--clbr-radio-gap);
       cursor: pointer;
       display: flex;
-
+      font-size: var(--clbr-typography-type-step-100-font-size);
       inline-size: fit-content;
+      line-height: var(--clbr-typography-type-step-100-line-height);
 
       @media (any-hover: hover) {
         &:hover {
@@ -35,15 +62,13 @@
       }
     }
 
-    .checkbox {
+    .radio {
       appearance: none;
       aspect-ratio: 1 / 1;
-      block-size: var(--clbr-checkbox-size);
+      block-size: var(--clbr-radio-size);
       border: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-interactive-neutral-default);
-      border-radius: calc(
-        var(--clbr-checkbox-size) * var(--clbr-radius-ratio-default)
-      );
+      border-radius: 50%;
       box-shadow: var(--clbr-effect-shadow-default);
       cursor: pointer;
       margin-block: var(--clbr-spacing-vertical-250);
@@ -51,20 +76,14 @@
       position: relative;
 
       &:focus-visible {
-        border-radius: calc(
-          (var(--clbr-checkbox-size) + var(--clbr-layout-focus-ring-outset)) *
-            var(--clbr-radius-ratio-default)
-        );
+        border-radius: 50%;
       }
 
       &::before {
         background-color: var(--clbr-color-interactive-default);
-        border-radius: calc(
-          (var(--clbr-checkbox-size) - (var(--clbr-checkbox-inset) * 2)) *
-            var(--clbr-radius-ratio-default)
-        );
+        border-radius: 50%;
         content: "";
-        inset: var(--clbr-checkbox-inset);
+        inset: var(--clbr-radio-inset);
         position: absolute;
         transform: scale(0);
         transition: var(--clbr-motion-duration-100) transform
@@ -83,23 +102,13 @@
         transform: scale(1);
       }
 
-      &:indeterminate::before {
-        inset-block: var(--clbr-spacing-vertical-400);
-        transform: scale(1);
-      }
-
       &::after {
         content: "";
         position: absolute;
-        inset: calc(0rem - var(--clbr-checkbox-inset));
+        inset: calc(0rem - var(--clbr-radio-inset));
       }
 
-      &[aria-invalid="true"] {
-        background-color: var(--clbr-color-interactive-error-subtle);
-        border-color: var(--clbr-color-interactive-error-default);
-      }
-
-      &[disabled] {
+      &:disabled {
         border-color: var(--clbr-color-foreground-muted-non-text);
         box-shadow: none;
         cursor: not-allowed;
@@ -116,21 +125,20 @@
           }
         }
       }
+
+      [aria-invalid="true"] & {
+        background-color: var(--clbr-color-interactive-error-subtle);
+        border-color: var(--clbr-color-interactive-error-default);
+      }
     }
 
-    .description {
+    .radio-description {
       color: var(--clbr-color-foreground-muted-text);
       font-size: var(--clbr-typography-type-step-50-font-size);
       line-height: var(--clbr-typography-type-step-50-line-height);
       margin-block: 0;
-      margin-inline-start: calc(
-        var(--clbr-checkbox-size) + var(--clbr-checkbox-gap)
-      );
+      margin-inline-start: calc(var(--clbr-radio-size) + var(--clbr-radio-gap));
       max-width: var(--clbr-typography-measure-default);
-
-      :where(.label:has([aria-invalid="true"])) + & {
-        color: var(--clbr-color-interactive-error-default);
-      }
     }
   }
 }

@@ -6,8 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active `Now` items at the moment.
-
 ## Next
 
 What we could working on next.
@@ -19,6 +17,28 @@ What we could working on next.
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
   - also consider `id`
 - Consider namespacing of component classes
+
+### reconsider SPEC/test relationship
+
+Goal: reduce drift across renderer implementation, SPEC, and tests without building a brittle rule parser.
+
+- Add a shared spec-parity test helper in core test utils.
+- Start with one pilot component (`radios`) and then roll out to other components.
+- Validate machine-safe SPEC surface only:
+  - SPEC prop keys match runtime prop names used by renderer/tests
+  - SPEC defaults match renderer defaults
+  - enum value lists match renderer unions/accepted values
+  - required props are covered by canonical valid fixtures
+  - static attribute/content selectors in SPEC exist in rendered output
+- Keep behavior tests as primary source of truth; parity tests are a drift guard, not a replacement.
+- Do not parse prose `when` strings in this phase.
+- If needed later, add optional structured rule metadata alongside prose (for machine assertions), while keeping prose for docs readability.
+
+Deliverables:
+
+- `spec-parity` helper + radios parity test
+- pattern documented for component test suites
+- CI runs parity checks with existing tests/typecheck
 
 ## Later
 
@@ -144,6 +164,13 @@ _This section is a historical completion record; some entries may describe decis
   - responsive heading typography exposed via contextual tokens (`typography.text.heading.responsive.*`)
   - heading CSS supports fixed/default typography and opt-in responsive typography via `data-responsive`
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Radios component implemented and aligned across core:
+  - added `radios` renderer + CSS + stories + tests
+  - API settled on `legend`, `radios[]`, `id`, `name`, optional `description`, `value`, `required`, `disabled`, `invalid`, and `orientation`
+  - group description is wired on `fieldset[aria-describedby]`, per-item descriptions are wired per input and rendered outside each label
+  - group invalid is emitted on `fieldset` only; group disabled uses `fieldset[disabled]` inheritance, with per-item disabled emitted on individual radios
+  - required is emitted on all non-disabled radios when enabled
+  - spec and exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Text component implemented and aligned across core/system:
   - added `text` renderer + CSS + stories + tests with `span` (default) and `p` modes
   - added body typography `xs` and responsive body scale tokens (`baseline`/`tablet`) and wired them into Text sizes

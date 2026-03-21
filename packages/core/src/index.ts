@@ -33,6 +33,15 @@ export {
 } from "./components/heading/heading";
 
 export {
+  CLBR_ICON_RECOMMENDED,
+  CLBR_ICON_SPEC,
+  type ClbrIconMirrorMode,
+  type ClbrIconProps,
+  type ClbrIconSize,
+  renderClbrIcon,
+} from "./components/icon/icon";
+
+export {
   CLBR_INPUT_SPEC,
   type ClbrInputProps,
   type ClbrInputSize,
@@ -42,13 +51,22 @@ export {
 } from "./components/input/input";
 
 export {
-  CLBR_ICON_RECOMMENDED,
-  CLBR_ICON_SPEC,
-  type ClbrIconMirrorMode,
-  type ClbrIconProps,
-  type ClbrIconSize,
-  renderClbrIcon,
-} from "./components/icon/icon";
+  CLBR_RADIOS_SPEC,
+  type ClbrRadioItem,
+  type ClbrRadiosOrientation,
+  type ClbrRadiosProps,
+  renderClbrRadios,
+} from "./components/radios/radios";
+
+export {
+  CLBR_ROOT_SPEC,
+  type ClbrAppOverscrollBehavior,
+  type ClbrBrand,
+  type ClbrDirection,
+  type ClbrRootProps,
+  type ClbrTheme,
+  renderClbrRoot,
+} from "./components/root/root";
 
 export {
   CLBR_SURFACE_SPEC,
@@ -69,13 +87,3 @@ export {
   type ClbrTextTone,
   renderClbrText,
 } from "./components/text/text";
-
-export {
-  CLBR_ROOT_SPEC,
-  type ClbrAppOverscrollBehavior,
-  type ClbrBrand,
-  type ClbrDirection,
-  type ClbrRootProps,
-  type ClbrTheme,
-  renderClbrRoot,
-} from "./components/root/root";
