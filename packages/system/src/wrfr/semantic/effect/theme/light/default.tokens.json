@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic effect tokens for msrd light/default surface.",
+  "$description": "Semantic effect tokens for wrfr light/default surface.",
   "opacity": {
     "$type": "number",
     "demoted": {
@@ -17,6 +17,15 @@
         "blur": "{primitive.effect.shadow.blur.100}",
         "spread": "{primitive.effect.shadow.spread.0}"
       }
+    }
+  },
+  "stroke": {
+    "$type": "dimension",
+    "inset": {
+      "$value": "{primitive.effect.stroke.inset}"
+    },
+    "outset": {
+      "$value": "{primitive.effect.stroke.outset}"
     }
   }
 }

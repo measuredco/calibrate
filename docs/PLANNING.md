@@ -18,28 +18,6 @@ What we could working on next.
   - also consider `id`
 - Consider namespacing of component classes
 
-### reconsider SPEC/test relationship
-
-Goal: reduce drift across renderer implementation, SPEC, and tests without building a brittle rule parser.
-
-- Add a shared spec-parity test helper in core test utils.
-- Start with one pilot component (`radios`) and then roll out to other components.
-- Validate machine-safe SPEC surface only:
-  - SPEC prop keys match runtime prop names used by renderer/tests
-  - SPEC defaults match renderer defaults
-  - enum value lists match renderer unions/accepted values
-  - required props are covered by canonical valid fixtures
-  - static attribute/content selectors in SPEC exist in rendered output
-- Keep behavior tests as primary source of truth; parity tests are a drift guard, not a replacement.
-- Do not parse prose `when` strings in this phase.
-- If needed later, add optional structured rule metadata alongside prose (for machine assertions), while keeping prose for docs readability.
-
-Deliverables:
-
-- `spec-parity` helper + radios parity test
-- pattern documented for component test suites
-- CI runs parity checks with existing tests/typecheck
-
 ## Later
 
 Everything we could attempt given sufficient time and resources.
@@ -182,6 +160,11 @@ _This section is a historical completion record; some entries may describe decis
   - `numeric` type maps to `type="text"` with `inputmode="numeric"` and default numeric `pattern` (overridable)
   - single `description` slot is reused for hint or validation guidance; invalid state remains app-controlled
   - invalid precedence aligned with input editability (`disabled`/`readOnly` suppress `aria-invalid`)
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Prose component implemented and aligned across core:
+  - added `prose` renderer + CSS + stories + tests
+  - API includes trusted-HTML `children`, optional `align`, `measured`, `responsive`, and `hangingIndent` (`always | notebook`)
+  - renders `<div class="prose">` and follows text-style data-attribute omission defaults
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests

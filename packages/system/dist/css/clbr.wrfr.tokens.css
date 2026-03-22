@@ -61,6 +61,8 @@
     --clbr-color-logo-neutral: #000000;
     --clbr-effect-opacity-demoted: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
+    --clbr-effect-stroke-inset: 0rem;
+    --clbr-effect-stroke-outset: 0rem;
     --clbr-motion-duration-100: 100ms;
     --clbr-motion-duration-150: 150ms;
     --clbr-motion-duration-200: 200ms;

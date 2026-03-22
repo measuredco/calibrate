@@ -1,6 +1,6 @@
 {
   "$schema": "../../../schemas/2025.10/schema/format.json",
-  "$description": "Primitive effect tokens for msrd.",
+  "$description": "Primitive effect tokens for wrfr.",
   "opacity": {
     "40": {
       "$value": 0.4
@@ -50,5 +50,20 @@
       },
       "$type": "dimension"
     }
+  },
+  "stroke": {
+    "inset": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "outset": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "$type": "dimension"
   }
 }

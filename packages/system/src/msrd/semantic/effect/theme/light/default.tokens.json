@@ -18,5 +18,14 @@
         "spread": "{primitive.effect.shadow.spread.0}"
       }
     }
+  },
+  "stroke": {
+    "$type": "dimension",
+    "inset": {
+      "$value": "{primitive.effect.stroke.inset}"
+    },
+    "outset": {
+      "$value": "{primitive.effect.stroke.outset}"
+    }
   }
 }

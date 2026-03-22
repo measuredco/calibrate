@@ -50,5 +50,20 @@
       },
       "$type": "dimension"
     }
+  },
+  "stroke": {
+    "inset": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "outset": {
+      "$value": {
+        "value": -4,
+        "unit": "px"
+      }
+    },
+    "$type": "dimension"
   }
 }

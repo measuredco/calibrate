@@ -137,6 +137,8 @@
     --clbr-primitive-effect-shadow-offset-x-100: 0.125rem;
     --clbr-primitive-effect-shadow-offset-y-100: 0.125rem;
     --clbr-primitive-effect-shadow-spread-0: 0rem;
+    --clbr-primitive-effect-stroke-inset: 0.25rem;
+    --clbr-primitive-effect-stroke-outset: -0.25rem;
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;

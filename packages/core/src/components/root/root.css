@@ -56,12 +56,20 @@
     }
 
     /* Revert descendants and pseudo-elements to browser defaults. */
-    :where(:not(svg, svg *), *::after, *::before, *::marker) {
+    :where(:not(svg, svg *)) {
+      all: revert;
+    }
+
+    *::after,
+    *::before,
+    *::marker {
       all: revert;
     }
 
     /* Apply opinionated baseline defaults. */
-    :where(*, *::after, *::before) {
+    *,
+    *::after,
+    *::before {
       background-repeat: no-repeat;
       box-sizing: border-box;
     }
@@ -138,7 +146,7 @@
     }
 
     /* Define utility classes. */
-    :where(.visually-hidden) {
+    :where(.visually-hidden, .sr-only) {
       block-size: 1px;
       border: none;
       clip-path: inset(50%);

@@ -55,9 +55,6 @@
       text-decoration-thickness: var(
         --clbr-typography-prose-link-decoration-thickness
       );
-      text-underline-offset: var(
-        --clbr-typography-prose-link-hover-decoration-offset
-      );
     }
 
     & a:visited {
@@ -90,16 +87,22 @@
     }
 
     & code {
+      --clbr-code-padding-block-end: 0.055em;
+
       background-color: var(--clbr-color-background-subtle);
-      border-radius: var(--clbr-radius-200);
+      border-radius: calc(
+        (1lh - var(--clbr-code-padding-block-end)) *
+          var(--clbr-radius-ratio-default)
+      );
       font-family: var(--clbr-typography-font-family-mono);
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
+      padding-block-end: var(--clbr-code-padding-block-end);
       padding-inline: 0.25em;
 
       @media (min-width: 48em) {
         [data-responsive][data-size="md"] & {
-          padding-block-end: 0.2em;
+          --clbr-code-padding-block-end: 0.2em;
         }
       }
     }

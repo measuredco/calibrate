@@ -51,6 +51,13 @@ export {
 } from "./components/input/input";
 
 export {
+  CLBR_PROSE_SPEC,
+  type ClbrProseHangingIndent,
+  type ClbrProseProps,
+  renderClbrProse,
+} from "./components/prose/prose";
+
+export {
   CLBR_RADIOS_SPEC,
   type ClbrRadioItem,
   type ClbrRadiosOrientation,
