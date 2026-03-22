@@ -10,13 +10,35 @@ What we're working on now.
 
 What we could working on next.
 
-### Components and Recipes
+### Components
+
+#### Layout
+
+- `Container`
+- `Grid`
+- `Stack`
+- `Inline`
+- `Box` (implements `data-surface`)
+- `Space`(maybe, lower-level compositional device)
+
+#### Form
+
+- `Textarea`
+- `Switch`
+- `Select`
+- `Range`
+- `Checkboxes`
+- `Field`(maybe, abstraction and layout manager)
+- `Form`(maybe, validation and composition manager)
+
+#### General
 
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
-  - also consider `id`
-- Consider namespacing of component classes
+  - also consider `id` prop normalisation
+- Rename system core (foundations?) to avoid clash with core package
+- Consider namespacing of component classes (and data-surface?)
 
 ## Later
 
@@ -51,7 +73,7 @@ Everything we could attempt given sufficient time and resources.
 
 [Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
 
-- Revisit bridge-side DTCG `$dimension` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
+- Revisit bridge-side DTCG `$dimension`/`$duration` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
   - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
@@ -298,8 +320,12 @@ _This section is a historical completion record; some entries may describe decis
 - Class/attribute grammar applied to root + surface contracts:
   - structural semantics use classes; state/variant semantics use attributes
   - `root` now emits `.clbr` + `data-brand` (+ optional `data-theme`)
-  - `surface` now emits `.surface` + `data-variant` (default included)
+  - `surface` now emits `.surface` + `data-surface` (default included)
   - token resolver selectors and generated brand CSS updated to match attribute grammar
+- Surface selector contract refactor completed:
+  - brand surface token scopes now target `[data-surface="brand"]` (not `.surface[data-variant="brand"]`)
+  - no compatibility selectors are emitted (intentional breaking change)
+  - enables reuse of surface context attributes on non-Surface wrappers (e.g. future `Box`)
 - Font distribution contract implemented:
   - `@measured/calibrate-assets` package added for runtime font assets
   - vendored variable Inter + Roboto Mono font files and `@font-face` entrypoint at `@measured/calibrate-assets/fonts.css`

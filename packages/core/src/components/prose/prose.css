@@ -183,7 +183,7 @@
         margin-block-end: var(--clbr-spacing-vertical-700);
         outline: none;
         overflow-x: auto;
-        overscroll-behavior: none;
+        overscroll-behavior-x: none;
         padding-block: var(--clbr-spacing-vertical-700);
         padding-inline: var(--clbr-spacing-horizontal-700);
         position: relative;

@@ -74,7 +74,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - `packages/core/` is the canonical package boundary for component contracts built on token outputs.
 - Component markup grammar (SSR-first):
   - structural semantics use classes (function-focused nouns, not appearance naming).
-  - state/variant semantics use attributes (for example `data-variant`, `data-size`, ARIA state attrs).
+  - state/variant semantics use attributes (for example `data-surface`, `data-size`, ARIA state attrs).
   - public renderer props should map directly to emitted DOM semantics (props -> attributes).
 - Component implementation model:
   - components that do not require runtime JS behavior should be authored as pure SSR renderers that emit native HTML.
@@ -214,7 +214,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - `data-theme="dark"` and `data-theme="light"` force mode on the scoped brand root
   - without force attributes, theme follows authored media query behavior
 - Surface contract:
-  - `.surface[data-variant="brand"]` is a descendant surface scope inside a brand root
+  - `[data-surface="brand"]` is a descendant surface scope inside a brand root
 - Multi-brand on one page is supported:
   - use isolated wrapper roots per brand (`.clbr[data-brand="msrd"]`, `.clbr[data-brand="wrfr"]`, etc.)
   - do not mix multiple brands on the same scope root

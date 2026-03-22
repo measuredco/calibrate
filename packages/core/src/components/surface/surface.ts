@@ -21,7 +21,7 @@ export interface ClbrSurfaceProps {
 /**
  * SSR renderer for the Calibrate surface component.
  *
- * Emits a `<div>` with `surface` and a `data-variant` attribute, then injects
+ * Emits a `<div>` with `surface` and a `data-surface` attribute, then injects
  * the provided HTML content inside.
  *
  * @param props - Surface component props.
@@ -32,7 +32,7 @@ export function renderClbrSurface(props: ClbrSurfaceProps): string {
 
   const surfaceAttrs = attrs({
     class: "surface",
-    "data-variant": variant,
+    "data-surface": variant,
   });
 
   return `<div ${surfaceAttrs}>${children}</div>`;
@@ -60,7 +60,7 @@ export const CLBR_SURFACE_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "data-variant",
+        target: "data-surface",
         value: "{variant}",
       },
     ],

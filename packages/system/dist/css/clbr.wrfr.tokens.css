@@ -166,7 +166,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
+  :where(.clbr[data-brand="wrfr"] [data-surface="brand"]) {
     --clbr-color-background-panel: #f2f3f4;
     --clbr-color-background-subtle: #e3e4e5;
     --clbr-color-border-default: rgba(255, 255, 255, 0.16);
@@ -233,7 +233,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="wrfr"] [data-surface="brand"]) {
       --clbr-color-background-default: #0b0c0d;
       --clbr-color-background-inverse: #f9fafb;
       --clbr-color-background-panel: #0e0f10;
@@ -327,7 +327,7 @@
 
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="wrfr"][data-theme="light"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="wrfr"][data-theme="light"] [data-surface="brand"]) {
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #f2f3f4;
@@ -437,7 +437,7 @@
   }
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="wrfr"][data-theme="dark"] .surface[data-variant="brand"]) {
+  :where(.clbr[data-brand="wrfr"][data-theme="dark"] [data-surface="brand"]) {
     --clbr-color-background-default: #0b0c0d;
     --clbr-color-background-inverse: #f9fafb;
     --clbr-color-background-panel: #0e0f10;
@@ -518,7 +518,7 @@
 
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="wrfr"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="wrfr"] [data-surface="brand"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }

@@ -20,11 +20,11 @@
           "layerOrder": ["clbr", "clbr.brand"],
           "selectors": {
             "root": ":where(.{namespace}[data-brand=\"{brand}\"])",
-            "surfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"] .surface[data-variant=\"brand\"])",
+            "surfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"] [data-surface=\"brand\"])",
             "themeDark": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"])",
             "themeLight": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"])",
-            "themeDarkSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"] .surface[data-variant=\"brand\"])",
-            "themeLightSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"] .surface[data-variant=\"brand\"])"
+            "themeDarkSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"] [data-surface=\"brand\"])",
+            "themeLightSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"] [data-surface=\"brand\"])"
           },
           "modifiers": {
             "size": {

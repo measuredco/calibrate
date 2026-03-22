@@ -169,7 +169,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
+  :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
     --clbr-card-color-dots-default: #aed2fb;
     --clbr-color-background-default: #eef7fe;
     --clbr-color-background-inverse: #031f60;
@@ -241,7 +241,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
       --clbr-card-color-dots-default: #083c8a;
       --clbr-card-color-dots-hover: #0158ad;
       --clbr-color-background-default: #031f60;
@@ -340,7 +340,7 @@
 
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="msrd"][data-theme="light"] [data-surface="brand"]) {
       --clbr-card-color-dots-default: #aed2fb;
       --clbr-card-color-dots-hover: #6db5f8;
       --clbr-card-color-interactive: #0158ad;
@@ -458,7 +458,7 @@
   }
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"] .surface[data-variant="brand"]) {
+  :where(.clbr[data-brand="msrd"][data-theme="dark"] [data-surface="brand"]) {
     --clbr-card-color-dots-default: #083c8a;
     --clbr-card-color-dots-hover: #0158ad;
     --clbr-card-color-interactive: #3598f8;
@@ -547,7 +547,7 @@
 
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="msrd"] .surface[data-variant="brand"]) {
+    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
       --clbr-card-color-dots-default: ButtonBorder;
       --clbr-card-color-dots-hover: ButtonBorder;
       --clbr-card-color-interactive: LinkText;

@@ -13,7 +13,7 @@ describe("renderClbrSurface", () => {
       renderClbrSurface({ children: "<p>content</p>" }),
     );
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-variant")).toBe("default");
+    expect(surface.getAttribute("data-surface")).toBe("default");
   });
 
   it("renders brand surface variant attribute", () => {
@@ -24,7 +24,7 @@ describe("renderClbrSurface", () => {
       }),
     );
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-variant")).toBe("brand");
+    expect(surface.getAttribute("data-surface")).toBe("brand");
   });
 
   it("injects children HTML content", () => {
