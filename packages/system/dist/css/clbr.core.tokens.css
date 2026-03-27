@@ -18,9 +18,9 @@
     --clbr-layout-border-width-default: 0.0625rem;
     --clbr-layout-border-width-thick: 0.125rem;
     --clbr-layout-container-gutter-default: 1rem;
-    --clbr-layout-container-gutter-sm: 1rem;
-    --clbr-layout-container-max-width-lg: 80rem;
-    --clbr-layout-container-max-width-xl: 90rem;
+    --clbr-layout-container-gutter-narrow: 1rem;
+    --clbr-layout-container-max-width-default: 80rem;
+    --clbr-layout-container-max-width-wide: 90rem;
     --clbr-layout-focus-ring-offset-default: 0.125rem;
     --clbr-layout-focus-ring-offset-inset: -0.25rem;
     --clbr-layout-focus-ring-outset: 0.5rem;
@@ -92,7 +92,7 @@
   @media (min-width: 48em) {
     :where(.clbr) {
       --clbr-layout-container-gutter-default: 2rem;
-      --clbr-layout-container-gutter-sm: 1.5rem;
+      --clbr-layout-container-gutter-narrow: 1.5rem;
       --clbr-layout-grid-gap-column-default: 1.5rem;
       --clbr-layout-grid-gap-column-lg: 1.5rem;
     }

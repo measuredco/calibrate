@@ -12,6 +12,7 @@
 /* components */
 @import "./components/button/button.css";
 @import "./components/checkbox/checkbox.css";
+@import "./components/container/container.css";
 @import "./components/heading/heading.css";
 @import "./components/icon/icon.css";
 @import "./components/input/input.css";

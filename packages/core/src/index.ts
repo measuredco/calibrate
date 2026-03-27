@@ -24,6 +24,14 @@ export {
 } from "./components/checkbox/checkbox";
 
 export {
+  CLBR_CONTAINER_SPEC,
+  type ClbrContainerGutter,
+  type ClbrContainerMaxWidth,
+  type ClbrContainerProps,
+  renderClbrContainer,
+} from "./components/container/container";
+
+export {
   CLBR_HEADING_SPEC,
   type ClbrHeadingAlign,
   type ClbrHeadingLevel,

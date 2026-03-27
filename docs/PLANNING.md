@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Layout
 
-- `Container`
 - `Grid`
 - `Stack`
 - `Inline`
@@ -187,6 +186,12 @@ _This section is a historical completion record; some entries may describe decis
   - added `prose` renderer + CSS + stories + tests
   - API includes trusted-HTML `children`, optional `align`, `measured`, `responsive`, and `hangingIndent` (`always | notebook`)
   - renders `<div class="prose">` and follows text-style data-attribute omission defaults
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Container component implemented and aligned across core/system:
+  - added `container` renderer + CSS + stories + tests
+  - API includes trusted-HTML `children`, optional `maxWidth` (`default | wide | none`), and optional `gutter` (`default | narrow | none`)
+  - default values omit `data-*`; non-default values emit explicit attributes for deterministic styling
+  - semantic layout tokens updated to `container.gutter.{default|narrow}` and wired through system build output
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests

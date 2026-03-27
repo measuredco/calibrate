@@ -7,7 +7,7 @@
       "default": {
         "$value": "{spacing.horizontal.800}"
       },
-      "sm": {
+      "narrow": {
         "$value": "{spacing.horizontal.700}"
       }
     }

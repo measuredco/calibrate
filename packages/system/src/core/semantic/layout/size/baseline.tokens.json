@@ -7,7 +7,7 @@
       "default": {
         "$value": "{spacing.horizontal.600}"
       },
-      "sm": {
+      "narrow": {
         "$value": "{container.gutter.default}"
       }
     }
