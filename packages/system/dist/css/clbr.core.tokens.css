@@ -26,10 +26,9 @@
     --clbr-layout-focus-ring-outset: 0.5rem;
     --clbr-layout-focus-ring-width: 0.125rem;
     --clbr-layout-grid-columns: 12;
-    --clbr-layout-grid-gap-column-default: 1rem;
-    --clbr-layout-grid-gap-column-lg: 1rem;
-    --clbr-layout-grid-gap-row-default: 1.5rem;
-    --clbr-layout-grid-gap-row-lg: 1.5rem;
+    --clbr-layout-grid-gap-lg: 2rem;
+    --clbr-layout-grid-gap-md: 1.5rem;
+    --clbr-layout-grid-gap-sm: 1rem;
     --clbr-layout-grid-item-min-width: 18rem;
     --clbr-layout-icon-size-2xs: 1rem;
     --clbr-layout-icon-size-default: 1.5rem;
@@ -93,8 +92,6 @@
     :where(.clbr) {
       --clbr-layout-container-gutter-default: 2rem;
       --clbr-layout-container-gutter-narrow: 1.5rem;
-      --clbr-layout-grid-gap-column-default: 1.5rem;
-      --clbr-layout-grid-gap-column-lg: 1.5rem;
     }
   }
 
@@ -112,14 +109,6 @@
       --clbr-layout-spacing-vertical-800: 3rem;
       --clbr-layout-spacing-vertical-900: 4.5rem;
       --clbr-layout-spacing-vertical-950: 6rem;
-    }
-  }
-
-  /* default | laptop | default-states */
-  @media (min-width: 80em) {
-    :where(.clbr) {
-      --clbr-layout-grid-gap-column-lg: 2rem;
-      --clbr-layout-grid-gap-row-lg: 2rem;
     }
   }
 }

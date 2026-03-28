@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Layout
 
-- `Grid`
 - `Stack`
 - `Inline`
 - `Box` (implements `data-surface`)
@@ -192,6 +191,12 @@ _This section is a historical completion record; some entries may describe decis
   - API includes trusted-HTML `children`, optional `maxWidth` (`default | wide | none`), and optional `gutter` (`default | narrow | none`)
   - default values omit `data-*`; non-default values emit explicit attributes for deterministic styling
   - semantic layout tokens updated to `container.gutter.{default|narrow}` and wired through system build output
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Grid component implemented and aligned across core/system:
+  - added `grid` and `grid-item` renderers + CSS + stories + tests
+  - API includes trusted-HTML `children`, gap variants (`default | expanded | none`), and item placement props across `narrow` / `default` / `wide` thresholds
+  - renderer outputs `.grid-container` wrapper with inner `.grid`; item props emit data attributes for column/row span/start placement
+  - layout grid gap semantics refactored to root tokens (`layout.grid.gap.sm|md|lg`) and wired into CSS via container/media thresholds
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests

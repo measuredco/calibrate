@@ -18,12 +18,9 @@ const meta = {
 
 export default meta;
 
-const demoContent =
-  '<div style="background: #ff69b480;  padding: 1.75rem 0; text-align: center">Example content</div>';
-
 export const Default = {
   args: {
-    children: demoContent,
+    children: `<div class="example-content"></div>`,
     gutter: "default",
     maxWidth: "default",
   } satisfies ClbrContainerProps,

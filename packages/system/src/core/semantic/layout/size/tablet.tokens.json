@@ -11,26 +11,5 @@
         "$value": "{spacing.horizontal.700}"
       }
     }
-  },
-  "grid": {
-    "gap": {
-      "$type": "dimension",
-      "column": {
-        "default": {
-          "$value": "{spacing.horizontal.700}"
-        },
-        "lg": {
-          "$value": "{grid.gap.column.default}"
-        }
-      },
-      "row": {
-        "default": {
-          "$value": "{spacing.vertical.700}"
-        },
-        "lg": {
-          "$value": "{grid.gap.row.default}"
-        }
-      }
-    }
   }
 }

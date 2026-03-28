@@ -32,6 +32,18 @@ export {
 } from "./components/container/container";
 
 export {
+  CLBR_GRID_ITEM_SPEC,
+  CLBR_GRID_SPEC,
+  type ClbrGridGap,
+  type ClbrGridItemProps,
+  type ClbrGridPlacement,
+  type ClbrGridProps,
+  type ClbrGridTrack,
+  renderClbrGrid,
+  renderClbrGridItem,
+} from "./components/grid/grid";
+
+export {
   CLBR_HEADING_SPEC,
   type ClbrHeadingAlign,
   type ClbrHeadingLevel,
