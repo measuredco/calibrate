@@ -1,12 +1,13 @@
 import { attrs } from "../../helpers/html";
 
-export type ClbrStackAlign = "start" | "center" | "end";
+export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
 export type ClbrStackGap = "xs" | "sm" | "md" | "lg";
 
 /** Props for the Calibrate stack renderer. */
 export interface ClbrStackProps {
   /**
    * Stack cross-axis alignment.
+   * @default "stretch"
    */
   align?: ClbrStackAlign;
   /**
@@ -33,15 +34,15 @@ export interface ClbrStackProps {
  * @returns HTML string for a stack wrapper.
  */
 export function renderClbrStack({
-  align,
+  align = "stretch",
   children,
   gap = "md",
   responsive,
 }: ClbrStackProps): string {
   const stackAttrs = attrs({
-    "data-align": align,
-    "data-gap": gap,
     class: "stack",
+    "data-align": align === "stretch" ? undefined : align,
+    "data-gap": gap,
     "data-responsive": responsive,
   });
 
@@ -56,9 +57,10 @@ export const CLBR_STACK_SPEC = {
   },
   props: {
     align: {
+      default: "stretch",
       required: false,
       type: "enum",
-      values: ["start", "center", "end"],
+      values: ["stretch", "start", "center", "end"],
     },
     children: {
       required: false,
@@ -87,7 +89,7 @@ export const CLBR_STACK_SPEC = {
         behavior: "emit",
         target: "data-align",
         value: "{align}",
-        when: "align is provided",
+        when: "align is start, center, or end",
       },
       {
         behavior: "always",

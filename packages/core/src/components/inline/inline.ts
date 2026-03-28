@@ -1,0 +1,126 @@
+import { attrs } from "../../helpers/html";
+
+export type ClbrInlineAlign = "start" | "center" | "end";
+export type ClbrInlineGap = "2xs" | "xs" | "sm" | "md" | "lg";
+export type ClbrInlineJustify = "start" | "center" | "end" | "between";
+
+/** Props for the Calibrate inline renderer. */
+export interface ClbrInlineProps {
+  /**
+   * Inline cross-axis alignment.
+   * @default "center"
+   */
+  align?: ClbrInlineAlign;
+  /**
+   * Inner HTML content to render inside the inline wrapper.
+   * Caller is responsible for sanitizing untrusted content.
+   */
+  children?: string;
+  /**
+   * Inline spacing gap size.
+   * @default "md"
+   */
+  gap?: ClbrInlineGap;
+  /**
+   * Inline main-axis distribution.
+   * @default "start"
+   */
+  justify?: ClbrInlineJustify;
+  /**
+   * Prevents wrapping of inline children when true.
+   * Omitted by default.
+   */
+  nowrap?: boolean;
+}
+
+/**
+ * SSR renderer for the Calibrate inline component.
+ *
+ * @param props - Inline component props.
+ * @returns HTML string for an inline wrapper.
+ */
+export function renderClbrInline({
+  align = "center",
+  children,
+  gap = "md",
+  justify = "start",
+  nowrap,
+}: ClbrInlineProps): string {
+  const inlineAttrs = attrs({
+    class: "inline",
+    "data-align": align === "center" ? undefined : align,
+    "data-gap": gap,
+    "data-justify": justify === "start" ? undefined : justify,
+    "data-nowrap": nowrap,
+  });
+
+  return `<div ${inlineAttrs}>${children ?? ""}</div>`;
+}
+
+/** Declarative inline contract mirror for tooling, docs, and adapters. */
+export const CLBR_INLINE_SPEC = {
+  name: "inline",
+  output: {
+    element: "div",
+  },
+  props: {
+    align: {
+      default: "center",
+      required: false,
+      type: "enum",
+      values: ["start", "center", "end"],
+    },
+    children: {
+      required: false,
+      type: "html",
+    },
+    gap: {
+      default: "md",
+      required: false,
+      type: "enum",
+      values: ["2xs", "xs", "sm", "md", "lg"],
+    },
+    justify: {
+      default: "start",
+      required: false,
+      type: "enum",
+      values: ["start", "center", "end", "between"],
+    },
+    nowrap: {
+      required: false,
+      type: "boolean",
+    },
+  },
+  rules: {
+    attributes: [
+      {
+        behavior: "always",
+        target: "class",
+        value: "inline",
+      },
+      {
+        behavior: "emit",
+        target: "data-align",
+        value: "{align}",
+        when: "align is start or end",
+      },
+      {
+        behavior: "always",
+        target: "data-gap",
+        value: "{gap}",
+      },
+      {
+        behavior: "emit",
+        target: "data-justify",
+        value: "{justify}",
+        when: "justify is center, end, or between",
+      },
+      {
+        behavior: "emit",
+        target: "data-nowrap",
+        value: "present",
+        when: "nowrap is true",
+      },
+    ],
+  },
+} as const;

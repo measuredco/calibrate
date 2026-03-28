@@ -96,5 +96,11 @@ describe("renderClbrStack", () => {
     );
     const endStack = getByText(endRoot, "Body");
     expect(endStack.getAttribute("data-align")).toBe("end");
+
+    const stretchRoot = mountStack(
+      renderClbrStack({ align: "stretch", children: "Body" }),
+    );
+    const stretchStack = getByText(stretchRoot, "Body");
+    expect(stretchStack.hasAttribute("data-align")).toBe(false);
   });
 });

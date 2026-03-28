@@ -4,7 +4,7 @@ const meta = {
   argTypes: {
     align: {
       control: { type: "select" },
-      options: ["start", "center", "end"],
+      options: ["stretch", "start", "center", "end"],
     },
     children: { control: false },
     gap: {
@@ -21,7 +21,7 @@ export default meta;
 
 export const Default = {
   args: {
-    align: undefined,
+    align: "stretch",
     children:
       '<div class="example-content"></div><div class="example-content"></div><div class="example-content"></div>',
     gap: "md",

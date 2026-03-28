@@ -16,6 +16,7 @@
 @import "./components/grid/grid.css";
 @import "./components/heading/heading.css";
 @import "./components/icon/icon.css";
+@import "./components/inline/inline.css";
 @import "./components/input/input.css";
 @import "./components/prose/prose.css";
 @import "./components/radios/radios.css";

@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Layout
 
-- `Inline`
 - `Box` (implements `data-surface`)
 - `Space`(maybe, lower-level compositional device)
 
@@ -199,9 +198,15 @@ _This section is a historical completion record; some entries may describe decis
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Stack component implemented and aligned across core/system:
   - added `stack` renderer + CSS + stories + tests
-  - API includes trusted-HTML `children`, optional `gap` (`xs | sm | md | lg`), optional `align` (`start | center | end`), and optional `responsive`
+  - API includes trusted-HTML `children`, optional `gap` (`xs | sm | md | lg`), optional `align` (`start | center | end | stretch`), and optional `responsive`
   - renderer emits `data-gap` always, emits `data-align` when provided, and emits `data-responsive` only when true
   - CSS maps static stack gap to spacing tokens and responsive mode to layout spacing tokens
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Inline component implemented and aligned across core/system:
+  - added `inline` renderer + CSS + stories + tests
+  - API includes trusted-HTML `children`, optional `gap` (`2xs | xs | sm | md | lg`), optional `align` (`start | center | end`), optional `justify` (`start | center | end | between`), and optional `nowrap`
+  - renderer emits `data-gap` always, emits non-default `data-align`/`data-justify`, and emits `data-nowrap` only when true
+  - CSS maps horizontal gap scale to spacing tokens and supports cross-axis align plus main-axis justify variants
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests

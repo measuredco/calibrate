@@ -62,6 +62,15 @@ export {
 } from "./components/icon/icon";
 
 export {
+  CLBR_INLINE_SPEC,
+  type ClbrInlineAlign,
+  type ClbrInlineGap,
+  type ClbrInlineJustify,
+  type ClbrInlineProps,
+  renderClbrInline,
+} from "./components/inline/inline";
+
+export {
   CLBR_INPUT_SPEC,
   type ClbrInputProps,
   type ClbrInputSize,
