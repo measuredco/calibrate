@@ -34,12 +34,20 @@
     .grid-item {
       min-inline-size: 0;
 
+      &[data-align="start"] {
+        align-self: start;
+      }
+
       &[data-align="center"] {
         align-self: center;
       }
 
       &[data-align="end"] {
         align-self: end;
+      }
+
+      &[data-justify="start"] {
+        justify-self: start;
       }
 
       &[data-justify="center"] {

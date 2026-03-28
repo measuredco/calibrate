@@ -28,7 +28,7 @@ const meta = {
       },
     },
   },
-  title: "Components/Icon",
+  title: "Iconography/Icon",
 };
 
 export default meta;

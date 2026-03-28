@@ -1,0 +1,31 @@
+import { type ClbrStackProps, renderClbrStack } from "./stack";
+
+const meta = {
+  argTypes: {
+    align: {
+      control: { type: "select" },
+      options: ["start", "center", "end"],
+    },
+    children: { control: false },
+    gap: {
+      control: { type: "select" },
+      options: ["xs", "sm", "md", "lg"],
+    },
+    responsive: { control: { type: "boolean" } },
+  },
+  parameters: { padding: 0 },
+  title: "Layout/Stack",
+};
+
+export default meta;
+
+export const Default = {
+  args: {
+    align: undefined,
+    children:
+      '<div class="example-content"></div><div class="example-content"></div><div class="example-content"></div>',
+    gap: "md",
+    responsive: false,
+  } satisfies ClbrStackProps,
+  render: (args: ClbrStackProps) => renderClbrStack(args),
+};

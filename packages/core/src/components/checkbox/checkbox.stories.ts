@@ -1,7 +1,7 @@
 import { type ClbrCheckboxProps, renderClbrCheckbox } from "./checkbox";
 
 const meta = {
-  title: "Components/Checkbox",
+  title: "Control/Checkbox",
 };
 
 export default meta;

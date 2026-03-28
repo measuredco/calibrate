@@ -31,7 +31,7 @@ export interface ClbrHeadingProps {
   level?: ClbrHeadingLevel;
   /**
    * Enables breakpoint-responsive heading scale.
-   * @default true
+   * @default false
    */
   responsive?: boolean;
   /**
@@ -51,7 +51,7 @@ export function renderClbrHeading({
   align = "start",
   children,
   level,
-  responsive = true,
+  responsive,
   size = "md",
 }: ClbrHeadingProps): string {
   const tag = level ? (`h${level}` as const) : "span";
@@ -96,7 +96,7 @@ export const CLBR_HEADING_SPEC = {
       values: [1, 2, 3, 4, 5, 6],
     },
     responsive: {
-      default: true,
+      default: false,
       required: false,
       type: "boolean",
     },

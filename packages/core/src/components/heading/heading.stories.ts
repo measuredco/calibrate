@@ -18,7 +18,7 @@ const meta = {
       options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
     },
   },
-  title: "Components/Heading",
+  title: "Typography/Heading",
 };
 
 export default meta;
@@ -28,7 +28,7 @@ export const Default = {
     align: "start",
     children: "Heading",
     level: undefined,
-    responsive: true,
+    responsive: false,
     size: "md",
   } satisfies ClbrHeadingProps,
   render: (args: ClbrHeadingProps) => renderClbrHeading({ ...args }),

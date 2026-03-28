@@ -161,6 +161,7 @@
     :where(.example-content) {
       background: #ff69b450;
       min-block-size: 6rem;
+      min-inline-size: 18rem;
       outline: 0.0625rem solid #ff69b4;
     }
   }

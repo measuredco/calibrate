@@ -96,6 +96,14 @@ export {
 } from "./components/root/root";
 
 export {
+  CLBR_STACK_SPEC,
+  type ClbrStackAlign,
+  type ClbrStackGap,
+  type ClbrStackProps,
+  renderClbrStack,
+} from "./components/stack/stack";
+
+export {
   CLBR_SURFACE_SPEC,
   type ClbrSurfaceProps,
   type ClbrSurfaceVariant,

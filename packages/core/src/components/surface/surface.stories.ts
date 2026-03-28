@@ -19,7 +19,7 @@ const meta = {
     },
     withSurface: false,
   },
-  title: "Components/Surface",
+  title: "Layout/Surface",
 };
 
 export default meta;

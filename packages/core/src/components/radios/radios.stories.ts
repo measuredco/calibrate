@@ -7,7 +7,7 @@ const meta = {
       options: ["vertical", "horizontal"],
     },
   },
-  title: "Components/Radios",
+  title: "Control/Radios",
 };
 
 export default meta;

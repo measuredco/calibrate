@@ -19,7 +19,7 @@ const meta = {
       options: ["full", "auto"],
     },
   },
-  title: "Components/Input",
+  title: "Control/Input",
 };
 
 export default meta;

@@ -8,7 +8,7 @@ function mountHeading(html: string): HTMLElement {
 }
 
 describe("renderClbrHeading", () => {
-  it("renders span by default with md size and responsive attr", () => {
+  it("renders span by default with md size and no responsive attr", () => {
     const root = mountHeading(renderClbrHeading({ children: "Title" }));
     const text = getByText(root, "Title");
 
@@ -16,7 +16,7 @@ describe("renderClbrHeading", () => {
     expect(text.tagName).toBe("SPAN");
     expect(text.classList.contains("heading")).toBe(true);
     expect(text.getAttribute("data-size")).toBe("md");
-    expect(text.hasAttribute("data-responsive")).toBe(true);
+    expect(text.hasAttribute("data-responsive")).toBe(false);
   });
 
   it("renders semantic heading role and level when level is provided", () => {
@@ -55,13 +55,13 @@ describe("renderClbrHeading", () => {
     expect(heading.getAttribute("data-size")).toBe("2xl");
   });
 
-  it("omits data-responsive when responsive is false", () => {
+  it("emits data-responsive when responsive is true", () => {
     const root = mountHeading(
-      renderClbrHeading({ children: "Title", level: 2, responsive: false }),
+      renderClbrHeading({ children: "Title", level: 2, responsive: true }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
-    expect(heading.hasAttribute("data-responsive")).toBe(false);
+    expect(heading.hasAttribute("data-responsive")).toBe(true);
   });
 
   it("escapes heading text", () => {

@@ -9,7 +9,7 @@ const meta = {
     },
   },
   parameters: { padding: 0 },
-  title: "Components/Grid",
+  title: "Layout/Grid",
 };
 
 export default meta;

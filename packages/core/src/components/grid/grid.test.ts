@@ -109,6 +109,20 @@ describe("renderClbrGridItem", () => {
     expect(item.getAttribute("data-row-start-wide")).toBe("6");
   });
 
+  it('emits "start" when explicitly provided for align/justify', () => {
+    const root = mountGrid(
+      renderClbrGridItem({
+        align: "start",
+        children: "Item",
+        justify: "start",
+      }),
+    );
+    const item = getByText(root, "Item");
+
+    expect(item.getAttribute("data-align")).toBe("start");
+    expect(item.getAttribute("data-justify")).toBe("start");
+  });
+
   it("composes correctly when mapped into grid children", () => {
     const items = [
       renderClbrGridItem({ children: "A", colSpan: 6 }),

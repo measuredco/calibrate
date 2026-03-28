@@ -48,18 +48,18 @@ describe("renderClbrProse", () => {
     expect(notebookProse.getAttribute("data-hanging-indent")).toBe("notebook");
   });
 
-  it("emits measured/responsive by default and omits when false", () => {
+  it("emits measured by default and omits responsive by default", () => {
     const root = mountProse(renderClbrProse({ children: "Body" }));
     const prose = getByText(root, "Body");
     expect(prose.hasAttribute("data-measured")).toBe(true);
-    expect(prose.hasAttribute("data-responsive")).toBe(true);
+    expect(prose.hasAttribute("data-responsive")).toBe(false);
 
-    const noFlagsRoot = mountProse(
-      renderClbrProse({ children: "Body", measured: false, responsive: false }),
+    const explicitRoot = mountProse(
+      renderClbrProse({ children: "Body", measured: false, responsive: true }),
     );
-    const noFlagsProse = getByText(noFlagsRoot, "Body");
-    expect(noFlagsProse.hasAttribute("data-measured")).toBe(false);
-    expect(noFlagsProse.hasAttribute("data-responsive")).toBe(false);
+    const explicitProse = getByText(explicitRoot, "Body");
+    expect(explicitProse.hasAttribute("data-measured")).toBe(false);
+    expect(explicitProse.hasAttribute("data-responsive")).toBe(true);
   });
 
   it("renders trusted HTML content", () => {

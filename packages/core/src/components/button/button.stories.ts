@@ -14,7 +14,7 @@ const meta = {
       },
     },
   },
-  title: "Components/Button",
+  title: "Control/Button",
 };
 
 export default meta;

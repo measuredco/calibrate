@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Layout
 
-- `Stack`
 - `Inline`
 - `Box` (implements `data-surface`)
 - `Space`(maybe, lower-level compositional device)
@@ -197,6 +196,12 @@ _This section is a historical completion record; some entries may describe decis
   - API includes trusted-HTML `children`, gap variants (`default | expanded | none`), and item placement props across `narrow` / `default` / `wide` thresholds
   - renderer outputs `.grid-container` wrapper with inner `.grid`; item props emit data attributes for column/row span/start placement
   - layout grid gap semantics refactored to root tokens (`layout.grid.gap.sm|md|lg`) and wired into CSS via container/media thresholds
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
+- Stack component implemented and aligned across core/system:
+  - added `stack` renderer + CSS + stories + tests
+  - API includes trusted-HTML `children`, optional `gap` (`xs | sm | md | lg`), optional `align` (`start | center | end`), and optional `responsive`
+  - renderer emits `data-gap` always, emits `data-align` when provided, and emits `data-responsive` only when true
+  - CSS maps static stack gap to spacing tokens and responsive mode to layout spacing tokens
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Checkbox component implemented and aligned across core/system:
   - added `checkbox` renderer + CSS + stories + tests

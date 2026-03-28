@@ -28,7 +28,7 @@ export interface ClbrProseProps {
   measured?: boolean;
   /**
    * Enables breakpoint-responsive body scale.
-   * @default true
+   * @default false
    */
   responsive?: boolean;
 }
@@ -44,7 +44,7 @@ export function renderClbrProse({
   children,
   hangingIndent,
   measured = true,
-  responsive = true,
+  responsive,
 }: ClbrProseProps): string {
   const proseAttrs = attrs({
     class: "prose",
@@ -85,7 +85,7 @@ export const CLBR_PROSE_SPEC = {
       type: "boolean",
     },
     responsive: {
-      default: true,
+      default: false,
       required: false,
       type: "boolean",
     },

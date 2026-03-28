@@ -39,15 +39,15 @@ describe("renderClbrText", () => {
     expect(text.getAttribute("data-size")).toBe("md");
   });
 
-  it("emits data-responsive by default and omits it when false", () => {
-    const withResponsive = renderAndGetText();
-    expect(withResponsive.hasAttribute("data-responsive")).toBe(true);
+  it("omits data-responsive by default and emits it when true", () => {
+    const withoutResponsive = renderAndGetText();
+    expect(withoutResponsive.hasAttribute("data-responsive")).toBe(false);
 
     const root = mountText(
-      renderClbrText({ children: "Body text", responsive: false }),
+      renderClbrText({ children: "Body text", responsive: true }),
     );
-    const withoutResponsive = getByText(root, "Body text");
-    expect(withoutResponsive.hasAttribute("data-responsive")).toBe(false);
+    const withResponsive = getByText(root, "Body text");
+    expect(withResponsive.hasAttribute("data-responsive")).toBe(true);
   });
 
   it("emits muted tone and omits default tone attr", () => {

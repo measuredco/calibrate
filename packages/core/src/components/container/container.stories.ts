@@ -13,7 +13,7 @@ const meta = {
     },
   },
   parameters: { padding: 0 },
-  title: "Components/Container",
+  title: "Layout/Container",
 };
 
 export default meta;

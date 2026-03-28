@@ -19,7 +19,7 @@ export interface ClbrTextCommonProps {
   linkVisited?: boolean;
   /**
    * Enables breakpoint-responsive body scale.
-   * @default true
+   * @default false
    */
   responsive?: boolean;
   /**
@@ -72,7 +72,7 @@ export function renderClbrText(props: ClbrTextProps): string {
   const {
     children,
     linkVisited = true,
-    responsive = true,
+    responsive,
     size = "md",
     tone = "default",
   } = props;
@@ -125,7 +125,7 @@ export const CLBR_TEXT_SPEC = {
       type: "boolean",
     },
     responsive: {
-      default: true,
+      default: false,
       required: false,
       type: "boolean",
     },

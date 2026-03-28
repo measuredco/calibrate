@@ -28,7 +28,6 @@ export interface ClbrGridItemProps {
   children?: string;
   /**
    * Item align-self behavior.
-   * @default "start"
    */
   align?: ClbrGridPlacement;
   /** Column span at default container threshold. */
@@ -45,7 +44,6 @@ export interface ClbrGridItemProps {
   colStartWide?: ClbrGridTrack;
   /**
    * Item justify-self behavior.
-   * @default "start"
    */
   justify?: ClbrGridPlacement;
   /** Row span at default container threshold. */
@@ -95,7 +93,7 @@ export function renderClbrGrid({
  * @returns HTML string for a grid item.
  */
 export function renderClbrGridItem({
-  align = "start",
+  align,
   children,
   colSpan,
   colSpanNarrow,
@@ -103,7 +101,7 @@ export function renderClbrGridItem({
   colStart,
   colStartNarrow,
   colStartWide,
-  justify = "start",
+  justify,
   rowSpan,
   rowSpanNarrow,
   rowSpanWide,
@@ -113,8 +111,8 @@ export function renderClbrGridItem({
 }: ClbrGridItemProps): string {
   const gridItemAttrs = attrs({
     class: "grid-item",
-    "data-align": align === "start" ? undefined : align,
-    "data-justify": justify === "start" ? undefined : justify,
+    "data-align": align,
+    "data-justify": justify,
     "data-col-span-narrow": validateGridTrack(colSpanNarrow),
     "data-col-start-narrow": validateGridTrack(colStartNarrow),
     "data-col-span": validateGridTrack(colSpan),
@@ -184,13 +182,11 @@ export const CLBR_GRID_ITEM_SPEC = {
       type: "html",
     },
     align: {
-      default: "start",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     justify: {
-      default: "start",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
@@ -267,13 +263,13 @@ export const CLBR_GRID_ITEM_SPEC = {
         behavior: "emit",
         target: "data-align",
         value: "{align}",
-        when: "align is center or end",
+        when: "align is provided",
       },
       {
         behavior: "emit",
         target: "data-justify",
         value: "{justify}",
-        when: "justify is center or end",
+        when: "justify is provided",
       },
       {
         behavior: "emit",

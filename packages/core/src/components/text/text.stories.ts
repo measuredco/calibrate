@@ -13,7 +13,7 @@ const meta = {
       },
     },
   },
-  title: "Components/Text",
+  title: "Typography/Text",
 };
 
 export default meta;
@@ -41,7 +41,7 @@ export const Default = {
     as: "span",
     children: 'Text with <a href="/">link</a>.',
     linkVisited: true,
-    responsive: true,
+    responsive: false,
     size: "md",
     tone: "default",
   } satisfies ClbrTextSpanProps,
@@ -63,7 +63,7 @@ export const Paragraph = {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     linkVisited: true,
     measured: true,
-    responsive: true,
+    responsive: false,
     size: "md",
     tone: "default",
   } satisfies ClbrTextParagraphProps,
@@ -85,7 +85,7 @@ export const ParagraphWithMarkup = {
       '<em>Emphasis</em>, <code>code</code>, <del>deleted</del>, <strong>bold</strong>, and <sup>superscript</sup>. Here’s a link to <a href="https://measured.co">a website</a>.',
     linkVisited: true,
     measured: true,
-    responsive: true,
+    responsive: false,
     size: "md",
     tone: "default",
   } satisfies ClbrTextParagraphProps,

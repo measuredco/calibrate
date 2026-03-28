@@ -14,7 +14,7 @@ const meta = {
   parameters: {
     padding: "4.2rem 3rem",
   },
-  title: "Components/Prose",
+  title: "Typography/Prose",
 };
 
 export default meta;
@@ -24,7 +24,7 @@ export const Default = {
     align: "start",
     hangingIndent: undefined,
     measured: true,
-    responsive: true,
+    responsive: false,
     children: `<h1 id="an-h1-heading">An <code>h1</code> heading</h1>
 <p>This is a paragraph, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
 <p><em>Emphasis</em>, <code>code</code>, <del>deleted</del>,  and <strong>bold</strong>.</p>
