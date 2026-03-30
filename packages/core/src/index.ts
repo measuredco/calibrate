@@ -138,6 +138,15 @@ export {
 } from "./components/surface/surface";
 
 export {
+  CLBR_TEXTAREA_SPEC,
+  type ClbrTextareaProps,
+  type ClbrTextareaResize,
+  type ClbrTextareaSize,
+  type ClbrTextareaWidth,
+  renderClbrTextarea,
+} from "./components/textarea/textarea";
+
+export {
   CLBR_TEXT_SPEC,
   type ClbrTextAs,
   type ClbrTextAlign,

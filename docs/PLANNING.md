@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Control
 
-- `Textarea`
 - `Switch`
 - `Select`
 - `Range`
@@ -40,6 +39,7 @@ What we could working on next.
   - also consider `id` prop normalisation
 - Consider namespacing of component classes (and data-surface?)
 - full holistic human review across all components
+- reconsider Box abstraction
 
 #### Maybe
 
@@ -153,6 +153,13 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Textarea component implemented and aligned across core:
+  - added `textarea` renderer + CSS + stories + tests
+  - API includes `id`/`label` (required), optional `description`, `size`, `width`, `autocomplete`, `name`, `value`, `disabled`, `readOnly`, `required`, `spellcheck`, `invalid`, `resize`, and `rows`
+  - `resize` defaults to `vertical` and omits default attribute emission
+  - `rows` defaults to `2` with runtime minimum `2`
+  - spellcheck preserves browser defaults when omitted
+  - spec, exports, and core styles entrypoint wiring added
 - Divider component implemented and aligned across core/system:
   - added `divider` renderer + CSS + stories + tests
   - API settled on `orientation` (`horizontal | vertical`) and `tone` (`default | subtle | brand`)

@@ -1,17 +1,11 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 
-export type ClbrInputSize = "sm" | "md";
-export type ClbrInputType =
-  | "text"
-  | "email"
-  | "password"
-  | "tel"
-  | "url"
-  | "numeric";
-export type ClbrInputWidth = "full" | "auto";
+export type ClbrTextareaResize = "vertical" | "none";
+export type ClbrTextareaSize = "sm" | "md";
+export type ClbrTextareaWidth = "full" | "auto";
 
-/** Props for the Calibrate input renderer. */
-export interface ClbrInputProps {
+/** Props for the Calibrate textarea renderer. */
+export interface ClbrTextareaProps {
   /**
    * Autocomplete hint.
    * Use `false` to emit `autocomplete="off"`.
@@ -19,7 +13,7 @@ export interface ClbrInputProps {
    */
   autocomplete?: string | false;
   /**
-   * Optional assistive description text rendered after the input.
+   * Optional assistive description text rendered after the textarea.
    * Reused for validation guidance when `invalid` is true.
    * When omitted, no description or validation message is rendered.
    */
@@ -29,11 +23,11 @@ export interface ClbrInputProps {
    * @default false
    */
   disabled?: boolean;
-  /** Input id; used for `input[id]` and `label[for]`. */
+  /** Textarea id; used for `textarea[id]` and `label[for]`. */
   id: string;
   /**
    * Invalid state.
-   * Emits `aria-invalid="true"` only when true and input is editable.
+   * Emits `aria-invalid="true"` only when true and textarea is editable.
    * Ignored when `disabled` or `readOnly` is true.
    * Does not require `description`; consumers may keep hints or omit messages.
    * @default false
@@ -43,8 +37,6 @@ export interface ClbrInputProps {
   label: string;
   /** Optional field name. */
   name?: string;
-  /** Optional pattern attribute. */
-  pattern?: string;
   /**
    * Read-only state.
    * Ignored when `disabled` is true.
@@ -57,21 +49,28 @@ export interface ClbrInputProps {
    */
   required?: boolean;
   /**
+   * Resize behavior.
+   * Default `vertical` is omitted from markup.
+   * `none` emits `data-resize="none"` on wrapper.
+   * @default "vertical"
+   */
+  resize?: ClbrTextareaResize;
+  /**
+   * Number of visible text rows.
+   * Must be an integer >= 2.
+   * @default 2
+   */
+  rows?: number;
+  /**
    * Size variant.
    * @default "md"
    */
-  size?: ClbrInputSize;
+  size?: ClbrTextareaSize;
   /**
    * Spellcheck behavior.
-   * Defaults to false for `type="numeric"` unless explicitly provided.
+   * Omitted by default to preserve browser default behavior.
    */
   spellcheck?: boolean;
-  /**
-   * Input type.
-   * `numeric` maps to `type="text"` with `inputmode="numeric"`.
-   * @default "text"
-   */
-  type?: ClbrInputType;
   /** Optional current value. */
   value?: string;
   /**
@@ -80,16 +79,16 @@ export interface ClbrInputProps {
    * `auto` emits `data-width="auto"` on wrapper.
    * @default "full"
    */
-  width?: ClbrInputWidth;
+  width?: ClbrTextareaWidth;
 }
 
 /**
- * SSR renderer for the Calibrate input component.
+ * SSR renderer for the Calibrate textarea component.
  *
- * @param props - Input component props.
- * @returns HTML string for a labeled input field wrapper.
+ * @param props - Textarea component props.
+ * @returns HTML string for a labeled textarea field wrapper.
  */
-export function renderClbrInput({
+export function renderClbrTextarea({
   autocomplete,
   description,
   disabled,
@@ -97,21 +96,20 @@ export function renderClbrInput({
   invalid,
   label,
   name,
-  pattern,
   readOnly,
   required,
+  resize = "vertical",
+  rows = 2,
   size = "md",
   spellcheck,
-  type = "text",
   value,
   width = "full",
-}: ClbrInputProps): string {
+}: ClbrTextareaProps): string {
   const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
   const normalizedAutocomplete =
     autocomplete === false ? false : autocomplete?.trim();
   const normalizedName = name?.trim();
-  const normalizedPattern = pattern?.trim();
   const normalizedValue = value?.trim();
 
   if (!normalizedId) {
@@ -124,39 +122,33 @@ export function renderClbrInput({
     );
   }
 
+  if (!Number.isInteger(rows) || rows < 2) {
+    throw new Error("rows must be an integer greater than or equal to 2.");
+  }
+
   const descriptionId = normalizedDescription
     ? `${normalizedId}-description`
     : undefined;
 
-  const isNumeric = type === "numeric";
-  const resolvedType = isNumeric ? "text" : type;
-  const resolvedPattern =
-    normalizedPattern || (isNumeric ? "^[0-9]*$" : undefined);
-  const resolvedSpellcheck =
-    spellcheck === undefined && isNumeric ? false : spellcheck;
   const isDisabled = Boolean(disabled);
   const isReadOnly = !isDisabled && Boolean(readOnly);
   const isInvalid = !isDisabled && !isReadOnly && Boolean(invalid);
 
-  const inputAttrs = attrs({
+  const textareaAttrs = attrs({
     "aria-describedby": descriptionId,
     "aria-invalid": isInvalid ? "true" : undefined,
     autocomplete:
       normalizedAutocomplete === false
         ? "off"
         : normalizedAutocomplete || undefined,
-    class: "input",
+    class: "textarea",
     disabled: isDisabled,
     id: normalizedId,
-    inputmode: isNumeric ? "numeric" : undefined,
     name: normalizedName || undefined,
-    pattern: resolvedPattern,
     readonly: isReadOnly,
     required: Boolean(required),
-    spellcheck:
-      resolvedSpellcheck === undefined ? undefined : String(resolvedSpellcheck),
-    type: resolvedType,
-    value: normalizedValue || undefined,
+    rows: String(rows),
+    spellcheck: spellcheck === undefined ? undefined : String(spellcheck),
   });
 
   const descriptionMarkup = normalizedDescription
@@ -166,19 +158,22 @@ export function renderClbrInput({
     : "";
 
   const wrapperAttrs = attrs({
-    class: "input-field",
+    class: "textarea-field",
+    "data-resize": resize === "none" ? "none" : undefined,
     "data-size": size,
     "data-width": width === "auto" ? "auto" : undefined,
   });
 
   return `<div ${wrapperAttrs}><label class="label" for="${normalizedId}">${escapeHtml(
     label,
-  )}</label><input ${inputAttrs}>${descriptionMarkup}</div>`;
+  )}</label><textarea ${textareaAttrs}>${escapeHtml(
+    normalizedValue || "",
+  )}</textarea>${descriptionMarkup}</div>`;
 }
 
-/** Declarative input contract mirror for tooling, docs, and adapters. */
-export const CLBR_INPUT_SPEC = {
-  name: "input",
+/** Declarative textarea contract mirror for tooling, docs, and adapters. */
+export const CLBR_TEXTAREA_SPEC = {
+  name: "textarea",
   output: {
     element: "div",
   },
@@ -215,10 +210,6 @@ export const CLBR_INPUT_SPEC = {
       required: false,
       type: "string",
     },
-    pattern: {
-      required: false,
-      type: "string",
-    },
     readOnly: {
       default: false,
       ignoredWhen: "disabled is true",
@@ -230,6 +221,18 @@ export const CLBR_INPUT_SPEC = {
       required: false,
       type: "boolean",
     },
+    resize: {
+      default: "vertical",
+      required: false,
+      type: "enum",
+      values: ["vertical", "none"],
+    },
+    rows: {
+      constraints: ["integer", "min:2"],
+      default: 2,
+      required: false,
+      type: "number",
+    },
     size: {
       default: "md",
       required: false,
@@ -239,12 +242,6 @@ export const CLBR_INPUT_SPEC = {
     spellcheck: {
       required: false,
       type: "boolean",
-    },
-    type: {
-      default: "text",
-      required: false,
-      type: "enum",
-      values: ["text", "email", "password", "tel", "url", "numeric"],
     },
     value: {
       required: false,
@@ -262,12 +259,7 @@ export const CLBR_INPUT_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "input-field",
-      },
-      {
-        behavior: "always",
-        target: "input[class]",
-        value: "input",
+        value: "textarea-field",
       },
       {
         behavior: "always",
@@ -281,8 +273,19 @@ export const CLBR_INPUT_SPEC = {
         when: "width is auto",
       },
       {
+        behavior: "emit",
+        target: "data-resize",
+        value: "none",
+        when: "resize is none",
+      },
+      {
         behavior: "always",
-        target: "input[id]",
+        target: "textarea[class]",
+        value: "textarea",
+      },
+      {
+        behavior: "always",
+        target: "textarea[id]",
         value: "{id}",
       },
       {
@@ -290,99 +293,61 @@ export const CLBR_INPUT_SPEC = {
         target: "label[for]",
         value: "{id}",
       },
-
       {
         behavior: "always",
-        target: "input[type]",
-        value: "{type}",
-        when: "type is not numeric",
+        target: "textarea[rows]",
+        value: "{rows}",
       },
       {
         behavior: "emit",
-        target: "input[aria-describedby]",
-        value: "{id}-description",
-        when: "description is a non-empty string",
-      },
-      {
-        behavior: "emit",
-        target: "input[aria-invalid]",
-        value: "true",
-        when: "invalid is true and disabled/readOnly are false",
-      },
-      {
-        behavior: "emit",
-        target: "input[autocomplete]",
+        target: "textarea[autocomplete]",
         value: "off",
         when: "autocomplete is false",
       },
       {
         behavior: "emit",
-        target: "input[autocomplete]",
+        target: "textarea[autocomplete]",
         value: "{autocomplete}",
         when: "autocomplete is a non-empty string",
       },
       {
         behavior: "emit",
-        target: "input[disabled]",
-        when: "disabled is true",
-      },
-      {
-        behavior: "emit",
-        target: "input[required]",
-        when: "required is true",
-      },
-      {
-        behavior: "emit",
-        target: "input[name]",
+        target: "textarea[name]",
         value: "{name}",
         when: "name is a non-empty string",
       },
       {
         behavior: "emit",
-        target: "input[value]",
-        value: "{value}",
-        when: "value is a non-empty string",
+        target: "textarea[disabled]",
+        when: "disabled is true",
       },
       {
         behavior: "emit",
-        target: "input[type]",
-        value: "text",
-        when: "type is numeric",
-      },
-      {
-        behavior: "emit",
-        target: "input[inputmode]",
-        value: "numeric",
-        when: "type is numeric",
-      },
-      {
-        behavior: "emit",
-        target: "input[pattern]",
-        value: "{pattern}",
-        when: "pattern is a non-empty string",
-      },
-      {
-        behavior: "emit",
-        target: "input[pattern]",
-        value: "^[0-9]*$",
-        when: "type is numeric and pattern is omitted",
-      },
-      {
-        behavior: "emit",
-        target: "input[spellcheck]",
-        value: "{spellcheck}",
-        when: "spellcheck is explicitly true or false",
-      },
-      {
-        behavior: "emit",
-        target: "input[spellcheck]",
-        value: "false",
-        when: "type is numeric and spellcheck is omitted",
-      },
-      {
-        behavior: "emit",
-        target: "input[readonly]",
+        target: "textarea[readonly]",
         when: "readOnly is true and disabled is false",
+      },
+      {
+        behavior: "emit",
+        target: "textarea[required]",
+        when: "required is true",
+      },
+      {
+        behavior: "emit",
+        target: "textarea[spellcheck]",
+        value: "{spellcheck}",
+        when: "spellcheck is provided",
+      },
+      {
+        behavior: "emit",
+        target: "textarea[aria-invalid]",
+        value: "true",
+        when: "invalid is true and disabled is false and readOnly is false",
+      },
+      {
+        behavior: "emit",
+        target: "textarea[aria-describedby]",
+        value: "{id}-description",
+        when: "description is a non-empty string",
       },
     ],
     content: [
@@ -392,10 +357,15 @@ export const CLBR_INPUT_SPEC = {
         value: "escaped label",
       },
       {
+        behavior: "always",
+        element: "textarea.textarea",
+        value: "escaped value (or empty)",
+      },
+      {
         behavior: "emit",
         element: "p.description",
         value: "escaped description",
-        when: "description is provided (hint or validation guidance)",
+        when: "description is a non-empty string",
       },
     ],
   },
