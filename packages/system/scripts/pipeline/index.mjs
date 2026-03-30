@@ -94,10 +94,10 @@ async function discoverBuildTargets() {
     targets.push(buildTargetConfigFromResolver(resolverPath, resolverDoc));
   }
 
-  // Keep dependency-aware and deterministic build order: core first, then other targets alphabetically.
+  // Keep dependency-aware and deterministic build order: base first, then other targets alphabetically.
   targets.sort((a, b) => {
-    if (a.key === "core") return -1;
-    if (b.key === "core") return 1;
+    if (a.key === "base") return -1;
+    if (b.key === "base") return 1;
     return a.key.localeCompare(b.key);
   });
 

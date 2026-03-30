@@ -10,15 +10,11 @@ What we're working on now.
 
 What we could working on next.
 
-- cross-library consistency of optional/required props, default values, and omit/emit behaviour
-
 ### Components
 
-#### Layout
+- `Divider`
 
-- `Space`(maybe, lower-level compositional device)
-
-#### Form
+#### Control
 
 - `Textarea`
 - `Switch`
@@ -28,25 +24,33 @@ What we could working on next.
 - `Field`(maybe, abstraction and layout manager)
 - `Form`(maybe, validation and composition manager)
 
+#### Graphic
+
+- `Image`
+- `Logo`
+- `Poster` (maybe, text on Image)
+
+#### Composite
+
+- `Card`
+
 #### General
 
 - Define a shared `data-*` passthrough contract for renderer components:
   - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
   - also consider `id` prop normalisation
-- Rename system core (foundations?) to avoid clash with core package
 - Consider namespacing of component classes (and data-surface?)
+- cross-library consistency of optional/required props, default values, and omit/emit behaviour
+- full holistic human review across all components
+
+#### Maybe
+
+- `Space`(lower-level compositional device)
 
 ## Later
 
 Everything we could attempt given sufficient time and resources.
-
-### Components follow-up
-
-- Box component refinement pass:
-  - review final surface nesting defaults/brand interactions in composition-heavy layouts
-  - assess whether `data-surface="default"` emission should remain opt-in per component usage
-  - revisit optional API polish after real Storybook usage
 
 ### Tokens evolution
 
@@ -242,7 +246,7 @@ _This section is a historical completion record; some entries may describe decis
 - semantic effect theme/surface files for `msrd` (`light|dark` × `default|brand`).
 - semantic effect files now expose `opacity.demoted` mapped from `primitive.effect.opacity.40`.
 - semantic folder structure is axis-first for color/effect, with typography and layout using `size` contexts.
-- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `packages/system/src/core/semantic/spacing.tokens.json`.
+- semantic spacing now exposes root non-size scales (`vertical`, `horizontal`) in `packages/system/src/base/semantic/spacing.tokens.json`.
 - responsive vertical rhythm moved to `layout/size/*` as `verticalSpacing` (not duplicated in spacing size files).
 - layout grid gap semantics authored by size context (`baseline`, `tablet`, `laptop`), with `laptop` currently override-only.
 - layout vertical spacing escalation now begins at `notebook` (split from `tablet`).
@@ -278,9 +282,9 @@ _This section is a historical completion record; some entries may describe decis
   - `packages/system/dist/**` is versioned/public
   - `packages/system/build/**` is disposable
   - `system:verify` added to fail when `packages/system/dist/**` is out of date after build
-- Multi-brand packaging/layering foundation implemented:
-  - `core` and `msrd` outputs now build independently
-  - core artifacts: `packages/system/dist/css/clbr.core.tokens.css`, `packages/system/build/sd/clbr.core.contexts.json`
+- Multi-brand packaging/layering base implemented:
+  - `base` and `msrd` outputs now build independently
+  - base artifacts: `packages/system/dist/css/clbr.base.tokens.css`, `packages/system/build/sd/clbr.base.contexts.json`
   - msrd artifacts: `packages/system/dist/css/clbr.msrd.tokens.css`, `packages/system/build/sd/clbr.msrd.contexts.json`
   - deterministic CSS layering emitted via `@layer clbr, clbr.brand;`
 - Wireframe brand onboarding completed:

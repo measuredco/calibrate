@@ -123,7 +123,7 @@
       "description": "MSRD non-context token sources.",
       "sources": [
         {
-          "$ref": "../src/core/primitive/spacing.tokens.json"
+          "$ref": "../src/base/primitive/spacing.tokens.json"
         },
         {
           "$ref": "../src/msrd/primitive/color.tokens.json"

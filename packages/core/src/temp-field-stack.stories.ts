@@ -10,7 +10,7 @@ const meta = {
       disable: true,
     },
   },
-  title: "Sandbox/Field Stack (Temporary)",
+  title: "Sandbox/Field Stack",
 };
 
 export default meta;

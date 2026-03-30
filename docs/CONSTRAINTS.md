@@ -13,7 +13,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Establish `system`, `core`, and shared support packages as first-class package boundaries in the repo.
 - Treat `core` as the primary published runtime contract; keep token authoring/pipeline concerns internal by default.
 - Use lockstep versioning across design-system packages by default to reduce token/component drift.
-- Preserve core token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
+- Preserve base token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
 - Keep current bridge/build pipeline robust while resolver/SD support gaps are being closed upstream.
 - Treat probe artifacts (for example Card component tokens and wireframe brand) as architecture-validation assets until explicitly promoted to long-term API commitments.
 
@@ -24,7 +24,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - For the internal system package, semantic tokens remain the intended API layer (not primitives) for any downstream transforms/contracts.
 - Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
-- Shared system-shell domains live in `packages/system/src/core/{primitive,semantic}`.
+- Shared system-shell domains live in `packages/system/src/base/{primitive,semantic}`.
 - Brand-specific domains live in `packages/system/src/<brand>/{primitive,semantic}`.
 
 ## Folder And File Conventions
@@ -32,9 +32,9 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Semantic folder convention (axis-first where applicable):
   - base pattern: `packages/system/src/<brand>/semantic/<domain>/<axis>/<context>...`
   - optional override pattern (only when needed): `packages/system/src/<brand>/semantic/<domain>/override/<axis>/<context>...`
-- Core folder convention mirrors brand convention where applicable:
-  - base pattern: `packages/system/src/core/semantic/<domain>/<axis>/<context>...`
-  - primitive pattern: `packages/system/src/core/primitive/<domain>.tokens.json`
+- Foundation folder convention mirrors brand convention where applicable:
+  - base pattern: `packages/system/src/base/semantic/<domain>/<axis>/<context>...`
+  - primitive pattern: `packages/system/src/base/primitive/<domain>.tokens.json`
 
 - Semantic color file convention: `packages/system/src/<brand>/semantic/color/theme/<theme>/<surface>.tokens.json`.
 - Semantic color forced-colors convention (current normalized path): `packages/system/src/<brand>/semantic/color/forced-colors/<context>.tokens.json`.
@@ -64,7 +64,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - lockstep versioning is the default across design-system packages.
   - support full-system consumption through `core`; selective package publication remains optional and should not leak internal authoring boundaries by default.
 - `tokens` package structure remains:
-  - source tokens live under `packages/system/src/...` (including `core` and brand folders).
+  - source tokens live under `packages/system/src/...` (including `base` and brand folders).
   - generated public artifacts output to `packages/system/dist/...`.
   - disposable pipeline artifacts output to `packages/system/build/...`.
 - Resolver documents and build/transforms should live inside the `packages/system/` package tree.
@@ -127,10 +127,10 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - `packages/system/src/msrd/semantic/color/forced-colors/on.tokens.json`
 - `packages/system/src/msrd/semantic/effect/theme/light/{default,brand}.tokens.json`
 - `packages/system/src/msrd/semantic/effect/theme/dark/{default,brand}.tokens.json`
-- `packages/system/src/core/semantic/spacing.tokens.json`
-- `packages/system/src/core/semantic/layout/tokens.json`
-- `packages/system/src/core/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
-- `packages/system/src/core/semantic/breakpoint.tokens.json`
+- `packages/system/src/base/semantic/spacing.tokens.json`
+- `packages/system/src/base/semantic/layout/tokens.json`
+- `packages/system/src/base/semantic/layout/size/{baseline,tablet,notebook,laptop}.tokens.json`
+- `packages/system/src/base/semantic/breakpoint.tokens.json`
 - `packages/system/src/msrd/semantic/typography/tokens.json`
 - `packages/system/src/msrd/semantic/typography/size/{baseline,tablet}.tokens.json`
 - `packages/system/src/msrd/semantic/motion/tokens.json`
@@ -148,7 +148,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Group ordering rule:
   - when a group includes a `default` token, place `default` at the top of that group (after any `$*` metadata keys)
 - Cross-layer alias rule:
-  - brand primitive tokens may alias core primitive tokens when values are intentionally shared
+  - brand primitive tokens may alias base primitive tokens when values are intentionally shared
   - keep explicit literals where design intent intentionally diverges
 - Build outputs must be generated from tokens (no hand-maintained CSS token files as source of truth).
 - Prefer vendored schema URLs for `$schema` where possible after vendoring (`packages/system/schemas/...`) to reduce drift/network dependency.
@@ -176,7 +176,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - context files may be authored sparse/override-only when axis composition is cumulative (`baseContext`)
   - keep duplicate declarations only when required to preserve local alias anchors or explicit readability intent
 - Resolver/build order must satisfy semantic dependencies:
-  - `core.primitive` -> `core.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
+  - `base.primitive` -> `base.semantic` -> `<brand>.primitive` -> `<brand>.semantic`
   - `semantic.<brand>.spacing` resolves before `semantic.<brand>.layout` when layout aliases spacing
   - size-context layering order must be deterministic (e.g. `baseline|tablet|notebook` base, then `laptop` overrides where files are partial)
 
@@ -196,7 +196,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Keep the repository-level `build` ignore convention to avoid committing transient build folders.
 - CSS outputs should declare deterministic layer ordering when multiple bundles compose together:
   - layer order: `clbr`, then `clbr.brand`
-  - core bundle emits in `@layer clbr`
+  - base bundle emits in `@layer clbr`
   - brand bundles emit in `@layer clbr.brand`
 
 ## Consumer Integration Contract

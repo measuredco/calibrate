@@ -1,8 +1,8 @@
 {
   "$schema": "../schemas/2025.10/schema/resolver.json",
-  "name": "Core resolver",
+  "name": "Base resolver",
   "version": "2025.10",
-  "description": "Resolver contexts for core tokens (size + root).",
+  "description": "Resolver contexts for base tokens (size + root).",
   "$defs": {
     "build": {
       "namespace": "clbr",
@@ -64,25 +64,25 @@
   ],
   "sets": {
     "base": {
-      "description": "Core non-context token sources.",
+      "description": "Base non-context token sources.",
       "sources": [
         {
-          "$ref": "../src/core/primitive/breakpoint.tokens.json"
+          "$ref": "../src/base/primitive/breakpoint.tokens.json"
         },
         {
-          "$ref": "../src/core/primitive/spacing.tokens.json"
+          "$ref": "../src/base/primitive/spacing.tokens.json"
         },
         {
-          "$ref": "../src/core/primitive/layout.tokens.json"
+          "$ref": "../src/base/primitive/layout.tokens.json"
         },
         {
-          "$ref": "../src/core/semantic/breakpoint.tokens.json"
+          "$ref": "../src/base/semantic/breakpoint.tokens.json"
         },
         {
-          "$ref": "../src/core/semantic/spacing.tokens.json"
+          "$ref": "../src/base/semantic/spacing.tokens.json"
         },
         {
-          "$ref": "../src/core/semantic/layout/tokens.json"
+          "$ref": "../src/base/semantic/layout/tokens.json"
         }
       ]
     }
@@ -97,7 +97,7 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/baseline.tokens.json"
           }
         ],
         "tablet": [
@@ -105,10 +105,10 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/baseline.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/tablet.tokens.json"
           }
         ],
         "notebook": [
@@ -116,13 +116,13 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/baseline.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/tablet.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/notebook.tokens.json"
           }
         ],
         "laptop": [
@@ -130,22 +130,22 @@
             "$ref": "#/sets/base"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/baseline.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/baseline.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/tablet.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/tablet.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/notebook.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/notebook.tokens.json"
           },
           {
-            "$ref": "../src/core/semantic/layout/size/laptop.tokens.json"
+            "$ref": "../src/base/semantic/layout/size/laptop.tokens.json"
           }
         ]
       }
     },
     "root": {
-      "description": "Core root context.",
+      "description": "Base root context.",
       "default": "default",
       "contexts": {
         "default": [],

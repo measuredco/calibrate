@@ -28,7 +28,7 @@ const meta = {
       },
     },
   },
-  title: "Iconography/Icon",
+  title: "Graphic/Icon",
 };
 
 export default meta;

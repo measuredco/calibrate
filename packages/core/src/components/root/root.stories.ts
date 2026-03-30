@@ -48,7 +48,7 @@ const meta = {
     },
     withRoot: false,
   },
-  title: "Layout/Root",
+  title: "Environment/Root",
 };
 
 export default meta;
