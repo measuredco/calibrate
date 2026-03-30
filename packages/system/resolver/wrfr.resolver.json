@@ -144,6 +144,9 @@
           "$ref": "../src/wrfr/semantic/motion/tokens.json"
         },
         {
+          "$ref": "../src/wrfr/semantic/layout/tokens.json"
+        },
+        {
           "$ref": "../src/wrfr/semantic/radius/tokens.json"
         },
         {

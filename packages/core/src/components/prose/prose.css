@@ -2,7 +2,6 @@
   :where(.clbr) .prose {
     --clbr-prose-font: var(--clbr-typography-text-body-md);
     --clbr-prose-font-sm: var(--clbr-typography-text-body-sm);
-    --clbr-prose-rule-width: var(--clbr-spacing-horizontal-1000);
 
     color: var(--clbr-color-foreground-prose);
     font: var(--clbr-prose-font);
@@ -392,10 +391,10 @@
 
     & hr {
       border-block-end: none;
-      border-block-start: var(--clbr-layout-border-width-thick) solid
+      border-block-start: var(--clbr-layout-divider-brand-thickness) solid
         var(--clbr-color-border-brand);
       border-inline: none;
-      inline-size: var(--clbr-prose-rule-width);
+      inline-size: var(--clbr-layout-divider-brand-size);
       margin-block-end: var(--clbr-spacing-vertical-700);
       margin-block-start: 0;
       margin-inline: 0;
@@ -685,11 +684,11 @@
       }
 
       &::before {
-        border-top: var(--clbr-layout-border-width-thick) solid
+        border-top: var(--clbr-layout-divider-brand-thickness) solid
           var(--clbr-color-border-brand);
         content: "";
         display: block;
-        inline-size: var(--clbr-prose-rule-width);
+        inline-size: var(--clbr-layout-divider-brand-size);
         margin-block-end: var(--clbr-spacing-vertical-800);
         position: relative;
       }

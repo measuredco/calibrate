@@ -144,6 +144,9 @@
           "$ref": "../src/msrd/semantic/motion/tokens.json"
         },
         {
+          "$ref": "../src/msrd/semantic/layout/tokens.json"
+        },
+        {
           "$ref": "../src/msrd/semantic/radius/tokens.json"
         },
         {

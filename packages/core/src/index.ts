@@ -42,6 +42,14 @@ export {
 } from "./components/container/container";
 
 export {
+  CLBR_DIVIDER_SPEC,
+  type ClbrDividerOrientation,
+  type ClbrDividerTone,
+  type ClbrDividerProps,
+  renderClbrDivider,
+} from "./components/divider/divider";
+
+export {
   CLBR_GRID_ITEM_SPEC,
   CLBR_GRID_SPEC,
   type ClbrGridGap,

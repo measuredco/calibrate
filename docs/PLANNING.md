@@ -12,8 +12,6 @@ What we could working on next.
 
 ### Components
 
-- `Divider`
-
 #### Control
 
 - `Textarea`
@@ -155,6 +153,13 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Divider component implemented and aligned across core/system:
+  - added `divider` renderer + CSS + stories + tests
+  - API settled on `orientation` (`horizontal | vertical`) and `tone` (`default | subtle | brand`)
+  - horizontal renders semantic `<hr>`; vertical renders `<span role="separator" aria-orientation="vertical">`
+  - tone defaults to `default` (omitted in markup); non-default tones emit `data-tone`
+  - added brand layout semantic tokens for divider sizing/thickness in `msrd` and `wrfr`
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Cross-library prop contract consistency audit completed:
   - reviewed optional/required props, runtime defaults, and omit/emit behavior across component renderers
   - established default emission policy in constraints for semantic/context defaults vs deterministic layout attrs
