@@ -1,6 +1,16 @@
 import "./styles.css";
 
 export {
+  CLBR_BOX_SPEC,
+  type ClbrBoxBackground,
+  type ClbrBoxBorder,
+  type ClbrBoxPadding,
+  type ClbrBoxProps,
+  type ClbrBoxRadius,
+  renderClbrBox,
+} from "./components/box/box";
+
+export {
   CLBR_BUTTON_SPEC,
   type ClbrButtonAppearance,
   type ClbrButtonCommonProps,

@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr[data-brand="wrfr"]) {
+  :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
@@ -72,13 +72,13 @@
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
     --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-    --clbr-radius-100: 0.0625rem;
-    --clbr-radius-200: 0.25rem;
-    --clbr-radius-300: 0.5rem;
-    --clbr-radius-400: 1.125rem;
-    --clbr-radius-panel: 1.125rem;
-    --clbr-radius-ratio-default: 0.16666667;
-    --clbr-radius-ratio-lg: 0.311;
+    --clbr-radius-2xs: 0rem;
+    --clbr-radius-lg: 0rem;
+    --clbr-radius-md: 0rem;
+    --clbr-radius-ratio-default: 0;
+    --clbr-radius-ratio-lg: 0;
+    --clbr-radius-sm: 0rem;
+    --clbr-radius-xs: 0rem;
     --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif;
     --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace;
     --clbr-typography-font-weight-bold: 566;
@@ -175,7 +175,7 @@
 
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="wrfr"]) {
+    :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
@@ -269,7 +269,7 @@
 
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="wrfr"][data-theme="light"]) {
+    :where(.clbr[data-brand="wrfr"][data-theme="light"], .clbr[data-brand="wrfr"][data-theme="light"] [data-surface="default"]) {
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
@@ -381,7 +381,7 @@
   }
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="wrfr"][data-theme="dark"]) {
+  :where(.clbr[data-brand="wrfr"][data-theme="dark"], .clbr[data-brand="wrfr"][data-theme="dark"] [data-surface="default"]) {
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
@@ -491,7 +491,7 @@
 
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="wrfr"]) {
+    :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -510,7 +510,7 @@
 
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="wrfr"]) {
+    :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }

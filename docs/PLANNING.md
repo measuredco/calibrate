@@ -10,11 +10,12 @@ What we're working on now.
 
 What we could working on next.
 
+- cross-library consistency of optional/required props, default values, and omit/emit behaviour
+
 ### Components
 
 #### Layout
 
-- `Box` (implements `data-surface`)
 - `Space`(maybe, lower-level compositional device)
 
 #### Form
@@ -39,6 +40,13 @@ What we could working on next.
 ## Later
 
 Everything we could attempt given sufficient time and resources.
+
+### Components follow-up
+
+- Box component refinement pass:
+  - review final surface nesting defaults/brand interactions in composition-heavy layouts
+  - assess whether `data-surface="default"` emission should remain opt-in per component usage
+  - revisit optional API polish after real Storybook usage
 
 ### Tokens evolution
 

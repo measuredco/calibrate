@@ -145,7 +145,7 @@
     }
 
     & pre {
-      border-radius: var(--clbr-radius-panel);
+      border-radius: var(--clbr-radius-md);
       position: relative;
       max-inline-size: var(--clbr-typography-measure-default);
 
@@ -160,7 +160,7 @@
       &::after {
         border: var(--clbr-layout-border-width-default) solid
           var(--clbr-color-border-brand);
-        border-radius: var(--clbr-radius-panel);
+        border-radius: var(--clbr-radius-md);
         content: "";
         inset-block-end: var(--clbr-effect-stroke-inset);
         inset-block-start: var(--clbr-effect-stroke-outset);
@@ -172,7 +172,7 @@
 
       & code {
         background-color: var(--clbr-color-base16-00);
-        border-radius: var(--clbr-radius-panel);
+        border-radius: var(--clbr-radius-md);
         box-shadow: var(--clbr-effect-shadow-default);
         color: var(--clbr-color-base16-05);
         direction: ltr;
@@ -411,7 +411,7 @@
     }
 
     & img {
-      border-radius: var(--clbr-radius-200);
+      border-radius: var(--clbr-radius-xs);
       box-shadow: var(--clbr-effect-shadow-default);
 
       [data-align="end"] & {

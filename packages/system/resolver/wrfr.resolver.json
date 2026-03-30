@@ -19,10 +19,10 @@
           "layer": "clbr.brand",
           "layerOrder": ["clbr", "clbr.brand"],
           "selectors": {
-            "root": ":where(.{namespace}[data-brand=\"{brand}\"])",
+            "root": ":where(.{namespace}[data-brand=\"{brand}\"], .{namespace}[data-brand=\"{brand}\"] [data-surface=\"default\"])",
             "surfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"] [data-surface=\"brand\"])",
-            "themeDark": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"])",
-            "themeLight": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"])",
+            "themeDark": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"], .{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"] [data-surface=\"default\"])",
+            "themeLight": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"], .{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"] [data-surface=\"default\"])",
             "themeDarkSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"dark\"] [data-surface=\"brand\"])",
             "themeLightSurfaceBrand": ":where(.{namespace}[data-brand=\"{brand}\"][data-theme=\"light\"] [data-surface=\"brand\"])"
           },

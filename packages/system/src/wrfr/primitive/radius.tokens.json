@@ -1,36 +1,42 @@
 {
   "100": {
     "$value": {
-      "value": 1,
+      "value": 0,
       "unit": "px"
     }
   },
   "200": {
     "$value": {
-      "value": 4,
+      "value": 0,
       "unit": "px"
     }
   },
   "300": {
     "$value": {
-      "value": 8,
+      "value": 0,
       "unit": "px"
     }
   },
   "400": {
     "$value": {
-      "value": 18,
+      "value": 0,
+      "unit": "px"
+    }
+  },
+  "500": {
+    "$value": {
+      "value": 0,
       "unit": "px"
     }
   },
   "ratio": {
     "default": {
       "$type": "number",
-      "$value": 0.16666667
+      "$value": 0
     },
     "lg": {
       "$type": "number",
-      "$value": 0.311
+      "$value": 0
     }
   },
   "$schema": "../../../schemas/2025.10/schema/format.json",

@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr[data-brand="wrfr"]) {
+  :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-white-08: rgba(255, 255, 255, 0.08);
@@ -62,12 +62,13 @@
     --clbr-primitive-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-    --clbr-primitive-radius-100: 0.0625rem;
-    --clbr-primitive-radius-200: 0.25rem;
-    --clbr-primitive-radius-300: 0.5rem;
-    --clbr-primitive-radius-400: 1.125rem;
-    --clbr-primitive-radius-ratio-default: 0.16666667;
-    --clbr-primitive-radius-ratio-lg: 0.311;
+    --clbr-primitive-radius-100: 0rem;
+    --clbr-primitive-radius-200: 0rem;
+    --clbr-primitive-radius-300: 0rem;
+    --clbr-primitive-radius-400: 0rem;
+    --clbr-primitive-radius-500: 0rem;
+    --clbr-primitive-radius-ratio-default: 0;
+    --clbr-primitive-radius-ratio-lg: 0;
     --clbr-primitive-spacing-100: 0.0625rem;
     --clbr-primitive-spacing-1000: 2rem;
     --clbr-primitive-spacing-1100: 2.25rem;

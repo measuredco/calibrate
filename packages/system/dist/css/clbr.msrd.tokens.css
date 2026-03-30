@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) {
+  :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
     --clbr-card-color-dots-default: #e3e4e5;
     --clbr-card-color-dots-hover: #6db5f8;
     --clbr-card-color-interactive: #0158ad;
@@ -75,13 +75,13 @@
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
     --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-    --clbr-radius-100: 0.0625rem;
-    --clbr-radius-200: 0.25rem;
-    --clbr-radius-300: 0.5rem;
-    --clbr-radius-400: 1.125rem;
-    --clbr-radius-panel: 1.125rem;
+    --clbr-radius-2xs: 0.0625rem;
+    --clbr-radius-lg: 1.125rem;
+    --clbr-radius-md: 0.75rem;
     --clbr-radius-ratio-default: 0.16;
     --clbr-radius-ratio-lg: 0.311;
+    --clbr-radius-sm: 0.375rem;
+    --clbr-radius-xs: 0.25rem;
     --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif;
     --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace;
     --clbr-typography-font-weight-bold: 566;
@@ -180,7 +180,7 @@
 
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"]) {
+    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
       --clbr-card-color-dots-default: #232424;
       --clbr-card-color-dots-hover: #083c8a;
       --clbr-card-color-interactive: #3598f8;
@@ -279,7 +279,7 @@
 
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"]) {
+    :where(.clbr[data-brand="msrd"][data-theme="light"], .clbr[data-brand="msrd"][data-theme="light"] [data-surface="default"]) {
       --clbr-card-color-dots-default: #e3e4e5;
       --clbr-card-color-dots-hover: #6db5f8;
       --clbr-card-color-interactive: #0158ad;
@@ -399,7 +399,7 @@
   }
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"]) {
+  :where(.clbr[data-brand="msrd"][data-theme="dark"], .clbr[data-brand="msrd"][data-theme="dark"] [data-surface="default"]) {
     --clbr-card-color-dots-default: #232424;
     --clbr-card-color-dots-hover: #083c8a;
     --clbr-card-color-interactive: #3598f8;
@@ -517,7 +517,7 @@
 
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"]) {
+    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -536,7 +536,7 @@
 
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="msrd"]) {
+    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
       --clbr-card-color-dots-default: ButtonBorder;
       --clbr-card-color-dots-hover: ButtonBorder;
       --clbr-card-color-interactive: LinkText;
