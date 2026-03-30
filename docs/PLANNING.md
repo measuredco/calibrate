@@ -41,7 +41,6 @@ What we could working on next.
   - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
   - also consider `id` prop normalisation
 - Consider namespacing of component classes (and data-surface?)
-- cross-library consistency of optional/required props, default values, and omit/emit behaviour
 - full holistic human review across all components
 
 #### Maybe
@@ -156,6 +155,10 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Cross-library prop contract consistency audit completed:
+  - reviewed optional/required props, runtime defaults, and omit/emit behavior across component renderers
+  - established default emission policy in constraints for semantic/context defaults vs deterministic layout attrs
+  - fixed Box SPEC wording drift for `border` emit rule (`subtle | brand`)
 - Button icon props implemented and aligned across core:
   - button API expanded with `icon`, `iconPlacement`, `iconOnlyBelow`, `iconMirrored`
   - button renderer composes `renderClbrIcon` (decorative icon path, shared icon validation/render behavior)

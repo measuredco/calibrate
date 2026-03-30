@@ -115,6 +115,10 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
     - host CSS
     - `@layer clbr.root`
     - `@layer clbr.components`
+- Prop default emission policy (cross-component consistency):
+  - default semantic variant/context values should be omitted in emitted markup unless explicit default emission is required for context reset/scoping behavior.
+  - layout/size scale props that drive deterministic CSS branches should emit explicitly (for example `data-size`, `data-gap`) even at default.
+  - when default emission is intentionally divergent for a component, the reason should be documented in the component JSDoc/SPEC notes.
 - Asset package font contract:
   - `@measured/calibrate-assets/fonts.css` is the canonical package entrypoint for font-face declarations.
   - exposed family names should remain stable so consumers can self-host/override fonts without changing typography token contracts.

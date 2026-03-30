@@ -146,7 +146,7 @@ export const CLBR_BOX_SPEC = {
         behavior: "emit",
         target: "data-border",
         value: "{border}",
-        when: "border is subtle, brand, or none",
+        when: "border is subtle or brand",
       },
       {
         behavior: "emit",
