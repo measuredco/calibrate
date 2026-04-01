@@ -138,6 +138,13 @@ export {
 } from "./components/surface/surface";
 
 export {
+  CLBR_SWITCH_SPEC,
+  type ClbrSwitchProps,
+  type ClbrSwitchSize,
+  renderClbrSwitch,
+} from "./components/switch/switch";
+
+export {
   CLBR_TEXTAREA_SPEC,
   type ClbrTextareaProps,
   type ClbrTextareaResize,

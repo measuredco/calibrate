@@ -12,7 +12,6 @@
       column-gap: var(--clbr-checkbox-gap);
       cursor: pointer;
       display: flex;
-
       inline-size: fit-content;
 
       @media (any-hover: hover) {

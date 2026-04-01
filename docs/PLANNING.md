@@ -14,7 +14,6 @@ What we could working on next.
 
 #### Control
 
-- `Switch`
 - `Select`
 - `Range`
 - `Checkboxes`
@@ -156,6 +155,12 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Switch component implemented and aligned across core:
+  - added `switch` renderer + CSS + stories + tests
+  - API includes `label` (required), optional `checked`, `disabled`, `description`, `descriptionId`, `name`, `size`, and `value`
+  - implemented with native `input[type="checkbox"]` + `role="switch"` semantics
+  - `descriptionId` contract mirrors checkbox behavior (required when `description` is provided)
+  - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Wireframe (`wrfr`) theme visual design pass completed:
   - expanded wrfr primitive/semantic color and typography tokens (light/dark + brand)
   - added brand-specific typography/prose behaviors (including link decoration state model and code padding tokens)
