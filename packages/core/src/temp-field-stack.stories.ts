@@ -2,6 +2,8 @@ import { renderClbrButton } from "./components/button/button";
 import { renderClbrCheckbox } from "./components/checkbox/checkbox";
 import { renderClbrInput } from "./components/input/input";
 import { renderClbrRadios } from "./components/radios/radios";
+import { renderClbrSwitch } from "./components/switch/switch";
+import { renderClbrTextarea } from "./components/textarea/textarea";
 
 // Temporary sandbox story for quick cross-component visual checks.
 const meta = {
@@ -32,6 +34,12 @@ export const Default = {
       label: "Send me product updates",
       name: "updates",
       value: "yes",
+    })}${renderClbrSwitch({
+      description: "Enable this to receive urgent notifications.",
+      descriptionId: "temp-notifications-description",
+      label: "Urgent notifications",
+      name: "urgentNotifications",
+      value: "yes",
     })}${renderClbrRadios({
       description: "Choose one contact method.",
       id: "temp-contact-method",
@@ -42,6 +50,13 @@ export const Default = {
       legend: "Contact Method",
       name: "contactMethod",
       value: "email",
+    })}${renderClbrTextarea({
+      description: "Add any context that will help our support team.",
+      id: "temp-message",
+      label: "Message",
+      name: "message",
+      rows: 3,
+      value: "Hi team, I need help with my account settings.",
     })}<div style="display:flex;gap:var(--clbr-spacing-horizontal-400);">${renderClbrButton(
       {
         appearance: "solid",
@@ -72,6 +87,13 @@ export const Default = {
       label: "Send me product updates",
       name: "updates",
       value: "yes",
+    })}${renderClbrSwitch({
+      description: "Enable this to receive urgent notifications.",
+      descriptionId: "temp-notifications-description-sm",
+      label: "Urgent notifications",
+      name: "urgentNotificationsSm",
+      size: "sm",
+      value: "yes",
     })}${renderClbrRadios({
       description: "Choose one contact method.",
       id: "temp-contact-method-sm",
@@ -82,6 +104,14 @@ export const Default = {
       legend: "Contact Method",
       name: "contactMethodSm",
       value: "email",
+    })}${renderClbrTextarea({
+      description: "Add any context that will help our support team.",
+      id: "temp-message-sm",
+      label: "Message",
+      name: "messageSm",
+      rows: 2,
+      size: "sm",
+      value: "Hi team, I need help with my account settings.",
     })}<div style="display:flex;gap:var(--clbr-spacing-horizontal-400);">${renderClbrButton(
       {
         appearance: "solid",

@@ -1,3 +1,4 @@
+import { renderClbrFieldset } from "../fieldset/fieldset";
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 
 export type ClbrRadiosOrientation = "vertical" | "horizontal";
@@ -25,7 +26,7 @@ export interface ClbrRadiosProps {
    * @default false
    */
   disabled?: boolean;
-  /** Group id used for fieldset id and description id derivation. */
+  /** Group id used for group and per-item description id derivation. */
   id: string;
   /**
    * Group invalid state; emitted on fieldset when group is enabled.
@@ -67,7 +68,6 @@ export function renderClbrRadios({
   required,
   value,
 }: ClbrRadiosProps): string {
-  const normalizedDescription = description?.trim();
   const normalizedId = id.trim();
   const normalizedName = name.trim();
   const normalizedValue = value?.trim();
@@ -117,12 +117,7 @@ export function renderClbrRadios({
     throw new Error("radios values must be unique.");
   }
 
-  const groupDescriptionId = normalizedDescription
-    ? `${normalizedId}-description`
-    : undefined;
-
   const isGroupDisabled = Boolean(disabled);
-  const isGroupInvalid = !isGroupDisabled && Boolean(invalid);
 
   const optionsMarkup = normalizedRadios
     .map((item) => {
@@ -154,24 +149,19 @@ export function renderClbrRadios({
     })
     .join("");
 
-  const fieldsetAttrs = attrs({
-    "aria-describedby": groupDescriptionId,
-    "aria-invalid": isGroupInvalid ? "true" : undefined,
-    class: "radio-fieldset",
+  const radiosAttrs = attrs({
+    class: "radios",
     "data-orientation": orientation,
-    disabled: isGroupDisabled,
-    id: normalizedId,
   });
 
-  const groupDescriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${groupDescriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
-
-  return `<fieldset ${fieldsetAttrs}><legend class="legend">${escapeHtml(
+  return renderClbrFieldset({
+    children: `<div ${radiosAttrs}>${optionsMarkup}</div>`,
+    description,
+    disabled: isGroupDisabled,
+    id: normalizedId,
+    invalid,
     legend,
-  )}</legend>${groupDescriptionMarkup}<div class="radios">${optionsMarkup}</div></fieldset>`;
+  });
 }
 
 /** Declarative radios contract mirror for tooling, docs, and adapters. */
@@ -241,11 +231,16 @@ export const CLBR_RADIOS_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "radio-fieldset",
+        value: "fieldset",
       },
       {
         behavior: "always",
-        target: "data-orientation",
+        target: "div.radios[class]",
+        value: "radios",
+      },
+      {
+        behavior: "always",
+        target: "div.radios[data-orientation]",
         value: "{orientation}",
       },
       {
@@ -308,6 +303,11 @@ export const CLBR_RADIOS_SPEC = {
       },
     ],
     content: [
+      {
+        behavior: "always",
+        element: "div.radios",
+        value: "radio group container",
+      },
       {
         behavior: "always",
         element: "div.radio-field",

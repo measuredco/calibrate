@@ -1,0 +1,25 @@
+@layer clbr.components {
+  :where(.clbr) .fieldset {
+    border: none;
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+
+    &[data-width="auto"] {
+      inline-size: fit-content;
+    }
+
+    .description {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-50-font-size);
+      line-height: var(--clbr-typography-type-step-50-line-height);
+      margin-block: 0;
+      max-width: var(--clbr-typography-measure-default);
+      padding-block-end: var(--clbr-spacing-vertical-100);
+
+      [aria-invalid="true"] & {
+        color: var(--clbr-color-interactive-error-default);
+      }
+    }
+  }
+}

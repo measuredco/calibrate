@@ -1,32 +1,13 @@
 @layer clbr.components {
-  :where(.clbr) .radio-fieldset {
+  :where(.clbr) .radios {
     --clbr-radio-gap: var(--clbr-spacing-horizontal-400);
     --clbr-radio-inset: var(--clbr-spacing-vertical-200);
     --clbr-radio-size: var(--clbr-layout-icon-size-xs);
 
-    border: none;
-    margin: 0;
-    padding: 0;
-
-    .description {
-      color: var(--clbr-color-foreground-muted-text);
-      font-size: var(--clbr-typography-type-step-50-font-size);
-      line-height: var(--clbr-typography-type-step-50-line-height);
-      margin-block: 0;
-      max-width: var(--clbr-typography-measure-default);
-      padding-block-end: var(--clbr-spacing-vertical-100);
-
-      [aria-invalid="true"] & {
-        color: var(--clbr-color-interactive-error-default);
-      }
-    }
-
-    .radios {
-      [data-orientation="horizontal"] & {
-        display: flex;
-        column-gap: var(--clbr-spacing-horizontal-600);
-        flex-wrap: wrap;
-      }
+    &[data-orientation="horizontal"] {
+      display: flex;
+      column-gap: var(--clbr-spacing-horizontal-600);
+      flex-wrap: wrap;
     }
 
     .radio-field {

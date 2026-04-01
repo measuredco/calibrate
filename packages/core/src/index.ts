@@ -50,6 +50,13 @@ export {
 } from "./components/divider/divider";
 
 export {
+  CLBR_FIELDSET_SPEC,
+  type ClbrFieldsetProps,
+  type ClbrFieldsetWidth,
+  renderClbrFieldset,
+} from "./components/fieldset/fieldset";
+
+export {
   CLBR_GRID_ITEM_SPEC,
   CLBR_GRID_SPEC,
   type ClbrGridGap,

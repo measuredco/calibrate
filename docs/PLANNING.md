@@ -14,11 +14,7 @@ What we could working on next.
 
 #### Control
 
-- `Select`
-- `Range`
-- `Checkboxes`
-- `Field`(maybe, abstraction and layout manager)
-- `Form`(maybe, validation and composition manager)
+- `Form`
 
 #### Graphic
 
@@ -38,11 +34,14 @@ What we could working on next.
   - also consider `id` prop normalisation
 - Consider namespacing of component classes (and data-surface?)
 - full holistic human review across all components
-- reconsider Box abstraction
+- reconsider Box abstraction (allow border and radius `none` OR split into simpler Box component (maybe just padding and surface), and create a new component abstraction for border/radius/shadow/etc, e.g. Frame)
+- md size for radios, checkbox, fieldset
 
-#### Maybe
+### Web Components
 
-- `Space`(lower-level compositional device)
+- `Listbox`
+- `Menu`
+- `Range`
 
 ## Later
 
@@ -155,6 +154,11 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Fieldset extraction and radios composition refactor completed:
+  - added dedicated `fieldset` component (renderer/CSS/stories/tests/spec)
+  - radios now composes `renderClbrFieldset` and keeps orientation on `.radios`
+  - fieldset now supports width contract aligned with input (`full | auto`, emit only for `auto`)
+  - radios/fieldset specs and tests were rewritten against the settled APIs to remove change-trace residue
 - Switch component implemented and aligned across core:
   - added `switch` renderer + CSS + stories + tests
   - API includes `label` (required), optional `checked`, `disabled`, `description`, `descriptionId`, `name`, `size`, and `value`
