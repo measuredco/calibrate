@@ -107,9 +107,15 @@
     --clbr-typography-paragraph-spacing-default: 1.5rem;
     --clbr-typography-paragraph-spacing-lg: 2.25rem;
     --clbr-typography-paragraph-spacing-sm: 0.75rem;
-    --clbr-typography-prose-link-active-decoration-offset: 0.39em;
-    --clbr-typography-prose-link-decoration-thickness: 0.125rem;
-    --clbr-typography-prose-link-hover-decoration-offset: 0.34em;
+    --clbr-typography-prose-code-padding-block-default: 0.055em;
+    --clbr-typography-prose-code-padding-block-lg: 0.2em;
+    --clbr-typography-prose-code-padding-inline-default: 0.25em;
+    --clbr-typography-prose-link-active-decoration-offset: 0.34em;
+    --clbr-typography-prose-link-default-decoration-line: none;
+    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
+    --clbr-typography-prose-link-hover-decoration-line: underline;
+    --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
     --clbr-typography-text-body-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-body-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-body-responsive-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif;

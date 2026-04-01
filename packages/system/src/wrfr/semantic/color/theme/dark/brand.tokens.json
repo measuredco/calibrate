@@ -1,18 +1,18 @@
 {
   "$schema": "../../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic color tokens for msrd dark/brand surface.",
+  "$description": "Semantic color tokens for wrfr dark/brand surface.",
   "$type": "color",
   "brand": {
     "primary": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.white}"
     },
     "support": {
-      "$value": "{primitive.color.neutral.900}"
+      "$value": "{primitive.color.neutral.700}"
     }
   },
   "logo": {
     "default": {
-      "$value": "{primitive.color.white}"
+      "$value": "{brand.primary}"
     },
     "neutral": {
       "$value": "{logo.default}"
@@ -20,31 +20,31 @@
   },
   "background": {
     "default": {
-      "$value": "{primitive.color.neutral.1200}"
-    },
-    "panel": {
       "$value": "{primitive.color.neutral.1100}"
     },
+    "panel": {
+      "$value": "{primitive.color.neutral.1200}"
+    },
     "subtle": {
-      "$value": "{primitive.color.alpha.white.08}"
+      "$value": "{primitive.color.neutral.1000}"
     },
     "inverse": {
-      "$value": "{primitive.color.neutral.100}"
+      "$value": "{primitive.color.white}"
     }
   },
   "foreground": {
     "default": {
-      "$value": "{primitive.color.alpha.white.94}"
+      "$value": "{primitive.color.neutral.200}"
     },
     "prose": {
-      "$value": "{primitive.color.alpha.white.88}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "muted": {
       "text": {
-        "$value": "{primitive.color.alpha.white.56}"
+        "$value": "{primitive.color.neutral.600}"
       },
       "nonText": {
-        "$value": "{primitive.color.alpha.white.40}"
+        "$value": "{primitive.color.neutral.700}"
       }
     },
     "contrast": {
@@ -53,18 +53,18 @@
   },
   "border": {
     "default": {
-      "$value": "{primitive.color.alpha.white.16}"
+      "$value": "{primitive.color.neutral.800}"
     },
     "brand": {
       "$value": "{brand.support}"
     },
     "subtle": {
-      "$value": "{primitive.color.alpha.white.08}"
+      "$value": "{primitive.color.neutral.900}"
     }
   },
   "interactive": {
     "default": {
-      "$value": "{brand.primary}"
+      "$value": "{primitive.color.neutral.100}"
     },
     "error": {
       "default": {
@@ -78,52 +78,52 @@
       "$value": "{interactive.default}"
     },
     "hover": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.400}"
     },
     "focus": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.700}"
     },
     "active": {
-      "$value": "{primitive.color.neutral.400}"
+      "$value": "{primitive.color.neutral.500}"
     },
     "neutral": {
       "default": {
-        "$value": "{foreground.default}"
+        "$value": "{interactive.default}"
       },
       "visited": {
         "$value": "{interactive.neutral.default}"
       },
       "hover": {
-        "$value": "{primitive.color.alpha.white.80}"
-      },
-      "focus": {
-        "$value": "{interactive.focus}"
-      },
-      "active": {
-        "$value": "{primitive.color.alpha.white.68}"
-      }
-    },
-    "prose": {
-      "default": {
-        "$value": "{interactive.default}"
-      },
-      "visited": {
-        "$value": "{primitive.color.neutral.600}"
-      },
-      "hover": {
-        "$value": "{interactive.prose.default}"
-      },
-      "hoverDecoration": {
-        "$value": "{brand.support}"
+        "$value": "{interactive.hover}"
       },
       "focus": {
         "$value": "{interactive.focus}"
       },
       "active": {
         "$value": "{interactive.active}"
+      }
+    },
+    "prose": {
+      "default": {
+        "$value": "{foreground.prose}"
+      },
+      "visited": {
+        "$value": "{interactive.prose.default}"
+      },
+      "hover": {
+        "$value": "{interactive.prose.default}"
+      },
+      "hoverDecoration": {
+        "$value": "{interactive.prose.default}"
+      },
+      "focus": {
+        "$value": "{interactive.focus}"
+      },
+      "active": {
+        "$value": "{interactive.prose.default}"
       },
       "activeDecoration": {
-        "$value": "{interactive.prose.active}"
+        "$value": "{interactive.prose.default}"
       }
     }
   },
@@ -153,28 +153,28 @@
       "$value": "{primitive.color.neutral.100}"
     },
     "08": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "09": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0a": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0b": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0c": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0d": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0e": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0f": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     }
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "../../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic color tokens for msrd dark/default surface.",
+  "$description": "Semantic color tokens for wrfr dark/default surface.",
   "$type": "color",
   "brand": {
     "primary": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.white}"
     },
     "support": {
-      "$value": "{primitive.color.neutral.1000}"
+      "$value": "{primitive.color.neutral.700}"
     }
   },
   "logo": {
@@ -15,7 +15,7 @@
       "$value": "{brand.primary}"
     },
     "neutral": {
-      "$value": "{primitive.color.white}"
+      "$value": "{logo.default}"
     }
   },
   "background": {
@@ -64,7 +64,7 @@
   },
   "interactive": {
     "default": {
-      "$value": "{brand.primary}"
+      "$value": "{primitive.color.neutral.100}"
     },
     "error": {
       "default": {
@@ -78,52 +78,52 @@
       "$value": "{interactive.default}"
     },
     "hover": {
-      "$value": "{primitive.color.neutral.700}"
+      "$value": "{primitive.color.neutral.400}"
     },
     "focus": {
-      "$value": "{primitive.color.neutral.800}"
+      "$value": "{primitive.color.neutral.700}"
     },
     "active": {
-      "$value": "{primitive.color.neutral.800}"
+      "$value": "{primitive.color.neutral.500}"
     },
     "neutral": {
       "default": {
-        "$value": "{primitive.color.neutral.100}"
+        "$value": "{interactive.default}"
       },
       "visited": {
         "$value": "{interactive.neutral.default}"
       },
       "hover": {
-        "$value": "{primitive.color.neutral.400}"
-      },
-      "focus": {
-        "$value": "{interactive.focus}"
-      },
-      "active": {
-        "$value": "{primitive.color.neutral.500}"
-      }
-    },
-    "prose": {
-      "default": {
         "$value": "{interactive.hover}"
-      },
-      "visited": {
-        "$value": "{primitive.color.neutral.700}"
-      },
-      "hover": {
-        "$value": "{interactive.prose.default}"
-      },
-      "hoverDecoration": {
-        "$value": "{brand.support}"
       },
       "focus": {
         "$value": "{interactive.focus}"
       },
       "active": {
         "$value": "{interactive.active}"
+      }
+    },
+    "prose": {
+      "default": {
+        "$value": "{foreground.prose}"
+      },
+      "visited": {
+        "$value": "{interactive.prose.default}"
+      },
+      "hover": {
+        "$value": "{interactive.prose.default}"
+      },
+      "hoverDecoration": {
+        "$value": "{interactive.prose.default}"
+      },
+      "focus": {
+        "$value": "{interactive.focus}"
+      },
+      "active": {
+        "$value": "{interactive.prose.default}"
       },
       "activeDecoration": {
-        "$value": "{interactive.prose.hoverDecoration}"
+        "$value": "{interactive.prose.default}"
       }
     }
   },
@@ -153,28 +153,28 @@
       "$value": "{primitive.color.neutral.100}"
     },
     "08": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "09": {
-      "$value": "{primitive.color.neutral.500}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0a": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0b": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0c": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0d": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0e": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     },
     "0f": {
-      "$value": "{primitive.color.neutral.600}"
+      "$value": "{primitive.color.neutral.300}"
     }
   }
 }

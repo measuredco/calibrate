@@ -1,24 +1,48 @@
 {
   "$schema": "../../../schemas/2025.10/schema/format.json",
-  "decorationOffset": {
-    "$type": "number",
-    "100": {
-      "$value": 0.34
+  "decoration": {
+    "line": {
+      "none": {
+        "$value": "none"
+      },
+      "underline": {
+        "$value": "underline"
+      }
     },
-    "150": {
-      "$value": 0.39
-    },
-    "200": {
-      "$value": 0.5
+    "offset": {
+      "$type": "number",
+      "100": {
+        "$value": 0.29
+      },
+      "150": {
+        "$value": 0.315
+      },
+      "200": {
+        "$value": 0.34
+      }
+    }
+  },
+  "code": {
+    "padding": {
+      "$type": "number",
+      "50": {
+        "$value": 0.0275
+      },
+      "200": {
+        "$value": 0.1
+      },
+      "250": {
+        "$value": 0.25
+      }
     }
   },
   "fontFamily": {
     "$type": "fontFamily",
     "mono": {
-      "$value": ["Roboto Mono", "ui-monospace", "monospace"]
+      "$value": ["Fantasque Sans Mono", "ui-monospace", "monospace"]
     },
     "sans": {
-      "$value": ["InterVariable", "system-ui", "sans-serif"]
+      "$value": ["Playpen Sans", "system-ui", "sans-serif"]
     }
   },
   "fontSize": {

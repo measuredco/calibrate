@@ -52,8 +52,14 @@
 
     & a {
       color: var(--clbr-color-interactive-prose-default);
+      text-decoration-line: var(
+        --clbr-typography-prose-link-default-decoration-line
+      );
       text-decoration-thickness: var(
-        --clbr-typography-prose-link-decoration-thickness
+        --clbr-typography-prose-link-default-decoration-thickness
+      );
+      text-underline-offset: var(
+        --clbr-typography-prose-link-default-decoration-offset
       );
     }
 
@@ -67,9 +73,11 @@
 
     & a:hover {
       color: var(--clbr-color-interactive-prose-hover);
-      text-decoration: underline;
       text-decoration-color: var(
         --clbr-color-interactive-prose-hover-decoration
+      );
+      text-decoration-line: var(
+        --clbr-typography-prose-link-hover-decoration-line
       );
       text-underline-offset: var(
         --clbr-typography-prose-link-hover-decoration-offset
@@ -87,7 +95,9 @@
     }
 
     & code {
-      --clbr-code-padding-block-end: 0.055em;
+      --clbr-code-padding-block-end: var(
+        --clbr-typography-prose-code-padding-block-default
+      );
 
       background-color: var(--clbr-color-background-subtle);
       border-radius: calc(
@@ -98,11 +108,13 @@
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       padding-block-end: var(--clbr-code-padding-block-end);
-      padding-inline: 0.25em;
+      padding-inline: var(--clbr-typography-prose-code-padding-inline-default);
 
       @media (min-width: 48em) {
         [data-responsive][data-size="md"] & {
-          --clbr-code-padding-block-end: 0.2em;
+          --clbr-code-padding-block-end: var(
+            --clbr-typography-prose-code-padding-block-lg
+          );
         }
       }
     }

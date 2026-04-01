@@ -35,6 +35,7 @@
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
     font-size: var(--clbr-typography-type-step-200-font-size);
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);

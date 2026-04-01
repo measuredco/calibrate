@@ -72,7 +72,6 @@ Everything we could attempt given sufficient time and resources.
 - Light/dark inverse surfaces
 - `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
-- Give wireframe theme an actual design
 
 #### Style Dictionary DTCG 2025.10 gaps
 
@@ -131,6 +130,10 @@ Identify the minimum adapter surface needed to consume token/component contracts
 
 Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers.
 
+#### Skills package (`@measured/calibrate-skills`)
+
+Agent skills markdown.
+
 #### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
@@ -153,6 +156,12 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Wireframe (`wrfr`) theme visual design pass completed:
+  - expanded wrfr primitive/semantic color and typography tokens (light/dark + brand)
+  - added brand-specific typography/prose behaviors (including link decoration state model and code padding tokens)
+  - updated core prose/text CSS to consume the revised typography token structure
+  - refreshed wrfr brand font assets and root font baseline usage
+  - rebuilt token artifacts and verified system build output
 - Textarea component implemented and aligned across core:
   - added `textarea` renderer + CSS + stories + tests
   - API includes `id`/`label` (required), optional `description`, `size`, `width`, `autocomplete`, `name`, `value`, `disabled`, `readOnly`, `required`, `spellcheck`, `invalid`, `resize`, and `rows`
