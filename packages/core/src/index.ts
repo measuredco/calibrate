@@ -115,6 +115,15 @@ export {
 } from "./components/input/input";
 
 export {
+  CLBR_LOGO_SPEC,
+  type ClbrLogoProps,
+  type ClbrLogoSize,
+  type ClbrLogoTone,
+  type ClbrLogoVariant,
+  renderClbrLogo,
+} from "./components/logo/logo";
+
+export {
   CLBR_PROSE_SPEC,
   type ClbrProseHangingIndent,
   type ClbrProseProps,

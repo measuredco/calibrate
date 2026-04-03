@@ -19,7 +19,6 @@ What we could working on next.
 
 #### Graphic
 
-- `Logo`
 - `Poster` (maybe, text on Image)
 
 #### Composite
@@ -154,6 +153,13 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Logo component implemented and aligned across core:
+  - added `logo` renderer + CSS + stories + tests
+  - API includes required accessible `label`, optional `variant` (`primary | secondary | typographic | graphic`), optional `tone` (`default | neutral`), and optional `size` (`sm | md | lg | fill`)
+  - renderer emits `div.logo` with always-emitted `data-size`, and default-omitted `data-variant`/`data-tone`
+  - variant masks implemented from canonical mask SVG assets with per-variant aspect ratios
+  - tone maps to semantic logo color tokens
+  - exports and core styles entrypoint wiring added
 - Image component implemented and stabilized across core:
   - added `renderClbrImage` with settled prop contract (`src`, `alt`, `cover`, `aspectRatio`, `objectPosition`, `width`, `height`, `sources`, `srcSet`, `sizes`, `lazy`, `priority`, `radius`, `shadow`)
   - finalized emit behavior for `cover`/`aspectRatio`/dimensions (including aspect-ratio suppression when both dimensions are provided)

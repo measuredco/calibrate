@@ -13,7 +13,7 @@ const meta = {
       },
     },
   },
-  title: "Typography/Text",
+  title: "Typographic/Text",
 };
 
 export default meta;

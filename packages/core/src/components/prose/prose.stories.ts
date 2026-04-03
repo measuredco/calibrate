@@ -14,7 +14,7 @@ const meta = {
   parameters: {
     padding: "4.2rem 3rem",
   },
-  title: "Typography/Prose",
+  title: "Typographic/Prose",
 };
 
 export default meta;
