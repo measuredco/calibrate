@@ -16,7 +16,9 @@ describe("renderClbrLogo", () => {
     expect(logo.getAttribute("data-size")).toBe("md");
     expect(logo.hasAttribute("data-variant")).toBe(false);
     expect(logo.hasAttribute("data-tone")).toBe(false);
-    expect(logo.querySelector(".visually-hidden")?.textContent).toBe("Measured");
+    expect(logo.querySelector(".visually-hidden")?.textContent).toBe(
+      "Measured",
+    );
   });
 
   it("emits non-default variant and tone attributes", () => {
@@ -41,7 +43,7 @@ describe("renderClbrLogo", () => {
   });
 
   it("escapes label content", () => {
-    const root = mountLogo(renderClbrLogo({ label: 'Measured <Logo>' }));
+    const root = mountLogo(renderClbrLogo({ label: "Measured <Logo>" }));
     const label = root.querySelector(".logo .visually-hidden") as HTMLElement;
 
     expect(label.textContent).toBe("Measured <Logo>");

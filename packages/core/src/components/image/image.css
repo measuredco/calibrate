@@ -1,5 +1,6 @@
 @layer clbr.components {
   :where(.clbr) .image {
+    filter: grayscale(var(--clbr-effect-filter-image));
     inline-size: fit-content;
     overflow: hidden;
 

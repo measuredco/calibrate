@@ -69,9 +69,9 @@ describe("renderClbrImage", () => {
         src: "/image.jpg",
       }),
     );
-    expect(getWrapper(coverWithAspectRatio).getAttribute("data-aspect-ratio")).toBe(
-      "16:9",
-    );
+    expect(
+      getWrapper(coverWithAspectRatio).getAttribute("data-aspect-ratio"),
+    ).toBe("16:9");
 
     const coverWithBothDimensions = mountImage(
       renderClbrImage({

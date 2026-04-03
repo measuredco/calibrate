@@ -12,6 +12,11 @@ What we could working on next.
 
 ### Components
 
+- `Graphic/Avatar`
+- `Details`
+- `Status/Badge`
+- `Status/Spinner`
+
 #### Control
 
 - `Form`
@@ -24,6 +29,27 @@ What we could working on next.
 #### Composite
 
 - `Card`
+
+#### Page
+
+Potentially build as a single component (with sub components).
+
+- `Banner` (WC: dismissible)
+- `Breadcrumb`? (WC: responsive)
+- `Header` (WC: hamburger)
+- `Main`
+- `Footer`
+- `Sidebar`? (WC)
+
+#### Prose
+
+Concepts that already exist in in the `Prose` component.
+
+- `Blockquote`
+- `Code`
+- `Link` (also covered in `Button`)
+- `List`
+- `Table`
 
 #### General
 
@@ -38,9 +64,16 @@ What we could working on next.
 
 ### Web Components
 
-- `Listbox`
-- `Menu`
-- `Range`
+- `Accordion` (JS for exclusive)
+- `Alert` (optionally dismissible)
+- `Listbox` (JS required)
+- `Menu` (JS required)
+- `Progress` (updating)
+- `Range` (update text value)
+- `Skeleton` (resolve to loaded)
+- `Tag` (delete, remove, select)
+- `Toast` (dismissible, timer)
+- `Tabs` (JS required - a11y)
 
 ## Later
 
@@ -69,6 +102,7 @@ Everything we could attempt given sufficient time and resources.
 - Light/dark inverse surfaces
 - `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
+- Consider introducing Newsreader as a serif font for prose body copy.
 
 #### Style Dictionary DTCG 2025.10 gaps
 
