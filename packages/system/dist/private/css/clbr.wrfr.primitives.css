@@ -44,6 +44,8 @@
     --clbr-primitive-color-red-800: #cc3024;
     --clbr-primitive-color-red-900: #b40d05;
     --clbr-primitive-color-white: #ffffff;
+    --clbr-primitive-effect-filter-grayscale-0: 0;
+    --clbr-primitive-effect-filter-grayscale-100: 1;
     --clbr-primitive-effect-opacity-40: 0.4;
     --clbr-primitive-effect-opacity-64: 0.64;
     --clbr-primitive-effect-opacity-84: 0.84;

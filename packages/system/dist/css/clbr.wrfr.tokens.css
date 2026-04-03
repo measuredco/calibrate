@@ -59,6 +59,7 @@
     --clbr-color-interactive-visited: #000000;
     --clbr-color-logo-default: #000000;
     --clbr-color-logo-neutral: #000000;
+    --clbr-effect-filter-image: 1;
     --clbr-effect-opacity-demoted: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
