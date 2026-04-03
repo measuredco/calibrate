@@ -15,10 +15,10 @@ What we could working on next.
 #### Control
 
 - `Form`
+- `IconButton`
 
 #### Graphic
 
-- `Image`
 - `Logo`
 - `Poster` (maybe, text on Image)
 
@@ -153,6 +153,14 @@ Improve Storybook docs/type extraction for SSR renderer stories so prop tables a
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Image component implemented and stabilized across core:
+  - added `renderClbrImage` with settled prop contract (`src`, `alt`, `cover`, `aspectRatio`, `objectPosition`, `width`, `height`, `sources`, `srcSet`, `sizes`, `lazy`, `priority`, `radius`, `shadow`)
+  - finalized emit behavior for `cover`/`aspectRatio`/dimensions (including aspect-ratio suppression when both dimensions are provided)
+  - added picture/source rendering path with normalized source attributes and fallback img behavior
+  - completed Storybook examples for responsive `srcSet`/`sizes` and art-direction source switching
+  - rewrote image test suite from scratch against settled API/behavior to remove change-trace residue
+  - updated `CLBR_IMAGE_SPEC`, exports, and core styles integration
 
 - Fieldset extraction and radios composition refactor completed:
   - added dedicated `fieldset` component (renderer/CSS/stories/tests/spec)

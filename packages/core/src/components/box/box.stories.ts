@@ -33,7 +33,7 @@ export const Default = {
   args: {
     background: "default",
     border: "default",
-    boxShadow: false,
+    shadow: false,
     children: '<div class="example-content"></div>',
     offsetStroke: false,
     padding: "md",

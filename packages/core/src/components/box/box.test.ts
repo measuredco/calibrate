@@ -16,7 +16,7 @@ describe("renderClbrBox", () => {
     expect(box.classList.contains("box")).toBe(true);
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
-    expect(box.hasAttribute("data-box-shadow")).toBe(false);
+    expect(box.hasAttribute("data-shadow")).toBe(false);
     expect(box.hasAttribute("data-offset-stroke")).toBe(false);
     expect(box.hasAttribute("data-surface")).toBe(false);
     expect(box.getAttribute("data-padding")).toBe("md");
@@ -99,23 +99,23 @@ describe("renderClbrBox", () => {
     expect(disabled.hasAttribute("data-offset-stroke")).toBe(false);
   });
 
-  it("emits data-box-shadow only when boxShadow is true", () => {
+  it("emits data-shadow only when shadow is true", () => {
     const enabledRoot = mountBox(
       renderClbrBox({
-        boxShadow: true,
+        shadow: true,
         children: "Body",
       }),
     );
     const enabled = getByText(enabledRoot, "Body");
-    expect(enabled.hasAttribute("data-box-shadow")).toBe(true);
+    expect(enabled.hasAttribute("data-shadow")).toBe(true);
 
     const disabledRoot = mountBox(
       renderClbrBox({
-        boxShadow: false,
+        shadow: false,
         children: "Body",
       }),
     );
     const disabled = getByText(disabledRoot, "Body");
-    expect(disabled.hasAttribute("data-box-shadow")).toBe(false);
+    expect(disabled.hasAttribute("data-shadow")).toBe(false);
   });
 });

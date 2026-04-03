@@ -27,7 +27,7 @@ export interface ClbrBoxProps {
    * Applies default elevation shadow when true.
    * Omitted by default.
    */
-  boxShadow?: boolean;
+  shadow?: boolean;
   /**
    * Applies brand-specific stroke offset treatment.
    * Omitted by default.
@@ -59,7 +59,7 @@ export interface ClbrBoxProps {
 export function renderClbrBox({
   background = "default",
   border = "default",
-  boxShadow,
+  shadow,
   children,
   offsetStroke,
   padding = "md",
@@ -70,7 +70,7 @@ export function renderClbrBox({
     class: "box",
     "data-background": background === "default" ? undefined : background,
     "data-border": border === "default" ? undefined : border,
-    "data-box-shadow": boxShadow,
+    "data-shadow": shadow,
     "data-offset-stroke": offsetStroke,
     "data-padding": padding,
     "data-radius": radius,
@@ -103,7 +103,7 @@ export const CLBR_BOX_SPEC = {
       required: false,
       type: "html",
     },
-    boxShadow: {
+    shadow: {
       required: false,
       type: "boolean",
     },
@@ -150,9 +150,9 @@ export const CLBR_BOX_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-box-shadow",
+        target: "data-shadow",
         value: "present",
-        when: "boxShadow is true",
+        when: "shadow is true",
       },
       {
         behavior: "emit",

@@ -87,6 +87,16 @@ export {
 } from "./components/icon/icon";
 
 export {
+  CLBR_IMAGE_SPEC,
+  type ClbrImageAspectRatio,
+  type ClbrImageObjectPosition,
+  type ClbrImageProps,
+  type ClbrImageRadius,
+  type ClbrImageSource,
+  renderClbrImage,
+} from "./components/image/image";
+
+export {
   CLBR_INLINE_SPEC,
   type ClbrInlineAlign,
   type ClbrInlineGap,
