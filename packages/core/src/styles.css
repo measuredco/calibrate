@@ -10,6 +10,7 @@
 @import "./components/root/root.css";
 
 /* components */
+@import "./components/avatar/avatar.css";
 @import "./components/box/box.css";
 @import "./components/button/button.css";
 @import "./components/checkbox/checkbox.css";

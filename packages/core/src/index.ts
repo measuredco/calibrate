@@ -1,6 +1,16 @@
 import "./styles.css";
 
 export {
+  CLBR_AVATAR_SPEC,
+  getClbrInitials,
+  type ClbrAvatarColor,
+  type ClbrAvatarEntity,
+  type ClbrAvatarProps,
+  type ClbrAvatarSize,
+  renderClbrAvatar,
+} from "./components/avatar/avatar";
+
+export {
   CLBR_BOX_SPEC,
   type ClbrBoxBackground,
   type ClbrBoxBorder,

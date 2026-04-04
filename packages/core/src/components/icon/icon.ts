@@ -14,6 +14,8 @@ export const CLBR_ICON_RECOMMENDED = [
   "arrow-right-left",
   "arrow-up",
   "arrow-up-down",
+  "bot",
+  "building-2",
   "copy",
   "corner-down-left",
   "corner-down-right",
@@ -28,6 +30,8 @@ export const CLBR_ICON_RECOMMENDED = [
   "square",
   "sun-moon",
   "swatch-book",
+  "user",
+  "users",
   "x",
 ] as const;
 

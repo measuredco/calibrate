@@ -8,6 +8,16 @@
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
   :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
+    --clbr-color-avatar-01: #434444;
+    --clbr-color-avatar-02: #434444;
+    --clbr-color-avatar-03: #434444;
+    --clbr-color-avatar-04: #434444;
+    --clbr-color-avatar-05: #434444;
+    --clbr-color-avatar-06: #434444;
+    --clbr-color-avatar-07: #434444;
+    --clbr-color-avatar-08: #434444;
+    --clbr-color-avatar-09: #434444;
+    --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
@@ -105,8 +115,8 @@
     --clbr-typography-paragraph-spacing-default: 1.5rem;
     --clbr-typography-paragraph-spacing-lg: 2.25rem;
     --clbr-typography-paragraph-spacing-sm: 0.75rem;
-    --clbr-typography-prose-code-padding-block-default: 0.0275em;
-    --clbr-typography-prose-code-padding-block-lg: 0.1em;
+    --clbr-typography-prose-code-padding-block-default: 0.06em;
+    --clbr-typography-prose-code-padding-block-lg: 0.08em;
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: underline;
@@ -177,6 +187,16 @@
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="wrfr"], .clbr[data-brand="wrfr"] [data-surface="default"]) {
+      --clbr-color-avatar-01: #c8c9ca;
+      --clbr-color-avatar-02: #c8c9ca;
+      --clbr-color-avatar-03: #c8c9ca;
+      --clbr-color-avatar-04: #c8c9ca;
+      --clbr-color-avatar-05: #c8c9ca;
+      --clbr-color-avatar-06: #c8c9ca;
+      --clbr-color-avatar-07: #c8c9ca;
+      --clbr-color-avatar-08: #c8c9ca;
+      --clbr-color-avatar-09: #c8c9ca;
+      --clbr-color-avatar-default: #c8c9ca;
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
@@ -242,6 +262,16 @@
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="wrfr"][data-theme="light"], .clbr[data-brand="wrfr"][data-theme="light"] [data-surface="default"]) {
+      --clbr-color-avatar-01: #434444;
+      --clbr-color-avatar-02: #434444;
+      --clbr-color-avatar-03: #434444;
+      --clbr-color-avatar-04: #434444;
+      --clbr-color-avatar-05: #434444;
+      --clbr-color-avatar-06: #434444;
+      --clbr-color-avatar-07: #434444;
+      --clbr-color-avatar-08: #434444;
+      --clbr-color-avatar-09: #434444;
+      --clbr-color-avatar-default: #434444;
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
@@ -299,6 +329,16 @@
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
   :where(.clbr[data-brand="wrfr"][data-theme="dark"], .clbr[data-brand="wrfr"][data-theme="dark"] [data-surface="default"]) {
+    --clbr-color-avatar-01: #c8c9ca;
+    --clbr-color-avatar-02: #c8c9ca;
+    --clbr-color-avatar-03: #c8c9ca;
+    --clbr-color-avatar-04: #c8c9ca;
+    --clbr-color-avatar-05: #c8c9ca;
+    --clbr-color-avatar-06: #c8c9ca;
+    --clbr-color-avatar-07: #c8c9ca;
+    --clbr-color-avatar-08: #c8c9ca;
+    --clbr-color-avatar-09: #c8c9ca;
+    --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
@@ -355,6 +395,16 @@
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
   :where(.clbr[data-brand="wrfr"][data-theme="dark"] [data-surface="brand"]) {
+    --clbr-color-avatar-01: #c8c9ca;
+    --clbr-color-avatar-02: #c8c9ca;
+    --clbr-color-avatar-03: #c8c9ca;
+    --clbr-color-avatar-04: #c8c9ca;
+    --clbr-color-avatar-05: #c8c9ca;
+    --clbr-color-avatar-06: #c8c9ca;
+    --clbr-color-avatar-07: #c8c9ca;
+    --clbr-color-avatar-08: #c8c9ca;
+    --clbr-color-avatar-09: #c8c9ca;
+    --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
