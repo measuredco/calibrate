@@ -176,5 +176,37 @@
     "0f": {
       "$value": "{primitive.color.neutral.900}"
     }
+  },
+  "avatar": {
+    "default": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "01": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "02": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "03": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "04": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "05": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "06": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "07": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "08": {
+      "$value": "{primitive.color.neutral.800}"
+    },
+    "09": {
+      "$value": "{primitive.color.neutral.800}"
+    }
   }
 }

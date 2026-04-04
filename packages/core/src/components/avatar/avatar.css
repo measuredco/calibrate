@@ -1,0 +1,103 @@
+@layer clbr.components {
+  :where(.clbr) .avatar {
+    --clbr-avatar-size: var(--clbr-spacing-vertical-700);
+    --clbr-avatar-color-background: var(--clbr-color-avatar-default);
+
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    background-color: var(--clbr-avatar-color-background);
+    block-size: var(--clbr-avatar-size);
+    border-radius: calc(var(--clbr-avatar-size) * var(--clbr-radius-ratio-lg));
+    color: var(--clbr-color-foreground-contrast);
+    display: inline-flex;
+    flex: none;
+    justify-content: center;
+    overflow: hidden;
+
+    &[data-entity="bot"],
+    &[data-entity="organization"],
+    &[data-entity="team"] {
+      border-radius: calc(
+        var(--clbr-avatar-size) * var(--clbr-radius-ratio-default)
+      );
+    }
+
+    &[data-size="sm"] {
+      --clbr-avatar-size: var(--clbr-spacing-vertical-775);
+    }
+
+    &[data-size="md"] {
+      --clbr-avatar-size: var(--clbr-spacing-vertical-800);
+    }
+
+    &[data-size="lg"] {
+      --clbr-avatar-size: var(--clbr-spacing-vertical-900);
+    }
+
+    &[data-size="xl"] {
+      --clbr-avatar-size: var(--clbr-spacing-vertical-1200);
+    }
+
+    &[data-color="01"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-01);
+    }
+
+    &[data-color="02"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-02);
+    }
+
+    &[data-color="03"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-03);
+    }
+
+    &[data-color="04"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-04);
+    }
+
+    &[data-color="05"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-05);
+    }
+
+    &[data-color="06"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-06);
+    }
+
+    &[data-color="07"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-07);
+    }
+
+    &[data-color="08"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-08);
+    }
+
+    &[data-color="09"] {
+      --clbr-avatar-color-background: var(--clbr-color-avatar-09);
+    }
+
+    .img {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: 100%;
+      filter: grayscale(var(--clbr-effect-filter-image));
+      inline-size: 100%;
+      object-fit: cover;
+    }
+
+    .initials {
+      font-family: var(--clbr-typography-font-family-mono);
+      font-size: calc(var(--clbr-avatar-size) * 0.5);
+      font-weight: var(--clbr-typography-font-weight-regular-plus);
+      inset-block-start: -0.033em;
+      line-height: 1;
+      position: relative;
+      text-align: center;
+    }
+
+    .icon-wrapper {
+      align-items: center;
+      aspect-ratio: 1 / 1;
+      block-size: 70%;
+      display: inline-flex;
+      justify-content: center;
+    }
+  }
+}

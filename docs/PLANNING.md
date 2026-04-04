@@ -6,44 +6,29 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+- No active items.
+
 ## Next
 
 What we could working on next.
 
 ### Components
 
-- `Graphic/Avatar`
-- `Details`
+- `Graphic/Shape` (brand shape components)
 - `Status/Badge`
 - `Status/Spinner`
+- `Structure/Detail`
 
-#### Control
+#### Maybe
 
-- `Form`
-- `IconButton`
-
-#### Graphic
-
-- `Poster` (maybe, text on Image)
-
-#### Composite
-
-- `Card`
-
-#### Page
-
-Potentially build as a single component (with sub components).
-
-- `Banner` (WC: dismissible)
-- `Breadcrumb`? (WC: responsive)
-- `Header` (WC: hamburger)
-- `Main`
-- `Footer`
-- `Sidebar`? (WC)
+- `Control/Form`
+- `Control/IconButton`
+- `Graphic/Poster` (text on Image)
+- `Structure/Card`
 
 #### Prose
 
-Concepts that already exist in in the `Prose` component.
+Concepts that already exist in `Prose`, but could become components.
 
 - `Blockquote`
 - `Code`
@@ -62,18 +47,29 @@ Concepts that already exist in in the `Prose` component.
 - reconsider Box abstraction (allow border and radius `none` OR split into simpler Box component (maybe just padding and surface), and create a new component abstraction for border/radius/shadow/etc, e.g. Frame)
 - md size for radios, checkbox, fieldset
 
+#### Page
+
+Could build a simplified no-JS version as first pass, full solution will require Web Components.
+
+- `Page/Banner` (dismissible)
+- `Page/Breadcrumb`? (JS responsive)
+- `Page/Header` (hamburger)
+- `Page/Sidebar`? (JS required)
+- `Page/Main`
+- `Page/Footer`
+
 ### Web Components
 
-- `Accordion` (JS for exclusive)
-- `Alert` (optionally dismissible)
-- `Listbox` (JS required)
-- `Menu` (JS required)
-- `Progress` (updating)
-- `Range` (update text value)
-- `Skeleton` (resolve to loaded)
-- `Tag` (delete, remove, select)
-- `Toast` (dismissible, timer)
-- `Tabs` (JS required - a11y)
+- `Control/Listbox` (JS required)
+- `Control/Menu` (JS required)
+- `Control/Range` (update text value)
+- `Control/Tag` (delete, remove, select)
+- `Status/Alert` (optionally dismissible)
+- `Status/Progress` (updating)
+- `Status/Skeleton` (resolve to loaded)
+- `Status/Toast` (dismissible, timer)
+- `Structure/Accordion` (JS for exclusive)
+- `Structure/Tabs` (JS required - a11y)
 
 ## Later
 
@@ -187,6 +183,12 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Avatar component implemented and stabilized across core:
+  - added `avatar` renderer + CSS + stories + tests, plus exported `getClbrInitials` helper with dedicated matrix tests
+  - settled API includes `alt`, `ariaHidden`, `entity`, `color`, `initials`, `name`, `size` (`xs | sm | md | lg | xl`), and `src`
+  - settled behavior includes variant precedence (`src` > `initials` > derived initials > icon), deterministic name-hash color assignment with default-neutral omission, and strict explicit initials validation (alphabetic-only, max 3)
+  - settled icon fallback mapping includes `organization -> building-2`, with icon child rendered as decorative `size="fill"`
+  - spec/contracts, exports, and Storybook controls aligned with final omit/emit/default rules
 - Logo component implemented and aligned across core:
   - added `logo` renderer + CSS + stories + tests
   - API includes required accessible `label`, optional `variant` (`primary | secondary | typographic | graphic`), optional `tone` (`default | neutral`), and optional `size` (`sm | md | lg | fill`)

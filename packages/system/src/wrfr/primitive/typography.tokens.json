@@ -26,10 +26,10 @@
     "padding": {
       "$type": "number",
       "50": {
-        "$value": 0.0275
+        "$value": 0.06
       },
       "200": {
-        "$value": 0.1
+        "$value": 0.08
       },
       "250": {
         "$value": 0.25
