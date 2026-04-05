@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/web-components-vite";
+import { themes } from "storybook/theming";
 import { renderClbrRoot } from "../../../packages/core/src/components/root/root";
 import { renderClbrSurface } from "../../../packages/core/src/components/surface/surface";
 
@@ -24,6 +25,12 @@ const formatSourceForDocs = async (source: string): Promise<string> => {
   });
 };
 
+const getResolvedTheme = (theme?: "light" | "dark") =>
+  theme ?? getSystemTheme();
+
+const getSystemTheme = (): "light" | "dark" =>
+  window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
 const preview: Preview = {
   decorators: [
     (Story, context) => {
@@ -31,34 +38,35 @@ const preview: Preview = {
         typeof context.parameters.padding !== "undefined"
           ? context.parameters.padding
           : "1.75rem 1.25rem";
+
+      const resolvedTheme = getResolvedTheme(context.globals.theme);
       const storyHtml = String(Story());
       const withRoot = context.parameters?.withRoot !== false;
       const withSurface = context.parameters?.withSurface !== false;
 
       if (!withRoot) return storyHtml;
 
-      if (!withSurface)
+      if (!withSurface) {
         return renderClbrRoot({
           brand: context.globals.brand,
           children: storyHtml,
           dir: context.globals.direction,
-          theme: context.globals.theme,
+          theme: resolvedTheme,
         });
+      }
 
       return renderClbrRoot({
         brand: context.globals.brand,
-        children: `
-          ${renderClbrSurface({
-            children: `
-              <div style="padding: ${padding}">
-                ${storyHtml}
-              </div>
-            `,
-            variant: context.globals.surface,
-          })}
-        `,
+        children: renderClbrSurface({
+          children: `
+            <div style="padding: ${padding}">
+              ${storyHtml}
+            </div>
+          `,
+          variant: context.globals.surface,
+        }),
         dir: context.globals.direction,
-        theme: context.globals.theme,
+        theme: resolvedTheme,
       });
     },
   ],
@@ -133,6 +141,7 @@ const preview: Preview = {
         excludeDecorators: true,
         transform: (source: string) => formatSourceForDocs(source),
       },
+      theme: getSystemTheme() === "dark" ? themes.dark : themes.light,
     },
     layout: "fullscreen",
     withRoot: true,
