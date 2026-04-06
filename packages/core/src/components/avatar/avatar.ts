@@ -198,11 +198,11 @@ export function renderClbrAvatar({
       src: normalizedSrc,
     });
 
-    return `<div ${avatarAttrs}><img ${imgAttrs}></div>`;
+    return `<span ${avatarAttrs}><img ${imgAttrs}></span>`;
   }
 
   if (derivedInitials) {
-    return `<div ${avatarAttrs}><span class="initials">${escapeHtml(derivedInitials)}</span></div>`;
+    return `<span ${avatarAttrs}><span class="initials">${escapeHtml(derivedInitials)}</span></span>`;
   }
 
   const iconMarkup = renderClbrIcon({
@@ -211,14 +211,14 @@ export function renderClbrAvatar({
     size: "fill",
   });
 
-  return `<div ${avatarAttrs}><span class="icon-wrapper">${iconMarkup}</span></div>`;
+  return `<span ${avatarAttrs}><span class="icon-wrapper">${iconMarkup}</span></span>`;
 }
 
 /** Declarative avatar contract mirror for tooling, docs, and adapters. */
 export const CLBR_AVATAR_SPEC = {
   name: "avatar",
   output: {
-    element: "div",
+    element: "span",
     variants: ["image", "initials", "icon"],
   },
   props: {

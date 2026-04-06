@@ -17,6 +17,7 @@ describe("renderClbrAvatar", () => {
     const root = mountAvatar(renderClbrAvatar({}));
     const avatar = getAvatar(root);
 
+    expect(avatar.tagName).toBe("SPAN");
     expect(avatar.getAttribute("data-size")).toBe("xs");
     expect(avatar.hasAttribute("data-color")).toBe(false);
     expect(avatar.hasAttribute("data-entity")).toBe(false);
@@ -151,6 +152,7 @@ describe("renderClbrAvatar", () => {
     const avatar = getAvatar(root);
     const icon = root.querySelector(".icon");
 
+    expect(avatar.tagName).toBe("SPAN");
     expect(avatar.getAttribute("data-entity")).toBe("organization");
     expect(icon).toBeTruthy();
     expect(icon?.getAttribute("data-size")).toBe("fill");
