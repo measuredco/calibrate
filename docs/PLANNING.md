@@ -15,7 +15,6 @@ What we could working on next.
 ### Components
 
 - `Graphic/Shape` (brand shape components)
-- `Status/Badge`
 - `Status/Spinner`
 - `Structure/Detail`
 
@@ -183,6 +182,12 @@ What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
 
+- Badge component implemented and aligned across core:
+  - added `badge` renderer + CSS + stories + tests
+  - settled API includes escaped plain-text `label`, optional `tone` (`neutral | info | success | warning | error`), optional `size` (`sm | md`), and optional `floating`
+  - `tone` defaults to `neutral` and is omitted when default; `size` defaults to `md` and always emits as `data-size`; `floating` defaults to `false` and emits `data-floating` only when true
+  - semantic tone styling consumes the new `status.*` color tokens
+  - floating badge usage is demonstrated against avatar/button/link compositions in Storybook
 - Avatar component implemented and stabilized across core:
   - added `avatar` renderer + CSS + stories + tests, plus exported `getClbrInitials` helper with dedicated matrix tests
   - settled API includes `alt`, `ariaHidden`, `entity`, `color`, `initials`, `name`, `size` (`xs | sm | md | lg | xl`), and `src`

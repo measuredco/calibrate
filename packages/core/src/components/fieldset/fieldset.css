@@ -18,7 +18,7 @@
       padding-block-end: var(--clbr-spacing-vertical-100);
 
       [aria-invalid="true"] & {
-        color: var(--clbr-color-interactive-error-default);
+        color: var(--clbr-color-status-error-default);
       }
     }
   }

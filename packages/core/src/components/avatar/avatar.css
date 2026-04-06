@@ -106,8 +106,8 @@
       }
     }
 
-    a:has(> .avatar:only-child):focus-visible,
-    button:has(> .avatar:only-child):focus-visible {
+    a:has(> :where(.avatar:first-child)):focus-visible,
+    button:has(> :where(.avatar:first-child)):focus-visible {
       outline: none;
 
       .avatar {
@@ -117,7 +117,7 @@
       }
     }
 
-    button:has(> .avatar:only-child) {
+    button:has(> :where(.avatar:first-child)) {
       background: none;
       border: 0;
       cursor: pointer;

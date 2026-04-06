@@ -11,6 +11,14 @@ export {
 } from "./components/avatar/avatar";
 
 export {
+  CLBR_BADGE_SPEC,
+  type ClbrBadgeProps,
+  type ClbrBadgeSize,
+  type ClbrBadgeTone,
+  renderClbrBadge,
+} from "./components/badge/badge";
+
+export {
   CLBR_BOX_SPEC,
   type ClbrBoxBackground,
   type ClbrBoxBorder,

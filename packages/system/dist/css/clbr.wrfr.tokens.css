@@ -50,8 +50,6 @@
     --clbr-color-foreground-prose: #0e0f10;
     --clbr-color-interactive-active: #656667;
     --clbr-color-interactive-default: #000000;
-    --clbr-color-interactive-error-default: #b40d05;
-    --clbr-color-interactive-error-subtle: #fff3f2;
     --clbr-color-interactive-focus: #898a8b;
     --clbr-color-interactive-hover: #434444;
     --clbr-color-interactive-neutral-active: #656667;
@@ -69,6 +67,14 @@
     --clbr-color-interactive-visited: #000000;
     --clbr-color-logo-default: #000000;
     --clbr-color-logo-neutral: #000000;
+    --clbr-color-status-error-default: #b40d05;
+    --clbr-color-status-error-subtle: #fff3f2;
+    --clbr-color-status-info-default: #0b0c0d;
+    --clbr-color-status-info-subtle: #f2f3f4;
+    --clbr-color-status-success-default: #0b0c0d;
+    --clbr-color-status-success-subtle: #f2f3f4;
+    --clbr-color-status-warning-default: #0b0c0d;
+    --clbr-color-status-warning-subtle: #f2f3f4;
     --clbr-effect-filter-image: 1;
     --clbr-effect-opacity-demoted: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
@@ -229,8 +235,6 @@
       --clbr-color-foreground-prose: #e3e4e5;
       --clbr-color-interactive-active: #a6a7a8;
       --clbr-color-interactive-default: #f9fafb;
-      --clbr-color-interactive-error-default: #fb625b;
-      --clbr-color-interactive-error-subtle: #5d0000;
       --clbr-color-interactive-focus: #656667;
       --clbr-color-interactive-hover: #c8c9ca;
       --clbr-color-interactive-neutral-active: #a6a7a8;
@@ -248,6 +252,14 @@
       --clbr-color-interactive-visited: #f9fafb;
       --clbr-color-logo-default: #ffffff;
       --clbr-color-logo-neutral: #ffffff;
+      --clbr-color-status-error-default: #fb625b;
+      --clbr-color-status-error-subtle: #5d0000;
+      --clbr-color-status-info-default: #f2f3f4;
+      --clbr-color-status-info-subtle: #191a1a;
+      --clbr-color-status-success-default: #f2f3f4;
+      --clbr-color-status-success-subtle: #191a1a;
+      --clbr-color-status-warning-default: #f2f3f4;
+      --clbr-color-status-warning-subtle: #191a1a;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     }
   }
@@ -304,8 +316,6 @@
       --clbr-color-foreground-prose: #0e0f10;
       --clbr-color-interactive-active: #656667;
       --clbr-color-interactive-default: #000000;
-      --clbr-color-interactive-error-default: #b40d05;
-      --clbr-color-interactive-error-subtle: #fff3f2;
       --clbr-color-interactive-focus: #898a8b;
       --clbr-color-interactive-hover: #434444;
       --clbr-color-interactive-neutral-active: #656667;
@@ -323,6 +333,14 @@
       --clbr-color-interactive-visited: #000000;
       --clbr-color-logo-default: #000000;
       --clbr-color-logo-neutral: #000000;
+      --clbr-color-status-error-default: #b40d05;
+      --clbr-color-status-error-subtle: #fff3f2;
+      --clbr-color-status-info-default: #0b0c0d;
+      --clbr-color-status-info-subtle: #f2f3f4;
+      --clbr-color-status-success-default: #0b0c0d;
+      --clbr-color-status-success-subtle: #f2f3f4;
+      --clbr-color-status-warning-default: #0b0c0d;
+      --clbr-color-status-warning-subtle: #f2f3f4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     }
   }
@@ -371,8 +389,6 @@
     --clbr-color-foreground-prose: #e3e4e5;
     --clbr-color-interactive-active: #a6a7a8;
     --clbr-color-interactive-default: #f9fafb;
-    --clbr-color-interactive-error-default: #fb625b;
-    --clbr-color-interactive-error-subtle: #5d0000;
     --clbr-color-interactive-focus: #656667;
     --clbr-color-interactive-hover: #c8c9ca;
     --clbr-color-interactive-neutral-active: #a6a7a8;
@@ -390,6 +406,14 @@
     --clbr-color-interactive-visited: #f9fafb;
     --clbr-color-logo-default: #ffffff;
     --clbr-color-logo-neutral: #ffffff;
+    --clbr-color-status-error-default: #fb625b;
+    --clbr-color-status-error-subtle: #5d0000;
+    --clbr-color-status-info-default: #f2f3f4;
+    --clbr-color-status-info-subtle: #191a1a;
+    --clbr-color-status-success-default: #f2f3f4;
+    --clbr-color-status-success-subtle: #191a1a;
+    --clbr-color-status-warning-default: #f2f3f4;
+    --clbr-color-status-warning-subtle: #191a1a;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
   }
 
@@ -437,8 +461,6 @@
     --clbr-color-foreground-prose: #e3e4e5;
     --clbr-color-interactive-active: #a6a7a8;
     --clbr-color-interactive-default: #f9fafb;
-    --clbr-color-interactive-error-default: #fb625b;
-    --clbr-color-interactive-error-subtle: #5d0000;
     --clbr-color-interactive-focus: #656667;
     --clbr-color-interactive-hover: #c8c9ca;
     --clbr-color-interactive-neutral-active: #a6a7a8;
@@ -456,6 +478,14 @@
     --clbr-color-interactive-visited: #f9fafb;
     --clbr-color-logo-default: #ffffff;
     --clbr-color-logo-neutral: #ffffff;
+    --clbr-color-status-error-default: #fb625b;
+    --clbr-color-status-error-subtle: #5d0000;
+    --clbr-color-status-info-default: #f2f3f4;
+    --clbr-color-status-info-subtle: #191a1a;
+    --clbr-color-status-success-default: #f2f3f4;
+    --clbr-color-status-success-subtle: #191a1a;
+    --clbr-color-status-warning-default: #f2f3f4;
+    --clbr-color-status-warning-subtle: #191a1a;
   }
 
   /* lightDefault | tablet | default-states */

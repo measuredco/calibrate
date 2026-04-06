@@ -97,13 +97,13 @@ export const Color = {
 export const Interactive = {
   render: () =>
     renderClbrInline({
-      children: `<a href="/">${renderClbrAvatar({
-        name: "Link",
-        size: "md",
-      })}</a><button>${renderClbrAvatar({
+      children: `<button>${renderClbrAvatar({
         name: "Button",
         size: "md",
-      })}</button>`,
+      })}</button><a href="/">${renderClbrAvatar({
+        name: "Link",
+        size: "md",
+      })}</a>`,
       gap: "xs",
     }),
 };

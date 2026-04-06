@@ -57,8 +57,8 @@
       }
 
       &[aria-invalid="true"] {
-        background-color: var(--clbr-color-interactive-error-subtle);
-        border-color: var(--clbr-color-interactive-error-default);
+        background-color: var(--clbr-color-status-error-subtle);
+        border-color: var(--clbr-color-status-error-default);
       }
 
       &[readonly] {
@@ -90,7 +90,7 @@
       max-width: var(--clbr-typography-measure-default);
 
       [aria-invalid="true"] + & {
-        color: var(--clbr-color-interactive-error-default);
+        color: var(--clbr-color-status-error-default);
       }
     }
   }

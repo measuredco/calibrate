@@ -66,14 +66,6 @@
     "default": {
       "$value": "{brand.primary}"
     },
-    "error": {
-      "default": {
-        "$value": "{primitive.color.red.900}"
-      },
-      "subtle": {
-        "$value": "{primitive.color.red.100}"
-      }
-    },
     "visited": {
       "$value": "{interactive.default}"
     },
@@ -124,6 +116,40 @@
       },
       "activeDecoration": {
         "$value": "{interactive.prose.default}"
+      }
+    }
+  },
+  "status": {
+    "error": {
+      "default": {
+        "$value": "{primitive.color.red.900}"
+      },
+      "subtle": {
+        "$value": "{primitive.color.red.100}"
+      }
+    },
+    "info": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
+      }
+    },
+    "success": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
+      }
+    },
+    "warning": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
       }
     }
   },

@@ -108,8 +108,8 @@
       }
 
       [aria-invalid="true"] & {
-        background-color: var(--clbr-color-interactive-error-subtle);
-        border-color: var(--clbr-color-interactive-error-default);
+        background-color: var(--clbr-color-status-error-subtle);
+        border-color: var(--clbr-color-status-error-default);
       }
     }
 

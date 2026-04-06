@@ -66,14 +66,6 @@
     "default": {
       "$value": "{primitive.color.neutral.100}"
     },
-    "error": {
-      "default": {
-        "$value": "{primitive.color.red.600}"
-      },
-      "subtle": {
-        "$value": "{primitive.color.red.1200}"
-      }
-    },
     "visited": {
       "$value": "{interactive.default}"
     },
@@ -124,6 +116,40 @@
       },
       "activeDecoration": {
         "$value": "{interactive.prose.default}"
+      }
+    }
+  },
+  "status": {
+    "error": {
+      "default": {
+        "$value": "{primitive.color.red.600}"
+      },
+      "subtle": {
+        "$value": "{primitive.color.red.1200}"
+      }
+    },
+    "info": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
+      }
+    },
+    "success": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
+      }
+    },
+    "warning": {
+      "default": {
+        "$value": "{foreground.default}"
+      },
+      "subtle": {
+        "$value": "{background.subtle}"
       }
     }
   },
