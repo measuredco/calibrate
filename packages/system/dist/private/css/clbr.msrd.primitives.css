@@ -170,6 +170,7 @@
     --clbr-primitive-motion-duration-200: 200ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
+    --clbr-primitive-motion-duration-600: 600ms;
     --clbr-primitive-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
     --clbr-primitive-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);

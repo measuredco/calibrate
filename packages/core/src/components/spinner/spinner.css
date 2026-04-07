@@ -1,0 +1,65 @@
+@layer clbr.components {
+  @keyframes clbr-animation-name-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  :where(.clbr) .spinner {
+    --clbr-spinner-size: var(--clbr-layout-icon-size-md);
+
+    aspect-ratio: 1 / 1;
+    block-size: var(--clbr-spinner-size);
+    contain: layout paint;
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+
+    &[data-size="2xs"] {
+      --clbr-spinner-size: var(--clbr-layout-icon-size-2xs);
+    }
+
+    &[data-size="xs"] {
+      --clbr-spinner-size: var(--clbr-layout-icon-size-xs);
+    }
+
+    &[data-size="sm"] {
+      --clbr-spinner-size: var(--clbr-layout-icon-size-sm);
+    }
+
+    &[data-size="lg"] {
+      --clbr-spinner-size: var(--clbr-layout-icon-size-lg);
+    }
+
+    &[data-size="xl"] {
+      --clbr-spinner-size: var(--clbr-spacing-vertical-800);
+    }
+
+    &[data-size="2xl"] {
+      --clbr-spinner-size: var(--clbr-spacing-vertical-900);
+    }
+
+    &[data-size="fill"] {
+      block-size: 100%;
+      inline-size: 100%;
+    }
+
+    &[data-tone="brand"] {
+      color: var(--clbr-color-brand-primary);
+    }
+
+    .circle-lg {
+      stroke: var(--clbr-color-border-default);
+    }
+
+    .circle-sm {
+      animation: clbr-animation-name-spin var(--clbr-motion-duration-600) linear
+        infinite;
+      will-change: transform;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+}

@@ -82,11 +82,12 @@
     --clbr-effect-stroke-outset: 0rem;
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
-    --clbr-motion-duration-100: 100ms;
-    --clbr-motion-duration-150: 150ms;
-    --clbr-motion-duration-200: 200ms;
-    --clbr-motion-duration-300: 300ms;
-    --clbr-motion-duration-50: 50ms;
+    --clbr-motion-duration-100: 0ms;
+    --clbr-motion-duration-150: 0ms;
+    --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-300: 0ms;
+    --clbr-motion-duration-50: 0ms;
+    --clbr-motion-duration-600: 0ms;
     --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);

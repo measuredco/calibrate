@@ -175,6 +175,14 @@ export {
 } from "./components/stack/stack";
 
 export {
+  CLBR_SPINNER_SPEC,
+  type ClbrSpinnerProps,
+  type ClbrSpinnerSize,
+  type ClbrSpinnerTone,
+  renderClbrSpinner,
+} from "./components/spinner/spinner";
+
+export {
   CLBR_SURFACE_SPEC,
   type ClbrSurfaceProps,
   type ClbrSurfaceVariant,

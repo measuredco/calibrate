@@ -7,7 +7,6 @@ type LucideIconNode = Array<[tag: string, attrs: LucideSvgAttrs]>;
 const LUCIDE_ICONS = icons as Record<string, LucideIconNode>;
 
 export const CLBR_ICON_RECOMMENDED = [
-  "sliders-horizontal",
   "arrow-down",
   "arrow-left",
   "arrow-right",
@@ -16,6 +15,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "arrow-up-down",
   "bot",
   "building-2",
+  "circle",
   "copy",
   "corner-down-left",
   "corner-down-right",
@@ -27,6 +27,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "menu",
   "settings",
   "shuffle",
+  "sliders-horizontal",
   "square",
   "sun-moon",
   "swatch-book",

@@ -37,7 +37,7 @@ export const Default = {
   args: {
     ariaHidden: false,
     mirrored: undefined,
-    name: "sliders-horizontal",
+    name: "layers",
     size: "md",
     title: "Title",
     titleId: "title-id",

@@ -8,7 +8,9 @@ function mountBadge(html: string): HTMLElement {
 
 describe("renderClbrBadge", () => {
   it("renders a span badge with escaped text by default", () => {
-    const root = mountBadge(renderClbrBadge({ label: `<strong>Badge</strong>` }));
+    const root = mountBadge(
+      renderClbrBadge({ label: `<strong>Badge</strong>` }),
+    );
     const badge = root.querySelector(".badge") as HTMLElement;
 
     expect(badge).toBeTruthy();
@@ -39,7 +41,9 @@ describe("renderClbrBadge", () => {
   });
 
   it("always emits data-size", () => {
-    const smallRoot = mountBadge(renderClbrBadge({ label: "Badge", size: "sm" }));
+    const smallRoot = mountBadge(
+      renderClbrBadge({ label: "Badge", size: "sm" }),
+    );
     const smallBadge = smallRoot.querySelector(".badge") as HTMLElement;
     expect(smallBadge.getAttribute("data-size")).toBe("sm");
 

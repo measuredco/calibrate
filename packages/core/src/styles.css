@@ -27,6 +27,7 @@
 @import "./components/logo/logo.css";
 @import "./components/prose/prose.css";
 @import "./components/radios/radios.css";
+@import "./components/spinner/spinner.css";
 @import "./components/stack/stack.css";
 @import "./components/surface/surface.css";
 @import "./components/switch/switch.css";

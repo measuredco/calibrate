@@ -55,11 +55,12 @@
     --clbr-primitive-effect-shadow-spread-0: 0rem;
     --clbr-primitive-effect-stroke-inset: -0.0625rem;
     --clbr-primitive-effect-stroke-outset: 0rem;
-    --clbr-primitive-motion-duration-100: 100ms;
-    --clbr-primitive-motion-duration-150: 150ms;
-    --clbr-primitive-motion-duration-200: 200ms;
-    --clbr-primitive-motion-duration-300: 300ms;
-    --clbr-primitive-motion-duration-50: 50ms;
+    --clbr-primitive-motion-duration-100: 0ms;
+    --clbr-primitive-motion-duration-150: 0ms;
+    --clbr-primitive-motion-duration-200: 0ms;
+    --clbr-primitive-motion-duration-300: 0ms;
+    --clbr-primitive-motion-duration-50: 0ms;
+    --clbr-primitive-motion-duration-600: 0ms;
     --clbr-primitive-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
     --clbr-primitive-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);

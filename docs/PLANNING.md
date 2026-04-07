@@ -6,8 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-- No active items.
-
 ## Next
 
 What we could working on next.
@@ -15,7 +13,6 @@ What we could working on next.
 ### Components
 
 - `Graphic/Shape` (brand shape components)
-- `Status/Spinner`
 - `Structure/Detail`
 
 #### Maybe
@@ -45,6 +42,8 @@ Concepts that already exist in `Prose`, but could become components.
 - full holistic human review across all components
 - reconsider Box abstraction (allow border and radius `none` OR split into simpler Box component (maybe just padding and surface), and create a new component abstraction for border/radius/shadow/etc, e.g. Frame)
 - md size for radios, checkbox, fieldset
+- icon size scale currently follows the msrd typography scale. Open question wether to diverge and use 30 (from vertical spacing scale), instead of 28, for lg. Above 30 we are capping due to stroke widths going over 2px (though we also have fill option for the required flexibility)
+- potential info with color only for input error states
 
 #### Page
 
@@ -188,6 +187,12 @@ _This section is a historical completion record; some entries may describe decis
   - `tone` defaults to `neutral` and is omitted when default; `size` defaults to `md` and always emits as `data-size`; `floating` defaults to `false` and emits `data-floating` only when true
   - semantic tone styling consumes the new `status.*` color tokens
   - floating badge usage is demonstrated against avatar/button/link compositions in Storybook
+- Spinner component implemented and aligned across core:
+  - added `spinner` renderer + CSS + stories + tests
+  - settled API includes optional `label`, optional `size` (`2xs | xs | sm | md | lg | xl | 2xl | fill`), and optional `tone` (`default | brand`)
+  - spinner renders a `span.spinner` containing an aria-hidden SVG; when `label` is present it also emits `role="status"` and visually hidden escaped label text
+  - `size` defaults to `md` and always emits as `data-size`; `tone` defaults to `default` and is omitted when default
+  - extended spinner-only `xl` and `2xl` sizes map to vertical spacing tokens rather than the shared icon size scale
 - Avatar component implemented and stabilized across core:
   - added `avatar` renderer + CSS + stories + tests, plus exported `getClbrInitials` helper with dedicated matrix tests
   - settled API includes `alt`, `ariaHidden`, `entity`, `color`, `initials`, `name`, `size` (`xs | sm | md | lg | xl`), and `src`

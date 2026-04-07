@@ -2,7 +2,7 @@
   :where(.clbr) {
     .badge {
       --clbr-badge-background-color: var(--clbr-color-background-subtle);
-      --clbr-badge-foreground-color: var(--clbr-color-foreground-muted-text);
+      --clbr-badge-foreground-color: var(--clbr-color-foreground-prose);
       --clbr-badge-font-size: var(--clbr-typography-type-step-100-font-size);
       --clbr-badge-line-height: var(
         --clbr-typography-type-step-100-line-height

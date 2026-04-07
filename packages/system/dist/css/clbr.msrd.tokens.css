@@ -90,6 +90,7 @@
     --clbr-motion-duration-200: 200ms;
     --clbr-motion-duration-300: 300ms;
     --clbr-motion-duration-50: 50ms;
+    --clbr-motion-duration-600: 600ms;
     --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1);
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
