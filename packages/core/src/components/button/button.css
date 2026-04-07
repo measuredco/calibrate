@@ -23,6 +23,7 @@
       var(--clbr-spacing-horizontal-600) -
         var(--clbr-layout-border-width-default)
     );
+    vertical-align: middle;
 
     &:focus-visible {
       border-radius: calc(
@@ -125,7 +126,44 @@
       }
     }
 
-    &[data-icon-only-below="tablet"] {
+    &[data-label-visibility="hidden"] {
+      padding: calc(
+        var(--clbr-spacing-vertical-400) -
+          var(--clbr-layout-border-width-default)
+      );
+
+      & .icon-wrapper {
+        block-size: var(--clbr-layout-icon-size-default);
+        margin: 0;
+      }
+
+      &[data-size="sm"] {
+        padding-block: calc(var(--clbr-spacing-vertical-300));
+        padding-inline: calc(var(--clbr-spacing-horizontal-300));
+
+        & .icon-wrapper {
+          block-size: var(--clbr-layout-icon-size-sm);
+        }
+      }
+
+      &[data-size="lg"] {
+        --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+      }
+
+      .label {
+        block-size: 1px;
+        border: none;
+        clip-path: inset(50%);
+        inline-size: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+      }
+    }
+
+    &[data-label-visibility="hiddenBelowTablet"] {
       @media (width < 48rem) {
         padding: calc(
           var(--clbr-spacing-vertical-400) -
@@ -187,14 +225,14 @@
       }
 
       @media (width < 48rem) {
-        &[data-icon-only-below="tablet"][data-size="sm"] {
+        &[data-label-visibility="hiddenBelowTablet"][data-size="sm"] {
           padding-block: var(--clbr-spacing-vertical-200);
           padding-inline: var(--clbr-spacing-horizontal-200);
         }
       }
 
       @media (width < 48rem) {
-        &[data-icon-only-below="tablet"][data-size="lg"] {
+        &[data-label-visibility="hiddenBelowTablet"][data-size="lg"] {
           --clbr-button-block-size: var(--clbr-spacing-vertical-700);
         }
       }

@@ -2,8 +2,11 @@ import { attrs, escapeHtml } from "../../helpers/html";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";
+export type ClbrButtonLabelVisibility =
+  | "visible"
+  | "hidden"
+  | "hiddenBelowTablet";
 export type ClbrButtonMode = "button" | "link";
-export type ClbrButtonOnlyBelow = "tablet";
 export type ClbrButtonPlacement = "start" | "end";
 export type ClbrButtonSize = "sm" | "md" | "lg";
 export type ClbrButtonTone = "brand" | "neutral";
@@ -21,10 +24,11 @@ export interface ClbrButtonCommonProps {
   /** Optional icon mirroring mode. Ignored when `icon` is omitted. */
   iconMirrored?: ClbrIconMirrorMode;
   /**
-   * Collapse to icon-only below the named breakpoint.
-   * Ignored when `icon` is omitted.
+   * Controls whether the visible label is shown alongside the icon.
+   * Non-visible values require `icon`.
+   * @default "visible"
    */
-  iconOnlyBelow?: ClbrButtonOnlyBelow;
+  labelVisibility?: ClbrButtonLabelVisibility;
   /**
    * Icon placement when icon is present.
    * @default "start"
@@ -111,15 +115,20 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     appearance = "outline",
     icon,
     iconMirrored,
-    iconOnlyBelow,
     iconPlacement = "start",
     label,
+    labelVisibility = "visible",
     size = "md",
     tone = "brand",
   } = props;
 
   const normalizedIconName = icon?.trim() || undefined;
   const hasIcon = Boolean(normalizedIconName);
+
+  if (labelVisibility !== "visible" && !hasIcon) {
+    throw new Error("labelVisibility requires icon when label is not visible.");
+  }
+
   let iconMarkup = "";
 
   if (hasIcon && normalizedIconName) {
@@ -141,7 +150,8 @@ export function renderClbrButton(props: ClbrButtonProps): string {
   const commonAttrs = {
     class: "button",
     "data-appearance": appearance,
-    "data-icon-only-below": hasIcon ? iconOnlyBelow : undefined,
+    "data-label-visibility":
+      labelVisibility === "visible" ? undefined : labelVisibility,
     "data-size": size,
     "data-tone": tone,
   };
@@ -216,6 +226,7 @@ export const CLBR_BUTTON_SPEC = {
       type: "string",
     },
     icon: {
+      requiredWhen: "labelVisibility is hidden or hiddenBelowTablet",
       required: false,
       type: "string",
     },
@@ -225,18 +236,18 @@ export const CLBR_BUTTON_SPEC = {
       type: "enum",
       values: ["always", "rtl"],
     },
-    iconOnlyBelow: {
-      ignoredWhen: "icon is omitted",
-      required: false,
-      type: "enum",
-      values: ["tablet"],
-    },
     iconPlacement: {
       default: "start",
       ignoredWhen: "icon is omitted",
       required: false,
       type: "enum",
       values: ["start", "end"],
+    },
+    labelVisibility: {
+      default: "visible",
+      required: false,
+      type: "enum",
+      values: ["visible", "hidden", "hiddenBelowTablet"],
     },
     label: {
       required: true,
@@ -315,9 +326,9 @@ export const CLBR_BUTTON_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-icon-only-below",
-        value: "{iconOnlyBelow}",
-        when: "icon is a non-empty string and iconOnlyBelow is provided",
+        target: "data-label-visibility",
+        value: "{labelVisibility}",
+        when: "labelVisibility is hidden or hiddenBelowTablet",
       },
       {
         behavior: "emit",

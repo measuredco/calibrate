@@ -2,10 +2,14 @@ import { getByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
 import { type ClbrButtonProps, renderClbrButton } from "./button";
 
+function mount(html: string): void {
+  document.body.innerHTML = `<div class="clbr">${html}</div>`;
+}
+
 describe("renderClbrButton", () => {
   describe("button mode", () => {
-    it("defaults to button mode when mode is omitted", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({ label: "Save" })}</div>`;
+    it("defaults to button mode with the standard attrs", () => {
+      mount(renderClbrButton({ label: "Save" }));
       const button = getByRole(document.body, "button", { name: "Save" });
 
       expect(button.getAttribute("data-mode")).toBe("button");
@@ -13,14 +17,17 @@ describe("renderClbrButton", () => {
       expect(button.getAttribute("data-size")).toBe("md");
       expect(button.getAttribute("data-tone")).toBe("brand");
       expect(button.getAttribute("type")).toBe("button");
+      expect(button.getAttribute("data-label-visibility")).toBeNull();
     });
 
     it("supports explicit button mode with submit type", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        label: "Save",
-        mode: "button",
-        type: "submit",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          label: "Save",
+          mode: "button",
+          type: "submit",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Save" });
 
       expect(button.getAttribute("data-mode")).toBe("button");
@@ -28,13 +35,15 @@ describe("renderClbrButton", () => {
     });
 
     it("emits non-empty form attrs and omits empty values", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        form: "profile-form",
-        label: "Save",
-        mode: "button",
-        name: "",
-        value: "save",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          form: "profile-form",
+          label: "Save",
+          mode: "button",
+          name: "",
+          value: "save",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Save" });
 
       expect(button.getAttribute("form")).toBe("profile-form");
@@ -43,73 +52,92 @@ describe("renderClbrButton", () => {
     });
 
     it("renders icon at start by default when icon is provided", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        icon: "arrow-right",
-        label: "Continue",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          icon: "arrow-right",
+          label: "Continue",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
-      const firstChild = button.firstElementChild;
 
-      expect(firstChild?.className).toBe("icon-wrapper");
+      expect(button.firstElementChild?.className).toBe("icon-wrapper");
       expect(button.querySelector(".icon-wrapper .icon")).toBeTruthy();
     });
 
     it("renders icon at end when iconPlacement is end", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        icon: "arrow-right",
-        iconPlacement: "end",
-        label: "Continue",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          icon: "arrow-right",
+          iconPlacement: "end",
+          label: "Continue",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
-      const lastChild = button.lastElementChild;
 
-      expect(lastChild?.className).toBe("icon-wrapper");
+      expect(button.lastElementChild?.className).toBe("icon-wrapper");
     });
 
-    it("emits collapse and mirrored attrs when provided", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        iconOnlyBelow: "tablet",
-        iconMirrored: "rtl",
-        icon: "arrow-right",
-        label: "Continue",
-      })}</div>`;
+    it("emits label visibility and mirrored attrs when provided", () => {
+      mount(
+        renderClbrButton({
+          icon: "arrow-right",
+          iconMirrored: "rtl",
+          label: "Continue",
+          labelVisibility: "hiddenBelowTablet",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
       const icon = button.querySelector("svg.icon");
 
-      expect(button.getAttribute("data-icon-only-below")).toBe("tablet");
+      expect(button.getAttribute("data-label-visibility")).toBe(
+        "hiddenBelowTablet",
+      );
       expect(icon?.getAttribute("data-mirrored")).toBe("rtl");
     });
 
-    it("ignores icon props when icon is omitted", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        iconOnlyBelow: "tablet",
-        iconMirrored: "always",
-        iconPlacement: "end",
-        label: "Continue",
-      })}</div>`;
+    it("supports always-hidden labels when icon is present", () => {
+      mount(
+        renderClbrButton({
+          icon: "arrow-right",
+          label: "Continue",
+          labelVisibility: "hidden",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
 
-      expect(button.getAttribute("data-icon-only-below")).toBeNull();
-      expect(button.querySelector(".icon-wrapper")).toBeNull();
+      expect(button.getAttribute("data-label-visibility")).toBe("hidden");
+      expect(button.querySelector(".label")?.textContent).toBe("Continue");
     });
 
     it("treats empty icon string as omitted", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        icon: "",
-        iconOnlyBelow: "tablet",
-        label: "Continue",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          icon: "",
+          label: "Continue",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
 
-      expect(button.getAttribute("data-icon-only-below")).toBeNull();
+      expect(button.getAttribute("data-label-visibility")).toBeNull();
       expect(button.querySelector(".icon-wrapper")).toBeNull();
     });
 
-    it("renders button icon as decorative (aria-hidden)", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        icon: "arrow-right",
-        label: "Continue",
-      })}</div>`;
+    it("throws when label is hidden but no icon is present", () => {
+      expect(() =>
+        renderClbrButton({
+          label: "Continue",
+          labelVisibility: "hidden",
+        }),
+      ).toThrow("labelVisibility requires icon when label is not visible.");
+    });
+
+    it("renders button icon as decorative", () => {
+      mount(
+        renderClbrButton({
+          icon: "arrow-right",
+          label: "Continue",
+        }),
+      );
       const button = getByRole(document.body, "button", { name: "Continue" });
       const icon = button.querySelector("svg.icon");
 
@@ -121,11 +149,13 @@ describe("renderClbrButton", () => {
 
   describe("link mode", () => {
     it("renders link semantics when mode is link", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("data-mode")).toBe("link");
@@ -133,53 +163,62 @@ describe("renderClbrButton", () => {
     });
 
     it("supports icon rendering in link mode", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        icon: "arrow-right",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          icon: "arrow-right",
+          label: "Docs",
+          mode: "link",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.querySelector(".icon-wrapper .icon")).toBeTruthy();
     });
 
     it("supports end placement for link icon", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        icon: "arrow-right",
-        iconPlacement: "end",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          icon: "arrow-right",
+          iconPlacement: "end",
+          label: "Docs",
+          mode: "link",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
-      const lastChild = link.lastElementChild;
 
-      expect(lastChild?.className).toBe("icon-wrapper");
+      expect(link.lastElementChild?.className).toBe("icon-wrapper");
     });
 
-    it("emits collapse and mirrored behavior for link icon", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        icon: "arrow-right",
-        iconOnlyBelow: "tablet",
-        iconMirrored: "rtl",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+    it("emits label visibility and mirrored behavior for link icon", () => {
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          icon: "arrow-right",
+          iconMirrored: "rtl",
+          label: "Docs",
+          labelVisibility: "hiddenBelowTablet",
+          mode: "link",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
       const icon = link.querySelector("svg.icon");
 
-      expect(link.getAttribute("data-icon-only-below")).toBe("tablet");
+      expect(link.getAttribute("data-label-visibility")).toBe(
+        "hiddenBelowTablet",
+      );
       expect(icon?.getAttribute("data-mirrored")).toBe("rtl");
     });
 
     it("renders an anchor when href is empty string", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          href: "",
+          label: "Docs",
+          mode: "link",
+        }),
+      );
       const anchor = document.body.querySelector("a");
 
       expect(anchor).toBeTruthy();
@@ -188,13 +227,15 @@ describe("renderClbrButton", () => {
     });
 
     it("emits rel/target when download is omitted and values are non-empty", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        label: "Docs",
-        mode: "link",
-        rel: "noreferrer",
-        target: "_blank",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+          rel: "noreferrer",
+          target: "_blank",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("rel")).toBe("noreferrer");
@@ -202,13 +243,15 @@ describe("renderClbrButton", () => {
     });
 
     it("omits empty rel/target values", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        href: "/docs",
-        label: "Docs",
-        mode: "link",
-        rel: "",
-        target: "",
-      } as unknown as ClbrButtonProps)}</div>`;
+      mount(
+        renderClbrButton({
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+          rel: "",
+          target: "",
+        } as unknown as ClbrButtonProps),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("rel")).toBeNull();
@@ -216,22 +259,26 @@ describe("renderClbrButton", () => {
     });
 
     it("supports valueless and named download attrs", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        download: true,
-        href: "/docs",
-        label: "Download",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          download: true,
+          href: "/docs",
+          label: "Download",
+          mode: "link",
+        }),
+      );
       const valueless = getByRole(document.body, "link", { name: "Download" });
       expect(valueless.hasAttribute("download")).toBe(true);
       expect(valueless.getAttribute("download")).toBe("");
 
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        download: "guide.pdf",
-        href: "/docs",
-        label: "Download named",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          download: "guide.pdf",
+          href: "/docs",
+          label: "Download named",
+          mode: "link",
+        }),
+      );
       const named = getByRole(document.body, "link", {
         name: "Download named",
       });
@@ -239,26 +286,30 @@ describe("renderClbrButton", () => {
     });
 
     it("omits download when value is false", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        download: false,
-        href: "/docs",
-        label: "Docs",
-        mode: "link",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          download: false,
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("download")).toBeNull();
     });
 
     it("ignores rel/target when download is set", () => {
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton({
-        download: "guide.pdf",
-        href: "/docs",
-        label: "Docs",
-        mode: "link",
-        rel: "noreferrer",
-        target: "_blank",
-      })}</div>`;
+      mount(
+        renderClbrButton({
+          download: "guide.pdf",
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+          rel: "noreferrer",
+          target: "_blank",
+        }),
+      );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("download")).toBe("guide.pdf");
@@ -278,7 +329,7 @@ describe("renderClbrButton", () => {
         name: "intent",
         value: "open-docs",
       } as unknown as ClbrButtonProps;
-      document.body.innerHTML = `<div class="clbr">${renderClbrButton(invalidLinkProps)}</div>`;
+      mount(renderClbrButton(invalidLinkProps));
       const link = getByRole(document.body, "link", { name: "Docs" });
 
       expect(link.getAttribute("aria-disabled")).toBeNull();

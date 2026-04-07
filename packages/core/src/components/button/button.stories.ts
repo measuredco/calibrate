@@ -28,10 +28,6 @@ const commonArgTypes = {
     control: { type: "select" },
     options: CLBR_ICON_RECOMMENDED,
   },
-  iconOnlyBelow: {
-    control: { type: "select" },
-    options: ["tablet"],
-  },
   iconMirrored: {
     control: { type: "select" },
     options: ["always", "rtl"],
@@ -39,6 +35,10 @@ const commonArgTypes = {
   iconPlacement: {
     control: { type: "select" },
     options: ["start", "end"],
+  },
+  labelVisibility: {
+    control: { type: "select" },
+    options: ["visible", "hidden", "hiddenBelowTablet"],
   },
   mode: {
     control: false,
@@ -89,9 +89,9 @@ export const ButtonMode = {
     appearance: "outline",
     tone: "brand",
     size: "md",
+    labelVisibility: "visible",
     icon: undefined,
     iconPlacement: "start",
-    iconOnlyBelow: undefined,
     iconMirrored: undefined,
     disabled: false,
     type: "button",
@@ -104,6 +104,7 @@ export const ButtonMode = {
     renderClbrButton({
       ...args,
       form: args.form || undefined,
+      labelVisibility: args.icon ? args.labelVisibility : "visible",
       name: args.name || undefined,
       value: args.value || undefined,
     }),
@@ -119,13 +120,17 @@ export const LinkMode = {
     size: "md",
     icon: undefined,
     iconPlacement: "start",
-    iconOnlyBelow: undefined,
+    labelVisibility: "visible",
     iconMirrored: undefined,
     rel: "noreferrer",
     target: "_self",
   } satisfies ClbrButtonLinkProps,
   argTypes: linkArgTypes,
-  render: (args: ClbrButtonLinkProps) => renderClbrButton({ ...args }),
+  render: (args: ClbrButtonLinkProps) =>
+    renderClbrButton({
+      ...args,
+      labelVisibility: args.icon ? args.labelVisibility : "visible",
+    }),
 };
 
 export const LinkModeDownload = {
@@ -139,11 +144,15 @@ export const LinkModeDownload = {
     size: "md",
     icon: "download",
     iconPlacement: "start",
-    iconOnlyBelow: undefined,
+    labelVisibility: "visible",
     iconMirrored: undefined,
   } satisfies ClbrButtonLinkProps,
   argTypes: downloadLinkArgTypes,
-  render: (args: ClbrButtonLinkProps) => renderClbrButton({ ...args }),
+  render: (args: ClbrButtonLinkProps) =>
+    renderClbrButton({
+      ...args,
+      labelVisibility: args.icon ? args.labelVisibility : "visible",
+    }),
 };
 
 export const LinkModeNamedDownload = {
@@ -157,9 +166,13 @@ export const LinkModeNamedDownload = {
     size: "md",
     icon: "download",
     iconPlacement: "start",
-    iconOnlyBelow: undefined,
+    labelVisibility: "visible",
     iconMirrored: undefined,
   } satisfies ClbrButtonLinkProps,
   argTypes: downloadLinkArgTypes,
-  render: (args: ClbrButtonLinkProps) => renderClbrButton({ ...args }),
+  render: (args: ClbrButtonLinkProps) =>
+    renderClbrButton({
+      ...args,
+      labelVisibility: args.icon ? args.labelVisibility : "visible",
+    }),
 };

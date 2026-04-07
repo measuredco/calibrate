@@ -14,24 +14,13 @@ What we could working on next.
 
 ### Components
 
+- `Control/Form`
+- `Graphic/Poster` (text on Image)
 - `Graphic/Shape` (brand shape components)
 - `Structure/Card`
-
-#### Maybe
-
-- `Control/Form`
-- `Control/IconButton`
-- `Graphic/Poster` (text on Image)
-
-#### Prose
-
-Concepts that already exist in `Prose`, but could become components.
-
-- `Blockquote`
-- `Code`
-- `Link` (also covered in `Button`)
-- `List`
-- `Table`
+- `Structure/Figure`
+- `Typographic/Blockquote`
+- `Typographic/Code`
 
 #### General
 
