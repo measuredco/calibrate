@@ -60,6 +60,13 @@ export {
 } from "./components/container/container";
 
 export {
+  CLBR_DETAILS_SPEC,
+  type ClbrDetailsInlineSize,
+  type ClbrDetailsProps,
+  renderClbrDetails,
+} from "./components/details/details";
+
+export {
   CLBR_DIVIDER_SPEC,
   type ClbrDividerOrientation,
   type ClbrDividerTone,
@@ -69,8 +76,8 @@ export {
 
 export {
   CLBR_FIELDSET_SPEC,
+  type ClbrFieldsetInlineSize,
   type ClbrFieldsetProps,
-  type ClbrFieldsetWidth,
   renderClbrFieldset,
 } from "./components/fieldset/fieldset";
 
@@ -125,10 +132,10 @@ export {
 
 export {
   CLBR_INPUT_SPEC,
+  type ClbrInputInlineSize,
   type ClbrInputProps,
   type ClbrInputSize,
   type ClbrInputType,
-  type ClbrInputWidth,
   renderClbrInput,
 } from "./components/input/input";
 
@@ -198,10 +205,10 @@ export {
 
 export {
   CLBR_TEXTAREA_SPEC,
+  type ClbrTextareaInlineSize,
   type ClbrTextareaProps,
   type ClbrTextareaResize,
   type ClbrTextareaSize,
-  type ClbrTextareaWidth,
   renderClbrTextarea,
 } from "./components/textarea/textarea";
 

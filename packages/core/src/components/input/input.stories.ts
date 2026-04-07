@@ -6,6 +6,10 @@ const meta = {
       control: { type: "text" },
       description: 'Set to `"off"` to disable (or pass `false` in code).',
     },
+    inlineSize: {
+      control: { type: "select" },
+      options: ["full", "fit"],
+    },
     size: {
       control: { type: "select" },
       options: ["sm", "md"],
@@ -13,10 +17,6 @@ const meta = {
     type: {
       control: { type: "select" },
       options: ["text", "email", "password", "tel", "url", "numeric"],
-    },
-    width: {
-      control: { type: "select" },
-      options: ["full", "auto"],
     },
   },
   title: "Control/Input",
@@ -30,6 +30,7 @@ export const Default = {
     description: "Description",
     disabled: false,
     id: "inputId",
+    inlineSize: "fit",
     invalid: false,
     label: "Label",
     name: "",
@@ -40,7 +41,6 @@ export const Default = {
     spellcheck: false,
     type: "text",
     value: "Value",
-    width: "auto",
   } satisfies ClbrInputProps,
   render: (args: ClbrInputProps) =>
     renderClbrInput({

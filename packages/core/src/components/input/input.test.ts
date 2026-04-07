@@ -14,23 +14,23 @@ describe("renderClbrInput", () => {
     const field = root.querySelector(".input-field");
 
     expect(field?.getAttribute("data-size")).toBe("md");
-    expect(field?.getAttribute("data-width")).toBeNull();
+    expect(field?.getAttribute("data-inline-size")).toBeNull();
     expect(input.getAttribute("id")).toBe("email");
     expect(input.getAttribute("type")).toBe("text");
   });
 
-  it('emits data-width="auto" only when width is auto', () => {
-    const autoRoot = mountInput(
-      renderClbrInput({ id: "email", label: "Email", width: "auto" }),
+  it('emits data-inline-size="fit" only when inlineSize is fit', () => {
+    const fitRoot = mountInput(
+      renderClbrInput({ id: "email", inlineSize: "fit", label: "Email" }),
     );
-    const autoField = autoRoot.querySelector(".input-field");
-    expect(autoField?.getAttribute("data-width")).toBe("auto");
+    const fitField = fitRoot.querySelector(".input-field");
+    expect(fitField?.getAttribute("data-inline-size")).toBe("fit");
 
     const fullRoot = mountInput(
-      renderClbrInput({ id: "email", label: "Email", width: "full" }),
+      renderClbrInput({ id: "email", inlineSize: "full", label: "Email" }),
     );
     const fullField = fullRoot.querySelector(".input-field");
-    expect(fullField?.getAttribute("data-width")).toBeNull();
+    expect(fullField?.getAttribute("data-inline-size")).toBeNull();
   });
 
   it("renders description and wires aria-describedby", () => {

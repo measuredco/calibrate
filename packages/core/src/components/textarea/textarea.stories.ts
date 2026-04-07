@@ -6,6 +6,10 @@ const meta = {
       control: { type: "text" },
       description: 'Set to `"off"` to disable (or pass `false` in code).',
     },
+    inlineSize: {
+      control: { type: "select" },
+      options: ["full", "fit"],
+    },
     resize: {
       control: { type: "select" },
       options: ["vertical", "none"],
@@ -13,10 +17,6 @@ const meta = {
     size: {
       control: { type: "select" },
       options: ["sm", "md"],
-    },
-    width: {
-      control: { type: "select" },
-      options: ["full", "auto"],
     },
   },
   title: "Control/Textarea",
@@ -31,6 +31,7 @@ export const Default = {
     disabled: false,
     id: "textareaId",
     invalid: false,
+    inlineSize: "fit",
     label: "Label",
     name: "",
     readOnly: false,
@@ -40,7 +41,6 @@ export const Default = {
     size: "md",
     spellcheck: false,
     value: "Value",
-    width: "auto",
   } satisfies ClbrTextareaProps,
   render: (args: ClbrTextareaProps) =>
     renderClbrTextarea({

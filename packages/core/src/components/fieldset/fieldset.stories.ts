@@ -3,9 +3,9 @@ import { type ClbrFieldsetProps, renderClbrFieldset } from "./fieldset";
 const meta = {
   argTypes: {
     children: { control: false },
-    width: {
+    inlineSize: {
       control: { type: "select" },
-      options: ["full", "auto"],
+      options: ["full", "fit"],
     },
   },
   title: "Control/Fieldset",
@@ -19,9 +19,9 @@ export const Default = {
     description: "Description",
     disabled: false,
     id: "fieldsetId",
+    inlineSize: "fit",
     invalid: false,
     legend: "Legend",
-    width: "auto",
   } satisfies ClbrFieldsetProps,
   render: (args: ClbrFieldsetProps) =>
     renderClbrFieldset({

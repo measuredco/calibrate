@@ -5,8 +5,12 @@
     min-inline-size: 0;
     padding: 0;
 
-    &[data-width="auto"] {
+    &[data-inline-size="fit"] {
       inline-size: fit-content;
+    }
+
+    .legend {
+      padding-inline: 0;
     }
 
     .description {

@@ -16,7 +16,7 @@ describe("renderClbrTextarea", () => {
     const field = root.querySelector(".textarea-field");
 
     expect(field?.getAttribute("data-size")).toBe("md");
-    expect(field?.getAttribute("data-width")).toBeNull();
+    expect(field?.getAttribute("data-inline-size")).toBeNull();
     expect(field?.getAttribute("data-resize")).toBeNull();
     expect(textarea.getAttribute("id")).toBe("message");
     expect(textarea.getAttribute("rows")).toBe("2");
@@ -52,18 +52,26 @@ describe("renderClbrTextarea", () => {
     expect(textarea.getAttribute("rows")).toBe("6");
   });
 
-  it('emits data-width="auto" only when width is auto', () => {
-    const autoRoot = mountTextarea(
-      renderClbrTextarea({ id: "message", label: "Message", width: "auto" }),
+  it('emits data-inline-size="fit" only when inlineSize is fit', () => {
+    const fitRoot = mountTextarea(
+      renderClbrTextarea({
+        id: "message",
+        inlineSize: "fit",
+        label: "Message",
+      }),
     );
-    const autoField = autoRoot.querySelector(".textarea-field");
-    expect(autoField?.getAttribute("data-width")).toBe("auto");
+    const fitField = fitRoot.querySelector(".textarea-field");
+    expect(fitField?.getAttribute("data-inline-size")).toBe("fit");
 
     const fullRoot = mountTextarea(
-      renderClbrTextarea({ id: "message", label: "Message", width: "full" }),
+      renderClbrTextarea({
+        id: "message",
+        inlineSize: "full",
+        label: "Message",
+      }),
     );
     const fullField = fullRoot.querySelector(".textarea-field");
-    expect(fullField?.getAttribute("data-width")).toBeNull();
+    expect(fullField?.getAttribute("data-inline-size")).toBeNull();
   });
 
   it('emits data-resize="none" only when resize is none', () => {

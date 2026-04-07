@@ -13,7 +13,6 @@ What we could working on next.
 ### Components
 
 - `Graphic/Shape` (brand shape components)
-- `Structure/Detail`
 
 #### Maybe
 
@@ -187,6 +186,12 @@ _This section is a historical completion record; some entries may describe decis
   - `tone` defaults to `neutral` and is omitted when default; `size` defaults to `md` and always emits as `data-size`; `floating` defaults to `false` and emits `data-floating` only when true
   - semantic tone styling consumes the new `status.*` color tokens
   - floating badge usage is demonstrated against avatar/button/link compositions in Storybook
+- Details component implemented and aligned across core:
+  - added `details` renderer + CSS + stories + tests
+  - settled API includes required escaped `summary`, optional trusted `children`, optional `open`, and optional `inlineSize` (`full | fit`)
+  - component renders native `<details>/<summary>` markup with a decorative shared chevron icon marker and `.content` wrapper
+  - `open` emits the native `open` attribute only when true; `inlineSize` defaults to `full` and emits `data-inline-size="fit"` only when requested
+  - related width-contract refactor completed across input, textarea, and fieldset: prop renamed to `inlineSize`, values renamed to `full | fit`, and emitted attr renamed to `data-inline-size`
 - Spinner component implemented and aligned across core:
   - added `spinner` renderer + CSS + stories + tests
   - settled API includes optional `label`, optional `size` (`2xs | xs | sm | md | lg | xl | 2xl | fill`), and optional `tone` (`default | brand`)

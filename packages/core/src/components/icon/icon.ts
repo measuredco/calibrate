@@ -15,6 +15,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "arrow-up-down",
   "bot",
   "building-2",
+  "chevron-right",
   "circle",
   "copy",
   "corner-down-left",

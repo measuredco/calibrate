@@ -15,7 +15,7 @@
       );
     }
 
-    &[data-width="auto"] {
+    &[data-inline-size="fit"] {
       inline-size: fit-content;
 
       .textarea {

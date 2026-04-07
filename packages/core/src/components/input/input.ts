@@ -1,5 +1,6 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 
+export type ClbrInputInlineSize = "full" | "fit";
 export type ClbrInputSize = "sm" | "md";
 export type ClbrInputType =
   | "text"
@@ -8,7 +9,6 @@ export type ClbrInputType =
   | "tel"
   | "url"
   | "numeric";
-export type ClbrInputWidth = "full" | "auto";
 
 /** Props for the Calibrate input renderer. */
 export interface ClbrInputProps {
@@ -75,12 +75,12 @@ export interface ClbrInputProps {
   /** Optional current value. */
   value?: string;
   /**
-   * Width behavior.
-   * `full` is default and emits no width attribute.
-   * `auto` emits `data-width="auto"` on wrapper.
+   * Inline-size behavior.
+   * `full` is default and emits no inline-size attribute.
+   * `fit` emits `data-inline-size="fit"` on wrapper.
    * @default "full"
    */
-  width?: ClbrInputWidth;
+  inlineSize?: ClbrInputInlineSize;
 }
 
 /**
@@ -104,7 +104,7 @@ export function renderClbrInput({
   spellcheck,
   type = "text",
   value,
-  width = "full",
+  inlineSize = "full",
 }: ClbrInputProps): string {
   const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
@@ -168,7 +168,7 @@ export function renderClbrInput({
   const wrapperAttrs = attrs({
     class: "input-field",
     "data-size": size,
-    "data-width": width === "auto" ? "auto" : undefined,
+    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
   });
 
   return `<div ${wrapperAttrs}><label class="label" for="${normalizedId}">${escapeHtml(
@@ -250,11 +250,11 @@ export const CLBR_INPUT_SPEC = {
       required: false,
       type: "string",
     },
-    width: {
+    inlineSize: {
       default: "full",
       required: false,
       type: "enum",
-      values: ["full", "auto"],
+      values: ["full", "fit"],
     },
   },
   rules: {
@@ -276,9 +276,9 @@ export const CLBR_INPUT_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-width",
-        value: "auto",
-        when: "width is auto",
+        target: "data-inline-size",
+        value: "fit",
+        when: "inlineSize is fit",
       },
       {
         behavior: "always",

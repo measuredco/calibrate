@@ -10,7 +10,7 @@
       --clbr-input-block-size: var(--clbr-spacing-vertical-775);
     }
 
-    &[data-width="auto"] {
+    &[data-inline-size="fit"] {
       inline-size: fit-content;
 
       .input {

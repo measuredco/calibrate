@@ -1,6 +1,6 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 
-export type ClbrFieldsetWidth = "full" | "auto";
+export type ClbrFieldsetInlineSize = "full" | "fit";
 
 /** Props for the Calibrate fieldset renderer. */
 export interface ClbrFieldsetProps {
@@ -16,19 +16,19 @@ export interface ClbrFieldsetProps {
   /** Fieldset id used for description id derivation. */
   id: string;
   /**
+   * Inline-size behavior.
+   * `full` is default and emits no inline-size attribute.
+   * `fit` emits `data-inline-size="fit"` on fieldset.
+   * @default "full"
+   */
+  inlineSize?: ClbrFieldsetInlineSize;
+  /**
    * Fieldset invalid state; emitted only when enabled.
    * @default false
    */
   invalid?: boolean;
   /** Fieldset legend text (escaped before render). */
   legend: string;
-  /**
-   * Width behavior.
-   * `full` is default and emits no width attribute.
-   * `auto` emits `data-width="auto"` on fieldset.
-   * @default "full"
-   */
-  width?: ClbrFieldsetWidth;
 }
 
 /**
@@ -44,7 +44,7 @@ export function renderClbrFieldset({
   id,
   invalid,
   legend,
-  width = "full",
+  inlineSize = "full",
 }: ClbrFieldsetProps): string {
   const normalizedDescription = description?.trim();
   const normalizedId = id.trim();
@@ -72,7 +72,7 @@ export function renderClbrFieldset({
       : undefined,
     "aria-invalid": isInvalid ? "true" : undefined,
     class: "fieldset",
-    "data-width": width === "auto" ? "auto" : undefined,
+    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
     disabled: isDisabled,
     id: normalizedId,
   });
@@ -123,11 +123,11 @@ export const CLBR_FIELDSET_SPEC = {
       required: true,
       type: "text",
     },
-    width: {
+    inlineSize: {
       default: "full",
       required: false,
       type: "enum",
-      values: ["full", "auto"],
+      values: ["full", "fit"],
     },
   },
   rules: {
@@ -144,9 +144,9 @@ export const CLBR_FIELDSET_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-width",
-        value: "auto",
-        when: "width is auto",
+        target: "data-inline-size",
+        value: "fit",
+        when: "inlineSize is fit",
       },
       {
         behavior: "emit",

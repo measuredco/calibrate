@@ -21,22 +21,22 @@ describe("renderClbrFieldset", () => {
 
     expect(fieldset?.getAttribute("id")).toBe("contact");
     expect(fieldset?.classList.contains("fieldset")).toBe(true);
-    expect(fieldset?.hasAttribute("data-width")).toBe(false);
+    expect(fieldset?.hasAttribute("data-inline-size")).toBe(false);
     expect(getByText(root, "Legend").tagName).toBe("LEGEND");
     expect(root.querySelector(".content")?.textContent).toBe("Body");
   });
 
-  it("emits data-width only when width is auto", () => {
+  it('emits data-inline-size only when inlineSize is fit', () => {
     const root = mountFieldset(
       renderClbrFieldset({
         id: "contact",
+        inlineSize: "fit",
         legend: "Legend",
-        width: "auto",
       }),
     );
 
-    expect(root.querySelector("fieldset")?.getAttribute("data-width")).toBe(
-      "auto",
+    expect(root.querySelector("fieldset")?.getAttribute("data-inline-size")).toBe(
+      "fit",
     );
   });
 
