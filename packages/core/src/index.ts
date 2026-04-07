@@ -21,7 +21,6 @@ export {
 export {
   CLBR_BOX_SPEC,
   type ClbrBoxBackground,
-  type ClbrBoxBorder,
   type ClbrBoxPadding,
   type ClbrBoxProps,
   type ClbrBoxRadius,
@@ -147,6 +146,14 @@ export {
   type ClbrLogoVariant,
   renderClbrLogo,
 } from "./components/logo/logo";
+
+export {
+  CLBR_PANEL_SPEC,
+  type ClbrPanelInlineSize,
+  type ClbrPanelPadding,
+  type ClbrPanelProps,
+  renderClbrPanel,
+} from "./components/panel/panel";
 
 export {
   CLBR_PROSE_SPEC,

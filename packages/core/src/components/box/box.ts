@@ -2,50 +2,43 @@ import { attrs } from "../../helpers/html";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrBoxBackground = "default" | "panel";
-export type ClbrBoxBorder = "default" | "subtle" | "brand";
 export type ClbrBoxPadding = "xs" | "sm" | "md" | "lg" | "xl";
-export type ClbrBoxRadius = "sm" | "md" | "lg";
+export type ClbrBoxRadius = "sm" | "md";
 
 /** Props for the Calibrate box renderer. */
 export interface ClbrBoxProps {
   /**
    * Background treatment.
+   * `default` emits no background attribute.
+   * `panel` emits `data-background="panel"`.
    * @default "default"
    */
   background?: ClbrBoxBackground;
   /**
-   * Border treatment.
-   * @default "default"
+   * Adds a subtle border when true.
+   * Emits `data-border` as a presence attribute.
+   * @default false
    */
-  border?: ClbrBoxBorder;
+  border?: boolean;
   /**
    * Inner HTML content to render inside the box wrapper.
    * Caller is responsible for sanitizing untrusted content.
    */
   children?: string;
   /**
-   * Applies default elevation shadow when true.
-   * Omitted by default.
-   */
-  shadow?: boolean;
-  /**
-   * Applies brand-specific stroke offset treatment.
-   * Omitted by default.
-   */
-  offsetStroke?: boolean;
-  /**
    * Inner spacing scale.
+   * Always emits `data-padding`.
    * @default "md"
    */
   padding?: ClbrBoxPadding;
   /**
-   * Corner radius scale.
-   * @default "md"
+   * Corner radius size.
+   * When omitted, no `data-radius` attribute is emitted.
    */
   radius?: ClbrBoxRadius;
   /**
    * Surface context.
-   * Omitted by default.
+   * When provided, emits `data-surface`.
    */
   surface?: ClbrSurfaceVariant;
 }
@@ -53,25 +46,24 @@ export interface ClbrBoxProps {
 /**
  * SSR renderer for the Calibrate box component.
  *
+ * Emits a single `div.box` wrapper around trusted child HTML.
+ * Optional variants are expressed via `data-*` attributes on the root element.
+ *
  * @param props - Box component props.
  * @returns HTML string for a box wrapper.
  */
 export function renderClbrBox({
   background = "default",
-  border = "default",
-  shadow,
   children,
-  offsetStroke,
+  border = false,
   padding = "md",
-  radius = "md",
+  radius,
   surface,
 }: ClbrBoxProps): string {
   const boxAttrs = attrs({
     class: "box",
     "data-background": background === "default" ? undefined : background,
-    "data-border": border === "default" ? undefined : border,
-    "data-shadow": shadow,
-    "data-offset-stroke": offsetStroke,
+    "data-border": border,
     "data-padding": padding,
     "data-radius": radius,
     "data-surface": surface,
@@ -85,6 +77,8 @@ export const CLBR_BOX_SPEC = {
   name: "box",
   output: {
     element: "div",
+    class: "box",
+    children: "trusted HTML",
   },
   props: {
     background: {
@@ -94,22 +88,13 @@ export const CLBR_BOX_SPEC = {
       values: ["default", "panel"],
     },
     border: {
-      default: "default",
+      default: false,
       required: false,
-      type: "enum",
-      values: ["default", "subtle", "brand"],
+      type: "boolean",
     },
     children: {
       required: false,
       type: "html",
-    },
-    shadow: {
-      required: false,
-      type: "boolean",
-    },
-    offsetStroke: {
-      required: false,
-      type: "boolean",
     },
     padding: {
       default: "md",
@@ -118,10 +103,9 @@ export const CLBR_BOX_SPEC = {
       values: ["xs", "sm", "md", "lg", "xl"],
     },
     radius: {
-      default: "md",
       required: false,
       type: "enum",
-      values: ["sm", "md", "lg"],
+      values: ["sm", "md"],
     },
     surface: {
       required: false,
@@ -139,26 +123,14 @@ export const CLBR_BOX_SPEC = {
       {
         behavior: "emit",
         target: "data-background",
-        value: "{background}",
+        value: "panel",
         when: "background is panel",
       },
       {
         behavior: "emit",
         target: "data-border",
-        value: "{border}",
-        when: "border is subtle or brand",
-      },
-      {
-        behavior: "emit",
-        target: "data-shadow",
         value: "present",
-        when: "shadow is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-offset-stroke",
-        value: "present",
-        when: "offsetStroke is true",
+        when: "border is true",
       },
       {
         behavior: "always",
@@ -166,9 +138,10 @@ export const CLBR_BOX_SPEC = {
         value: "{padding}",
       },
       {
-        behavior: "always",
+        behavior: "emit",
         target: "data-radius",
         value: "{radius}",
+        when: "radius is sm or md",
       },
       {
         behavior: "emit",

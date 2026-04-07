@@ -1,121 +1,78 @@
-import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
 import { renderClbrBox } from "./box";
 
 function mountBox(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".clbr") as HTMLElement;
+  return document.body.querySelector(".box") as HTMLElement;
 }
 
 describe("renderClbrBox", () => {
-  it("renders a div.box with default emit behavior", () => {
-    const root = mountBox(renderClbrBox({ children: "Body" }));
-    const box = getByText(root, "Body");
+  it("renders a div.box with the default contract", () => {
+    const box = mountBox(renderClbrBox({ children: "Body" }));
 
     expect(box.tagName).toBe("DIV");
-    expect(box.classList.contains("box")).toBe(true);
+    expect(box.className).toBe("box");
+    expect(box.textContent).toBe("Body");
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
-    expect(box.hasAttribute("data-shadow")).toBe(false);
-    expect(box.hasAttribute("data-offset-stroke")).toBe(false);
-    expect(box.hasAttribute("data-surface")).toBe(false);
     expect(box.getAttribute("data-padding")).toBe("md");
-    expect(box.getAttribute("data-radius")).toBe("md");
+    expect(box.hasAttribute("data-radius")).toBe(false);
+    expect(box.hasAttribute("data-surface")).toBe(false);
   });
 
-  it("renders trusted children HTML without escaping", () => {
-    const root = mountBox(
+  it("renders trusted child HTML without escaping", () => {
+    const box = mountBox(
       renderClbrBox({
         children: '<p>Lorem <em>ipsum</em> <a href="/docs">docs</a></p>',
       }),
     );
 
-    expect(root.querySelector("p")?.textContent).toContain("Lorem");
-    expect(root.querySelector("em")?.textContent).toBe("ipsum");
-    expect(root.querySelector("a")?.getAttribute("href")).toBe("/docs");
+    expect(box.querySelector("p")?.textContent).toContain("Lorem");
+    expect(box.querySelector("em")?.textContent).toBe("ipsum");
+    expect(box.querySelector("a")?.getAttribute("href")).toBe("/docs");
   });
 
-  it("allows omitted and empty children", () => {
-    const omittedRoot = mountBox(renderClbrBox({}));
-    const omittedBox = omittedRoot.querySelector(".box");
-    expect(omittedBox).toBeTruthy();
-    expect(omittedBox?.innerHTML).toBe("");
+  it("supports omitted or empty children", () => {
+    const omitted = mountBox(renderClbrBox({}));
+    const empty = mountBox(renderClbrBox({ children: "" }));
 
-    const emptyRoot = mountBox(renderClbrBox({ children: "" }));
-    const emptyBox = emptyRoot.querySelector(".box");
-    expect(emptyBox).toBeTruthy();
-    expect(emptyBox?.innerHTML).toBe("");
+    expect(omitted.innerHTML).toBe("");
+    expect(empty.innerHTML).toBe("");
   });
 
-  it("emits non-default variant attributes", () => {
-    const root = mountBox(
+  it("emits requested variant attributes", () => {
+    const box = mountBox(
       renderClbrBox({
         background: "panel",
-        border: "brand",
+        border: true,
         children: "Body",
+        padding: "xl",
+        radius: "md",
         surface: "brand",
       }),
     );
-    const box = getByText(root, "Body");
 
     expect(box.getAttribute("data-background")).toBe("panel");
-    expect(box.getAttribute("data-border")).toBe("brand");
+    expect(box.hasAttribute("data-border")).toBe(true);
+    expect(box.getAttribute("data-padding")).toBe("xl");
+    expect(box.getAttribute("data-radius")).toBe("md");
     expect(box.getAttribute("data-surface")).toBe("brand");
   });
 
-  it("always emits padding and radius attrs from props", () => {
-    const root = mountBox(
+  it("omits optional attrs when their variants are unset", () => {
+    const box = mountBox(
       renderClbrBox({
+        background: "default",
+        border: false,
         children: "Body",
-        padding: "xl",
-        radius: "lg",
+        padding: "sm",
       }),
     );
-    const box = getByText(root, "Body");
 
-    expect(box.getAttribute("data-padding")).toBe("xl");
-    expect(box.getAttribute("data-radius")).toBe("lg");
-  });
-
-  it("emits data-offset-stroke only when offsetStroke is true", () => {
-    const enabledRoot = mountBox(
-      renderClbrBox({
-        border: "default",
-        children: "Body",
-        offsetStroke: true,
-      }),
-    );
-    const enabled = getByText(enabledRoot, "Body");
-    expect(enabled.hasAttribute("data-offset-stroke")).toBe(true);
-
-    const disabledRoot = mountBox(
-      renderClbrBox({
-        border: "default",
-        children: "Body",
-        offsetStroke: false,
-      }),
-    );
-    const disabled = getByText(disabledRoot, "Body");
-    expect(disabled.hasAttribute("data-offset-stroke")).toBe(false);
-  });
-
-  it("emits data-shadow only when shadow is true", () => {
-    const enabledRoot = mountBox(
-      renderClbrBox({
-        shadow: true,
-        children: "Body",
-      }),
-    );
-    const enabled = getByText(enabledRoot, "Body");
-    expect(enabled.hasAttribute("data-shadow")).toBe(true);
-
-    const disabledRoot = mountBox(
-      renderClbrBox({
-        shadow: false,
-        children: "Body",
-      }),
-    );
-    const disabled = getByText(disabledRoot, "Body");
-    expect(disabled.hasAttribute("data-shadow")).toBe(false);
+    expect(box.hasAttribute("data-background")).toBe(false);
+    expect(box.hasAttribute("data-border")).toBe(false);
+    expect(box.getAttribute("data-padding")).toBe("sm");
+    expect(box.hasAttribute("data-radius")).toBe(false);
+    expect(box.hasAttribute("data-surface")).toBe(false);
   });
 });

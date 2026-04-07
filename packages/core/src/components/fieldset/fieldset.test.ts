@@ -26,7 +26,7 @@ describe("renderClbrFieldset", () => {
     expect(root.querySelector(".content")?.textContent).toBe("Body");
   });
 
-  it('emits data-inline-size only when inlineSize is fit', () => {
+  it("emits data-inline-size only when inlineSize is fit", () => {
     const root = mountFieldset(
       renderClbrFieldset({
         id: "contact",
@@ -35,9 +35,9 @@ describe("renderClbrFieldset", () => {
       }),
     );
 
-    expect(root.querySelector("fieldset")?.getAttribute("data-inline-size")).toBe(
-      "fit",
-    );
+    expect(
+      root.querySelector("fieldset")?.getAttribute("data-inline-size"),
+    ).toBe("fit");
   });
 
   it("wires group description to derived aria-describedby id", () => {

@@ -14,7 +14,9 @@ describe("renderClbrDetails", () => {
       }),
     );
     const summary = details.querySelector(".summary") as HTMLElement;
-    const marker = details.querySelector(".summary .marker .icon") as HTMLElement;
+    const marker = details.querySelector(
+      ".summary .marker .icon",
+    ) as HTMLElement;
     const content = details.querySelector(".content") as HTMLElement;
 
     expect(details.tagName).toBe("DETAILS");

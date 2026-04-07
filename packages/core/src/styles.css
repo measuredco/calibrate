@@ -26,6 +26,7 @@
 @import "./components/inline/inline.css";
 @import "./components/input/input.css";
 @import "./components/logo/logo.css";
+@import "./components/panel/panel.css";
 @import "./components/prose/prose.css";
 @import "./components/radios/radios.css";
 @import "./components/spinner/spinner.css";

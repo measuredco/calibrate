@@ -7,8 +7,7 @@ const meta = {
       options: ["default", "panel"],
     },
     border: {
-      control: { type: "select" },
-      options: ["default", "subtle", "brand"],
+      control: { type: "boolean" },
     },
     children: { control: false },
     padding: {
@@ -17,7 +16,7 @@ const meta = {
     },
     radius: {
       control: { type: "select" },
-      options: ["sm", "md", "lg"],
+      options: ["sm", "md"],
     },
     surface: {
       control: { type: "select" },
@@ -32,12 +31,10 @@ export default meta;
 export const Default = {
   args: {
     background: "default",
-    border: "default",
-    shadow: false,
+    border: true,
     children: '<div class="example-content"></div>',
-    offsetStroke: false,
     padding: "md",
-    radius: "md",
+    radius: undefined,
     surface: undefined,
   } satisfies ClbrBoxProps,
   render: (args: ClbrBoxProps) => renderClbrBox(args),

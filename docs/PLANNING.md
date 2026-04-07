@@ -6,6 +6,8 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+_No current item recorded here._
+
 ## Next
 
 What we could working on next.
@@ -13,13 +15,13 @@ What we could working on next.
 ### Components
 
 - `Graphic/Shape` (brand shape components)
+- `Structure/Card`
 
 #### Maybe
 
 - `Control/Form`
 - `Control/IconButton`
 - `Graphic/Poster` (text on Image)
-- `Structure/Card`
 
 #### Prose
 
@@ -39,10 +41,9 @@ Concepts that already exist in `Prose`, but could become components.
   - also consider `id` prop normalisation
 - Consider namespacing of component classes (and data-surface?)
 - full holistic human review across all components
-- reconsider Box abstraction (allow border and radius `none` OR split into simpler Box component (maybe just padding and surface), and create a new component abstraction for border/radius/shadow/etc, e.g. Frame)
-- md size for radios, checkbox, fieldset
+- md size for radios, checkbox, fieldset, summary
 - icon size scale currently follows the msrd typography scale. Open question wether to diverge and use 30 (from vertical spacing scale), instead of 28, for lg. Above 30 we are capping due to stroke widths going over 2px (though we also have fill option for the required flexibility)
-- potential info with color only for input error states
+- potential issue with color-only for input error states
 
 #### Page
 
@@ -179,6 +180,16 @@ Improve Storybook docs/type extraction for SSR renderer stories so prop tables a
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Panel component implemented as a first-pass structure primitive:
+  - added `panel` renderer + CSS + stories + tests
+  - settled API includes optional trusted `children`, optional `inlineSize` (`full | fit`), optional `offsetStroke`, optional `padding` (`xs | sm | md | lg | xl`), and optional `surface`
+  - panel always uses the panel background, default border, default shadow, and `lg` radius; only the documented variant attributes are configurable
+  - `inlineSize` defaults to `full` and emits `data-inline-size="fit"` only when requested; `padding` defaults to `md` and always emits as `data-padding`; `offsetStroke` defaults to `false` and emits `data-offset-stroke` only when true
+- Box component contract simplified and aligned across core:
+  - removed legacy `shadow` and `offsetStroke` props and simplified `border` to a boolean subtle-border toggle
+  - settled API includes optional `background` (`default | panel`), optional boolean `border`, optional trusted `children`, optional `padding` (`xs | sm | md | lg | xl`), optional `radius` (`sm | md`), and optional `surface`
+  - `background` defaults to `default` and is omitted when default; `border` defaults to `false` and emits `data-border` as a presence attribute only when true; `radius` is omitted by default
 
 - Badge component implemented and aligned across core:
   - added `badge` renderer + CSS + stories + tests
