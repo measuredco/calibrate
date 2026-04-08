@@ -68,16 +68,15 @@
     }
 
     & blockquote {
+      margin-inline: 0;
       margin-block-end: var(--clbr-spacing-vertical-500);
       margin-block-start: 0;
-      margin-inline: 0;
 
       & p {
-        margin-block-end: 0;
-        quotes: "“" "”" "‘" "’";
+        margin-block: 0;
 
         &:first-child::before {
-          content: open-quote;
+          content: open-quote / "";
           margin-inline-start: -0.81ch;
         }
 
@@ -86,28 +85,32 @@
           margin-inline-start: 0;
         }
 
-        &:first-child::after {
-          content: close-quote;
+        &:last-child::after {
+          content: close-quote / "";
         }
 
-        [data-align="end"] &:first-child::after {
+        [data-align="end"] &:last-child::after {
           margin-inline-end: -0.81ch;
         }
 
         p + & {
           margin-block-start: var(--clbr-spacing-vertical-500);
         }
+      }
 
-        /* Workaround for lack of cite support in markdown */
-        p + &:last-child {
-          font: var(--clbr-prose-font-sm);
-          font-feature-settings: "ss03" 1;
-          font-optical-sizing: none;
-          text-align: end;
+      & + p {
+        margin-block-end: var(--clbr-spacing-vertical-700);
+        font: var(--clbr-prose-font-sm);
+        font-feature-settings: "ss03" 1;
+        font-optical-sizing: none;
+        text-align: end;
 
-          [data-align="center"] & {
-            text-align: center;
-          }
+        &::before {
+          content: "— " / "- ";
+        }
+
+        [data-align="center"] & {
+          text-align: center;
         }
       }
     }

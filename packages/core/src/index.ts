@@ -19,6 +19,13 @@ export {
 } from "./components/badge/badge";
 
 export {
+  CLBR_BLOCKQUOTE_SPEC,
+  type ClbrBlockquoteProps,
+  type ClbrBlockquoteSize,
+  renderClbrBlockquote,
+} from "./components/blockquote/blockquote";
+
+export {
   CLBR_BOX_SPEC,
   type ClbrBoxBackground,
   type ClbrBoxPadding,

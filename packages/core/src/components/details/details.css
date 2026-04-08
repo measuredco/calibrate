@@ -39,6 +39,10 @@
         transition: transform var(--clbr-motion-duration-100)
           var(--clbr-motion-easing-ease-in-out);
 
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
+
         [open] & {
           transform: rotate(90deg);
         }

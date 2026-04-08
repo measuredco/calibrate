@@ -19,7 +19,6 @@ What we could working on next.
 - `Graphic/Shape` (brand shape components)
 - `Structure/Card`
 - `Structure/Figure`
-- `Typographic/Blockquote`
 - `Typographic/Code`
 
 #### General
@@ -169,6 +168,12 @@ Improve Storybook docs/type extraction for SSR renderer stories so prop tables a
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Blockquote component implemented and aligned across core:
+  - added `blockquote` renderer + CSS + stories + tests
+  - settled API includes required trusted `quote` and `attribution`, optional `align` (`start | center | end`), optional `measured`, optional `responsive`, and optional `size` (`md | lg`)
+  - component renders `div.blockquote` with semantic `blockquote` and attribution wrappers, composing `renderClbrText` internally for both quote and attribution
+  - `align` defaults to `start` and is emitted on the root only when non-default, while also passing through to the composed quote paragraph; `measured` defaults to `true`; attribution is always rendered at `sm`
 
 - Panel component implemented as a first-pass structure primitive:
   - added `panel` renderer + CSS + stories + tests
@@ -466,3 +471,7 @@ _This section is a historical completion record; some entries may describe decis
   - Storybook Vitest addon wired for automated accessibility testing (WCAG 2.2 AA, no exclusions)
   - Storybook CI job now executes Storybook a11y tests as a dedicated gate
   - local reproducible scripts added for a11y runs
+
+```
+
+```
