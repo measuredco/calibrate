@@ -6,7 +6,7 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-_No current item recorded here._
+### `Structure/Card`
 
 ## Next
 
@@ -14,12 +14,9 @@ What we could working on next.
 
 ### Components
 
-- `Control/Form`
-- `Graphic/Poster` (text on Image)
 - `Graphic/Shape` (brand shape components)
-- `Structure/Card`
 - `Structure/Figure`
-- `Typographic/Code`
+- `Structure/Poster` (content on Image)
 
 #### General
 
@@ -33,19 +30,9 @@ What we could working on next.
 - icon size scale currently follows the msrd typography scale. Open question wether to diverge and use 30 (from vertical spacing scale), instead of 28, for lg. Above 30 we are capping due to stroke widths going over 2px (though we also have fill option for the required flexibility)
 - potential issue with color-only for input error states
 
-#### Page
-
-Could build a simplified no-JS version as first pass, full solution will require Web Components.
-
-- `Page/Banner` (dismissible)
-- `Page/Breadcrumb`? (JS responsive)
-- `Page/Header` (hamburger)
-- `Page/Sidebar`? (JS required)
-- `Page/Main`
-- `Page/Footer`
-
 ### Web Components
 
+- `Control/Form` (custom validation)
 - `Control/Listbox` (JS required)
 - `Control/Menu` (JS required)
 - `Control/Range` (update text value)
@@ -55,7 +42,17 @@ Could build a simplified no-JS version as first pass, full solution will require
 - `Status/Skeleton` (resolve to loaded)
 - `Status/Toast` (dismissible, timer)
 - `Structure/Accordion` (JS for exclusive)
+- `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required - a11y)
+
+#### Page
+
+- `Page/Banner` (dismissible)
+- `Page/Breadcrumb` (JS responsive)
+- `Page/Header` (hamburger)
+- `Page/Sidebar` (JS required)
+- `Page/Main`
+- `Page/Footer`
 
 ## Later
 
@@ -471,7 +468,3 @@ _This section is a historical completion record; some entries may describe decis
   - Storybook Vitest addon wired for automated accessibility testing (WCAG 2.2 AA, no exclusions)
   - Storybook CI job now executes Storybook a11y tests as a dedicated gate
   - local reproducible scripts added for a11y runs
-
-```
-
-```
