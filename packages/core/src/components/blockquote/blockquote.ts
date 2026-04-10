@@ -47,8 +47,8 @@ export interface ClbrBlockquoteProps {
 /**
  * SSR renderer for the Calibrate blockquote component.
  *
- * Emits a `div.blockquote` root containing semantic `blockquote` and attribution
- * wrappers, with typography delegated to `renderClbrText`.
+ * Emits a `figure.blockquote` root containing semantic `blockquote` and
+ * `figcaption` wrappers, with typography delegated to `renderClbrText`.
  *
  * @param props - Blockquote component props.
  * @returns HTML string for a blockquote wrapper.
@@ -82,18 +82,18 @@ export function renderClbrBlockquote({
     size: "sm",
   });
 
-  return `<div ${rootAttrs}><blockquote>${quoteMarkup}</blockquote><p class="attribution">${attributionMarkup}</p></div>`;
+  return `<figure ${rootAttrs}><blockquote>${quoteMarkup}</blockquote><figcaption class="attribution">${attributionMarkup}</figcaption></figure>`;
 }
 
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */
 export const CLBR_BLOCKQUOTE_SPEC = {
   name: "blockquote",
   output: {
-    element: "div",
+    element: "figure",
     class: "blockquote",
     children: [
       "blockquote > renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
-      "p.attribution > renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
+      "figcaption.attribution > renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
     ],
   },
   props: {
@@ -153,7 +153,7 @@ export const CLBR_BLOCKQUOTE_SPEC = {
         behavior: "always",
         value:
           "renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
-        when: "inside p.attribution element",
+        when: "inside figcaption.attribution element",
       },
     ],
   },

@@ -15,7 +15,7 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(blockquote.tagName).toBe("DIV");
+    expect(blockquote.tagName).toBe("FIGURE");
     expect(blockquote.className).toBe("blockquote");
     expect(blockquote.hasAttribute("data-align")).toBe(false);
     expect(blockquote.querySelector("blockquote > p.text")?.textContent).toBe(
@@ -32,11 +32,13 @@ describe("renderClbrBlockquote", () => {
         ?.hasAttribute("data-measured"),
     ).toBe(true);
     expect(
-      blockquote.querySelector("p.attribution > span.text")?.textContent,
+      blockquote
+        .querySelector("figcaption.attribution > span.text")
+        ?.textContent,
     ).toBe("Measured");
     expect(
       blockquote
-        .querySelector("p.attribution > span.text")
+        .querySelector("figcaption.attribution > span.text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -57,7 +59,7 @@ describe("renderClbrBlockquote", () => {
     ).toBe("lg");
     expect(
       blockquote
-        .querySelector("p.attribution > span.text")
+        .querySelector("figcaption.attribution > span.text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -78,7 +80,7 @@ describe("renderClbrBlockquote", () => {
     ).toBe(true);
     expect(
       blockquote
-        .querySelector("p.attribution > span.text")
+        .querySelector("figcaption.attribution > span.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
@@ -128,7 +130,7 @@ describe("renderClbrBlockquote", () => {
       "emphasis",
     );
     expect(
-      blockquote.querySelector("p.attribution a")?.getAttribute("href"),
+      blockquote.querySelector("figcaption.attribution a")?.getAttribute("href"),
     ).toBe("/team");
   });
 });
