@@ -11,28 +11,6 @@
     padding-block: var(--clbr-panel-padding-block);
     padding-inline: var(--clbr-panel-padding-inline);
 
-    &[data-inline-size="fit"] {
-      inline-size: fit-content;
-    }
-
-    &[data-offset-stroke] {
-      border-color: transparent;
-      position: relative;
-
-      &::after {
-        border: var(--clbr-layout-border-width-default) solid
-          var(--clbr-color-border-default);
-        border-radius: var(--clbr-radius-lg);
-        content: "";
-        inset-block-end: var(--clbr-effect-stroke-inset);
-        inset-block-start: var(--clbr-effect-stroke-outset);
-        inset-inline-end: var(--clbr-effect-stroke-inset);
-        inset-inline-start: var(--clbr-effect-stroke-outset);
-        pointer-events: none;
-        position: absolute;
-      }
-    }
-
     &[data-padding="xs"] {
       --clbr-panel-padding-block: var(--clbr-spacing-vertical-500);
       --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-500);

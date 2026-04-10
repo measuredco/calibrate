@@ -27,6 +27,9 @@
       "default": {
         "$value": "{primitive.spacing.200}"
       },
+      "lg": {
+        "$value": "{primitive.spacing.300}"
+      },
       "inset": {
         "$value": {
           "value": -4,

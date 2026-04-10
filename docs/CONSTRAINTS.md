@@ -8,21 +8,21 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 
 ## Program Goals
 
-- Maintain a stable public design-system API, starting with semantic tokens and extending to component consumption contracts.
+- Maintain a stable public design-system API rooted in semantic tokens and the component consumption contracts built on them.
 - Keep monorepo architecture as the default repo model for system evolution.
 - Establish `system`, `core`, and shared support packages as first-class package boundaries in the repo.
 - Treat `core` as the primary published runtime contract; keep token authoring/pipeline concerns internal by default.
 - Use lockstep versioning across design-system packages by default to reduce token/component drift.
 - Preserve base token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
 - Keep current bridge/build pipeline robust while resolver/SD support gaps are being closed upstream.
-- Treat probe artifacts (for example Card component tokens and wireframe brand) as architecture-validation assets until explicitly promoted to long-term API commitments.
+- Treat probe artifacts (for example wireframe brand assets) as architecture-validation assets until explicitly promoted to long-term API commitments.
 
 ## API And Ownership
 
 - Ensure `*.tokens.json` files conform to `packages/system/schemas/2025.10/spec`.
 - `packages/system/src/<brand>/primitive` is private; public API is `packages/system/src/<brand>/semantic`.
 - For the internal system package, semantic tokens remain the intended API layer (not primitives) for any downstream transforms/contracts.
-- Semantic-first authoring is the default for UI implementation; component tokens are additive and should be introduced only when they encode component-specific semantics or cross-context behavior not cleanly represented in semantic/component CSS alone.
+- Semantic-first authoring is the default for UI implementation.
 - Keep semantic token shape consistent across brands (same semantic paths per brand).
 - Shared system-shell domains live in `packages/system/src/base/{primitive,semantic}`.
 - Brand-specific domains live in `packages/system/src/<brand>/{primitive,semantic}`.

@@ -7,14 +7,12 @@ function mountPanel(html: string): HTMLElement {
 }
 
 describe("renderClbrPanel", () => {
-  it("renders a div.panel with the default contract", () => {
+  it("renders the default panel contract", () => {
     const panel = mountPanel(renderClbrPanel({ children: "Body" }));
 
     expect(panel.tagName).toBe("DIV");
     expect(panel.className).toBe("panel");
     expect(panel.textContent).toBe("Body");
-    expect(panel.hasAttribute("data-inline-size")).toBe(false);
-    expect(panel.hasAttribute("data-offset-stroke")).toBe(false);
     expect(panel.getAttribute("data-padding")).toBe("md");
     expect(panel.hasAttribute("data-surface")).toBe(false);
   });
@@ -39,19 +37,15 @@ describe("renderClbrPanel", () => {
     expect(empty.innerHTML).toBe("");
   });
 
-  it("emits requested variant attributes", () => {
+  it("emits requested padding and surface attributes", () => {
     const panel = mountPanel(
       renderClbrPanel({
         children: "Body",
-        inlineSize: "fit",
-        offsetStroke: true,
         padding: "xl",
         surface: "brand",
       }),
     );
 
-    expect(panel.getAttribute("data-inline-size")).toBe("fit");
-    expect(panel.hasAttribute("data-offset-stroke")).toBe(true);
     expect(panel.getAttribute("data-padding")).toBe("xl");
     expect(panel.getAttribute("data-surface")).toBe("brand");
   });
