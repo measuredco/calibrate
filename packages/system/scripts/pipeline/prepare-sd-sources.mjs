@@ -276,11 +276,11 @@ async function discoverSemanticDomainRoots() {
 }
 
 /**
- * Infers tokenLayer/domain (and component subdomain) from source path segments.
+ * Infers tokenLayer/domain from source path segments.
  *
  * @param {string} relPath
  * @param {Set<string>} knownTokenLayers
- * @returns {{ tokenLayer: string, domain: string, subdomain: string | null }}
+ * @returns {{ tokenLayer: string, domain: string }}
  */
 function deriveLayerAndDomain(relPath, knownTokenLayers) {
   const parts = relPath.split("/");
@@ -298,18 +298,8 @@ function deriveLayerAndDomain(relPath, knownTokenLayers) {
   const domain = next.endsWith(".tokens.json")
     ? path.basename(next, ".tokens.json")
     : next;
-  let subdomain = null;
 
-  if (tokenLayer === "component") {
-    const maybeSubdomain = parts[tokenLayerIndex + 2];
-
-    if (typeof maybeSubdomain === "string" && maybeSubdomain.length > 0) {
-      subdomain = maybeSubdomain.endsWith(".tokens.json")
-        ? path.basename(maybeSubdomain, ".tokens.json")
-        : maybeSubdomain;
-    }
-  }
-  return { tokenLayer, domain, subdomain };
+  return { tokenLayer, domain };
 }
 
 /**
@@ -365,7 +355,7 @@ async function buildMergedTokenObject(sources, layerConfig) {
   for (const sourcePath of sources) {
     const resolvedDoc = await loadResolved(sourcePath);
     const relPath = sourcePath.replaceAll(path.sep, "/");
-    const { tokenLayer, domain, subdomain } = deriveLayerAndDomain(
+    const { tokenLayer, domain } = deriveLayerAndDomain(
       relPath,
       knownTokenLayers,
     );
@@ -386,11 +376,7 @@ async function buildMergedTokenObject(sources, layerConfig) {
       : docBody;
     const wrapped = privateTokenLayers.has(tokenLayer)
       ? { [tokenLayer]: { [domain]: normalizedDoc } }
-      : tokenLayer === "component" &&
-          typeof subdomain === "string" &&
-          subdomain.length > 0
-        ? { [domain]: { [subdomain]: normalizedDoc } }
-        : { [domain]: normalizedDoc };
+      : { [domain]: normalizedDoc };
 
     merged = deepMerge(merged, wrapped);
   }

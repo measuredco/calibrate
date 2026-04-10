@@ -12,7 +12,7 @@
       },
       "tokenLayers": {
         "private": ["primitive"],
-        "public": ["semantic", "component"]
+        "public": ["semantic"]
       },
       "targets": {
         "css": {

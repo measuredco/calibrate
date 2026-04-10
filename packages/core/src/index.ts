@@ -52,6 +52,13 @@ export {
 } from "./components/button/button";
 
 export {
+  CLBR_CARD_SPEC,
+  type ClbrCardHeadingLevel,
+  type ClbrCardProps,
+  renderClbrCard,
+} from "./components/card/card";
+
+export {
   CLBR_CHECKBOX_SPEC,
   type ClbrCheckboxProps,
   renderClbrCheckbox,
@@ -156,7 +163,6 @@ export {
 
 export {
   CLBR_PANEL_SPEC,
-  type ClbrPanelInlineSize,
   type ClbrPanelPadding,
   type ClbrPanelProps,
   renderClbrPanel,

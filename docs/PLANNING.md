@@ -6,8 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### `Structure/Card`
-
 ## Next
 
 What we could working on next.
@@ -171,6 +169,15 @@ _This section is a historical completion record; some entries may describe decis
   - settled API includes required trusted `quote` and `attribution`, optional `align` (`start | center | end`), optional `measured`, optional `responsive`, and optional `size` (`md | lg`)
   - component renders `div.blockquote` with semantic `blockquote` and attribution wrappers, composing `renderClbrText` internally for both quote and attribution
   - `align` defaults to `start` and is emitted on the root only when non-default, while also passing through to the composed quote paragraph; `measured` defaults to `true`; attribution is always rendered at `sm`
+
+- Card component implemented and aligned across core:
+  - added `card` renderer + CSS + stories + tests
+  - settled API includes required escaped `title`, required trusted `description`, optional trusted `note`, optional `href`, optional `headingLevel`, and optional `surface`
+  - component renders `div.card` with decorative dots, a title wrapper (`div` by default or semantic heading when `headingLevel` is provided), `p.description`, and optional `p.note`
+  - when `href` is provided the title renders as a link, and when both `href` and `note` are provided the note includes a trailing decorative arrow icon
+  - related cleanup completed in the same change set:
+    - removed system `component` token layer support from resolvers, pipeline prep, and constraints/planning docs
+    - removed now-unused MSRD card component token sources after Card was rewired to semantic tokens only
 
 - Panel component implemented as a first-pass structure primitive:
   - added `panel` renderer + CSS + stories + tests
@@ -423,14 +430,7 @@ _This section is a historical completion record; some entries may describe decis
   - `eslint` configured via `eslint.config.mjs` for token pipeline scripts
   - `prettier` configured via `.prettierrc.json` and `.prettierignore`
   - scripts added in `package.json`: `lint`, `lint:fix`, `format`, `format:check`
-- Component token layer architecture proved with Card pilot:
-  - `packages/system/src/<brand>/component/...` path shape integrated into resolver->SD bridge
-  - component tokens resolve across theme/surface/state contexts with correct diff behavior
-  - forced-colors component overrides emit correctly without leaking unrelated semantic tokens
-  - output naming and scoping conventions validated in generated CSS
-- Card and `wrfr` are intentionally retained as architecture probes for now:
-  - Card remains in-tree to validate component-theme/surface/state support and resolver->SD behavior
-  - `wrfr` remains in-tree to validate multi-brand packaging and runtime scoping patterns
+- `wrfr` remains in-tree as a multi-brand packaging and runtime scoping probe
 - Monorepo architecture baseline completed (pnpm workspace, lockstep versioning):
   - `pnpm-workspace.yaml` added with `packages/*`
   - tokens package moved to `packages/system` with package-local build/validate/verify scripts

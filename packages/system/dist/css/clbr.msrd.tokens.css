@@ -8,9 +8,6 @@
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
   :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
-    --clbr-card-color-dots-default: #e3e4e5;
-    --clbr-card-color-dots-hover: #6db5f8;
-    --clbr-card-color-interactive: #0158ad;
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -196,7 +193,6 @@
 
   /* lightBrand | baseline | default-states */
   :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
-    --clbr-card-color-dots-default: #aed2fb;
     --clbr-color-background-default: #eef7fe;
     --clbr-color-background-inverse: #031f60;
     --clbr-color-background-panel: #e9f4fe;
@@ -207,9 +203,6 @@
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
-      --clbr-card-color-dots-default: #232424;
-      --clbr-card-color-dots-hover: #083c8a;
-      --clbr-card-color-interactive: #3598f8;
       --clbr-color-avatar-01: #df98df;
       --clbr-color-avatar-02: #ebbdeb;
       --clbr-color-avatar-03: #f6e3f7;
@@ -284,8 +277,6 @@
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
-      --clbr-card-color-dots-default: #083c8a;
-      --clbr-card-color-dots-hover: #0158ad;
       --clbr-color-background-default: #031f60;
       --clbr-color-background-inverse: #eef7fe;
       --clbr-color-background-panel: #042467;
@@ -322,9 +313,6 @@
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="msrd"][data-theme="light"], .clbr[data-brand="msrd"][data-theme="light"] [data-surface="default"]) {
-      --clbr-card-color-dots-default: #e3e4e5;
-      --clbr-card-color-dots-hover: #6db5f8;
-      --clbr-card-color-interactive: #0158ad;
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -399,9 +387,6 @@
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
     :where(.clbr[data-brand="msrd"][data-theme="light"] [data-surface="brand"]) {
-      --clbr-card-color-dots-default: #aed2fb;
-      --clbr-card-color-dots-hover: #6db5f8;
-      --clbr-card-color-interactive: #0158ad;
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -474,9 +459,6 @@
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
   :where(.clbr[data-brand="msrd"][data-theme="dark"], .clbr[data-brand="msrd"][data-theme="dark"] [data-surface="default"]) {
-    --clbr-card-color-dots-default: #232424;
-    --clbr-card-color-dots-hover: #083c8a;
-    --clbr-card-color-interactive: #3598f8;
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -549,9 +531,6 @@
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
   :where(.clbr[data-brand="msrd"][data-theme="dark"] [data-surface="brand"]) {
-    --clbr-card-color-dots-default: #083c8a;
-    --clbr-card-color-dots-hover: #0158ad;
-    --clbr-card-color-interactive: #3598f8;
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -643,9 +622,6 @@
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
     :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
-      --clbr-card-color-dots-default: ButtonBorder;
-      --clbr-card-color-dots-hover: ButtonBorder;
-      --clbr-card-color-interactive: LinkText;
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }
@@ -654,9 +630,6 @@
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
     :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
-      --clbr-card-color-dots-default: ButtonBorder;
-      --clbr-card-color-dots-hover: ButtonBorder;
-      --clbr-card-color-interactive: LinkText;
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }
