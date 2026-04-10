@@ -32,8 +32,7 @@ describe("renderClbrBlockquote", () => {
         ?.hasAttribute("data-measured"),
     ).toBe(true);
     expect(
-      blockquote
-        .querySelector("figcaption.attribution > span.text")
+      blockquote.querySelector("figcaption.attribution > span.text")
         ?.textContent,
     ).toBe("Measured");
     expect(
@@ -130,7 +129,9 @@ describe("renderClbrBlockquote", () => {
       "emphasis",
     );
     expect(
-      blockquote.querySelector("figcaption.attribution a")?.getAttribute("href"),
+      blockquote
+        .querySelector("figcaption.attribution a")
+        ?.getAttribute("href"),
     ).toBe("/team");
   });
 });

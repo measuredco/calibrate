@@ -13,8 +13,7 @@ What we could working on next.
 ### Components
 
 - `Graphic/Shape` (brand shape components)
-- `Structure/Figure`
-- `Structure/Poster` (content on Image)
+- `Structure/Poster` (text on Image)
 
 #### General
 
@@ -169,6 +168,11 @@ _This section is a historical completion record; some entries may describe decis
   - settled API includes required trusted `quote` and `attribution`, optional `align` (`start | center | end`), optional `measured`, optional `responsive`, and optional `size` (`md | lg`)
   - component renders `div.blockquote` with semantic `blockquote` and attribution wrappers, composing `renderClbrText` internally for both quote and attribution
   - `align` defaults to `start` and is emitted on the root only when non-default, while also passing through to the composed quote paragraph; `measured` defaults to `true`; attribution is always rendered at `sm`
+
+- Exhibit component implemented as an image-with-caption structure primitive:
+  - added `exhibit` renderer + CSS + stories + tests
+  - renders semantic `figure`/`figcaption` markup with trusted media content and caption text composed via `renderClbrText`
+  - settled first-pass API includes trusted `caption`, trusted `children`, optional `align`, and optional `responsive` for the caption
 
 - Card component implemented and aligned across core:
   - added `card` renderer + CSS + stories + tests

@@ -1,0 +1,23 @@
+@layer clbr.components {
+  :where(.clbr) .exhibit {
+    inline-size: fit-content;
+    margin: 0;
+
+    figcaption {
+      inline-size: 0;
+      margin-block-start: var(--clbr-spacing-vertical-500);
+      min-inline-size: 100%;
+      text-wrap: pretty;
+    }
+
+    &[data-align="center"] {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    &[data-align="end"] {
+      margin-inline-start: auto;
+      text-align: end;
+    }
+  }
+}
