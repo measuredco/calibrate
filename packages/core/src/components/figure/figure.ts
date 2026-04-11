@@ -2,16 +2,16 @@ import { attrs } from "../../helpers/html";
 import type { ClbrTextAlign } from "../text/text";
 import { renderClbrText } from "../text/text";
 
-export type ClbrExhibitAlign = ClbrTextAlign;
+export type ClbrFigureAlign = ClbrTextAlign;
 
-/** Props for the Calibrate exhibit renderer. */
-export interface ClbrExhibitProps {
+/** Props for the Calibrate figure renderer. */
+export interface ClbrFigureProps {
   /**
-   * Alignment of the exhibit within available space.
+   * Alignment of the figure within available space.
    * `start` emits no alignment attribute.
    * @default "start"
    */
-  align?: ClbrExhibitAlign;
+  align?: ClbrFigureAlign;
   /**
    * Caption HTML content.
    * Caller is responsible for sanitizing untrusted content.
@@ -32,22 +32,22 @@ export interface ClbrExhibitProps {
 }
 
 /**
- * SSR renderer for the Calibrate exhibit component.
+ * SSR renderer for the Calibrate figure component.
  *
- * Emits a `figure.exhibit` root containing trusted media markup followed by a
+ * Emits a `figure.figure` root containing trusted media markup followed by a
  * `figcaption` composed with `renderClbrText({ as: "span" })`.
  *
- * @param props - Exhibit component props.
- * @returns HTML string for an exhibit wrapper.
+ * @param props - Figure component props.
+ * @returns HTML string for a figure wrapper.
  */
-export function renderClbrExhibit({
+export function renderClbrFigure({
   align = "start",
   caption,
   children,
   responsive = false,
-}: ClbrExhibitProps): string {
+}: ClbrFigureProps): string {
   const rootAttrs = attrs({
-    class: "exhibit",
+    class: "figure",
     "data-align": align === "start" ? undefined : align,
   });
   const captionMarkup = `<figcaption>${renderClbrText({
@@ -60,12 +60,12 @@ export function renderClbrExhibit({
   return `<figure ${rootAttrs}>${children}${captionMarkup}</figure>`;
 }
 
-/** Declarative exhibit contract mirror for tooling, docs, and adapters. */
-export const CLBR_EXHIBIT_SPEC = {
-  name: "exhibit",
+/** Declarative figure contract mirror for tooling, docs, and adapters. */
+export const CLBR_FIGURE_SPEC = {
+  name: "figure",
   output: {
     element: "figure",
-    class: "exhibit",
+    class: "figure",
     children: [
       "trusted media HTML",
       "figcaption > renderClbrText({ as: 'span', children: caption, size: 'sm' })",
@@ -97,7 +97,7 @@ export const CLBR_EXHIBIT_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "exhibit",
+        value: "figure",
       },
       {
         behavior: "emit",
@@ -110,13 +110,13 @@ export const CLBR_EXHIBIT_SPEC = {
       {
         behavior: "always",
         value: "trusted media HTML",
-        when: "inside figure.exhibit",
+        when: "inside figure.figure",
       },
       {
         behavior: "always",
         value:
           "figcaption > renderClbrText({ as: 'span', children: caption, responsive, size: 'sm' })",
-        when: "inside figure.exhibit",
+        when: "inside figure.figure",
       },
     ],
   },

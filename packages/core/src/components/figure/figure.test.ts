@@ -1,65 +1,65 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrExhibit } from "./exhibit";
+import { renderClbrFigure } from "./figure";
 
-function mountExhibit(html: string): HTMLElement {
+function mountFigure(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".exhibit") as HTMLElement;
+  return document.body.querySelector(".figure") as HTMLElement;
 }
 
-describe("renderClbrExhibit", () => {
-  it("renders the default exhibit contract", () => {
-    const exhibit = mountExhibit(
-      renderClbrExhibit({
+describe("renderClbrFigure", () => {
+  it("renders the default figure contract", () => {
+    const figure = mountFigure(
+      renderClbrFigure({
         caption: "Caption",
         children: '<img src="/image.jpg" alt="Alt" />',
       }),
     );
 
-    expect(exhibit.tagName).toBe("FIGURE");
-    expect(exhibit.className).toBe("exhibit");
-    expect(exhibit.hasAttribute("data-align")).toBe(false);
-    expect(exhibit.querySelector("img")?.getAttribute("src")).toBe(
+    expect(figure.tagName).toBe("FIGURE");
+    expect(figure.className).toBe("figure");
+    expect(figure.hasAttribute("data-align")).toBe(false);
+    expect(figure.querySelector("img")?.getAttribute("src")).toBe(
       "/image.jpg",
     );
-    expect(exhibit.querySelector("figcaption > span.text")?.textContent).toBe(
+    expect(figure.querySelector("figcaption > span.text")?.textContent).toBe(
       "Caption",
     );
     expect(
-      exhibit
+      figure
         .querySelector("figcaption > span.text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
 
   it("emits non-default align attributes", () => {
-    const exhibit = mountExhibit(
-      renderClbrExhibit({
+    const figure = mountFigure(
+      renderClbrFigure({
         align: "center",
         caption: "Caption",
         children: '<img src="/image.jpg" alt="Alt" />',
       }),
     );
 
-    expect(exhibit.getAttribute("data-align")).toBe("center");
+    expect(figure.getAttribute("data-align")).toBe("center");
   });
 
   it("renders trusted HTML for caption and children", () => {
-    const exhibit = mountExhibit(
-      renderClbrExhibit({
+    const figure = mountFigure(
+      renderClbrFigure({
         caption: 'See the <a href="/docs">documentation</a>.',
         children: '<picture><img src="/image.jpg" alt="Alt" /></picture>',
       }),
     );
 
-    expect(exhibit.querySelector("figcaption a")?.getAttribute("href")).toBe(
+    expect(figure.querySelector("figcaption a")?.getAttribute("href")).toBe(
       "/docs",
     );
-    expect(exhibit.querySelector("picture img")).toBeTruthy();
+    expect(figure.querySelector("picture img")).toBeTruthy();
   });
 
   it("passes responsive through to the caption text", () => {
-    const exhibit = mountExhibit(
-      renderClbrExhibit({
+    const figure = mountFigure(
+      renderClbrFigure({
         caption: "Caption",
         children: '<img src="/image.jpg" alt="Alt" />',
         responsive: true,
@@ -67,7 +67,7 @@ describe("renderClbrExhibit", () => {
     );
 
     expect(
-      exhibit
+      figure
         .querySelector("figcaption > span.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);

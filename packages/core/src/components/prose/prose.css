@@ -9,10 +9,12 @@
     font-optical-sizing: none;
 
     &[data-align="center"] {
+      margin-inline: auto;
       text-align: center;
     }
 
     &[data-align="end"] {
+      margin-inline-start: auto;
       text-align: end;
     }
 

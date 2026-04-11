@@ -1,6 +1,7 @@
 @layer clbr.components {
   :where(.clbr) .text {
     --clbr-text-font: var(--clbr-typography-text-body-md);
+    color: var(--clbr-color-foreground-prose);
     font: var(--clbr-text-font);
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
@@ -35,10 +36,12 @@
     }
 
     &[data-align="center"] {
+      margin-inline: auto;
       text-align: center;
     }
 
     &[data-align="end"] {
+      margin-inline-start: auto;
       text-align: end;
     }
 

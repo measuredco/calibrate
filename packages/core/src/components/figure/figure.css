@@ -1,7 +1,8 @@
 @layer clbr.components {
-  :where(.clbr) .exhibit {
-    inline-size: fit-content;
+  :where(.clbr) .figure {
+    max-inline-size: fit-content;
     margin: 0;
+    min-inline-size: var(--clbr-layout-grid-item-min-width);
 
     figcaption {
       inline-size: 0;

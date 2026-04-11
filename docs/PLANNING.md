@@ -185,8 +185,8 @@ _This section is a historical completion record; some entries may describe decis
   - component renders `div.blockquote` with semantic `blockquote` and attribution wrappers, composing `renderClbrText` internally for both quote and attribution
   - `align` defaults to `start` and is emitted on the root only when non-default, while also passing through to the composed quote paragraph; `measured` defaults to `true`; attribution is always rendered at `sm`
 
-- Exhibit component implemented as an image-with-caption structure primitive:
-  - added `exhibit` renderer + CSS + stories + tests
+- Figure component implemented as an image-with-caption structure primitive:
+  - added `figure` renderer + CSS + stories + tests
   - renders semantic `figure`/`figcaption` markup with trusted media content and caption text composed via `renderClbrText`
   - settled first-pass API includes trusted `caption`, trusted `children`, optional `align`, and optional `responsive` for the caption
 

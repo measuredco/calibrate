@@ -20,8 +20,8 @@
 @import "./components/container/container.css";
 @import "./components/details/details.css";
 @import "./components/divider/divider.css";
-@import "./components/exhibit/exhibit.css";
 @import "./components/fieldset/fieldset.css";
+@import "./components/figure/figure.css";
 @import "./components/grid/grid.css";
 @import "./components/heading/heading.css";
 @import "./components/icon/icon.css";

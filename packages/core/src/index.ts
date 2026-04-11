@@ -88,18 +88,18 @@ export {
 } from "./components/divider/divider";
 
 export {
-  CLBR_EXHIBIT_SPEC,
-  type ClbrExhibitAlign,
-  type ClbrExhibitProps,
-  renderClbrExhibit,
-} from "./components/exhibit/exhibit";
-
-export {
   CLBR_FIELDSET_SPEC,
   type ClbrFieldsetInlineSize,
   type ClbrFieldsetProps,
   renderClbrFieldset,
 } from "./components/fieldset/fieldset";
+
+export {
+  CLBR_FIGURE_SPEC,
+  type ClbrFigureAlign,
+  type ClbrFigureProps,
+  renderClbrFigure,
+} from "./components/figure/figure";
 
 export {
   CLBR_GRID_ITEM_SPEC,

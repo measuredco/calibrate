@@ -3,6 +3,14 @@
     inline-size: fit-content;
     margin: 0;
 
+    &[data-align="center"] {
+      margin-inline: auto;
+    }
+
+    &[data-align="end"] {
+      margin-inline-start: auto;
+    }
+
     blockquote {
       margin-inline: 0;
       margin-block-end: var(--clbr-spacing-vertical-500);
