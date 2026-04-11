@@ -123,9 +123,9 @@ function buildShapeImageValue({ viewBox, path, fill }) {
  * Derives an aspect-ratio string from a square/rectangular SVG viewBox.
  *
  * @param {string} viewBox
- * @returns {string}
+ * @returns {{ aspectRatio: string, blockSize: string }}
  */
-function deriveAspectRatioValue(viewBox) {
+function deriveShapeDimensions(viewBox) {
   const parts = viewBox.trim().split(/\s+/);
 
   if (parts.length !== 4) {
@@ -144,7 +144,10 @@ function deriveAspectRatioValue(viewBox) {
     throw new Error(`Invalid shape viewBox dimensions: ${viewBox}`);
   }
 
-  return `${width} / ${height}`;
+  return {
+    aspectRatio: `${width} / ${height}`,
+    blockSize: `${height}px`,
+  };
 }
 
 /**
@@ -161,6 +164,8 @@ function appendSemanticShapeDerivatives(semanticNode, primitiveNode) {
   const fill = readTokenStringValue(primitiveNode.fill);
 
   if (viewBox && shapePath) {
+    const dimensions = deriveShapeDimensions(viewBox);
+
     semanticNode.image = {
       $value: buildShapeImageValue({
         viewBox,
@@ -169,7 +174,10 @@ function appendSemanticShapeDerivatives(semanticNode, primitiveNode) {
       }),
     };
     semanticNode.aspectRatio = {
-      $value: deriveAspectRatioValue(viewBox),
+      $value: dimensions.aspectRatio,
+    };
+    semanticNode.blockSize = {
+      $value: dimensions.blockSize,
     };
   }
 
