@@ -138,6 +138,9 @@
           "$ref": "../src/msrd/primitive/radius.tokens.json"
         },
         {
+          "$ref": "../src/msrd/primitive/shape.tokens.json"
+        },
+        {
           "$ref": "../src/msrd/primitive/typography.tokens.json"
         },
         {
@@ -148,6 +151,9 @@
         },
         {
           "$ref": "../src/msrd/semantic/radius/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/shape/tokens.json"
         },
         {
           "$ref": "../src/msrd/semantic/typography/tokens.json"

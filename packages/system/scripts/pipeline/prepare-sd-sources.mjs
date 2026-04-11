@@ -13,6 +13,7 @@ import { isObject, parseJsonPointer } from "./helpers/json.mjs";
  */
 
 const cwd = process.cwd();
+const SVG_XMLNS = "http://www.w3.org/2000/svg";
 
 /**
  * Parses required CLI flags and validates invocation shape.
@@ -94,6 +95,88 @@ function normalizeDtcgValueObjects(node) {
   }
 
   return out;
+}
+
+/**
+ * Reads a token leaf string value if present.
+ *
+ * @param {unknown} node
+ * @returns {string | null}
+ */
+function readTokenStringValue(node) {
+  if (!isObject(node) || typeof node.$value !== "string") return null;
+  return node.$value;
+}
+
+/**
+ * Builds a CSS-ready SVG data URI.
+ *
+ * @param {{ viewBox: string, path: string, fill: string }} shape
+ * @returns {string}
+ */
+function buildShapeImageValue({ viewBox, path, fill }) {
+  const svg = `<svg xmlns="${SVG_XMLNS}" viewBox="${viewBox}"><path d="${path}" fill="${fill}"/></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+/**
+ * Derives an aspect-ratio string from a square/rectangular SVG viewBox.
+ *
+ * @param {string} viewBox
+ * @returns {string}
+ */
+function deriveAspectRatioValue(viewBox) {
+  const parts = viewBox.trim().split(/\s+/);
+
+  if (parts.length !== 4) {
+    throw new Error(`Invalid shape viewBox: ${viewBox}`);
+  }
+
+  const width = Number(parts[2]);
+  const height = Number(parts[3]);
+
+  if (
+    !Number.isFinite(width) ||
+    !Number.isFinite(height) ||
+    width === 0 ||
+    height === 0
+  ) {
+    throw new Error(`Invalid shape viewBox dimensions: ${viewBox}`);
+  }
+
+  return `${width} / ${height}`;
+}
+
+/**
+ * Derives semantic shape CSS outputs from raw primitive shape geometry.
+ *
+ * @param {unknown} semanticNode
+ * @param {unknown} primitiveNode
+ */
+function appendSemanticShapeDerivatives(semanticNode, primitiveNode) {
+  if (!isObject(semanticNode) || !isObject(primitiveNode)) return;
+
+  const viewBox = readTokenStringValue(primitiveNode.viewBox);
+  const shapePath = readTokenStringValue(primitiveNode.path);
+  const fill = readTokenStringValue(primitiveNode.fill);
+
+  if (viewBox && shapePath) {
+    semanticNode.image = {
+      $value: buildShapeImageValue({
+        viewBox,
+        path: shapePath,
+        fill: fill ?? "currentColor",
+      }),
+    };
+    semanticNode.aspectRatio = {
+      $value: deriveAspectRatioValue(viewBox),
+    };
+  }
+
+  for (const [key, value] of Object.entries(semanticNode)) {
+    if (key.startsWith("$")) continue;
+    appendSemanticShapeDerivatives(value, primitiveNode[key]);
+  }
 }
 
 /**
@@ -380,6 +463,8 @@ async function buildMergedTokenObject(sources, layerConfig) {
 
     merged = deepMerge(merged, wrapped);
   }
+
+  appendSemanticShapeDerivatives(merged.shape, merged.primitive?.shape);
 
   return normalizeDtcgValueObjects(merged);
 }

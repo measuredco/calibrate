@@ -6,6 +6,21 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### `System/Brand Shapes`
+
+- Introduce a brand-owned shape source-of-truth domain in `packages/system` for reusable geometry such as logo masks and Measured visual-language shapes
+- Start with logo variants as the proving use case by migrating hardcoded SVG data URIs and aspect ratios out of `packages/core/src/components/logo/logo.css`
+- Author canonical shape data as structured geometry, not prebuilt CSS strings. These values should remain typeless (DTCG has no `string` token type):
+  - shared `xmlns`
+  - per-shape `viewBox`
+  - per-shape `path`
+  - per-shape `fill.default` (starting with `currentColor`, while leaving room for future variants such as brand color aliases)
+- Extend the existing system pipeline to derive CSS-ready outputs from that source:
+  - `--clbr-shape-<id>` as a CSS `url("data:image/svg+xml,...")` value
+  - `--clbr-shape-<id>-aspect-ratio` derived from the `viewBox`
+- Treat these as system-known brand geometry rather than ordinary semantic tokens or standalone asset files
+- Keep the initial implementation scoped to runtime CSS consumption in core while preserving a future path to broader export/discovery use cases
+
 ## Next
 
 What we could working on next.

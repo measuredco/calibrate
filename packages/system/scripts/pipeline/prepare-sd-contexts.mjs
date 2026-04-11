@@ -263,7 +263,22 @@ function annotateTokensWithBridgeMeta(node, meta) {
   }
   if (!isObject(node)) return node;
 
+  const shouldExposeLeaf = (tokenNode, role) => {
+    const publish =
+      tokenNode?.$extensions?.["dev.msrd.calibrate"]?.css?.publish;
+
+    if (role === "public" && publish === false) {
+      return false;
+    }
+
+    return true;
+  };
+
   if (Object.prototype.hasOwnProperty.call(node, "$value")) {
+    if (!shouldExposeLeaf(node, meta.role)) {
+      return undefined;
+    }
+
     const existingExtensions = isObject(node.$extensions)
       ? node.$extensions
       : {};
@@ -286,11 +301,18 @@ function annotateTokensWithBridgeMeta(node, meta) {
       out[key] = value;
       continue;
     }
-    out[key] = annotateTokensWithBridgeMeta(value, {
+    const annotatedChild = annotateTokensWithBridgeMeta(value, {
       ...meta,
       path: meta.path.concat(key),
     });
+
+    if (annotatedChild !== undefined) {
+      out[key] = annotatedChild;
+    }
   }
+
+  if (Object.keys(out).length === 0) return undefined;
+
   return out;
 }
 

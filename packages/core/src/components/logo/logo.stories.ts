@@ -12,7 +12,7 @@ const meta = {
     },
     variant: {
       control: { type: "select" },
-      options: ["primary", "secondary", "typographic", "graphic"],
+      options: ["primary", "graphic", "secondary", "typographic"],
     },
   },
   title: "Graphic/Logo",

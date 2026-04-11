@@ -138,6 +138,9 @@
           "$ref": "../src/wrfr/primitive/radius.tokens.json"
         },
         {
+          "$ref": "../src/wrfr/primitive/shape.tokens.json"
+        },
+        {
           "$ref": "../src/wrfr/primitive/typography.tokens.json"
         },
         {
@@ -148,6 +151,9 @@
         },
         {
           "$ref": "../src/wrfr/semantic/radius/tokens.json"
+        },
+        {
+          "$ref": "../src/wrfr/semantic/shape/tokens.json"
         },
         {
           "$ref": "../src/wrfr/semantic/typography/tokens.json"
