@@ -12,7 +12,6 @@ What we could working on next.
 
 ### Components
 
-- `Graphic/Shape` (brand shape components)
 - `Structure/Poster` (text on Image)
 
 #### General
@@ -166,9 +165,14 @@ _This section is a historical completion record; some entries may describe decis
 - Brand shape tokens implemented in system:
   - added a `shape` domain to `packages/system` for logo geometry and Measured visual-language shapes
   - canonical shape source now lives in raw brand primitive tokens as `viewBox` + `path`, with semantic shape tokens mirroring those raw inputs
-  - the system pipeline derives public CSS-ready outputs as `image` and `aspectRatio`
+  - the system pipeline derives public CSS-ready outputs as `image`, `aspectRatio`, and `blockSize`
   - public CSS exposes only the derived shape outputs, while primitive/private output remains raw geometry
   - `packages/core/src/components/logo/logo.css` now consumes generated shape vars instead of hardcoded SVG data URIs and aspect ratios
+
+- Shape component implemented as a graphic primitive in core:
+  - added `shape` renderer + CSS + stories + tests
+  - settled API includes optional `variant` (visual-language shape ids), optional `tone` (`default | neutral | brand | support`), and optional `size` (`xs | sm | md | lg | xl | fill`)
+  - component renders a single `div.shape` and relies on generated shape token vars for mask image, canonical block size, and size scaling
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

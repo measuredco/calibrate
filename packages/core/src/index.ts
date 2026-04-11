@@ -209,6 +209,15 @@ export {
 } from "./components/stack/stack";
 
 export {
+  CLBR_SHAPE_SPEC,
+  type ClbrShapeProps,
+  type ClbrShapeSize,
+  type ClbrShapeTone,
+  type ClbrShapeVariant,
+  renderClbrShape,
+} from "./components/shape/shape";
+
+export {
   CLBR_SPINNER_SPEC,
   type ClbrSpinnerProps,
   type ClbrSpinnerSize,
