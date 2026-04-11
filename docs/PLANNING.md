@@ -174,6 +174,11 @@ _This section is a historical completion record; some entries may describe decis
   - settled API includes optional `variant` (visual-language shape ids), optional `tone` (`default | neutral | brand | support`), and optional `size` (`xs | sm | md | lg | xl | fill`)
   - component renders a single `div.shape` and relies on generated shape token vars for mask image, canonical block size, and size scaling
 
+- Pattern component implemented as a graphic primitive in core:
+  - added `pattern` renderer + CSS + stories + tests
+  - settled API includes trusted `children`, optional `variant` (mirroring shape variants), optional `tone` (`default | subtle | support`), and optional `size` (`xs | sm | md | lg | xl | fill`)
+  - component renders a single `div.pattern` with a CSS-driven repeated masked layer for decorative exploration behind child content
+
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests
   - settled API includes required trusted `quote` and `attribution`, optional `align` (`start | center | end`), optional `measured`, optional `responsive`, and optional `size` (`md | lg`)

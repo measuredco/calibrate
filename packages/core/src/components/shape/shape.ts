@@ -1,11 +1,7 @@
 import { attrs } from "../../helpers/html";
 
 export type ClbrShapeSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
-export type ClbrShapeTone =
-  | "default"
-  | "brand"
-  | "support"
-  | "neutral";
+export type ClbrShapeTone = "default" | "brand" | "support" | "neutral";
 export type ClbrShapeVariant =
   | "corner"
   | "tile-lg"

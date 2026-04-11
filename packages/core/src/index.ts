@@ -176,6 +176,15 @@ export {
 } from "./components/panel/panel";
 
 export {
+  CLBR_PATTERN_SPEC,
+  type ClbrPatternProps,
+  type ClbrPatternSize,
+  type ClbrPatternTone,
+  type ClbrPatternVariant,
+  renderClbrPattern,
+} from "./components/pattern/pattern";
+
+export {
   CLBR_PROSE_SPEC,
   type ClbrProseHangingIndent,
   type ClbrProseProps,
