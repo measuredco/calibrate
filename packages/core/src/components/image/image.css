@@ -44,8 +44,8 @@
     }
 
     &[data-object-fit="cover"] {
-      block-size: var(--clbr-image-block-size, auto);
-      inline-size: var(--clbr-image-inline-size, auto);
+      block-size: var(--clbr-image-block-size, 100%);
+      inline-size: var(--clbr-image-inline-size, 100%);
       max-inline-size: 100%;
 
       &[data-aspect-ratio="1:1"] {
@@ -76,20 +76,36 @@
         object-fit: cover;
       }
 
-      [data-object-position="top"] & {
+      [data-gravity="N"] & {
         object-position: center top;
       }
 
-      [data-object-position="right"] & {
+      [data-gravity="NE"] & {
+        object-position: right top;
+      }
+
+      [data-gravity="E"] & {
         object-position: right center;
       }
 
-      [data-object-position="bottom"] & {
+      [data-gravity="SE"] & {
+        object-position: right bottom;
+      }
+
+      [data-gravity="S"] & {
         object-position: center bottom;
       }
 
-      [data-object-position="left"] & {
+      [data-gravity="SW"] & {
+        object-position: left bottom;
+      }
+
+      [data-gravity="W"] & {
         object-position: left center;
+      }
+
+      [data-gravity="NW"] & {
+        object-position: left top;
       }
     }
   }

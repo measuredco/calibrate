@@ -1,9 +1,11 @@
 @layer clbr.components {
   :where(.clbr) .grid-container {
     container-type: inline-size;
+    block-size: 100%;
     inline-size: 100%;
 
     .grid {
+      block-size: 100%;
       display: grid;
       gap: var(--clbr-layout-grid-gap-md) var(--clbr-layout-grid-gap-sm);
       grid-template-columns: 1fr;

@@ -9,6 +9,7 @@
     background-color: var(--clbr-box-background-color);
     border: var(--clbr-layout-border-width-default) solid
       var(--clbr-box-border-color);
+    color: var(--clbr-color-foreground-default);
     border-radius: var(--clbr-box-border-radius);
     padding-block: var(--clbr-box-padding-block);
     padding-inline: var(--clbr-box-padding-inline);
@@ -17,28 +18,72 @@
       --clbr-box-background-color: var(--clbr-color-background-panel);
     }
 
+    &[data-background="transparent"] {
+      --clbr-box-background-color: transparent;
+    }
+
     &[data-border] {
       --clbr-box-border-color: var(--clbr-color-border-subtle);
     }
 
-    &[data-padding="xs"] {
+    &[data-padding-block="xs"] {
       --clbr-box-padding-block: var(--clbr-spacing-vertical-500);
+    }
+
+    &[data-responsive][data-padding-block="xs"] {
+      --clbr-box-padding-block: var(--clbr-layout-spacing-vertical-500);
+    }
+
+    &[data-padding-inline="xs"] {
       --clbr-box-padding-inline: var(--clbr-spacing-horizontal-500);
     }
 
-    &[data-padding="sm"] {
+    &[data-padding-block="sm"] {
       --clbr-box-padding-block: var(--clbr-spacing-vertical-600);
+    }
+
+    &[data-responsive][data-padding-block="sm"] {
+      --clbr-box-padding-block: var(--clbr-layout-spacing-vertical-600);
+    }
+
+    &[data-padding-inline="sm"] {
       --clbr-box-padding-inline: var(--clbr-spacing-horizontal-600);
     }
 
-    &[data-padding="lg"] {
+    &[data-responsive][data-padding-block="md"] {
+      --clbr-box-padding-block: var(--clbr-layout-spacing-vertical-700);
+    }
+
+    &[data-padding-block="lg"] {
       --clbr-box-padding-block: var(--clbr-spacing-vertical-800);
+    }
+
+    &[data-responsive][data-padding-block="lg"] {
+      --clbr-box-padding-block: var(--clbr-layout-spacing-vertical-800);
+    }
+
+    &[data-padding-inline="lg"] {
       --clbr-box-padding-inline: var(--clbr-spacing-horizontal-800);
     }
 
-    &[data-padding="xl"] {
+    &[data-padding-block="xl"] {
       --clbr-box-padding-block: var(--clbr-spacing-vertical-900);
+    }
+
+    &[data-responsive][data-padding-block="xl"] {
+      --clbr-box-padding-block: var(--clbr-layout-spacing-vertical-900);
+    }
+
+    &[data-padding-inline="xl"] {
       --clbr-box-padding-inline: var(--clbr-spacing-horizontal-900);
+    }
+
+    &[data-padding-block="none"] {
+      --clbr-box-padding-block: 0;
+    }
+
+    &[data-padding-inline="none"] {
+      --clbr-box-padding-inline: 0;
     }
 
     &[data-radius="sm"] {

@@ -15,8 +15,10 @@ describe("renderClbrBox", () => {
     expect(box.textContent).toBe("Body");
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
-    expect(box.getAttribute("data-padding")).toBe("md");
+    expect(box.getAttribute("data-padding-block")).toBe("md");
+    expect(box.getAttribute("data-padding-inline")).toBe("md");
     expect(box.hasAttribute("data-radius")).toBe(false);
+    expect(box.hasAttribute("data-responsive")).toBe(false);
     expect(box.hasAttribute("data-surface")).toBe(false);
   });
 
@@ -46,16 +48,20 @@ describe("renderClbrBox", () => {
         background: "panel",
         border: true,
         children: "Body",
-        padding: "xl",
+        paddingBlock: "xl",
+        paddingInline: "sm",
         radius: "md",
+        responsive: true,
         surface: "brand",
       }),
     );
 
     expect(box.getAttribute("data-background")).toBe("panel");
     expect(box.hasAttribute("data-border")).toBe(true);
-    expect(box.getAttribute("data-padding")).toBe("xl");
+    expect(box.getAttribute("data-padding-block")).toBe("xl");
+    expect(box.getAttribute("data-padding-inline")).toBe("sm");
     expect(box.getAttribute("data-radius")).toBe("md");
+    expect(box.hasAttribute("data-responsive")).toBe(true);
     expect(box.getAttribute("data-surface")).toBe("brand");
   });
 
@@ -65,14 +71,41 @@ describe("renderClbrBox", () => {
         background: "default",
         border: false,
         children: "Body",
-        padding: "sm",
+        paddingBlock: "sm",
+        paddingInline: "xs",
       }),
     );
 
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
-    expect(box.getAttribute("data-padding")).toBe("sm");
+    expect(box.getAttribute("data-padding-block")).toBe("sm");
+    expect(box.getAttribute("data-padding-inline")).toBe("xs");
     expect(box.hasAttribute("data-radius")).toBe(false);
+    expect(box.hasAttribute("data-responsive")).toBe(false);
     expect(box.hasAttribute("data-surface")).toBe(false);
+  });
+
+  it("supports none for both padding axes", () => {
+    const box = mountBox(
+      renderClbrBox({
+        children: "Body",
+        paddingBlock: "none",
+        paddingInline: "none",
+      }),
+    );
+
+    expect(box.getAttribute("data-padding-block")).toBe("none");
+    expect(box.getAttribute("data-padding-inline")).toBe("none");
+  });
+
+  it("emits transparent background when requested", () => {
+    const box = mountBox(
+      renderClbrBox({
+        background: "transparent",
+        children: "Body",
+      }),
+    );
+
+    expect(box.getAttribute("data-background")).toBe("transparent");
   });
 });

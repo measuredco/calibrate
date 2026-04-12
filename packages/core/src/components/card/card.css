@@ -4,6 +4,7 @@
     block-size: 100%;
     border-radius: var(--clbr-radius-lg);
     box-shadow: var(--clbr-effect-shadow-default);
+    color: var(--clbr-color-foreground-default);
     display: flex;
     flex-direction: column;
     inline-size: 100%;

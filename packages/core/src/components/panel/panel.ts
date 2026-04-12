@@ -75,7 +75,7 @@ export const CLBR_PANEL_SPEC = {
     surface: {
       required: false,
       type: "enum",
-      values: ["default", "brand"],
+      values: ["default", "brand", "inverse", "brand-inverse"],
     },
   },
   rules: {
@@ -94,7 +94,7 @@ export const CLBR_PANEL_SPEC = {
         behavior: "emit",
         target: "data-surface",
         value: "{surface}",
-        when: "surface is default or brand",
+        when: "surface is provided",
       },
     ],
   },

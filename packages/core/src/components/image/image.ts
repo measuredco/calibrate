@@ -1,12 +1,16 @@
 import { attrs } from "../../helpers/html";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
-export type ClbrImageObjectPosition =
-  | "top"
-  | "right"
-  | "bottom"
-  | "left"
-  | "center";
+export type ClbrImageGravity =
+  | "N"
+  | "NE"
+  | "E"
+  | "SE"
+  | "S"
+  | "SW"
+  | "W"
+  | "NW"
+  | "C";
 export type ClbrImageRadius = "xs" | "ratio";
 
 export interface ClbrImageSource {
@@ -78,10 +82,10 @@ export interface ClbrImageProps {
    */
   priority?: boolean;
   /**
-   * Object position for cover fit.
-   * @default "center"
+   * Focal gravity for cover fit.
+   * @default "C"
    */
-  objectPosition?: ClbrImageObjectPosition;
+  gravity?: ClbrImageGravity;
   /**
    * Radius strategy.
    * Omitted by default.
@@ -123,9 +127,9 @@ export function renderClbrImage({
   alt = "",
   aspectRatio,
   cover,
+  gravity = "C",
   height,
   lazy,
-  objectPosition = "center",
   priority,
   radius,
   shadow,
@@ -204,10 +208,9 @@ export function renderClbrImage({
   const wrapperAttrs = attrs({
     class: "image",
     "data-aspect-ratio": cover && !(height && width) ? aspectRatio : undefined,
+    "data-gravity": cover && gravity !== "C" ? gravity : undefined,
     "data-shadow": Boolean(shadow),
     "data-object-fit": cover ? "cover" : undefined,
-    "data-object-position":
-      cover && objectPosition !== "center" ? objectPosition : undefined,
     "data-radius": radius,
     style: styleChunks.length > 0 ? styleChunks.join("; ") : undefined,
   });
@@ -231,11 +234,11 @@ export const CLBR_IMAGE_SPEC = {
       required: false,
       type: "string",
     },
-    objectPosition: {
-      default: "center",
+    gravity: {
+      default: "C",
       required: false,
       type: "enum",
-      values: ["top", "right", "bottom", "left", "center"],
+      values: ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"],
     },
     radius: {
       required: false,
@@ -313,9 +316,9 @@ export const CLBR_IMAGE_SPEC = {
       },
       {
         behavior: "emit",
-        target: "div[data-object-position]",
-        value: "{objectPosition}",
-        when: "cover is true and objectPosition is not center",
+        target: "div[data-gravity]",
+        value: "{gravity}",
+        when: "cover is true and gravity is not C",
       },
       {
         behavior: "emit",

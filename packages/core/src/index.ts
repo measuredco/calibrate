@@ -134,7 +134,7 @@ export {
 export {
   CLBR_IMAGE_SPEC,
   type ClbrImageAspectRatio,
-  type ClbrImageObjectPosition,
+  type ClbrImageGravity,
   type ClbrImageProps,
   type ClbrImageRadius,
   type ClbrImageSource,
@@ -183,6 +183,13 @@ export {
   type ClbrPatternVariant,
   renderClbrPattern,
 } from "./components/pattern/pattern";
+
+export {
+  CLBR_POSTER_SPEC,
+  type ClbrPosterProps,
+  type ClbrPosterSurface,
+  renderClbrPoster,
+} from "./components/poster/poster";
 
 export {
   CLBR_PROSE_SPEC,

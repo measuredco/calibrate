@@ -1,8 +1,8 @@
 import { attrs } from "../../helpers/html";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
-export type ClbrBoxBackground = "default" | "panel";
-export type ClbrBoxPadding = "xs" | "sm" | "md" | "lg" | "xl";
+export type ClbrBoxBackground = "default" | "panel" | "transparent";
+export type ClbrBoxPadding = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type ClbrBoxRadius = "sm" | "md";
 
 /** Props for the Calibrate box renderer. */
@@ -11,6 +11,7 @@ export interface ClbrBoxProps {
    * Background treatment.
    * `default` emits no background attribute.
    * `panel` emits `data-background="panel"`.
+   * `transparent` emits `data-background="transparent"`.
    * @default "default"
    */
   background?: ClbrBoxBackground;
@@ -26,16 +27,28 @@ export interface ClbrBoxProps {
    */
   children?: string;
   /**
-   * Inner spacing scale.
-   * Always emits `data-padding`.
+   * Inner block-axis spacing scale.
+   * Always emits `data-padding-block`.
    * @default "md"
    */
-  padding?: ClbrBoxPadding;
+  paddingBlock?: ClbrBoxPadding;
+  /**
+   * Inner inline-axis spacing scale.
+   * Always emits `data-padding-inline`.
+   * @default "md"
+   */
+  paddingInline?: ClbrBoxPadding;
   /**
    * Corner radius size.
    * When omitted, no `data-radius` attribute is emitted.
    */
   radius?: ClbrBoxRadius;
+  /**
+   * Switches block-axis padding to the responsive layout spacing scale.
+   * Emits `data-responsive` as a presence attribute when true.
+   * @default false
+   */
+  responsive?: boolean;
   /**
    * Surface context.
    * When provided, emits `data-surface`.
@@ -56,16 +69,20 @@ export function renderClbrBox({
   background = "default",
   children,
   border = false,
-  padding = "md",
+  paddingBlock = "md",
+  paddingInline = "md",
   radius,
+  responsive = false,
   surface,
 }: ClbrBoxProps): string {
   const boxAttrs = attrs({
     class: "box",
     "data-background": background === "default" ? undefined : background,
     "data-border": border,
-    "data-padding": padding,
+    "data-padding-block": paddingBlock,
+    "data-padding-inline": paddingInline,
     "data-radius": radius,
+    "data-responsive": responsive,
     "data-surface": surface,
   });
 
@@ -85,7 +102,7 @@ export const CLBR_BOX_SPEC = {
       default: "default",
       required: false,
       type: "enum",
-      values: ["default", "panel"],
+      values: ["default", "panel", "transparent"],
     },
     border: {
       default: false,
@@ -96,21 +113,32 @@ export const CLBR_BOX_SPEC = {
       required: false,
       type: "html",
     },
-    padding: {
+    paddingBlock: {
       default: "md",
       required: false,
       type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl"],
+      values: ["none", "xs", "sm", "md", "lg", "xl"],
+    },
+    paddingInline: {
+      default: "md",
+      required: false,
+      type: "enum",
+      values: ["none", "xs", "sm", "md", "lg", "xl"],
     },
     radius: {
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
+    responsive: {
+      default: false,
+      required: false,
+      type: "boolean",
+    },
     surface: {
       required: false,
       type: "enum",
-      values: ["default", "brand"],
+      values: ["default", "brand", "inverse", "brand-inverse"],
     },
   },
   rules: {
@@ -123,8 +151,8 @@ export const CLBR_BOX_SPEC = {
       {
         behavior: "emit",
         target: "data-background",
-        value: "panel",
-        when: "background is panel",
+        value: "{background}",
+        when: "background is panel or transparent",
       },
       {
         behavior: "emit",
@@ -134,8 +162,13 @@ export const CLBR_BOX_SPEC = {
       },
       {
         behavior: "always",
-        target: "data-padding",
-        value: "{padding}",
+        target: "data-padding-block",
+        value: "{paddingBlock}",
+      },
+      {
+        behavior: "always",
+        target: "data-padding-inline",
+        value: "{paddingInline}",
       },
       {
         behavior: "emit",
@@ -145,9 +178,15 @@ export const CLBR_BOX_SPEC = {
       },
       {
         behavior: "emit",
+        target: "data-responsive",
+        value: "present",
+        when: "responsive is true",
+      },
+      {
+        behavior: "emit",
         target: "data-surface",
         value: "{surface}",
-        when: "surface is default or brand",
+        when: "surface is provided",
       },
     ],
   },

@@ -71,16 +71,16 @@ describe("renderClbrCard", () => {
     expect(card.querySelector("p.note .icon")).toBeNull();
   });
 
-  it("emits surface when provided", () => {
+  it("emits any supported surface variant when provided", () => {
     const card = mountCard(
       renderClbrCard({
         description: "Description",
-        surface: "brand",
+        surface: "brand-inverse",
         title: "Card title",
       }),
     );
 
-    expect(card.getAttribute("data-surface")).toBe("brand");
+    expect(card.getAttribute("data-surface")).toBe("brand-inverse");
   });
 
   it("escapes title text", () => {

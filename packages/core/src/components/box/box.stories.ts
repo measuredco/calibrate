@@ -4,23 +4,30 @@ const meta = {
   argTypes: {
     background: {
       control: { type: "select" },
-      options: ["default", "panel"],
+      options: ["default", "panel", "transparent"],
     },
     border: {
       control: { type: "boolean" },
     },
     children: { control: false },
-    padding: {
+    paddingBlock: {
       control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl"],
+      options: ["none", "xs", "sm", "md", "lg", "xl"],
+    },
+    paddingInline: {
+      control: { type: "select" },
+      options: ["none", "xs", "sm", "md", "lg", "xl"],
     },
     radius: {
       control: { type: "select" },
       options: ["sm", "md"],
     },
+    responsive: {
+      control: { type: "boolean" },
+    },
     surface: {
       control: { type: "select" },
-      options: ["default", "brand"],
+      options: ["default", "brand", "inverse", "brand-inverse"],
     },
   },
   title: "Layout/Box",
@@ -33,8 +40,10 @@ export const Default = {
     background: "default",
     border: true,
     children: '<div class="example-content"></div>',
-    padding: "md",
+    paddingBlock: "md",
+    paddingInline: "md",
     radius: undefined,
+    responsive: false,
     surface: undefined,
   } satisfies ClbrBoxProps,
   render: (args: ClbrBoxProps) => renderClbrBox(args),

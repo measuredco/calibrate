@@ -27,6 +27,28 @@ describe("renderClbrSurface", () => {
     expect(surface.getAttribute("data-surface")).toBe("brand");
   });
 
+  it("renders inverse surface variant attribute", () => {
+    const surface = mountSurface(
+      renderClbrSurface({
+        children: "<p>content</p>",
+        variant: "inverse",
+      }),
+    );
+    expect(surface.classList.contains("surface")).toBe(true);
+    expect(surface.getAttribute("data-surface")).toBe("inverse");
+  });
+
+  it("renders brand-inverse surface variant attribute", () => {
+    const surface = mountSurface(
+      renderClbrSurface({
+        children: "<p>content</p>",
+        variant: "brand-inverse",
+      }),
+    );
+    expect(surface.classList.contains("surface")).toBe(true);
+    expect(surface.getAttribute("data-surface")).toBe("brand-inverse");
+  });
+
   it("injects children HTML content", () => {
     const children = "<section><h2>Surface</h2><p>Body</p></section>";
     const surface = mountSurface(renderClbrSurface({ children }));
