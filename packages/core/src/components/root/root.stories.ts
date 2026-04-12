@@ -60,7 +60,7 @@ export const Default = {
     brand: "msrd",
     children: `<div style="padding: 1.75rem 1.25rem">Example content</div>`,
     dir: undefined,
-    lang: undefined,
+    lang: "",
     theme: undefined,
   },
   render: (args: ClbrRootProps) => renderClbrRoot({ ...args }),

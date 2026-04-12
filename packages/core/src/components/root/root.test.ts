@@ -113,6 +113,16 @@ describe("renderClbrRoot", () => {
     expect(root.hasAttribute("lang")).toBe(false);
   });
 
+  it("does not render lang when provided as an empty string", () => {
+    const root = mountRoot(
+      renderClbrRoot({
+        children: "<p>content</p>",
+        lang: "",
+      }),
+    );
+    expect(root.hasAttribute("lang")).toBe(false);
+  });
+
   it("injects children HTML content", () => {
     const children = "<section><h1>Title</h1><p>Body</p></section>";
     const root = mountRoot(renderClbrRoot({ children }));

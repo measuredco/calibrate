@@ -66,7 +66,7 @@ export function renderClbrRoot(props: ClbrRootProps): string {
       appOverscrollBehavior === "none" ? "none" : undefined,
     "data-brand": brand,
     "data-theme": theme,
-    lang,
+    lang: lang === "" ? undefined : lang,
     dir,
   });
 
@@ -148,7 +148,7 @@ export const CLBR_ROOT_SPEC = {
       {
         behavior: "emit",
         target: "lang",
-        when: "lang is provided",
+        when: "lang is a non-empty string",
       },
     ],
     classes: [

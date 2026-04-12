@@ -12,7 +12,7 @@ What we could be working on next.
 
 ### SSR Components
 
-- Full holistic human review across all components. Consider namespacing of component classes, data-surface, data-local-theme
+Full holistic human review across all components. Consider namespacing of component classes, data-surface, data-local-theme
 
 ### Web Components
 
@@ -59,6 +59,7 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 - Component-wide `data-testid` and/or `id` support
 - `size: "lg"` for Controls (and `details`)
 - `renderPosterImage` to expose subset of `image` props in `poster` API
+- Add `Image` `sources` art direction example to Storybook
 
 ### Component analytics
 
@@ -87,6 +88,7 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 
 #### Design model evolution
 
+- Custom inverse themes?
 - `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Consider introducing Newsreader as a serif font for prose body copy.
