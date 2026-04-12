@@ -30,6 +30,11 @@ export interface ClbrHeadingProps {
    */
   level?: ClbrHeadingLevel;
   /**
+   * Enables optical inline alignment adjustment for left sidebearing-heavy glyphs.
+   * @default false
+   */
+  opticalInline?: boolean;
+  /**
    * Enables breakpoint-responsive heading scale.
    * @default false
    */
@@ -51,6 +56,7 @@ export function renderClbrHeading({
   align = "start",
   children,
   level,
+  opticalInline,
   responsive,
   size = "md",
 }: ClbrHeadingProps): string {
@@ -58,6 +64,7 @@ export function renderClbrHeading({
   const headingAttrs = attrs({
     class: "heading",
     "data-align": align === "start" ? undefined : align,
+    "data-optical-inline": opticalInline,
     "data-responsive": responsive,
     "data-size": size,
   });
@@ -95,6 +102,11 @@ export const CLBR_HEADING_SPEC = {
       type: "enum",
       values: [1, 2, 3, 4, 5, 6],
     },
+    opticalInline: {
+      default: false,
+      required: false,
+      type: "boolean",
+    },
     responsive: {
       default: false,
       required: false,
@@ -131,6 +143,12 @@ export const CLBR_HEADING_SPEC = {
         target: "data-align",
         value: "{align}",
         when: "align is center or end",
+      },
+      {
+        behavior: "emit",
+        target: "data-optical-inline",
+        value: "present",
+        when: "opticalInline is true",
       },
       {
         behavior: "emit",

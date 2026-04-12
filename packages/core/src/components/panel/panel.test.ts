@@ -37,16 +37,16 @@ describe("renderClbrPanel", () => {
     expect(empty.innerHTML).toBe("");
   });
 
-  it("emits requested padding and surface attributes", () => {
+  it("emits requested padding and any supported surface variant", () => {
     const panel = mountPanel(
       renderClbrPanel({
         children: "Body",
         padding: "xl",
-        surface: "brand",
+        surface: "inverse",
       }),
     );
 
     expect(panel.getAttribute("data-padding")).toBe("xl");
-    expect(panel.getAttribute("data-surface")).toBe("brand");
+    expect(panel.getAttribute("data-surface")).toBe("inverse");
   });
 });

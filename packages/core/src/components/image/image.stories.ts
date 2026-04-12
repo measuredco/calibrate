@@ -6,9 +6,9 @@ const meta = {
       control: { type: "select" },
       options: ["1:1", "4:5", "3:2", "16:9", "21:9"],
     },
-    objectPosition: {
+    gravity: {
       control: { type: "select" },
-      options: ["center", "top", "bottom", "left", "right"],
+      options: ["C", "N", "NE", "E", "SE", "S", "SW", "W", "NW"],
     },
     radius: {
       control: { type: "select" },
@@ -24,7 +24,7 @@ export default meta;
 export const Default = {
   args: {
     cover: false,
-    objectPosition: "center",
+    gravity: "C",
     aspectRatio: undefined,
     width: 0,
     height: 0,

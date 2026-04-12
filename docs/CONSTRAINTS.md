@@ -218,7 +218,18 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - `data-theme="dark"` and `data-theme="light"` force mode on the scoped brand root
   - without force attributes, theme follows authored media query behavior
 - Surface contract:
-  - `[data-surface="brand"]` is a descendant surface scope inside a brand root
+  - descendant surface scopes are expressed with `data-surface`
+  - supported public surface values are:
+    - `default`
+    - `brand`
+    - `inverse`
+    - `brand-inverse`
+  - `default` is the inherited/base surface context
+  - `brand`, `inverse`, and `brand-inverse` are sibling surface contexts and must not rely on ancestor surface fallback to complete their token sets
+- Local content-theme override contract:
+  - `data-content-theme="light"` and `data-content-theme="dark"` are reserved for absolute local foreground theme overrides on poster-like content over non-themeable media
+  - local content-theme overrides are intentionally stronger than normal theme/surface selectors
+  - local content-theme overrides currently pair with `data-surface="default"` or `data-surface="brand"`
 - Multi-brand on one page is supported:
   - use isolated wrapper roots per brand (`.clbr[data-brand="msrd"]`, `.clbr[data-brand="wrfr"]`, etc.)
   - do not mix multiple brands on the same scope root

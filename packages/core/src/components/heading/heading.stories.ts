@@ -10,9 +10,6 @@ const meta = {
       control: { type: "select" },
       options: [1, 2, 3, 4, 5, 6],
     },
-    responsive: {
-      control: { type: "boolean" },
-    },
     size: {
       control: { type: "select" },
       options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
@@ -28,6 +25,7 @@ export const Default = {
     align: "start",
     children: "Heading",
     level: undefined,
+    opticalInline: false,
     responsive: false,
     size: "md",
   } satisfies ClbrHeadingProps,

@@ -39,7 +39,7 @@ describe("renderClbrImage", () => {
     const enabledRoot = mountImage(
       renderClbrImage({
         cover: true,
-        objectPosition: "left",
+        gravity: "W",
         radius: "xs",
         shadow: true,
         src: "/image.jpg",
@@ -48,7 +48,7 @@ describe("renderClbrImage", () => {
     const enabledWrapper = getWrapper(enabledRoot);
 
     expect(enabledWrapper.getAttribute("data-object-fit")).toBe("cover");
-    expect(enabledWrapper.getAttribute("data-object-position")).toBe("left");
+    expect(enabledWrapper.getAttribute("data-gravity")).toBe("W");
     expect(enabledWrapper.getAttribute("data-radius")).toBe("xs");
     expect(enabledWrapper.hasAttribute("data-shadow")).toBe(true);
 
@@ -56,7 +56,7 @@ describe("renderClbrImage", () => {
     const defaultWrapper = getWrapper(defaultRoot);
 
     expect(defaultWrapper.hasAttribute("data-object-fit")).toBe(false);
-    expect(defaultWrapper.hasAttribute("data-object-position")).toBe(false);
+    expect(defaultWrapper.hasAttribute("data-gravity")).toBe(false);
     expect(defaultWrapper.hasAttribute("data-radius")).toBe(false);
     expect(defaultWrapper.hasAttribute("data-shadow")).toBe(false);
   });

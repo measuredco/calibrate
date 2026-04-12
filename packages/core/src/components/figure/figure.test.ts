@@ -18,16 +18,12 @@ describe("renderClbrFigure", () => {
     expect(figure.tagName).toBe("FIGURE");
     expect(figure.className).toBe("figure");
     expect(figure.hasAttribute("data-align")).toBe(false);
-    expect(figure.querySelector("img")?.getAttribute("src")).toBe(
-      "/image.jpg",
-    );
+    expect(figure.querySelector("img")?.getAttribute("src")).toBe("/image.jpg");
     expect(figure.querySelector("figcaption > span.text")?.textContent).toBe(
       "Caption",
     );
     expect(
-      figure
-        .querySelector("figcaption > span.text")
-        ?.getAttribute("data-size"),
+      figure.querySelector("figcaption > span.text")?.getAttribute("data-size"),
     ).toBe("sm");
   });
 

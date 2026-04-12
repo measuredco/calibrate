@@ -1,12 +1,17 @@
 @layer clbr.components {
   :where(.clbr) .heading {
     --clbr-heading-font: var(--clbr-typography-text-heading-md);
+    color: var(--clbr-color-foreground-default);
     display: block;
     font: var(--clbr-heading-font);
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
     margin: 0;
     text-wrap: balance;
+
+    &[data-optical-inline] {
+      margin-inline: -0.1em;
+    }
 
     &[data-size="xs"] {
       --clbr-heading-font: var(--clbr-typography-text-heading-xs);

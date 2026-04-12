@@ -8,6 +8,7 @@
       var(--clbr-color-border-default);
     border-radius: var(--clbr-radius-lg);
     box-shadow: var(--clbr-effect-shadow-default);
+    color: var(--clbr-color-foreground-default);
     padding-block: var(--clbr-panel-padding-block);
     padding-inline: var(--clbr-panel-padding-inline);
 

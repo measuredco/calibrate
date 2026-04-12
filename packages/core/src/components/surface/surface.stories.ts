@@ -7,7 +7,7 @@ const meta = {
     },
     variant: {
       control: { type: "select" },
-      options: ["default", "brand"],
+      options: ["default", "brand", "inverse", "brand-inverse"],
     },
   },
   parameters: {

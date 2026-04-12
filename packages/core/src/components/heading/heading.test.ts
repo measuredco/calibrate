@@ -64,6 +64,15 @@ describe("renderClbrHeading", () => {
     expect(heading.hasAttribute("data-responsive")).toBe(true);
   });
 
+  it("emits data-optical-inline when opticalInline is true", () => {
+    const root = mountHeading(
+      renderClbrHeading({ children: "Title", level: 2, opticalInline: true }),
+    );
+    const heading = getByRole(root, "heading", { level: 2, name: "Title" });
+
+    expect(heading.hasAttribute("data-optical-inline")).toBe(true);
+  });
+
   it("escapes heading text", () => {
     const root = mountHeading(
       renderClbrHeading({

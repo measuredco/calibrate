@@ -1,6 +1,10 @@
 import { attrs } from "../../helpers/html";
 
-export type ClbrSurfaceVariant = "default" | "brand";
+export type ClbrSurfaceVariant =
+  | "default"
+  | "brand"
+  | "inverse"
+  | "brand-inverse";
 
 /**
  * Props for the Calibrate surface renderer.
@@ -53,7 +57,7 @@ export const CLBR_SURFACE_SPEC = {
       default: "default",
       required: false,
       type: "enum",
-      values: ["default", "brand"],
+      values: ["default", "brand", "inverse", "brand-inverse"],
     },
   },
   rules: {

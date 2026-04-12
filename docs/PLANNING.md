@@ -6,13 +6,13 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### `Structure/Poster` (text on Image)
+
 ## Next
 
 What we could working on next.
 
 ### Components
-
-- `Structure/Poster` (text on Image)
 
 #### General
 
@@ -74,7 +74,6 @@ Everything we could attempt given sufficient time and resources.
 
 #### Design model evolution
 
-- Light/dark inverse surfaces
 - `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Consider introducing Newsreader as a serif font for prose body copy.
