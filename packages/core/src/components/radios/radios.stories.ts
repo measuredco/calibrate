@@ -6,6 +6,10 @@ const meta = {
       control: { type: "select" },
       options: ["vertical", "horizontal"],
     },
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md"],
+    },
   },
   title: "Control/Radios",
 };
@@ -32,6 +36,7 @@ export const Default = {
     name: "radio-group",
     orientation: "vertical",
     required: false,
+    size: "md",
     value: "radio-one",
   } satisfies ClbrRadiosProps,
   render: (args: ClbrRadiosProps) =>

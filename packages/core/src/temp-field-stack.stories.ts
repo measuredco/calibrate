@@ -86,6 +86,7 @@ export const Default = {
       descriptionId: "temp-updates-description",
       label: "Send me product updates",
       name: "updates",
+      size: "sm",
       value: "yes",
     })}${renderClbrSwitch({
       description: "Enable this to receive urgent notifications.",
@@ -103,6 +104,7 @@ export const Default = {
       ],
       legend: "Contact Method",
       name: "contactMethodSm",
+      size: "sm",
       value: "email",
     })}${renderClbrTextarea({
       description: "Add any context that will help our support team.",

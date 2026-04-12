@@ -14,7 +14,20 @@ describe("renderClbrCheckbox", () => {
     const field = root.querySelector(".checkbox-field");
 
     expect(field).toBeTruthy();
+    expect(field?.getAttribute("data-size")).toBe("md");
     expect(checkbox.getAttribute("type")).toBe("checkbox");
+  });
+
+  it("emits requested size variant", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({
+        label: "Subscribe",
+        size: "sm",
+      }),
+    );
+    const field = root.querySelector(".checkbox-field");
+
+    expect(field?.getAttribute("data-size")).toBe("sm");
   });
 
   it("emits checked/disabled/required attrs when true", () => {

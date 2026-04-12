@@ -2,12 +2,17 @@
   :where(.clbr) .checkbox-field {
     --clbr-checkbox-gap: var(--clbr-spacing-horizontal-400);
     --clbr-checkbox-inset: var(--clbr-spacing-vertical-200);
-    --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);
+    --clbr-checkbox-size: var(--clbr-layout-icon-size-sm);
 
     font-size: var(--clbr-typography-type-step-100-font-size);
     line-height: var(--clbr-typography-type-step-100-line-height);
 
+    &[data-size="sm"] {
+      --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);
+    }
+
     .label {
+      align-items: center;
       color: var(--clbr-color-interactive-neutral-default);
       column-gap: var(--clbr-checkbox-gap);
       cursor: pointer;
@@ -45,8 +50,7 @@
       );
       box-shadow: var(--clbr-effect-shadow-default);
       cursor: pointer;
-      margin-block: var(--clbr-spacing-vertical-250);
-      margin-inline: 0;
+      margin: 0;
       position: relative;
 
       &:focus-visible {

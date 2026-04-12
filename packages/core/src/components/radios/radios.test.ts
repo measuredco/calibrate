@@ -28,6 +28,7 @@ describe("renderClbrRadios", () => {
 
     expect(fieldset?.getAttribute("id")).toBe("contact");
     expect(radios?.getAttribute("data-orientation")).toBe("vertical");
+    expect(radios?.getAttribute("data-size")).toBe("md");
     expect(root.querySelectorAll(".radio-field")).toHaveLength(2);
     expect(getByText(root, "Contact Method").tagName).toBe("LEGEND");
     expect(getByRole(root, "radio", { name: "Email" })).toBeTruthy();
@@ -126,6 +127,20 @@ describe("renderClbrRadios", () => {
     expect(
       root.querySelector(".radios")?.getAttribute("data-orientation"),
     ).toBe("horizontal");
+  });
+
+  it("maps size to the .radios container", () => {
+    const root = mountRadios(
+      renderClbrRadios({
+        id: "contact",
+        legend: "Contact Method",
+        name: "contact",
+        radios: baseItems,
+        size: "sm",
+      }),
+    );
+
+    expect(root.querySelector(".radios")?.getAttribute("data-size")).toBe("sm");
   });
 
   it("maps selected value to checked radio and leaves unmatched values unchecked", () => {

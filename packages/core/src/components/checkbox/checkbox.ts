@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrInputSize } from "../input/input";
 
 /** Props for the Calibrate checkbox renderer. */
 export interface ClbrCheckboxProps {
@@ -38,6 +39,11 @@ export interface ClbrCheckboxProps {
    * @default false
    */
   required?: boolean;
+  /**
+   * Size variant.
+   * @default "md"
+   */
+  size?: ClbrInputSize;
   /** Optional submitted field value. */
   value?: string;
 }
@@ -57,6 +63,7 @@ export function renderClbrCheckbox({
   label,
   name,
   required,
+  size = "md",
   value,
 }: ClbrCheckboxProps): string {
   const normalizedDescription = description?.trim();
@@ -97,7 +104,12 @@ export function renderClbrCheckbox({
       )}</p>`
     : "";
 
-  return `<div class="checkbox-field"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
+  const fieldAttrs = attrs({
+    class: "checkbox-field",
+    "data-size": size,
+  });
+
+  return `<div ${fieldAttrs}><label class="label"><input ${inputAttrs}><span>${escapeHtml(
     label,
   )}</span></label>${descriptionMarkup}</div>`;
 }
@@ -148,6 +160,12 @@ export const CLBR_CHECKBOX_SPEC = {
       required: false,
       type: "boolean",
     },
+    size: {
+      default: "md",
+      required: false,
+      type: "enum",
+      values: ["sm", "md"],
+    },
     value: {
       required: false,
       type: "string",
@@ -159,6 +177,11 @@ export const CLBR_CHECKBOX_SPEC = {
         behavior: "always",
         target: "class",
         value: "checkbox-field",
+      },
+      {
+        behavior: "always",
+        target: "div[data-size]",
+        value: "{size}",
       },
       {
         behavior: "emit",

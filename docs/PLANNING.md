@@ -6,25 +6,13 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### `Structure/Poster` (text on Image)
-
 ## Next
 
-What we could working on next.
+What we could be working on next.
 
-### Components
+### SSR Components
 
-#### General
-
-- Define a shared `data-*` passthrough contract for renderer components:
-  - allow typed arbitrary `data-*` attributes for analytics/instrumentation and declarative customization
-  - keep attribute passthrough sandboxed (no general arbitrary-attribute forwarding)
-  - also consider `id` prop normalisation
-- Consider namespacing of component classes (and data-surface?)
-- full holistic human review across all components
-- md size for radios, checkbox, fieldset, summary
-- icon size scale currently follows the msrd typography scale. Open question wether to diverge and use 30 (from vertical spacing scale), instead of 28, for lg. Above 30 we are capping due to stroke widths going over 2px (though we also have fill option for the required flexibility)
-- potential issue with color-only for input error states
+- Full holistic human review across all components. Consider namespacing of component classes, data-surface, data-local-theme
 
 ### Web Components
 
@@ -50,17 +38,33 @@ What we could working on next.
 - `Page/Main`
 - `Page/Footer`
 
+### Storybook docs fidelity
+
+Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components.
+
+### Framework adapters (e.g. `@measured/calibrate-react`)
+
+Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
+
 ## Later
 
 Everything we could attempt given sufficient time and resources.
 
+### Minimal viable publish
+
+Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
+
+### Component props evolution
+
+- Component-wide `data-testid` and/or `id` support
+- `size: "lg"` for Controls (and `details`)
+- `renderPosterImage` to expose subset of `image` props in `poster` API
+
+### Component analytics
+
+Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note Plausible implementation in Facet used classnames.
+
 ### Tokens evolution
-
-#### Deterministic sorting (linting)
-
-- JS import/export ordering via ESLint autofix
-- JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type` / `$description` / `default`)
-- Alphabetical sorting
 
 #### Machine-readable intent
 
@@ -72,12 +76,6 @@ Everything we could attempt given sufficient time and resources.
   - stable fields for tooling/agents beyond prose descriptions
   - worked examples where intent is easy to misuse
 
-#### Design model evolution
-
-- `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
-- Border and Transition DTCG Composites
-- Consider introducing Newsreader as a serif font for prose body copy.
-
 #### Style Dictionary DTCG 2025.10 gaps
 
 [Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
@@ -87,9 +85,11 @@ Everything we could attempt given sufficient time and resources.
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
 
-#### Explore $extensions
+#### Design model evolution
 
-[Understanding $extensions in the Design Tokens Specification](www.alwaystwisted.com/articles/understanding-extensions-in-the-design-tokens-spec)
+- `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
+- Border and Transition DTCG Composites
+- Consider introducing Newsreader as a serif font for prose body copy.
 
 #### JSON export target
 
@@ -105,55 +105,47 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 1. iOS
 1. Android
 
-### Further evolution
+### Deterministic sorting (linting)
 
-#### Assets package
+- JS import/export ordering via ESLint autofix
+- JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type` / `$description` / `default`)
+- Alphabetical sorting
 
-Expand `@measured/calibrate-assets` beyond v1 fonts scope (for example favicons/images) and define stable vs implementation-detail asset APIs.
-
-#### Shared config package evolution
+### Shared config package evolution
 
 Expand `@measured/calibrate-config` beyond the current browserslist/esbuild baseline to include additional consumer-installable subpath presets (for example ESLint, Stylelint, axe; token-name lint rules, raw hex/px guards), plus optional starter assets for contribution workflows (for example PR template/checklist files).
 
-#### Minimal viable publish
+### Assets package evolution
 
-Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
+Expand `@measured/calibrate-assets` beyond v1 fonts scope (for example favicons/images) and define stable vs implementation-detail asset APIs.
 
-#### Documentation website (`apps/documentation`)
+### Documentation website (`apps/documentation`)
 
 Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples. Deploy to `http://calibrate.msrd.dev`, `apps/storybook` can deploy to `http://calibrate.msrd.dev/storybook/`
 
-#### CLI bootstrap tool (`@measured/calibrate`)
-
-Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
-
-#### Framework adapters (e.g. `@measured/calibrate-react`)
-
-Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
-
-#### Content package (`@measured/calibrate-content`)
-
-Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers.
-
-#### Skills package (`@measured/calibrate-skills`)
+### Skills package (`@measured/calibrate-skills`)
 
 Agent skills markdown.
 
-#### MCP/API
+### CLI bootstrap tool (`@measured/calibrate`)
+
+Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
+
+### Content package (`@measured/calibrate-content`)
+
+Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers.
+
+### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
 
-#### Brand tree-shaking strategy
+### Brand tree-shaking strategy
 
 Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract.
 
-#### Optional core private discovery bundle
+### Optional core private discovery bundle
 
 Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows.
-
-#### Storybook docs fidelity
-
-Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components.
 
 ## Done
 

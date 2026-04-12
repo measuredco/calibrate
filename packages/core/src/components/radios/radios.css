@@ -2,7 +2,11 @@
   :where(.clbr) .radios {
     --clbr-radio-gap: var(--clbr-spacing-horizontal-400);
     --clbr-radio-inset: var(--clbr-spacing-vertical-200);
-    --clbr-radio-size: var(--clbr-layout-icon-size-xs);
+    --clbr-radio-size: var(--clbr-layout-icon-size-sm);
+
+    &[data-size="sm"] {
+      --clbr-radio-size: var(--clbr-layout-icon-size-xs);
+    }
 
     &[data-orientation="horizontal"] {
       display: flex;
@@ -15,6 +19,7 @@
     }
 
     .label {
+      align-items: center;
       color: var(--clbr-color-interactive-neutral-default);
       column-gap: var(--clbr-radio-gap);
       cursor: pointer;
@@ -52,8 +57,7 @@
       border-radius: 50%;
       box-shadow: var(--clbr-effect-shadow-default);
       cursor: pointer;
-      margin-block: var(--clbr-spacing-vertical-250);
-      margin-inline: 0;
+      margin: 0;
       position: relative;
 
       &:focus-visible {

@@ -1,5 +1,6 @@
 import { renderClbrFieldset } from "../fieldset/fieldset";
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrInputSize } from "../input/input";
 
 export type ClbrRadiosOrientation = "vertical" | "horizontal";
 
@@ -46,6 +47,11 @@ export interface ClbrRadiosProps {
    * @default false
    */
   required?: boolean;
+  /**
+   * Size variant for all radios in the group.
+   * @default "md"
+   */
+  size?: ClbrInputSize;
   /** Selected option value. When unmatched, no option is checked. */
   value?: string;
 }
@@ -66,6 +72,7 @@ export function renderClbrRadios({
   name,
   orientation = "vertical",
   required,
+  size = "md",
   value,
 }: ClbrRadiosProps): string {
   const normalizedId = id.trim();
@@ -152,6 +159,7 @@ export function renderClbrRadios({
   const radiosAttrs = attrs({
     class: "radios",
     "data-orientation": orientation,
+    "data-size": size,
   });
 
   return renderClbrFieldset({
@@ -221,6 +229,12 @@ export const CLBR_RADIOS_SPEC = {
       required: false,
       type: "boolean",
     },
+    size: {
+      default: "md",
+      required: false,
+      type: "enum",
+      values: ["sm", "md"],
+    },
     value: {
       required: false,
       type: "string",
@@ -242,6 +256,11 @@ export const CLBR_RADIOS_SPEC = {
         behavior: "always",
         target: "div.radios[data-orientation]",
         value: "{orientation}",
+      },
+      {
+        behavior: "always",
+        target: "div.radios[data-size]",
+        value: "{size}",
       },
       {
         behavior: "always",
