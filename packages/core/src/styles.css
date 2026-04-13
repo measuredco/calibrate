@@ -10,6 +10,7 @@
 @import "./components/root/root.css";
 
 /* components */
+@import "./components/alert/alert.css";
 @import "./components/avatar/avatar.css";
 @import "./components/badge/badge.css";
 @import "./components/blockquote/blockquote.css";

@@ -21,7 +21,6 @@ Full holistic human review across all components. Consider namespacing of compon
 - `Control/Menu` (JS required)
 - `Control/Range` (update text value)
 - `Control/Tag` (delete, remove, select)
-- `Status/Alert` (optionally dismissible)
 - `Status/Progress` (updating)
 - `Status/Skeleton` (resolve to loaded)
 - `Status/Toast` (dismissible, timer)
@@ -59,13 +58,22 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 - Component-wide `data-testid` and/or `id` support
 - `size: "lg"` for Controls (and `details`)
 - `renderPosterImage` to expose subset of `image` props in `poster` API
-- Add `Image` `sources` art direction example to Storybook
+- Add `image` `sources` art direction example to Storybook
 
 ### Component analytics
 
-Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note Plausible implementation in Facet used classnames.
+Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note - Plausible implementation in Facet used classnames.
 
 ### Tokens evolution
+
+#### Style Dictionary DTCG 2025.10 gaps
+
+[Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
+
+- Revisit bridge-side DTCG `$dimension`/`$duration` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
+  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
+- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
+  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
 
 #### Machine-readable intent
 
@@ -76,15 +84,6 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 - Define structured token/group `$extensions` for machine-readable intent:
   - stable fields for tooling/agents beyond prose descriptions
   - worked examples where intent is easy to misuse
-
-#### Style Dictionary DTCG 2025.10 gaps
-
-[Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
-
-- Revisit bridge-side DTCG `$dimension`/`$duration` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
-  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
-- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
-  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
 
 #### Design model evolution
 
@@ -171,6 +170,13 @@ _This section is a historical completion record; some entries may describe decis
   - added `pattern` renderer + CSS + stories + tests
   - settled API includes trusted `children`, optional `variant` (mirroring shape variants), optional `tone` (`default | subtle | support`), and optional `size` (`xs | sm | md | lg | xl | fill`)
   - component renders a single `div.pattern` with a CSS-driven repeated masked layer for decorative exploration behind child content
+
+- Alert implemented as the first JS-enabled web-component in core:
+  - added `alert` renderer + CSS + stories + tests
+  - settled API includes optional `dismissible`, optional `dismissibleLabel`, optional `inlineSize` (`full | fit`), required escaped `message`, optional escaped `title`, and optional `tone` (`info | success | warning | error`)
+  - SSR output remains meaningful light-DOM HTML inside a `clbr-alert` host, while `defineClbrAlert()` upgrades dismissible alerts in place by injecting a close control and handling removal
+  - alert runtime now dispatches `clbr-alert-before-dismiss` (cancelable) and `clbr-alert-dismiss` (bubbling) for consumer hooks
+  - established `defineClbrComponents()` as the top-level runtime registration convenience in `core`
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

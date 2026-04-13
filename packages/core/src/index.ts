@@ -1,5 +1,29 @@
 import "./styles.css";
 
+import { defineClbrAlert } from "./components/alert/alert";
+
+/**
+ * Defines all available Calibrate runtime custom elements.
+ *
+ * Safe to call multiple times. Each component-level define function is
+ * responsible for guarding its own registration.
+ */
+export function defineClbrComponents(): void {
+  defineClbrAlert();
+}
+
+export {
+  CLBR_ALERT_BEFORE_DISMISS_EVENT,
+  CLBR_ALERT_DISMISS_EVENT,
+  CLBR_ALERT_SPEC,
+  CLBR_ALERT_TAG_NAME,
+  defineClbrAlert,
+  type ClbrAlertInlineSize,
+  type ClbrAlertProps,
+  type ClbrAlertTone,
+  renderClbrAlert,
+} from "./components/alert/alert";
+
 export {
   CLBR_AVATAR_SPEC,
   getClbrInitials,
