@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrInputSize } from "../input/input";
+import type { ClbrControlSize } from "../../types";
 
 /** Props for the Calibrate checkbox renderer. */
 export interface ClbrCheckboxProps {
@@ -43,7 +43,7 @@ export interface ClbrCheckboxProps {
    * Size variant.
    * @default "md"
    */
-  size?: ClbrInputSize;
+  size?: ClbrControlSize;
   /** Optional submitted field value. */
   value?: string;
 }
@@ -97,13 +97,11 @@ export function renderClbrCheckbox({
     type: "checkbox",
     value: value || undefined,
   });
-
   const descriptionMarkup = normalizedDescription
     ? `<p class="description" id="${normalizedDescriptionId}">${escapeHtml(
         normalizedDescription,
       )}</p>`
     : "";
-
   const fieldAttrs = attrs({
     class: "checkbox-field",
     "data-size": size,

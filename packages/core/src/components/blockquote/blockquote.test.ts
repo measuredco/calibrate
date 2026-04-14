@@ -18,17 +18,18 @@ describe("renderClbrBlockquote", () => {
     expect(blockquote.tagName).toBe("FIGURE");
     expect(blockquote.className).toBe("blockquote");
     expect(blockquote.hasAttribute("data-align")).toBe(false);
-    expect(blockquote.querySelector("blockquote > p.text")?.textContent).toBe(
-      "Quote",
-    );
+    expect(blockquote.querySelector("blockquote.quote")).toBeTruthy();
+    expect(
+      blockquote.querySelector("blockquote.quote > p.text")?.textContent,
+    ).toBe("Quote");
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.getAttribute("data-size"),
     ).toBe("md");
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.hasAttribute("data-measured"),
     ).toBe(true);
     expect(
@@ -53,7 +54,7 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.getAttribute("data-size"),
     ).toBe("lg");
     expect(
@@ -74,7 +75,7 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
     expect(
@@ -96,7 +97,7 @@ describe("renderClbrBlockquote", () => {
     expect(blockquote.getAttribute("data-align")).toBe("center");
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.getAttribute("data-align"),
     ).toBe("center");
   });
@@ -112,7 +113,7 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       blockquote
-        .querySelector("blockquote > p.text")
+        .querySelector("blockquote.quote > p.text")
         ?.hasAttribute("data-measured"),
     ).toBe(false);
   });

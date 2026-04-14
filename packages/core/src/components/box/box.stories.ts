@@ -6,9 +6,6 @@ const meta = {
       control: { type: "select" },
       options: ["default", "panel", "transparent"],
     },
-    border: {
-      control: { type: "boolean" },
-    },
     children: { control: false },
     paddingBlock: {
       control: { type: "select" },
@@ -21,9 +18,6 @@ const meta = {
     radius: {
       control: { type: "select" },
       options: ["sm", "md"],
-    },
-    responsive: {
-      control: { type: "boolean" },
     },
     surface: {
       control: { type: "select" },

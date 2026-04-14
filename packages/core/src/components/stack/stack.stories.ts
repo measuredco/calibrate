@@ -11,7 +11,6 @@ const meta = {
       control: { type: "select" },
       options: ["xs", "sm", "md", "lg"],
     },
-    responsive: { control: { type: "boolean" } },
   },
   parameters: { padding: 0 },
   title: "Layout/Stack",

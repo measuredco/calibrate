@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrTextAlign } from "../text/text";
+import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
 export type ClbrBlockquoteSize = "md" | "lg";
@@ -12,7 +12,7 @@ export interface ClbrBlockquoteProps {
    * `start` emits no root alignment attribute.
    * @default "start"
    */
-  align?: ClbrTextAlign;
+  align?: ClbrAlign;
   /**
    * Attribution HTML content.
    * Caller is responsible for sanitizing untrusted content.
@@ -82,7 +82,7 @@ export function renderClbrBlockquote({
     size: "sm",
   });
 
-  return `<figure ${rootAttrs}><blockquote>${quoteMarkup}</blockquote><figcaption class="attribution">${attributionMarkup}</figcaption></figure>`;
+  return `<figure ${rootAttrs}><blockquote class="quote">${quoteMarkup}</blockquote><figcaption class="attribution">${attributionMarkup}</figcaption></figure>`;
 }
 
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */
@@ -92,7 +92,7 @@ export const CLBR_BLOCKQUOTE_SPEC = {
     element: "figure",
     class: "blockquote",
     children: [
-      "blockquote > renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
+      "blockquote.quote > renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
       "figcaption.attribution > renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
     ],
   },
@@ -145,9 +145,13 @@ export const CLBR_BLOCKQUOTE_SPEC = {
     composition: [
       {
         behavior: "always",
+        value: "blockquote.quote",
+      },
+      {
+        behavior: "always",
         value:
           "renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
-        when: "inside blockquote element",
+        when: "inside blockquote.quote element",
       },
       {
         behavior: "always",

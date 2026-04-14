@@ -1,8 +1,7 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export type ClbrTextareaResize = "vertical" | "none";
-export type ClbrTextareaSize = "sm" | "md";
-export type ClbrTextareaInlineSize = "full" | "fit";
 
 /** Props for the Calibrate textarea renderer. */
 export interface ClbrTextareaProps {
@@ -65,7 +64,7 @@ export interface ClbrTextareaProps {
    * Size variant.
    * @default "md"
    */
-  size?: ClbrTextareaSize;
+  size?: ClbrControlSize;
   /**
    * Spellcheck behavior.
    * Omitted by default to preserve browser default behavior.
@@ -79,7 +78,7 @@ export interface ClbrTextareaProps {
    * `fit` emits `data-inline-size="fit"` on wrapper.
    * @default "full"
    */
-  inlineSize?: ClbrTextareaInlineSize;
+  inlineSize?: ClbrInlineSize;
 }
 
 /**

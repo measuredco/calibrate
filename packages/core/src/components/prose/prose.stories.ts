@@ -38,7 +38,7 @@ doc</a>. Here’s a footnote <sup><a href="#user-content-fn-1" id="user-content-
 <p>One more attribute the modern typographer must have: the capacity for taking great pains with seemingly unimportant detail.</p>
 <p>To him, one typographical point must be as important as one inch, and he must harden his heart against the accusation of being too fussy.</p>
 </blockquote>
-<p><a href="http://www.germandesigners.net/designers/hans_peter_schmoller">Hans P. Schmoller</a>, in <i>Book Design Today</i>, Printing Review, Spring 1951</p>
+<p><a href="http://www.germandesigners.net/designers/hans_peter_schmoller">Hans P. Schmoller</a>, in <i>Book Design Today</i>, <i>Printing Review</i>, Spring 1951</p>
 <h3 id="an-h3-heading">An <code>h3</code> heading</h3>
 <p>Itemised lists look like</p>
 <ul>

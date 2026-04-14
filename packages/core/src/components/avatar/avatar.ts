@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import { collapseWhitespace } from "../../helpers/string";
 import { renderClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
 
@@ -77,14 +78,6 @@ export interface ClbrAvatarProps {
    * Empty/whitespace is treated as missing.
    */
   src?: string;
-}
-
-function collapseWhitespace(value: string | undefined): string | undefined {
-  if (value == null) return undefined;
-
-  const normalized = value.trim().replace(/\s+/g, " ");
-
-  return normalized || undefined;
 }
 
 function hashString(value: string): number {

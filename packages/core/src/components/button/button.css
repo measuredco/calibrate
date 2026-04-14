@@ -1,6 +1,7 @@
 @layer clbr.components {
   :where(.clbr) .button {
     --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+
     align-items: center;
     background-color: var(--clbr-color-background-panel);
     border: var(--clbr-layout-border-width-default) solid

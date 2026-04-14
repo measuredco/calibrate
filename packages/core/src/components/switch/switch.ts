@@ -1,6 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-
-export type ClbrSwitchSize = "sm" | "md";
+import type { ClbrControlSize } from "../../types";
 
 /** Props for the Calibrate switch renderer. */
 export interface ClbrSwitchProps {
@@ -32,7 +31,7 @@ export interface ClbrSwitchProps {
    * Size variant.
    * @default "md"
    */
-  size?: ClbrSwitchSize;
+  size?: ClbrControlSize;
   /** Optional submitted field value. */
   value?: string;
 }

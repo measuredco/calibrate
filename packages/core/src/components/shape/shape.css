@@ -69,10 +69,6 @@
       --clbr-shape-block-size: calc(var(--clbr-shape-block-size-base) / 10);
     }
 
-    &[data-size="md"] {
-      --clbr-shape-block-size: calc(var(--clbr-shape-block-size-base) / 5);
-    }
-
     &[data-size="lg"] {
       --clbr-shape-block-size: calc(var(--clbr-shape-block-size-base) / 4);
     }

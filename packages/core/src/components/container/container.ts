@@ -1,7 +1,7 @@
 import { attrs } from "../../helpers/html";
 
 export type ClbrContainerGutter = "default" | "narrow" | "none";
-export type ClbrContainerMaxWidth = "default" | "wide" | "none";
+export type ClbrContainerMaxInlineSize = "default" | "wide" | "none";
 
 /** Props for the Calibrate container renderer. */
 export interface ClbrContainerProps {
@@ -11,15 +11,15 @@ export interface ClbrContainerProps {
    */
   children?: string;
   /**
-   * Container width behavior.
-   * @default "default"
-   */
-  maxWidth?: ClbrContainerMaxWidth;
-  /**
    * Container inline gutter behavior.
    * @default "default"
    */
   gutter?: ClbrContainerGutter;
+  /**
+   * Container max-inline-size behavior.
+   * @default "default"
+   */
+  maxInlineSize?: ClbrContainerMaxInlineSize;
 }
 
 /**
@@ -31,12 +31,13 @@ export interface ClbrContainerProps {
 export function renderClbrContainer({
   children,
   gutter = "default",
-  maxWidth = "default",
+  maxInlineSize = "default",
 }: ClbrContainerProps): string {
   const containerAttrs = attrs({
     class: "container",
     "data-gutter": gutter === "default" ? undefined : gutter,
-    "data-max-width": maxWidth === "default" ? undefined : maxWidth,
+    "data-max-inline-size":
+      maxInlineSize === "default" ? undefined : maxInlineSize,
   });
 
   return `<div ${containerAttrs}>${children ?? ""}</div>`;
@@ -59,7 +60,7 @@ export const CLBR_CONTAINER_SPEC = {
       type: "enum",
       values: ["default", "narrow", "none"],
     },
-    maxWidth: {
+    maxInlineSize: {
       default: "default",
       required: false,
       type: "enum",
@@ -75,9 +76,9 @@ export const CLBR_CONTAINER_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-max-width",
-        value: "{maxWidth}",
-        when: "maxWidth is wide or none",
+        target: "data-max-inline-size",
+        value: "{maxInlineSize}",
+        when: "maxInlineSize is wide or none",
       },
       {
         behavior: "emit",

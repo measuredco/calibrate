@@ -1,7 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-
-export type ClbrHeadingAlign = "start" | "center" | "end";
-export type ClbrHeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+import type { ClbrAlign, ClbrHeadingLevel } from "../../types";
 export type ClbrHeadingSize =
   | "xs"
   | "sm"
@@ -21,7 +19,7 @@ export interface ClbrHeadingProps {
    * Text alignment.
    * @default "start"
    */
-  align?: ClbrHeadingAlign;
+  align?: ClbrAlign;
   /** Heading text content (escaped before render). */
   children: string;
   /**

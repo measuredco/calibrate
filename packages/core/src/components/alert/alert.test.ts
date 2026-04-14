@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-  CLBR_ALERT_BEFORE_DISMISS_EVENT,
-  CLBR_ALERT_DISMISS_EVENT,
+  CLBR_ALERT_EVENT_BEFORE_DISMISS,
+  CLBR_ALERT_EVENT_DISMISS,
   CLBR_ALERT_TAG_NAME,
   defineClbrAlert,
   renderClbrAlert,
@@ -135,12 +135,12 @@ describe("defineClbrAlert", () => {
 
     const receivedEvents: string[] = [];
 
-    alert.addEventListener(CLBR_ALERT_BEFORE_DISMISS_EVENT, () => {
-      receivedEvents.push(CLBR_ALERT_BEFORE_DISMISS_EVENT);
+    alert.addEventListener(CLBR_ALERT_EVENT_BEFORE_DISMISS, () => {
+      receivedEvents.push(CLBR_ALERT_EVENT_BEFORE_DISMISS);
     });
 
-    alert.addEventListener(CLBR_ALERT_DISMISS_EVENT, () => {
-      receivedEvents.push(CLBR_ALERT_DISMISS_EVENT);
+    alert.addEventListener(CLBR_ALERT_EVENT_DISMISS, () => {
+      receivedEvents.push(CLBR_ALERT_EVENT_DISMISS);
     });
 
     const dismissButton = alert.querySelector(
@@ -150,8 +150,8 @@ describe("defineClbrAlert", () => {
     dismissButton.click();
 
     expect(receivedEvents).toEqual([
-      CLBR_ALERT_BEFORE_DISMISS_EVENT,
-      CLBR_ALERT_DISMISS_EVENT,
+      CLBR_ALERT_EVENT_BEFORE_DISMISS,
+      CLBR_ALERT_EVENT_DISMISS,
     ]);
   });
 
@@ -165,11 +165,11 @@ describe("defineClbrAlert", () => {
 
     let dismissEventFired = false;
 
-    alert.addEventListener(CLBR_ALERT_BEFORE_DISMISS_EVENT, (event) => {
+    alert.addEventListener(CLBR_ALERT_EVENT_BEFORE_DISMISS, (event) => {
       event.preventDefault();
     });
 
-    alert.addEventListener(CLBR_ALERT_DISMISS_EVENT, () => {
+    alert.addEventListener(CLBR_ALERT_EVENT_DISMISS, () => {
       dismissEventFired = true;
     });
 

@@ -1,6 +1,6 @@
-import { renderClbrFieldset } from "../fieldset/fieldset";
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrInputSize } from "../input/input";
+import type { ClbrControlSize } from "../../types";
+import { renderClbrFieldset } from "../fieldset/fieldset";
 
 export type ClbrRadiosOrientation = "vertical" | "horizontal";
 
@@ -51,7 +51,7 @@ export interface ClbrRadiosProps {
    * Size variant for all radios in the group.
    * @default "md"
    */
-  size?: ClbrInputSize;
+  size?: ClbrControlSize;
   /** Selected option value. When unmatched, no option is checked. */
   value?: string;
 }

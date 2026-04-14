@@ -6,11 +6,11 @@
     max-inline-size: var(--clbr-layout-container-max-width-default);
     padding-inline: var(--clbr-layout-container-gutter-default);
 
-    &[data-max-width="wide"] {
+    &[data-max-inline-size="wide"] {
       max-inline-size: var(--clbr-layout-container-max-width-wide);
     }
 
-    &[data-max-width="none"] {
+    &[data-max-inline-size="none"] {
       max-inline-size: none;
     }
 

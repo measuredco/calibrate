@@ -39,6 +39,7 @@ export const Default = {
 };
 
 export const Shapes = {
+  parameters: { controls: { disable: true } },
   render: () =>
     renderClbrInline({
       children: [

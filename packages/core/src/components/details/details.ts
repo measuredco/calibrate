@@ -1,7 +1,6 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrInlineSize } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
-
-export type ClbrDetailsInlineSize = "full" | "fit";
 
 /** Props for the Calibrate details renderer. */
 export interface ClbrDetailsProps {
@@ -16,7 +15,7 @@ export interface ClbrDetailsProps {
    * `fit` emits `data-inline-size="fit"` on details.
    * @default "full"
    */
-  inlineSize?: ClbrDetailsInlineSize;
+  inlineSize?: ClbrInlineSize;
   /**
    * Whether the details is initially open.
    * Emits the native `open` attribute when true.

@@ -1,8 +1,7 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrHeadingLevel } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
 import type { ClbrSurfaceVariant } from "../surface/surface";
-
-export type ClbrCardHeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 /** Props for the Calibrate card renderer. */
 export interface ClbrCardProps {
@@ -15,7 +14,7 @@ export interface ClbrCardProps {
    * Optional heading level for the title.
    * When omitted, title is rendered in a `div.title`.
    */
-  headingLevel?: ClbrCardHeadingLevel;
+  headingLevel?: ClbrHeadingLevel;
   /**
    * Optional link destination for the title.
    * When provided, title is rendered as a link and note includes a trailing

@@ -1,6 +1,6 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrAlign } from "../../types";
 
-export type ClbrTextAlign = "start" | "center" | "end";
 export type ClbrTextAs = "p" | "span";
 export type ClbrTextSize = "xs" | "sm" | "md" | "lg";
 export type ClbrTextTone = "default" | "muted";
@@ -51,7 +51,7 @@ export interface ClbrTextParagraphProps extends ClbrTextCommonProps {
    * Text alignment.
    * @default "start"
    */
-  align?: ClbrTextAlign;
+  align?: ClbrAlign;
   /**
    * Applies max measure constraints for long-form readability.
    * @default true
@@ -77,7 +77,7 @@ export function renderClbrText(props: ClbrTextProps): string {
     tone = "default",
   } = props;
   const as: ClbrTextAs = props.as === "p" ? "p" : "span";
-  let align: ClbrTextAlign | undefined;
+  let align: ClbrAlign | undefined;
   let measured: boolean | undefined;
 
   if (props.as === "p") {

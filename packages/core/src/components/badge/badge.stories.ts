@@ -12,7 +12,7 @@ const meta = {
     },
     tone: {
       control: { type: "select" },
-      options: ["neutral", "info", "success", "warning", "error"],
+      options: ["info", "success", "warning", "error"],
     },
   },
   title: "Status/Badge",
@@ -24,13 +24,14 @@ export const Default = {
   args: {
     label: "Badge",
     size: "md",
-    tone: "neutral",
+    tone: undefined,
     floating: false,
   } satisfies ClbrBadgeProps,
   render: (args: ClbrBadgeProps) => renderClbrBadge(args),
 };
 
 export const Floating = {
+  parameters: { controls: { disable: true } },
   render: () =>
     renderClbrInline({
       children: `<button>${renderClbrAvatar({
@@ -74,10 +75,11 @@ export const Floating = {
 };
 
 export const Tone = {
+  parameters: { controls: { disable: true } },
   render: () =>
     renderClbrStack({
       children: [
-        renderClbrBadge({ label: "Neutral", tone: "neutral" }),
+        renderClbrBadge({ label: "Default" }),
         renderClbrBadge({ label: "Info", tone: "info" }),
         renderClbrBadge({ label: "Success", tone: "success" }),
         renderClbrBadge({ label: "Warning", tone: "warning" }),

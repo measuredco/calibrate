@@ -7,7 +7,7 @@ const meta = {
       control: { type: "select" },
       options: ["default", "narrow", "none"],
     },
-    maxWidth: {
+    maxInlineSize: {
       control: { type: "select" },
       options: ["default", "wide", "none"],
     },
@@ -22,7 +22,7 @@ export const Default = {
   args: {
     children: `<div class="example-content"></div>`,
     gutter: "default",
-    maxWidth: "default",
+    maxInlineSize: "default",
   } satisfies ClbrContainerProps,
   render: (args: ClbrContainerProps) => renderClbrContainer(args),
 };

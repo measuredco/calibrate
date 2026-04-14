@@ -34,6 +34,7 @@ export const Default = {
 };
 
 export const Cards = {
+  parameters: { controls: { disable: true } },
   args: {
     children: [
       renderClbrGridItem({

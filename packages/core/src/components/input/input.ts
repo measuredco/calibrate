@@ -1,7 +1,6 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
-export type ClbrInputInlineSize = "full" | "fit";
-export type ClbrInputSize = "sm" | "md";
 export type ClbrInputType =
   | "text"
   | "email"
@@ -60,7 +59,7 @@ export interface ClbrInputProps {
    * Size variant.
    * @default "md"
    */
-  size?: ClbrInputSize;
+  size?: ClbrControlSize;
   /**
    * Spellcheck behavior.
    * Defaults to false for `type="numeric"` unless explicitly provided.
@@ -80,7 +79,7 @@ export interface ClbrInputProps {
    * `fit` emits `data-inline-size="fit"` on wrapper.
    * @default "full"
    */
-  inlineSize?: ClbrInputInlineSize;
+  inlineSize?: ClbrInlineSize;
 }
 
 /**

@@ -1,6 +1,6 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrAlign } from "../../types";
 
-export type ClbrInlineAlign = "start" | "center" | "end";
 export type ClbrInlineGap = "2xs" | "xs" | "sm" | "md" | "lg";
 export type ClbrInlineJustify = "start" | "center" | "end" | "between";
 
@@ -10,7 +10,7 @@ export interface ClbrInlineProps {
    * Inline cross-axis alignment.
    * @default "center"
    */
-  align?: ClbrInlineAlign;
+  align?: ClbrAlign;
   /**
    * Inner HTML content to render inside the inline wrapper.
    * Caller is responsible for sanitizing untrusted content.

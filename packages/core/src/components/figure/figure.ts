@@ -1,8 +1,6 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrTextAlign } from "../text/text";
+import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
-
-export type ClbrFigureAlign = ClbrTextAlign;
 
 /** Props for the Calibrate figure renderer. */
 export interface ClbrFigureProps {
@@ -11,7 +9,7 @@ export interface ClbrFigureProps {
    * `start` emits no alignment attribute.
    * @default "start"
    */
-  align?: ClbrFigureAlign;
+  align?: ClbrAlign;
   /**
    * Caption HTML content.
    * Caller is responsible for sanitizing untrusted content.
@@ -50,7 +48,7 @@ export function renderClbrFigure({
     class: "figure",
     "data-align": align === "start" ? undefined : align,
   });
-  const captionMarkup = `<figcaption>${renderClbrText({
+  const captionMarkup = `<figcaption class="figcaption">${renderClbrText({
     as: "span",
     children: caption,
     responsive,
@@ -68,7 +66,7 @@ export const CLBR_FIGURE_SPEC = {
     class: "figure",
     children: [
       "trusted media HTML",
-      "figcaption > renderClbrText({ as: 'span', children: caption, size: 'sm' })",
+      "figcaption.figcaption > renderClbrText({ as: 'span', children: caption, size: 'sm' })",
     ],
   },
   props: {
@@ -115,7 +113,7 @@ export const CLBR_FIGURE_SPEC = {
       {
         behavior: "always",
         value:
-          "figcaption > renderClbrText({ as: 'span', children: caption, responsive, size: 'sm' })",
+          "figcaption.figcaption > renderClbrText({ as: 'span', children: caption, responsive, size: 'sm' })",
         when: "inside figure.figure",
       },
     ],

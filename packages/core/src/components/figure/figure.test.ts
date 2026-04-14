@@ -19,11 +19,14 @@ describe("renderClbrFigure", () => {
     expect(figure.className).toBe("figure");
     expect(figure.hasAttribute("data-align")).toBe(false);
     expect(figure.querySelector("img")?.getAttribute("src")).toBe("/image.jpg");
-    expect(figure.querySelector("figcaption > span.text")?.textContent).toBe(
-      "Caption",
-    );
+    expect(figure.querySelector("figcaption.figcaption")).toBeTruthy();
     expect(
-      figure.querySelector("figcaption > span.text")?.getAttribute("data-size"),
+      figure.querySelector("figcaption.figcaption > span.text")?.textContent,
+    ).toBe("Caption");
+    expect(
+      figure
+        .querySelector("figcaption.figcaption > span.text")
+        ?.getAttribute("data-size"),
     ).toBe("sm");
   });
 
@@ -47,9 +50,9 @@ describe("renderClbrFigure", () => {
       }),
     );
 
-    expect(figure.querySelector("figcaption a")?.getAttribute("href")).toBe(
-      "/docs",
-    );
+    expect(
+      figure.querySelector("figcaption.figcaption a")?.getAttribute("href"),
+    ).toBe("/docs");
     expect(figure.querySelector("picture img")).toBeTruthy();
   });
 
@@ -64,7 +67,7 @@ describe("renderClbrFigure", () => {
 
     expect(
       figure
-        .querySelector("figcaption > span.text")
+        .querySelector("figcaption.figcaption > span.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });

@@ -10,10 +10,6 @@ What we're working on now.
 
 What we could be working on next.
 
-### SSR Components
-
-Full holistic human review across all components. Consider namespacing of component classes, data-surface, data-local-theme
-
 ### Web Components
 
 - `Control/Form` (custom validation)
@@ -39,7 +35,12 @@ Full holistic human review across all components. Consider namespacing of compon
 
 ### Storybook docs fidelity
 
-Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components.
+Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components. Fix the JSDoc comments for human docs consumption as part of this.
+
+### Component hygiene
+
+- Consider namespacing of component classes, data-surface, data-local-theme.
+- Are tests and SPECs consistent and coherent?
 
 ### Framework adapters (e.g. `@measured/calibrate-react`)
 

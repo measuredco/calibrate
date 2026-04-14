@@ -1,12 +1,7 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStatusTone } from "../../types";
 
 export type ClbrBadgeSize = "sm" | "md";
-export type ClbrBadgeTone =
-  | "neutral"
-  | "info"
-  | "success"
-  | "warning"
-  | "error";
 
 /** Props for the Calibrate badge renderer. */
 export interface ClbrBadgeProps {
@@ -24,10 +19,9 @@ export interface ClbrBadgeProps {
   size?: ClbrBadgeSize;
   /**
    * Semantic tone variant.
-   * Omitted when `neutral`.
-   * @default "neutral"
+   * Omitted by default.
    */
-  tone?: ClbrBadgeTone;
+  tone?: ClbrStatusTone;
 }
 
 /**
@@ -40,13 +34,13 @@ export function renderClbrBadge({
   floating,
   label,
   size = "md",
-  tone = "neutral",
+  tone,
 }: ClbrBadgeProps): string {
   const badgeAttrs = attrs({
     class: "badge",
     "data-floating": floating,
     "data-size": size,
-    "data-tone": tone === "neutral" ? undefined : tone,
+    "data-tone": tone || undefined,
   });
 
   return `<span ${badgeAttrs}>${escapeHtml(label)}</span>`;
@@ -75,10 +69,9 @@ export const CLBR_BADGE_SPEC = {
       values: ["sm", "md"],
     },
     tone: {
-      default: "neutral",
       required: false,
       type: "enum",
-      values: ["neutral", "info", "success", "warning", "error"],
+      values: ["info", "success", "warning", "error"],
     },
   },
   rules: {
@@ -103,7 +96,7 @@ export const CLBR_BADGE_SPEC = {
         behavior: "emit",
         target: "data-tone",
         value: "{tone}",
-        when: "tone is info, success, warning, or error",
+        when: "tone is provided",
       },
     ],
     content: {

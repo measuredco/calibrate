@@ -1,9 +1,9 @@
 @layer clbr.components {
   :where(.clbr) .alert {
-    --clbr-alert-background-color: var(--clbr-color-background-subtle);
-    --clbr-alert-border-color: var(--clbr-color-foreground-prose);
+    --clbr-alert-color-background: var(--clbr-color-background-subtle);
+    --clbr-alert-color-border: var(--clbr-color-foreground-prose);
 
-    background-color: var(--clbr-alert-background-color);
+    background-color: var(--clbr-alert-color-background);
     border-radius: var(--clbr-radius-md);
     box-shadow: var(--clbr-effect-shadow-default);
     color: var(--clbr-color-foreground-prose);
@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
     outline: var(--clbr-layout-border-width-default) solid
-      var(--clbr-alert-border-color);
+      var(--clbr-alert-color-border);
     outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
     padding-block: var(--clbr-spacing-vertical-500);
     padding-inline-end: var(--clbr-spacing-horizontal-700);
@@ -35,23 +35,23 @@
     }
 
     &[data-tone="info"] {
-      --clbr-alert-background-color: var(--clbr-color-status-info-subtle);
-      --clbr-alert-border-color: var(--clbr-color-status-info-default);
+      --clbr-alert-color-background: var(--clbr-color-status-info-subtle);
+      --clbr-alert-color-border: var(--clbr-color-status-info-default);
     }
 
     &[data-tone="success"] {
-      --clbr-alert-background-color: var(--clbr-color-status-success-subtle);
-      --clbr-alert-border-color: var(--clbr-color-status-success-default);
+      --clbr-alert-color-background: var(--clbr-color-status-success-subtle);
+      --clbr-alert-color-border: var(--clbr-color-status-success-default);
     }
 
     &[data-tone="warning"] {
-      --clbr-alert-background-color: var(--clbr-color-status-warning-subtle);
-      --clbr-alert-border-color: var(--clbr-color-status-warning-default);
+      --clbr-alert-color-background: var(--clbr-color-status-warning-subtle);
+      --clbr-alert-color-border: var(--clbr-color-status-warning-default);
     }
 
     &[data-tone="error"] {
-      --clbr-alert-background-color: var(--clbr-color-status-error-subtle);
-      --clbr-alert-border-color: var(--clbr-color-status-error-default);
+      --clbr-alert-color-background: var(--clbr-color-status-error-subtle);
+      --clbr-alert-color-border: var(--clbr-color-status-error-default);
     }
 
     > .icon-wrapper {

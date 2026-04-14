@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrTextAlign } from "../text/text";
+import type { ClbrAlign } from "../../types";
 
 export type ClbrProseHangingIndent = "always" | "notebook";
 
@@ -14,7 +14,7 @@ export interface ClbrProseProps {
    * Text alignment.
    * @default "start"
    */
-  align?: ClbrTextAlign;
+  align?: ClbrAlign;
   /**
    * Hanging-indent layout behavior.
    * Omitted by default.

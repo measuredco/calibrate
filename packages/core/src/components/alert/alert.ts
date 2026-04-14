@@ -1,15 +1,13 @@
-import { renderClbrButton } from "../button/button";
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
+import { renderClbrButton } from "../button/button";
 import { renderClbrIcon } from "../icon/icon";
 
-export const CLBR_ALERT_BEFORE_DISMISS_EVENT = "clbr-alert-before-dismiss";
-export const CLBR_ALERT_DISMISS_EVENT = "clbr-alert-dismiss";
 export const CLBR_ALERT_TAG_NAME = "clbr-alert";
+export const CLBR_ALERT_EVENT_BEFORE_DISMISS = "clbr-alert-before-dismiss";
+export const CLBR_ALERT_EVENT_DISMISS = "clbr-alert-dismiss";
 
-const CLBR_ALERT_DEFAULT_DISMISSIBLE_LABEL = "Dismiss alert";
-
-export type ClbrAlertInlineSize = "full" | "fit";
-export type ClbrAlertTone = "info" | "success" | "warning" | "error";
+const dismissibleLabelDefault = "Dismiss alert";
 
 /** Props for the Calibrate alert renderer. */
 export interface ClbrAlertProps {
@@ -28,21 +26,21 @@ export interface ClbrAlertProps {
    */
   dismissibleLabel?: string;
   /**
-   * Alert body text content.
-   * Escaped before render.
-   */
-  message: string;
-  /**
    * Inline-size behavior.
    * `full` is default and emits no inline-size attribute.
    * `fit` emits `data-inline-size="fit"` on the alert host.
    * @default "full"
    */
-  inlineSize?: ClbrAlertInlineSize;
+  inlineSize?: ClbrInlineSize;
+  /**
+   * Alert body text content.
+   * Escaped before render.
+   */
+  message: string;
   /**
    * Semantic message intent.
    */
-  tone?: ClbrAlertTone;
+  tone?: ClbrStatusTone;
   /**
    * Optional short heading/title text.
    * Escaped before render.
@@ -67,11 +65,7 @@ function createDismissButtonElement(
   return wrapper;
 }
 
-function getAlertRole(tone?: ClbrAlertTone): "status" | "alert" {
-  return tone === "warning" || tone === "error" ? "alert" : "status";
-}
-
-function getAlertIconName(tone?: ClbrAlertTone): string {
+function getAlertIconName(tone?: ClbrStatusTone): string {
   switch (tone) {
     case "success":
       return "CircleCheck";
@@ -83,6 +77,10 @@ function getAlertIconName(tone?: ClbrAlertTone): string {
     default:
       return "Info";
   }
+}
+
+function getAlertRole(tone?: ClbrStatusTone): "status" | "alert" {
+  return tone === "warning" || tone === "error" ? "alert" : "status";
 }
 
 /**
@@ -98,16 +96,14 @@ function getAlertIconName(tone?: ClbrAlertTone): string {
  */
 export function renderClbrAlert({
   dismissible,
-  dismissibleLabel = CLBR_ALERT_DEFAULT_DISMISSIBLE_LABEL,
+  dismissibleLabel = dismissibleLabelDefault,
   inlineSize = "full",
   message,
   tone,
   title,
 }: ClbrAlertProps): string {
   const normalizedDismissibleLabel =
-    dismissibleLabel.trim() === ""
-      ? CLBR_ALERT_DEFAULT_DISMISSIBLE_LABEL
-      : dismissibleLabel;
+    dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
   const alertAttrs = attrs({
     class: "alert",
@@ -140,7 +136,7 @@ class ClbrAlertElement extends HTMLElement {
     if (!target.closest('[data-part="close"]')) return;
 
     const beforeDismissEvent = new CustomEvent(
-      CLBR_ALERT_BEFORE_DISMISS_EVENT,
+      CLBR_ALERT_EVENT_BEFORE_DISMISS,
       {
         bubbles: true,
         cancelable: true,
@@ -151,7 +147,7 @@ class ClbrAlertElement extends HTMLElement {
 
     this.remove();
     this.dispatchEvent(
-      new CustomEvent(CLBR_ALERT_DISMISS_EVENT, {
+      new CustomEvent(CLBR_ALERT_EVENT_DISMISS, {
         bubbles: true,
       }),
     );
@@ -175,8 +171,7 @@ class ClbrAlertElement extends HTMLElement {
 
     this.append(
       createDismissButtonElement(
-        this.getAttribute("data-dismissible-label") ??
-          CLBR_ALERT_DEFAULT_DISMISSIBLE_LABEL,
+        this.getAttribute("data-dismissible-label") ?? dismissibleLabelDefault,
         this.ownerDocument,
       ),
     );
@@ -215,7 +210,7 @@ export const CLBR_ALERT_SPEC = {
       type: "boolean",
     },
     dismissibleLabel: {
-      default: CLBR_ALERT_DEFAULT_DISMISSIBLE_LABEL,
+      default: dismissibleLabelDefault,
       ignoredWhen: "dismissible is false",
       required: false,
       type: "string",
@@ -306,12 +301,12 @@ export const CLBR_ALERT_SPEC = {
       },
       {
         behavior: "runtime",
-        value: CLBR_ALERT_BEFORE_DISMISS_EVENT,
+        value: CLBR_ALERT_EVENT_BEFORE_DISMISS,
         when: "dismiss control is activated before removal; event is cancelable and bubbles",
       },
       {
         behavior: "runtime",
-        value: CLBR_ALERT_DISMISS_EVENT,
+        value: CLBR_ALERT_EVENT_DISMISS,
         when: "alert has been removed after an allowed dismiss action; event bubbles",
       },
     ],

@@ -1,6 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-
-export type ClbrFieldsetInlineSize = "full" | "fit";
+import type { ClbrInlineSize } from "../../types";
 
 /** Props for the Calibrate fieldset renderer. */
 export interface ClbrFieldsetProps {
@@ -21,7 +20,7 @@ export interface ClbrFieldsetProps {
    * `fit` emits `data-inline-size="fit"` on fieldset.
    * @default "full"
    */
-  inlineSize?: ClbrFieldsetInlineSize;
+  inlineSize?: ClbrInlineSize;
   /**
    * Fieldset invalid state; emitted only when enabled.
    * @default false

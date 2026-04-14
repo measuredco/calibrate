@@ -8,13 +8,13 @@ function mountContainer(html: string): HTMLElement {
 }
 
 describe("renderClbrContainer", () => {
-  it("renders a container div with default gutter and no max-width/gutter attributes", () => {
+  it("renders a container div with default gutter and no max-inline-size/gutter attributes", () => {
     const root = mountContainer(renderClbrContainer({ children: "Body" }));
     const container = getByText(root, "Body");
 
     expect(container.tagName).toBe("DIV");
     expect(container.classList.contains("container")).toBe(true);
-    expect(container.hasAttribute("data-max-width")).toBe(false);
+    expect(container.hasAttribute("data-max-inline-size")).toBe(false);
     expect(container.hasAttribute("data-gutter")).toBe(false);
   });
 
@@ -49,38 +49,38 @@ describe("renderClbrContainer", () => {
       renderClbrContainer({
         children: "Body",
         gutter: "default",
-        maxWidth: "default",
+        maxInlineSize: "default",
       }),
     );
     const container = getByText(root, "Body");
 
-    expect(container.hasAttribute("data-max-width")).toBe(false);
+    expect(container.hasAttribute("data-max-inline-size")).toBe(false);
     expect(container.hasAttribute("data-gutter")).toBe(false);
   });
 
-  it("emits explicit max-width and gutter values", () => {
+  it("emits explicit max-inline-size and gutter values", () => {
     const wideRoot = mountContainer(
       renderClbrContainer({
         children: "Body",
         gutter: "narrow",
-        maxWidth: "wide",
+        maxInlineSize: "wide",
       }),
     );
     const wideContainer = getByText(wideRoot, "Body");
 
-    expect(wideContainer.getAttribute("data-max-width")).toBe("wide");
+    expect(wideContainer.getAttribute("data-max-inline-size")).toBe("wide");
     expect(wideContainer.getAttribute("data-gutter")).toBe("narrow");
 
     const noneRoot = mountContainer(
       renderClbrContainer({
         children: "Body",
         gutter: "none",
-        maxWidth: "none",
+        maxInlineSize: "none",
       }),
     );
     const noneContainer = getByText(noneRoot, "Body");
 
-    expect(noneContainer.getAttribute("data-max-width")).toBe("none");
+    expect(noneContainer.getAttribute("data-max-inline-size")).toBe("none");
     expect(noneContainer.getAttribute("data-gutter")).toBe("none");
   });
 });

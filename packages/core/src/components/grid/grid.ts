@@ -1,7 +1,7 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrAlign } from "../../types";
 
 export type ClbrGridGap = "default" | "expanded" | "none";
-export type ClbrGridPlacement = "start" | "center" | "end";
 export type ClbrGridTrack = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 /** Props for the Calibrate grid renderer. */
@@ -29,7 +29,7 @@ export interface ClbrGridItemProps {
   /**
    * Item align-self behavior.
    */
-  align?: ClbrGridPlacement;
+  align?: ClbrAlign;
   /** Column span at default container threshold. */
   colSpan?: ClbrGridTrack;
   /** Column span at narrow container threshold. */
@@ -45,7 +45,7 @@ export interface ClbrGridItemProps {
   /**
    * Item justify-self behavior.
    */
-  justify?: ClbrGridPlacement;
+  justify?: ClbrAlign;
   /** Row span at default container threshold. */
   rowSpan?: ClbrGridTrack;
   /** Row span at narrow container threshold. */

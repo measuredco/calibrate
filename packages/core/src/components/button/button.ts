@@ -24,18 +24,18 @@ export interface ClbrButtonCommonProps {
   /** Optional icon mirroring mode. Ignored when `icon` is omitted. */
   iconMirrored?: ClbrIconMirrorMode;
   /**
-   * Controls whether the visible label is shown alongside the icon.
-   * Non-visible values require `icon`.
-   * @default "visible"
-   */
-  labelVisibility?: ClbrButtonLabelVisibility;
-  /**
    * Icon placement when icon is present.
    * @default "start"
    */
   iconPlacement?: ClbrButtonPlacement;
   /** Accessible name text rendered as content (escaped before render). */
   label: string;
+  /**
+   * Controls whether the visible label is shown alongside the icon.
+   * Non-visible values require `icon`.
+   * @default "visible"
+   */
+  labelVisibility?: ClbrButtonLabelVisibility;
   /**
    * Size variant.
    * @default "md"
@@ -146,7 +146,6 @@ export function renderClbrButton(props: ClbrButtonProps): string {
       ? `${labelMarkup}${iconMarkup}`
       : `${iconMarkup}${labelMarkup}`
     : labelMarkup;
-
   const commonAttrs = {
     class: "button",
     "data-appearance": appearance,

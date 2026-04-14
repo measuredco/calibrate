@@ -1,29 +1,30 @@
 @layer clbr.components {
   :where(.clbr) .box {
-    --clbr-box-background-color: var(--clbr-color-background-default);
-    --clbr-box-border-color: transparent;
     --clbr-box-border-radius: var(--clbr-radius-2xs);
+    --clbr-box-color-background: var(--clbr-color-background-default);
+    --clbr-box-color-border: transparent;
     --clbr-box-padding-block: var(--clbr-spacing-vertical-700);
     --clbr-box-padding-inline: var(--clbr-spacing-horizontal-700);
 
-    background-color: var(--clbr-box-background-color);
-    border: var(--clbr-layout-border-width-default) solid
-      var(--clbr-box-border-color);
+    background-color: var(--clbr-box-color-background);
+    outline: var(--clbr-layout-border-width-default) solid
+      var(--clbr-box-color-border);
+    outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
     color: var(--clbr-color-foreground-default);
     border-radius: var(--clbr-box-border-radius);
     padding-block: var(--clbr-box-padding-block);
     padding-inline: var(--clbr-box-padding-inline);
 
     &[data-background="panel"] {
-      --clbr-box-background-color: var(--clbr-color-background-panel);
+      --clbr-box-color-background: var(--clbr-color-background-panel);
     }
 
     &[data-background="transparent"] {
-      --clbr-box-background-color: transparent;
+      --clbr-box-color-background: transparent;
     }
 
     &[data-border] {
-      --clbr-box-border-color: var(--clbr-color-border-subtle);
+      --clbr-box-color-border: var(--clbr-color-border-subtle);
     }
 
     &[data-padding-block="xs"] {

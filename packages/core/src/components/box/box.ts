@@ -68,11 +68,11 @@ export interface ClbrBoxProps {
 export function renderClbrBox({
   background = "default",
   children,
-  border = false,
+  border,
   paddingBlock = "md",
   paddingInline = "md",
   radius,
-  responsive = false,
+  responsive,
   surface,
 }: ClbrBoxProps): string {
   const boxAttrs = attrs({

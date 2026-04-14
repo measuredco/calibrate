@@ -12,15 +12,21 @@ export function defineClbrComponents(): void {
   defineClbrAlert();
 }
 
+export type {
+  ClbrAlign,
+  ClbrControlSize,
+  ClbrHeadingLevel,
+  ClbrInlineSize,
+  ClbrStatusTone,
+} from "./types";
+
 export {
-  CLBR_ALERT_BEFORE_DISMISS_EVENT,
-  CLBR_ALERT_DISMISS_EVENT,
+  CLBR_ALERT_EVENT_BEFORE_DISMISS,
+  CLBR_ALERT_EVENT_DISMISS,
   CLBR_ALERT_SPEC,
   CLBR_ALERT_TAG_NAME,
   defineClbrAlert,
-  type ClbrAlertInlineSize,
   type ClbrAlertProps,
-  type ClbrAlertTone,
   renderClbrAlert,
 } from "./components/alert/alert";
 
@@ -38,7 +44,6 @@ export {
   CLBR_BADGE_SPEC,
   type ClbrBadgeProps,
   type ClbrBadgeSize,
-  type ClbrBadgeTone,
   renderClbrBadge,
 } from "./components/badge/badge";
 
@@ -77,7 +82,6 @@ export {
 
 export {
   CLBR_CARD_SPEC,
-  type ClbrCardHeadingLevel,
   type ClbrCardProps,
   renderClbrCard,
 } from "./components/card/card";
@@ -91,14 +95,13 @@ export {
 export {
   CLBR_CONTAINER_SPEC,
   type ClbrContainerGutter,
-  type ClbrContainerMaxWidth,
+  type ClbrContainerMaxInlineSize,
   type ClbrContainerProps,
   renderClbrContainer,
 } from "./components/container/container";
 
 export {
   CLBR_DETAILS_SPEC,
-  type ClbrDetailsInlineSize,
   type ClbrDetailsProps,
   renderClbrDetails,
 } from "./components/details/details";
@@ -113,14 +116,12 @@ export {
 
 export {
   CLBR_FIELDSET_SPEC,
-  type ClbrFieldsetInlineSize,
   type ClbrFieldsetProps,
   renderClbrFieldset,
 } from "./components/fieldset/fieldset";
 
 export {
   CLBR_FIGURE_SPEC,
-  type ClbrFigureAlign,
   type ClbrFigureProps,
   renderClbrFigure,
 } from "./components/figure/figure";
@@ -130,7 +131,6 @@ export {
   CLBR_GRID_SPEC,
   type ClbrGridGap,
   type ClbrGridItemProps,
-  type ClbrGridPlacement,
   type ClbrGridProps,
   type ClbrGridTrack,
   renderClbrGrid,
@@ -139,8 +139,6 @@ export {
 
 export {
   CLBR_HEADING_SPEC,
-  type ClbrHeadingAlign,
-  type ClbrHeadingLevel,
   type ClbrHeadingProps,
   type ClbrHeadingSize,
   renderClbrHeading,
@@ -167,7 +165,6 @@ export {
 
 export {
   CLBR_INLINE_SPEC,
-  type ClbrInlineAlign,
   type ClbrInlineGap,
   type ClbrInlineJustify,
   type ClbrInlineProps,
@@ -176,9 +173,7 @@ export {
 
 export {
   CLBR_INPUT_SPEC,
-  type ClbrInputInlineSize,
   type ClbrInputProps,
-  type ClbrInputSize,
   type ClbrInputType,
   renderClbrInput,
 } from "./components/input/input";
@@ -275,23 +270,19 @@ export {
 export {
   CLBR_SWITCH_SPEC,
   type ClbrSwitchProps,
-  type ClbrSwitchSize,
   renderClbrSwitch,
 } from "./components/switch/switch";
 
 export {
   CLBR_TEXTAREA_SPEC,
-  type ClbrTextareaInlineSize,
   type ClbrTextareaProps,
   type ClbrTextareaResize,
-  type ClbrTextareaSize,
   renderClbrTextarea,
 } from "./components/textarea/textarea";
 
 export {
   CLBR_TEXT_SPEC,
   type ClbrTextAs,
-  type ClbrTextAlign,
   type ClbrTextCommonProps,
   type ClbrTextParagraphProps,
   type ClbrTextProps,

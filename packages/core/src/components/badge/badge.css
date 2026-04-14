@@ -1,8 +1,8 @@
 @layer clbr.components {
   :where(.clbr) {
     .badge {
-      --clbr-badge-background-color: var(--clbr-color-background-subtle);
-      --clbr-badge-border-color: var(--clbr-color-foreground-prose);
+      --clbr-badge-color-background: var(--clbr-color-background-subtle);
+      --clbr-badge-color-border: var(--clbr-color-foreground-prose);
       --clbr-badge-font-size: var(--clbr-typography-type-step-100-font-size);
       --clbr-badge-line-height: var(
         --clbr-typography-type-step-100-line-height
@@ -10,7 +10,7 @@
       --clbr-badge-padding-inline: 0.57em;
 
       align-items: center;
-      background-color: var(--clbr-badge-background-color);
+      background-color: var(--clbr-badge-color-background);
       border-radius: calc(1lh * var(--clbr-radius-ratio-lg));
       color: var(--clbr-color-foreground-prose);
       display: inline-flex;
@@ -20,7 +20,7 @@
       line-height: var(--clbr-badge-line-height);
       inline-size: fit-content;
       outline: var(--clbr-layout-border-width-default) solid
-        var(--clbr-badge-border-color);
+        var(--clbr-badge-color-border);
       outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
       padding-inline: var(--clbr-badge-padding-inline);
 
@@ -44,23 +44,23 @@
       }
 
       &[data-tone="info"] {
-        --clbr-badge-background-color: var(--clbr-color-status-info-subtle);
-        --clbr-badge-border-color: var(--clbr-color-status-info-default);
+        --clbr-badge-color-background: var(--clbr-color-status-info-subtle);
+        --clbr-badge-color-border: var(--clbr-color-status-info-default);
       }
 
       &[data-tone="success"] {
-        --clbr-badge-background-color: var(--clbr-color-status-success-subtle);
-        --clbr-badge-border-color: var(--clbr-color-status-success-default);
+        --clbr-badge-color-background: var(--clbr-color-status-success-subtle);
+        --clbr-badge-color-border: var(--clbr-color-status-success-default);
       }
 
       &[data-tone="warning"] {
-        --clbr-badge-background-color: var(--clbr-color-status-warning-subtle);
-        --clbr-badge-border-color: var(--clbr-color-status-warning-default);
+        --clbr-badge-color-background: var(--clbr-color-status-warning-subtle);
+        --clbr-badge-color-border: var(--clbr-color-status-warning-default);
       }
 
       &[data-tone="error"] {
-        --clbr-badge-background-color: var(--clbr-color-status-error-subtle);
-        --clbr-badge-border-color: var(--clbr-color-status-error-default);
+        --clbr-badge-color-background: var(--clbr-color-status-error-subtle);
+        --clbr-badge-color-border: var(--clbr-color-status-error-default);
       }
     }
 

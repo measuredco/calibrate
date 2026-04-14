@@ -1,12 +1,8 @@
-function collapseWhitespace(value: string | undefined): string | undefined {
-  if (value == null) return undefined;
-
-  const normalized = value.trim().replace(/\s+/g, " ");
-  return normalized || undefined;
-}
+import { collapseWhitespace } from "../../helpers/string";
 
 function isLatinChar(char: string | undefined): boolean {
   if (!char) return false;
+
   return /[A-Za-z]/.test(char);
 }
 
@@ -16,6 +12,7 @@ function isLowercaseToken(token: string): boolean {
 
 function leadingInitialFromToken(token: string): string | undefined {
   const leadingChar = token.charAt(0);
+
   return isLatinChar(leadingChar) ? leadingChar : undefined;
 }
 
@@ -37,6 +34,7 @@ function leadingInitialFromToken(token: string): string | undefined {
  */
 export function getClbrInitials(name: string | undefined): string | undefined {
   const normalizedName = collapseWhitespace(name);
+
   if (!normalizedName) return undefined;
 
   const words = normalizedName.split(" ");

@@ -1,7 +1,11 @@
 import { attrs } from "../../helpers/html";
 import type { ClbrTheme } from "../root/root";
+import type { ClbrSurfaceVariant } from "../surface/surface";
 
-export type ClbrPosterSurface = "default" | "brand";
+export type ClbrPosterSurface = Exclude<
+  ClbrSurfaceVariant,
+  "inverse" | "brand-inverse"
+>;
 
 /** Props for the Calibrate poster renderer. */
 export interface ClbrPosterProps {
