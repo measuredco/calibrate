@@ -10,6 +10,7 @@ describe("renderClbrPage", () => {
   it("renders the page shell with prescribed regions", () => {
     const page = mountPage(
       renderClbrPage({
+        banner: '<div class="page-banner">Banner</div>',
         children: "Main",
         centered: true,
         footer: "<div>Footer</div>",
@@ -21,6 +22,7 @@ describe("renderClbrPage", () => {
     expect(page.className).toBe("page");
     expect(page.hasAttribute("data-centered")).toBe(true);
     expect(page.hasAttribute("data-sticky-header")).toBe(false);
+    expect(page.firstElementChild?.className).toBe("page-banner");
     expect(page.querySelector("header")?.textContent).toBe("Header");
     expect(page.querySelector(".main")?.textContent).toBe("Main");
     expect(page.querySelector("footer")?.textContent).toBe("Footer");
@@ -29,6 +31,7 @@ describe("renderClbrPage", () => {
   it("renders trusted main HTML without escaping", () => {
     const page = mountPage(
       renderClbrPage({
+        banner: '<a href="/banner">Banner</a>',
         children: "<p>Main <em>body</em></p>",
         footer: '<a href="/footer">Footer</a>',
         header: '<a href="/header">Header</a>',
@@ -36,6 +39,7 @@ describe("renderClbrPage", () => {
     );
 
     expect(page.querySelector(".main em")?.textContent).toBe("body");
+    expect(page.firstElementChild?.getAttribute("href")).toBe("/banner");
     expect(page.querySelector("header a")?.getAttribute("href")).toBe(
       "/header",
     );
@@ -54,6 +58,18 @@ describe("renderClbrPage", () => {
     );
 
     expect(page.hasAttribute("data-centered")).toBe(false);
+  });
+
+  it("omits banner content when banner is not provided", () => {
+    const page = mountPage(
+      renderClbrPage({
+        children: "Main",
+        footer: "<div>Footer</div>",
+        header: "<div>Header</div>",
+      }),
+    );
+
+    expect(page.firstElementChild?.tagName).toBe("HEADER");
   });
 
   it("emits data-sticky-header when provided", () => {

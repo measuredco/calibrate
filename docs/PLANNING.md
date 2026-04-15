@@ -6,8 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-`Page` component inc. header/footer story recipes.
-
 ## Next
 
 What we could be working on next.
@@ -21,14 +19,14 @@ What we could be working on next.
 - `Status/Toast` (dismissible, timer)
 - `Structure/Tabs` (JS required, a11y)
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
-- `Page/Sidebar` (JS required, likely Lit)
-- `Page/Breadcrumb` (JS responsive, likely Lit)
+- `?/Navigation` (JS required, likely Lit)
+- `?/Sidebar` (JS required, likely Lit)
+- `?/Breadcrumb` (JS responsive, likely Lit)
 
 #### Simple
 
 - `Control/Range` (update text value)
 - `Control/Tag` (delete, remove, select)
-- `Status/Banner` (dismissible, simple WC)
 - `Status/Progress` (updating)
 - `Status/Skeleton` (resolve to loaded)
 - `Structure/Accordion` (JS for exclusive)
@@ -183,6 +181,13 @@ _This section is a historical completion record; some entries may describe decis
   - SSR output remains meaningful light-DOM HTML inside a `clbr-alert` host, while `defineClbrAlert()` upgrades dismissible alerts in place by injecting a close control and handling removal
   - alert runtime now dispatches `clbr-alert-before-dismiss` (cancelable) and `clbr-alert-dismiss` (bubbling) for consumer hooks
   - established `defineClbrComponents()` as the top-level runtime registration convenience in `core`
+
+- Banner implemented as a lightweight status web-component in core:
+  - added `banner` renderer + CSS + stories + tests
+  - settled API includes optional inline `action` link, default-true `dismissible`, optional `dismissibleLabel`, required escaped `message`, optional `size` (`sm | md`), and optional `tone` (`info | success | warning | error`)
+  - SSR output remains meaningful light-DOM HTML inside a `clbr-banner` host, while `defineClbrBanner()` upgrades dismissible banners in place by injecting a close control and handling removal
+  - banner runtime now dispatches `clbr-banner-before-dismiss` (cancelable) and `clbr-banner-dismiss` (bubbling) for consumer hooks
+  - page shell now includes optional `banner` markup ahead of the header region
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

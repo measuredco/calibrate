@@ -12,6 +12,7 @@
 /* components */
 @import "./components/alert/alert.css";
 @import "./components/avatar/avatar.css";
+@import "./components/banner/banner.css";
 @import "./components/badge/badge.css";
 @import "./components/blockquote/blockquote.css";
 @import "./components/box/box.css";

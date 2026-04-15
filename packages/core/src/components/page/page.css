@@ -9,6 +9,10 @@
       min-block-size: auto;
     }
 
+    &:has(> .banner) {
+      grid-template-rows: max-content auto 1fr auto;
+    }
+
     .header {
       [data-sticky-header="always"] &,
       [data-sticky-header="belowNotebook"] & {

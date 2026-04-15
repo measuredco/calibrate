@@ -5,6 +5,11 @@ export type ClbrPageStickyHeader = "always" | "belowNotebook";
 /** Props for the Calibrate page renderer. */
 export interface ClbrPageProps {
   /**
+   * Optional banner region markup rendered before the page header.
+   * Caller is responsible for sanitizing untrusted content.
+   */
+  banner?: string;
+  /**
    * Main region markup rendered inside the page-owned `<main>`.
    * Caller is responsible for sanitizing untrusted content.
    */
@@ -39,15 +44,16 @@ export interface ClbrPageProps {
 /**
  * SSR renderer for the Calibrate page shell.
  *
- * Emits a prescribed page structure with named regions for header, main, and
- * footer content. The page shell owns the outer layout wrapper and region
- * elements so the internal page layout can evolve without changing the
- * consumer-facing region contract.
+ * Emits a prescribed page structure with an optional banner region followed by
+ * header, main, and footer content. The page shell owns the outer layout
+ * wrapper and region elements so the internal page layout can evolve without
+ * changing the consumer-facing region contract.
  *
  * @param props - Page shell props.
  * @returns HTML string for a page wrapper.
  */
 export function renderClbrPage({
+  banner,
   children,
   centered,
   footer,
@@ -60,7 +66,7 @@ export function renderClbrPage({
     "data-sticky-header": stickyHeader,
   });
 
-  return `<div ${pageAttrs}><header class="header">${header}</header><main class="main">${children ?? ""}</main><footer class="footer">${footer}</footer></div>`;
+  return `<div ${pageAttrs}>${banner}<header class="header">${header}</header><main class="main">${children ?? ""}</main><footer class="footer">${footer}</footer></div>`;
 }
 
 /** Declarative page contract mirror for tooling, docs, and adapters. */
@@ -69,9 +75,18 @@ export const CLBR_PAGE_SPEC = {
   output: {
     element: "div",
     class: "page",
-    children: ["header.header", "main.main", "footer.footer"],
+    children: [
+      "optional {banner}",
+      "header.header",
+      "main.main",
+      "footer.footer",
+    ],
   },
   props: {
+    banner: {
+      required: false,
+      type: "html",
+    },
     children: {
       required: false,
       type: "html",
@@ -116,6 +131,11 @@ export const CLBR_PAGE_SPEC = {
       },
     ],
     composition: [
+      {
+        behavior: "emit",
+        value: "{banner}",
+        when: "banner is provided",
+      },
       {
         behavior: "always",
         value: "header.header",

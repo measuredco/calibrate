@@ -1,3 +1,4 @@
+import { defineClbrBanner, renderClbrBanner } from "../banner/banner";
 import { renderClbrBox } from "../box/box";
 import { renderClbrButton } from "../button/button";
 import { renderClbrContainer } from "../container/container";
@@ -9,8 +10,11 @@ import { renderClbrLogo } from "../logo/logo";
 import { renderClbrStack } from "../stack/stack";
 import { type ClbrPageProps, renderClbrPage } from "./page";
 
+defineClbrBanner();
+
 const meta = {
   argTypes: {
+    banner: { control: false },
     children: { control: false },
     centered: { control: { type: "boolean" } },
     footer: { control: false },
@@ -36,6 +40,14 @@ export const Default = {
   args: {
     centered: false,
     stickyHeader: "always",
+    banner: renderClbrBanner({
+      action: {
+        href: "/",
+        label: "Action link",
+      },
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.",
+    }),
     header: renderClbrContainer({
       gutter: "narrow",
       maxInlineSize: "wide",
