@@ -98,6 +98,30 @@ describe("renderClbrBox", () => {
     expect(box.getAttribute("data-padding-inline")).toBe("none");
   });
 
+  it("supports 2xs and 2xl padding values", () => {
+    const compact = mountBox(
+      renderClbrBox({
+        children: "Body",
+        paddingBlock: "2xs",
+        paddingInline: "2xs",
+      }),
+    );
+
+    expect(compact.getAttribute("data-padding-block")).toBe("2xs");
+    expect(compact.getAttribute("data-padding-inline")).toBe("2xs");
+
+    const spacious = mountBox(
+      renderClbrBox({
+        children: "Body",
+        paddingBlock: "2xl",
+        paddingInline: "2xl",
+      }),
+    );
+
+    expect(spacious.getAttribute("data-padding-block")).toBe("2xl");
+    expect(spacious.getAttribute("data-padding-inline")).toBe("2xl");
+  });
+
   it("emits transparent background when requested", () => {
     const box = mountBox(
       renderClbrBox({

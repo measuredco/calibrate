@@ -19,6 +19,14 @@ describe("renderClbrStack", () => {
     expect(stack.hasAttribute("data-responsive")).toBe(false);
   });
 
+  it("renders a ul when as is ul", () => {
+    const root = mountStack(renderClbrStack({ as: "ul", children: "Body" }));
+    const stack = getByText(root, "Body");
+
+    expect(stack.tagName).toBe("UL");
+    expect(stack.classList.contains("stack")).toBe(true);
+  });
+
   it("renders trusted HTML content when children is provided", () => {
     const root = mountStack(
       renderClbrStack({
@@ -46,6 +54,13 @@ describe("renderClbrStack", () => {
   });
 
   it("always emits data-gap for all variants", () => {
+    const noneRoot = mountStack(
+      renderClbrStack({ children: "Body", gap: "none" }),
+    );
+    const noneStack = getByText(noneRoot, "Body");
+
+    expect(noneStack.getAttribute("data-gap")).toBe("none");
+
     const xsRoot = mountStack(renderClbrStack({ children: "Body", gap: "xs" }));
     const xsStack = getByText(xsRoot, "Body");
 

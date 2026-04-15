@@ -40,13 +40,13 @@ export interface ClbrLogoProps {
 export function renderClbrLogo({
   label,
   size = "md",
-  tone = "default",
+  tone,
   variant = "primary",
 }: ClbrLogoProps): string {
   const logoAttrs = attrs({
     class: "logo",
     "data-size": size,
-    "data-tone": tone === "default" ? undefined : tone,
+    "data-tone": tone === "neutral" ? "neutral" : undefined,
     "data-variant": variant === "primary" ? undefined : variant,
   });
 

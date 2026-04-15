@@ -34,7 +34,7 @@ export const Default = {
   args: {
     children: `<div style="block-size: 6rem;"></div>`,
     size: "md",
-    tone: "default",
+    tone: undefined,
     variant: "corner",
   } satisfies ClbrPatternProps,
   render: (args: ClbrPatternProps) => renderClbrPattern(args),

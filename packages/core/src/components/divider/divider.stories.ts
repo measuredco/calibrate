@@ -19,7 +19,7 @@ export default meta;
 export const Default = {
   args: {
     orientation: "horizontal",
-    tone: "default",
+    tone: undefined,
   } satisfies ClbrDividerProps,
   render: (args: ClbrDividerProps) => renderClbrDivider(args),
 };

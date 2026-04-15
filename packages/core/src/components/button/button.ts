@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";
@@ -9,9 +10,8 @@ export type ClbrButtonLabelVisibility =
 export type ClbrButtonMode = "button" | "link";
 export type ClbrButtonPlacement = "start" | "end";
 export type ClbrButtonSize = "sm" | "md" | "lg";
-export type ClbrButtonTone = "brand" | "neutral";
+export type ClbrButtonTone = "default" | "neutral";
 export type ClbrButtonType = "button" | "submit";
-export type ClbrLinkTarget = "_blank" | "_parent" | "_self" | "_top";
 
 export interface ClbrButtonCommonProps {
   /**
@@ -43,7 +43,7 @@ export interface ClbrButtonCommonProps {
   size?: ClbrButtonSize;
   /**
    * Semantic color intent.
-   * @default "brand"
+   * @default "default"
    */
   tone?: ClbrButtonTone;
 }
@@ -119,7 +119,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     label,
     labelVisibility = "visible",
     size = "md",
-    tone = "brand",
+    tone,
   } = props;
 
   const normalizedIconName = icon?.trim() || undefined;
@@ -152,7 +152,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     "data-label-visibility":
       labelVisibility === "visible" ? undefined : labelVisibility,
     "data-size": size,
-    "data-tone": tone,
+    "data-tone": tone === "neutral" ? "neutral" : undefined,
   };
 
   // Keep discriminant check on `props.mode` so TypeScript narrows the union.
@@ -281,10 +281,10 @@ export const CLBR_BUTTON_SPEC = {
       values: ["_blank", "_parent", "_self", "_top"],
     },
     tone: {
-      default: "brand",
+      default: "default",
       required: false,
       type: "enum",
-      values: ["brand", "neutral"],
+      values: ["default", "neutral"],
     },
     type: {
       default: "button",
@@ -347,9 +347,10 @@ export const CLBR_BUTTON_SPEC = {
         value: "{size}",
       },
       {
-        behavior: "always",
+        behavior: "emit",
         target: "data-tone",
-        value: "{tone}",
+        value: "neutral",
+        when: "tone is neutral",
       },
       {
         behavior: "emit",

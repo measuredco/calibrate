@@ -32,7 +32,7 @@ export default meta;
 export const Default = {
   args: {
     size: "md",
-    tone: "default",
+    tone: undefined,
     variant: "corner",
   } satisfies ClbrShapeProps,
   render: (args: ClbrShapeProps) => renderClbrShape(args),

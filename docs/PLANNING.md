@@ -6,36 +6,41 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+`Page` component inc. header/footer story recipes.
+
 ## Next
 
 What we could be working on next.
 
 ### Web Components
 
-- `Control/Form` (custom validation)
-- `Control/Listbox` (JS required)
-- `Control/Menu` (JS required)
+#### Lit
+
+- `Control/Menu` (best first lit candidate)
+- `Control/Listbox` (JS required, selection/value semantics)
+- `Status/Toast` (dismissible, timer)
+- `Structure/Tabs` (JS required, a11y)
+- `Control/Form` (if it becomes a real stateful runtime abstraction)
+- `Page/Sidebar` (JS required, likely Lit)
+- `Page/Breadcrumb` (JS responsive, likely Lit)
+
+#### Simple
+
 - `Control/Range` (update text value)
 - `Control/Tag` (delete, remove, select)
+- `Status/Banner` (dismissible, simple WC)
 - `Status/Progress` (updating)
 - `Status/Skeleton` (resolve to loaded)
-- `Status/Toast` (dismissible, timer)
 - `Structure/Accordion` (JS for exclusive)
 - `Structure/Code` (copy to clipboard)
-- `Structure/Tabs` (JS required - a11y)
-
-#### Page
-
-- `Page/Banner` (dismissible)
-- `Page/Breadcrumb` (JS responsive)
-- `Page/Header` (hamburger)
-- `Page/Sidebar` (JS required)
-- `Page/Main`
-- `Page/Footer`
 
 ### Storybook docs fidelity
 
-Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components. Fix the JSDoc comments for human docs consumption as part of this.
+Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components. Fix the JSDoc comments for human docs consumption as part of this. And fix tsconfig.
+
+### Component evolution
+
+- `Page` sticky header border on scroll
 
 ### Component hygiene
 

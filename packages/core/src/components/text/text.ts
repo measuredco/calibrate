@@ -69,13 +69,7 @@ export type ClbrTextProps = ClbrTextSpanProps | ClbrTextParagraphProps;
  * @returns HTML string for a text paragraph or span element.
  */
 export function renderClbrText(props: ClbrTextProps): string {
-  const {
-    children,
-    linkVisited = true,
-    responsive,
-    size = "md",
-    tone = "default",
-  } = props;
+  const { children, linkVisited = true, responsive, size = "md", tone } = props;
   const as: ClbrTextAs = props.as === "p" ? "p" : "span";
   let align: ClbrAlign | undefined;
   let measured: boolean | undefined;
@@ -208,8 +202,8 @@ export const CLBR_TEXT_SPEC = {
       {
         behavior: "emit",
         target: "data-tone",
-        value: "{tone}",
-        when: "tone is provided",
+        value: "muted",
+        when: "tone is muted",
       },
     ],
   },

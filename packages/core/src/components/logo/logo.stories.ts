@@ -24,7 +24,7 @@ export const Default = {
   args: {
     label: "Measured",
     size: "md",
-    tone: "default",
+    tone: undefined,
     variant: "primary",
   } satisfies ClbrLogoProps,
   render: (args: ClbrLogoProps) => renderClbrLogo(args),

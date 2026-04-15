@@ -26,12 +26,12 @@ export interface ClbrDividerProps {
  */
 export function renderClbrDivider({
   orientation = "horizontal",
-  tone = "default",
+  tone,
 }: ClbrDividerProps = {}): string {
   const dividerAttrs = attrs({
     "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
     class: "divider",
-    "data-tone": tone === "default" ? undefined : tone,
+    "data-tone": tone === "subtle" || tone === "brand" ? tone : undefined,
     role: orientation === "vertical" ? "separator" : undefined,
   });
 

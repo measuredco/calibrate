@@ -63,7 +63,7 @@ export const Default = {
         label: "Continue",
         mode: "button",
         size: "md",
-        tone: "brand",
+        tone: "default",
         type: "button",
       },
     )}${renderClbrButton({
@@ -120,7 +120,7 @@ export const Default = {
         label: "Continue",
         mode: "button",
         size: "sm",
-        tone: "brand",
+        tone: "default",
         type: "button",
       },
     )}${renderClbrButton({

@@ -51,11 +51,6 @@
     text-orientation: inherit;
     writing-mode: inherit;
 
-    /* Fill the viewport when mounted as the app root */
-    &[data-app-root] {
-      min-block-size: 100dvb;
-    }
-
     /* Revert descendants and pseudo-elements to browser defaults. */
     :where(:not(svg, svg *)) {
       all: revert;

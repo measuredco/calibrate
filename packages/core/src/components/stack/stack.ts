@@ -1,7 +1,8 @@
 import { attrs } from "../../helpers/html";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
-export type ClbrStackGap = "xs" | "sm" | "md" | "lg";
+export type ClbrStackAs = "div" | "ul";
+export type ClbrStackGap = "none" | "xs" | "sm" | "md" | "lg";
 
 /** Props for the Calibrate stack renderer. */
 export interface ClbrStackProps {
@@ -10,6 +11,11 @@ export interface ClbrStackProps {
    * @default "stretch"
    */
   align?: ClbrStackAlign;
+  /**
+   * Element tag used for stack rendering.
+   * @default "div"
+   */
+  as?: ClbrStackAs;
   /**
    * Inner HTML content to render inside the stack wrapper.
    * Caller is responsible for sanitizing untrusted content.
@@ -35,6 +41,7 @@ export interface ClbrStackProps {
  */
 export function renderClbrStack({
   align = "stretch",
+  as = "div",
   children,
   gap = "md",
   responsive,
@@ -46,14 +53,17 @@ export function renderClbrStack({
     "data-responsive": responsive,
   });
 
-  return `<div ${stackAttrs}>${children ?? ""}</div>`;
+  return `<${as} ${stackAttrs}>${children ?? ""}</${as}>`;
 }
 
 /** Declarative stack contract mirror for tooling, docs, and adapters. */
 export const CLBR_STACK_SPEC = {
   name: "stack",
   output: {
-    element: "div",
+    modes: {
+      div: "div",
+      list: "ul",
+    },
   },
   props: {
     align: {
@@ -61,6 +71,12 @@ export const CLBR_STACK_SPEC = {
       required: false,
       type: "enum",
       values: ["stretch", "start", "center", "end"],
+    },
+    as: {
+      default: "div",
+      required: false,
+      type: "enum",
+      values: ["div", "ul"],
     },
     children: {
       required: false,
@@ -70,7 +86,7 @@ export const CLBR_STACK_SPEC = {
       default: "md",
       required: false,
       type: "enum",
-      values: ["xs", "sm", "md", "lg"],
+      values: ["none", "xs", "sm", "md", "lg"],
     },
     responsive: {
       default: false,
@@ -79,6 +95,18 @@ export const CLBR_STACK_SPEC = {
     },
   },
   rules: {
+    modes: [
+      {
+        behavior: "render-as",
+        value: "div",
+        when: "as is div or omitted",
+      },
+      {
+        behavior: "render-as",
+        value: "ul",
+        when: "as is ul",
+      },
+    ],
     attributes: [
       {
         behavior: "always",

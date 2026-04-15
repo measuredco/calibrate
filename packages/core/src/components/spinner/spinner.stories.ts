@@ -20,7 +20,7 @@ export const Default = {
   args: {
     label: "",
     size: "md",
-    tone: "default",
+    tone: undefined,
   } satisfies ClbrSpinnerProps,
   render: (args: ClbrSpinnerProps) => renderClbrSpinner({ ...args }),
 };

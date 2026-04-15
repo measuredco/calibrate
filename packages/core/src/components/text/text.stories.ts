@@ -43,7 +43,7 @@ export const Default = {
     linkVisited: true,
     responsive: false,
     size: "md",
-    tone: "default",
+    tone: undefined,
   } satisfies ClbrTextSpanProps,
   render: (args: ClbrTextSpanProps) => renderClbrText({ ...args }),
 };
@@ -65,7 +65,7 @@ export const Paragraph = {
     measured: true,
     responsive: false,
     size: "md",
-    tone: "default",
+    tone: undefined,
   } satisfies ClbrTextParagraphProps,
   render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
 };
@@ -87,7 +87,7 @@ export const ParagraphWithMarkup = {
     measured: true,
     responsive: false,
     size: "md",
-    tone: "default",
+    tone: undefined,
   } satisfies ClbrTextParagraphProps,
   render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
 };

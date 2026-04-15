@@ -20,6 +20,19 @@ describe("renderClbrInline", () => {
     expect(inline.hasAttribute("data-nowrap")).toBe(false);
   });
 
+  it("renders a ul when as is ul", () => {
+    const root = mountInline(
+      renderClbrInline({ as: "ul", children: "<li>Body</li>" }),
+    );
+    const inline = root.querySelector(".inline");
+
+    expect(inline?.tagName).toBe("UL");
+    expect(inline?.getAttribute("data-gap")).toBe("md");
+    expect(inline?.hasAttribute("data-align")).toBe(false);
+    expect(inline?.hasAttribute("data-justify")).toBe(false);
+    expect(inline?.hasAttribute("data-nowrap")).toBe(false);
+  });
+
   it("renders trusted HTML content when children is provided", () => {
     const root = mountInline(
       renderClbrInline({

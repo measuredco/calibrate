@@ -6,10 +6,14 @@ const meta = {
       control: { type: "select" },
       options: ["stretch", "start", "center", "end"],
     },
+    as: {
+      control: { type: "select" },
+      options: ["div", "ul"],
+    },
     children: { control: false },
     gap: {
       control: { type: "select" },
-      options: ["xs", "sm", "md", "lg"],
+      options: ["none", "xs", "sm", "md", "lg"],
     },
   },
   parameters: { padding: 0 },
@@ -21,6 +25,7 @@ export default meta;
 export const Default = {
   args: {
     align: "stretch",
+    as: "div",
     children:
       '<div class="example-content"></div><div class="example-content"></div><div class="example-content"></div>',
     gap: "md",

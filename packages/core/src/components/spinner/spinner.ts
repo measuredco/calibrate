@@ -43,12 +43,12 @@ export interface ClbrSpinnerProps {
 export function renderClbrSpinner({
   label,
   size = "md",
-  tone = "default",
+  tone,
 }: ClbrSpinnerProps = {}): string {
   const spinnerAttrs = attrs({
     class: "spinner",
     "data-size": size,
-    "data-tone": tone !== "default" ? tone : undefined,
+    "data-tone": tone === "brand" ? "brand" : undefined,
     role: label ? "status" : undefined,
   });
 

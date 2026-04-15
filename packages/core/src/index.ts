@@ -76,7 +76,6 @@ export {
   type ClbrButtonSize,
   type ClbrButtonTone,
   type ClbrButtonType,
-  type ClbrLinkTarget,
   renderClbrButton,
 } from "./components/button/button";
 
@@ -188,11 +187,27 @@ export {
 } from "./components/logo/logo";
 
 export {
+  CLBR_LINK_SPEC,
+  type ClbrLinkProps,
+  type ClbrLinkSize,
+  type ClbrLinkTarget,
+  type ClbrLinkTone,
+  renderClbrLink,
+} from "./components/link/link";
+
+export {
   CLBR_PANEL_SPEC,
   type ClbrPanelPadding,
   type ClbrPanelProps,
   renderClbrPanel,
 } from "./components/panel/panel";
+
+export {
+  CLBR_PAGE_SPEC,
+  type ClbrPageProps,
+  type ClbrPageStickyHeader,
+  renderClbrPage,
+} from "./components/page/page";
 
 export {
   CLBR_PATTERN_SPEC,

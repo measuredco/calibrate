@@ -50,13 +50,16 @@ export interface ClbrShapeProps {
  */
 export function renderClbrShape({
   variant = "corner",
-  tone = "default",
+  tone,
   size = "md",
 }: ClbrShapeProps = {}): string {
   const shapeAttrs = attrs({
     class: "shape",
     "data-size": size,
-    "data-tone": tone === "default" ? undefined : tone,
+    "data-tone":
+      tone === "neutral" || tone === "brand" || tone === "support"
+        ? tone
+        : undefined,
     "data-variant": variant,
   });
 

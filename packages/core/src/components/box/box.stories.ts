@@ -9,11 +9,11 @@ const meta = {
     children: { control: false },
     paddingBlock: {
       control: { type: "select" },
-      options: ["none", "xs", "sm", "md", "lg", "xl"],
+      options: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     paddingInline: {
       control: { type: "select" },
-      options: ["none", "xs", "sm", "md", "lg", "xl"],
+      options: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     radius: {
       control: { type: "select" },

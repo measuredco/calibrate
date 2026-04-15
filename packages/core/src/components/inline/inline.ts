@@ -1,11 +1,17 @@
 import { attrs } from "../../helpers/html";
 import type { ClbrAlign } from "../../types";
 
+export type ClbrInlineAs = "div" | "ul";
 export type ClbrInlineGap = "2xs" | "xs" | "sm" | "md" | "lg";
 export type ClbrInlineJustify = "start" | "center" | "end" | "between";
 
 /** Props for the Calibrate inline renderer. */
 export interface ClbrInlineProps {
+  /**
+   * Element tag used for inline rendering.
+   * @default "div"
+   */
+  as?: ClbrInlineAs;
   /**
    * Inline cross-axis alignment.
    * @default "center"
@@ -41,6 +47,7 @@ export interface ClbrInlineProps {
  */
 export function renderClbrInline({
   align = "center",
+  as = "div",
   children,
   gap = "md",
   justify = "start",
@@ -54,16 +61,25 @@ export function renderClbrInline({
     "data-nowrap": nowrap,
   });
 
-  return `<div ${inlineAttrs}>${children ?? ""}</div>`;
+  return `<${as} ${inlineAttrs}>${children ?? ""}</${as}>`;
 }
 
 /** Declarative inline contract mirror for tooling, docs, and adapters. */
 export const CLBR_INLINE_SPEC = {
   name: "inline",
   output: {
-    element: "div",
+    modes: {
+      div: "div",
+      list: "ul",
+    },
   },
   props: {
+    as: {
+      default: "div",
+      required: false,
+      type: "enum",
+      values: ["div", "ul"],
+    },
     align: {
       default: "center",
       required: false,
@@ -92,6 +108,18 @@ export const CLBR_INLINE_SPEC = {
     },
   },
   rules: {
+    modes: [
+      {
+        behavior: "render-as",
+        value: "div",
+        when: "as is div or omitted",
+      },
+      {
+        behavior: "render-as",
+        value: "ul",
+        when: "as is ul",
+      },
+    ],
     attributes: [
       {
         behavior: "always",

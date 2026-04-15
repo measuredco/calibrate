@@ -2,7 +2,15 @@ import { attrs } from "../../helpers/html";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrBoxBackground = "default" | "panel" | "transparent";
-export type ClbrBoxPadding = "none" | "xs" | "sm" | "md" | "lg" | "xl";
+export type ClbrBoxPadding =
+  | "none"
+  | "2xs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl";
 export type ClbrBoxRadius = "sm" | "md";
 
 /** Props for the Calibrate box renderer. */
@@ -117,13 +125,13 @@ export const CLBR_BOX_SPEC = {
       default: "md",
       required: false,
       type: "enum",
-      values: ["none", "xs", "sm", "md", "lg", "xl"],
+      values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     paddingInline: {
       default: "md",
       required: false,
       type: "enum",
-      values: ["none", "xs", "sm", "md", "lg", "xl"],
+      values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     radius: {
       required: false,

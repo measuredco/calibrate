@@ -256,6 +256,19 @@
           padding: var(--clbr-spacing-vertical-200);
         }
       }
+
+      .icon-wrapper {
+        margin-inline-start: 0;
+
+        [data-size="sm"] & {
+          block-size: var(--clbr-layout-icon-size-xs);
+
+          margin-inline-end: calc(
+            var(--clbr-layout-icon-size-xs) *
+              var(--clbr-layout-icon-viewbox-outset-ratio)
+          );
+        }
+      }
     }
 
     &[data-appearance="text"][data-tone="neutral"] {

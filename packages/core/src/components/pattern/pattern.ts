@@ -50,13 +50,13 @@ export interface ClbrPatternProps {
 export function renderClbrPattern({
   children,
   size = "md",
-  tone = "default",
+  tone,
   variant = "corner",
 }: ClbrPatternProps = {}): string {
   const patternAttrs = attrs({
     class: "pattern",
     "data-size": size,
-    "data-tone": tone === "default" ? undefined : tone,
+    "data-tone": tone === "default" || tone === undefined ? undefined : tone,
     "data-variant": variant,
   });
 

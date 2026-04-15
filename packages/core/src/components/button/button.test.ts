@@ -15,9 +15,16 @@ describe("renderClbrButton", () => {
       expect(button.getAttribute("data-mode")).toBe("button");
       expect(button.getAttribute("data-appearance")).toBe("outline");
       expect(button.getAttribute("data-size")).toBe("md");
-      expect(button.getAttribute("data-tone")).toBe("brand");
+      expect(button.getAttribute("data-tone")).toBeNull();
       expect(button.getAttribute("type")).toBe("button");
       expect(button.getAttribute("data-label-visibility")).toBeNull();
+    });
+
+    it("emits neutral tone only when provided", () => {
+      mount(renderClbrButton({ label: "Save", tone: "neutral" }));
+      const button = getByRole(document.body, "button", { name: "Save" });
+
+      expect(button.getAttribute("data-tone")).toBe("neutral");
     });
 
     it("supports explicit button mode with submit type", () => {
