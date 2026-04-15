@@ -14,6 +14,7 @@ describe("renderClbrLink", () => {
     expect(link.getAttribute("href")).toBe("/docs");
     expect(link.getAttribute("data-size")).toBe("md");
     expect(link.getAttribute("data-tone")).toBeNull();
+    expect(link.hasAttribute("data-underline")).toBe(false);
   });
 
   it("escapes the label text", () => {
@@ -65,5 +66,12 @@ describe("renderClbrLink", () => {
 
     expect(link.getAttribute("data-size")).toBe("sm");
     expect(link.getAttribute("data-tone")).toBe("neutral");
+  });
+
+  it("emits underline when provided", () => {
+    mount(renderClbrLink({ href: "/docs", label: "Docs", underline: true }));
+    const link = getByRole(document.body, "link", { name: "Docs" });
+
+    expect(link.hasAttribute("data-underline")).toBe(true);
   });
 });

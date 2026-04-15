@@ -23,6 +23,27 @@
       color: var(--clbr-color-interactive-active);
     }
 
+    &[data-underline] {
+      text-decoration-color: var(
+        --clbr-color-interactive-prose-hover-decoration
+      );
+      text-decoration-line: var(
+        --clbr-typography-prose-link-hover-decoration-line
+      );
+      text-decoration-thickness: var(
+        --clbr-typography-prose-link-default-decoration-thickness
+      );
+      text-underline-offset: var(
+        --clbr-typography-prose-link-hover-decoration-offset
+      );
+
+      &:active {
+        text-underline-offset: var(
+          --clbr-typography-prose-link-active-decoration-offset
+        );
+      }
+    }
+
     & .icon-wrapper {
       block-size: var(--clbr-layout-icon-size-xs);
       display: flex;

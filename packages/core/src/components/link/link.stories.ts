@@ -17,6 +17,7 @@ const meta = {
       control: { type: "select" },
       options: ["default", "neutral"],
     },
+    underline: { control: { type: "boolean" } },
   },
   title: "Typographic/Link",
 };
@@ -32,6 +33,7 @@ export const Default = {
     size: "md",
     target: undefined,
     tone: undefined,
+    underline: false,
   } satisfies ClbrLinkProps,
   render: (args: ClbrLinkProps) => renderClbrLink(args),
 };

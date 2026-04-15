@@ -28,6 +28,12 @@ export interface ClbrLinkProps {
    * @default "default"
    */
   tone?: ClbrLinkTone;
+  /**
+   * Underline variant.
+   * Emits `data-underline` only when true.
+   * @default false
+   */
+  underline?: boolean;
 }
 
 /**
@@ -40,7 +46,16 @@ export interface ClbrLinkProps {
  * - `icon`, when provided, is rendered as trusted inline markup
  */
 export function renderClbrLink(props: ClbrLinkProps): string {
-  const { href, icon, label, rel, size = "md", target, tone } = props;
+  const {
+    href,
+    icon,
+    label,
+    rel,
+    size = "md",
+    target,
+    tone,
+    underline,
+  } = props;
 
   const normalizedRel = rel || undefined;
   const normalizedTarget = target || undefined;
@@ -55,6 +70,7 @@ export function renderClbrLink(props: ClbrLinkProps): string {
     target: normalizedTarget,
     "data-size": size,
     "data-tone": tone === "neutral" ? "neutral" : undefined,
+    "data-underline": underline || undefined,
   });
 
   return `<a ${linkAttrs}>${content}</a>`;
@@ -100,6 +116,11 @@ export const CLBR_LINK_SPEC = {
       type: "enum",
       values: ["default", "neutral"],
     },
+    underline: {
+      default: false,
+      required: false,
+      type: "boolean",
+    },
   },
   rules: {
     attributes: [
@@ -136,6 +157,12 @@ export const CLBR_LINK_SPEC = {
         target: "data-tone",
         value: "neutral",
         when: "tone is neutral",
+      },
+      {
+        behavior: "emit",
+        target: "data-underline",
+        value: "present",
+        when: "underline is true",
       },
     ],
     content: [

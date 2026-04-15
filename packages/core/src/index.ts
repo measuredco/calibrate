@@ -1,6 +1,7 @@
 import "./styles.css";
 
 import { defineClbrAlert } from "./components/alert/alert";
+import { defineClbrBanner } from "./components/banner/banner";
 
 /**
  * Defines all available Calibrate runtime custom elements.
@@ -10,6 +11,7 @@ import { defineClbrAlert } from "./components/alert/alert";
  */
 export function defineClbrComponents(): void {
   defineClbrAlert();
+  defineClbrBanner();
 }
 
 export type {
@@ -29,6 +31,16 @@ export {
   type ClbrAlertProps,
   renderClbrAlert,
 } from "./components/alert/alert";
+
+export {
+  CLBR_BANNER_EVENT_BEFORE_DISMISS,
+  CLBR_BANNER_EVENT_DISMISS,
+  CLBR_BANNER_SPEC,
+  CLBR_BANNER_TAG_NAME,
+  defineClbrBanner,
+  type ClbrBannerProps,
+  renderClbrBanner,
+} from "./components/banner/banner";
 
 export {
   CLBR_AVATAR_SPEC,
