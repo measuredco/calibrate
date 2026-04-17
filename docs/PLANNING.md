@@ -14,9 +14,7 @@ What we could be working on next.
 
 - `Control/Listbox` (JS required, selection/value semantics)
 - `Control/Menu` (best first lit candidate)
-- `Control/Range` (update text value)
 - `Structure/Sidebar|Drawer` (JS required)
-
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
 - `Control/Tag` (delete, remove, select)
 - `Status/Progress` (updating)
@@ -187,6 +185,13 @@ _This section is a historical completion record; some entries may describe decis
   - `defineClbrNav()` now upgrades `clbr-nav` in place, injects the expander when needed, manages `aria-expanded`, closes on `Escape`, closes `belowTablet` nav on breakpoint crossover, and locks page scroll while expanded
   - settled implementation is plain custom elements rather than Lit; the earlier `enhanceClbrNav` transitional runtime path was removed from the public API
   - specs, stories, exports, and tests were aligned to the final host-plus-inner-nav contract
+
+- Range implemented as a control web-component in core:
+  - added `range` renderer + CSS + stories + tests
+  - settled API includes required `id` and escaped `label`, optional escaped `description`, optional `disabled`, optional `inlineSize` (`full | fit`), optional `size` (`sm | md`), and optional numeric `min`, `max`, `step`, and `value`
+  - SSR output renders semantic `label`, `output`, and `input[type="range"]` markup inside a `clbr-range` host, with description wiring via `aria-describedby` when present
+  - `defineClbrRange()` upgrades `clbr-range` in place and keeps the `.output` text synchronized with the current input value
+  - range was also added to the temporary field stack sandbox story for cross-control visual checks
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

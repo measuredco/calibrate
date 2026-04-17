@@ -1,6 +1,7 @@
 import { renderClbrButton } from "./components/button/button";
 import { renderClbrCheckbox } from "./components/checkbox/checkbox";
 import { renderClbrInput } from "./components/input/input";
+import { renderClbrRange } from "./components/range/range";
 import { renderClbrRadios } from "./components/radios/radios";
 import { renderClbrSwitch } from "./components/switch/switch";
 import { renderClbrTextarea } from "./components/textarea/textarea";
@@ -28,7 +29,15 @@ export const Default = {
         type: "email",
         value: "person@example.com",
       },
-    )}${renderClbrCheckbox({
+    )}${renderClbrRange({
+      description: "Adjust the default playback volume.",
+      id: "temp-volume",
+      label: "Volume",
+      max: 100,
+      min: 0,
+      name: "volume",
+      value: 60,
+    })}${renderClbrCheckbox({
       description: "You can unsubscribe at any time.",
       descriptionId: "temp-updates-description",
       label: "Send me product updates",
@@ -106,6 +115,15 @@ export const Default = {
       name: "contactMethodSm",
       size: "sm",
       value: "email",
+    })}${renderClbrRange({
+      description: "Adjust the default playback volume.",
+      id: "temp-volume-sm",
+      label: "Volume",
+      max: 100,
+      min: 0,
+      name: "volumeSm",
+      size: "sm",
+      value: 60,
     })}${renderClbrTextarea({
       description: "Add any context that will help our support team.",
       id: "temp-message-sm",

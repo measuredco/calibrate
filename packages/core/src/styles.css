@@ -40,6 +40,7 @@
 @import "./components/poster/poster.css";
 @import "./components/prose/prose.css";
 @import "./components/radios/radios.css";
+@import "./components/range/range.css";
 @import "./components/shape/shape.css";
 @import "./components/spinner/spinner.css";
 @import "./components/stack/stack.css";

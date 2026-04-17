@@ -77,6 +77,7 @@
     --clbr-color-status-warning-subtle: #f2f3f4;
     --clbr-effect-filter-image: 1;
     --clbr-effect-opacity-demoted: 0.4;
+    --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
     --clbr-effect-stroke-outset: 0rem;
@@ -293,6 +294,7 @@
     --clbr-color-status-success-subtle: #f2f3f4;
     --clbr-color-status-warning-default: #0b0c0d;
     --clbr-color-status-warning-subtle: #f2f3f4;
+    --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -509,6 +511,7 @@
     --clbr-color-status-warning-subtle: #f2f3f4;
     --clbr-effect-filter-image: 1;
     --clbr-effect-opacity-demoted: 0.4;
+    --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
     --clbr-effect-stroke-outset: 0rem;
@@ -725,6 +728,7 @@
     --clbr-color-status-success-subtle: #f2f3f4;
     --clbr-color-status-warning-default: #0b0c0d;
     --clbr-color-status-warning-subtle: #f2f3f4;
+    --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -939,6 +943,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
   }
 
@@ -1011,6 +1016,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -1226,6 +1232,7 @@
       --clbr-color-status-success-subtle: #191a1a;
       --clbr-color-status-warning-default: #f2f3f4;
       --clbr-color-status-warning-subtle: #191a1a;
+      --clbr-effect-opacity-disabled: 0.08;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     }
   }
@@ -1300,6 +1307,7 @@
       --clbr-color-status-success-subtle: #191a1a;
       --clbr-color-status-warning-default: #f2f3f4;
       --clbr-color-status-warning-subtle: #191a1a;
+      --clbr-effect-opacity-disabled: 0.08;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-layout-divider-brand-size: 12rem;
       --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -1515,6 +1523,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -1729,6 +1738,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -1946,6 +1956,7 @@
       --clbr-color-status-warning-subtle: #f2f3f4;
       --clbr-effect-filter-image: 1;
       --clbr-effect-opacity-demoted: 0.4;
+      --clbr-effect-opacity-disabled: 0.4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-effect-stroke-inset: -0.0625rem;
       --clbr-effect-stroke-outset: 0rem;
@@ -2164,6 +2175,7 @@
       --clbr-color-status-success-subtle: #f2f3f4;
       --clbr-color-status-warning-default: #0b0c0d;
       --clbr-color-status-warning-subtle: #f2f3f4;
+      --clbr-effect-opacity-disabled: 0.4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-layout-divider-brand-size: 12rem;
       --clbr-layout-divider-brand-thickness: 0.0625rem;
@@ -2380,6 +2392,7 @@
       --clbr-color-status-success-subtle: #f2f3f4;
       --clbr-color-status-warning-default: #0b0c0d;
       --clbr-color-status-warning-subtle: #f2f3f4;
+      --clbr-effect-opacity-disabled: 0.4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     }
   }
@@ -2454,6 +2467,7 @@
       --clbr-color-status-success-subtle: #f2f3f4;
       --clbr-color-status-warning-default: #0b0c0d;
       --clbr-color-status-warning-subtle: #f2f3f4;
+      --clbr-effect-opacity-disabled: 0.4;
     }
   }
 
@@ -2527,6 +2541,7 @@
       --clbr-color-status-success-subtle: #191a1a;
       --clbr-color-status-warning-default: #f2f3f4;
       --clbr-color-status-warning-subtle: #191a1a;
+      --clbr-effect-opacity-disabled: 0.08;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     }
   }
@@ -2601,6 +2616,7 @@
       --clbr-color-status-success-subtle: #191a1a;
       --clbr-color-status-warning-default: #f2f3f4;
       --clbr-color-status-warning-subtle: #191a1a;
+      --clbr-effect-opacity-disabled: 0.08;
     }
   }
 
@@ -2673,6 +2689,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
   }
 
@@ -2745,6 +2762,7 @@
     --clbr-color-status-success-subtle: #191a1a;
     --clbr-color-status-warning-default: #f2f3f4;
     --clbr-color-status-warning-subtle: #191a1a;
+    --clbr-effect-opacity-disabled: 0.08;
   }
 
   /* darkInverse | baseline | default-states | variant:forcedDark */
@@ -2816,6 +2834,7 @@
     --clbr-color-status-success-subtle: #f2f3f4;
     --clbr-color-status-warning-default: #0b0c0d;
     --clbr-color-status-warning-subtle: #f2f3f4;
+    --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
   }
 
@@ -2888,6 +2907,7 @@
     --clbr-color-status-success-subtle: #f2f3f4;
     --clbr-color-status-warning-default: #0b0c0d;
     --clbr-color-status-warning-subtle: #f2f3f4;
+    --clbr-effect-opacity-disabled: 0.4;
   }
 
   /* lightDefault | tablet | default-states */

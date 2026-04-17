@@ -8,6 +8,9 @@
   },
   "opacity": {
     "$type": "number",
+    "disabled": {
+      "$value": "{primitive.effect.opacity.40}"
+    },
     "demoted": {
       "$value": "{primitive.effect.opacity.40}"
     }

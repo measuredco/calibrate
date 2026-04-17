@@ -32,6 +32,7 @@
     all: initial;
 
     /* Establish system defaults. */
+    accent-color: var(--clbr-color-interactive-default);
     background-color: var(--clbr-color-background-default);
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);

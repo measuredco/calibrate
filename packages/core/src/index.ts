@@ -3,6 +3,7 @@ import "./styles.css";
 import { defineClbrAlert } from "./components/alert/alert";
 import { defineClbrBanner } from "./components/banner/banner";
 import { defineClbrNav } from "./components/nav/nav";
+import { defineClbrRange } from "./components/range/range";
 
 /**
  * Defines all available Calibrate runtime custom elements.
@@ -14,6 +15,7 @@ export function defineClbrComponents(): void {
   defineClbrAlert();
   defineClbrBanner();
   defineClbrNav();
+  defineClbrRange();
 }
 
 export type {
@@ -269,6 +271,14 @@ export {
   type ClbrRadiosProps,
   renderClbrRadios,
 } from "./components/radios/radios";
+
+export {
+  CLBR_RANGE_SPEC,
+  CLBR_RANGE_TAG_NAME,
+  defineClbrRange,
+  type ClbrRangeProps,
+  renderClbrRange,
+} from "./components/range/range";
 
 export {
   CLBR_ROOT_SPEC,
