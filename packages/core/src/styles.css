@@ -22,6 +22,7 @@
 @import "./components/container/container.css";
 @import "./components/details/details.css";
 @import "./components/divider/divider.css";
+@import "./components/expander/expander.css";
 @import "./components/fieldset/fieldset.css";
 @import "./components/figure/figure.css";
 @import "./components/grid/grid.css";
@@ -32,6 +33,7 @@
 @import "./components/input/input.css";
 @import "./components/link/link.css";
 @import "./components/logo/logo.css";
+@import "./components/nav/nav.css";
 @import "./components/page/page.css";
 @import "./components/panel/panel.css";
 @import "./components/pattern/pattern.css";

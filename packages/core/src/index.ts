@@ -2,6 +2,7 @@ import "./styles.css";
 
 import { defineClbrAlert } from "./components/alert/alert";
 import { defineClbrBanner } from "./components/banner/banner";
+import { defineClbrNav } from "./components/nav/nav";
 
 /**
  * Defines all available Calibrate runtime custom elements.
@@ -12,6 +13,7 @@ import { defineClbrBanner } from "./components/banner/banner";
 export function defineClbrComponents(): void {
   defineClbrAlert();
   defineClbrBanner();
+  defineClbrNav();
 }
 
 export type {
@@ -126,6 +128,13 @@ export {
 } from "./components/divider/divider";
 
 export {
+  CLBR_EXPANDER_SPEC,
+  type ClbrExpanderProps,
+  type ClbrExpanderSize,
+  renderClbrExpander,
+} from "./components/expander/expander";
+
+export {
   CLBR_FIELDSET_SPEC,
   type ClbrFieldsetProps,
   renderClbrFieldset,
@@ -206,6 +215,15 @@ export {
   type ClbrLinkTone,
   renderClbrLink,
 } from "./components/link/link";
+
+export {
+  CLBR_NAV_TAG_NAME,
+  CLBR_NAV_SPEC,
+  defineClbrNav,
+  type ClbrNavItem,
+  type ClbrNavProps,
+  renderClbrNav,
+} from "./components/nav/nav";
 
 export {
   CLBR_PANEL_SPEC,

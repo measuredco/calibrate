@@ -70,41 +70,41 @@
     }
 
     .img {
-      [data-object-fit="cover"] & {
+      .image[data-object-fit="cover"] & {
         block-size: 100%;
         inline-size: 100%;
         object-fit: cover;
       }
 
-      [data-gravity="N"] & {
+      .image[data-gravity="N"] & {
         object-position: center top;
       }
 
-      [data-gravity="NE"] & {
+      .image[data-gravity="NE"] & {
         object-position: right top;
       }
 
-      [data-gravity="E"] & {
+      .image[data-gravity="E"] & {
         object-position: right center;
       }
 
-      [data-gravity="SE"] & {
+      .image[data-gravity="SE"] & {
         object-position: right bottom;
       }
 
-      [data-gravity="S"] & {
+      .image[data-gravity="S"] & {
         object-position: center bottom;
       }
 
-      [data-gravity="SW"] & {
+      .image[data-gravity="SW"] & {
         object-position: left bottom;
       }
 
-      [data-gravity="W"] & {
+      .image[data-gravity="W"] & {
         object-position: left center;
       }
 
-      [data-gravity="NW"] & {
+      .image[data-gravity="NW"] & {
         object-position: left top;
       }
     }

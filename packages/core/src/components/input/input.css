@@ -76,7 +76,7 @@
         cursor: not-allowed;
       }
 
-      [data-size="sm"] & {
+      .input-field[data-size="sm"] & {
         padding-block: var(--clbr-spacing-vertical-200);
       }
     }
@@ -89,7 +89,7 @@
       margin-inline: var(--clbr-spacing-horizontal-400);
       max-width: var(--clbr-typography-measure-default);
 
-      [aria-invalid="true"] + & {
+      .input[aria-invalid="true"] + & {
         color: var(--clbr-color-status-error-default);
       }
     }

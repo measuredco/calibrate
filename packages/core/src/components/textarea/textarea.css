@@ -105,7 +105,7 @@
       margin-inline: var(--clbr-spacing-horizontal-400);
       max-width: var(--clbr-typography-measure-default);
 
-      [aria-invalid="true"] + & {
+      .textarea[aria-invalid="true"] + & {
         color: var(--clbr-color-status-error-default);
       }
     }

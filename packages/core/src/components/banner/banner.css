@@ -41,7 +41,7 @@
       text-align: center;
       text-wrap: balance;
 
-      [data-dismissible] > & {
+      .banner[data-dismissible] > & {
         padding-inline: var(--clbr-spacing-horizontal-700);
       }
     }

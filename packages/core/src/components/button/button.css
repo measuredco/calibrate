@@ -240,7 +240,7 @@
         padding: var(--clbr-spacing-vertical-200);
       }
 
-      @media (width < 48rem) {
+      @media (width < 48em) {
         &[data-label-visibility="hiddenBelowTablet"] {
           --clbr-button-block-size: var(--clbr-spacing-vertical-800);
           background-color: color-mix(

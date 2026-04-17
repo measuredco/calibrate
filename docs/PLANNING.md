@@ -12,33 +12,24 @@ What we could be working on next.
 
 ### Web Components
 
-#### Lit
-
-- `Control/Menu` (best first lit candidate)
 - `Control/Listbox` (JS required, selection/value semantics)
-- `Status/Toast` (dismissible, timer)
-- `Structure/Tabs` (JS required, a11y)
-- `Control/Form` (if it becomes a real stateful runtime abstraction)
-- `?/Navigation` (JS required, likely Lit)
-- `?/Sidebar` (JS required, likely Lit)
-- `?/Breadcrumb` (JS responsive, likely Lit)
-
-#### Simple
-
+- `Control/Menu` (best first lit candidate)
 - `Control/Range` (update text value)
+- `Structure/Sidebar|Drawer` (JS required)
+
+- `Control/Form` (if it becomes a real stateful runtime abstraction)
 - `Control/Tag` (delete, remove, select)
 - `Status/Progress` (updating)
 - `Status/Skeleton` (resolve to loaded)
+- `Status/Toast` (dismissible, timer)
 - `Structure/Accordion` (JS for exclusive)
+- `Structure/Breadcrumb` (JS responsive)
 - `Structure/Code` (copy to clipboard)
+- `Structure/Tabs` (JS required, a11y)
 
 ### Storybook docs fidelity
 
 Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components. Fix the JSDoc comments for human docs consumption as part of this. And fix tsconfig.
-
-### Component evolution
-
-- `Page` sticky header border on scroll
 
 ### Component hygiene
 
@@ -57,12 +48,13 @@ Everything we could attempt given sufficient time and resources.
 
 Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
 
-### Component props evolution
+### Component evolution
 
-- Component-wide `data-testid` and/or `id` support
-- `size: "lg"` for Controls (and `details`)
-- `renderPosterImage` to expose subset of `image` props in `poster` API
+- Add `data-testid` and/or `id` support
+- Add `size: "lg"` to Controls (and `details`, etc.)
+- Add `renderPosterImage` to expose subset of `image` props in `poster` API
 - Add `image` `sources` art direction example to Storybook
+- Show `page` sticky header border on scroll only
 
 ### Component analytics
 
@@ -184,10 +176,17 @@ _This section is a historical completion record; some entries may describe decis
 
 - Banner implemented as a lightweight status web-component in core:
   - added `banner` renderer + CSS + stories + tests
-  - settled API includes optional inline `action` link, default-true `dismissible`, optional `dismissibleLabel`, required escaped `message`, optional `size` (`sm | md`), and optional `tone` (`info | success | warning | error`)
+  - settled API includes optional inline `action` link, default-true `dismissible`, optional `dismissibleLabel`, required escaped `message`, and optional `tone` (`info | success | warning | error`)
   - SSR output remains meaningful light-DOM HTML inside a `clbr-banner` host, while `defineClbrBanner()` upgrades dismissible banners in place by injecting a close control and handling removal
   - banner runtime now dispatches `clbr-banner-before-dismiss` (cancelable) and `clbr-banner-dismiss` (bubbling) for consumer hooks
   - page shell now includes optional `banner` markup ahead of the header region
+
+- Nav and Expander implemented and stabilized in core:
+  - added `expander` renderer + CSS + stories + tests as a reusable control primitive with `controlsId`, `expanded`, `label`, and `size`
+  - settled `nav` SSR contract now renders semantic `nav > ul > li > a` markup inside a `clbr-nav` host, with optional `collapsible`, `contentId`, `expanderLabel`, `expanderPosition`, and `size`
+  - `defineClbrNav()` now upgrades `clbr-nav` in place, injects the expander when needed, manages `aria-expanded`, closes on `Escape`, closes `belowTablet` nav on breakpoint crossover, and locks page scroll while expanded
+  - settled implementation is plain custom elements rather than Lit; the earlier `enhanceClbrNav` transitional runtime path was removed from the public API
+  - specs, stories, exports, and tests were aligned to the final host-plus-inner-nav contract
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

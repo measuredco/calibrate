@@ -13,6 +13,11 @@
     overscroll-behavior: none;
   }
 
+  /* Allow Calibrate to lock page scroll */
+  :where(:root[data-clbr-scroll-locked], :root[data-clbr-scroll-locked] body) {
+    overflow: hidden;
+  }
+
   /* Remove default page margin when Calibrate owns the page. */
   :where(body:has(.clbr[data-app-root])) {
     margin: 0;
@@ -118,6 +123,10 @@
 
     :where(h1, h2, h3, h4, h5, h6) {
       text-wrap: balance;
+    }
+
+    :where([hidden]) {
+      display: none;
     }
 
     :where(p) {

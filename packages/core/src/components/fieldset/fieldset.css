@@ -21,7 +21,7 @@
       max-width: var(--clbr-typography-measure-default);
       padding-block-end: var(--clbr-spacing-vertical-100);
 
-      [aria-invalid="true"] & {
+      .fieldset[aria-invalid="true"] & {
         color: var(--clbr-color-status-error-default);
       }
     }

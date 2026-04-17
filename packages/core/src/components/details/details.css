@@ -43,7 +43,7 @@
           transition: none;
         }
 
-        [open] & {
+        .details[open] & {
           transform: rotate(90deg);
         }
       }

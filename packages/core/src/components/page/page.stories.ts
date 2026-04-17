@@ -7,10 +7,12 @@ import { renderClbrHeading } from "../heading/heading";
 import { renderClbrInline } from "../inline/inline";
 import { renderClbrLink } from "../link/link";
 import { renderClbrLogo } from "../logo/logo";
+import { defineClbrNav, renderClbrNav } from "../nav/nav";
 import { renderClbrStack } from "../stack/stack";
 import { type ClbrPageProps, renderClbrPage } from "./page";
 
 defineClbrBanner();
+defineClbrNav();
 
 const meta = {
   argTypes: {
@@ -63,6 +65,15 @@ export const Default = {
               label: "Measured",
               variant: "secondary",
             })}</a>`,
+            renderClbrNav({
+              collapsible: "belowTablet",
+              expanderPosition: "end",
+              items: [
+                { current: true, href: "/", label: "About" },
+                { href: "/", label: "Work" },
+                { href: "/", label: "Blog" },
+              ],
+            }),
           ].join(""),
         }),
       }),
@@ -154,6 +165,14 @@ export const Default = {
 export const Alt = {
   args: {
     centerMain: true,
+    banner: renderClbrBanner({
+      action: {
+        href: "/",
+        label: "Action link",
+      },
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.",
+    }),
     header: renderClbrContainer({
       gutter: "narrow",
       maxInlineSize: "none",
@@ -165,10 +184,20 @@ export const Alt = {
           gap: "sm",
           justify: "between",
           children: [
-            `<a href="">${renderClbrHeading({
-              children: "Facet.",
-              size: "lg",
-            })}</a>`,
+            renderClbrInline({
+              gap: "sm",
+              children: [
+                renderClbrNav({
+                  collapsible: "always",
+                  size: "sm",
+                  items: [{ href: "/", label: "Controls" }],
+                }),
+                `<a href="">${renderClbrHeading({
+                  children: "Facet.",
+                  size: "lg",
+                })}</a>`,
+              ].join(""),
+            }),
             renderClbrInline({
               align: "end",
               gap: "xs",

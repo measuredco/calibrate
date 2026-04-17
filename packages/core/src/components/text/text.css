@@ -114,7 +114,7 @@
       padding-inline: var(--clbr-typography-prose-code-padding-inline-default);
 
       @media (min-width: 48em) {
-        [data-responsive][data-size="md"] & {
+        .text[data-responsive][data-size="md"] & {
           --clbr-code-padding-block-end: var(
             --clbr-typography-prose-code-padding-block-lg
           );

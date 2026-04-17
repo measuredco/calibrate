@@ -62,7 +62,7 @@
         content: "— " / "- ";
       }
 
-      [data-align="center"] & {
+      .blockquote[data-align="center"] & {
         text-align: center;
       }
     }
