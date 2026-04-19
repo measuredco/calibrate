@@ -1,18 +1,23 @@
 @layer clbr.components {
   :where(.clbr) .nav {
-    --clbr-expander-size: var(--clbr-layout-icon-size-lg);
+    --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-300));
+    --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-lg);
 
     display: flex;
+    position: relative;
+    z-index: 1;
 
     &[data-size="sm"] {
-      --clbr-expander-size: var(--clbr-layout-icon-size-md);
+      --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-250));
+      --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-md);
     }
 
     [data-part="expander"] {
       display: none;
       margin-inline-end: auto;
+      margin-inline-start: var(--clbr-nav-expander-offset);
       position: relative;
-      z-index: 3;
+      z-index: 2;
 
       .nav[data-collapsible] & {
         display: inline-flex;
@@ -25,7 +30,7 @@
       }
 
       .nav[data-expander-position="end"] & {
-        margin-inline-end: 0;
+        margin-inline-end: var(--clbr-nav-expander-offset);
         margin-inline-start: auto;
       }
 
@@ -76,12 +81,12 @@
         overscroll-behavior-y: none;
         padding-block-end: var(--clbr-spacing-vertical-700);
         padding-block-start: calc(
-          var(--clbr-layout-spacing-vertical-600) + var(--clbr-expander-size)
+          var(--clbr-layout-spacing-vertical-600) +
+            var(--clbr-nav-expander-icon-size)
         );
         padding-inline-end: var(--clbr-spacing-horizontal-700);
         padding-inline-start: var(--clbr-spacing-horizontal-900);
         position: fixed;
-        z-index: 2;
 
         .nav[data-expander-position="end"] & {
           padding-inline-end: var(--clbr-spacing-horizontal-900);
@@ -105,12 +110,12 @@
           overscroll-behavior-y: none;
           padding-block-end: var(--clbr-spacing-vertical-700);
           padding-block-start: calc(
-            var(--clbr-layout-spacing-vertical-600) + var(--clbr-expander-size)
+            var(--clbr-layout-spacing-vertical-600) +
+              var(--clbr-nav-expander-icon-size)
           );
           padding-inline-end: var(--clbr-spacing-horizontal-700);
           padding-inline-start: var(--clbr-spacing-horizontal-900);
           position: fixed;
-          z-index: 2;
 
           .nav[data-expander-position="end"] & {
             padding-inline-end: var(--clbr-spacing-horizontal-900);

@@ -51,6 +51,18 @@ export interface ClbrButtonCommonProps {
 /** Button-mode props. */
 export interface ClbrButtonElementProps extends ClbrButtonCommonProps {
   /**
+   * Controlled element id for disclosure-style button interactions.
+   * Ignored when `disclosure` is false or omitted.
+   */
+  controls?: string;
+  /**
+   * Emits `aria-expanded="false"` for disclosure-style button interactions.
+   * SSR renderers are expected to update the attribute at runtime if state changes.
+   * Ignored in link mode.
+   * @default false
+   */
+  disclosure?: boolean;
+  /**
    * Disables interaction in button mode.
    * @default false
    */
@@ -173,8 +185,10 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     return `<a ${linkAttrs}>${content}</a>`;
   }
 
-  const { disabled, form, name, type, value } = props;
+  const { controls, disabled, disclosure, form, name, type, value } = props;
   const buttonAttrs = attrs({
+    "aria-controls": disclosure ? controls || undefined : undefined,
+    "aria-expanded": disclosure ? "false" : undefined,
     ...commonAttrs,
     "data-mode": "button",
     disabled: Boolean(disabled),
@@ -204,6 +218,17 @@ export const CLBR_BUTTON_SPEC = {
       values: ["outline", "solid", "text"],
     },
     disabled: {
+      default: false,
+      ignoredWhen: "mode is link",
+      required: false,
+      type: "boolean",
+    },
+    controls: {
+      ignoredWhen: "mode is link or disclosure is false",
+      required: false,
+      type: "string",
+    },
+    disclosure: {
       default: false,
       ignoredWhen: "mode is link",
       required: false,
@@ -357,6 +382,18 @@ export const CLBR_BUTTON_SPEC = {
         target: "disabled",
         value: "true",
         when: "mode is button and disabled is true",
+      },
+      {
+        behavior: "emit",
+        target: "aria-expanded",
+        value: "false",
+        when: "mode is button and disclosure is true",
+      },
+      {
+        behavior: "emit",
+        target: "aria-controls",
+        value: "{controls}",
+        when: "mode is button and disclosure is true and controls is non-empty",
       },
       {
         behavior: "emit",

@@ -47,5 +47,6 @@ export const Default = {
     label: "",
     size: "md",
   } satisfies ClbrNavProps,
-  render: (args: ClbrNavProps) => renderClbrNav(args),
+  render: (args: ClbrNavProps) =>
+    `<div style="min-block-size: 21rem">${renderClbrNav(args)}</div>`,
 };

@@ -48,8 +48,8 @@
 
     [data-part="close"] {
       position: absolute;
-      inset-block-start: var(--clbr-spacing-vertical-400);
-      inset-inline-end: var(--clbr-spacing-horizontal-500);
+      inset-block: var(--clbr-spacing-vertical-400);
+      inset-inline-end: var(--clbr-spacing-horizontal-400);
     }
   }
 }

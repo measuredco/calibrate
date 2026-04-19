@@ -34,8 +34,16 @@
         --clbr-typography-prose-link-default-decoration-thickness
       );
       text-underline-offset: var(
-        --clbr-typography-prose-link-hover-decoration-offset
+        --clbr-typography-prose-link-default-decoration-offset
       );
+
+      @media (any-hover: hover) {
+        &:hover {
+          text-underline-offset: var(
+            --clbr-typography-prose-link-hover-decoration-offset
+          );
+        }
+      }
 
       &:active {
         text-underline-offset: var(

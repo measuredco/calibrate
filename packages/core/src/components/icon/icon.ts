@@ -29,6 +29,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "info",
   "layers",
   "menu",
+  "panel-left",
   "settings",
   "shuffle",
   "sliders-horizontal",

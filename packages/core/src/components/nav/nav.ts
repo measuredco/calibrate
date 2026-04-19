@@ -156,7 +156,7 @@ class ClbrNavElement extends HTMLElement {
       `<div data-part="expander">${renderClbrExpander({
         controlsId: content.id || undefined,
         label: nav.getAttribute("data-expander-label") || undefined,
-        size: nav.getAttribute("data-size") === "sm" ? "sm" : "md",
+        size: nav.getAttribute("data-size") === "sm" ? "md" : "lg",
       })}</div>`,
     );
   }

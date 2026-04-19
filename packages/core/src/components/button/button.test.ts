@@ -58,6 +58,37 @@ describe("renderClbrButton", () => {
       expect(button.getAttribute("value")).toBe("save");
     });
 
+    it("supports disclosure semantics in button mode", () => {
+      mount(
+        renderClbrButton({
+          controls: "sidebar",
+          disclosure: true,
+          label: "Open sidebar",
+        }),
+      );
+      const button = getByRole(document.body, "button", {
+        name: "Open sidebar",
+      });
+
+      expect(button.getAttribute("aria-expanded")).toBe("false");
+      expect(button.getAttribute("aria-controls")).toBe("sidebar");
+    });
+
+    it("ignores controls when disclosure is omitted", () => {
+      mount(
+        renderClbrButton({
+          controls: "sidebar",
+          label: "Open sidebar",
+        }),
+      );
+      const button = getByRole(document.body, "button", {
+        name: "Open sidebar",
+      });
+
+      expect(button.getAttribute("aria-expanded")).toBeNull();
+      expect(button.getAttribute("aria-controls")).toBeNull();
+    });
+
     it("renders icon at start by default when icon is provided", () => {
       mount(
         renderClbrButton({

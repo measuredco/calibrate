@@ -4,6 +4,7 @@ import { defineClbrAlert } from "./components/alert/alert";
 import { defineClbrBanner } from "./components/banner/banner";
 import { defineClbrNav } from "./components/nav/nav";
 import { defineClbrRange } from "./components/range/range";
+import { defineClbrSidebar } from "./components/sidebar/sidebar";
 
 /**
  * Defines all available Calibrate runtime custom elements.
@@ -16,6 +17,7 @@ export function defineClbrComponents(): void {
   defineClbrBanner();
   defineClbrNav();
   defineClbrRange();
+  defineClbrSidebar();
 }
 
 export type {
@@ -289,6 +291,16 @@ export {
   type ClbrTheme,
   renderClbrRoot,
 } from "./components/root/root";
+
+export {
+  CLBR_SIDEBAR_SPEC,
+  CLBR_SIDEBAR_TAG_NAME,
+  defineClbrSidebar,
+  type ClbrSidebarAboveNotebook,
+  type ClbrSidebarProps,
+  type ClbrSidebarSize,
+  renderClbrSidebar,
+} from "./components/sidebar/sidebar";
 
 export {
   CLBR_STACK_SPEC,

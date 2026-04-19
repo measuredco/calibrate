@@ -14,7 +14,6 @@ What we could be working on next.
 
 - `Control/Listbox` (JS required, selection/value semantics)
 - `Control/Menu` (best first lit candidate)
-- `Structure/Sidebar|Drawer` (JS required)
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
 - `Control/Tag` (delete, remove, select)
 - `Status/Progress` (updating)
@@ -48,6 +47,7 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 
 ### Component evolution
 
+- Consider moving `data-app-*` props from `root` to `page`
 - Add `data-testid` and/or `id` support
 - Add `size: "lg"` to Controls (and `details`, etc.)
 - Add `renderPosterImage` to expose subset of `image` props in `poster` API
@@ -192,6 +192,13 @@ _This section is a historical completion record; some entries may describe decis
   - SSR output renders semantic `label`, `output`, and `input[type="range"]` markup inside a `clbr-range` host, with description wiring via `aria-describedby` when present
   - `defineClbrRange()` upgrades `clbr-range` in place and keeps the `.output` text synchronized with the current input value
   - range was also added to the temporary field stack sandbox story for cross-control visual checks
+
+- Sidebar implemented and stabilized in core:
+  - added `sidebar` renderer + CSS + stories + tests
+  - settled API includes required `id`, optional trusted `header`, `children`, and `footer`, optional `size` (`sm | md`), optional `triggerLabel`, optional `collapseLabel`, and optional `aboveNotebook` (`persistent | collapsible | overlay`)
+  - SSR output renders a `clbr-sidebar` host with owned trigger and backdrop, plus structural inner `div.sidebar > div.header > div.content` and optional `div.footer`
+  - `defineClbrSidebar()` upgrades `clbr-sidebar` in place, injects the collapse control, syncs `aria-expanded`, moves focus into the sidebar on open and back to the trigger on close, supports `Escape` and backdrop dismissal, and uses `matchMedia("(min-width: 68em)")` to apply the `aboveNotebook` behavior model
+  - settled host state contract is `data-above-notebook`, `data-size`, `data-collapse-label`, `data-open`, and `data-collapsed`, leaving the inner `.sidebar` structural only
 
 - Blockquote component implemented and aligned across core:
   - added `blockquote` renderer + CSS + stories + tests

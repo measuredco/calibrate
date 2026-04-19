@@ -161,7 +161,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -376,7 +376,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -595,7 +595,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -810,7 +810,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -1098,7 +1098,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -1389,7 +1389,7 @@
       --clbr-typography-prose-code-padding-inline-default: 0.25em;
       --clbr-typography-prose-link-active-decoration-offset: 0.34em;
       --clbr-typography-prose-link-default-decoration-line: none;
-      --clbr-typography-prose-link-default-decoration-offset: 0em;
+      --clbr-typography-prose-link-default-decoration-offset: 0.24em;
       --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
       --clbr-typography-prose-link-hover-decoration-line: underline;
       --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -1605,7 +1605,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -1820,7 +1820,7 @@
     --clbr-typography-prose-code-padding-inline-default: 0.25em;
     --clbr-typography-prose-link-active-decoration-offset: 0.34em;
     --clbr-typography-prose-link-default-decoration-line: none;
-    --clbr-typography-prose-link-default-decoration-offset: 0em;
+    --clbr-typography-prose-link-default-decoration-offset: 0.24em;
     --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
     --clbr-typography-prose-link-hover-decoration-line: underline;
     --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -2040,7 +2040,7 @@
       --clbr-typography-prose-code-padding-inline-default: 0.25em;
       --clbr-typography-prose-link-active-decoration-offset: 0.34em;
       --clbr-typography-prose-link-default-decoration-line: none;
-      --clbr-typography-prose-link-default-decoration-offset: 0em;
+      --clbr-typography-prose-link-default-decoration-offset: 0.24em;
       --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
       --clbr-typography-prose-link-hover-decoration-line: underline;
       --clbr-typography-prose-link-hover-decoration-offset: 0.29em;
@@ -2257,7 +2257,7 @@
       --clbr-typography-prose-code-padding-inline-default: 0.25em;
       --clbr-typography-prose-link-active-decoration-offset: 0.34em;
       --clbr-typography-prose-link-default-decoration-line: none;
-      --clbr-typography-prose-link-default-decoration-offset: 0em;
+      --clbr-typography-prose-link-default-decoration-offset: 0.24em;
       --clbr-typography-prose-link-default-decoration-thickness: 0.125rem;
       --clbr-typography-prose-link-hover-decoration-line: underline;
       --clbr-typography-prose-link-hover-decoration-offset: 0.29em;

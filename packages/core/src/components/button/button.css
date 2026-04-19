@@ -211,6 +211,10 @@
       color: var(--clbr-color-interactive-default);
       padding: 0;
 
+      &:focus-visible {
+        outline-offset: 0;
+      }
+
       @media (any-hover: hover) {
         &:hover {
           background-color: transparent;
@@ -225,48 +229,100 @@
         color: var(--clbr-color-interactive-active);
       }
 
-      &[data-label-visibility="hidden"] {
-        --clbr-button-block-size: var(--clbr-spacing-vertical-800);
-        background-color: color-mix(
-          in srgb,
-          var(--clbr-color-background-inverse) 04%,
-          transparent
+      .icon-wrapper {
+        block-size: var(--clbr-layout-icon-size-xs);
+        margin-inline: calc(
+          var(--clbr-layout-icon-size-xs) *
+            var(--clbr-layout-icon-viewbox-outset-ratio)
         );
+      }
+
+      &[data-label-visibility="hidden"] {
+        --clbr-button-block-size: var(--clbr-spacing-vertical-775);
+        margin-inline: calc(
+          var(--clbr-layout-icon-size-md) *
+            var(--clbr-layout-icon-viewbox-outset-ratio)
+        );
+
         padding: var(--clbr-spacing-vertical-250);
+
+        & .icon-wrapper {
+          block-size: var(--clbr-layout-icon-size-md);
+          margin-inline: 0;
+        }
       }
 
       &[data-label-visibility="hidden"][data-size="sm"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+        margin-inline: calc(
+          var(--clbr-layout-icon-size-sm) *
+            var(--clbr-layout-icon-viewbox-outset-ratio)
+        );
+
         padding: var(--clbr-spacing-vertical-200);
+
+        & .icon-wrapper {
+          block-size: var(--clbr-layout-icon-size-sm);
+        }
+      }
+
+      &[data-label-visibility="hidden"][data-size="lg"] {
+        --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+        margin-inline: calc(
+          var(--clbr-layout-icon-size-lg) *
+            var(--clbr-layout-icon-viewbox-outset-ratio)
+        );
+
+        padding: var(--clbr-spacing-vertical-300);
+
+        & .icon-wrapper {
+          block-size: var(--clbr-layout-icon-size-lg);
+        }
       }
 
       @media (width < 48em) {
         &[data-label-visibility="hiddenBelowTablet"] {
-          --clbr-button-block-size: var(--clbr-spacing-vertical-800);
-          background-color: color-mix(
-            in srgb,
-            var(--clbr-color-background-inverse) 04%,
-            transparent
+          --clbr-button-block-size: var(--clbr-spacing-vertical-775);
+
+          border: var(--clbr-layout-border-width-default) solid transparent;
+          margin-inline: calc(
+            var(--clbr-layout-icon-size-md) *
+              var(--clbr-layout-icon-viewbox-outset-ratio)
           );
           padding: var(--clbr-spacing-vertical-250);
+
+          & .icon-wrapper {
+            block-size: var(--clbr-layout-icon-size-md);
+            margin-inline: 0;
+          }
         }
 
         &[data-label-visibility="hiddenBelowTablet"][data-size="sm"] {
           --clbr-button-block-size: var(--clbr-spacing-vertical-700);
-          padding: var(--clbr-spacing-vertical-200);
-        }
-      }
-
-      .icon-wrapper {
-        margin-inline-start: 0;
-
-        [data-size="sm"] & {
-          block-size: var(--clbr-layout-icon-size-xs);
-
-          margin-inline-end: calc(
-            var(--clbr-layout-icon-size-xs) *
+          margin-inline: calc(
+            var(--clbr-layout-icon-size-sm) *
               var(--clbr-layout-icon-viewbox-outset-ratio)
           );
+
+          padding: var(--clbr-spacing-vertical-200);
+
+          & .icon-wrapper {
+            block-size: var(--clbr-layout-icon-size-sm);
+          }
+        }
+
+        &[data-label-visibility="hidden"][data-size="lg"] {
+          --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+          margin-inline: calc(
+            var(--clbr-layout-icon-size-lg) *
+              var(--clbr-layout-icon-viewbox-outset-ratio)
+          );
+
+          padding: var(--clbr-spacing-vertical-300);
+
+          & .icon-wrapper {
+            block-size: var(--clbr-layout-icon-size-lg);
+          }
         }
       }
     }
@@ -288,9 +344,9 @@
     &[disabled],
     &[disabled][data-tone="neutral"] {
       border-color: var(--clbr-color-border-subtle);
+      box-shadow: none;
       color: var(--clbr-color-foreground-muted-text);
       cursor: not-allowed;
-      box-shadow: none;
     }
 
     &[disabled][data-appearance="solid"],

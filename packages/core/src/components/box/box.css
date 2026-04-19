@@ -7,11 +7,11 @@
     --clbr-box-padding-inline: var(--clbr-spacing-horizontal-700);
 
     background-color: var(--clbr-box-color-background);
+    color: var(--clbr-color-foreground-default);
+    border-radius: var(--clbr-box-border-radius);
     outline: var(--clbr-layout-border-width-default) solid
       var(--clbr-box-color-border);
     outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
-    color: var(--clbr-color-foreground-default);
-    border-radius: var(--clbr-box-border-radius);
     padding-block: var(--clbr-box-padding-block);
     padding-inline: var(--clbr-box-padding-inline);
 

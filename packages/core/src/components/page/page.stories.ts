@@ -8,11 +8,13 @@ import { renderClbrInline } from "../inline/inline";
 import { renderClbrLink } from "../link/link";
 import { renderClbrLogo } from "../logo/logo";
 import { defineClbrNav, renderClbrNav } from "../nav/nav";
+import { defineClbrSidebar, renderClbrSidebar } from "../sidebar/sidebar";
 import { renderClbrStack } from "../stack/stack";
 import { type ClbrPageProps, renderClbrPage } from "./page";
 
 defineClbrBanner();
 defineClbrNav();
+defineClbrSidebar();
 
 const meta = {
   argTypes: {
@@ -39,6 +41,271 @@ const simpleIcons = {
 };
 
 export const Default = {
+  args: {
+    stickyHeader: "always",
+    header: renderClbrContainer({
+      gutter: "narrow",
+      maxInlineSize: "wide",
+      children: renderClbrBox({
+        paddingBlock: "sm",
+        paddingInline: "none",
+        responsive: true,
+        children: renderClbrInline({
+          gap: "sm",
+          justify: "between",
+          children: [
+            `<a href="/">${renderClbrLogo({
+              label: "Measured",
+              variant: "secondary",
+            })}</a>`,
+            renderClbrNav({
+              collapsible: "belowTablet",
+              expanderPosition: "end",
+              items: [
+                { current: true, href: "/", label: "About" },
+                { href: "/", label: "Work" },
+                { href: "/", label: "Blog" },
+              ],
+            }),
+          ].join(""),
+        }),
+      }),
+    }),
+    children: renderClbrContainer({
+      children: renderClbrBox({
+        paddingBlock: "2xl",
+        paddingInline: "none",
+        children: '<div class="example-content"></div>',
+      }),
+    }),
+    footer: renderClbrContainer({
+      gutter: "narrow",
+      maxInlineSize: "wide",
+      children: [
+        renderClbrDivider({ tone: "brand" }),
+        renderClbrBox({
+          paddingBlock: "md",
+          paddingInline: "none",
+          responsive: true,
+          children: renderClbrInline({
+            align: "end",
+            gap: "sm",
+            justify: "between",
+            children: [
+              renderClbrStack({
+                as: "ul",
+                gap: "none",
+                children: [
+                  `<li>${renderClbrLink({
+                    href: "/",
+                    icon: simpleIcons.gitHub,
+                    label: "GitHub",
+                    tone: "neutral",
+                  })}</li>`,
+                  `<li>${renderClbrLink({
+                    href: "/",
+                    icon: simpleIcons.linkedIn,
+                    label: "LinkedIn",
+                    tone: "neutral",
+                  })}</li>`,
+                  `<li>${renderClbrLink({
+                    href: "/",
+                    icon: simpleIcons.rss,
+                    label: "RSS feed",
+                    tone: "neutral",
+                  })}</li>`,
+                ].join(""),
+              }),
+              renderClbrInline({
+                align: "end",
+                gap: "lg",
+                justify: "between",
+                children: [
+                  renderClbrStack({
+                    as: "ul",
+                    gap: "none",
+                    children: [
+                      `<li>${renderClbrLink({
+                        href: "/",
+                        label: "Privacy policy",
+                        tone: "neutral",
+                      })}</li>`,
+                      `<li>${renderClbrLink({
+                        href: "/",
+                        label: "Terms and conditions",
+                        tone: "neutral",
+                      })}</li>`,
+                    ].join(""),
+                  }),
+                  `<a
+                    href="/"
+                    style="margin-block-end: var(--clbr-spacing-vertical-400)"
+                  >${renderClbrLogo({
+                    label: "Measured",
+                    variant: "graphic",
+                  })}</a>`,
+                ].join(""),
+              }),
+            ].join(""),
+          }),
+        }),
+      ].join(""),
+    }),
+  } satisfies ClbrPageProps,
+  render: (args: ClbrPageProps) => renderClbrPage(args),
+};
+
+export const Alt = {
+  args: {
+    centerMain: true,
+    header: renderClbrContainer({
+      gutter: "narrow",
+      maxInlineSize: "none",
+      children: renderClbrBox({
+        paddingBlock: "xs",
+        paddingInline: "none",
+        children: renderClbrInline({
+          gap: "sm",
+          justify: "between",
+          children: [
+            renderClbrInline({
+              gap: "xs",
+              children: [
+                renderClbrSidebar({
+                  aboveNotebook: "overlay",
+                  id: "alt-sidebar",
+                  size: "sm",
+                  header: renderClbrBox({
+                    background: "panel",
+                    paddingBlock: "none",
+                    paddingInline: "sm",
+                    children: `Header`,
+                  }),
+                  children: renderClbrBox({
+                    background: "panel",
+                    paddingBlock: "xs",
+                    paddingInline: "xs",
+                    children: renderClbrBox({
+                      background: "panel",
+                      border: true,
+                      radius: "sm",
+                      paddingBlock: "xs",
+                      paddingInline: "xs",
+                      children: `Content`,
+                    }),
+                  }),
+                  footer: renderClbrBox({
+                    background: "panel",
+                    paddingBlock: "none",
+                    paddingInline: "sm",
+                    children: `Footer`,
+                  }),
+                }),
+                `<a href="">${renderClbrHeading({
+                  children: "Facet.",
+                  size: "lg",
+                })}</a>`,
+              ].join(""),
+            }),
+            renderClbrInline({
+              align: "end",
+              gap: "xs",
+              children: [
+                renderClbrButton({
+                  icon: "download",
+                  label: "Export",
+                  labelVisibility: "hiddenBelowTablet",
+                  size: "sm",
+                  tone: "neutral",
+                }),
+                renderClbrButton({
+                  label: "16:9",
+                  size: "sm",
+                  tone: "neutral",
+                }),
+                renderClbrButton({
+                  icon: "shuffle",
+                  appearance: "solid",
+                  label: "Shuffle",
+                  labelVisibility: "hiddenBelowTablet",
+                  size: "sm",
+                }),
+                renderClbrButton({
+                  icon: "dice5",
+                  appearance: "solid",
+                  label: "Randomise",
+                  labelVisibility: "hiddenBelowTablet",
+                  size: "sm",
+                }),
+              ].join(""),
+            }),
+          ].join(""),
+        }),
+      }),
+    }),
+    children: renderClbrContainer({
+      gutter: "narrow",
+      children: renderClbrBox({
+        paddingBlock: "2xl",
+        paddingInline: "none",
+        children: '<div class="example-content"></div>',
+      }),
+    }),
+    footer: renderClbrContainer({
+      gutter: "narrow",
+      maxInlineSize: "none",
+      children: renderClbrBox({
+        paddingBlock: "xs",
+        paddingInline: "none",
+        children: renderClbrInline({
+          align: "end",
+          gap: "xs",
+          justify: "between",
+          children: [
+            `<a
+              href="/"
+              style="margin-block-end: var(--clbr-spacing-vertical-400)"
+            >${renderClbrLogo({
+              label: "Measured",
+              size: "sm",
+              tone: "neutral",
+              variant: "graphic",
+            })}</a>`,
+            renderClbrInline({
+              align: "end",
+              as: "ul",
+              gap: "sm",
+              children: [
+                `<li>${renderClbrLink({
+                  href: "/",
+                  icon: simpleIcons.gitHub,
+                  label: "View source",
+                  size: "sm",
+                  tone: "neutral",
+                })}</li>`,
+                `<li>${renderClbrLink({
+                  href: "/",
+                  label: "About",
+                  size: "sm",
+                  tone: "neutral",
+                })}</li>`,
+                `<li>${renderClbrLink({
+                  href: "/",
+                  label: "Measured",
+                  size: "sm",
+                  tone: "neutral",
+                })}</li>`,
+              ].join(""),
+            }),
+          ].join(""),
+        }),
+      }),
+    }),
+  } satisfies ClbrPageProps,
+  render: (args: ClbrPageProps) => renderClbrPage(args),
+};
+
+export const Banner = {
   args: {
     centerMain: false,
     stickyHeader: "always",
@@ -157,140 +424,6 @@ export const Default = {
           }),
         }),
       ].join(""),
-    }),
-  } satisfies ClbrPageProps,
-  render: (args: ClbrPageProps) => renderClbrPage(args),
-};
-
-export const Alt = {
-  args: {
-    centerMain: true,
-    banner: renderClbrBanner({
-      action: {
-        href: "/",
-        label: "Action link",
-      },
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.",
-    }),
-    header: renderClbrContainer({
-      gutter: "narrow",
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "2xs",
-        paddingInline: "none",
-        responsive: true,
-        children: renderClbrInline({
-          gap: "sm",
-          justify: "between",
-          children: [
-            renderClbrInline({
-              gap: "sm",
-              children: [
-                renderClbrNav({
-                  collapsible: "always",
-                  size: "sm",
-                  items: [{ href: "/", label: "Controls" }],
-                }),
-                `<a href="">${renderClbrHeading({
-                  children: "Facet.",
-                  size: "lg",
-                })}</a>`,
-              ].join(""),
-            }),
-            renderClbrInline({
-              align: "end",
-              gap: "xs",
-              children: [
-                renderClbrButton({
-                  icon: "download",
-                  label: "Export",
-                  labelVisibility: "hiddenBelowTablet",
-                  size: "sm",
-                  tone: "neutral",
-                }),
-                renderClbrButton({
-                  label: "16:9",
-                  size: "sm",
-                  tone: "neutral",
-                }),
-                renderClbrButton({
-                  icon: "shuffle",
-                  appearance: "solid",
-                  label: "Shuffle",
-                  labelVisibility: "hiddenBelowTablet",
-                  size: "sm",
-                }),
-                renderClbrButton({
-                  icon: "dice5",
-                  appearance: "solid",
-                  label: "Randomise",
-                  labelVisibility: "hiddenBelowTablet",
-                  size: "sm",
-                }),
-              ].join(""),
-            }),
-          ].join(""),
-        }),
-      }),
-    }),
-    children: renderClbrContainer({
-      gutter: "narrow",
-      children: renderClbrBox({
-        paddingBlock: "2xl",
-        paddingInline: "none",
-        children: '<div class="example-content"></div>',
-      }),
-    }),
-    footer: renderClbrContainer({
-      gutter: "narrow",
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "xs",
-        paddingInline: "none",
-        children: renderClbrInline({
-          align: "end",
-          gap: "xs",
-          justify: "between",
-          children: [
-            `<a
-              href="/"
-              style="margin-block-end: var(--clbr-spacing-vertical-400)"
-            >${renderClbrLogo({
-              label: "Measured",
-              size: "sm",
-              tone: "neutral",
-              variant: "graphic",
-            })}</a>`,
-            renderClbrInline({
-              align: "end",
-              as: "ul",
-              gap: "sm",
-              children: [
-                `<li>${renderClbrLink({
-                  href: "/",
-                  icon: simpleIcons.gitHub,
-                  label: "View source",
-                  size: "sm",
-                  tone: "neutral",
-                })}</li>`,
-                `<li>${renderClbrLink({
-                  href: "/",
-                  label: "About",
-                  size: "sm",
-                  tone: "neutral",
-                })}</li>`,
-                `<li>${renderClbrLink({
-                  href: "/",
-                  label: "Measured",
-                  size: "sm",
-                  tone: "neutral",
-                })}</li>`,
-              ].join(""),
-            }),
-          ].join(""),
-        }),
-      }),
     }),
   } satisfies ClbrPageProps,
   render: (args: ClbrPageProps) => renderClbrPage(args),

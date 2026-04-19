@@ -35,6 +35,13 @@ describe("renderClbrExpander", () => {
     expect(button.getAttribute("data-size")).toBe("sm");
   });
 
+  it("renders the lg size when provided", () => {
+    mount(renderClbrExpander({ label: "Open menu", size: "lg" }));
+    const button = getByRole(document.body, "button", { name: "Open menu" });
+
+    expect(button.getAttribute("data-size")).toBe("lg");
+  });
+
   it("normalizes an empty label to the default", () => {
     mount(renderClbrExpander({ label: "" }));
     const button = getByRole(document.body, "button", { name: "Menu" });

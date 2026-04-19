@@ -56,10 +56,6 @@
 
     > .icon-wrapper {
       align-self: start;
-      margin-inline: calc(
-        var(--clbr-layout-icon-size-md) *
-          var(--clbr-layout-icon-viewbox-outset-ratio)
-      );
     }
 
     .content {
@@ -81,6 +77,7 @@
 
     [data-part="close"] {
       align-self: start;
+      margin-inline-end: calc(0rem - var(--clbr-spacing-horizontal-300));
     }
   }
 }

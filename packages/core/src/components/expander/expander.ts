@@ -1,6 +1,6 @@
 import { attrs, escapeHtml } from "../../helpers/html";
 
-export type ClbrExpanderSize = "sm" | "md";
+export type ClbrExpanderSize = "sm" | "md" | "lg";
 
 /** Props for the Calibrate expander renderer. */
 export interface ClbrExpanderProps {
@@ -80,7 +80,7 @@ export const CLBR_EXPANDER_SPEC = {
       default: "md",
       required: false,
       type: "enum",
-      values: ["sm", "md"],
+      values: ["sm", "md", "lg"],
     },
   },
   rules: {
