@@ -119,6 +119,13 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - default semantic variant/context values should be omitted in emitted markup unless explicit default emission is required for context reset/scoping behavior.
   - layout/size scale props that drive deterministic CSS branches should emit explicitly (for example `data-size`, `data-gap`) even at default.
   - when default emission is intentionally divergent for a component, the reason should be documented in the component JSDoc/SPEC notes.
+- Runtime event handling convention:
+  - attach event listeners at the custom-element host by default.
+  - owned interactions (for example trigger clicks, close/backdrop clicks, input/change handling, and keyboard handling for focused descendants) should be handled at host scope.
+  - global listeners (`document`/`window`) are exceptions and should only be used when the interaction is inherently global (for example `matchMedia(...).change`, outside-click fallback, or cross-instance coordination).
+  - when a global listener is required, it must scope matched targets back to the host before acting (`this.contains(...)` or equivalent).
+  - generic internal hooks such as `data-part="trigger"` are local component hooks and must not be treated as document-global selectors for behavior.
+  - custom events should be emitted from the custom-element host, not internal child controls, unless a component contract explicitly documents otherwise.
 - Asset package font contract:
   - `@measured/calibrate-assets/fonts.css` is the canonical package entrypoint for font-face declarations.
   - exposed family names should remain stable so consumers can self-host/override fonts without changing typography token contracts.

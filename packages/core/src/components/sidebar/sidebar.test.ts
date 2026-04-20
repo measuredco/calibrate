@@ -198,9 +198,11 @@ describe("renderClbrSidebar", () => {
     });
 
     trigger.click();
-    document.defaultView?.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Escape" }),
-    );
+    (
+      getByRole(document.body, "button", {
+        name: "Collapse sidebar",
+      }) as HTMLButtonElement
+    ).dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }));
 
     expect(
       document.body

@@ -2,6 +2,7 @@ import "./styles.css";
 
 import { defineClbrAlert } from "./components/alert/alert";
 import { defineClbrBanner } from "./components/banner/banner";
+import { defineClbrMenu } from "./components/menu/menu";
 import { defineClbrNav } from "./components/nav/nav";
 import { defineClbrRange } from "./components/range/range";
 import { defineClbrSidebar } from "./components/sidebar/sidebar";
@@ -15,6 +16,7 @@ import { defineClbrSidebar } from "./components/sidebar/sidebar";
 export function defineClbrComponents(): void {
   defineClbrAlert();
   defineClbrBanner();
+  defineClbrMenu();
   defineClbrNav();
   defineClbrRange();
   defineClbrSidebar();
@@ -86,6 +88,7 @@ export {
   type ClbrButtonAppearance,
   type ClbrButtonCommonProps,
   type ClbrButtonElementProps,
+  type ClbrButtonHasPopup,
   type ClbrButtonLabelVisibility,
   type ClbrButtonLinkProps,
   type ClbrButtonMode,
@@ -219,6 +222,17 @@ export {
   type ClbrLinkTone,
   renderClbrLink,
 } from "./components/link/link";
+
+export {
+  CLBR_MENU_EVENT_CHOOSE,
+  CLBR_MENU_SPEC,
+  CLBR_MENU_TAG_NAME,
+  defineClbrMenu,
+  type ClbrMenuItem,
+  type ClbrMenuProps,
+  type ClbrMenuTriggerProps,
+  renderClbrMenu,
+} from "./components/menu/menu";
 
 export {
   CLBR_NAV_TAG_NAME,

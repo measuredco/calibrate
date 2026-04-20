@@ -13,7 +13,6 @@ What we could be working on next.
 ### Web Components
 
 - `Control/Listbox` (JS required, selection/value semantics)
-- `Control/Menu` (best first lit candidate)
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
 - `Control/Tag` (delete, remove, select)
 - `Status/Progress` (updating)
@@ -47,6 +46,7 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 
 ### Component evolution
 
+- Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
 - Consider moving `data-app-*` props from `root` to `page`
 - Add `data-testid` and/or `id` support
 - Add `size: "lg"` to Controls (and `details`, etc.)
@@ -167,6 +167,25 @@ _This section is a historical completion record; some entries may describe decis
 
 - Alert implemented as the first JS-enabled web-component in core:
   - added `alert` renderer + CSS + stories + tests
+
+- Menu implemented as a control primitive in core:
+  - added `menu` renderer + CSS + stories + tests
+  - settled API includes:
+    - required `id`
+    - required `items`
+    - typed `trigger` config composed into `renderClbrButton(...)`
+    - optional `align` (`start | end`)
+    - optional `size` (`sm | md`)
+  - menu composes its owned trigger button and uses button-level `disclosure`, `controls`, and `haspopup` props rather than HTML string post-processing
+  - runtime is WC-based and host-scoped:
+    - owned trigger and popup
+    - `role="menu"` popup labelled by the trigger
+    - `role="menuitem"` action items
+    - APG 1.2 aligned keyboard handling for trigger/menu items
+    - outside click close
+    - choose event emitted from the `clbr-menu` host
+  - disabled items now follow the APG pattern via `aria-disabled` rather than native `disabled`
+  - persistent choice (`menuitemradio` / `menuitemcheckbox`) and submenus remain deferred follow-up work
   - settled API includes optional `dismissible`, optional `dismissibleLabel`, optional `inlineSize` (`full | fit`), required escaped `message`, optional escaped `title`, and optional `tone` (`info | success | warning | error`)
   - SSR output remains meaningful light-DOM HTML inside a `clbr-alert` host, while `defineClbrAlert()` upgrades dismissible alerts in place by injecting a close control and handling removal
   - alert runtime now dispatches `clbr-alert-before-dismiss` (cancelable) and `clbr-alert-dismiss` (bubbling) for consumer hooks

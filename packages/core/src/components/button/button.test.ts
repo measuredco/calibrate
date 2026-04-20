@@ -74,6 +74,18 @@ describe("renderClbrButton", () => {
       expect(button.getAttribute("aria-controls")).toBe("sidebar");
     });
 
+    it("supports haspopup semantics in button mode", () => {
+      mount(
+        renderClbrButton({
+          haspopup: "menu",
+          label: "Open menu",
+        }),
+      );
+      const button = getByRole(document.body, "button", { name: "Open menu" });
+
+      expect(button.getAttribute("aria-haspopup")).toBe("menu");
+    });
+
     it("ignores controls when disclosure is omitted", () => {
       mount(
         renderClbrButton({
@@ -87,6 +99,20 @@ describe("renderClbrButton", () => {
 
       expect(button.getAttribute("aria-expanded")).toBeNull();
       expect(button.getAttribute("aria-controls")).toBeNull();
+    });
+
+    it("ignores haspopup in link mode", () => {
+      mount(
+        renderClbrButton({
+          haspopup: "menu",
+          href: "/docs",
+          label: "Docs",
+          mode: "link",
+        } as ClbrButtonProps),
+      );
+      const link = getByRole(document.body, "link", { name: "Docs" });
+
+      expect(link.getAttribute("aria-haspopup")).toBeNull();
     });
 
     it("renders icon at start by default when icon is provided", () => {

@@ -7,12 +7,14 @@ import { renderClbrHeading } from "../heading/heading";
 import { renderClbrInline } from "../inline/inline";
 import { renderClbrLink } from "../link/link";
 import { renderClbrLogo } from "../logo/logo";
+import { defineClbrMenu, renderClbrMenu } from "../menu/menu";
 import { defineClbrNav, renderClbrNav } from "../nav/nav";
 import { defineClbrSidebar, renderClbrSidebar } from "../sidebar/sidebar";
 import { renderClbrStack } from "../stack/stack";
 import { type ClbrPageProps, renderClbrPage } from "./page";
 
 defineClbrBanner();
+defineClbrMenu();
 defineClbrNav();
 defineClbrSidebar();
 
@@ -211,12 +213,20 @@ export const Alt = {
               align: "end",
               gap: "xs",
               children: [
-                renderClbrButton({
-                  icon: "download",
-                  label: "Export",
-                  labelVisibility: "hiddenBelowTablet",
+                renderClbrMenu({
+                  align: "end",
+                  id: "exportMenu",
+                  items: [
+                    { id: "hi-rese", label: "Hi-res" },
+                    { id: "vector", label: "Vector" },
+                    { id: "web", label: "Web" },
+                  ],
+                  trigger: {
+                    icon: "download",
+                    label: "Export",
+                    labelVisibility: "hiddenBelowTablet",
+                  },
                   size: "sm",
-                  tone: "neutral",
                 }),
                 renderClbrButton({
                   label: "16:9",

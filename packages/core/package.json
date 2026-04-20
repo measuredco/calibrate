@@ -30,6 +30,7 @@
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
     "@testing-library/dom": "^10.4.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.3.5",
     "autoprefixer": "^10.4.21",
     "jsdom": "^28.1.0",

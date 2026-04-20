@@ -3,6 +3,7 @@ import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";
+export type ClbrButtonHasPopup = "menu";
 export type ClbrButtonLabelVisibility =
   | "visible"
   | "hidden"
@@ -19,6 +20,8 @@ export interface ClbrButtonCommonProps {
    * @default "outline"
    */
   appearance?: ClbrButtonAppearance;
+  /** Optional DOM id. */
+  id?: string;
   /** Optional icon name (Lucide naming semantics). */
   icon?: string;
   /** Optional icon mirroring mode. Ignored when `icon` is omitted. */
@@ -62,6 +65,11 @@ export interface ClbrButtonElementProps extends ClbrButtonCommonProps {
    * @default false
    */
   disclosure?: boolean;
+  /**
+   * Popup type for button interactions.
+   * Ignored in link mode.
+   */
+  haspopup?: ClbrButtonHasPopup;
   /**
    * Disables interaction in button mode.
    * @default false
@@ -125,6 +133,7 @@ function normalizeDownload(
 export function renderClbrButton(props: ClbrButtonProps): string {
   const {
     appearance = "outline",
+    id,
     icon,
     iconMirrored,
     iconPlacement = "start",
@@ -165,6 +174,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
       labelVisibility === "visible" ? undefined : labelVisibility,
     "data-size": size,
     "data-tone": tone === "neutral" ? "neutral" : undefined,
+    id: id || undefined,
   };
 
   // Keep discriminant check on `props.mode` so TypeScript narrows the union.
@@ -185,10 +195,12 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     return `<a ${linkAttrs}>${content}</a>`;
   }
 
-  const { controls, disabled, disclosure, form, name, type, value } = props;
+  const { controls, disabled, disclosure, form, haspopup, name, type, value } =
+    props;
   const buttonAttrs = attrs({
     "aria-controls": disclosure ? controls || undefined : undefined,
     "aria-expanded": disclosure ? "false" : undefined,
+    "aria-haspopup": haspopup || undefined,
     ...commonAttrs,
     "data-mode": "button",
     disabled: Boolean(disabled),
@@ -223,6 +235,10 @@ export const CLBR_BUTTON_SPEC = {
       required: false,
       type: "boolean",
     },
+    id: {
+      required: false,
+      type: "string",
+    },
     controls: {
       ignoredWhen: "mode is link or disclosure is false",
       required: false,
@@ -233,6 +249,12 @@ export const CLBR_BUTTON_SPEC = {
       ignoredWhen: "mode is link",
       required: false,
       type: "boolean",
+    },
+    haspopup: {
+      ignoredWhen: "mode is link",
+      required: false,
+      type: "enum",
+      values: ["menu"],
     },
     download: {
       ignoredWhen: "mode is button",
@@ -344,6 +366,12 @@ export const CLBR_BUTTON_SPEC = {
         value: "button",
       },
       {
+        behavior: "emit",
+        target: "id",
+        value: "{id}",
+        when: "id is provided",
+      },
+      {
         behavior: "always",
         target: "data-appearance",
         value: "{appearance}",
@@ -394,6 +422,12 @@ export const CLBR_BUTTON_SPEC = {
         target: "aria-controls",
         value: "{controls}",
         when: "mode is button and disclosure is true and controls is non-empty",
+      },
+      {
+        behavior: "emit",
+        target: "aria-haspopup",
+        value: "{haspopup}",
+        when: "mode is button and haspopup is provided",
       },
       {
         behavior: "emit",

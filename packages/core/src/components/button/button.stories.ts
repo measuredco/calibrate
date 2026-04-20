@@ -55,6 +55,10 @@ const commonArgTypes = {
 
 const buttonArgTypes = {
   ...commonArgTypes,
+  haspopup: {
+    control: { type: "select" },
+    options: ["menu"],
+  },
   type: {
     control: { type: "select" },
     options: ["button", "submit"],
@@ -95,8 +99,10 @@ export const ButtonMode = {
     iconMirrored: undefined,
     disabled: false,
     disclosure: false,
+    haspopup: undefined,
     type: "button",
     controls: "",
+    id: "",
     form: "",
     name: "",
     value: "",
@@ -122,6 +128,7 @@ export const LinkMode = {
     size: "md",
     icon: undefined,
     iconPlacement: "start",
+    id: "",
     labelVisibility: "visible",
     iconMirrored: undefined,
     rel: "noreferrer",
@@ -146,6 +153,7 @@ export const LinkModeDownload = {
     size: "md",
     icon: "download",
     iconPlacement: "start",
+    id: "",
     labelVisibility: "visible",
     iconMirrored: undefined,
   } satisfies ClbrButtonLinkProps,

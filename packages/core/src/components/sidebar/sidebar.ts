@@ -147,7 +147,7 @@ export function renderClbrSidebar({
 
 class ClbrSidebarElement extends HTMLElement {
   #mediaQuery?: MediaQueryList;
-  #onDocumentClick?: (event: Event) => void;
+  #onClick?: (event: Event) => void;
   #onKeyDown?: (event: KeyboardEvent) => void;
   #onMediaChange?: (event: MediaQueryListEvent) => void;
 
@@ -343,7 +343,7 @@ class ClbrSidebarElement extends HTMLElement {
       this.#syncResponsiveState();
     }
 
-    this.#onDocumentClick = (event: Event) => {
+    this.#onClick = (event: Event) => {
       const target = event.target;
 
       if (!(target instanceof Element)) return;
@@ -376,26 +376,24 @@ class ClbrSidebarElement extends HTMLElement {
       this.close();
     };
 
-    this.ownerDocument.addEventListener("click", this.#onDocumentClick);
-    windowRef.addEventListener("keydown", this.#onKeyDown);
+    this.addEventListener("click", this.#onClick);
+    this.addEventListener("keydown", this.#onKeyDown);
   }
 
   #teardownListeners(): void {
-    const windowRef = this.ownerDocument.defaultView;
-
-    if (this.#onDocumentClick) {
-      this.ownerDocument.removeEventListener("click", this.#onDocumentClick);
+    if (this.#onClick) {
+      this.removeEventListener("click", this.#onClick);
     }
 
-    if (this.#onKeyDown && windowRef) {
-      windowRef.removeEventListener("keydown", this.#onKeyDown);
+    if (this.#onKeyDown) {
+      this.removeEventListener("keydown", this.#onKeyDown);
     }
 
     if (this.#mediaQuery && this.#onMediaChange) {
       this.#mediaQuery.removeEventListener("change", this.#onMediaChange);
     }
 
-    this.#onDocumentClick = undefined;
+    this.#onClick = undefined;
     this.#onKeyDown = undefined;
     this.#mediaQuery = undefined;
     this.#onMediaChange = undefined;
