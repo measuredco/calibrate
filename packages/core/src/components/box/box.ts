@@ -13,62 +13,27 @@ export type ClbrBoxPadding =
   | "2xl";
 export type ClbrBoxRadius = "sm" | "md";
 
-/** Props for the Calibrate box renderer. */
 export interface ClbrBoxProps {
-  /**
-   * Background treatment.
-   * `default` emits no background attribute.
-   * `panel` emits `data-background="panel"`.
-   * `transparent` emits `data-background="transparent"`.
-   * @default "default"
-   */
+  /** Background treatment. @default "default" */
   background?: ClbrBoxBackground;
-  /**
-   * Adds a subtle border when true.
-   * Emits `data-border` as a presence attribute.
-   * @default false
-   */
+  /** Subtle border. @default false */
   border?: boolean;
-  /**
-   * Inner HTML content to render inside the box wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Inner block-axis spacing scale.
-   * Always emits `data-padding-block`.
-   * @default "md"
-   */
+  /** Inner block-axis spacing scale. @default "md" */
   paddingBlock?: ClbrBoxPadding;
-  /**
-   * Inner inline-axis spacing scale.
-   * Always emits `data-padding-inline`.
-   * @default "md"
-   */
+  /** Inner inline-axis spacing scale. @default "md" */
   paddingInline?: ClbrBoxPadding;
-  /**
-   * Corner radius size.
-   * When omitted, no `data-radius` attribute is emitted.
-   */
+  /** Corner radius size. */
   radius?: ClbrBoxRadius;
-  /**
-   * Switches block-axis padding to the responsive layout spacing scale.
-   * Emits `data-responsive` as a presence attribute when true.
-   * @default false
-   */
+  /** Responsive block-axis padding. @default false */
   responsive?: boolean;
-  /**
-   * Surface context.
-   * When provided, emits `data-surface`.
-   */
+  /** Surface context. */
   surface?: ClbrSurfaceVariant;
 }
 
 /**
  * SSR renderer for the Calibrate box component.
- *
- * Emits a single `div.box` wrapper around trusted child HTML.
- * Optional variants are expressed via `data-*` attributes on the root element.
  *
  * @param props - Box component props.
  * @returns HTML string for a box wrapper.
@@ -100,6 +65,7 @@ export function renderClbrBox({
 /** Declarative box contract mirror for tooling, docs, and adapters. */
 export const CLBR_BOX_SPEC = {
   name: "box",
+  description: "Use `box` as a primitive to inset content.",
   output: {
     element: "div",
     class: "box",
@@ -108,42 +74,50 @@ export const CLBR_BOX_SPEC = {
   props: {
     background: {
       default: "default",
+      description: "Background treatment.",
       required: false,
       type: "enum",
       values: ["default", "panel", "transparent"],
     },
     border: {
       default: false,
+      description: "Shows a subtle border around the box.",
       required: false,
       type: "boolean",
     },
     children: {
+      description: "Content rendered inside the box.",
       required: false,
       type: "html",
     },
     paddingBlock: {
       default: "md",
+      description: "Vertical padding.",
       required: false,
       type: "enum",
       values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     paddingInline: {
       default: "md",
+      description: "Horizontal padding.",
       required: false,
       type: "enum",
       values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     },
     radius: {
+      description: "Corner radius.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     responsive: {
       default: false,
+      description: "Scales vertical padding across breakpoints.",
       required: false,
       type: "boolean",
     },
     surface: {
+      description: "Surface context.",
       required: false,
       type: "enum",
       values: ["default", "brand", "inverse", "brand-inverse"],

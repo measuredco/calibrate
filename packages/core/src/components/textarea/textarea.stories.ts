@@ -1,22 +1,25 @@
-import { type ClbrTextareaProps, renderClbrTextarea } from "./textarea";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_TEXTAREA_SPEC,
+  type ClbrTextareaProps,
+  renderClbrTextarea,
+} from "./textarea";
+
+const baseArgTypes = specToArgTypes(CLBR_TEXTAREA_SPEC);
 
 const meta = {
   argTypes: {
+    ...baseArgTypes,
     autocomplete: {
+      ...baseArgTypes.autocomplete,
       control: { type: "text" },
-      description: 'Set to `"off"` to disable (or pass `false` in code).',
     },
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
-    },
-    resize: {
-      control: { type: "select" },
-      options: ["vertical", "none"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_TEXTAREA_SPEC),
+      },
     },
   },
   title: "Control/Textarea",

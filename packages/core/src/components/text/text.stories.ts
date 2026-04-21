@@ -1,15 +1,23 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import {
+  CLBR_TEXT_SPEC,
   type ClbrTextParagraphProps,
   type ClbrTextSpanProps,
   renderClbrText,
 } from "./text";
 
+const baseArgTypes = specToArgTypes(CLBR_TEXT_SPEC);
+
 const meta = {
+  argTypes: {
+    ...baseArgTypes,
+    as: { ...baseArgTypes.as, control: false },
+    measured: { ...baseArgTypes.measured, control: false },
+  },
   parameters: {
     docs: {
       description: {
-        component:
-          'Docs controls are scoped to `as: "span"` props only. See the secondary Paragraph stories below for `as: "p"` props and behavior.',
+        component: `${specToComponentDescription(CLBR_TEXT_SPEC)}\n\nDocs controls are scoped to the default \`as: "span"\` story. See Paragraph stories below for \`as: "p"\` props and behavior.`,
       },
     },
   },
@@ -18,44 +26,19 @@ const meta = {
 
 export default meta;
 
-const sharedArgTypes = {
-  as: { control: false },
-  linkVisited: {
-    control: { type: "boolean" },
-  },
-  size: {
-    control: { type: "select" },
-    options: ["xs", "sm", "md", "lg"],
-  },
-  tone: {
-    control: { type: "select" },
-    options: ["default", "muted"],
-  },
-};
-
 export const Default = {
-  argTypes: {
-    ...sharedArgTypes,
-  },
   args: {
     as: "span",
     children: 'Text with <a href="/">link</a>.',
     linkVisited: true,
     responsive: false,
     size: "md",
-    tone: undefined,
+    tone: "default",
   } satisfies ClbrTextSpanProps,
   render: (args: ClbrTextSpanProps) => renderClbrText({ ...args }),
 };
 
 export const Paragraph = {
-  argTypes: {
-    ...sharedArgTypes,
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-  },
   args: {
     as: "p",
     align: "start",
@@ -65,19 +48,12 @@ export const Paragraph = {
     measured: true,
     responsive: false,
     size: "md",
-    tone: undefined,
+    tone: "default",
   } satisfies ClbrTextParagraphProps,
   render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
 };
 
 export const ParagraphWithMarkup = {
-  argTypes: {
-    ...sharedArgTypes,
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-  },
   args: {
     as: "p",
     align: "start",
@@ -87,7 +63,7 @@ export const ParagraphWithMarkup = {
     measured: true,
     responsive: false,
     size: "md",
-    tone: undefined,
+    tone: "default",
   } satisfies ClbrTextParagraphProps,
   render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
 };

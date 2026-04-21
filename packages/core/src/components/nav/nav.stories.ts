@@ -1,4 +1,6 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import {
+  CLBR_NAV_SPEC,
   defineClbrNav,
   renderClbrNav,
   type ClbrNavItem,
@@ -7,25 +9,18 @@ import {
 
 defineClbrNav();
 
+const baseArgTypes = specToArgTypes(CLBR_NAV_SPEC);
+
 const meta = {
-  argTypes: {
-    collapsible: {
-      control: { type: "select" },
-      options: ["always", "belowTablet"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_NAV_SPEC),
+      },
     },
-    contentId: { control: { type: "text" } },
-    expanderLabel: { control: { type: "text" } },
-    items: { control: false },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-    expanderPosition: {
-      control: { type: "select" },
-      options: ["start", "end"],
-    },
+    padding: "1.125rem 1rem",
   },
-  parameters: { padding: "1.125rem 1rem" },
   title: "Structure/Nav",
 };
 

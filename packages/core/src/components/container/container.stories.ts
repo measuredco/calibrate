@@ -1,18 +1,25 @@
-import { type ClbrContainerProps, renderClbrContainer } from "./container";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_CONTAINER_SPEC,
+  type ClbrContainerProps,
+  renderClbrContainer,
+} from "./container";
+
+const baseArgTypes = specToArgTypes(CLBR_CONTAINER_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    gutter: {
-      control: { type: "select" },
-      options: ["default", "narrow", "none"],
-    },
-    maxInlineSize: {
-      control: { type: "select" },
-      options: ["default", "wide", "none"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_CONTAINER_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Layout/Container",
 };
 

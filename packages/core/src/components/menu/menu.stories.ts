@@ -1,10 +1,16 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import {
   type ClbrButtonLabelVisibility,
   type ClbrButtonPlacement,
 } from "../button/button";
 import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
 import type { ClbrIconMirrorMode } from "../icon/icon";
-import { type ClbrMenuProps, defineClbrMenu, renderClbrMenu } from "./menu";
+import {
+  CLBR_MENU_SPEC,
+  type ClbrMenuProps,
+  defineClbrMenu,
+  renderClbrMenu,
+} from "./menu";
 
 defineClbrMenu();
 
@@ -16,17 +22,13 @@ interface ClbrMenuStoryArgs extends Omit<ClbrMenuProps, "trigger"> {
   triggerLabelVisibility?: ClbrButtonLabelVisibility;
 }
 
+const baseArgTypes = specToArgTypes(CLBR_MENU_SPEC);
+
 const meta = {
   argTypes: {
-    align: {
-      control: "select",
-      options: ["start", "end"],
-    },
-    items: { control: false },
-    size: {
-      control: "select",
-      options: ["sm", "md"],
-    },
+    ...baseArgTypes,
+    items: { ...baseArgTypes.items, control: false },
+    trigger: { ...baseArgTypes.trigger, control: false },
     triggerIcon: {
       control: "select",
       options: CLBR_ICON_RECOMMENDED,
@@ -43,6 +45,13 @@ const meta = {
     triggerLabelVisibility: {
       control: "select",
       options: ["visible", "hidden", "hiddenBelowTablet"],
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_MENU_SPEC),
+      },
     },
   },
   title: "Control/Menu",

@@ -42,78 +42,34 @@ export interface ClbrImageSource {
   width?: number;
 }
 
-/** Props for the Calibrate image renderer. */
 export interface ClbrImageProps {
-  /**
-   * Alternative text for the image. Empty string is valid and used by default.
-   * @default ""
-   */
+  /** Alternative text. Empty string is valid and used by default. @default "" */
   alt?: string;
-  /**
-   * Optional aspect ratio for the image wrapper.
-   * Applies only when `cover` is true, and is omitted when both `height` and
-   * `width` are also provided.
-   */
+  /** Aspect ratio for the wrapper. Applies only when `cover` is true and not both `width`/`height` are set. */
   aspectRatio?: ClbrImageAspectRatio;
-  /**
-   * Optional `object-fit: cover` mode.
-   * @default false
-   */
+  /** Enables `object-fit: cover`. @default false */
   cover?: boolean;
-  /**
-   * Enables default image shadow treatment.
-   * @default false
-   */
+  /** Enables default image shadow treatment. @default false */
   shadow?: boolean;
-  /**
-   * Height dimension in pixels.
-   * For `cover`, this is applied to the wrapper. When `cover` is true and both
-   * `height` and `width` are provided, `aspectRatio` is ignored.
-   */
+  /** Height in pixels. For `cover`, applied to the wrapper. */
   height?: number;
-  /**
-   * When true, emit `loading="lazy"` on the image.
-   * @default false
-   */
+  /** Emit `loading="lazy"` on the image. @default false */
   lazy?: boolean;
-  /**
-   * When true, emit `fetchpriority="high"` and suppress `loading="lazy"`.
-   * @default false
-   */
+  /** Emit `fetchpriority="high"` and suppress `loading="lazy"`. @default false */
   priority?: boolean;
-  /**
-   * Focal gravity for cover fit.
-   * @default "C"
-   */
+  /** Focal gravity for cover fit. @default "C" */
   gravity?: ClbrImageGravity;
-  /**
-   * Radius strategy.
-   * Omitted by default.
-   */
+  /** Radius strategy. Omitted by default. */
   radius?: ClbrImageRadius;
-  /**
-   * The HTML `sizes` attribute.
-   * Ignored on `<img>` when `sources` are provided.
-   */
+  /** HTML `sizes` attribute. Ignored on `<img>` when `sources` are provided. */
   sizes?: string;
-  /**
-   * Optional responsive source set definitions for `<picture>`.
-   */
+  /** Responsive source-set definitions for `<picture>`. */
   sources?: ClbrImageSource[];
-  /**
-   * A comma-separated list of candidate sources for the fallback `<img>`.
-   * Same format as the HTML `img[srcset]` attribute.
-   */
+  /** Candidate sources for the fallback `<img>` (HTML `img[srcset]` format). */
   srcSet?: string;
-  /**
-   * Image source URL.
-   */
+  /** Image source URL. */
   src: string;
-  /**
-   * Width dimension in pixels.
-   * For `cover`, this is applied to the wrapper. When `cover` is true and both
-   * `width` and `height` are provided, `aspectRatio` is ignored.
-   */
+  /** Width in pixels. For `cover`, applied to the wrapper. */
   width?: number;
 }
 
@@ -221,6 +177,7 @@ export function renderClbrImage({
 /** Declarative image contract mirror for tooling, docs, and adapters. */
 export const CLBR_IMAGE_SPEC = {
   name: "image",
+  description: "Use `image` to render a responsive image with optional cover fit.",
   output: {
     modes: {
       image: "img",
@@ -231,67 +188,81 @@ export const CLBR_IMAGE_SPEC = {
   props: {
     alt: {
       default: "",
+      description: "Alternative text. Leave empty for decorative images.",
       required: false,
       type: "string",
     },
     gravity: {
       default: "C",
+      description: "Focal point used when cropping with `cover`.",
       required: false,
       type: "enum",
       values: ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"],
     },
     radius: {
+      description: "Corner radius treatment.",
       required: false,
       type: "enum",
       values: ["xs", "ratio"],
     },
     aspectRatio: {
+      description: "Aspect ratio for the wrapper when using `cover`.",
       required: false,
       type: "enum",
       values: ["1:1", "4:5", "3:2", "16:9", "21:9"],
     },
     cover: {
       default: false,
+      description: "Crops the image to fill the wrapper.",
       required: false,
       type: "boolean",
     },
     shadow: {
       default: false,
+      description: "Applies a soft shadow to the image.",
       required: false,
       type: "boolean",
     },
     height: {
+      description: "Height in pixels.",
       required: false,
       type: "number",
     },
     lazy: {
       default: false,
+      description: "Defers loading until the image is near the viewport.",
       required: false,
       type: "boolean",
     },
     priority: {
       default: false,
+      description: "Marks the image as high priority for fetch.",
       required: false,
       type: "boolean",
     },
     sizes: {
+      description: "`sizes` attribute used with `srcSet`.",
       required: false,
       type: "string",
     },
     sources: {
+      description: "Responsive sources rendered inside a `<picture>`.",
       required: false,
       type: "array",
     },
     srcSet: {
+      description: "Candidate sources for the fallback image.",
       required: false,
       type: "string",
     },
     src: {
       constraints: ["non-empty"],
+      description: "Image source URL.",
       required: true,
       type: "string",
     },
     width: {
+      description: "Width in pixels.",
       required: false,
       type: "number",
     },

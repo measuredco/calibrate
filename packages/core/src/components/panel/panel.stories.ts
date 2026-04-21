@@ -1,15 +1,22 @@
-import { type ClbrPanelProps, renderClbrPanel } from "./panel";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_PANEL_SPEC,
+  type ClbrPanelProps,
+  renderClbrPanel,
+} from "./panel";
+
+const baseArgTypes = specToArgTypes(CLBR_PANEL_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    padding: {
-      control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl"],
-    },
-    surface: {
-      control: { type: "select" },
-      options: ["default", "brand", "inverse", "brand-inverse"],
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_PANEL_SPEC),
+      },
     },
   },
   title: "Structure/Panel",

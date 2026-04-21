@@ -5,7 +5,7 @@ import { renderClbrFieldset } from "../fieldset/fieldset";
 export type ClbrRadiosOrientation = "vertical" | "horizontal";
 
 export interface ClbrRadioItem {
-  /** Optional per-item assistive description text. */
+  /** Optional per-item helper text. */
   description?: string;
   /**
    * Optional per-item disabled override.
@@ -18,21 +18,14 @@ export interface ClbrRadioItem {
   value: string;
 }
 
-/** Props for the Calibrate radios renderer. */
 export interface ClbrRadiosProps {
-  /** Optional group description rendered below legend. */
+  /** Group description rendered below legend. */
   description?: string;
-  /**
-   * Group disabled state.
-   * @default false
-   */
+  /** Group disabled state. @default false */
   disabled?: boolean;
   /** Group id used for group and per-item description id derivation. */
   id: string;
-  /**
-   * Group invalid state; emitted on fieldset when group is enabled.
-   * @default false
-   */
+  /** Group invalid state. Ignored when `disabled`. @default false */
   invalid?: boolean;
   /** Radio options. Must include at least 2 options. */
   radios: ClbrRadioItem[];
@@ -40,17 +33,11 @@ export interface ClbrRadiosProps {
   legend: string;
   /** Shared radio name applied to all options. */
   name: string;
-  /** Layout orientation. */
+  /** Layout orientation. @default "vertical" */
   orientation?: ClbrRadiosOrientation;
-  /**
-   * Required selection state.
-   * @default false
-   */
+  /** Required selection state. @default false */
   required?: boolean;
-  /**
-   * Size variant for all radios in the group.
-   * @default "md"
-   */
+  /** Size variant for all radios in the group. @default "md" */
   size?: ClbrControlSize;
   /** Selected option value. When unmatched, no option is checked. */
   value?: string;
@@ -175,26 +162,32 @@ export function renderClbrRadios({
 /** Declarative radios contract mirror for tooling, docs, and adapters. */
 export const CLBR_RADIOS_SPEC = {
   name: "radios",
+  description:
+    "Use `radios` to let users select one option from a short list.",
   output: {
     element: "fieldset",
   },
   props: {
     description: {
+      description: "Helper text shown below the legend.",
       required: false,
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Disables every option in the group.",
       required: false,
       type: "boolean",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "Unique id used to associate the group with its descriptions.",
       required: true,
       type: "string",
     },
     invalid: {
       default: false,
+      description: "Marks the group as invalid.",
       ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
@@ -206,36 +199,43 @@ export const CLBR_RADIOS_SPEC = {
         "nonEmptyValue",
         "nonEmptyLabel",
       ],
+      description: "Options shown in the group.",
       required: true,
       type: "array",
     },
     legend: {
+      description: "Group label.",
       required: true,
       type: "text",
     },
     name: {
       constraints: ["non-empty"],
+      description: "Form field name shared by all options.",
       required: true,
       type: "string",
     },
     orientation: {
       default: "vertical",
+      description: "Layout direction.",
       required: false,
       type: "enum",
       values: ["vertical", "horizontal"],
     },
     required: {
       default: false,
+      description: "Requires a selection before submission.",
       required: false,
       type: "boolean",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     value: {
+      description: "Currently selected value.",
       required: false,
       type: "string",
     },

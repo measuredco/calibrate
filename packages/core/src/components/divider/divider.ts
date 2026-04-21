@@ -3,18 +3,10 @@ import { attrs } from "../../helpers/html";
 export type ClbrDividerOrientation = "horizontal" | "vertical";
 export type ClbrDividerTone = "default" | "subtle" | "brand";
 
-/** Props for the Calibrate divider renderer. */
 export interface ClbrDividerProps {
-  /**
-   * Divider orientation.
-   * @default "horizontal"
-   */
+  /** Divider orientation. @default "horizontal" */
   orientation?: ClbrDividerOrientation;
-  /**
-   * Divider tone variant.
-   * Omitted when `default`.
-   * @default "default"
-   */
+  /** Tone variant. @default "default" */
   tone?: ClbrDividerTone;
 }
 
@@ -26,7 +18,7 @@ export interface ClbrDividerProps {
  */
 export function renderClbrDivider({
   orientation = "horizontal",
-  tone,
+  tone = "default",
 }: ClbrDividerProps = {}): string {
   const dividerAttrs = attrs({
     "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
@@ -45,6 +37,7 @@ export function renderClbrDivider({
 /** Declarative divider contract mirror for tooling, docs, and adapters. */
 export const CLBR_DIVIDER_SPEC = {
   name: "divider",
+  description: "Use `divider` to separate related content with a rule.",
   output: {
     modes: {
       horizontal: "hr",
@@ -54,12 +47,14 @@ export const CLBR_DIVIDER_SPEC = {
   props: {
     orientation: {
       default: "horizontal",
+      description: "Divider orientation.",
       required: false,
       type: "enum",
       values: ["horizontal", "vertical"],
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "subtle", "brand"],

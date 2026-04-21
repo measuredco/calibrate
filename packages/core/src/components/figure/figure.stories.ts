@@ -1,14 +1,25 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrImage } from "../image/image";
 import { renderClbrProse } from "../prose/prose";
-import { type ClbrFigureProps, renderClbrFigure } from "./figure";
+import {
+  CLBR_FIGURE_SPEC,
+  type ClbrFigureProps,
+  renderClbrFigure,
+} from "./figure";
+
+const baseArgTypes = specToArgTypes(CLBR_FIGURE_SPEC);
 
 const meta = {
   argTypes: {
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_FIGURE_SPEC),
+      },
     },
-    children: { control: false },
   },
   title: "Structure/Figure",
 };

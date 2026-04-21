@@ -1,14 +1,17 @@
-import { type ClbrDividerProps, renderClbrDivider } from "./divider";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_DIVIDER_SPEC,
+  type ClbrDividerProps,
+  renderClbrDivider,
+} from "./divider";
 
 const meta = {
-  argTypes: {
-    orientation: {
-      control: { type: "select" },
-      options: ["horizontal", "vertical"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["default", "subtle", "brand"],
+  argTypes: specToArgTypes(CLBR_DIVIDER_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_DIVIDER_SPEC),
+      },
     },
   },
   title: "Layout/Divider",
@@ -19,7 +22,7 @@ export default meta;
 export const Default = {
   args: {
     orientation: "horizontal",
-    tone: undefined,
+    tone: "default",
   } satisfies ClbrDividerProps,
   render: (args: ClbrDividerProps) => renderClbrDivider(args),
 };

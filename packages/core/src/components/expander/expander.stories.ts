@@ -1,13 +1,17 @@
-import { type ClbrExpanderProps, renderClbrExpander } from "./expander";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_EXPANDER_SPEC,
+  type ClbrExpanderProps,
+  renderClbrExpander,
+} from "./expander";
 
 const meta = {
-  argTypes: {
-    controlsId: { control: { type: "text" } },
-    expanded: { control: { type: "boolean" } },
-    label: { control: { type: "text" } },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md", "lg"],
+  argTypes: specToArgTypes(CLBR_EXPANDER_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_EXPANDER_SPEC),
+      },
     },
   },
   title: "Control/Expander",

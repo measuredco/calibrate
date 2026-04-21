@@ -1,11 +1,22 @@
-import { type ClbrDetailsProps, renderClbrDetails } from "./details";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_DETAILS_SPEC,
+  type ClbrDetailsProps,
+  renderClbrDetails,
+} from "./details";
+
+const baseArgTypes = specToArgTypes(CLBR_DETAILS_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_DETAILS_SPEC),
+      },
     },
   },
   title: "Structure/Details",

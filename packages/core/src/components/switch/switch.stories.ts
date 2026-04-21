@@ -1,10 +1,19 @@
-import { type ClbrSwitchProps, renderClbrSwitch } from "./switch";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_SWITCH_SPEC,
+  type ClbrSwitchProps,
+  renderClbrSwitch,
+} from "./switch";
+
+const baseArgTypes = specToArgTypes(CLBR_SWITCH_SPEC);
 
 const meta = {
-  argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_SWITCH_SPEC),
+      },
     },
   },
   title: "Control/Switch",

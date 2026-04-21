@@ -2,42 +2,18 @@ import { attrs } from "../../helpers/html";
 
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
 
-/** Props for the Calibrate page renderer. */
 export interface ClbrPageProps {
-  /**
-   * Optional banner region markup rendered before the page header.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Optional banner region markup rendered before the header. Caller sanitizes untrusted content. */
   banner?: string;
-  /**
-   * Centers the main region within the page shell.
-   * Emits `data-center-main` only when true.
-   * @default false
-   */
+  /** Centers the main region within the page shell. Emits `data-center-main` only when true. @default false */
   centerMain?: boolean;
-  /**
-   * Main region markup rendered inside the page-owned `<main>`.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Main region markup rendered inside the page-owned `<main>`. Caller sanitizes untrusted content. */
   children?: string;
-  /**
-   * Header region markup.
-   * Typically composed from existing layout and content primitives.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Header region markup. Caller sanitizes untrusted content. */
   header: string;
-  /**
-   * Sticky header behavior.
-   * `always` keeps the header sticky at all breakpoints.
-   * `belowNotebook` keeps the header sticky until notebook width and above.
-   * Emits `data-sticky-header` when provided.
-   */
+  /** Sticky header behavior. Emits `data-sticky-header` when provided. */
   stickyHeader?: ClbrPageStickyHeader;
-  /**
-   * Footer region markup.
-   * Typically composed from existing layout and content primitives.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Footer region markup. Caller sanitizes untrusted content. */
   footer: string;
 }
 
@@ -72,6 +48,7 @@ export function renderClbrPage({
 /** Declarative page contract mirror for tooling, docs, and adapters. */
 export const CLBR_PAGE_SPEC = {
   name: "page",
+  description: "Use `page` as the top-level shell for header, main, and footer regions.",
   output: {
     element: "div",
     class: "page",
@@ -84,28 +61,34 @@ export const CLBR_PAGE_SPEC = {
   },
   props: {
     banner: {
+      description: "Banner rendered above the header.",
       required: false,
       type: "html",
     },
     children: {
+      description: "Main content of the page.",
       required: false,
       type: "html",
     },
     centerMain: {
       default: false,
+      description: "Centers the main region within the page shell.",
       required: false,
       type: "boolean",
     },
     header: {
+      description: "Header content.",
       required: true,
       type: "html",
     },
     stickyHeader: {
+      description: "When the header stays stuck to the top of the viewport.",
       required: false,
       type: "enum",
       values: ["always", "belowNotebook"],
     },
     footer: {
+      description: "Footer content.",
       required: true,
       type: "html",
     },

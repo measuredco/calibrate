@@ -11,46 +11,24 @@ export type ClbrShapeVariant =
   | "circle-lg"
   | "circle-sm";
 
-/** Props for the Calibrate shape renderer. */
 export interface ClbrShapeProps {
-  /**
-   * Shape size mode.
-   * Always emits `data-size`.
-   * `fill` stretches the shape to the block-size of its container; the named
-   * sizes map to canonical fractions of the selected shape's derived size.
-   * @default "md"
-   */
+  /** Size mode. @default "md" */
   size?: ClbrShapeSize;
-  /**
-   * Shape tone.
-   * Omitted when `default`.
-   * Non-default values select the corresponding semantic color treatment.
-   * @default "default"
-   */
+  /** Tone. @default "default" */
   tone?: ClbrShapeTone;
-  /**
-   * Shape variant.
-   * Always emits `data-variant`.
-   * Selects one of the visual-language shape masks from the generated token set.
-   * @default "corner"
-   */
+  /** Shape variant. @default "corner" */
   variant?: ClbrShapeVariant;
 }
 
 /**
  * SSR renderer for the Calibrate shape component.
  *
- * Emits a single `div.shape` with a required `data-variant` attribute.
- * Visual rendering is CSS-driven via the generated shape token variables:
- * `data-variant` selects the mask and canonical derived size, `data-size`
- * selects the size mapping, and optional `data-tone` selects the color.
- *
  * @param props - Shape component props.
  * @returns HTML string for a masked shape element.
  */
 export function renderClbrShape({
   variant = "corner",
-  tone,
+  tone = "default",
   size = "md",
 }: ClbrShapeProps = {}): string {
   const shapeAttrs = attrs({
@@ -69,6 +47,7 @@ export function renderClbrShape({
 /** Declarative shape contract mirror for tooling, docs, and adapters. */
 export const CLBR_SHAPE_SPEC = {
   name: "shape",
+  description: "Use `shape` to render brand visual language components.",
   output: {
     element: "div",
     class: "shape",
@@ -78,6 +57,7 @@ export const CLBR_SHAPE_SPEC = {
   props: {
     variant: {
       default: "corner",
+      description: "Shape to render.",
       required: false,
       type: "enum",
       values: [
@@ -92,12 +72,14 @@ export const CLBR_SHAPE_SPEC = {
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "neutral", "brand", "support"],
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg", "xl", "fill"],

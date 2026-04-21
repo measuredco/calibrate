@@ -1,10 +1,19 @@
-import { type ClbrCheckboxProps, renderClbrCheckbox } from "./checkbox";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_CHECKBOX_SPEC,
+  type ClbrCheckboxProps,
+  renderClbrCheckbox,
+} from "./checkbox";
+
+const baseArgTypes = specToArgTypes(CLBR_CHECKBOX_SPEC);
 
 const meta = {
-  argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_CHECKBOX_SPEC),
+      },
     },
   },
   title: "Control/Checkbox",

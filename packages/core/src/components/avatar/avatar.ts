@@ -36,47 +36,23 @@ const COLOR_HASH = [
   "09",
 ] as const;
 
-/** Props for the Calibrate avatar renderer. */
 export interface ClbrAvatarProps {
-  /**
-   * Optional explicit accessible label.
-   * Used before `name` fallback text.
-   */
+  /** Optional explicit accessible label. Used before `name` fallback text. */
   alt?: string;
-  /**
-   * When true, emits `aria-hidden="true"` on the wrapper.
-   * @default false
-   */
+  /** Emits `aria-hidden="true"` on the wrapper when true. @default false */
   ariaHidden?: boolean;
-  /**
-   * Used to specify icon fallback if `src`, `initials`, and `name` are absent.
-   * @default "person"
-   */
+  /** Icon fallback identity when `src`, `initials`, and `name` are absent.
+   * @default "person" */
   entity?: ClbrAvatarEntity;
-  /**
-   * Optional avatar background color token.
-   * If omitted and `name` exists, color is hash-derived from `name` (01..09).
-   * Falls back to `neutral` when not specified and no `name` is available.
-   */
+  /** Avatar background color token. If omitted and `name` exists, color is hash-derived (01..09). */
   color?: ClbrAvatarColor;
-  /**
-   * Explicit initials override.
-   * Trimmed and whitespace-collapsed; must be alphabetic only, 1-3 characters.
-   */
+  /** Explicit initials override. Trimmed and whitespace-collapsed; alphabetic only, 1-3 characters. */
   initials?: string;
-  /**
-   * Full name used for accessible-label fallback and initials derivation.
-   */
+  /** Full name used for accessible-label fallback and initials derivation. */
   name?: string;
-  /**
-   * Avatar size.
-   * @default "xs"
-   */
+  /** Avatar size. @default "md" */
   size?: ClbrAvatarSize;
-  /**
-   * Image source URL.
-   * Empty/whitespace is treated as missing.
-   */
+  /** Image source URL. Empty/whitespace is treated as missing. */
   src?: string;
 }
 
@@ -156,7 +132,7 @@ export function renderClbrAvatar({
   entity = "person",
   initials,
   name,
-  size = "xs",
+  size = "md",
   src,
 }: ClbrAvatarProps): string {
   const normalizedInitials = normalizeInitials(initials);
@@ -210,27 +186,32 @@ export function renderClbrAvatar({
 /** Declarative avatar contract mirror for tooling, docs, and adapters. */
 export const CLBR_AVATAR_SPEC = {
   name: "avatar",
+  description: "Use `avatar` to visually represent a person, team, or entity.",
   output: {
     element: "span",
     variants: ["image", "initials", "icon"],
   },
   props: {
     alt: {
+      description: "Accessible label for the avatar, overrides name.",
       required: false,
       type: "string",
     },
     ariaHidden: {
       default: false,
+      description: "Hides the avatar from assistive technology.",
       required: false,
       type: "boolean",
     },
     entity: {
       default: "person",
+      description: "Type of subject the avatar represents.",
       required: false,
       type: "enum",
       values: ["bot", "organization", "person", "team"],
     },
     color: {
+      description: "Background color swatch. Derived from name when omitted.",
       required: false,
       type: "enum",
       values: ["neutral", "01", "02", "03", "04", "05", "06", "07", "08", "09"],
@@ -243,20 +224,25 @@ export const CLBR_AVATAR_SPEC = {
         "length <= 3",
         "alphabetic only (A-Z, a-z)",
       ],
+      description:
+        "Initials to display. 1–3 alphabetic characters. Overrides name-derived initials.",
       required: false,
       type: "string",
     },
     name: {
+      description: "Full name. Used for the label and to derive initials.",
       required: false,
       type: "string",
     },
     size: {
-      default: "xs",
+      default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg", "xl"],
     },
     src: {
+      description: "Image source URL.",
       required: false,
       type: "string",
     },

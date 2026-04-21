@@ -3,22 +3,12 @@ import { attrs } from "../../helpers/html";
 export type ClbrContainerGutter = "default" | "narrow" | "none";
 export type ClbrContainerMaxInlineSize = "default" | "wide" | "none";
 
-/** Props for the Calibrate container renderer. */
 export interface ClbrContainerProps {
-  /**
-   * Inner HTML content to render inside the container wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Container inline gutter behavior.
-   * @default "default"
-   */
+  /** Inline gutter behavior. @default "default" */
   gutter?: ClbrContainerGutter;
-  /**
-   * Container max-inline-size behavior.
-   * @default "default"
-   */
+  /** Max-inline-size behavior. @default "default" */
   maxInlineSize?: ClbrContainerMaxInlineSize;
 }
 
@@ -46,22 +36,26 @@ export function renderClbrContainer({
 /** Declarative container contract mirror for tooling, docs, and adapters. */
 export const CLBR_CONTAINER_SPEC = {
   name: "container",
+  description: "Use `container` to wrap page-level content.",
   output: {
     element: "div",
   },
   props: {
     children: {
+      description: "Content rendered inside the container.",
       required: false,
       type: "html",
     },
     gutter: {
       default: "default",
+      description: "Horizontal gutter width.",
       required: false,
       type: "enum",
       values: ["default", "narrow", "none"],
     },
     maxInlineSize: {
       default: "default",
+      description: "Maximum content width.",
       required: false,
       type: "enum",
       values: ["default", "wide", "none"],

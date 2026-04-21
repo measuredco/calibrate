@@ -59,6 +59,7 @@ describe("renderClbrNav", () => {
   it("emits collapsible hooks in SSR output", () => {
     const html = renderClbrNav({
       collapsible: "belowTablet",
+      contentId: "primary-nav-content",
       expanderPosition: "end",
       items,
       size: "sm",
@@ -89,6 +90,7 @@ describe("renderClbrNav", () => {
     mount(
       renderClbrNav({
         collapsible: "belowTablet",
+        contentId: "primary-nav-content",
         items,
       }),
     );
@@ -101,8 +103,26 @@ describe("renderClbrNav", () => {
     const button = getByRole(document.body, "button", { name: "Menu" });
 
     expect(expander).not.toBeNull();
-    expect(button.getAttribute("aria-controls")).toBeNull();
     expect(button.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("throws when collapsible is set without a contentId", () => {
+    expect(() =>
+      renderClbrNav({
+        collapsible: "always",
+        items,
+      }),
+    ).toThrow(/contentId must be a non-empty string/);
+  });
+
+  it("throws when contentId is not a valid HTML id", () => {
+    expect(() =>
+      renderClbrNav({
+        collapsible: "always",
+        contentId: "123-bad-start",
+        items,
+      }),
+    ).toThrow(/contentId must start with a letter/);
   });
 
   it("wires aria-controls when contentId is provided", () => {
@@ -127,6 +147,7 @@ describe("renderClbrNav", () => {
     mount(
       renderClbrNav({
         collapsible: "always",
+        contentId: "primary-nav-content",
         items,
       }),
     );
@@ -154,6 +175,7 @@ describe("renderClbrNav", () => {
     mount(
       renderClbrNav({
         collapsible: "always",
+        contentId: "primary-nav-content",
         items,
       }),
     );

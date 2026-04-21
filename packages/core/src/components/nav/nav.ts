@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 import { renderClbrExpander } from "../expander/expander";
 
 export const CLBR_NAV_TAG_NAME = "clbr-nav";
@@ -8,53 +8,28 @@ export type ClbrNavSize = "sm" | "md";
 const scrollLockAttr = "data-clbr-scroll-locked";
 
 export interface ClbrNavItem {
-  /**
-   * Whether this item points at the current page.
-   * Emits `aria-current="page"` when true.
-   * @default false
-   */
+  /** Emits `aria-current="page"` when true. @default false */
   current?: boolean;
   /** Link destination. */
   href: string;
-  /** Escaped link label. */
+  /** Link label (escaped before render). */
   label: string;
 }
 
-/** Props for the Calibrate nav renderer. */
 export interface ClbrNavProps {
-  /**
-   * Enables collapsible nav behavior.
-   * - `"always"`: menu expander is used at all breakpoints.
-   * - `"belowTablet"`: menu expander is used below the tablet breakpoint.
-   *
-   * Emits `data-collapsible` as a structural hook for runtime enhancement.
-   */
+  /** Collapsible nav behavior. Emits `data-collapsible` as a structural hook for runtime enhancement. */
   collapsible?: ClbrNavCollapsible;
-  /**
-   * Optional id applied to `.content`.
-   * When provided, it is also used as the expander `aria-controls` target.
-   */
+  /** ID applied to `.content`; also used as expander `aria-controls`. Required when `collapsible` is set. */
   contentId?: string;
-  /**
-   * Accessible label for the runtime expander button when `collapsible` is set.
-   * When omitted, the expander component applies its own default label.
-   */
+  /** Accessible label for the runtime expander button when `collapsible` is set. */
   expanderLabel?: string;
-  /**
-   * @default "start"
-   */
+  /** Expander placement when collapsible. @default "start" */
   expanderPosition?: ClbrNavExpanderPosition;
-  /**
-   * Nav items rendered as semantic list links.
-   */
+  /** Nav items rendered as semantic list links. */
   items: ClbrNavItem[];
-  /**
-   * Optional accessible nav label.
-   */
+  /** Accessible nav label. */
   label?: string;
-  /**
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrNavSize;
 }
 
@@ -78,6 +53,17 @@ export function renderClbrNav({
   size = "md",
 }: ClbrNavProps): string {
   const normalizedExpanderLabel = expanderLabel?.trim() || undefined;
+  const normalizedContentId = contentId?.trim();
+
+  if (collapsible && !normalizedContentId) {
+    throw new Error("contentId must be a non-empty string when collapsible is set.");
+  }
+
+  if (normalizedContentId && !isValidHtmlId(normalizedContentId)) {
+    throw new Error(
+      "contentId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
+    );
+  }
 
   const navAttrs = attrs({
     class: "nav",
@@ -105,7 +91,7 @@ export function renderClbrNav({
 
   const contentAttrs = attrs({
     class: "content",
-    id: contentId || undefined,
+    id: normalizedContentId,
   });
 
   return `<${CLBR_NAV_TAG_NAME}><nav ${navAttrs}><div ${contentAttrs}><ul class="list">${listMarkup}</ul></div></nav></${CLBR_NAV_TAG_NAME}>`;
@@ -273,6 +259,7 @@ export function defineClbrNav(): void {
 /** Declarative nav contract mirror for tooling, docs, and adapters. */
 export const CLBR_NAV_SPEC = {
   name: "nav",
+  description: "Use `clbr-nav` to render a primary navigation list.",
   output: {
     element: CLBR_NAV_TAG_NAME,
     class: "nav (inner)",
@@ -285,6 +272,7 @@ export const CLBR_NAV_SPEC = {
   },
   props: {
     items: {
+      description: "Nav links shown in the list.",
       required: true,
       type: "array",
       shape: {
@@ -304,30 +292,38 @@ export const CLBR_NAV_SPEC = {
       },
     },
     label: {
+      description: "Accessible label for the nav landmark.",
       required: false,
       type: "string",
     },
     expanderLabel: {
+      description: "Accessible label for the collapsible expander button.",
       required: false,
       type: "string",
     },
     expanderPosition: {
       default: "start",
+      description: "Where the expander sits within the compostion.",
       required: false,
       type: "enum",
       values: ["start", "end"],
     },
     collapsible: {
+      description: "When to collapse the nav behind an expander.",
       required: false,
       type: "enum",
       values: ["always", "belowTablet"],
     },
     contentId: {
+      constraints: ["validHtmlId"],
+      description: "HTML id for the collapsible content region.",
       required: false,
+      requiredWhen: "collapsible is provided",
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],

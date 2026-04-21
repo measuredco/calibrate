@@ -7,32 +7,19 @@ export type ClbrLinkTone = "default" | "neutral";
 export interface ClbrLinkProps {
   /** Link destination. */
   href: string;
-  /**
-   * Optional icon markup rendered alongside the label.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Optional icon markup rendered alongside the label. Caller sanitizes untrusted content. */
   icon?: string;
   /** Accessible label text rendered as content (escaped before render). */
   label: string;
   /** Optional explicit `rel` value. */
   rel?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrLinkSize;
   /** Optional link target. */
   target?: ClbrLinkTarget;
-  /**
-   * Tone variant.
-   * @default "default"
-   */
+  /** Tone variant. @default "default" */
   tone?: ClbrLinkTone;
-  /**
-   * Underline variant.
-   * Emits `data-underline` only when true.
-   * @default false
-   */
+  /** Underline variant; emits `data-underline` only when true. @default false */
   underline?: boolean;
 }
 
@@ -53,7 +40,7 @@ export function renderClbrLink(props: ClbrLinkProps): string {
     rel,
     size = "md",
     target,
-    tone,
+    tone = "default",
     underline,
   } = props;
 
@@ -79,45 +66,54 @@ export function renderClbrLink(props: ClbrLinkProps): string {
 /** Declarative link contract mirror for tooling, docs, and adapters. */
 export const CLBR_LINK_SPEC = {
   name: "link",
+  description: "Use `link` to navigate to another page or resource.",
   output: {
     default: "a",
   },
   props: {
     href: {
+      description: "Link destination.",
       required: true,
       type: "string",
     },
     icon: {
+      description: "Icon markup shown alongside the label.",
       required: false,
       type: "html",
     },
     label: {
+      description: "Accessible label.",
       required: true,
       type: "text",
     },
     rel: {
+      description: "Explicit `rel` attribute.",
       required: false,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     target: {
+      description: "Where to open the link.",
       required: false,
       type: "enum",
       values: ["_blank", "_parent", "_self", "_top"],
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "neutral"],
     },
     underline: {
       default: false,
+      description: "Underlines the link.",
       required: false,
       type: "boolean",
     },

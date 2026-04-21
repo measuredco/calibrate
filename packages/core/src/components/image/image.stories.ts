@@ -1,20 +1,23 @@
-import { type ClbrImageProps, renderClbrImage } from "./image";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_IMAGE_SPEC,
+  type ClbrImageProps,
+  renderClbrImage,
+} from "./image";
+
+const baseArgTypes = specToArgTypes(CLBR_IMAGE_SPEC);
 
 const meta = {
   argTypes: {
-    aspectRatio: {
-      control: { type: "select" },
-      options: ["1:1", "4:5", "3:2", "16:9", "21:9"],
+    ...baseArgTypes,
+    sources: { ...baseArgTypes.sources, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_IMAGE_SPEC),
+      },
     },
-    gravity: {
-      control: { type: "select" },
-      options: ["C", "N", "NE", "E", "SE", "S", "SW", "W", "NW"],
-    },
-    radius: {
-      control: { type: "select" },
-      options: ["xs", "ratio"],
-    },
-    sources: { control: false },
   },
   title: "Graphic/Image",
 };

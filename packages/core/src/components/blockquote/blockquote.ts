@@ -4,51 +4,23 @@ import { renderClbrText } from "../text/text";
 
 export type ClbrBlockquoteSize = "md" | "lg";
 
-/** Props for the Calibrate blockquote renderer. */
 export interface ClbrBlockquoteProps {
-  /**
-   * Text alignment for the blockquote.
-   * Applied to the root wrapper and passed through to the composed quote paragraph.
-   * `start` emits no root alignment attribute.
-   * @default "start"
-   */
+  /** Text alignment. @default "start" */
   align?: ClbrAlign;
-  /**
-   * Attribution HTML content.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted attribution HTML. */
   attribution: string;
-  /**
-   * Applies max measure constraints to the composed quote paragraph.
-   * Passed through to the quote `renderClbrText({ as: "p" })` call.
-   * @default true
-   */
+  /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
-  /**
-   * Quote HTML content.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted quote HTML. */
   quote: string;
-  /**
-   * Enables breakpoint-responsive type sizing.
-   * Passed through to both composed text elements.
-   * @default false
-   */
+  /** Enables breakpoint-responsive type sizing. @default false */
   responsive?: boolean;
-  /**
-   * Blockquote size.
-   * Passed through to the composed quote paragraph.
-   * Attribution always renders at `sm`.
-   * @default "md"
-   */
+  /** Quote size. @default "md" */
   size?: ClbrBlockquoteSize;
 }
 
 /**
  * SSR renderer for the Calibrate blockquote component.
- *
- * Emits a `figure.blockquote` root containing semantic `blockquote` and
- * `figcaption` wrappers, with typography delegated to `renderClbrText`.
  *
  * @param props - Blockquote component props.
  * @returns HTML string for a blockquote wrapper.
@@ -88,6 +60,7 @@ export function renderClbrBlockquote({
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */
 export const CLBR_BLOCKQUOTE_SPEC = {
   name: "blockquote",
+  description: "Use `blockquote` to display a quote with attribution.",
   output: {
     element: "figure",
     class: "blockquote",
@@ -99,30 +72,36 @@ export const CLBR_BLOCKQUOTE_SPEC = {
   props: {
     align: {
       default: "start",
+      description: "Text alignment.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     attribution: {
+      description: "Attribution HTML shown beneath the quote.",
       required: true,
       type: "html",
     },
     measured: {
       default: true,
+      description: "Caps line length for comfortable reading.",
       required: false,
       type: "boolean",
     },
     quote: {
+      description: "Quote HTML.",
       required: true,
       type: "html",
     },
     responsive: {
       default: false,
+      description: "Scales type across breakpoints.",
       required: false,
       type: "boolean",
     },
     size: {
       default: "md",
+      description: "Size variant for the quote.",
       required: false,
       type: "enum",
       values: ["md", "lg"],

@@ -1,3 +1,4 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { defineClbrBanner, renderClbrBanner } from "../banner/banner";
 import { renderClbrBox } from "../box/box";
 import { renderClbrButton } from "../button/button";
@@ -11,26 +12,31 @@ import { defineClbrMenu, renderClbrMenu } from "../menu/menu";
 import { defineClbrNav, renderClbrNav } from "../nav/nav";
 import { defineClbrSidebar, renderClbrSidebar } from "../sidebar/sidebar";
 import { renderClbrStack } from "../stack/stack";
-import { type ClbrPageProps, renderClbrPage } from "./page";
+import { CLBR_PAGE_SPEC, type ClbrPageProps, renderClbrPage } from "./page";
 
 defineClbrBanner();
 defineClbrMenu();
 defineClbrNav();
 defineClbrSidebar();
 
+const baseArgTypes = specToArgTypes(CLBR_PAGE_SPEC);
+
 const meta = {
   argTypes: {
-    banner: { control: false },
-    children: { control: false },
-    centerMain: { control: { type: "boolean" } },
-    footer: { control: false },
-    header: { control: false },
-    stickyHeader: {
-      control: { type: "select" },
-      options: ["always", "belowNotebook"],
-    },
+    ...baseArgTypes,
+    banner: { ...baseArgTypes.banner, control: false },
+    children: { ...baseArgTypes.children, control: false },
+    footer: { ...baseArgTypes.footer, control: false },
+    header: { ...baseArgTypes.header, control: false },
   },
-  parameters: { padding: false },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_PAGE_SPEC),
+      },
+    },
+    padding: false,
+  },
   title: "Structure/Page",
 };
 

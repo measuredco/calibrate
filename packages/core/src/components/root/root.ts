@@ -5,36 +5,20 @@ export type ClbrDirection = "ltr" | "rtl";
 export type ClbrAppOverscrollBehavior = "none";
 export type ClbrTheme = "light" | "dark";
 
-/**
- * Props for the Calibrate root wrapper renderer.
- */
 export interface ClbrRootProps {
-  /**
-   * Marks this root as the owning app root.
-   * Emits `data-app-root` only when `true`.
-   * @default false
-   */
+  /** Marks this root as the owning app root; emits `data-app-root` when true. @default false */
   appRoot?: boolean;
-  /**
-   * Opts this root into `overscroll-behavior: none` integration hooks.
-   * Emits `data-app-overscroll-behavior="none"` when provided.
-   */
+  /** Opts into `overscroll-behavior: none` integration hooks; emits `data-app-overscroll-behavior="none"`. */
   appOverscrollBehavior?: ClbrAppOverscrollBehavior;
-  /**
-   * Brand variant applied to the root wrapper.
-   * @default "msrd"
-   */
+  /** Brand variant applied to the root wrapper. @default "msrd" */
   brand?: ClbrBrand;
-  /**
-   * Inner HTML content to render inside the root wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Inner HTML content. Caller sanitizes untrusted content. */
   children: string;
-  /** Optional explicit text direction for the root wrapper. */
+  /** Optional explicit text direction. */
   dir?: ClbrDirection;
-  /** Optional BCP47 language tag for the root wrapper (e.g. `en-GB`). */
+  /** Optional BCP47 language tag (e.g. `en-GB`). */
   lang?: string;
-  /** Optional explicit theme variant class to apply on the root wrapper. */
+  /** Optional explicit theme variant. */
   theme?: ClbrTheme;
 }
 
@@ -76,41 +60,49 @@ export function renderClbrRoot(props: ClbrRootProps): string {
 /** Declarative root contract mirror for tooling, docs, and adapters. */
 export const CLBR_ROOT_SPEC = {
   name: "root",
+  description: "Mandatory top-level `root` wrapper for the Calibrate system.",
   output: {
     element: "div",
   },
   props: {
     appOverscrollBehavior: {
+      description: "Disables overscroll bounce for app-shell integrations.",
       required: false,
       type: "enum",
       values: ["none"],
     },
     appRoot: {
       default: false,
+      description: "Marks this wrapper as the top-level app root.",
       required: false,
       type: "boolean",
     },
     brand: {
       default: "msrd",
+      description: "Brand identity applied to the wrapper.",
       required: false,
       type: "enum",
       values: ["msrd", "wrfr"],
     },
     children: {
+      description: "Content rendered inside the root.",
       required: true,
       type: "html",
     },
     dir: {
+      description: "Text direction.",
       required: false,
       type: "enum",
       values: ["ltr", "rtl"],
     },
     lang: {
+      description: "BCP47 language tag (e.g. `en-GB`).",
       format: "bcp47",
       required: false,
       type: "string",
     },
     theme: {
+      description: "Colour theme.",
       required: false,
       type: "enum",
       values: ["light", "dark"],

@@ -1,14 +1,26 @@
-import { type ClbrGridProps, renderClbrGrid, renderClbrGridItem } from "./grid";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_GRID_SPEC,
+  type ClbrGridProps,
+  renderClbrGrid,
+  renderClbrGridItem,
+} from "./grid";
+
+const baseArgTypes = specToArgTypes(CLBR_GRID_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    gap: {
-      control: { type: "select" },
-      options: ["default", "expanded", "none"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_GRID_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Layout/Grid",
 };
 

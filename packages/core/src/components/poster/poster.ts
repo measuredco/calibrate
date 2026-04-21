@@ -7,29 +7,14 @@ export type ClbrPosterSurface = Exclude<
   "inverse" | "brand-inverse"
 >;
 
-/** Props for the Calibrate poster renderer. */
 export interface ClbrPosterProps {
-  /**
-   * Foreground HTML content rendered above the image layer.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Foreground HTML content above the image. Caller sanitizes untrusted content. */
   children?: string;
-  /**
-   * Absolute theme lock for foreground content over non-themeable media.
-   * When provided, emits `data-content-theme` and ensures a default
-   * `data-surface="default"` is present when no explicit surface is set.
-   */
+  /** Absolute theme lock for foreground content over non-themeable media. */
   contentTheme?: ClbrTheme;
-  /**
-   * Background image HTML content.
-   * Usually `renderClbrImage(...)` output.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Background image HTML (usually `renderClbrImage(...)`). Caller sanitizes untrusted content. */
   image: string;
-  /**
-   * Surface context.
-   * When provided, emits `data-surface`.
-   */
+  /** Surface context. Emits `data-surface` when provided. */
   surface?: ClbrPosterSurface;
 }
 
@@ -66,6 +51,7 @@ export function renderClbrPoster({
 /** Declarative poster contract mirror for tooling, docs, and adapters. */
 export const CLBR_POSTER_SPEC = {
   name: "poster",
+  description: "Use `poster` to layer content over a background image.",
   output: {
     element: "div",
     class: "poster",
@@ -73,19 +59,25 @@ export const CLBR_POSTER_SPEC = {
   },
   props: {
     children: {
+      description: "Foreground content rendered over the image.",
       required: false,
       type: "html",
     },
     contentTheme: {
+      description:
+        "Fixed theme for foreground content over non-themeable media.",
       required: false,
       type: "enum",
       values: ["light", "dark"],
     },
     image: {
+      description:
+        "Background image markup, usually a calibrate image component.",
       required: true,
       type: "html",
     },
     surface: {
+      description: "Surface context.",
       required: false,
       type: "enum",
       values: ["default", "brand"],

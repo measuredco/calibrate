@@ -1,32 +1,21 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrInline } from "../inline/inline";
-import { type ClbrAvatarProps, renderClbrAvatar } from "./avatar";
+import {
+  CLBR_AVATAR_SPEC,
+  type ClbrAvatarProps,
+  renderClbrAvatar,
+} from "./avatar";
+
+const baseArgTypes = specToArgTypes(CLBR_AVATAR_SPEC);
 
 const meta = {
-  argTypes: {
-    color: {
-      control: { type: "select" },
-      options: [
-        "neutral",
-        "01",
-        "02",
-        "03",
-        "04",
-        "05",
-        "06",
-        "07",
-        "08",
-        "09",
-      ],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_AVATAR_SPEC),
+      },
     },
-    entity: {
-      control: { type: "select" },
-      options: ["person", "bot", "organization", "team"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl"],
-    },
-    src: { control: false },
   },
   title: "Graphic/Avatar",
 };

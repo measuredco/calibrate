@@ -3,33 +3,16 @@ import type { ClbrAlign } from "../../types";
 
 export type ClbrProseHangingIndent = "always" | "notebook";
 
-/** Props for the Calibrate prose renderer. */
 export interface ClbrProseProps {
-  /**
-   * Inner HTML content to render inside the prose wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children: string;
-  /**
-   * Text alignment.
-   * @default "start"
-   */
+  /** Text alignment. @default "start" */
   align?: ClbrAlign;
-  /**
-   * Hanging-indent layout behavior.
-   * Omitted by default.
-   * `always` and `notebook` emit `data-hanging-indent` with matching value.
-   */
+  /** Hanging-indent layout behavior. */
   hangingIndent?: ClbrProseHangingIndent;
-  /**
-   * Applies max measure constraints for long-form readability.
-   * @default true
-   */
+  /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
-  /**
-   * Enables breakpoint-responsive body scale.
-   * @default false
-   */
+  /** Enables breakpoint-responsive body scale. @default false */
   responsive?: boolean;
 }
 
@@ -60,32 +43,38 @@ export function renderClbrProse({
 /** Declarative prose contract mirror for tooling, docs, and adapters. */
 export const CLBR_PROSE_SPEC = {
   name: "prose",
+  description: "Use `prose` to style rich-text markup.",
   output: {
     element: "div",
   },
   props: {
     children: {
+      description: "Content rendered inside the prose wrapper.",
       required: true,
       type: "html",
     },
     align: {
       default: "start",
+      description: "Text alignment.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     hangingIndent: {
+      description: "Indents paragraphs with a hanging first line.",
       required: false,
       type: "enum",
       values: ["always", "notebook"],
     },
     measured: {
       default: true,
+      description: "Caps line length for comfortable reading.",
       required: false,
       type: "boolean",
     },
     responsive: {
       default: false,
+      description: "Scales body text across breakpoints.",
       required: false,
       type: "boolean",
     },

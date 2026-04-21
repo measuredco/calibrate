@@ -2,38 +2,19 @@ import { attrs } from "../../helpers/html";
 import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
-/** Props for the Calibrate figure renderer. */
 export interface ClbrFigureProps {
-  /**
-   * Alignment of the figure within available space.
-   * `start` emits no alignment attribute.
-   * @default "start"
-   */
+  /** Alignment within available space. @default "start" */
   align?: ClbrAlign;
-  /**
-   * Caption HTML content.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted caption HTML. */
   caption: string;
-  /**
-   * Media/content to present.
-   * Typically `renderClbrImage(...)` output.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted media HTML (typically a `renderClbrImage` result). */
   children: string;
-  /**
-   * Enables breakpoint-responsive type sizing for the caption.
-   * Passed through to the composed caption text element.
-   * @default false
-   */
+  /** Enables breakpoint-responsive type sizing for the caption. @default false */
   responsive?: boolean;
 }
 
 /**
  * SSR renderer for the Calibrate figure component.
- *
- * Emits a `figure.figure` root containing trusted media markup followed by a
- * `figcaption` composed with `renderClbrText({ as: "span" })`.
  *
  * @param props - Figure component props.
  * @returns HTML string for a figure wrapper.
@@ -61,6 +42,7 @@ export function renderClbrFigure({
 /** Declarative figure contract mirror for tooling, docs, and adapters. */
 export const CLBR_FIGURE_SPEC = {
   name: "figure",
+  description: "Use `figure` to present media with a caption.",
   output: {
     element: "figure",
     class: "figure",
@@ -72,20 +54,24 @@ export const CLBR_FIGURE_SPEC = {
   props: {
     align: {
       default: "start",
+      description: "Alignment within available space.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     caption: {
+      description: "Caption HTML shown below the media.",
       required: true,
       type: "html",
     },
     children: {
+      description: "Media rendered inside the figure.",
       required: true,
       type: "html",
     },
     responsive: {
       default: false,
+      description: "Scales the caption across breakpoints.",
       required: false,
       type: "boolean",
     },

@@ -11,36 +11,18 @@ export type ClbrHeadingSize =
   | "4xl"
   | "5xl";
 
-/**
- * Props for the Calibrate heading renderer.
- */
 export interface ClbrHeadingProps {
-  /**
-   * Text alignment.
-   * @default "start"
-   */
+  /** Text alignment. @default "start" */
   align?: ClbrAlign;
   /** Heading text content (escaped before render). */
   children: string;
-  /**
-   * Optional semantic heading level.
-   * When omitted, renders a `span`.
-   */
+  /** Semantic heading level; omit to render a `span`. */
   level?: ClbrHeadingLevel;
-  /**
-   * Enables optical inline alignment adjustment for left sidebearing-heavy glyphs.
-   * @default false
-   */
+  /** Enables optical inline alignment for left sidebearing-heavy glyphs. @default false */
   opticalInline?: boolean;
-  /**
-   * Enables breakpoint-responsive heading scale.
-   * @default false
-   */
+  /** Enables breakpoint-responsive heading scale. @default false */
   responsive?: boolean;
-  /**
-   * Heading size variant.
-   * @default "md"
-   */
+  /** Heading size. @default "md" */
   size?: ClbrHeadingSize;
 }
 
@@ -73,6 +55,7 @@ export function renderClbrHeading({
 /** Declarative heading contract mirror for tooling, docs, and adapters. */
 export const CLBR_HEADING_SPEC = {
   name: "heading",
+  description: "Use `heading` to render a section title with consistent type.",
   output: {
     modes: {
       level1: "h1",
@@ -87,31 +70,37 @@ export const CLBR_HEADING_SPEC = {
   props: {
     align: {
       default: "start",
+      description: "Text alignment.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     children: {
+      description: "Heading text.",
       required: true,
       type: "text",
     },
     level: {
+      description: "Semantic heading level. Renders a `<span>` when omitted.",
       required: false,
       type: "enum",
       values: [1, 2, 3, 4, 5, 6],
     },
     opticalInline: {
       default: false,
+      description: "Optically aligns the first glyph to the inline edge.",
       required: false,
       type: "boolean",
     },
     responsive: {
       default: false,
+      description: "Scales type across breakpoints.",
       required: false,
       type: "boolean",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],

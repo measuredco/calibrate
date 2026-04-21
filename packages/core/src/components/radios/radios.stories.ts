@@ -1,14 +1,19 @@
-import { type ClbrRadiosProps, renderClbrRadios } from "./radios";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_RADIOS_SPEC,
+  type ClbrRadiosProps,
+  renderClbrRadios,
+} from "./radios";
+
+const baseArgTypes = specToArgTypes(CLBR_RADIOS_SPEC);
 
 const meta = {
-  argTypes: {
-    orientation: {
-      control: { type: "select" },
-      options: ["vertical", "horizontal"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_RADIOS_SPEC),
+      },
     },
   },
   title: "Control/Radios",

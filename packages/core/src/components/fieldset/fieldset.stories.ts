@@ -1,11 +1,22 @@
-import { type ClbrFieldsetProps, renderClbrFieldset } from "./fieldset";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_FIELDSET_SPEC,
+  type ClbrFieldsetProps,
+  renderClbrFieldset,
+} from "./fieldset";
+
+const baseArgTypes = specToArgTypes(CLBR_FIELDSET_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_FIELDSET_SPEC),
+      },
     },
   },
   title: "Control/Fieldset",

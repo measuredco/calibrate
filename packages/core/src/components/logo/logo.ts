@@ -8,26 +8,14 @@ export type ClbrLogoVariant =
   | "typographic"
   | "graphic";
 
-/** Props for the Calibrate logo renderer. */
 export interface ClbrLogoProps {
-  /**
-   * Accessible label text rendered in a visually hidden span.
-   */
+  /** Accessible label. */
   label: string;
-  /**
-   * Logo size.
-   * @default "md"
-   */
+  /** Size. @default "md" */
   size?: ClbrLogoSize;
-  /**
-   * Logo tone.
-   * @default "default"
-   */
+  /** Tone. @default "default" */
   tone?: ClbrLogoTone;
-  /**
-   * Logo variant.
-   * @default "primary"
-   */
+  /** Variant. @default "primary" */
   variant?: ClbrLogoVariant;
 }
 
@@ -40,7 +28,7 @@ export interface ClbrLogoProps {
 export function renderClbrLogo({
   label,
   size = "md",
-  tone,
+  tone = "default",
   variant = "primary",
 }: ClbrLogoProps): string {
   const logoAttrs = attrs({
@@ -56,28 +44,33 @@ export function renderClbrLogo({
 /** Declarative logo contract mirror for tooling, docs, and adapters. */
 export const CLBR_LOGO_SPEC = {
   name: "logo",
+  description: "Use `logo` to display the Measured brand mark.",
   output: {
     element: "div",
   },
   props: {
     label: {
+      description: "Accessible label.",
       required: true,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md", "lg", "fill"],
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "neutral"],
     },
     variant: {
       default: "primary",
+      description: "Logo variant.",
       required: false,
       type: "enum",
       values: ["primary", "secondary", "typographic", "graphic"],

@@ -1,16 +1,23 @@
-import { type ClbrBlockquoteProps, renderClbrBlockquote } from "./blockquote";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_BLOCKQUOTE_SPEC,
+  type ClbrBlockquoteProps,
+  renderClbrBlockquote,
+} from "./blockquote";
+
+const baseArgTypes = specToArgTypes(CLBR_BLOCKQUOTE_SPEC);
 
 const meta = {
   argTypes: {
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-    attribution: { control: false },
-    quote: { control: false },
-    size: {
-      control: { type: "select" },
-      options: ["md", "lg"],
+    ...baseArgTypes,
+    attribution: { ...baseArgTypes.attribution, control: false },
+    quote: { ...baseArgTypes.quote, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_BLOCKQUOTE_SPEC),
+      },
     },
   },
   title: "Typographic/Blockquote",

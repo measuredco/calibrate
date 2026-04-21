@@ -3,42 +3,28 @@ import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export const CLBR_RANGE_TAG_NAME = "clbr-range";
 
-/** Props for the Calibrate range renderer. */
 export interface ClbrRangeProps {
-  /**
-   * Optional assistive description text rendered after the range.
-   */
+  /** Helper text rendered after the range. */
   description?: string;
-  /**
-   * Disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
   /** Range id; used for input/output/label wiring. */
   id: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on wrapper.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
   /** Label text content (escaped before render). */
   label: string;
-  /** Optional maximum value. */
+  /** Maximum value. */
   max?: number;
-  /** Optional minimum value. */
+  /** Minimum value. */
   min?: number;
-  /** Optional field name. */
+  /** Field name. */
   name?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrControlSize;
-  /** Optional step value. */
+  /** Step value. */
   step?: number;
-  /** Optional current value. */
+  /** Current value. */
   value?: number;
 }
 
@@ -157,6 +143,8 @@ export function defineClbrRange(): void {
 /** Declarative range contract mirror for tooling, docs, and adapters. */
 export const CLBR_RANGE_SPEC = {
   name: "range",
+  description:
+    "Use `clbr-range` to let users pick a numeric value along a scale.",
   output: {
     element: CLBR_RANGE_TAG_NAME,
     class: "range-field (inner)",
@@ -171,52 +159,63 @@ export const CLBR_RANGE_SPEC = {
   },
   props: {
     description: {
+      description: "Helper text shown below the range.",
       required: false,
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Disables the range.",
       required: false,
       type: "boolean",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "Unique id used to associate the input with its label.",
       required: true,
       type: "string",
     },
     inlineSize: {
       default: "full",
+      description: "How the range fills its container.",
       required: false,
       type: "enum",
       values: ["full", "fit"],
     },
     label: {
+      description: "Label text.",
       required: true,
       type: "text",
     },
     max: {
+      description: "Maximum value.",
       required: false,
       type: "number",
     },
     min: {
+      description: "Minimum value.",
       required: false,
       type: "number",
     },
     name: {
+      description: "Form field name.",
       required: false,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     step: {
+      description: "Granularity of value changes.",
       required: false,
       type: "number",
     },
     value: {
+      description: "Current value.",
       required: false,
       type: "number",
     },

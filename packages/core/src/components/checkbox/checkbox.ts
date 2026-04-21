@@ -1,50 +1,26 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 import type { ClbrControlSize } from "../../types";
 
-/** Props for the Calibrate checkbox renderer. */
 export interface ClbrCheckboxProps {
-  /**
-   * Checked state.
-   * @default false
-   */
+  /** Checked state. @default false */
   checked?: boolean;
-  /**
-   * Optional assistive description text rendered after the label.
-   * Requires `descriptionId` when provided.
-   */
+  /** Helper text rendered after the label. Requires `descriptionId`. */
   description?: string;
-  /**
-   * ID for the description element, used by `aria-describedby`.
-   * Required when `description` is provided.
-   */
+  /** ID for the description element, used by `aria-describedby`. Required when `description` is provided. */
   descriptionId?: string;
-  /**
-   * Disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
-  /**
-   * Invalid state.
-   * Emits `aria-invalid="true"` only when true and checkbox is enabled.
-   * Ignored when `disabled` is true.
-   * @default false
-   */
+  /** Invalid state. Ignored when `disabled`. @default false */
   invalid?: boolean;
   /** Label text content (escaped before render). */
   label: string;
-  /** Optional form field name. */
+  /** Form field name. */
   name?: string;
-  /**
-   * Required state.
-   * @default false
-   */
+  /** Required state. @default false */
   required?: boolean;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrControlSize;
-  /** Optional submitted field value. */
+  /** Submitted field value. */
   value?: string;
 }
 
@@ -115,56 +91,67 @@ export function renderClbrCheckbox({
 /** Declarative checkbox contract mirror for tooling, docs, and adapters. */
 export const CLBR_CHECKBOX_SPEC = {
   name: "checkbox",
+  description: "Use `checkbox` to let users toggle a single option on or off.",
   output: {
     element: "div",
   },
   props: {
     checked: {
       default: false,
+      description: "Whether the checkbox is checked.",
       required: false,
       type: "boolean",
     },
     description: {
+      description: "Helper text shown below the label.",
       required: false,
       type: "string",
     },
     descriptionId: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "HTML id for the description element.",
       required: false,
       requiredWhen: "description is provided",
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Prevents interaction.",
       required: false,
       type: "boolean",
     },
     invalid: {
       default: false,
+      description: "Marks the checkbox as invalid.",
       ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
     },
     label: {
+      description: "Label shown next to the checkbox.",
       required: true,
       type: "text",
     },
     name: {
+      description: "Name submitted with the form.",
       required: false,
       type: "string",
     },
     required: {
       default: false,
+      description: "Marks the checkbox as required.",
       required: false,
       type: "boolean",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     value: {
+      description: "Value submitted with the form.",
       required: false,
       type: "string",
     },

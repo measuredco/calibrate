@@ -5,37 +5,18 @@ export type ClbrInlineAs = "div" | "ul";
 export type ClbrInlineGap = "2xs" | "xs" | "sm" | "md" | "lg";
 export type ClbrInlineJustify = "start" | "center" | "end" | "between";
 
-/** Props for the Calibrate inline renderer. */
 export interface ClbrInlineProps {
-  /**
-   * Element tag used for inline rendering.
-   * @default "div"
-   */
+  /** Element tag. @default "div" */
   as?: ClbrInlineAs;
-  /**
-   * Inline cross-axis alignment.
-   * @default "center"
-   */
+  /** Cross-axis alignment. @default "center" */
   align?: ClbrAlign;
-  /**
-   * Inner HTML content to render inside the inline wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Inline spacing gap size.
-   * @default "md"
-   */
+  /** Spacing gap size. @default "md" */
   gap?: ClbrInlineGap;
-  /**
-   * Inline main-axis distribution.
-   * @default "start"
-   */
+  /** Main-axis distribution. @default "start" */
   justify?: ClbrInlineJustify;
-  /**
-   * Prevents wrapping of inline children when true.
-   * Omitted by default.
-   */
+  /** Prevents wrapping of inline children. */
   nowrap?: boolean;
 }
 
@@ -67,6 +48,7 @@ export function renderClbrInline({
 /** Declarative inline contract mirror for tooling, docs, and adapters. */
 export const CLBR_INLINE_SPEC = {
   name: "inline",
+  description: "Use `inline` to lay out content in a horizontal row.",
   output: {
     modes: {
       div: "div",
@@ -76,33 +58,39 @@ export const CLBR_INLINE_SPEC = {
   props: {
     as: {
       default: "div",
+      description: "Element tag to render.",
       required: false,
       type: "enum",
       values: ["div", "ul"],
     },
     align: {
       default: "center",
+      description: "Aligns items on the cross axis.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     children: {
+      description: "Items laid out in a row.",
       required: false,
       type: "html",
     },
     gap: {
       default: "md",
+      description: "Space between children.",
       required: false,
       type: "enum",
       values: ["2xs", "xs", "sm", "md", "lg"],
     },
     justify: {
       default: "start",
+      description: "Distributes items along the main axis.",
       required: false,
       type: "enum",
       values: ["start", "center", "end", "between"],
     },
     nowrap: {
+      description: "Prevents items from wrapping onto new lines.",
       required: false,
       type: "boolean",
     },

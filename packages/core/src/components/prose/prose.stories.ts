@@ -1,17 +1,23 @@
-import { type ClbrProseProps, renderClbrProse } from "./prose";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_PROSE_SPEC,
+  type ClbrProseProps,
+  renderClbrProse,
+} from "./prose";
+
+const baseArgTypes = specToArgTypes(CLBR_PROSE_SPEC);
 
 const meta = {
   argTypes: {
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-    hangingIndent: {
-      control: { type: "select" },
-      options: ["always", "notebook"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
   parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_PROSE_SPEC),
+      },
+    },
     padding: "4.2rem 3rem",
   },
   title: "Typographic/Prose",

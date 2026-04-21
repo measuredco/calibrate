@@ -1,3 +1,4 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrBox } from "../box/box";
 import { renderClbrButton } from "../button/button";
 import { renderClbrContainer } from "../container/container";
@@ -6,19 +7,29 @@ import { renderClbrHeading } from "../heading/heading";
 import { renderClbrImage } from "../image/image";
 import { renderClbrStack } from "../stack/stack";
 import { renderClbrText } from "../text/text";
-import { type ClbrPosterProps, renderClbrPoster } from "./poster";
+import {
+  CLBR_POSTER_SPEC,
+  type ClbrPosterProps,
+  renderClbrPoster,
+} from "./poster";
+
+const baseArgTypes = specToArgTypes(CLBR_POSTER_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    contentTheme: { control: false },
-    image: { control: false },
-    surface: {
-      control: { type: "select" },
-      options: ["default", "brand"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+    contentTheme: { ...baseArgTypes.contentTheme, control: false },
+    image: { ...baseArgTypes.image, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_POSTER_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Structure/Poster",
 };
 

@@ -3,81 +3,36 @@ import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export type ClbrTextareaResize = "vertical" | "none";
 
-/** Props for the Calibrate textarea renderer. */
 export interface ClbrTextareaProps {
-  /**
-   * Autocomplete hint.
-   * Use `false` to emit `autocomplete="off"`.
-   * Omitted by default.
-   */
+  /** Autocomplete hint; `false` emits `autocomplete="off"`. */
   autocomplete?: string | false;
-  /**
-   * Optional assistive description text rendered after the textarea.
-   * Reused for validation guidance when `invalid` is true.
-   * When omitted, no description or validation message is rendered.
-   */
+  /** Helper text rendered after the textarea (reused as validation guidance when `invalid`). */
   description?: string;
-  /**
-   * Disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
   /** Textarea id; used for `textarea[id]` and `label[for]`. */
   id: string;
-  /**
-   * Invalid state.
-   * Emits `aria-invalid="true"` only when true and textarea is editable.
-   * Ignored when `disabled` or `readOnly` is true.
-   * Does not require `description`; consumers may keep hints or omit messages.
-   * @default false
-   */
+  /** Invalid state. Ignored when `disabled` or `readOnly`. @default false */
   invalid?: boolean;
   /** Label text content (escaped before render). */
   label: string;
-  /** Optional field name. */
+  /** Field name attribute. */
   name?: string;
-  /**
-   * Read-only state.
-   * Ignored when `disabled` is true.
-   * @default false
-   */
+  /** Read-only state. Ignored when `disabled`. @default false */
   readOnly?: boolean;
-  /**
-   * Required state.
-   * @default false
-   */
+  /** Required state. @default false */
   required?: boolean;
-  /**
-   * Resize behavior.
-   * Default `vertical` is omitted from markup.
-   * `none` emits `data-resize="none"` on wrapper.
-   * @default "vertical"
-   */
+  /** Resize behavior. @default "vertical" */
   resize?: ClbrTextareaResize;
-  /**
-   * Number of visible text rows.
-   * Must be an integer >= 2.
-   * @default 2
-   */
+  /** Number of visible text rows. Must be an integer >= 2. @default 2 */
   rows?: number;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrControlSize;
-  /**
-   * Spellcheck behavior.
-   * Omitted by default to preserve browser default behavior.
-   */
+  /** Spellcheck behavior. Omitted by default. */
   spellcheck?: boolean;
-  /** Optional current value. */
+  /** Current value. */
   value?: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on wrapper.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
 }
 
@@ -173,55 +128,67 @@ export function renderClbrTextarea({
 /** Declarative textarea contract mirror for tooling, docs, and adapters. */
 export const CLBR_TEXTAREA_SPEC = {
   name: "textarea",
+  description:
+    "Use `textarea` to collect multiple lines of text from users.",
   output: {
     element: "div",
   },
   props: {
     autocomplete: {
+      description: "Browser autocomplete hint. Pass `false` to disable.",
       required: false,
       type: "string|false",
     },
     description: {
+      description: "Helper text shown below the textarea; also used for validation guidance.",
       required: false,
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Disables the textarea.",
       required: false,
       type: "boolean",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "Unique id used to associate the textarea with its label.",
       required: true,
       type: "string",
     },
     invalid: {
       default: false,
+      description: "Marks the textarea as invalid.",
       ignoredWhen: "disabled is true or readOnly is true",
       required: false,
       type: "boolean",
     },
     label: {
+      description: "Label text.",
       required: true,
       type: "text",
     },
     name: {
+      description: "Form field name.",
       required: false,
       type: "string",
     },
     readOnly: {
       default: false,
+      description: "Prevents editing while keeping the value visible.",
       ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
     },
     required: {
       default: false,
+      description: "Requires a value before submission.",
       required: false,
       type: "boolean",
     },
     resize: {
       default: "vertical",
+      description: "How the user can resize the textarea.",
       required: false,
       type: "enum",
       values: ["vertical", "none"],
@@ -229,25 +196,30 @@ export const CLBR_TEXTAREA_SPEC = {
     rows: {
       constraints: ["integer", "min:2"],
       default: 2,
+      description: "Number of visible rows.",
       required: false,
       type: "number",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     spellcheck: {
+      description: "Whether the browser checks spelling.",
       required: false,
       type: "boolean",
     },
     value: {
+      description: "Current value.",
       required: false,
       type: "string",
     },
     inlineSize: {
       default: "full",
+      description: "How the textarea fills its container.",
       required: false,
       type: "enum",
       values: ["full", "fit"],

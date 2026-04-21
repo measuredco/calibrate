@@ -11,39 +11,25 @@ export type ClbrSpinnerSize =
   | "fill";
 export type ClbrSpinnerTone = "default" | "brand";
 
-/** Props for the Calibrate spinner renderer. */
 export interface ClbrSpinnerProps {
-  /**
-   * Optional accessible status label.
-   * Escaped and rendered in visually hidden text after the SVG.
-   * When present, the spinner emits `role="status"`.
-   */
+  /** Accessible status label. */
   label?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrSpinnerSize;
-  /**
-   * Tone variant.
-   * @default "default"
-   * Omitted from output when `default`.
-   */
+  /** Tone variant. @default "default" */
   tone?: ClbrSpinnerTone;
 }
 
 /**
  * SSR renderer for the Calibrate spinner component.
  *
- * Emits a `span.spinner` containing an aria-hidden SVG. When `label` is
- * provided, it also emits `role="status"` and visually hidden label text.
- *
+ * @param props - Spinner component props.
  * @returns HTML string for a spinner element.
  */
 export function renderClbrSpinner({
   label,
   size = "md",
-  tone,
+  tone = "default",
 }: ClbrSpinnerProps = {}): string {
   const spinnerAttrs = attrs({
     class: "spinner",
@@ -58,25 +44,27 @@ export function renderClbrSpinner({
 /** Declarative spinner contract mirror for tooling, docs, and adapters. */
 export const CLBR_SPINNER_SPEC = {
   name: "spinner",
+  description:
+    "Use `spinner` to indicate loading or in-progress state.",
   output: {
     element: "span",
   },
   props: {
     label: {
-      description:
-        "Escaped visually hidden status text. Emits role=status when present.",
+      description: "Accessible status label announced to assistive tech.",
       type: "string",
       required: false,
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "fill"],
     },
     tone: {
       default: "default",
-      description: "Emit data-tone only when not default.",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "brand"],

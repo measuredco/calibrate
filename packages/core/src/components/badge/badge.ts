@@ -3,24 +3,14 @@ import type { ClbrStatusTone } from "../../types";
 
 export type ClbrBadgeSize = "sm" | "md";
 
-/** Props for the Calibrate badge renderer. */
 export interface ClbrBadgeProps {
-  /**
-   * Positions the badge as a floating overlay when true.
-   * Omitted by default.
-   */
+  /** Positions the badge as a floating overlay. */
   floating?: boolean;
   /** Badge text content. Escaped as plain text. */
   label: string;
-  /**
-   * Badge size.
-   * @default "md"
-   */
+  /** Badge size. @default "md" */
   size?: ClbrBadgeSize;
-  /**
-   * Semantic tone variant.
-   * Omitted by default.
-   */
+  /** Semantic tone variant. */
   tone?: ClbrStatusTone;
 }
 
@@ -49,26 +39,31 @@ export function renderClbrBadge({
 /** Declarative badge contract mirror for tooling, docs, and adapters. */
 export const CLBR_BADGE_SPEC = {
   name: "badge",
+  description: "Use `badge` to label or count related content.",
   output: {
     element: "span",
   },
   props: {
     floating: {
       default: false,
+      description: "Positions the badge as a floating overlay.",
       required: false,
       type: "boolean",
     },
     label: {
+      description: "Badge text.",
       required: true,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     tone: {
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["info", "success", "warning", "error"],

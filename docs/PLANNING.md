@@ -6,6 +6,28 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Storybook docs fidelity
+
+Autodocs for the `web-components` flavor reads from a Custom Elements Manifest (class-based), not TypeScript interfaces + JSDoc. That pipeline can never cover our SSR function renderers, so pulling prop descriptions/defaults/controls into the docs page and args table needs a different source.
+
+Direction: promote `CLBR_*_SPEC` to canonical docs/tooling source of truth (already mandated as a mirror per `CONSTRAINTS.md`). Demote JSDoc on public component contracts to a functional role — `@param`, `@default`, `@returns`, `@throws`, `@remarks`, plus short one-liners where hover DX benefits. SPEC carries rich human-facing descriptions, enum semantics, defaults, required/ignored clauses; JSDoc stays a tight hover hint.
+
+Steps:
+
+- [x] Add a `specToArgTypes` helper (plus `specToComponentDescription`) that maps SPEC props to Storybook argTypes (control, options, description, `table.type`, `table.defaultValue`).
+- [x] POC migration of `button` to consume SPEC via the helper (SPEC gained top-level `description` and per-prop `description` fields).
+- [x] Add top-level `description` to every remaining `CLBR_*_SPEC`.
+- [x] Add per-prop `description` to every remaining `CLBR_*_SPEC` prop. Where a JSDoc already exists on the matching TS interface prop, mirror it as the starting point.
+- [x] Migrate remaining `*.stories.ts` to `argTypes: specToArgTypes(CLBR_*_SPEC)`, dropping hand-maintained argType blocks. Per-story overrides stay at the story level (e.g. Button's per-mode `hideControls(...)`, curated `icon` option lists).
+- [x] Demote JSDoc on public component contracts: strip descriptive prose that now lives in SPEC, keep `@param`/`@default`/`@returns` and short one-line hints where IDE hover benefits.
+- [x] Add `apps/storybook/tsconfig.json` so `.storybook/**` and story files get proper editor type-checking without relying on the core package's `tsconfig`.
+- [ ] Decide whether to enforce SPEC `description` presence via ESLint (rule scope: every prop in `CLBR_*_SPEC.props` has a non-empty `description`). Hold until the migration completes.
+
+Deferred:
+
+- CEM-based docgen path for class-based runtime web components (alert, banner, nav, menu, sidebar, range). The SPEC-based path already delivers parity docs for SSR + web-component renderers, so CEM is optional — revisit if we want per-attribute/event/slot metadata in the docs page that SPEC doesn't model.
+- SPEC/renderer drift prevention via shared test helper (e.g. `assertSpecConsistency(SPEC, renderer)`): default values match renderer's destructured defaults; `ignoredWhen` props genuinely don't affect output in that mode; enum `values` round-trip through the renderer. Prefer this over type-level enforcement (SPEC-as-types) since test-based checks don't require a specific authoring style.
+
 ## Next
 
 What we could be working on next.
@@ -22,10 +44,6 @@ What we could be working on next.
 - `Structure/Breadcrumb` (JS responsive)
 - `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required, a11y)
-
-### Storybook docs fidelity
-
-Improve Storybook docs/type extraction for SSR renderer stories so prop tables and component/prop JSDoc are represented consistently (for example evaluating docgen/CEM options, or generating docs metadata from `CLBR_*_SPEC`), and to align with web-components. Fix the JSDoc comments for human docs consumption as part of this. And fix tsconfig.
 
 ### Component hygiene
 

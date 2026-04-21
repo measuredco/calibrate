@@ -4,31 +4,17 @@ import type { ClbrAlign } from "../../types";
 export type ClbrGridGap = "default" | "expanded" | "none";
 export type ClbrGridTrack = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-/** Props for the Calibrate grid renderer. */
 export interface ClbrGridProps {
-  /**
-   * Inner HTML content to render inside the grid wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   * Direct children should be grid items (for example via `renderClbrGridItem`).
-   */
+  /** Trusted inner HTML (typically grid items). */
   children?: string;
-  /**
-   * Grid gap behavior.
-   * @default "default"
-   */
+  /** Gap behavior. @default "default" */
   gap?: ClbrGridGap;
 }
 
-/** Props for the Calibrate grid-item renderer. */
 export interface ClbrGridItemProps {
-  /**
-   * Inner HTML content to render inside the grid item.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Item align-self behavior.
-   */
+  /** Align-self. */
   align?: ClbrAlign;
   /** Column span at default container threshold. */
   colSpan?: ClbrGridTrack;
@@ -42,9 +28,7 @@ export interface ClbrGridItemProps {
   colStartNarrow?: ClbrGridTrack;
   /** Column start at wide container threshold. */
   colStartWide?: ClbrGridTrack;
-  /**
-   * Item justify-self behavior.
-   */
+  /** Justify-self. */
   justify?: ClbrAlign;
   /** Row span at default container threshold. */
   rowSpan?: ClbrGridTrack;
@@ -133,16 +117,19 @@ export function renderClbrGridItem({
 /** Declarative grid contract mirror for tooling, docs, and adapters. */
 export const CLBR_GRID_SPEC = {
   name: "grid",
+  description: "Use `grid` to lay out content in a 12-column responsive grid.",
   output: {
     element: "div",
   },
   props: {
     children: {
+      description: "Grid items rendered inside the grid.",
       required: false,
       type: "html",
     },
     gap: {
       default: "default",
+      description: "Space between grid items.",
       required: false,
       type: "enum",
       values: ["default", "expanded", "none"],
@@ -173,81 +160,97 @@ export const CLBR_GRID_SPEC = {
 /** Declarative grid-item contract mirror for tooling, docs, and adapters. */
 export const CLBR_GRID_ITEM_SPEC = {
   name: "grid-item",
+  description: "Use `grid-item` to place content within a `grid` layout.",
   output: {
     element: "div",
   },
   props: {
     children: {
+      description: "Content rendered inside the grid item.",
       required: false,
       type: "html",
     },
     align: {
+      description: "Block-axis alignment within the grid cell.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     justify: {
+      description: "Inline-axis alignment within the grid cell.",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
     },
     colSpan: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Columns spanned at the default breakpoint.",
       required: false,
       type: "number",
     },
     colStart: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting column at the default breakpoint.",
       required: false,
       type: "number",
     },
     rowSpan: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Rows spanned at the default breakpoint.",
       required: false,
       type: "number",
     },
     rowSpanNarrow: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Rows spanned at the narrow breakpoint.",
       required: false,
       type: "number",
     },
     rowSpanWide: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Rows spanned at the wide breakpoint.",
       required: false,
       type: "number",
     },
     rowStart: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting row at the default breakpoint.",
       required: false,
       type: "number",
     },
     rowStartNarrow: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting row at the narrow breakpoint.",
       required: false,
       type: "number",
     },
     rowStartWide: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting row at the wide breakpoint.",
       required: false,
       type: "number",
     },
     colSpanNarrow: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Columns spanned at the narrow breakpoint.",
       required: false,
       type: "number",
     },
     colStartNarrow: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting column at the narrow breakpoint.",
       required: false,
       type: "number",
     },
     colSpanWide: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Columns spanned at the wide breakpoint.",
       required: false,
       type: "number",
     },
     colStartWide: {
       constraints: ["integer", "min:1", "max:12"],
+      description: "Starting column at the wide breakpoint.",
       required: false,
       type: "number",
     },

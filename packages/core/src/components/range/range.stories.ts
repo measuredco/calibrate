@@ -1,16 +1,22 @@
-import { defineClbrRange, type ClbrRangeProps, renderClbrRange } from "./range";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_RANGE_SPEC,
+  defineClbrRange,
+  type ClbrRangeProps,
+  renderClbrRange,
+} from "./range";
 
 defineClbrRange();
 
+const baseArgTypes = specToArgTypes(CLBR_RANGE_SPEC);
+
 const meta = {
-  argTypes: {
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_RANGE_SPEC),
+      },
     },
   },
   title: "Control/Range",

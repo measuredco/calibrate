@@ -1,20 +1,21 @@
-import { type ClbrSurfaceProps, renderClbrSurface } from "./surface";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_SURFACE_SPEC,
+  type ClbrSurfaceProps,
+  renderClbrSurface,
+} from "./surface";
+
+const baseArgTypes = specToArgTypes(CLBR_SURFACE_SPEC);
 
 const meta = {
   argTypes: {
-    children: {
-      control: false,
-    },
-    variant: {
-      control: { type: "select" },
-      options: ["default", "brand", "inverse", "brand-inverse"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          "Surface toolbar global is ignored here; use Controls for surface props.",
+        component: specToComponentDescription(CLBR_SURFACE_SPEC),
       },
     },
     withSurface: false,
@@ -30,6 +31,6 @@ export const Default = {
   args: {
     children: exampleContent,
     variant: "default",
-  },
+  } satisfies ClbrSurfaceProps,
   render: (args: ClbrSurfaceProps) => renderClbrSurface(args),
 };

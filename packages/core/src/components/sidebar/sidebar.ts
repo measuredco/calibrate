@@ -9,47 +9,22 @@ const aboveNotebookMedia = "(min-width: 68em)";
 const collapseLabelDefault = "Collapse sidebar";
 const triggerLabelDefault = "Open sidebar";
 
-/** Props for the Calibrate sidebar renderer. */
 export interface ClbrSidebarProps {
-  /**
-   * Behavior above the notebook breakpoint.
-   * @default "persistent"
-   */
+  /** Behavior above the notebook breakpoint. @default "persistent" */
   aboveNotebook?: ClbrSidebarAboveNotebook;
-  /**
-   * Content region markup rendered inside `.content`.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Content region markup rendered inside `.content`. Caller sanitizes untrusted content. */
   children?: string;
-  /**
-   * Accessible label for the runtime collapse/close button.
-   * @default "Collapse sidebar"
-   */
+  /** Accessible label for the runtime collapse/close button. @default "Collapse sidebar" */
   collapseLabel?: string;
-  /**
-   * Optional footer region markup.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Optional footer region markup. Caller sanitizes untrusted content. */
   footer?: string;
-  /**
-   * Optional header region markup.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Optional header region markup. Caller sanitizes untrusted content. */
   header?: string;
-  /**
-   * Required id for the inner `.sidebar` element.
-   * Used by the component-owned trigger via `aria-controls`.
-   */
+  /** Required id for the inner `.sidebar`; used by the trigger via `aria-controls`. */
   id: string;
-  /**
-   * Accessible label for the component-owned trigger.
-   * @default "Open sidebar"
-   */
+  /** Accessible label for the component-owned trigger. @default "Open sidebar" */
   triggerLabel?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrSidebarSize;
 }
 
@@ -415,6 +390,8 @@ export function defineClbrSidebar(): void {
 /** Declarative sidebar contract mirror for tooling, docs, and adapters. */
 export const CLBR_SIDEBAR_SPEC = {
   name: "sidebar",
+  description:
+    "Use `clbr-sidebar` for a collapsible side panel alongside main content.",
   output: {
     element: CLBR_SIDEBAR_TAG_NAME,
     children: [
@@ -430,39 +407,47 @@ export const CLBR_SIDEBAR_SPEC = {
   props: {
     aboveNotebook: {
       default: "persistent",
+      description: "Layout behaviour on wider screens.",
       required: false,
       type: "enum",
       values: ["persistent", "collapsible", "overlay"],
     },
     children: {
+      description: "Sidebar body content.",
       required: false,
       type: "html",
     },
     collapseLabel: {
       default: collapseLabelDefault,
+      description: "Accessible label for the collapse button.",
       required: false,
       type: "string",
     },
     footer: {
+      description: "Content rendered in the sidebar footer.",
       required: false,
       type: "html",
     },
     header: {
+      description: "Content rendered in the sidebar header.",
       required: false,
       type: "html",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "Unique id used to wire the trigger to the sidebar.",
       required: true,
       type: "string",
     },
     triggerLabel: {
       default: triggerLabelDefault,
+      description: "Accessible label for the open button.",
       required: false,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],

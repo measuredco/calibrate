@@ -1,18 +1,19 @@
-import { type ClbrHeadingProps, renderClbrHeading } from "./heading";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_HEADING_SPEC,
+  type ClbrHeadingProps,
+  renderClbrHeading,
+} from "./heading";
+
+const baseArgTypes = specToArgTypes(CLBR_HEADING_SPEC);
 
 const meta = {
-  argTypes: {
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-    level: {
-      control: { type: "select" },
-      options: [1, 2, 3, 4, 5, 6],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_HEADING_SPEC),
+      },
     },
   },
   title: "Typographic/Heading",

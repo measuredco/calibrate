@@ -1,30 +1,18 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 import type { ClbrInlineSize } from "../../types";
 
-/** Props for the Calibrate fieldset renderer. */
 export interface ClbrFieldsetProps {
-  /** Trusted inner HTML content. Caller is responsible for sanitization. */
+  /** Trusted inner HTML. */
   children?: string;
-  /** Optional group description rendered below legend. */
+  /** Group description rendered below legend. */
   description?: string;
-  /**
-   * Fieldset disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
   /** Fieldset id used for description id derivation. */
   id: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on fieldset.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
-  /**
-   * Fieldset invalid state; emitted only when enabled.
-   * @default false
-   */
+  /** Invalid state. Ignored when `disabled`. @default false */
   invalid?: boolean;
   /** Fieldset legend text (escaped before render). */
   legend: string;
@@ -90,40 +78,48 @@ export function renderClbrFieldset({
 /** Declarative fieldset contract mirror for tooling, docs, and adapters. */
 export const CLBR_FIELDSET_SPEC = {
   name: "fieldset",
+  description: "Use `fieldset` to group related form controls under a legend.",
   output: {
     element: "fieldset",
   },
   props: {
     children: {
+      description: "Form controls grouped inside the fieldset.",
       required: false,
       type: "html",
     },
     description: {
+      description: "Description shown below the legend.",
       required: false,
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Prevents interaction with controls in the group.",
       required: false,
       type: "boolean",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "HTML id for the fieldset.",
       required: true,
       type: "string",
     },
     invalid: {
       default: false,
+      description: "Marks the group as invalid.",
       ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
     },
     legend: {
+      description: "Legend shown above the group.",
       required: true,
       type: "text",
     },
     inlineSize: {
       default: "full",
+      description: "Whether the fieldset fills its container or shrinks to fit.",
       required: false,
       type: "enum",
       values: ["full", "fit"],

@@ -34,19 +34,13 @@ export interface ClbrMenuTriggerProps {
 }
 
 export interface ClbrMenuProps {
-  /**
-   * Popup alignment relative to the trigger.
-   * @default "start"
-   */
+  /** Popup alignment relative to the trigger. @default "start" */
   align?: ClbrMenuAlign;
   /** Required HTML id seed for the menu popup and trigger relationship. */
   id: string;
   /** Action items rendered inside the popup menu. */
   items: ClbrMenuItem[];
-  /**
-   * Control size applied to the host and composed trigger button.
-   * @default "md"
-   */
+  /** Control size applied to the host and composed trigger button. @default "md" */
   size?: ClbrControlSize;
   /** Trigger button configuration composed internally via `renderClbrButton()`. */
   trigger: ClbrMenuTriggerProps;
@@ -394,8 +388,11 @@ export function defineClbrMenu(): void {
   customElements.define(CLBR_MENU_TAG_NAME, ClbrMenuElement);
 }
 
+/** Declarative menu contract mirror for tooling, docs, and adapters. */
 export const CLBR_MENU_SPEC = {
   name: "menu",
+  description:
+    "Use `clbr-menu` to show a list of actions from a trigger button.",
   output: {
     element: CLBR_MENU_TAG_NAME,
     children: [
@@ -407,16 +404,19 @@ export const CLBR_MENU_SPEC = {
   props: {
     align: {
       default: "start",
+      description: "Popup alignment relative to the trigger.",
       required: false,
       type: "enum",
       values: ["start", "end"],
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "HTML id seed used for the trigger and popup.",
       required: true,
       type: "string",
     },
     items: {
+      description: "Action items listed inside the popup.",
       required: true,
       type: "array",
       shape: {
@@ -437,11 +437,13 @@ export const CLBR_MENU_SPEC = {
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     trigger: {
+      description: "Trigger button configuration.",
       required: true,
       type: "object",
       shape: {
@@ -528,7 +530,8 @@ export const CLBR_MENU_SPEC = {
       },
       {
         behavior: "emit",
-        value: 'div.popup[role="menu"] > button[role="menuitem"][aria-disabled="true"]',
+        value:
+          'div.popup[role="menu"] > button[role="menuitem"][aria-disabled="true"]',
         when: "an item has disabled: true",
       },
       {

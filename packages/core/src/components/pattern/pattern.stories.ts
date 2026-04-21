@@ -1,30 +1,25 @@
-import { type ClbrPatternProps, renderClbrPattern } from "./pattern";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_PATTERN_SPEC,
+  type ClbrPatternProps,
+  renderClbrPattern,
+} from "./pattern";
+
+const baseArgTypes = specToArgTypes(CLBR_PATTERN_SPEC);
 
 const meta = {
   argTypes: {
-    children: { control: false },
-    size: {
-      control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl", "fill"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["default", "subtle", "support"],
-    },
-    variant: {
-      control: { type: "select" },
-      options: [
-        "corner",
-        "tile-slice-lg",
-        "tile-slice-sm",
-        "tile-sm",
-        "tile-lg",
-        "circle-lg",
-        "circle-sm",
-      ],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_PATTERN_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Graphic/Pattern",
 };
 
@@ -34,7 +29,7 @@ export const Default = {
   args: {
     children: `<div style="block-size: 6rem;"></div>`,
     size: "md",
-    tone: undefined,
+    tone: "default",
     variant: "corner",
   } satisfies ClbrPatternProps,
   render: (args: ClbrPatternProps) => renderClbrPattern(args),

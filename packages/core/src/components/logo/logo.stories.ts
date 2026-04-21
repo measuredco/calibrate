@@ -1,18 +1,13 @@
-import { type ClbrLogoProps, renderClbrLogo } from "./logo";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { CLBR_LOGO_SPEC, type ClbrLogoProps, renderClbrLogo } from "./logo";
 
 const meta = {
-  argTypes: {
-    tone: {
-      control: { type: "select" },
-      options: ["default", "neutral"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md", "lg", "fill"],
-    },
-    variant: {
-      control: { type: "select" },
-      options: ["primary", "graphic", "secondary", "typographic"],
+  argTypes: specToArgTypes(CLBR_LOGO_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_LOGO_SPEC),
+      },
     },
   },
   title: "Graphic/Logo",
@@ -24,7 +19,7 @@ export const Default = {
   args: {
     label: "Measured",
     size: "md",
-    tone: undefined,
+    tone: "default",
     variant: "primary",
   } satisfies ClbrLogoProps,
   render: (args: ClbrLogoProps) => renderClbrLogo(args),

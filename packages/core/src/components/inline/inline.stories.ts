@@ -1,27 +1,25 @@
-import { type ClbrInlineProps, renderClbrInline } from "./inline";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_INLINE_SPEC,
+  type ClbrInlineProps,
+  renderClbrInline,
+} from "./inline";
+
+const baseArgTypes = specToArgTypes(CLBR_INLINE_SPEC);
 
 const meta = {
   argTypes: {
-    as: {
-      control: { type: "select" },
-      options: ["div", "ul"],
-    },
-    align: {
-      control: { type: "select" },
-      options: ["start", "center", "end"],
-    },
-    children: { control: false },
-    gap: {
-      control: { type: "select" },
-      options: ["2xs", "xs", "sm", "md", "lg"],
-    },
-    justify: {
-      control: { type: "select" },
-      options: ["start", "center", "end", "between"],
-    },
-    nowrap: { control: { type: "boolean" } },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_INLINE_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Layout/Inline",
 };
 

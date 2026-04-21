@@ -1,27 +1,14 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrInline } from "../inline/inline";
-import { type ClbrShapeProps, renderClbrShape } from "./shape";
+import { CLBR_SHAPE_SPEC, type ClbrShapeProps, renderClbrShape } from "./shape";
 
 const meta = {
-  argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["xs", "sm", "md", "lg", "xl", "fill"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["default", "brand", "support", "neutral"],
-    },
-    variant: {
-      control: { type: "select" },
-      options: [
-        "corner",
-        "tile-slice-lg",
-        "tile-slice-sm",
-        "tile-sm",
-        "tile-lg",
-        "circle-lg",
-        "circle-sm",
-      ],
+  argTypes: specToArgTypes(CLBR_SHAPE_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_SHAPE_SPEC),
+      },
     },
   },
   title: "Graphic/Shape",
@@ -32,7 +19,7 @@ export default meta;
 export const Default = {
   args: {
     size: "md",
-    tone: undefined,
+    tone: "default",
     variant: "corner",
   } satisfies ClbrShapeProps,
   render: (args: ClbrShapeProps) => renderClbrShape(args),

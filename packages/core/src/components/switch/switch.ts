@@ -1,38 +1,22 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
 import type { ClbrControlSize } from "../../types";
 
-/** Props for the Calibrate switch renderer. */
 export interface ClbrSwitchProps {
-  /**
-   * Checked state.
-   * @default false
-   */
+  /** Checked state. @default false */
   checked?: boolean;
-  /**
-   * Optional assistive description text rendered after the label.
-   * Requires `descriptionId` when provided.
-   */
+  /** Helper text rendered after the label. Requires `descriptionId`. */
   description?: string;
-  /**
-   * ID for the description element, used by `aria-describedby`.
-   * Required when `description` is provided.
-   */
+  /** ID for the description element, used by `aria-describedby`. Required when `description` is provided. */
   descriptionId?: string;
-  /**
-   * Disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
   /** Label text content (escaped before render). */
   label: string;
-  /** Optional form field name. */
+  /** Form field name. */
   name?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrControlSize;
-  /** Optional submitted field value. */
+  /** Submitted field value. */
   value?: string;
 }
 
@@ -94,45 +78,55 @@ export function renderClbrSwitch({
 /** Declarative switch contract mirror for tooling, docs, and adapters. */
 export const CLBR_SWITCH_SPEC = {
   name: "switch",
+  description:
+    "Use `switch` to let users instantly toggle a setting on or off.",
   output: {
     element: "div",
   },
   props: {
     checked: {
       default: false,
+      description: "Whether the switch is on.",
       required: false,
       type: "boolean",
     },
     description: {
+      description: "Helper text shown below the label.",
       required: false,
       type: "string",
     },
     descriptionId: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "Id of the description element referenced by the input.",
       required: false,
       requiredWhen: "description is provided",
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Disables the switch.",
       required: false,
       type: "boolean",
     },
     label: {
+      description: "Label text.",
       required: true,
       type: "text",
     },
     name: {
+      description: "Form field name.",
       required: false,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     value: {
+      description: "Submitted value when checked.",
       required: false,
       type: "string",
     },

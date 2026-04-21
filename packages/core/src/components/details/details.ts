@@ -2,27 +2,14 @@ import { attrs, escapeHtml } from "../../helpers/html";
 import type { ClbrInlineSize } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
 
-/** Props for the Calibrate details renderer. */
 export interface ClbrDetailsProps {
-  /**
-   * Content markup inside the details panel.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Content markup inside the details panel. Caller sanitizes untrusted content. */
   children?: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on details.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
-  /**
-   * Whether the details is initially open.
-   * Emits the native `open` attribute when true.
-   * @default false
-   */
+  /** Whether the details is initially open. @default false */
   open?: boolean;
-  /** Summary text content. Escaped as plain text. */
+  /** Summary text content. Escaped before render. */
   summary: string;
 }
 
@@ -59,29 +46,32 @@ export function renderClbrDetails({
 /** Declarative details contract mirror for tooling, docs, and adapters. */
 export const CLBR_DETAILS_SPEC = {
   name: "details",
+  description:
+    "Use `details` to let users expand and collapse a section of content.",
   output: {
     element: "details",
   },
   props: {
     children: {
-      description: "Trusted inner HTML rendered inside div.content.",
+      description: "Content revealed when the details is open.",
       required: false,
       type: "html",
     },
     inlineSize: {
       default: "full",
-      description: 'Emit data-inline-size only when value is "fit".',
+      description: "Whether the details fills its container or shrinks to fit.",
       required: false,
       type: "enum",
       values: ["full", "fit"],
     },
     open: {
       default: false,
-      description: "Emit native open attribute when true.",
+      description: "Opens the details by default.",
       required: false,
       type: "boolean",
     },
     summary: {
+      description: "Summary shown in the toggle.",
       required: true,
       type: "string",
     },

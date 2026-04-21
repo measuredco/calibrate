@@ -9,42 +9,18 @@ export const CLBR_ALERT_EVENT_DISMISS = "clbr-alert-dismiss";
 
 const dismissibleLabelDefault = "Dismiss alert";
 
-/** Props for the Calibrate alert renderer. */
 export interface ClbrAlertProps {
-  /**
-   * Whether a dismiss control is injected by the runtime custom element.
-   * In no-JS SSR output, dismissible alerts remain visible.
-   * @default false
-   */
+  /** Whether the runtime custom element should inject a dismiss control. @default false */
   dismissible?: boolean;
-  /**
-   * Accessible label for the runtime dismiss control.
-   * Escaped before render. Serialized into `data-dismissible-label` as the
-   * runtime bridge value used when upgrading SSR markup.
-   * Ignored when `dismissible` is false.
-   * @default "Dismiss alert"
-   */
+  /** Accessible label for the runtime dismiss control. Ignored when not dismissible. @default "Dismiss alert" */
   dismissibleLabel?: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on the alert host.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
-  /**
-   * Alert body text content.
-   * Escaped before render.
-   */
+  /** Alert body text (escaped before render). */
   message: string;
-  /**
-   * Semantic message intent.
-   */
+  /** Semantic message intent. */
   tone?: ClbrStatusTone;
-  /**
-   * Optional short heading/title text.
-   * Escaped before render.
-   */
+  /** Optional short heading/title text (escaped before render). */
   title?: string;
 }
 
@@ -194,6 +170,7 @@ export function defineClbrAlert(): void {
 /** Declarative alert contract mirror for tooling, docs, and adapters. */
 export const CLBR_ALERT_SPEC = {
   name: "alert",
+  description: "Use `clbr-alert` to surface short, important messages.",
   output: {
     element: CLBR_ALERT_TAG_NAME,
     class: "alert",
@@ -206,31 +183,37 @@ export const CLBR_ALERT_SPEC = {
   props: {
     dismissible: {
       default: false,
+      description: "Shows a dismiss control that removes the alert.",
       required: false,
       type: "boolean",
     },
     dismissibleLabel: {
       default: dismissibleLabelDefault,
+      description: "Accessible label for the dismiss control.",
       ignoredWhen: "dismissible is false",
       required: false,
       type: "string",
     },
     inlineSize: {
       default: "full",
+      description: "Whether the alert fills its container or shrinks to fit.",
       required: false,
       type: "enum",
       values: ["full", "fit"],
     },
     message: {
+      description: "Body text of the alert.",
       required: true,
       type: "text",
     },
     tone: {
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["info", "success", "warning", "error"],
     },
     title: {
+      description: "Short heading above the message.",
       required: false,
       type: "text",
     },

@@ -1,49 +1,17 @@
-import { ClbrRootProps, renderClbrRoot } from "./root";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { CLBR_ROOT_SPEC, ClbrRootProps, renderClbrRoot } from "./root";
+
+const baseArgTypes = specToArgTypes(CLBR_ROOT_SPEC);
 
 const meta = {
   argTypes: {
-    appOverscrollBehavior: {
-      control: {
-        labels: {
-          none: "none",
-        },
-        type: "select",
-      },
-      options: ["none"],
-    },
-    brand: {
-      control: { type: "select" },
-      options: ["msrd", "wrfr"],
-    },
-    children: {
-      control: false,
-    },
-    dir: {
-      control: {
-        labels: {
-          ltr: "ltr",
-          rtl: "rtl",
-        },
-        type: "select",
-      },
-      options: ["ltr", "rtl"],
-    },
-    theme: {
-      control: {
-        labels: {
-          dark: "dark",
-          light: "light",
-        },
-        type: "select",
-      },
-      options: ["light", "dark"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          "Toolbar globals are ignored here; use Controls for root props.",
+        component: `${specToComponentDescription(CLBR_ROOT_SPEC)}\n\nToolbar globals are ignored on this page; use arg table controls instead.`,
       },
     },
     withRoot: false,

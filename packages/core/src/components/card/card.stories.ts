@@ -1,19 +1,18 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import {
   type ClbrGridProps,
   renderClbrGrid,
   renderClbrGridItem,
 } from "../grid/grid";
-import { type ClbrCardProps, renderClbrCard } from "./card";
+import { CLBR_CARD_SPEC, type ClbrCardProps, renderClbrCard } from "./card";
 
 const meta = {
-  argTypes: {
-    headingLevel: {
-      control: { type: "select" },
-      options: [1, 2, 3, 4, 5, 6],
-    },
-    surface: {
-      control: { type: "select" },
-      options: ["default", "brand", "inverse", "brand-inverse"],
+  argTypes: specToArgTypes(CLBR_CARD_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_CARD_SPEC),
+      },
     },
   },
   title: "Structure/Card",

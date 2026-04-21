@@ -1,5 +1,7 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrBox } from "../box/box";
 import {
+  CLBR_SIDEBAR_SPEC,
   defineClbrSidebar,
   renderClbrSidebar,
   type ClbrSidebarProps,
@@ -7,23 +9,23 @@ import {
 
 defineClbrSidebar();
 
+const baseArgTypes = specToArgTypes(CLBR_SIDEBAR_SPEC);
+
 const meta = {
   argTypes: {
-    aboveNotebook: {
-      control: { type: "select" },
-      options: ["persistent", "collapsible", "overlay"],
-    },
-    children: { control: false },
-    collapseLabel: { control: { type: "text" } },
-    footer: { control: false },
-    header: { control: false },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-    triggerLabel: { control: { type: "text" } },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+    footer: { ...baseArgTypes.footer, control: false },
+    header: { ...baseArgTypes.header, control: false },
   },
-  parameters: { padding: "1rem" },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_SIDEBAR_SPEC),
+      },
+    },
+    padding: "1rem",
+  },
   title: "Structure/Sidebar",
 };
 

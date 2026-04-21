@@ -9,76 +9,36 @@ export type ClbrInputType =
   | "url"
   | "numeric";
 
-/** Props for the Calibrate input renderer. */
 export interface ClbrInputProps {
-  /**
-   * Autocomplete hint.
-   * Use `false` to emit `autocomplete="off"`.
-   * Omitted by default.
-   */
+  /** Autocomplete hint; `false` emits `autocomplete="off"`. */
   autocomplete?: string | false;
-  /**
-   * Optional assistive description text rendered after the input.
-   * Reused for validation guidance when `invalid` is true.
-   * When omitted, no description or validation message is rendered.
-   */
+  /** Helper text rendered after the input (reused as validation guidance when `invalid`). */
   description?: string;
-  /**
-   * Disabled state.
-   * @default false
-   */
+  /** Disabled state. @default false */
   disabled?: boolean;
   /** Input id; used for `input[id]` and `label[for]`. */
   id: string;
-  /**
-   * Invalid state.
-   * Emits `aria-invalid="true"` only when true and input is editable.
-   * Ignored when `disabled` or `readOnly` is true.
-   * Does not require `description`; consumers may keep hints or omit messages.
-   * @default false
-   */
+  /** Invalid state. Ignored when `disabled` or `readOnly`. @default false */
   invalid?: boolean;
   /** Label text content (escaped before render). */
   label: string;
-  /** Optional field name. */
+  /** Field name attribute. */
   name?: string;
-  /** Optional pattern attribute. */
+  /** Pattern attribute. */
   pattern?: string;
-  /**
-   * Read-only state.
-   * Ignored when `disabled` is true.
-   * @default false
-   */
+  /** Read-only state. Ignored when `disabled`. @default false */
   readOnly?: boolean;
-  /**
-   * Required state.
-   * @default false
-   */
+  /** Required state. @default false */
   required?: boolean;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrControlSize;
-  /**
-   * Spellcheck behavior.
-   * Defaults to false for `type="numeric"` unless explicitly provided.
-   */
+  /** Spellcheck behavior. Defaults to `false` for `type="numeric"` unless explicit. */
   spellcheck?: boolean;
-  /**
-   * Input type.
-   * `numeric` maps to `type="text"` with `inputmode="numeric"`.
-   * @default "text"
-   */
+  /** Input type; `numeric` maps to `type="text"` with `inputmode="numeric"`. @default "text" */
   type?: ClbrInputType;
-  /** Optional current value. */
+  /** Current value. */
   value?: string;
-  /**
-   * Inline-size behavior.
-   * `full` is default and emits no inline-size attribute.
-   * `fit` emits `data-inline-size="fit"` on wrapper.
-   * @default "full"
-   */
+  /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
 }
 
@@ -178,79 +138,96 @@ export function renderClbrInput({
 /** Declarative input contract mirror for tooling, docs, and adapters. */
 export const CLBR_INPUT_SPEC = {
   name: "input",
+  description: "Use `input` to collect a single line of text from users.",
   output: {
     element: "div",
   },
   props: {
     autocomplete: {
+      description: "Autocomplete hint. Pass `false` to disable autocomplete.",
       required: false,
       type: "string|false",
     },
     description: {
+      description:
+        "Helper text shown below the input; also used for validation guidance.",
       required: false,
       type: "string",
     },
     disabled: {
       default: false,
+      description: "Prevents interaction.",
       required: false,
       type: "boolean",
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "HTML id. Links the label to the input.",
       required: true,
       type: "string",
     },
     invalid: {
       default: false,
+      description: "Marks the input as invalid.",
       ignoredWhen: "disabled is true or readOnly is true",
       required: false,
       type: "boolean",
     },
     label: {
+      description: "Label shown above the input.",
       required: true,
       type: "text",
     },
     name: {
+      description: "Name submitted with the form.",
       required: false,
       type: "string",
     },
     pattern: {
+      description: "Regex pattern the value must match.",
       required: false,
       type: "string",
     },
     readOnly: {
       default: false,
+      description: "Makes the input read-only.",
       ignoredWhen: "disabled is true",
       required: false,
       type: "boolean",
     },
     required: {
       default: false,
+      description: "Marks the input as required.",
       required: false,
       type: "boolean",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md"],
     },
     spellcheck: {
+      description: "Enables browser spellchecking.",
       required: false,
       type: "boolean",
     },
     type: {
       default: "text",
+      description: "Input type.",
       required: false,
       type: "enum",
       values: ["text", "email", "password", "tel", "url", "numeric"],
     },
     value: {
+      description: "Current value.",
       required: false,
       type: "string",
     },
     inlineSize: {
       default: "full",
+      description: "Whether the field fills its container or shrinks to fit.",
       required: false,
       type: "enum",
       values: ["full", "fit"],

@@ -46,38 +46,18 @@ export const CLBR_ICON_RECOMMENDED = [
 export type ClbrIconMirrorMode = "always" | "rtl";
 export type ClbrIconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "fill";
 
-/** Props for the Calibrate icon renderer. */
 export interface ClbrIconProps {
-  /**
-   * Whether to emit aria-hidden="true".
-   * @default false
-   */
+  /** Emits `aria-hidden="true"` when true. @default false */
   ariaHidden?: boolean;
-  /**
-   * SVG title text used when `ariaHidden` is `false`.
-   * Ignored only when `ariaHidden` is `true`.
-   */
+  /** SVG title text. Required when `ariaHidden` is false. */
   title?: string;
-  /**
-   * ID used for `<title>` and `aria-labelledby` when `ariaHidden` is `false`.
-   * Ignored only when `ariaHidden` is `true`.
-   */
+  /** ID for `<title>` referenced via `aria-labelledby`. Required when `ariaHidden` is false. */
   titleId?: string;
-  /**
-   * Lucide icon name.
-   * Supports common forms (kebab-case, camelCase, PascalCase).
-   * Browse available icon names: https://lucide.dev/icons/
-   */
+  /** Lucide icon name (kebab-case, camelCase, or PascalCase). See https://lucide.dev/icons/ */
   name: string;
-  /**
-   * Horizontal mirroring behavior.
-   * Omit for no mirroring.
-   */
+  /** Horizontal mirroring behavior. Omit for no mirroring. */
   mirrored?: ClbrIconMirrorMode;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrIconSize;
 }
 
@@ -188,38 +168,45 @@ export function renderClbrIcon({
 /** Declarative icon contract mirror for tooling, docs, and adapters. */
 export const CLBR_ICON_SPEC = {
   name: "icon",
+  description: "Use `icon` to render a Lucide icon inline.",
   output: {
     element: "svg",
   },
   props: {
     ariaHidden: {
       default: false,
+      description: "Hides the icon from assistive technology.",
       required: false,
       type: "boolean",
     },
     mirrored: {
+      description: "Mirrors the icon horizontally.",
       required: false,
       type: "enum",
       values: ["always", "rtl"],
     },
     name: {
+      description: "Lucide icon name.",
       format: "lucide-icon-name",
       required: true,
       type: "string",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["2xs", "xs", "sm", "md", "lg", "fill"],
     },
     title: {
+      description: "Accessible title announced by assistive technology.",
       required: false,
       requiredWhen: "ariaHidden is false or omitted",
       type: "string",
     },
     titleId: {
       constraints: ["non-empty", "validHtmlId"],
+      description: "HTML id for the accessible title element.",
       required: false,
       requiredWhen: "ariaHidden is false or omitted",
       type: "string",

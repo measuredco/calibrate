@@ -1,22 +1,21 @@
-import { type ClbrStackProps, renderClbrStack } from "./stack";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { CLBR_STACK_SPEC, type ClbrStackProps, renderClbrStack } from "./stack";
+
+const baseArgTypes = specToArgTypes(CLBR_STACK_SPEC);
 
 const meta = {
   argTypes: {
-    align: {
-      control: { type: "select" },
-      options: ["stretch", "start", "center", "end"],
-    },
-    as: {
-      control: { type: "select" },
-      options: ["div", "ul"],
-    },
-    children: { control: false },
-    gap: {
-      control: { type: "select" },
-      options: ["none", "xs", "sm", "md", "lg"],
-    },
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
   },
-  parameters: { padding: 0 },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_STACK_SPEC),
+      },
+    },
+    padding: 0,
+  },
   title: "Layout/Stack",
 };
 

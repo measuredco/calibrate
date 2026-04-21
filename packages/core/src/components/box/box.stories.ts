@@ -1,27 +1,18 @@
-import { type ClbrBoxProps, renderClbrBox } from "./box";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { CLBR_BOX_SPEC, type ClbrBoxProps, renderClbrBox } from "./box";
+
+const baseArgTypes = specToArgTypes(CLBR_BOX_SPEC);
 
 const meta = {
   argTypes: {
-    background: {
-      control: { type: "select" },
-      options: ["default", "panel", "transparent"],
-    },
-    children: { control: false },
-    paddingBlock: {
-      control: { type: "select" },
-      options: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
-    },
-    paddingInline: {
-      control: { type: "select" },
-      options: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
-    },
-    radius: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-    surface: {
-      control: { type: "select" },
-      options: ["default", "brand", "inverse", "brand-inverse"],
+    ...baseArgTypes,
+    children: { ...baseArgTypes.children, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_BOX_SPEC),
+      },
     },
   },
   title: "Layout/Box",

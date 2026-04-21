@@ -18,7 +18,7 @@ describe("renderClbrAvatar", () => {
     const avatar = getAvatar(root);
 
     expect(avatar.tagName).toBe("SPAN");
-    expect(avatar.getAttribute("data-size")).toBe("xs");
+    expect(avatar.getAttribute("data-size")).toBe("md");
     expect(avatar.hasAttribute("data-color")).toBe(false);
     expect(avatar.hasAttribute("data-entity")).toBe(false);
     expect(avatar.getAttribute("role")).toBe("img");

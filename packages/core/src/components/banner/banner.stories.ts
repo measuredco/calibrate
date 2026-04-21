@@ -1,5 +1,7 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrStack } from "../stack/stack";
 import {
+  CLBR_BANNER_SPEC,
   type ClbrBannerProps,
   defineClbrBanner,
   renderClbrBanner,
@@ -7,12 +9,15 @@ import {
 
 defineClbrBanner();
 
+const baseArgTypes = specToArgTypes(CLBR_BANNER_SPEC);
+
 const meta = {
-  argTypes: {
-    action: { control: false },
-    tone: {
-      control: { type: "select" },
-      options: ["info", "success", "warning", "error"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_BANNER_SPEC),
+      },
     },
   },
   title: "Status/Banner",

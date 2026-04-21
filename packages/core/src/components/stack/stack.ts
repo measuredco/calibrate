@@ -4,32 +4,16 @@ export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
 export type ClbrStackAs = "div" | "ul";
 export type ClbrStackGap = "none" | "xs" | "sm" | "md" | "lg";
 
-/** Props for the Calibrate stack renderer. */
 export interface ClbrStackProps {
-  /**
-   * Stack cross-axis alignment.
-   * @default "stretch"
-   */
+  /** Cross-axis alignment. @default "stretch" */
   align?: ClbrStackAlign;
-  /**
-   * Element tag used for stack rendering.
-   * @default "div"
-   */
+  /** Element tag. @default "div" */
   as?: ClbrStackAs;
-  /**
-   * Inner HTML content to render inside the stack wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Stack spacing gap size.
-   * @default "md"
-   */
+  /** Spacing gap size. @default "md" */
   gap?: ClbrStackGap;
-  /**
-   * Enables layout-context responsive spacing scale.
-   * @default false
-   */
+  /** Enables layout-context responsive spacing scale. @default false */
   responsive?: boolean;
 }
 
@@ -59,6 +43,7 @@ export function renderClbrStack({
 /** Declarative stack contract mirror for tooling, docs, and adapters. */
 export const CLBR_STACK_SPEC = {
   name: "stack",
+  description: "Use `stack` to lay out content in a vertical column.",
   output: {
     modes: {
       div: "div",
@@ -68,28 +53,33 @@ export const CLBR_STACK_SPEC = {
   props: {
     align: {
       default: "stretch",
+      description: "Aligns items on the cross axis.",
       required: false,
       type: "enum",
       values: ["stretch", "start", "center", "end"],
     },
     as: {
       default: "div",
+      description: "Element tag to render.",
       required: false,
       type: "enum",
       values: ["div", "ul"],
     },
     children: {
+      description: "Items laid out in a column.",
       required: false,
       type: "html",
     },
     gap: {
       default: "md",
+      description: "Space between children.",
       required: false,
       type: "enum",
       values: ["none", "xs", "sm", "md", "lg"],
     },
     responsive: {
       default: false,
+      description: "Scales spacing across breakpoints.",
       required: false,
       type: "boolean",
     },

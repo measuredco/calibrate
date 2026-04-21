@@ -1,17 +1,23 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrStack } from "../stack/stack";
-import { type ClbrAlertProps, defineClbrAlert, renderClbrAlert } from "./alert";
+import {
+  CLBR_ALERT_SPEC,
+  type ClbrAlertProps,
+  defineClbrAlert,
+  renderClbrAlert,
+} from "./alert";
 
 defineClbrAlert();
 
+const baseArgTypes = specToArgTypes(CLBR_ALERT_SPEC);
+
 const meta = {
-  argTypes: {
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["info", "success", "warning", "error"],
+  argTypes: baseArgTypes,
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_ALERT_SPEC),
+      },
     },
   },
   title: "Status/Alert",

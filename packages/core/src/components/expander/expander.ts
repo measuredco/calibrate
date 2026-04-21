@@ -2,24 +2,14 @@ import { attrs, escapeHtml } from "../../helpers/html";
 
 export type ClbrExpanderSize = "sm" | "md" | "lg";
 
-/** Props for the Calibrate expander renderer. */
 export interface ClbrExpanderProps {
-  /** Optional id of the controlled element. */
+  /** Optional id of the controlled element (emitted as `aria-controls`). */
   controlsId?: string;
-  /**
-   * Expanded state.
-   * @default false
-   */
+  /** Expanded state. @default false */
   expanded?: boolean;
-  /**
-   * Accessible label for the toggle control.
-   * @default "Menu"
-   */
+  /** Accessible label for the toggle control. @default "Menu" */
   label?: string;
-  /**
-   * Size variant.
-   * @default "md"
-   */
+  /** Size variant. @default "md" */
   size?: ClbrExpanderSize;
 }
 
@@ -58,26 +48,31 @@ export function renderClbrExpander({
 /** Declarative expander contract mirror for tooling, docs, and adapters. */
 export const CLBR_EXPANDER_SPEC = {
   name: "expander",
+  description: "Use `expander` as a toggle for disclosure regions such as menus.",
   output: {
     default: "button",
   },
   props: {
     controlsId: {
+      description: "ID of the element this toggle controls.",
       required: false,
       type: "string",
     },
     expanded: {
       default: false,
+      description: "Whether the controlled region is expanded.",
       required: false,
       type: "boolean",
     },
     label: {
       default: expanderLabelDefault,
+      description: "Accessible label.",
       required: false,
       type: "text",
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["sm", "md", "lg"],

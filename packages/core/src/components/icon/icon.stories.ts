@@ -1,30 +1,27 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { isValidHtmlId } from "../../helpers/html";
 import {
-  type ClbrIconProps,
   CLBR_ICON_RECOMMENDED,
+  CLBR_ICON_SPEC,
+  type ClbrIconProps,
   renderClbrIcon,
 } from "./icon";
-import { isValidHtmlId } from "../../helpers/html";
+
+const baseArgTypes = specToArgTypes(CLBR_ICON_SPEC);
 
 const meta = {
   argTypes: {
+    ...baseArgTypes,
     name: {
+      ...baseArgTypes.name,
       control: { type: "select" },
       options: CLBR_ICON_RECOMMENDED,
-    },
-    mirrored: {
-      control: { type: "select" },
-      options: ["rtl", "always"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["2xs", "xs", "sm", "md", "lg", "fill"],
     },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          "Name control uses a recommended icon subset; browse all available icon names at https://lucide.dev/icons/.",
+        component: `${specToComponentDescription(CLBR_ICON_SPEC)}\n\nThe \`name\` control uses a recommended icon subset; browse all available icon names at https://lucide.dev/icons/.`,
       },
     },
   },

@@ -9,37 +9,20 @@ export const CLBR_BANNER_EVENT_DISMISS = "clbr-banner-dismiss";
 
 const dismissibleLabelDefault = "Dismiss banner";
 
-/** Props for the Calibrate banner renderer. */
 export interface ClbrBannerProps {
-  /**
-   * Optional secondary link action rendered inline within the message.
-   */
+  /** Optional secondary link action rendered inline within the message. */
   action?: {
     href: string;
     label: string;
   };
-  /**
-   * Whether a dismiss control is injected by the runtime custom element.
-   * In no-JS SSR output, dismissible banners remain visible.
-   * @default true
-   */
+  /** Whether the runtime custom element should inject a dismiss control. @default true */
   dismissible?: boolean;
-  /**
-   * Accessible label for the runtime dismiss control.
-   * Escaped before render. Serialized into `data-dismissible-label` as the
-   * runtime bridge value used when upgrading SSR markup.
-   * Ignored when `dismissible` is false.
-   * @default "Dismiss banner"
-   */
+  /** Accessible label for the runtime dismiss control. Ignored when not dismissible.
+   * @default "Dismiss banner" */
   dismissibleLabel?: string;
-  /**
-   * Banner body text content.
-   * Escaped before render.
-   */
+  /** Banner body text (escaped before render). */
   message: string;
-  /**
-   * Semantic message intent.
-   */
+  /** Semantic message intent. */
   tone?: ClbrStatusTone;
 }
 
@@ -170,6 +153,7 @@ export function defineClbrBanner(): void {
 /** Declarative banner contract mirror for tooling, docs, and adapters. */
 export const CLBR_BANNER_SPEC = {
   name: "banner",
+  description: "Use `clbr-banner` to display a prominent site-wide message.",
   output: {
     element: CLBR_BANNER_TAG_NAME,
     class: "banner",
@@ -177,6 +161,7 @@ export const CLBR_BANNER_SPEC = {
   },
   props: {
     action: {
+      description: "Inline link action rendered after the message.",
       required: false,
       shape: {
         href: {
@@ -192,20 +177,24 @@ export const CLBR_BANNER_SPEC = {
     },
     dismissible: {
       default: true,
+      description: "Shows a dismiss control that removes the banner.",
       required: false,
       type: "boolean",
     },
     dismissibleLabel: {
       default: dismissibleLabelDefault,
+      description: "Accessible label for the dismiss control.",
       ignoredWhen: "dismissible is false",
       required: false,
       type: "string",
     },
     message: {
+      description: "Body text of the banner.",
       required: true,
       type: "text",
     },
     tone: {
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["info", "success", "warning", "error"],

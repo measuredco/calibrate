@@ -3,32 +3,17 @@ import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrPanelPadding = "xs" | "sm" | "md" | "lg" | "xl";
 
-/** Props for the Calibrate panel renderer. */
 export interface ClbrPanelProps {
-  /**
-   * Inner HTML content to render inside the panel wrapper.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children?: string;
-  /**
-   * Inner spacing scale.
-   * Always emits `data-padding`.
-   * @default "md"
-   */
+  /** Inner spacing scale. @default "md" */
   padding?: ClbrPanelPadding;
-  /**
-   * Surface context.
-   * When provided, emits `data-surface`.
-   */
+  /** Surface context. */
   surface?: ClbrSurfaceVariant;
 }
 
 /**
  * SSR renderer for the Calibrate panel component.
- *
- * Emits a single `div.panel` wrapper around trusted child HTML.
- * Panel always uses the panel background, default border, default shadow,
- * and large radius. Only padding and surface context are configurable.
  *
  * @param props - Panel component props.
  * @returns HTML string for a panel wrapper.
@@ -50,6 +35,7 @@ export function renderClbrPanel({
 /** Declarative panel contract mirror for tooling, docs, and adapters. */
 export const CLBR_PANEL_SPEC = {
   name: "panel",
+  description: "Use `panel` to group related content in a contained region.",
   output: {
     element: "div",
     class: "panel",
@@ -63,16 +49,19 @@ export const CLBR_PANEL_SPEC = {
   },
   props: {
     children: {
+      description: "Content rendered inside the panel.",
       required: false,
       type: "html",
     },
     padding: {
       default: "md",
+      description: "Inner spacing scale.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg", "xl"],
     },
     surface: {
+      description: "Surface context.",
       required: false,
       type: "enum",
       values: ["default", "brand", "inverse", "brand-inverse"],

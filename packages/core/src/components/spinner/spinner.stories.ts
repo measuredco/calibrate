@@ -1,14 +1,17 @@
-import { type ClbrSpinnerProps, renderClbrSpinner } from "./spinner";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_SPINNER_SPEC,
+  type ClbrSpinnerProps,
+  renderClbrSpinner,
+} from "./spinner";
 
 const meta = {
-  argTypes: {
-    size: {
-      control: { type: "select" },
-      options: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "fill"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["default", "brand"],
+  argTypes: specToArgTypes(CLBR_SPINNER_SPEC),
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_SPINNER_SPEC),
+      },
     },
   },
   title: "Status/Spinner",
@@ -20,7 +23,7 @@ export const Default = {
   args: {
     label: "",
     size: "md",
-    tone: undefined,
+    tone: "default",
   } satisfies ClbrSpinnerProps,
   render: (args: ClbrSpinnerProps) => renderClbrSpinner({ ...args }),
 };

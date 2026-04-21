@@ -5,61 +5,33 @@ export type ClbrTextAs = "p" | "span";
 export type ClbrTextSize = "xs" | "sm" | "md" | "lg";
 export type ClbrTextTone = "default" | "muted";
 
-/** Shared props for all text modes. */
 export interface ClbrTextCommonProps {
-  /**
-   * Inner HTML content to render inside the text element.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML. */
   children: string;
-  /**
-   * Enables visited-state styling for links inside text content.
-   * @default true
-   */
+  /** Enables visited-state styling for links inside text. @default true */
   linkVisited?: boolean;
-  /**
-   * Enables breakpoint-responsive body scale.
-   * @default false
-   */
+  /** Enables breakpoint-responsive body scale. @default false */
   responsive?: boolean;
-  /**
-   * Text size variant.
-   * @default "md"
-   */
+  /** Text size. @default "md" */
   size?: ClbrTextSize;
-  /**
-   * Tone variant.
-   * @default "default"
-   */
+  /** Tone variant. @default "default" */
   tone?: ClbrTextTone;
 }
 
-/** Span text mode props. */
 export interface ClbrTextSpanProps extends ClbrTextCommonProps {
-  /**
-   * Element tag used for text rendering.
-   * @default "span"
-   */
+  /** Element tag. @default "span" */
   as?: "span";
 }
 
-/** Paragraph text mode props. */
 export interface ClbrTextParagraphProps extends ClbrTextCommonProps {
-  /** Element tag used for text rendering. */
+  /** Element tag. */
   as: "p";
-  /**
-   * Text alignment.
-   * @default "start"
-   */
+  /** Text alignment. @default "start" */
   align?: ClbrAlign;
-  /**
-   * Applies max measure constraints for long-form readability.
-   * @default true
-   */
+  /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
 }
 
-/** Props for the Calibrate text renderer. */
 export type ClbrTextProps = ClbrTextSpanProps | ClbrTextParagraphProps;
 
 /**
@@ -69,7 +41,13 @@ export type ClbrTextProps = ClbrTextSpanProps | ClbrTextParagraphProps;
  * @returns HTML string for a text paragraph or span element.
  */
 export function renderClbrText(props: ClbrTextProps): string {
-  const { children, linkVisited = true, responsive, size = "md", tone } = props;
+  const {
+    children,
+    linkVisited = true,
+    responsive,
+    size = "md",
+    tone = "default",
+  } = props;
   const as: ClbrTextAs = props.as === "p" ? "p" : "span";
   let align: ClbrAlign | undefined;
   let measured: boolean | undefined;
@@ -96,6 +74,7 @@ export function renderClbrText(props: ClbrTextProps): string {
 /** Declarative text contract mirror for tooling, docs, and adapters. */
 export const CLBR_TEXT_SPEC = {
   name: "text",
+  description: "Use `text` for inline or single paragraph body copy.",
   output: {
     modes: {
       paragraph: "p",
@@ -105,26 +84,31 @@ export const CLBR_TEXT_SPEC = {
   props: {
     as: {
       default: "span",
+      description: "HTML element used for the text.",
       required: false,
       type: "enum",
       values: ["p", "span"],
     },
     children: {
+      description: "Text content.",
       required: true,
       type: "html",
     },
     linkVisited: {
       default: true,
+      description: "Styles visited links inside the text.",
       required: false,
       type: "boolean",
     },
     responsive: {
       default: false,
+      description: "Scales text across breakpoints.",
       required: false,
       type: "boolean",
     },
     align: {
       default: "start",
+      description: "Text alignment.",
       ignoredWhen: "as is span",
       required: false,
       type: "enum",
@@ -133,6 +117,7 @@ export const CLBR_TEXT_SPEC = {
     },
     measured: {
       default: true,
+      description: "Caps line length for comfortable reading.",
       ignoredWhen: "as is span",
       required: false,
       type: "boolean",
@@ -140,12 +125,14 @@ export const CLBR_TEXT_SPEC = {
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg"],
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "muted"],

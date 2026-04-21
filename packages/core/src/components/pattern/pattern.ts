@@ -5,44 +5,19 @@ export type ClbrPatternSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
 export type ClbrPatternTone = "default" | "subtle" | "support";
 export type ClbrPatternVariant = ClbrShapeVariant;
 
-/** Props for the Calibrate pattern renderer. */
 export interface ClbrPatternProps {
-  /**
-   * Inner HTML content rendered inside the pattern container.
-   * Caller is responsible for sanitizing untrusted content.
-   */
+  /** Trusted inner HTML rendered inside the pattern container. */
   children?: string;
-  /**
-   * Pattern variant.
-   * Always emits `data-variant`.
-   * Mirrors the visual-language shape ids.
-   * @default "corner"
-   */
+  /** Pattern variant. @default "corner" */
   variant?: ClbrPatternVariant;
-  /**
-   * Pattern tone.
-   * Omitted when `default`.
-   * Non-default values select the corresponding decorative pattern color.
-   * @default "default"
-   */
+  /** Tone. @default "default" */
   tone?: ClbrPatternTone;
-  /**
-   * Pattern size mode.
-   * Always emits `data-size`.
-   * Named sizes map to canonical fractions of the selected shape's derived
-   * size. `fill` disables repeat and scales the mask to contain the pattern
-   * box.
-   * @default "md"
-   */
+  /** Size mode. @default "md" */
   size?: ClbrPatternSize;
 }
 
 /**
  * SSR renderer for the Calibrate pattern component.
- *
- * Emits a single `div.pattern` root. Visual rendering is CSS-driven and uses
- * the selected shape image as a repeated masked layer. Trusted child HTML, when
- * provided, is rendered inside the root above the decorative layer.
  *
  * @param props - Pattern component props.
  * @returns HTML string for a pattern container.
@@ -50,13 +25,13 @@ export interface ClbrPatternProps {
 export function renderClbrPattern({
   children,
   size = "md",
-  tone,
+  tone = "default",
   variant = "corner",
 }: ClbrPatternProps = {}): string {
   const patternAttrs = attrs({
     class: "pattern",
     "data-size": size,
-    "data-tone": tone === "default" || tone === undefined ? undefined : tone,
+    "data-tone": tone === "default" ? undefined : tone,
     "data-variant": variant,
   });
 
@@ -66,6 +41,8 @@ export function renderClbrPattern({
 /** Declarative pattern contract mirror for tooling, docs, and adapters. */
 export const CLBR_PATTERN_SPEC = {
   name: "pattern",
+  description:
+    "Use `pattern` to render a decorative repeated shape behind content.",
   output: {
     element: "div",
     class: "pattern",
@@ -75,23 +52,27 @@ export const CLBR_PATTERN_SPEC = {
   },
   props: {
     children: {
+      description: "Content rendered above the pattern.",
       required: false,
       type: "html",
     },
     tone: {
       default: "default",
+      description: "Semantic tone.",
       required: false,
       type: "enum",
       values: ["default", "subtle", "support"],
     },
     size: {
       default: "md",
+      description: "Size variant.",
       required: false,
       type: "enum",
       values: ["xs", "sm", "md", "lg", "xl", "fill"],
     },
     variant: {
       default: "corner",
+      description: "Shape used for the pattern tile.",
       required: false,
       type: "enum",
       values: [

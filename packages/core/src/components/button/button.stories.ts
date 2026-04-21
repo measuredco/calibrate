@@ -1,16 +1,67 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
 import {
+  CLBR_BUTTON_SPEC,
   type ClbrButtonElementProps,
   type ClbrButtonLinkProps,
   renderClbrButton,
 } from "./button";
 
+const baseArgTypes = specToArgTypes(CLBR_BUTTON_SPEC);
+
+const iconArgType = {
+  ...baseArgTypes.icon,
+  control: { type: "select" as const },
+  options: [undefined, ...CLBR_ICON_RECOMMENDED],
+};
+
+const hideControls = (...names: string[]): Record<string, unknown> =>
+  Object.fromEntries(
+    names.map((name) => [
+      name,
+      { ...baseArgTypes[name], control: false, table: { disable: true } },
+    ]),
+  );
+
+const buttonArgTypes = {
+  ...baseArgTypes,
+  icon: iconArgType,
+  ...hideControls("download", "href", "rel", "target"),
+  mode: { ...baseArgTypes.mode, control: false },
+};
+
+const linkArgTypes = {
+  ...baseArgTypes,
+  icon: iconArgType,
+  ...hideControls(
+    "controls",
+    "disabled",
+    "disclosure",
+    "form",
+    "haspopup",
+    "name",
+    "type",
+    "value",
+  ),
+  mode: { ...baseArgTypes.mode, control: false },
+};
+
+const downloadLinkArgTypes = {
+  ...linkArgTypes,
+  ...hideControls("rel", "target"),
+  download: { ...baseArgTypes.download, control: false },
+};
+
 const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "Docs controls are scoped to Button Mode props only. See secondary Link Mode stories below for link-specific props and behavior.",
+        component: [
+          specToComponentDescription(CLBR_BUTTON_SPEC),
+          `Arg table controls are scoped to \`mode="button"\` props only. See secondary \`mode="link"\` stories below for link-specific props and behavior.`,
+        ]
+          .filter(Boolean)
+          .join("\n\n"),
       },
     },
   },
@@ -19,79 +70,12 @@ const meta = {
 
 export default meta;
 
-const commonArgTypes = {
-  appearance: {
-    control: { type: "select" },
-    options: ["outline", "solid", "text"],
-  },
-  icon: {
-    control: { type: "select" },
-    options: CLBR_ICON_RECOMMENDED,
-  },
-  iconMirrored: {
-    control: { type: "select" },
-    options: ["always", "rtl"],
-  },
-  iconPlacement: {
-    control: { type: "select" },
-    options: ["start", "end"],
-  },
-  labelVisibility: {
-    control: { type: "select" },
-    options: ["visible", "hidden", "hiddenBelowTablet"],
-  },
-  mode: {
-    control: false,
-  },
-  size: {
-    control: { type: "select" },
-    options: ["sm", "md", "lg"],
-  },
-  tone: {
-    control: { type: "select" },
-    options: ["default", "neutral"],
-  },
-};
-
-const buttonArgTypes = {
-  ...commonArgTypes,
-  haspopup: {
-    control: { type: "select" },
-    options: ["menu"],
-  },
-  type: {
-    control: { type: "select" },
-    options: ["button", "submit"],
-  },
-};
-
-const linkArgTypes = {
-  ...commonArgTypes,
-  download: {
-    control: false,
-  },
-  target: {
-    control: { type: "select" },
-    options: ["_blank", "_parent", "_self", "_top"],
-  },
-};
-
-const downloadLinkArgTypes = {
-  ...linkArgTypes,
-  rel: {
-    control: false,
-  },
-  target: {
-    control: false,
-  },
-};
-
 export const ButtonMode = {
   args: {
     mode: "button",
     label: "Button",
     appearance: "outline",
-    tone: undefined,
+    tone: "default",
     size: "md",
     labelVisibility: "visible",
     icon: undefined,
@@ -124,7 +108,7 @@ export const LinkMode = {
     label: "Link",
     href: "#",
     appearance: "outline",
-    tone: undefined,
+    tone: "default",
     size: "md",
     icon: undefined,
     iconPlacement: "start",
@@ -149,7 +133,7 @@ export const LinkModeDownload = {
     label: "Download",
     href: "#",
     appearance: "outline",
-    tone: undefined,
+    tone: "default",
     size: "md",
     icon: "download",
     iconPlacement: "start",
@@ -172,7 +156,7 @@ export const LinkModeNamedDownload = {
     label: "Download",
     href: "#",
     appearance: "outline",
-    tone: undefined,
+    tone: "default",
     size: "md",
     icon: "download",
     iconPlacement: "start",

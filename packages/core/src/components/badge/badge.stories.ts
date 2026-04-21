@@ -1,18 +1,21 @@
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
 import { renderClbrAvatar } from "../avatar/avatar";
 import { renderClbrInline } from "../inline/inline";
 import { renderClbrStack } from "../stack/stack";
-import { type ClbrBadgeProps, renderClbrBadge } from "./badge";
+import { CLBR_BADGE_SPEC, type ClbrBadgeProps, renderClbrBadge } from "./badge";
+
+const baseArgTypes = specToArgTypes(CLBR_BADGE_SPEC);
 
 const meta = {
   argTypes: {
-    floating: { control: false },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-    tone: {
-      control: { type: "select" },
-      options: ["info", "success", "warning", "error"],
+    ...baseArgTypes,
+    floating: { ...baseArgTypes.floating, control: false },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_BADGE_SPEC),
+      },
     },
   },
   title: "Status/Badge",
@@ -22,10 +25,10 @@ export default meta;
 
 export const Default = {
   args: {
+    floating: false,
     label: "Badge",
     size: "md",
     tone: undefined,
-    floating: false,
   } satisfies ClbrBadgeProps,
   render: (args: ClbrBadgeProps) => renderClbrBadge(args),
 };

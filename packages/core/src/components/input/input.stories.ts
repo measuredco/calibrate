@@ -1,22 +1,25 @@
-import { type ClbrInputProps, renderClbrInput } from "./input";
+import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  CLBR_INPUT_SPEC,
+  type ClbrInputProps,
+  renderClbrInput,
+} from "./input";
+
+const baseArgTypes = specToArgTypes(CLBR_INPUT_SPEC);
 
 const meta = {
   argTypes: {
+    ...baseArgTypes,
     autocomplete: {
+      ...baseArgTypes.autocomplete,
       control: { type: "text" },
-      description: 'Set to `"off"` to disable (or pass `false` in code).',
     },
-    inlineSize: {
-      control: { type: "select" },
-      options: ["full", "fit"],
-    },
-    size: {
-      control: { type: "select" },
-      options: ["sm", "md"],
-    },
-    type: {
-      control: { type: "select" },
-      options: ["text", "email", "password", "tel", "url", "numeric"],
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: specToComponentDescription(CLBR_INPUT_SPEC),
+      },
     },
   },
   title: "Control/Input",
