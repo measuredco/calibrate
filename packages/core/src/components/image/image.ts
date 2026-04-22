@@ -162,7 +162,7 @@ export function renderClbrImage({
   if (width) styleChunks.push(`--clbr-image-inline-size: ${width / 16}rem`);
 
   const wrapperAttrs = attrs({
-    class: "image",
+    class: "clbr-image",
     "data-aspect-ratio": cover && !(height && width) ? aspectRatio : undefined,
     "data-gravity": cover && gravity !== "C" ? gravity : undefined,
     "data-shadow": Boolean(shadow),

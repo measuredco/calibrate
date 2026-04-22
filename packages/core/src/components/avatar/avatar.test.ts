@@ -12,7 +12,7 @@ function mountAvatar(html: string): HTMLElement {
 }
 
 function getAvatar(root: HTMLElement): HTMLElement {
-  const avatar = root.querySelector(".avatar");
+  const avatar = root.querySelector(".clbr-avatar");
   expect(avatar).toBeTruthy();
   return avatar as HTMLElement;
 }
@@ -155,7 +155,7 @@ describe("renderClbrAvatar", () => {
   it("emits non-default entity and forwards icon sizing contract", () => {
     const root = mountAvatar(renderClbrAvatar({ entity: "organization" }));
     const avatar = getAvatar(root);
-    const icon = root.querySelector(".icon");
+    const icon = root.querySelector(".clbr-icon");
 
     expect(avatar.tagName).toBe("SPAN");
     expect(avatar.getAttribute("data-entity")).toBe("organization");

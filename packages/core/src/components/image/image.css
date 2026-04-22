@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .image {
+  :where(.clbr) .clbr-image {
     filter: grayscale(var(--clbr-effect-filter-image));
     inline-size: fit-content;
     overflow: hidden;
@@ -70,41 +70,41 @@
     }
 
     .img {
-      .image[data-object-fit="cover"] & {
+      .clbr-image[data-object-fit="cover"] & {
         block-size: 100%;
         inline-size: 100%;
         object-fit: cover;
       }
 
-      .image[data-gravity="N"] & {
+      .clbr-image[data-gravity="N"] & {
         object-position: center top;
       }
 
-      .image[data-gravity="NE"] & {
+      .clbr-image[data-gravity="NE"] & {
         object-position: right top;
       }
 
-      .image[data-gravity="E"] & {
+      .clbr-image[data-gravity="E"] & {
         object-position: right center;
       }
 
-      .image[data-gravity="SE"] & {
+      .clbr-image[data-gravity="SE"] & {
         object-position: right bottom;
       }
 
-      .image[data-gravity="S"] & {
+      .clbr-image[data-gravity="S"] & {
         object-position: center bottom;
       }
 
-      .image[data-gravity="SW"] & {
+      .clbr-image[data-gravity="SW"] & {
         object-position: left bottom;
       }
 
-      .image[data-gravity="W"] & {
+      .clbr-image[data-gravity="W"] & {
         object-position: left center;
       }
 
-      .image[data-gravity="NW"] & {
+      .clbr-image[data-gravity="NW"] & {
         object-position: left top;
       }
     }

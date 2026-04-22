@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .shape {
+  :where(.clbr) .clbr-shape {
     --clbr-shape-aspect-ratio: 1 / 1;
     --clbr-shape-block-size-base: var(--clbr-shape-corner-block-size);
     --clbr-shape-block-size: calc(var(--clbr-shape-block-size-base) / 5);

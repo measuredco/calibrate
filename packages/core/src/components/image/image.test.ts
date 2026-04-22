@@ -8,7 +8,7 @@ function mountImage(html: string): HTMLElement {
 }
 
 function getWrapper(root: HTMLElement): HTMLElement {
-  const wrapper = root.querySelector(".image");
+  const wrapper = root.querySelector(".clbr-image");
   expect(wrapper).toBeTruthy();
   return wrapper as HTMLElement;
 }
@@ -25,7 +25,7 @@ describe("renderClbrImage", () => {
     const wrapper = getWrapper(root);
     const img = getImg(root);
 
-    expect(wrapper.classList.contains("image")).toBe(true);
+    expect(wrapper.classList.contains("clbr-image")).toBe(true);
     expect(img.getAttribute("src")).toBe("/image.jpg");
     expect(img.getAttribute("alt")).toBe("");
   });

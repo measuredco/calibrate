@@ -51,7 +51,7 @@ export function renderClbrLink(props: ClbrLinkProps): string {
     ? `<span class="icon-wrapper">${normalizedIcon}</span><span class="label">${escapeHtml(label)}</span>`
     : `<span class="label">${escapeHtml(label)}</span>`;
   const linkAttrs = attrs({
-    class: "link",
+    class: "clbr-link",
     href,
     rel: normalizedRel,
     target: normalizedTarget,
@@ -124,7 +124,7 @@ export const CLBR_LINK_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "link",
+        value: "clbr-link",
       },
       {
         behavior: "emit",

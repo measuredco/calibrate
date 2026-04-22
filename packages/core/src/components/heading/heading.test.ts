@@ -19,7 +19,7 @@ describe("renderClbrHeading", () => {
 
     expect(queryByRole(root, "heading")).toBeNull();
     expect(text.tagName).toBe("SPAN");
-    expect(text.classList.contains("heading")).toBe(true);
+    expect(text.classList.contains("clbr-heading")).toBe(true);
     expect(text.getAttribute("data-size")).toBe("md");
     expect(text.hasAttribute("data-responsive")).toBe(false);
   });

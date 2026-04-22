@@ -30,7 +30,7 @@ export const Default = {
     const html = renderClbrExpander(args);
 
     queueMicrotask(() => {
-      const button = document.querySelector(".sb-show-main .expander");
+      const button = document.querySelector(".sb-show-main .clbr-expander");
 
       if (!(button instanceof HTMLButtonElement)) return;
 

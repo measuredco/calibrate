@@ -35,7 +35,7 @@ export function renderClbrExpander({
   const expanderAttrs = attrs({
     "aria-controls": controlsId || undefined,
     "aria-expanded": expanded ? "true" : "false",
-    class: "expander",
+    class: "clbr-expander",
     "data-size": size,
     type: "button",
   });
@@ -84,7 +84,7 @@ export const CLBR_EXPANDER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "expander",
+        value: "clbr-expander",
       },
       {
         behavior: "always",

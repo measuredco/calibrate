@@ -10,10 +10,10 @@ function mountPanel(html: string): HTMLElement {
 describe("renderClbrPanel", () => {
   it("renders the default panel contract", () => {
     const root = mountPanel(renderClbrPanel({ children: "Body" }));
-    const panel = root.querySelector(".panel") as HTMLElement;
+    const panel = root.querySelector(".clbr-panel") as HTMLElement;
 
     expect(panel.tagName).toBe("DIV");
-    expect(panel.className).toBe("panel");
+    expect(panel.className).toBe("clbr-panel");
     expect(panel.textContent).toBe("Body");
     expect(panel.getAttribute("data-padding")).toBe("md");
     expect(panel.hasAttribute("data-clbr-surface")).toBe(false);
@@ -26,17 +26,17 @@ describe("renderClbrPanel", () => {
       }),
     );
 
-    expect(root.querySelector(".panel p")?.textContent).toContain("Lorem");
-    expect(root.querySelector(".panel em")?.textContent).toBe("ipsum");
-    expect(root.querySelector(".panel a")?.getAttribute("href")).toBe("/docs");
+    expect(root.querySelector(".clbr-panel p")?.textContent).toContain("Lorem");
+    expect(root.querySelector(".clbr-panel em")?.textContent).toBe("ipsum");
+    expect(root.querySelector(".clbr-panel a")?.getAttribute("href")).toBe("/docs");
   });
 
   it("supports omitted or empty children", () => {
     const omitted = mountPanel(renderClbrPanel({}));
     const empty = mountPanel(renderClbrPanel({ children: "" }));
 
-    expect(omitted.querySelector(".panel")?.innerHTML).toBe("");
-    expect(empty.querySelector(".panel")?.innerHTML).toBe("");
+    expect(omitted.querySelector(".clbr-panel")?.innerHTML).toBe("");
+    expect(empty.querySelector(".clbr-panel")?.innerHTML).toBe("");
   });
 
   it("emits requested padding and any supported surface variant", () => {
@@ -47,7 +47,7 @@ describe("renderClbrPanel", () => {
         surface: "inverse",
       }),
     );
-    const panel = root.querySelector(".panel") as HTMLElement;
+    const panel = root.querySelector(".clbr-panel") as HTMLElement;
 
     expect(panel.getAttribute("data-padding")).toBe("xl");
     expect(panel.getAttribute("data-clbr-surface")).toBe("inverse");

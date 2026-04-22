@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .icon {
+  :where(.clbr) .clbr-icon {
     aspect-ratio: 1 / 1;
     block-size: var(--clbr-layout-icon-size-md);
     display: inline-block;

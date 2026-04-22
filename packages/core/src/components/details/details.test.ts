@@ -18,15 +18,15 @@ describe("renderClbrDetails", () => {
         summary: "More information",
       }),
     );
-    const details = root.querySelector(".details") as HTMLElement;
+    const details = root.querySelector(".clbr-details") as HTMLElement;
     const summary = details.querySelector(".summary") as HTMLElement;
     const marker = details.querySelector(
-      ".summary .marker .icon",
+      ".summary .marker .clbr-icon",
     ) as HTMLElement;
     const content = details.querySelector(".content") as HTMLElement;
 
     expect(details.tagName).toBe("DETAILS");
-    expect(details.className).toBe("details");
+    expect(details.className).toBe("clbr-details");
     expect(details.hasAttribute("open")).toBe(false);
     expect(details.hasAttribute("data-inline-size")).toBe(false);
 
@@ -47,7 +47,7 @@ describe("renderClbrDetails", () => {
       }),
     );
 
-    expect(root.querySelector(".details")?.hasAttribute("open")).toBe(true);
+    expect(root.querySelector(".clbr-details")?.hasAttribute("open")).toBe(true);
   });
 
   it('emits data-inline-size only when inlineSize is "fit"', () => {
@@ -58,7 +58,7 @@ describe("renderClbrDetails", () => {
       }),
     );
     expect(
-      fitRoot.querySelector(".details")?.getAttribute("data-inline-size"),
+      fitRoot.querySelector(".clbr-details")?.getAttribute("data-inline-size"),
     ).toBe("fit");
 
     const fullRoot = mountDetails(
@@ -68,7 +68,7 @@ describe("renderClbrDetails", () => {
       }),
     );
     expect(
-      fullRoot.querySelector(".details")?.hasAttribute("data-inline-size"),
+      fullRoot.querySelector(".clbr-details")?.hasAttribute("data-inline-size"),
     ).toBe(false);
   });
 
@@ -79,8 +79,8 @@ describe("renderClbrDetails", () => {
         summary: `<More information>`,
       }),
     );
-    const summary = root.querySelector(".details .summary") as HTMLElement;
-    const content = root.querySelector(".details .content") as HTMLElement;
+    const summary = root.querySelector(".clbr-details .summary") as HTMLElement;
+    const content = root.querySelector(".clbr-details .content") as HTMLElement;
 
     expect(summary.textContent).toBe("<More information>");
     expect(content.innerHTML).toBe("<p><strong>Trusted</strong> content.</p>");

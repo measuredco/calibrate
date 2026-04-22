@@ -14,11 +14,11 @@ function mountSpinner(html: string): HTMLElement {
 describe("renderClbrSpinner", () => {
   it("renders the default spinner contract", () => {
     const root = mountSpinner(renderClbrSpinner());
-    const spinner = root.querySelector(".spinner") as HTMLElement;
+    const spinner = root.querySelector(".clbr-spinner") as HTMLElement;
     const svg = spinner.querySelector("svg") as SVGElement;
 
     expect(spinner.tagName).toBe("SPAN");
-    expect(spinner.className).toBe("spinner");
+    expect(spinner.className).toBe("clbr-spinner");
     expect(spinner.getAttribute("data-size")).toBe("md");
     expect(spinner.hasAttribute("data-tone")).toBe(false);
     expect(spinner.hasAttribute("role")).toBe(false);
@@ -33,7 +33,7 @@ describe("renderClbrSpinner", () => {
   it("emits the requested size", () => {
     const root = mountSpinner(renderClbrSpinner({ size: "2xl" }));
 
-    expect(root.querySelector(".spinner")?.getAttribute("data-size")).toBe(
+    expect(root.querySelector(".clbr-spinner")?.getAttribute("data-size")).toBe(
       "2xl",
     );
   });
@@ -41,18 +41,18 @@ describe("renderClbrSpinner", () => {
   it("omits default tone and emits non-default tone", () => {
     const defaultRoot = mountSpinner(renderClbrSpinner({ tone: "default" }));
     expect(
-      defaultRoot.querySelector(".spinner")?.hasAttribute("data-tone"),
+      defaultRoot.querySelector(".clbr-spinner")?.hasAttribute("data-tone"),
     ).toBe(false);
 
     const brandRoot = mountSpinner(renderClbrSpinner({ tone: "brand" }));
-    expect(brandRoot.querySelector(".spinner")?.getAttribute("data-tone")).toBe(
+    expect(brandRoot.querySelector(".clbr-spinner")?.getAttribute("data-tone")).toBe(
       "brand",
     );
   });
 
   it("renders a status label when provided", () => {
     const root = mountSpinner(renderClbrSpinner({ label: "Loading" }));
-    const spinner = root.querySelector(".spinner") as HTMLElement;
+    const spinner = root.querySelector(".clbr-spinner") as HTMLElement;
     const hiddenLabel = spinner.querySelector(
       ".visually-hidden",
     ) as HTMLElement;
@@ -66,7 +66,7 @@ describe("renderClbrSpinner", () => {
       renderClbrSpinner({ label: `<strong>Loading</strong>` }),
     );
     const hiddenLabel = root.querySelector(
-      ".spinner .visually-hidden",
+      ".clbr-spinner .visually-hidden",
     ) as HTMLElement;
 
     expect(hiddenLabel.innerHTML).toBe("&lt;strong&gt;Loading&lt;/strong&gt;");

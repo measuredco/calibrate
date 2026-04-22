@@ -35,7 +35,7 @@ export function renderClbrInline({
   nowrap,
 }: ClbrInlineProps): string {
   const inlineAttrs = attrs({
-    class: "inline",
+    class: "clbr-inline",
     "data-align": align === "center" ? undefined : align,
     "data-gap": gap,
     "data-justify": justify === "start" ? undefined : justify,
@@ -112,7 +112,7 @@ export const CLBR_INLINE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "inline",
+        value: "clbr-inline",
       },
       {
         behavior: "emit",

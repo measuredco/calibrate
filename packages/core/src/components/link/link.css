@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .link {
+  :where(.clbr) .clbr-link {
     align-items: center;
     color: var(--clbr-color-interactive-default);
     display: inline-flex;

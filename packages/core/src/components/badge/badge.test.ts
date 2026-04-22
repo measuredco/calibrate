@@ -12,7 +12,7 @@ describe("renderClbrBadge", () => {
     const root = mountBadge(
       renderClbrBadge({ label: `<strong>Badge</strong>` }),
     );
-    const badge = root.querySelector(".badge") as HTMLElement;
+    const badge = root.querySelector(".clbr-badge") as HTMLElement;
 
     expect(badge).toBeTruthy();
     expect(badge.tagName).toBe("SPAN");
@@ -24,7 +24,7 @@ describe("renderClbrBadge", () => {
 
   it("emits data-tone for non-default tones", () => {
     const root = mountBadge(renderClbrBadge({ label: "Info", tone: "info" }));
-    const badge = root.querySelector(".badge") as HTMLElement;
+    const badge = root.querySelector(".clbr-badge") as HTMLElement;
 
     expect(badge.getAttribute("data-tone")).toBe("info");
   });
@@ -33,12 +33,12 @@ describe("renderClbrBadge", () => {
     const floatingRoot = mountBadge(
       renderClbrBadge({ floating: true, label: "1" }),
     );
-    const floatingBadge = floatingRoot.querySelector(".badge") as HTMLElement;
+    const floatingBadge = floatingRoot.querySelector(".clbr-badge") as HTMLElement;
 
     expect(floatingBadge.hasAttribute("data-floating")).toBe(true);
 
     const defaultRoot = mountBadge(renderClbrBadge({ label: "1" }));
-    const defaultBadge = defaultRoot.querySelector(".badge") as HTMLElement;
+    const defaultBadge = defaultRoot.querySelector(".clbr-badge") as HTMLElement;
     expect(defaultBadge.hasAttribute("data-floating")).toBe(false);
   });
 
@@ -46,11 +46,11 @@ describe("renderClbrBadge", () => {
     const smallRoot = mountBadge(
       renderClbrBadge({ label: "Badge", size: "sm" }),
     );
-    const smallBadge = smallRoot.querySelector(".badge") as HTMLElement;
+    const smallBadge = smallRoot.querySelector(".clbr-badge") as HTMLElement;
     expect(smallBadge.getAttribute("data-size")).toBe("sm");
 
     const defaultRoot = mountBadge(renderClbrBadge({ label: "Badge" }));
-    const defaultBadge = defaultRoot.querySelector(".badge") as HTMLElement;
+    const defaultBadge = defaultRoot.querySelector(".clbr-badge") as HTMLElement;
     expect(defaultBadge.getAttribute("data-size")).toBe("md");
   });
 });

@@ -68,7 +68,7 @@ export function renderClbrNav({
   }
 
   const navAttrs = attrs({
-    class: "nav",
+    class: "clbr-nav",
     "aria-label": label || undefined,
     "data-collapsible": collapsible,
     "data-expander-label":
@@ -120,12 +120,12 @@ class ClbrNavElement extends HTMLElement {
   }
 
   #getNav(): HTMLElement | null {
-    return this.querySelector<HTMLElement>(".nav[data-collapsible]");
+    return this.querySelector<HTMLElement>(".clbr-nav[data-collapsible]");
   }
 
   #getExpanderButton(): HTMLButtonElement | null {
     return this.querySelector<HTMLButtonElement>(
-      '[data-part="expander"] .expander',
+      '[data-part="expander"] .clbr-expander',
     );
   }
 
@@ -167,7 +167,7 @@ class ClbrNavElement extends HTMLElement {
       const target = event.target;
 
       if (!(target instanceof Element)) return;
-      if (!target.closest('[data-part="expander"] .expander')) return;
+      if (!target.closest('[data-part="expander"] .clbr-expander')) return;
 
       const button = this.#getExpanderButton();
 
@@ -264,11 +264,11 @@ export const CLBR_NAV_SPEC = {
   description: "Use `clbr-nav` to render a primary navigation list.",
   output: {
     element: CLBR_NAV_TAG_NAME,
-    class: "nav (inner)",
+    class: "clbr-nav (inner)",
     children: [
-      "nav.nav",
-      "nav.nav > div.content",
-      "nav.nav > div.content > ul.list > li > a",
+      "nav.clbr-nav",
+      "nav.clbr-nav > div.content",
+      "nav.clbr-nav > div.content > ul.list > li > a",
       "optional runtime div[data-part='expander'] > button.expander",
     ],
   },
@@ -336,7 +336,7 @@ export const CLBR_NAV_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "nav",
+        value: "clbr-nav",
       },
       {
         behavior: "emit",

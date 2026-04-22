@@ -18,7 +18,7 @@ describe("renderClbrText", () => {
     const text = renderAndGetText();
 
     expect(text.tagName).toBe("SPAN");
-    expect(text.classList.contains("text")).toBe(true);
+    expect(text.classList.contains("clbr-text")).toBe(true);
   });
 
   it("renders paragraph when as is p", () => {

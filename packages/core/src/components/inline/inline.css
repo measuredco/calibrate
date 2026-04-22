@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .inline {
+  :where(.clbr) .clbr-inline {
     --clbr-inline-gap: var(--clbr-spacing-horizontal-700);
 
     align-items: center;

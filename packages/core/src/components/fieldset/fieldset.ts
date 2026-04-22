@@ -58,7 +58,7 @@ export function renderClbrFieldset({
       ? derivedDescriptionId
       : undefined,
     "aria-invalid": isInvalid ? "true" : undefined,
-    class: "fieldset",
+    class: "clbr-fieldset",
     "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
     disabled: isDisabled,
     id: normalizedId,
@@ -132,7 +132,7 @@ export const CLBR_FIELDSET_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "fieldset",
+        value: "clbr-fieldset",
       },
       {
         behavior: "always",

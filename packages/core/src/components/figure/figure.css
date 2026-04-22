@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .figure {
+  :where(.clbr) .clbr-figure {
     max-inline-size: fit-content;
     margin: 0;
     min-inline-size: var(--clbr-layout-grid-item-min-width);

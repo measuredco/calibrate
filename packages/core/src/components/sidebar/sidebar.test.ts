@@ -63,12 +63,12 @@ describe("renderClbrSidebar", () => {
     );
 
     const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
-    const sidebar = root.querySelector(".sidebar") as HTMLElement;
+    const sidebar = root.querySelector(".clbr-sidebar") as HTMLElement;
 
     expect(host).not.toBeNull();
     expect(host.getAttribute("data-above-notebook")).toBe("persistent");
     expect(host.getAttribute("data-size")).toBe("md");
-    expect(sidebar.classList.contains("sidebar")).toBe(true);
+    expect(sidebar.classList.contains("clbr-sidebar")).toBe(true);
     expect(root.querySelector('[data-part="backdrop"]')).not.toBeNull();
     expect(getByRole(root, "button", { name: "Open sidebar" })).not.toBeNull();
     expect(getByText(root, "Header")).not.toBeNull();
@@ -110,7 +110,7 @@ describe("defineClbrSidebar", () => {
     ).not.toBeNull();
     expect(
       root
-        .querySelector('[data-part="close"] .button')
+        .querySelector('[data-part="close"] .clbr-button')
         ?.getAttribute("data-size"),
     ).toBe("md");
   });

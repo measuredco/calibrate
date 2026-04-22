@@ -26,7 +26,7 @@ export function renderClbrFigure({
   responsive = false,
 }: ClbrFigureProps): string {
   const rootAttrs = attrs({
-    class: "figure",
+    class: "clbr-figure",
     "data-align": align === "start" ? undefined : align,
   });
   const captionMarkup = `<figcaption class="figcaption">${renderClbrText({
@@ -45,7 +45,7 @@ export const CLBR_FIGURE_SPEC = {
   description: "Use `figure` to present media with a caption.",
   output: {
     element: "figure",
-    class: "figure",
+    class: "clbr-figure",
     children: [
       "trusted media HTML",
       "figcaption.figcaption > renderClbrText({ as: 'span', children: caption, size: 'sm' })",
@@ -82,7 +82,7 @@ export const CLBR_FIGURE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "figure",
+        value: "clbr-figure",
       },
       {
         behavior: "emit",

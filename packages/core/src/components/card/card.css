@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .card {
+  :where(.clbr) .clbr-card {
     background-color: var(--clbr-color-background-panel);
     block-size: 100%;
     border-radius: var(--clbr-radius-lg);
@@ -132,7 +132,7 @@
         );
       }
 
-      .card:has(.title a) & {
+      .clbr-card:has(.title a) & {
         color: var(--clbr-color-interactive-default);
         font-weight: var(--clbr-typography-font-weight-regular-plus);
         font-family: var(--clbr-typography-font-family-mono);
@@ -149,7 +149,7 @@
       }
 
       @media (hover: hover) {
-        .card:has(.title a):hover & .icon-wrapper {
+        .clbr-card:has(.title a):hover & .icon-wrapper {
           inset-inline-start: var(--clbr-spacing-horizontal-400);
           opacity: 1;
           transition:
@@ -208,9 +208,9 @@
       }
 
       @media (any-hover: hover) {
-        .card:has(.title a):hover &::before,
-        .card:has(.title a):hover & span,
-        .card:has(.title a):hover &::after {
+        .clbr-card:has(.title a):hover &::before,
+        .clbr-card:has(.title a):hover & span,
+        .clbr-card:has(.title a):hover &::after {
           background-color: var(--clbr-color-brand-support);
 
           @media (forced-colors: active) {
@@ -218,12 +218,12 @@
           }
         }
 
-        .card:has(.title a):hover &::before {
+        .clbr-card:has(.title a):hover &::before {
           transition: background-color var(--clbr-motion-duration-100)
             var(--clbr-motion-easing-ease-in-out);
         }
 
-        .card:has(.title a):hover & span {
+        .clbr-card:has(.title a):hover & span {
           transition: background-color var(--clbr-motion-duration-200)
             var(--clbr-motion-easing-ease-in-out);
 
@@ -233,7 +233,7 @@
           }
         }
 
-        .card:has(.title a):hover &::after {
+        .clbr-card:has(.title a):hover &::after {
           transition: background-color var(--clbr-motion-duration-300)
             var(--clbr-motion-easing-ease-in-out);
 

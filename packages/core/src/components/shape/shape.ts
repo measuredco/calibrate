@@ -32,7 +32,7 @@ export function renderClbrShape({
   size = "md",
 }: ClbrShapeProps = {}): string {
   const shapeAttrs = attrs({
-    class: "shape",
+    class: "clbr-shape",
     "data-size": size,
     "data-tone":
       tone === "neutral" || tone === "brand" || tone === "support"
@@ -50,7 +50,7 @@ export const CLBR_SHAPE_SPEC = {
   description: "Use `shape` to render brand visual language components.",
   output: {
     element: "div",
-    class: "shape",
+    class: "clbr-shape",
     rendering:
       "CSS-driven masked shape using generated image/block-size token variables.",
   },
@@ -90,7 +90,7 @@ export const CLBR_SHAPE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "shape",
+        value: "clbr-shape",
       },
       {
         behavior: "always",

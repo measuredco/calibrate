@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .nav {
+  :where(.clbr) .clbr-nav {
     --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-300));
     --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-lg);
 
@@ -19,45 +19,45 @@
       position: relative;
       z-index: 2;
 
-      .nav[data-collapsible] & {
+      .clbr-nav[data-collapsible] & {
         display: inline-flex;
       }
 
       @media (min-width: 48rem) {
-        .nav[data-collapsible="belowTablet"] & {
+        .clbr-nav[data-collapsible="belowTablet"] & {
           display: none;
         }
       }
 
-      .nav[data-expander-position="end"] & {
+      .clbr-nav[data-expander-position="end"] & {
         margin-inline-end: var(--clbr-nav-expander-offset);
         margin-inline-start: auto;
       }
 
-      .banner
+      .clbr-banner
         + .header
-        .nav[data-collapsible="always"]
+        .clbr-nav[data-collapsible="always"]
         &:has(> [aria-expanded="true"]) {
         inset-block-start: var(--clbr-layout-spacing-vertical-600);
         inset-inline-start: var(--clbr-spacing-horizontal-600);
         position: fixed;
 
-        .nav[data-expander-position="end"] & {
+        .clbr-nav[data-expander-position="end"] & {
           inset-inline-end: var(--clbr-spacing-horizontal-600);
           inset-inline-start: inherit;
         }
       }
 
       @media (width < 48rem) {
-        .banner
+        .clbr-banner
           + .header
-          .nav[data-collapsible="belowTablet"]
+          .clbr-nav[data-collapsible="belowTablet"]
           &:has(> [aria-expanded="true"]) {
           inset-block-start: var(--clbr-layout-spacing-vertical-600);
           inset-inline-start: var(--clbr-layout-container-gutter-default);
           position: fixed;
 
-          .nav[data-expander-position="end"] & {
+          .clbr-nav[data-expander-position="end"] & {
             inset-inline-end: var(--clbr-layout-container-gutter-default);
             inset-inline-start: inherit;
           }
@@ -66,11 +66,11 @@
     }
 
     .content {
-      .nav[data-collapsible="always"] & {
+      .clbr-nav[data-collapsible="always"] & {
         display: none;
       }
 
-      .nav[data-collapsible="always"]:has(
+      .clbr-nav[data-collapsible="always"]:has(
           > [data-part="expander"] [aria-expanded="true"]
         )
         & {
@@ -88,18 +88,18 @@
         padding-inline-start: var(--clbr-spacing-horizontal-900);
         position: fixed;
 
-        .nav[data-expander-position="end"] & {
+        .clbr-nav[data-expander-position="end"] & {
           padding-inline-end: var(--clbr-spacing-horizontal-900);
           padding-inline-start: var(--clbr-spacing-horizontal-700);
         }
       }
 
       @media (width < 48rem) {
-        .nav[data-collapsible="belowTablet"] & {
+        .clbr-nav[data-collapsible="belowTablet"] & {
           display: none;
         }
 
-        .nav[data-collapsible="belowTablet"]:has(
+        .clbr-nav[data-collapsible="belowTablet"]:has(
             > [data-part="expander"] [aria-expanded="true"]
           )
           & {
@@ -117,7 +117,7 @@
           padding-inline-start: var(--clbr-spacing-horizontal-900);
           position: fixed;
 
-          .nav[data-expander-position="end"] & {
+          .clbr-nav[data-expander-position="end"] & {
             padding-inline-end: var(--clbr-spacing-horizontal-900);
             padding-inline-start: var(--clbr-spacing-horizontal-700);
           }
@@ -133,14 +133,14 @@
       margin-block: var(--clbr-spacing-vertical-400);
       padding-inline-start: 0;
 
-      .nav[data-size="sm"] & {
+      .clbr-nav[data-size="sm"] & {
         font-size: var(--clbr-typography-type-step-100-font-size);
         gap: var(--clbr-spacing-horizontal-500);
         margin-block: var(--clbr-spacing-vertical-250);
         line-height: var(--clbr-typography-type-step-100-line-height);
       }
 
-      .nav[data-collapsible="always"]:has(
+      .clbr-nav[data-collapsible="always"]:has(
           > [data-part="expander"] [aria-expanded="true"]
         )
         & {
@@ -154,7 +154,7 @@
       }
 
       @media (width < 48rem) {
-        .nav[data-collapsible="belowTablet"]:has(
+        .clbr-nav[data-collapsible="belowTablet"]:has(
             > [data-part="expander"] [aria-expanded="true"]
           )
           & {
@@ -183,7 +183,7 @@
         color: var(--clbr-color-interactive-neutral-active);
       }
 
-      .nav[data-collapsible="always"]:has(
+      .clbr-nav[data-collapsible="always"]:has(
           > [data-part="expander"] [aria-expanded="true"]
         )
         & {
@@ -207,7 +207,7 @@
       }
 
       @media (width < 48rem) {
-        .nav[data-collapsible="belowTablet"]:has(
+        .clbr-nav[data-collapsible="belowTablet"]:has(
             > [data-part="expander"] [aria-expanded="true"]
           )
           & {
@@ -245,7 +245,7 @@
           --clbr-typography-prose-link-hover-decoration-offset
         );
 
-        .nav[data-collapsible="always"]:has(
+        .clbr-nav[data-collapsible="always"]:has(
             > [data-part="expander"] [aria-expanded="true"]
           )
           & {
@@ -263,7 +263,7 @@
         }
 
         @media (width < 48rem) {
-          .nav[data-collapsible="belowTablet"]:has(
+          .clbr-nav[data-collapsible="belowTablet"]:has(
               > [data-part="expander"] [aria-expanded="true"]
             )
             & {

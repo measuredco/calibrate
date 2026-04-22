@@ -18,7 +18,7 @@ describe("renderClbrInline", () => {
     const inline = getByText(root, "Body");
 
     expect(inline.tagName).toBe("DIV");
-    expect(inline.classList.contains("inline")).toBe(true);
+    expect(inline.classList.contains("clbr-inline")).toBe(true);
     expect(inline.hasAttribute("data-align")).toBe(false);
     expect(inline.getAttribute("data-gap")).toBe("md");
     expect(inline.hasAttribute("data-justify")).toBe(false);
@@ -29,7 +29,7 @@ describe("renderClbrInline", () => {
     const root = mountInline(
       renderClbrInline({ as: "ul", children: "<li>Body</li>" }),
     );
-    const inline = root.querySelector(".inline");
+    const inline = root.querySelector(".clbr-inline");
 
     expect(inline?.tagName).toBe("UL");
     expect(inline?.getAttribute("data-gap")).toBe("md");
@@ -52,13 +52,13 @@ describe("renderClbrInline", () => {
 
   it("allows omitted and empty children without throwing", () => {
     const omittedRoot = mountInline(renderClbrInline({}));
-    const omittedInline = omittedRoot.querySelector(".inline");
+    const omittedInline = omittedRoot.querySelector(".clbr-inline");
 
     expect(omittedInline).toBeTruthy();
     expect(omittedInline?.innerHTML).toBe("");
 
     const emptyRoot = mountInline(renderClbrInline({ children: "" }));
-    const emptyInline = emptyRoot.querySelector(".inline");
+    const emptyInline = emptyRoot.querySelector(".clbr-inline");
 
     expect(emptyInline).toBeTruthy();
     expect(emptyInline?.innerHTML).toBe("");

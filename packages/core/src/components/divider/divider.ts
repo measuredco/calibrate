@@ -22,7 +22,7 @@ export function renderClbrDivider({
 }: ClbrDividerProps = {}): string {
   const dividerAttrs = attrs({
     "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
-    class: "divider",
+    class: "clbr-divider",
     "data-tone": tone === "subtle" || tone === "brand" ? tone : undefined,
     role: orientation === "vertical" ? "separator" : undefined,
   });
@@ -77,7 +77,7 @@ export const CLBR_DIVIDER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "divider",
+        value: "clbr-divider",
       },
       {
         behavior: "emit",

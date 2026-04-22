@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .poster {
+  :where(.clbr) .clbr-poster {
     background-color: var(--clbr-color-background-default);
     color: var(--clbr-color-foreground-default);
     isolation: isolate;

@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .details {
+  :where(.clbr) .clbr-details {
     &[data-inline-size="fit"] {
       inline-size: fit-content;
     }
@@ -43,7 +43,7 @@
           transition: none;
         }
 
-        .details[open] & {
+        .clbr-details[open] & {
           transform: rotate(90deg);
         }
       }

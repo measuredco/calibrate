@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .panel {
+  :where(.clbr) .clbr-panel {
     --clbr-panel-padding-block: var(--clbr-spacing-vertical-700);
     --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-700);
 

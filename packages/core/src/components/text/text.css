@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .text {
+  :where(.clbr) .clbr-text {
     --clbr-text-font: var(--clbr-typography-text-body-md);
     color: var(--clbr-color-foreground-prose);
     font: var(--clbr-text-font);
@@ -114,7 +114,7 @@
       padding-inline: var(--clbr-typography-prose-code-padding-inline-default);
 
       @media (min-width: 48em) {
-        .text[data-responsive][data-size="md"] & {
+        .clbr-text[data-responsive][data-size="md"] & {
           --clbr-code-padding-block-end: var(
             --clbr-typography-prose-code-padding-block-lg
           );

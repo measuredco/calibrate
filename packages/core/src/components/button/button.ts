@@ -168,7 +168,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
       : `${iconMarkup}${labelMarkup}`
     : labelMarkup;
   const commonAttrs = {
-    class: "button",
+    class: "clbr-button",
     "data-appearance": appearance,
     "data-label-visibility":
       labelVisibility === "visible" ? undefined : labelVisibility,
@@ -389,7 +389,7 @@ export const CLBR_BUTTON_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "button",
+        value: "clbr-button",
       },
       {
         behavior: "emit",

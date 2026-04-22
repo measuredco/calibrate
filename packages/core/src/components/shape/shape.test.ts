@@ -10,11 +10,11 @@ function mountShape(html: string): HTMLElement {
 describe("renderClbrShape", () => {
   it("renders the settled default root contract", () => {
     const root = mountShape(renderClbrShape());
-    const shape = root.querySelector(".shape") as HTMLElement;
+    const shape = root.querySelector(".clbr-shape") as HTMLElement;
 
     expect(shape).toBeTruthy();
     expect(shape.tagName).toBe("DIV");
-    expect(shape.className).toBe("shape");
+    expect(shape.className).toBe("clbr-shape");
     expect(shape.getAttribute("data-variant")).toBe("corner");
     expect(shape.hasAttribute("data-tone")).toBe(false);
     expect(shape.getAttribute("data-size")).toBe("md");
@@ -24,7 +24,7 @@ describe("renderClbrShape", () => {
     const root = mountShape(
       renderClbrShape({ size: "fill", tone: "brand", variant: "circle-sm" }),
     );
-    const shape = root.querySelector(".shape") as HTMLElement;
+    const shape = root.querySelector(".clbr-shape") as HTMLElement;
 
     expect(shape.getAttribute("data-variant")).toBe("circle-sm");
     expect(shape.getAttribute("data-tone")).toBe("brand");
@@ -34,10 +34,10 @@ describe("renderClbrShape", () => {
   it("emits each supported non-default tone value", () => {
     const neutral = mountShape(
       renderClbrShape({ tone: "neutral", variant: "tile-lg" }),
-    ).querySelector(".shape") as HTMLElement;
+    ).querySelector(".clbr-shape") as HTMLElement;
     const support = mountShape(
       renderClbrShape({ tone: "support", variant: "tile-slice-sm" }),
-    ).querySelector(".shape") as HTMLElement;
+    ).querySelector(".clbr-shape") as HTMLElement;
 
     expect(neutral.getAttribute("data-tone")).toBe("neutral");
     expect(support.getAttribute("data-tone")).toBe("support");
@@ -47,7 +47,7 @@ describe("renderClbrShape", () => {
     const root = mountShape(
       renderClbrShape({ variant: "tile-slice-lg", size: "xl" }),
     );
-    const shape = root.querySelector(".shape") as HTMLElement;
+    const shape = root.querySelector(".clbr-shape") as HTMLElement;
 
     expect(shape.getAttribute("data-variant")).toBe("tile-slice-lg");
     expect(shape.getAttribute("data-size")).toBe("xl");

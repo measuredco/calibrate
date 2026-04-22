@@ -19,19 +19,19 @@ describe("renderClbrFigure", () => {
         children: '<img src="/image.jpg" alt="Alt" />',
       }),
     );
-    const figure = root.querySelector(".figure") as HTMLElement;
+    const figure = root.querySelector(".clbr-figure") as HTMLElement;
 
     expect(figure.tagName).toBe("FIGURE");
-    expect(figure.className).toBe("figure");
+    expect(figure.className).toBe("clbr-figure");
     expect(figure.hasAttribute("data-align")).toBe(false);
     expect(figure.querySelector("img")?.getAttribute("src")).toBe("/image.jpg");
     expect(figure.querySelector("figcaption.figcaption")).toBeTruthy();
     expect(
-      figure.querySelector("figcaption.figcaption > span.text")?.textContent,
+      figure.querySelector("figcaption.figcaption > span.clbr-text")?.textContent,
     ).toBe("Caption");
     expect(
       figure
-        .querySelector("figcaption.figcaption > span.text")
+        .querySelector("figcaption.figcaption > span.clbr-text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -45,7 +45,7 @@ describe("renderClbrFigure", () => {
       }),
     );
 
-    expect(root.querySelector(".figure")?.getAttribute("data-align")).toBe(
+    expect(root.querySelector(".clbr-figure")?.getAttribute("data-align")).toBe(
       "center",
     );
   });
@@ -60,10 +60,10 @@ describe("renderClbrFigure", () => {
 
     expect(
       root
-        .querySelector(".figure figcaption.figcaption a")
+        .querySelector(".clbr-figure figcaption.figcaption a")
         ?.getAttribute("href"),
     ).toBe("/docs");
-    expect(root.querySelector(".figure picture img")).toBeTruthy();
+    expect(root.querySelector(".clbr-figure picture img")).toBeTruthy();
   });
 
   it("passes responsive through to the caption text", () => {
@@ -77,7 +77,7 @@ describe("renderClbrFigure", () => {
 
     expect(
       root
-        .querySelector(".figure figcaption.figcaption > span.text")
+        .querySelector(".clbr-figure figcaption.figcaption > span.clbr-text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });

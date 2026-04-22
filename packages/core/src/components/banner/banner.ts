@@ -71,7 +71,7 @@ export function renderClbrBanner({
     dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
   const bannerAttrs = attrs({
-    class: "banner",
+    class: "clbr-banner",
     "data-dismissible": dismissible,
     "data-dismissible-label": dismissible
       ? normalizedDismissibleLabel
@@ -163,7 +163,7 @@ export const CLBR_BANNER_SPEC = {
   description: "Use `clbr-banner` to display a prominent site-wide message.",
   output: {
     element: CLBR_BANNER_TAG_NAME,
-    class: "banner",
+    class: "clbr-banner",
     children: ["p.message", 'optional runtime div[data-part="close"]'],
   },
   props: {
@@ -211,7 +211,7 @@ export const CLBR_BANNER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "banner",
+        value: "clbr-banner",
       },
       {
         behavior: "emit",

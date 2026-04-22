@@ -29,7 +29,7 @@ export function renderClbrPattern({
   variant = "corner",
 }: ClbrPatternProps = {}): string {
   const patternAttrs = attrs({
-    class: "pattern",
+    class: "clbr-pattern",
     "data-size": size,
     "data-tone": tone === "default" ? undefined : tone,
     "data-variant": variant,
@@ -45,7 +45,7 @@ export const CLBR_PATTERN_SPEC = {
     "Use `pattern` to render repeated visual language components behind content.",
   output: {
     element: "div",
-    class: "pattern",
+    class: "clbr-pattern",
     children: "trusted HTML",
     rendering:
       "CSS-driven repeated masked layer using generated shape image/block-size token variables.",
@@ -91,7 +91,7 @@ export const CLBR_PATTERN_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "pattern",
+        value: "clbr-pattern",
       },
       {
         behavior: "always",

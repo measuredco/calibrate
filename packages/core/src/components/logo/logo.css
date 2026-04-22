@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .logo {
+  :where(.clbr) .clbr-logo {
     --clbr-logo-aspect-ratio: var(--clbr-shape-logo-primary-aspect-ratio);
     --clbr-logo-block-size: calc(
       var(--clbr-spacing-vertical-775) + var(--clbr-spacing-vertical-600) +

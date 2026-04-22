@@ -46,7 +46,7 @@ export function renderClbrText({
   const resolvedMeasured = isParagraph ? (measured ?? true) : undefined;
 
   const textAttrs = attrs({
-    class: "text",
+    class: "clbr-text",
     "data-align":
       resolvedAlign && resolvedAlign !== "start" ? resolvedAlign : undefined,
     "data-link-visited": linkVisited ? undefined : "off",
@@ -144,7 +144,7 @@ export const CLBR_TEXT_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "text",
+        value: "clbr-text",
       },
       {
         behavior: "emit",

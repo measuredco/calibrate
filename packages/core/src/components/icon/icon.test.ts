@@ -15,7 +15,7 @@ describe("renderClbrIcon", () => {
       );
       const icon = root.querySelector("svg") as SVGElement;
 
-      expect(icon.classList.contains("icon")).toBe(true);
+      expect(icon.classList.contains("clbr-icon")).toBe(true);
       expect(icon.getAttribute("data-size")).toBe("md");
       expect(icon.getAttribute("aria-hidden")).toBe("true");
       expect(icon.hasAttribute("aria-labelledby")).toBe(false);

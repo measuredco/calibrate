@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .avatar {
+  :where(.clbr) .clbr-avatar {
     --clbr-avatar-size: var(--clbr-spacing-vertical-700);
     --clbr-avatar-color-background: var(--clbr-color-avatar-default);
 
@@ -103,18 +103,18 @@
     }
   }
 
-  a:has(> :where(.avatar:first-child)):focus-visible,
-  button:has(> :where(.avatar:first-child)):focus-visible {
+  a:has(> :where(.clbr-avatar:first-child)):focus-visible,
+  button:has(> :where(.clbr-avatar:first-child)):focus-visible {
     outline: none;
 
-    .avatar {
+    .clbr-avatar {
       outline-color: var(--clbr-color-interactive-focus);
       outline-offset: var(--clbr-layout-focus-ring-offset-default);
       outline-width: var(--clbr-layout-focus-ring-width);
     }
   }
 
-  button:has(> :where(.avatar:first-child)) {
+  button:has(> :where(.clbr-avatar:first-child)) {
     background: none;
     border: 0;
     cursor: pointer;

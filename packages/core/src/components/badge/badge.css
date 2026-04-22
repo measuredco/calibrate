@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .badge {
+  :where(.clbr) .clbr-badge {
     --clbr-badge-color-background: var(--clbr-color-background-subtle);
     --clbr-badge-color-border: var(--clbr-color-foreground-prose);
     --clbr-badge-font-size: var(--clbr-typography-type-step-100-font-size);
@@ -59,8 +59,8 @@
     }
   }
 
-  a:has(> :where(.badge[data-floating]:last-child)),
-  button:has(> :where(.badge[data-floating]:last-child)) {
+  a:has(> :where(.clbr-badge[data-floating]:last-child)),
+  button:has(> :where(.clbr-badge[data-floating]:last-child)) {
     position: relative;
   }
 }

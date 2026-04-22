@@ -18,10 +18,10 @@ describe("renderClbrPage", () => {
         header: "<div>Header</div>",
       }),
     );
-    const page = root.querySelector(".page") as HTMLElement;
+    const page = root.querySelector(".clbr-page") as HTMLElement;
 
     expect(page.tagName).toBe("DIV");
-    expect(page.className).toBe("page");
+    expect(page.className).toBe("clbr-page");
     expect(page.hasAttribute("data-center-main")).toBe(true);
     expect(page.hasAttribute("data-sticky-header")).toBe(false);
     expect(page.firstElementChild?.className).toBe("page-banner");
@@ -39,7 +39,7 @@ describe("renderClbrPage", () => {
         header: '<a href="/header">Header</a>',
       }),
     );
-    const page = root.querySelector(".page") as HTMLElement;
+    const page = root.querySelector(".clbr-page") as HTMLElement;
 
     expect(page.querySelector(".main em")?.textContent).toBe("body");
     expect(page.firstElementChild?.getAttribute("href")).toBe("/banner");
@@ -60,7 +60,7 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(root.querySelector(".page")?.hasAttribute("data-center-main")).toBe(
+    expect(root.querySelector(".clbr-page")?.hasAttribute("data-center-main")).toBe(
       false,
     );
   });
@@ -74,7 +74,7 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(root.querySelector(".page")?.firstElementChild?.tagName).toBe(
+    expect(root.querySelector(".clbr-page")?.firstElementChild?.tagName).toBe(
       "HEADER",
     );
   });
@@ -90,7 +90,7 @@ describe("renderClbrPage", () => {
     );
 
     expect(
-      root.querySelector(".page")?.getAttribute("data-sticky-header"),
+      root.querySelector(".clbr-page")?.getAttribute("data-sticky-header"),
     ).toBe("always");
   });
 });

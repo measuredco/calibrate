@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .expander {
+  :where(.clbr) .clbr-expander {
     --clbr-expander-icon-size: var(--clbr-layout-icon-size-md);
     --clbr-expander-padding-size: var(--clbr-spacing-vertical-250);
     --clbr-expander-button-size: calc(
@@ -129,7 +129,7 @@
         }
       }
 
-      .expander[aria-expanded="true"] & {
+      .clbr-expander[aria-expanded="true"] & {
         transform: rotate(225deg);
         transition-delay: var(--clbr-motion-duration-100);
         transition-timing-function: var(--clbr-motion-easing-ease-in-out);

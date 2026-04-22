@@ -18,7 +18,7 @@ describe("renderClbrContainer", () => {
     const container = getByText(root, "Body");
 
     expect(container.tagName).toBe("DIV");
-    expect(container.classList.contains("container")).toBe(true);
+    expect(container.classList.contains("clbr-container")).toBe(true);
     expect(container.hasAttribute("data-max-inline-size")).toBe(false);
     expect(container.hasAttribute("data-gutter")).toBe(false);
   });
@@ -37,13 +37,13 @@ describe("renderClbrContainer", () => {
 
   it("allows omitted and empty children without throwing", () => {
     const omittedRoot = mountContainer(renderClbrContainer({}));
-    const omittedContainer = omittedRoot.querySelector(".container");
+    const omittedContainer = omittedRoot.querySelector(".clbr-container");
 
     expect(omittedContainer).toBeTruthy();
     expect(omittedContainer?.innerHTML).toBe("");
 
     const emptyRoot = mountContainer(renderClbrContainer({ children: "" }));
-    const emptyContainer = emptyRoot.querySelector(".container");
+    const emptyContainer = emptyRoot.querySelector(".clbr-container");
 
     expect(emptyContainer).toBeTruthy();
     expect(emptyContainer?.innerHTML).toBe("");

@@ -24,7 +24,7 @@ export function renderClbrContainer({
   maxInlineSize = "default",
 }: ClbrContainerProps): string {
   const containerAttrs = attrs({
-    class: "container",
+    class: "clbr-container",
     "data-gutter": gutter === "default" ? undefined : gutter,
     "data-max-inline-size":
       maxInlineSize === "default" ? undefined : maxInlineSize,
@@ -67,7 +67,7 @@ export const CLBR_CONTAINER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "container",
+        value: "clbr-container",
       },
       {
         behavior: "emit",

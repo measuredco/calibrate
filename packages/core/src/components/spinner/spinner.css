@@ -5,7 +5,7 @@
     }
   }
 
-  :where(.clbr) .spinner {
+  :where(.clbr) .clbr-spinner {
     --clbr-spinner-size: var(--clbr-layout-icon-size-md);
 
     aspect-ratio: 1 / 1;

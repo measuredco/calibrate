@@ -8,7 +8,7 @@
       --clbr-menu-trigger-block-size: var(--clbr-spacing-vertical-775);
     }
 
-    .menu {
+    .clbr-menu {
       border-radius: calc(
         var(--clbr-menu-trigger-block-size) * var(--clbr-radius-ratio-default)
       );

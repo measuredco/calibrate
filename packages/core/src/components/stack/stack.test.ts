@@ -14,7 +14,7 @@ describe("renderClbrStack", () => {
     const stack = getByText(root, "Body");
 
     expect(stack.tagName).toBe("DIV");
-    expect(stack.classList.contains("stack")).toBe(true);
+    expect(stack.classList.contains("clbr-stack")).toBe(true);
     expect(stack.hasAttribute("data-align")).toBe(false);
     expect(stack.getAttribute("data-gap")).toBe("md");
     expect(stack.hasAttribute("data-responsive")).toBe(false);
@@ -25,7 +25,7 @@ describe("renderClbrStack", () => {
     const stack = getByText(root, "Body");
 
     expect(stack.tagName).toBe("UL");
-    expect(stack.classList.contains("stack")).toBe(true);
+    expect(stack.classList.contains("clbr-stack")).toBe(true);
   });
 
   it("renders trusted HTML content when children is provided", () => {
@@ -42,13 +42,13 @@ describe("renderClbrStack", () => {
 
   it("allows omitted and empty children without throwing", () => {
     const omittedRoot = mountStack(renderClbrStack({}));
-    const omittedStack = omittedRoot.querySelector(".stack");
+    const omittedStack = omittedRoot.querySelector(".clbr-stack");
 
     expect(omittedStack).toBeTruthy();
     expect(omittedStack?.innerHTML).toBe("");
 
     const emptyRoot = mountStack(renderClbrStack({ children: "" }));
-    const emptyStack = emptyRoot.querySelector(".stack");
+    const emptyStack = emptyRoot.querySelector(".clbr-stack");
 
     expect(emptyStack).toBeTruthy();
     expect(emptyStack?.innerHTML).toBe("");

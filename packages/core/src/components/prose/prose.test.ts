@@ -14,7 +14,7 @@ describe("renderClbrProse", () => {
     const prose = getByText(root, "Hello world");
 
     expect(prose.tagName).toBe("DIV");
-    expect(prose.classList.contains("prose")).toBe(true);
+    expect(prose.classList.contains("clbr-prose")).toBe(true);
   });
 
   it("omits default align and emits non-default align", () => {
@@ -78,12 +78,12 @@ describe("renderClbrProse", () => {
 
   it("allows empty or whitespace children without throwing", () => {
     const emptyRoot = mountProse(renderClbrProse({ children: "" }));
-    const emptyProse = emptyRoot.querySelector(".prose");
+    const emptyProse = emptyRoot.querySelector(".clbr-prose");
     expect(emptyProse).toBeTruthy();
     expect(emptyProse?.innerHTML).toBe("");
 
     const whitespaceRoot = mountProse(renderClbrProse({ children: "   " }));
-    const whitespaceProse = whitespaceRoot.querySelector(".prose");
+    const whitespaceProse = whitespaceRoot.querySelector(".clbr-prose");
     expect(whitespaceProse).toBeTruthy();
     expect(whitespaceProse?.innerHTML).toBe("   ");
   });

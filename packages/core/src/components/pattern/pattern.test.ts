@@ -14,11 +14,11 @@ function mountPattern(html: string): HTMLElement {
 describe("renderClbrPattern", () => {
   it("renders the settled default root contract", () => {
     const root = mountPattern(renderClbrPattern());
-    const pattern = root.querySelector(".pattern") as HTMLElement;
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
 
     expect(pattern).toBeTruthy();
     expect(pattern.tagName).toBe("DIV");
-    expect(pattern.className).toBe("pattern");
+    expect(pattern.className).toBe("clbr-pattern");
     expect(pattern.getAttribute("data-size")).toBe("md");
     expect(pattern.hasAttribute("data-tone")).toBe(false);
     expect(pattern.getAttribute("data-variant")).toBe("corner");
@@ -33,7 +33,7 @@ describe("renderClbrPattern", () => {
         variant: "tile-slice-lg",
       }),
     );
-    const pattern = root.querySelector(".pattern") as HTMLElement;
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
 
     expect(pattern.getAttribute("data-size")).toBe("fill");
     expect(pattern.getAttribute("data-tone")).toBe("support");
@@ -42,7 +42,7 @@ describe("renderClbrPattern", () => {
 
   it("emits the subtle tone value", () => {
     const root = mountPattern(renderClbrPattern({ tone: "subtle" }));
-    const pattern = root.querySelector(".pattern") as HTMLElement;
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
 
     expect(pattern.getAttribute("data-tone")).toBe("subtle");
   });
@@ -53,7 +53,7 @@ describe("renderClbrPattern", () => {
         children: '<div class="content">Pattern content</div>',
       }),
     );
-    const pattern = root.querySelector(".pattern") as HTMLElement;
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
     const content = pattern.querySelector(".content") as HTMLElement;
 
     expect(content).toBeTruthy();

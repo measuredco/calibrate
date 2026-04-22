@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .heading {
+  :where(.clbr) .clbr-heading {
     --clbr-heading-font: var(--clbr-typography-text-heading-md);
     color: var(--clbr-color-foreground-default);
     display: block;

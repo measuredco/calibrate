@@ -17,8 +17,8 @@ describe("renderClbrSurface", () => {
     const root = mountSurface(
       renderClbrSurface({ children: "<p>content</p>" }),
     );
-    const surface = root.querySelector(".surface") as HTMLElement;
-    expect(surface.classList.contains("surface")).toBe(true);
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.classList.contains("clbr-surface")).toBe(true);
     expect(surface.getAttribute("data-clbr-surface")).toBe("default");
   });
 
@@ -29,8 +29,8 @@ describe("renderClbrSurface", () => {
         variant: "brand",
       }),
     );
-    const surface = root.querySelector(".surface") as HTMLElement;
-    expect(surface.classList.contains("surface")).toBe(true);
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.classList.contains("clbr-surface")).toBe(true);
     expect(surface.getAttribute("data-clbr-surface")).toBe("brand");
   });
 
@@ -41,8 +41,8 @@ describe("renderClbrSurface", () => {
         variant: "inverse",
       }),
     );
-    const surface = root.querySelector(".surface") as HTMLElement;
-    expect(surface.classList.contains("surface")).toBe(true);
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.classList.contains("clbr-surface")).toBe(true);
     expect(surface.getAttribute("data-clbr-surface")).toBe("inverse");
   });
 
@@ -53,15 +53,15 @@ describe("renderClbrSurface", () => {
         variant: "brand-inverse",
       }),
     );
-    const surface = root.querySelector(".surface") as HTMLElement;
-    expect(surface.classList.contains("surface")).toBe(true);
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.classList.contains("clbr-surface")).toBe(true);
     expect(surface.getAttribute("data-clbr-surface")).toBe("brand-inverse");
   });
 
   it("injects children HTML content", () => {
     const children = "<section><h2>Surface</h2><p>Body</p></section>";
     const root = mountSurface(renderClbrSurface({ children }));
-    const surface = root.querySelector(".surface") as HTMLElement;
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
     expect(getByText(surface, "Surface")).toBeTruthy();
     expect(getByText(surface, "Body")).toBeTruthy();
   });

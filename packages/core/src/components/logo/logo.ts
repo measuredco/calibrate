@@ -32,7 +32,7 @@ export function renderClbrLogo({
   variant = "primary",
 }: ClbrLogoProps): string {
   const logoAttrs = attrs({
-    class: "logo",
+    class: "clbr-logo",
     "data-size": size,
     "data-tone": tone === "neutral" ? "neutral" : undefined,
     "data-variant": variant === "primary" ? undefined : variant,
@@ -81,7 +81,7 @@ export const CLBR_LOGO_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "logo",
+        value: "clbr-logo",
       },
       {
         behavior: "always",

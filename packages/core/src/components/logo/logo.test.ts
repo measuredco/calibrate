@@ -10,7 +10,7 @@ function mountLogo(html: string): HTMLElement {
 describe("renderClbrLogo", () => {
   it("renders div.logo with default variant/tone/size and required label", () => {
     const root = mountLogo(renderClbrLogo({ label: "Measured" }));
-    const logo = root.querySelector(".logo") as HTMLElement;
+    const logo = root.querySelector(".clbr-logo") as HTMLElement;
 
     expect(logo).toBeTruthy();
     expect(logo.tagName).toBe("DIV");
@@ -30,7 +30,7 @@ describe("renderClbrLogo", () => {
         variant: "graphic",
       }),
     );
-    const logo = root.querySelector(".logo") as HTMLElement;
+    const logo = root.querySelector(".clbr-logo") as HTMLElement;
 
     expect(logo.getAttribute("data-variant")).toBe("graphic");
     expect(logo.getAttribute("data-tone")).toBe("neutral");
@@ -38,14 +38,14 @@ describe("renderClbrLogo", () => {
 
   it("always emits data-size and supports fill", () => {
     const root = mountLogo(renderClbrLogo({ label: "Measured", size: "fill" }));
-    const logo = root.querySelector(".logo") as HTMLElement;
+    const logo = root.querySelector(".clbr-logo") as HTMLElement;
 
     expect(logo.getAttribute("data-size")).toBe("fill");
   });
 
   it("escapes label content", () => {
     const root = mountLogo(renderClbrLogo({ label: "Measured <Logo>" }));
-    const label = root.querySelector(".logo .visually-hidden") as HTMLElement;
+    const label = root.querySelector(".clbr-logo .visually-hidden") as HTMLElement;
 
     expect(label.textContent).toBe("Measured <Logo>");
     expect(label.querySelector("logo")).toBeNull();

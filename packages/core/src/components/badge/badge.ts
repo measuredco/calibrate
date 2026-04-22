@@ -27,7 +27,7 @@ export function renderClbrBadge({
   tone,
 }: ClbrBadgeProps): string {
   const badgeAttrs = attrs({
-    class: "badge",
+    class: "clbr-badge",
     "data-floating": floating,
     "data-size": size,
     "data-tone": tone || undefined,
@@ -74,7 +74,7 @@ export const CLBR_BADGE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "badge",
+        value: "clbr-badge",
       },
       {
         behavior: "emit",

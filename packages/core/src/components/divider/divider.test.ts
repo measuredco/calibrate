@@ -14,11 +14,11 @@ function mountDivider(html: string): HTMLElement {
 describe("renderClbrDivider", () => {
   it("renders horizontal divider markup by default", () => {
     const root = mountDivider(renderClbrDivider());
-    const divider = root.querySelector(".divider") as HTMLElement;
+    const divider = root.querySelector(".clbr-divider") as HTMLElement;
 
     expect(divider).toBeTruthy();
     expect(divider.tagName).toBe("HR");
-    expect(divider.classList.contains("divider")).toBe(true);
+    expect(divider.classList.contains("clbr-divider")).toBe(true);
     expect(divider.hasAttribute("role")).toBe(false);
     expect(divider.hasAttribute("aria-orientation")).toBe(false);
     expect(divider.hasAttribute("data-tone")).toBe(false);
@@ -26,7 +26,7 @@ describe("renderClbrDivider", () => {
 
   it("renders vertical divider semantics when orientation is vertical", () => {
     const root = mountDivider(renderClbrDivider({ orientation: "vertical" }));
-    const divider = root.querySelector(".divider") as HTMLElement;
+    const divider = root.querySelector(".clbr-divider") as HTMLElement;
 
     expect(divider.tagName).toBe("SPAN");
     expect(divider.getAttribute("role")).toBe("separator");
@@ -35,15 +35,15 @@ describe("renderClbrDivider", () => {
 
   it("emits data-tone only for non-default tone values", () => {
     const subtleRoot = mountDivider(renderClbrDivider({ tone: "subtle" }));
-    const subtle = subtleRoot.querySelector(".divider") as HTMLElement;
+    const subtle = subtleRoot.querySelector(".clbr-divider") as HTMLElement;
     expect(subtle.getAttribute("data-tone")).toBe("subtle");
 
     const brandRoot = mountDivider(renderClbrDivider({ tone: "brand" }));
-    const brand = brandRoot.querySelector(".divider") as HTMLElement;
+    const brand = brandRoot.querySelector(".clbr-divider") as HTMLElement;
     expect(brand.getAttribute("data-tone")).toBe("brand");
 
     const defaultRoot = mountDivider(renderClbrDivider({ tone: "default" }));
-    const defaultTone = defaultRoot.querySelector(".divider") as HTMLElement;
+    const defaultTone = defaultRoot.querySelector(".clbr-divider") as HTMLElement;
     expect(defaultTone.hasAttribute("data-tone")).toBe(false);
   });
 });

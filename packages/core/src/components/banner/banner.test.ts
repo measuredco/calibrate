@@ -25,7 +25,7 @@ describe("renderClbrBanner", () => {
     const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
     expect(banner.tagName).toBe("CLBR-BANNER");
-    expect(banner.className).toBe("banner");
+    expect(banner.className).toBe("clbr-banner");
     expect(banner.hasAttribute("data-tone")).toBe(false);
     expect(banner.hasAttribute("role")).toBe(false);
     expect(banner.hasAttribute("data-dismissible")).toBe(true);
@@ -35,7 +35,7 @@ describe("renderClbrBanner", () => {
     expect(banner.querySelector(".message")?.textContent?.trim()).toBe(
       "Body copy",
     );
-    expect(banner.querySelector(".link")).toBeNull();
+    expect(banner.querySelector(".clbr-link")).toBeNull();
     expect(
       getByRole(root, "button", { name: "Dismiss banner" }),
     ).not.toBeNull();
@@ -52,7 +52,7 @@ describe("renderClbrBanner", () => {
 
     const action = getByRole(root, "link", { name: "Learn more" });
     expect(action.getAttribute("href")).toBe("/docs");
-    expect(action.classList.contains("link")).toBe(true);
+    expect(action.classList.contains("clbr-link")).toBe(true);
   });
 
   it("throws when actionHref and actionLabel are not provided together", () => {
@@ -88,7 +88,7 @@ describe("renderClbrBanner", () => {
     );
 
     expect(root.querySelector(".message em")).toBeNull();
-    expect(root.querySelector(".message .link")).toBeNull();
+    expect(root.querySelector(".message .clbr-link")).toBeNull();
     expect(root.querySelector(".message")?.innerHTML).toContain("&lt;em&gt;");
   });
 
@@ -101,7 +101,7 @@ describe("renderClbrBanner", () => {
       }),
     );
 
-    const action = root.querySelector(".link") as HTMLElement;
+    const action = root.querySelector(".clbr-link") as HTMLElement;
     expect(action.innerHTML).toContain(
       "&lt;strong&gt;Learn more&lt;/strong&gt;",
     );

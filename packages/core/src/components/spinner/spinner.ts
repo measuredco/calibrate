@@ -32,7 +32,7 @@ export function renderClbrSpinner({
   tone = "default",
 }: ClbrSpinnerProps = {}): string {
   const spinnerAttrs = attrs({
-    class: "spinner",
+    class: "clbr-spinner",
     "data-size": size,
     "data-tone": tone === "brand" ? "brand" : undefined,
     role: label ? "status" : undefined,
@@ -74,7 +74,7 @@ export const CLBR_SPINNER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "spinner",
+        value: "clbr-spinner",
       },
       {
         behavior: "always",

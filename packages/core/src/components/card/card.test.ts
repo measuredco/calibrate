@@ -15,10 +15,10 @@ describe("renderClbrCard", () => {
         title: "Card title",
       }),
     );
-    const card = root.querySelector(".card") as HTMLElement;
+    const card = root.querySelector(".clbr-card") as HTMLElement;
 
     expect(card.tagName).toBe("DIV");
-    expect(card.className).toBe("card");
+    expect(card.className).toBe("clbr-card");
     expect(card.hasAttribute("data-clbr-surface")).toBe(false);
     expect(card.querySelector(".dots")).toBeTruthy();
     expect(card.querySelector("div.title")?.textContent).toBe("Card title");
@@ -37,10 +37,10 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".card h4.title")?.textContent).toBe(
+    expect(root.querySelector(".clbr-card h4.title")?.textContent).toBe(
       "Card title",
     );
-    expect(root.querySelector(".card div.title")).toBeNull();
+    expect(root.querySelector(".clbr-card div.title")).toBeNull();
   });
 
   it("renders a linked title and trailing note icon when href and note are provided", () => {
@@ -53,16 +53,16 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".card .title a")?.getAttribute("href")).toBe(
+    expect(root.querySelector(".clbr-card .title a")?.getAttribute("href")).toBe(
       "/docs",
     );
-    expect(root.querySelector(".card .title a")?.textContent).toBe(
+    expect(root.querySelector(".clbr-card .title a")?.textContent).toBe(
       "Card title",
     );
-    expect(root.querySelector(".card p.note")?.textContent).toContain(
+    expect(root.querySelector(".clbr-card p.note")?.textContent).toContain(
       "Read more",
     );
-    expect(root.querySelector(".card p.note .icon")).toBeTruthy();
+    expect(root.querySelector(".clbr-card p.note .clbr-icon")).toBeTruthy();
   });
 
   it("renders trusted HTML for description and note", () => {
@@ -74,13 +74,13 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".card p.description em")?.textContent).toBe(
+    expect(root.querySelector(".clbr-card p.description em")?.textContent).toBe(
       "emphasis",
     );
-    expect(root.querySelector(".card p.note a")?.getAttribute("href")).toBe(
+    expect(root.querySelector(".clbr-card p.note a")?.getAttribute("href")).toBe(
       "/team",
     );
-    expect(root.querySelector(".card p.note .icon")).toBeNull();
+    expect(root.querySelector(".clbr-card p.note .clbr-icon")).toBeNull();
   });
 
   it("emits any supported surface variant when provided", () => {
@@ -92,7 +92,7 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".card")?.getAttribute("data-clbr-surface")).toBe(
+    expect(root.querySelector(".clbr-card")?.getAttribute("data-clbr-surface")).toBe(
       "brand-inverse",
     );
   });

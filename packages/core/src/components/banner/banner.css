@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .banner {
+  :where(.clbr) .clbr-banner {
     --clbr-banner-color-background: var(--clbr-color-background-subtle);
 
     background-color: var(--clbr-banner-color-background);
@@ -41,7 +41,7 @@
       text-align: center;
       text-wrap: balance;
 
-      .banner[data-dismissible] > & {
+      .clbr-banner[data-dismissible] > & {
         padding-inline: var(--clbr-spacing-horizontal-700);
       }
     }

@@ -63,7 +63,7 @@ export function renderClbrGrid({
   gap = "default",
 }: ClbrGridProps): string {
   const gridAttrs = attrs({
-    class: "grid",
+    class: "clbr-grid",
     "data-gap": gap === "default" ? undefined : gap,
   });
 
@@ -94,7 +94,7 @@ export function renderClbrGridItem({
   rowStartWide,
 }: ClbrGridItemProps): string {
   const gridItemAttrs = attrs({
-    class: "grid-item",
+    class: "clbr-grid-item",
     "data-align": align,
     "data-justify": justify,
     "data-col-span-narrow": validateGridTrack(colSpanNarrow),
@@ -264,7 +264,7 @@ export const CLBR_GRID_ITEM_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "grid-item",
+        value: "clbr-grid-item",
       },
       {
         behavior: "emit",

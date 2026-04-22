@@ -25,7 +25,7 @@ describe("renderClbrFieldset", () => {
     const fieldset = root.querySelector("fieldset");
 
     expect(fieldset?.getAttribute("id")).toBe("contact");
-    expect(fieldset?.classList.contains("fieldset")).toBe(true);
+    expect(fieldset?.classList.contains("clbr-fieldset")).toBe(true);
     expect(fieldset?.hasAttribute("data-inline-size")).toBe(false);
     expect(getByText(root, "Legend").tagName).toBe("LEGEND");
     expect(root.querySelector(".content")?.textContent).toBe("Body");
@@ -99,7 +99,7 @@ describe("renderClbrFieldset", () => {
       }),
     );
 
-    const omittedFieldset = omittedRoot.querySelector(".fieldset");
+    const omittedFieldset = omittedRoot.querySelector(".clbr-fieldset");
 
     expect(omittedFieldset).toBeTruthy();
     expect(omittedFieldset?.innerHTML).toContain("<legend");
@@ -112,7 +112,7 @@ describe("renderClbrFieldset", () => {
       }),
     );
 
-    expect(emptyRoot.querySelector(".fieldset")?.innerHTML).toContain(
+    expect(emptyRoot.querySelector(".clbr-fieldset")?.innerHTML).toContain(
       "<legend",
     );
   });

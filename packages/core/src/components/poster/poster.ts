@@ -37,7 +37,7 @@ export function renderClbrPoster({
 }: ClbrPosterProps): string {
   const resolvedSurface = contentTheme ? (surface ?? "default") : surface;
   const posterAttrs = attrs({
-    class: "poster",
+    class: "clbr-poster",
     "data-clbr-content-theme": contentTheme,
     "data-clbr-surface": resolvedSurface,
   });
@@ -54,7 +54,7 @@ export const CLBR_POSTER_SPEC = {
   description: "Use `poster` to layer content over a background image.",
   output: {
     element: "div",
-    class: "poster",
+    class: "clbr-poster",
     children: ["div.image-wrapper", "optional div.content"],
   },
   props: {
@@ -88,7 +88,7 @@ export const CLBR_POSTER_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "poster",
+        value: "clbr-poster",
       },
       {
         behavior: "emit",

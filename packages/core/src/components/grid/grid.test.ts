@@ -19,11 +19,11 @@ describe("renderClbrGrid", () => {
   it("renders a grid container with inner grid and default gap omitted", () => {
     const root = mountGrid(renderClbrGrid({ children: "Body" }));
     const gridContainer = root.querySelector(".grid-container");
-    const grid = root.querySelector(".grid");
+    const grid = root.querySelector(".clbr-grid");
 
     expect(gridContainer?.tagName).toBe("DIV");
     expect(gridContainer?.classList.contains("grid-container")).toBe(true);
-    expect(grid?.classList.contains("grid")).toBe(true);
+    expect(grid?.classList.contains("clbr-grid")).toBe(true);
     expect(grid?.hasAttribute("data-gap")).toBe(false);
   });
 
@@ -31,14 +31,14 @@ describe("renderClbrGrid", () => {
     const expandedRoot = mountGrid(
       renderClbrGrid({ children: "Body", gap: "expanded" }),
     );
-    const expandedGrid = expandedRoot.querySelector(".grid");
+    const expandedGrid = expandedRoot.querySelector(".clbr-grid");
 
     expect(expandedGrid?.getAttribute("data-gap")).toBe("expanded");
 
     const noneRoot = mountGrid(
       renderClbrGrid({ children: "Body", gap: "none" }),
     );
-    const noneGrid = noneRoot.querySelector(".grid");
+    const noneGrid = noneRoot.querySelector(".clbr-grid");
 
     expect(noneGrid?.getAttribute("data-gap")).toBe("none");
   });
@@ -62,7 +62,7 @@ describe("renderClbrGridItem", () => {
     const item = getByText(root, "Item");
 
     expect(item.tagName).toBe("DIV");
-    expect(item.classList.contains("grid-item")).toBe(true);
+    expect(item.classList.contains("clbr-grid-item")).toBe(true);
     expect(item.hasAttribute("data-align")).toBe(false);
     expect(item.hasAttribute("data-justify")).toBe(false);
     expect(item.hasAttribute("data-col-span")).toBe(false);
@@ -138,8 +138,8 @@ describe("renderClbrGridItem", () => {
     ];
     const root = mountGrid(renderClbrGrid({ children: items.join("") }));
 
-    expect(getByText(root, "A").classList.contains("grid-item")).toBe(true);
-    expect(getByText(root, "B").classList.contains("grid-item")).toBe(true);
+    expect(getByText(root, "A").classList.contains("clbr-grid-item")).toBe(true);
+    expect(getByText(root, "B").classList.contains("clbr-grid-item")).toBe(true);
   });
 });
 

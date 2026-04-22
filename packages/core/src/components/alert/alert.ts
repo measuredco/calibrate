@@ -82,7 +82,7 @@ export function renderClbrAlert({
     dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
   const alertAttrs = attrs({
-    class: "alert",
+    class: "clbr-alert",
     "data-dismissible": dismissible,
     "data-dismissible-label": dismissible
       ? normalizedDismissibleLabel
@@ -173,7 +173,7 @@ export const CLBR_ALERT_SPEC = {
   description: "Use `clbr-alert` to surface short, important messages.",
   output: {
     element: CLBR_ALERT_TAG_NAME,
-    class: "alert",
+    class: "clbr-alert",
     children: [
       "div.icon-wrapper",
       "div.content",
@@ -223,7 +223,7 @@ export const CLBR_ALERT_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "alert",
+        value: "clbr-alert",
       },
       {
         behavior: "emit",

@@ -130,7 +130,7 @@ describe("renderClbrButton", () => {
       const button = getByRole(document.body, "button", { name: "Continue" });
 
       expect(button.firstElementChild?.className).toBe("icon-wrapper");
-      expect(button.querySelector(".icon-wrapper .icon")).toBeTruthy();
+      expect(button.querySelector(".icon-wrapper .clbr-icon")).toBeTruthy();
     });
 
     it("renders icon at end when iconPlacement is end", () => {
@@ -156,7 +156,7 @@ describe("renderClbrButton", () => {
         }),
       );
       const button = getByRole(document.body, "button", { name: "Continue" });
-      const icon = button.querySelector("svg.icon");
+      const icon = button.querySelector("svg.clbr-icon");
 
       expect(button.getAttribute("data-label-visibility")).toBe(
         "hiddenBelowTablet",
@@ -208,7 +208,7 @@ describe("renderClbrButton", () => {
         }),
       );
       const button = getByRole(document.body, "button", { name: "Continue" });
-      const icon = button.querySelector("svg.icon");
+      const icon = button.querySelector("svg.clbr-icon");
 
       expect(icon?.getAttribute("aria-hidden")).toBe("true");
       expect(icon?.getAttribute("role")).toBeNull();
@@ -242,7 +242,7 @@ describe("renderClbrButton", () => {
       );
       const link = getByRole(document.body, "link", { name: "Docs" });
 
-      expect(link.querySelector(".icon-wrapper .icon")).toBeTruthy();
+      expect(link.querySelector(".icon-wrapper .clbr-icon")).toBeTruthy();
     });
 
     it("supports end placement for link icon", () => {
@@ -272,7 +272,7 @@ describe("renderClbrButton", () => {
         }),
       );
       const link = getByRole(document.body, "link", { name: "Docs" });
-      const icon = link.querySelector("svg.icon");
+      const icon = link.querySelector("svg.clbr-icon");
 
       expect(link.getAttribute("data-label-visibility")).toBe(
         "hiddenBelowTablet",

@@ -37,7 +37,7 @@ export function renderClbrCard({
   surface,
   title,
 }: ClbrCardProps): string {
-  const rootAttrs = attrs({ class: "card", "data-clbr-surface": surface });
+  const rootAttrs = attrs({ class: "clbr-card", "data-clbr-surface": surface });
   const headingTag = headingLevel ? `h${headingLevel}` : `div`;
   const titleMarkup = href
     ? `<a href="${escapeHtml(href)}">${escapeHtml(title)}</a>`
@@ -65,7 +65,7 @@ export const CLBR_CARD_SPEC = {
   description: "Use `card` to display a summary for a single topic.",
   output: {
     element: "div",
-    class: "card",
+    class: "clbr-card",
     children: [
       "span.dots",
       "div.title or h{headingLevel}.title",
@@ -113,7 +113,7 @@ export const CLBR_CARD_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "card",
+        value: "clbr-card",
       },
       {
         behavior: "emit",

@@ -19,32 +19,32 @@ describe("renderClbrBlockquote", () => {
         quote: "Quote",
       }),
     );
-    const blockquote = root.querySelector(".blockquote") as HTMLElement;
+    const blockquote = root.querySelector(".clbr-blockquote") as HTMLElement;
 
     expect(blockquote.tagName).toBe("FIGURE");
-    expect(blockquote.className).toBe("blockquote");
+    expect(blockquote.className).toBe("clbr-blockquote");
     expect(blockquote.hasAttribute("data-align")).toBe(false);
     expect(blockquote.querySelector("blockquote.quote")).toBeTruthy();
     expect(
-      blockquote.querySelector("blockquote.quote > p.text")?.textContent,
+      blockquote.querySelector("blockquote.quote > p.clbr-text")?.textContent,
     ).toBe("Quote");
     expect(
       blockquote
-        .querySelector("blockquote.quote > p.text")
+        .querySelector("blockquote.quote > p.clbr-text")
         ?.getAttribute("data-size"),
     ).toBe("md");
     expect(
       blockquote
-        .querySelector("blockquote.quote > p.text")
+        .querySelector("blockquote.quote > p.clbr-text")
         ?.hasAttribute("data-measured"),
     ).toBe(true);
     expect(
-      blockquote.querySelector("figcaption.attribution > span.text")
+      blockquote.querySelector("figcaption.attribution > span.clbr-text")
         ?.textContent,
     ).toBe("Measured");
     expect(
       blockquote
-        .querySelector("figcaption.attribution > span.text")
+        .querySelector("figcaption.attribution > span.clbr-text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -60,12 +60,12 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       root
-        .querySelector(".blockquote blockquote.quote > p.text")
+        .querySelector(".clbr-blockquote blockquote.quote > p.clbr-text")
         ?.getAttribute("data-size"),
     ).toBe("lg");
     expect(
       root
-        .querySelector(".blockquote figcaption.attribution > span.text")
+        .querySelector(".clbr-blockquote figcaption.attribution > span.clbr-text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -81,12 +81,12 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       root
-        .querySelector(".blockquote blockquote.quote > p.text")
+        .querySelector(".clbr-blockquote blockquote.quote > p.clbr-text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
     expect(
       root
-        .querySelector(".blockquote figcaption.attribution > span.text")
+        .querySelector(".clbr-blockquote figcaption.attribution > span.clbr-text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
@@ -100,12 +100,12 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(root.querySelector(".blockquote")?.getAttribute("data-align")).toBe(
+    expect(root.querySelector(".clbr-blockquote")?.getAttribute("data-align")).toBe(
       "center",
     );
     expect(
       root
-        .querySelector(".blockquote blockquote.quote > p.text")
+        .querySelector(".clbr-blockquote blockquote.quote > p.clbr-text")
         ?.getAttribute("data-align"),
     ).toBe("center");
   });
@@ -121,7 +121,7 @@ describe("renderClbrBlockquote", () => {
 
     expect(
       root
-        .querySelector(".blockquote blockquote.quote > p.text")
+        .querySelector(".clbr-blockquote blockquote.quote > p.clbr-text")
         ?.hasAttribute("data-measured"),
     ).toBe(false);
   });
@@ -134,12 +134,12 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(root.querySelector(".blockquote blockquote em")?.textContent).toBe(
+    expect(root.querySelector(".clbr-blockquote blockquote em")?.textContent).toBe(
       "emphasis",
     );
     expect(
       root
-        .querySelector(".blockquote figcaption.attribution a")
+        .querySelector(".clbr-blockquote figcaption.attribution a")
         ?.getAttribute("href"),
     ).toBe("/team");
   });

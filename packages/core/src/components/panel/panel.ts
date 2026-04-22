@@ -24,7 +24,7 @@ export function renderClbrPanel({
   surface,
 }: ClbrPanelProps): string {
   const panelAttrs = attrs({
-    class: "panel",
+    class: "clbr-panel",
     "data-padding": padding,
     "data-clbr-surface": surface,
   });
@@ -38,7 +38,7 @@ export const CLBR_PANEL_SPEC = {
   description: "Use `panel` to group related content in a contained region.",
   output: {
     element: "div",
-    class: "panel",
+    class: "clbr-panel",
     children: "trusted HTML",
     fixedStyles: [
       "background: panel",
@@ -72,7 +72,7 @@ export const CLBR_PANEL_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "panel",
+        value: "clbr-panel",
       },
       {
         behavior: "always",

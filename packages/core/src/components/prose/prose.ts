@@ -30,7 +30,7 @@ export function renderClbrProse({
   responsive,
 }: ClbrProseProps): string {
   const proseAttrs = attrs({
-    class: "prose",
+    class: "clbr-prose",
     "data-align": align !== "start" ? align : undefined,
     "data-hanging-punctuation": hangingPunctuation,
     "data-measured": measured,
@@ -85,7 +85,7 @@ export const CLBR_PROSE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "prose",
+        value: "clbr-prose",
       },
       {
         behavior: "emit",

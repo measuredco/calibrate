@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .prose {
+  :where(.clbr) .clbr-prose {
     --clbr-prose-font: var(--clbr-typography-text-body-md);
     --clbr-prose-font-sm: var(--clbr-typography-text-body-sm);
 
@@ -164,11 +164,11 @@
       position: relative;
       max-inline-size: var(--clbr-typography-measure-default);
 
-      .prose[data-align="end"] & {
+      .clbr-prose[data-align="end"] & {
         margin-inline-start: auto;
       }
 
-      .prose[data-align="center"] & {
+      .clbr-prose[data-align="center"] & {
         margin-inline: auto;
       }
 
@@ -316,7 +316,7 @@
     & h6 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-md);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-md
         );
@@ -330,7 +330,7 @@
       margin-block-start: var(--clbr-spacing-vertical-700);
 
       @media (min-width: 48em) {
-        :where(.prose[data-responsive]) & {
+        :where(.clbr-prose[data-responsive]) & {
           margin-block-end: var(--clbr-spacing-vertical-700);
           margin-block-start: var(--clbr-spacing-vertical-800);
         }
@@ -340,7 +340,7 @@
     & h6 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-xs);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-xs
         );
@@ -354,7 +354,7 @@
     & h5 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-sm);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-sm
         );
@@ -368,7 +368,7 @@
     & h3 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-lg);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-lg
         );
@@ -382,7 +382,7 @@
     & h2 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-xl);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-xl
         );
@@ -396,7 +396,7 @@
     & h1 {
       --clbr-prose-heading-font: var(--clbr-typography-text-heading-2xl);
 
-      .prose[data-responsive] & {
+      .clbr-prose[data-responsive] & {
         --clbr-prose-heading-font: var(
           --clbr-typography-text-heading-responsive-2xl
         );
@@ -416,11 +416,11 @@
       margin-inline: 0;
       padding: 0;
 
-      .prose[data-align="end"] & {
+      .clbr-prose[data-align="end"] & {
         margin-inline-start: auto;
       }
 
-      .prose[data-align="center"] & {
+      .clbr-prose[data-align="center"] & {
         margin-inline: auto;
       }
     }
@@ -429,11 +429,11 @@
       border-radius: var(--clbr-radius-xs);
       box-shadow: var(--clbr-effect-shadow-default);
 
-      .prose[data-align="end"] & {
+      .clbr-prose[data-align="end"] & {
         margin-inline-start: auto;
       }
 
-      .prose[data-align="center"] & {
+      .clbr-prose[data-align="center"] & {
         margin-inline: auto;
       }
     }
@@ -449,12 +449,12 @@
       padding-inline-start: 0;
 
       @media (min-width: 48em) {
-        .prose[data-responsive] > & {
+        .clbr-prose[data-responsive] > & {
           --clbr-prose-marker-gutter: calc(40rem / 16);
         }
       }
 
-      .prose[data-hanging-punctuation="always"] > & {
+      .clbr-prose[data-hanging-punctuation="always"] > & {
         margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
         [data-align="center"] & {
@@ -463,7 +463,7 @@
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-punctuation="notebook"] > & {
+        .clbr-prose[data-hanging-punctuation="notebook"] > & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
@@ -476,7 +476,7 @@
       ol li:has(> h3:first-child) > & {
         margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
-        .prose[data-align="center"] & {
+        .clbr-prose[data-align="center"] & {
           margin-inline-start: 0;
         }
       }
@@ -490,7 +490,7 @@
       padding-inline-start: var(--clbr-prose-marker-gutter);
       position: relative;
 
-      .prose[data-align="center"] & {
+      .clbr-prose[data-align="center"] & {
         padding-inline-start: 0;
       }
 
@@ -501,8 +501,8 @@
         text-align: end;
       }
 
-      .prose[data-align="end"] &::before,
-      .prose[data-align="center"] &::before {
+      .clbr-prose[data-align="end"] &::before,
+      .clbr-prose[data-align="center"] &::before {
         position: static;
       }
 
@@ -513,11 +513,11 @@
         padding-inline-end: var(--clbr-spacing-horizontal-400);
       }
 
-      .prose[data-align="end"] ol > &:has(> *)::before {
+      .clbr-prose[data-align="end"] ol > &:has(> *)::before {
         padding-inline-end: 0;
       }
 
-      .prose[data-align="center"] ol > &:has(> *)::before {
+      .clbr-prose[data-align="center"] ol > &:has(> *)::before {
         content: counter(list);
         padding-inline-end: 0;
       }
@@ -527,8 +527,8 @@
         padding-inline-end: 0.5em;
       }
 
-      .prose[data-align="end"] ul > &:has(> *)::before,
-      .prose[data-align="center"] ul > &:has(> *)::before {
+      .clbr-prose[data-align="end"] ul > &:has(> *)::before,
+      .clbr-prose[data-align="center"] ul > &:has(> *)::before {
         padding-inline-end: 0;
       }
 
@@ -539,7 +539,7 @@
       }
 
       @media (min-width: 48em) {
-        .prose[data-responsive] ol > &:has(> h2)::before {
+        .clbr-prose[data-responsive] ol > &:has(> h2)::before {
           font-size: var(--clbr-typography-type-step-800-font-size);
           line-height: var(--clbr-typography-type-step-800-line-height);
         }
@@ -554,7 +554,7 @@
       }
 
       @media (min-width: 48em) {
-        .prose[data-responsive]
+        .clbr-prose[data-responsive]
           ol
           > &:has(> h2:first-child):nth-child(n + 10):before {
           font-size: var(--clbr-typography-type-step-400-font-size);
@@ -572,7 +572,7 @@
       }
 
       @media (min-width: 48em) {
-        .prose[data-responsive] ol > &:has(> h3:first-child)::before {
+        .clbr-prose[data-responsive] ol > &:has(> h3:first-child)::before {
           font-size: var(--clbr-typography-type-step-600-font-size);
           line-height: var(--clbr-typography-type-step-600-line-height);
         }
@@ -587,7 +587,7 @@
       }
 
       @media (min-width: 48em) {
-        .prose[data-responsive]
+        .clbr-prose[data-responsive]
           ol
           > &:has(> h3:first-child):nth-child(n + 10):before {
           font-size: var(--clbr-typography-type-step-400-font-size);
@@ -618,11 +618,11 @@
       margin-block-end: var(--clbr-spacing-vertical-700);
       max-inline-size: 100%;
 
-      .prose[data-align="end"] & {
+      .clbr-prose[data-align="end"] & {
         margin-inline-start: auto;
       }
 
-      .prose[data-align="center"] & {
+      .clbr-prose[data-align="center"] & {
         margin-inline: auto;
       }
     }
@@ -646,7 +646,7 @@
       vertical-align: middle;
 
       @media (min-width: 48em) {
-        .prose[data-responsive] & {
+        .clbr-prose[data-responsive] & {
           padding-block: calc(
             var(--clbr-spacing-vertical-500) -
               var(--clbr-layout-border-width-default)
@@ -690,7 +690,7 @@
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-punctuation="notebook"] & {
+        .clbr-prose[data-hanging-punctuation="notebook"] & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
@@ -709,22 +709,22 @@
         position: relative;
       }
 
-      .prose[data-hanging-punctuation="always"] &::before {
+      .clbr-prose[data-hanging-punctuation="always"] &::before {
         inset-inline-start: var(--clbr-prose-marker-gutter);
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-punctuation="notebook"] &::before {
+        .clbr-prose[data-hanging-punctuation="notebook"] &::before {
           inset-inline-start: var(--clbr-prose-marker-gutter);
         }
       }
 
-      .prose[data-align="end"] &::before {
+      .clbr-prose[data-align="end"] &::before {
         inset-inline-start: 0;
         margin-inline-start: auto;
       }
 
-      .prose[data-align="center"] &::before {
+      .clbr-prose[data-align="center"] &::before {
         inset-inline-start: 0;
         margin-inline: auto;
       }

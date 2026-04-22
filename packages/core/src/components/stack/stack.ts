@@ -31,7 +31,7 @@ export function renderClbrStack({
   responsive,
 }: ClbrStackProps): string {
   const stackAttrs = attrs({
-    class: "stack",
+    class: "clbr-stack",
     "data-align": align === "stretch" ? undefined : align,
     "data-gap": gap,
     "data-responsive": responsive,
@@ -101,7 +101,7 @@ export const CLBR_STACK_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "stack",
+        value: "clbr-stack",
       },
       {
         behavior: "emit",

@@ -29,7 +29,7 @@ export function renderClbrDetails({
   inlineSize = "full",
 }: ClbrDetailsProps): string {
   const detailsAttrs = attrs({
-    class: "details",
+    class: "clbr-details",
     open,
     "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
   });
@@ -81,7 +81,7 @@ export const CLBR_DETAILS_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "details",
+        value: "clbr-details",
       },
       {
         behavior: "emit",

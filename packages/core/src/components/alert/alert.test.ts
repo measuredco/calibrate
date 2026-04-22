@@ -25,12 +25,12 @@ describe("renderClbrAlert", () => {
     const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
 
     expect(alert.tagName).toBe("CLBR-ALERT");
-    expect(alert.className).toBe("alert");
+    expect(alert.className).toBe("clbr-alert");
     expect(alert.hasAttribute("data-tone")).toBe(false);
     expect(alert.getAttribute("role")).toBe("status");
     expect(alert.hasAttribute("data-dismissible")).toBe(false);
     expect(alert.hasAttribute("data-inline-size")).toBe(false);
-    expect(alert.querySelector(".icon-wrapper .icon")).not.toBeNull();
+    expect(alert.querySelector(".icon-wrapper .clbr-icon")).not.toBeNull();
     expect(alert.querySelector(".title")).toBeNull();
     expect(alert.querySelector(".message")?.textContent).toBe("Body copy");
   });

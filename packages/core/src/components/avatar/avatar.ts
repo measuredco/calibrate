@@ -153,7 +153,7 @@ export function renderClbrAvatar({
   const avatarAttrs = attrs({
     "aria-hidden": ariaHidden ? "true" : undefined,
     "aria-label": !ariaHidden && !renderAsImage ? accessibleLabel : undefined,
-    class: "avatar",
+    class: "clbr-avatar",
     "data-color": resolvedColor === "neutral" ? undefined : resolvedColor,
     "data-entity": entity === "person" ? undefined : entity,
     "data-size": size,
@@ -258,7 +258,7 @@ export const CLBR_AVATAR_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "avatar",
+        value: "clbr-avatar",
       },
       {
         behavior: "always",

@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .box {
+  :where(.clbr) .clbr-box {
     --clbr-box-border-radius: var(--clbr-radius-2xs);
     --clbr-box-color-background: var(--clbr-color-background-default);
     --clbr-box-color-border: transparent;

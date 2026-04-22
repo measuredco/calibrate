@@ -24,7 +24,7 @@
       }
     }
 
-    .sidebar {
+    .clbr-sidebar {
       background-color: var(--clbr-color-background-panel);
       color: var(--clbr-color-foreground-default);
       display: flex;
@@ -73,7 +73,7 @@
         );
         padding-block-start: var(--clbr-layout-spacing-vertical-600);
 
-        clbr-sidebar[data-size="sm"] .sidebar > & {
+        clbr-sidebar[data-size="sm"] .clbr-sidebar > & {
           min-block-size: var(--clbr-spacing-vertical-950);
           padding-block-end: calc(
             var(--clbr-spacing-vertical-500) -

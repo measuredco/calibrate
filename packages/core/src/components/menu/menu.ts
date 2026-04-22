@@ -85,7 +85,7 @@ export function renderClbrMenu({
     "data-size": size === "md" ? undefined : size,
   });
   const menuWrapperAttrs = attrs({
-    class: "menu",
+    class: "clbr-menu",
   });
   const menuAttrs = attrs({
     "aria-labelledby": triggerId,
@@ -145,7 +145,7 @@ class ClbrMenuElement extends HTMLElement {
 
   #getTriggerButton(): HTMLButtonElement | null {
     return this.querySelector<HTMLButtonElement>(
-      '[data-part="trigger"] .button',
+      '[data-part="trigger"] .clbr-button',
     );
   }
 
@@ -229,7 +229,7 @@ class ClbrMenuElement extends HTMLElement {
 
       if (!(target instanceof Element)) return;
 
-      if (target.closest('[data-part="trigger"] .button')) {
+      if (target.closest('[data-part="trigger"] .clbr-button')) {
         if (this.#isOpen()) {
           this.#close();
           return;
@@ -399,8 +399,8 @@ export const CLBR_MENU_SPEC = {
   output: {
     element: CLBR_MENU_TAG_NAME,
     children: [
-      "div.menu",
-      'div[data-part="trigger"] > button.button',
+      "div.clbr-menu",
+      'div[data-part="trigger"] > button.clbr-button',
       'div.popup[role="menu"] > button[role="menuitem"]',
     ],
   },
@@ -480,8 +480,8 @@ export const CLBR_MENU_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "div.menu@class",
-        value: "menu",
+        target: "div.clbr-menu@class",
+        value: "clbr-menu",
       },
       {
         behavior: "always",

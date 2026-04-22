@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .alert {
+  :where(.clbr) .clbr-alert {
     --clbr-alert-color-background: var(--clbr-color-background-subtle);
     --clbr-alert-color-border: var(--clbr-color-foreground-prose);
 

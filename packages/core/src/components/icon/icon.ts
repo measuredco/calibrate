@@ -148,7 +148,7 @@ export function renderClbrIcon({
   const svgAttrs = attrs({
     "aria-hidden": ariaHidden ? "true" : undefined,
     "aria-labelledby": !ariaHidden ? normalizedTitleId : undefined,
-    class: "icon",
+    class: "clbr-icon",
     "data-mirrored": mirrored,
     "data-size": size,
     fill: "none",
@@ -232,7 +232,7 @@ export const CLBR_ICON_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "icon",
+        value: "clbr-icon",
       },
       {
         behavior: "emit",

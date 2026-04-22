@@ -381,7 +381,7 @@ _This section is a historical completion record; some entries may describe decis
 - Prose component implemented and aligned across core:
   - added `prose` renderer + CSS + stories + tests
   - API includes trusted-HTML `children`, optional `align`, `measured`, `responsive`, and `hangingIndent` (`always | notebook`)
-  - renders `<div class="prose">` and follows text-style data-attribute omission defaults
+  - renders `<div class="clbr-prose">` and follows text-style data-attribute omission defaults
   - exports wired through `@measured/calibrate-core` index and core styles entrypoint
 - Container component implemented and aligned across core/system:
   - added `container` renderer + CSS + stories + tests

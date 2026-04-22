@@ -113,7 +113,7 @@ export const Link = {
     controls: { disable: true },
     docs: {
       description: {
-        story: `Link mode renders an \`<a class="button">\` with the shared visual props plus link-specific props. Examples below show a plain link and a named download.\n\n${linkPropsTable}`,
+        story: `Link mode renders an \`<a class="clbr-button">\` with the shared visual props plus link-specific props. Examples below show a plain link and a named download.\n\n${linkPropsTable}`,
       },
     },
   },

@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .pattern {
+  :where(.clbr) .clbr-pattern {
     --clbr-pattern-block-size-base: var(--clbr-shape-corner-block-size);
     --clbr-pattern-image: var(--clbr-shape-corner-image);
     --clbr-pattern-size: calc(var(--clbr-pattern-block-size-base) / 15);

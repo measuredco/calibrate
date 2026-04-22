@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .fieldset {
+  :where(.clbr) .clbr-fieldset {
     border: none;
     margin: 0;
     min-inline-size: 0;
@@ -21,7 +21,7 @@
       max-width: var(--clbr-typography-measure-default);
       padding-block-end: var(--clbr-spacing-vertical-100);
 
-      .fieldset[aria-invalid="true"] & {
+      .clbr-fieldset[aria-invalid="true"] & {
         color: var(--clbr-color-status-error-default);
       }
     }

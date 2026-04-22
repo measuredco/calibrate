@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .container {
+  :where(.clbr) .clbr-container {
     block-size: 100%;
     container-type: inline-size;
     inline-size: 100%;

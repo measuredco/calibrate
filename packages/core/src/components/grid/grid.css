@@ -4,7 +4,7 @@
     block-size: 100%;
     inline-size: 100%;
 
-    .grid {
+    .clbr-grid {
       block-size: 100%;
       display: grid;
       gap: var(--clbr-layout-grid-gap-md) var(--clbr-layout-grid-gap-sm);
@@ -33,7 +33,7 @@
       }
     }
 
-    .grid-item {
+    .clbr-grid-item {
       min-inline-size: 0;
 
       &[data-align="start"] {

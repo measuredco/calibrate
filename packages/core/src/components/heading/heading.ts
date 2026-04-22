@@ -42,7 +42,7 @@ export function renderClbrHeading({
 }: ClbrHeadingProps): string {
   const tag = level ? (`h${level}` as const) : "span";
   const headingAttrs = attrs({
-    class: "heading",
+    class: "clbr-heading",
     "data-align": align === "start" ? undefined : align,
     "data-optical-inline": opticalInline,
     "data-responsive": responsive,
@@ -123,7 +123,7 @@ export const CLBR_HEADING_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "heading",
+        value: "clbr-heading",
       },
       {
         behavior: "emit",

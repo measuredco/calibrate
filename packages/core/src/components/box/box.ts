@@ -49,7 +49,7 @@ export function renderClbrBox({
   surface,
 }: ClbrBoxProps): string {
   const boxAttrs = attrs({
-    class: "box",
+    class: "clbr-box",
     "data-background": background === "default" ? undefined : background,
     "data-border": border,
     "data-padding-block": paddingBlock,
@@ -68,7 +68,7 @@ export const CLBR_BOX_SPEC = {
   description: "Use `box` to inset content.",
   output: {
     element: "div",
-    class: "box",
+    class: "clbr-box",
     children: "trusted HTML",
   },
   props: {
@@ -128,7 +128,7 @@ export const CLBR_BOX_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "box",
+        value: "clbr-box",
       },
       {
         behavior: "emit",

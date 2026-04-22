@@ -34,7 +34,7 @@ export function renderClbrBlockquote({
   size = "md",
 }: ClbrBlockquoteProps): string {
   const rootAttrs = attrs({
-    class: "blockquote",
+    class: "clbr-blockquote",
     "data-align": align === "start" ? undefined : align,
   });
 
@@ -63,7 +63,7 @@ export const CLBR_BLOCKQUOTE_SPEC = {
   description: "Use `blockquote` to display a quote with attribution.",
   output: {
     element: "figure",
-    class: "blockquote",
+    class: "clbr-blockquote",
     children: [
       "blockquote.quote > renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
       "figcaption.attribution > renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
@@ -114,7 +114,7 @@ export const CLBR_BLOCKQUOTE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "blockquote",
+        value: "clbr-blockquote",
       },
       {
         behavior: "emit",

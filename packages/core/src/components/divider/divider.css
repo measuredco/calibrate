@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .divider {
+  :where(.clbr) .clbr-divider {
     border: none;
     border-block-start: var(--clbr-layout-border-width-default) solid
       var(--clbr-color-border-default);

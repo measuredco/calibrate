@@ -37,7 +37,7 @@ export function renderClbrPage({
   stickyHeader,
 }: ClbrPageProps): string {
   const pageAttrs = attrs({
-    class: "page",
+    class: "clbr-page",
     "data-center-main": centerMain,
     "data-sticky-header": stickyHeader,
   });
@@ -52,7 +52,7 @@ export const CLBR_PAGE_SPEC = {
     "Use `page` as the primary layout for header, main, and footer regions.",
   output: {
     element: "div",
-    class: "page",
+    class: "clbr-page",
     children: [
       "optional {banner}",
       "header.header",
@@ -99,7 +99,7 @@ export const CLBR_PAGE_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "page",
+        value: "clbr-page",
       },
       {
         behavior: "emit",

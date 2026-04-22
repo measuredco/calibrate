@@ -10,10 +10,10 @@ function mountBox(html: string): HTMLElement {
 describe("renderClbrBox", () => {
   it("renders a div.box with the default contract", () => {
     const root = mountBox(renderClbrBox({ children: "Body" }));
-    const box = root.querySelector(".box") as HTMLElement;
+    const box = root.querySelector(".clbr-box") as HTMLElement;
 
     expect(box.tagName).toBe("DIV");
-    expect(box.className).toBe("box");
+    expect(box.className).toBe("clbr-box");
     expect(box.textContent).toBe("Body");
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
@@ -31,17 +31,17 @@ describe("renderClbrBox", () => {
       }),
     );
 
-    expect(root.querySelector(".box p")?.textContent).toContain("Lorem");
-    expect(root.querySelector(".box em")?.textContent).toBe("ipsum");
-    expect(root.querySelector(".box a")?.getAttribute("href")).toBe("/docs");
+    expect(root.querySelector(".clbr-box p")?.textContent).toContain("Lorem");
+    expect(root.querySelector(".clbr-box em")?.textContent).toBe("ipsum");
+    expect(root.querySelector(".clbr-box a")?.getAttribute("href")).toBe("/docs");
   });
 
   it("supports omitted or empty children", () => {
     const omitted = mountBox(renderClbrBox({}));
     const empty = mountBox(renderClbrBox({ children: "" }));
 
-    expect(omitted.querySelector(".box")?.innerHTML).toBe("");
-    expect(empty.querySelector(".box")?.innerHTML).toBe("");
+    expect(omitted.querySelector(".clbr-box")?.innerHTML).toBe("");
+    expect(empty.querySelector(".clbr-box")?.innerHTML).toBe("");
   });
 
   it("emits requested variant attributes", () => {
@@ -57,7 +57,7 @@ describe("renderClbrBox", () => {
         surface: "brand",
       }),
     );
-    const box = root.querySelector(".box") as HTMLElement;
+    const box = root.querySelector(".clbr-box") as HTMLElement;
 
     expect(box.getAttribute("data-background")).toBe("panel");
     expect(box.hasAttribute("data-border")).toBe(true);
@@ -78,7 +78,7 @@ describe("renderClbrBox", () => {
         paddingInline: "xs",
       }),
     );
-    const box = root.querySelector(".box") as HTMLElement;
+    const box = root.querySelector(".clbr-box") as HTMLElement;
 
     expect(box.hasAttribute("data-background")).toBe(false);
     expect(box.hasAttribute("data-border")).toBe(false);
@@ -97,7 +97,7 @@ describe("renderClbrBox", () => {
         paddingInline: "none",
       }),
     );
-    const box = root.querySelector(".box") as HTMLElement;
+    const box = root.querySelector(".clbr-box") as HTMLElement;
 
     expect(box.getAttribute("data-padding-block")).toBe("none");
     expect(box.getAttribute("data-padding-inline")).toBe("none");
@@ -111,7 +111,7 @@ describe("renderClbrBox", () => {
         paddingInline: "2xs",
       }),
     );
-    const compact = compactRoot.querySelector(".box") as HTMLElement;
+    const compact = compactRoot.querySelector(".clbr-box") as HTMLElement;
 
     expect(compact.getAttribute("data-padding-block")).toBe("2xs");
     expect(compact.getAttribute("data-padding-inline")).toBe("2xs");
@@ -123,7 +123,7 @@ describe("renderClbrBox", () => {
         paddingInline: "2xl",
       }),
     );
-    const spacious = spaciousRoot.querySelector(".box") as HTMLElement;
+    const spacious = spaciousRoot.querySelector(".clbr-box") as HTMLElement;
 
     expect(spacious.getAttribute("data-padding-block")).toBe("2xl");
     expect(spacious.getAttribute("data-padding-inline")).toBe("2xl");
@@ -136,7 +136,7 @@ describe("renderClbrBox", () => {
         children: "Body",
       }),
     );
-    const box = root.querySelector(".box") as HTMLElement;
+    const box = root.querySelector(".clbr-box") as HTMLElement;
 
     expect(box.getAttribute("data-background")).toBe("transparent");
   });

@@ -28,7 +28,7 @@ describe("renderClbrRadios", () => {
       }),
     );
 
-    const fieldset = root.querySelector(".fieldset");
+    const fieldset = root.querySelector(".clbr-fieldset");
     const radios = root.querySelector(".radios");
 
     expect(fieldset?.getAttribute("id")).toBe("contact");

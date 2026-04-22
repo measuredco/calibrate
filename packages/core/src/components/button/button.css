@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .button {
+  :where(.clbr) .clbr-button {
     --clbr-button-block-size: var(--clbr-spacing-vertical-800);
 
     align-items: center;

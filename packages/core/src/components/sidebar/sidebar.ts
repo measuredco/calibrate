@@ -97,7 +97,7 @@ export function renderClbrSidebar({
   }
 
   const sidebarAttrs = attrs({
-    class: "sidebar",
+    class: "clbr-sidebar",
     id: normalizedId,
     tabindex: "-1",
   });
@@ -147,16 +147,16 @@ class ClbrSidebarElement extends HTMLElement {
   }
 
   #getSidebar(): HTMLElement | null {
-    return this.querySelector<HTMLElement>(".sidebar");
+    return this.querySelector<HTMLElement>(".clbr-sidebar");
   }
 
   #getCloseButton(): HTMLButtonElement | null {
-    return this.querySelector<HTMLButtonElement>('[data-part="close"] .button');
+    return this.querySelector<HTMLButtonElement>('[data-part="close"] .clbr-button');
   }
 
   #getTriggerButton(): HTMLButtonElement | null {
     return this.querySelector<HTMLButtonElement>(
-      '[data-part="trigger"] .button',
+      '[data-part="trigger"] .clbr-button',
     );
   }
 
@@ -323,12 +323,12 @@ class ClbrSidebarElement extends HTMLElement {
 
       if (!(target instanceof Element)) return;
 
-      if (target.closest('[data-part="trigger"] .button')) {
+      if (target.closest('[data-part="trigger"] .clbr-button')) {
         this.open();
         return;
       }
 
-      if (target.closest('[data-part="close"] .button')) {
+      if (target.closest('[data-part="close"] .clbr-button')) {
         if (
           this.#isAboveNotebook() &&
           this.#getAboveNotebook() === "collapsible"
@@ -395,10 +395,10 @@ export const CLBR_SIDEBAR_SPEC = {
     element: CLBR_SIDEBAR_TAG_NAME,
     children: [
       'div[data-part="trigger"] > button',
-      "div.sidebar",
-      "div.sidebar > div.header",
-      "div.sidebar > div.content",
-      "optional div.sidebar > div.footer",
+      "div.clbr-sidebar",
+      "div.clbr-sidebar > div.header",
+      "div.clbr-sidebar > div.content",
+      "optional div.clbr-sidebar > div.footer",
       'div[data-part="backdrop"]',
       'optional runtime div[data-part="close"] > button',
     ],
@@ -482,17 +482,17 @@ export const CLBR_SIDEBAR_SPEC = {
       },
       {
         behavior: "always",
-        target: "div.sidebar@class",
-        value: "sidebar",
+        target: "div.clbr-sidebar@class",
+        value: "clbr-sidebar",
       },
       {
         behavior: "always",
-        target: "div.sidebar@id",
+        target: "div.clbr-sidebar@id",
         value: "{id}",
       },
       {
         behavior: "always",
-        target: "div.sidebar@tabindex",
+        target: "div.clbr-sidebar@tabindex",
         value: "-1",
       },
     ],
@@ -503,15 +503,15 @@ export const CLBR_SIDEBAR_SPEC = {
       },
       {
         behavior: "always",
-        value: "div.sidebar > div.header",
+        value: "div.clbr-sidebar > div.header",
       },
       {
         behavior: "always",
-        value: "div.sidebar > div.content",
+        value: "div.clbr-sidebar > div.content",
       },
       {
         behavior: "emit",
-        value: "div.sidebar > div.footer",
+        value: "div.clbr-sidebar > div.footer",
         when: "footer is provided",
       },
       {
@@ -520,7 +520,7 @@ export const CLBR_SIDEBAR_SPEC = {
       },
       {
         behavior: "runtime",
-        value: 'div.sidebar > div.header > div[data-part="close"] > button',
+        value: 'div.clbr-sidebar > div.header > div[data-part="close"] > button',
         when: "defineClbrSidebar() has upgraded the host",
       },
       {
