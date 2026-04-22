@@ -44,7 +44,7 @@ export function renderClbrLogo({
 /** Declarative logo contract mirror for tooling, docs, and adapters. */
 export const CLBR_LOGO_SPEC = {
   name: "logo",
-  description: "Use `logo` to display the Measured brand mark.",
+  description: "Use `logo` to display the Measured brand marks.",
   output: {
     element: "div",
   },

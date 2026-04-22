@@ -230,7 +230,6 @@ export {
   defineClbrMenu,
   type ClbrMenuItem,
   type ClbrMenuProps,
-  type ClbrMenuTriggerProps,
   renderClbrMenu,
 } from "./components/menu/menu";
 
@@ -364,11 +363,8 @@ export {
 export {
   CLBR_TEXT_SPEC,
   type ClbrTextAs,
-  type ClbrTextCommonProps,
-  type ClbrTextParagraphProps,
   type ClbrTextProps,
   type ClbrTextSize,
-  type ClbrTextSpanProps,
   type ClbrTextTone,
   renderClbrText,
 } from "./components/text/text";

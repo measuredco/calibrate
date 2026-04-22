@@ -188,11 +188,13 @@ export const CLBR_RANGE_SPEC = {
       type: "text",
     },
     max: {
+      default: 100,
       description: "Maximum value.",
       required: false,
       type: "number",
     },
     min: {
+      default: 0,
       description: "Minimum value.",
       required: false,
       type: "number",
@@ -210,6 +212,7 @@ export const CLBR_RANGE_SPEC = {
       values: ["sm", "md"],
     },
     step: {
+      default: 1,
       description: "Granularity of value changes.",
       required: false,
       type: "number",

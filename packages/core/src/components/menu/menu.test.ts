@@ -18,7 +18,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: "bad" as unknown as [],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     ).toThrow("items must be an array.");
   });
@@ -28,7 +28,8 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { icon: "Download", label: "Actions" },
+        triggerIcon: "Download",
+        triggerLabel: "Actions",
       }),
     );
 
@@ -53,7 +54,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -66,7 +67,7 @@ describe("renderClbrMenu", () => {
         align: "end",
         id: "foo",
         items: [{ label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -80,7 +81,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -95,7 +96,7 @@ describe("renderClbrMenu", () => {
         id: "foo",
         items: [{ label: "First action" }],
         size: "sm",
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -111,7 +112,8 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { icon: "Download", label: "Actions" },
+        triggerIcon: "Download",
+        triggerLabel: "Actions",
       }),
     );
 
@@ -148,7 +150,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -173,7 +175,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -212,7 +214,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -246,7 +248,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -277,7 +279,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -299,7 +301,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ label: "First action" }, { label: "Second action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -332,7 +334,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ id: "first", label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -363,7 +365,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ disabled: true, id: "first", label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -400,7 +402,7 @@ describe("renderClbrMenu", () => {
           { disabled: true, id: "first", label: "First action" },
           { id: "second", label: "Second action" },
         ],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 
@@ -418,7 +420,7 @@ describe("renderClbrMenu", () => {
       renderClbrMenu({
         id: "foo",
         items: [{ id: "first", label: "First action" }],
-        trigger: { label: "Actions" },
+        triggerLabel: "Actions",
       }),
     );
 

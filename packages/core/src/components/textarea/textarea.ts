@@ -159,7 +159,7 @@ export const CLBR_TEXTAREA_SPEC = {
     invalid: {
       default: false,
       description: "Marks the textarea as invalid.",
-      ignoredWhen: "disabled is true or readOnly is true",
+      ignoredWhen: "`disabled` is true or `readOnly` is true",
       required: false,
       type: "boolean",
     },
@@ -176,7 +176,7 @@ export const CLBR_TEXTAREA_SPEC = {
     readOnly: {
       default: false,
       description: "Prevents editing while keeping the value visible.",
-      ignoredWhen: "disabled is true",
+      ignoredWhen: "`disabled` is true",
       required: false,
       type: "boolean",
     },

@@ -77,7 +77,8 @@ export const CLBR_LINK_SPEC = {
       type: "string",
     },
     icon: {
-      description: "Icon markup shown alongside the label.",
+      description:
+        "Icon markup shown alongside the label. Calibrate icon component, or SVG markup from https://simpleicons.org/ for third-party logos.",
       required: false,
       type: "html",
     },

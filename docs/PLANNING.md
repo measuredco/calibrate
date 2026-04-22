@@ -65,10 +65,10 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 ### Component evolution
 
 - Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
-- Consider moving `data-app-*` props from `root` to `page`
 - Add `data-testid` and/or `id` support
 - Add `size: "lg"` to Controls (and `details`, etc.)
 - Add `renderPosterImage` to expose subset of `image` props in `poster` API
+- Add light `Poster` story
 - Add `image` `sources` art direction example to Storybook
 - Show `page` sticky header border on scroll only
 

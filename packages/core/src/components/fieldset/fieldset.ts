@@ -89,7 +89,8 @@ export const CLBR_FIELDSET_SPEC = {
       type: "html",
     },
     description: {
-      description: "Description shown below the legend.",
+      description:
+        "Description shown below the legend; also used for validation guidance.",
       required: false,
       type: "string",
     },
@@ -108,7 +109,7 @@ export const CLBR_FIELDSET_SPEC = {
     invalid: {
       default: false,
       description: "Marks the group as invalid.",
-      ignoredWhen: "disabled is true",
+      ignoredWhen: "`disabled` is true",
       required: false,
       type: "boolean",
     },
@@ -119,7 +120,8 @@ export const CLBR_FIELDSET_SPEC = {
     },
     inlineSize: {
       default: "full",
-      description: "Whether the fieldset fills its container or shrinks to fit.",
+      description:
+        "Whether the fieldset fills its container or shrinks to fit.",
       required: false,
       type: "enum",
       values: ["full", "fit"],

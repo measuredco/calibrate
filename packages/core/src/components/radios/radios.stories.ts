@@ -25,7 +25,7 @@ export const Default = {
   args: {
     description: "Description",
     disabled: false,
-    id: "radiosId",
+    id: "radios-id",
     invalid: false,
     radios: [
       { label: "Radio one", value: "radio-one" },

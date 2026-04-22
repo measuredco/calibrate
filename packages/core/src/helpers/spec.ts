@@ -1,4 +1,5 @@
 export interface ClbrSpecProp {
+  readonly constraints?: ReadonlyArray<string>;
   readonly default?: unknown;
   readonly description?: string;
   readonly ignoredWhen?: string;
@@ -16,17 +17,36 @@ export interface ClbrComponentSpec {
 
 type StoryArgType = Record<string, unknown>;
 
+const numericConstraint = (
+  constraints: ReadonlyArray<string> | undefined,
+  key: "min" | "max",
+): number | undefined => {
+  const prefix = `${key}:`;
+  const match = constraints?.find((entry) => entry.startsWith(prefix));
+  if (!match) return undefined;
+  const value = Number(match.slice(prefix.length));
+  return Number.isFinite(value) ? value : undefined;
+};
+
 const controlFor = (prop: ClbrSpecProp): StoryArgType["control"] | undefined => {
   if (prop.values && prop.values.length > 0) return { type: "select" };
   switch (prop.type) {
     case "boolean":
       return { type: "boolean" };
-    case "number":
-      return { type: "number" };
+    case "number": {
+      const min = numericConstraint(prop.constraints, "min");
+      const max = numericConstraint(prop.constraints, "max");
+      return {
+        type: "number",
+        ...(min !== undefined ? { min } : {}),
+        ...(max !== undefined ? { max } : {}),
+      };
+    }
     case "array":
     case "object":
-    case "html":
       return { type: "object" };
+    case "html":
+      return false;
     case "iconName":
       return undefined;
     default:
@@ -83,3 +103,25 @@ export const specToArgTypes = (
 export const specToComponentDescription = (
   spec: ClbrComponentSpec,
 ): string | undefined => spec.description;
+
+const escapeCell = (value: string): string =>
+  value.replace(/\|/g, "\\|").replace(/\n+/g, " ");
+
+export const specToPropsTable = (spec: ClbrComponentSpec): string => {
+  const rows = Object.entries(spec.props).map(([name, prop]) => {
+    const label = prop.required ? `\`${name}\`*` : `\`${name}\``;
+    const defaultValue = summaryDefaultFor(prop) ?? "-";
+    const description = composeDescription(prop) ?? "";
+    const type = `\`${escapeCell(summaryTypeFor(prop))}\``;
+    const descriptionCell = description
+      ? `${escapeCell(description)}<br>${type}`
+      : type;
+    return `| ${label} | ${descriptionCell} | ${escapeCell(defaultValue)} |`;
+  });
+
+  return [
+    "| Name | Description | Default |",
+    "| --- | --- | --- |",
+    ...rows,
+  ].join("\n");
+};

@@ -75,23 +75,24 @@ export const CLBR_CARD_SPEC = {
   },
   props: {
     description: {
-      description: "Supporting description shown below the title.",
+      description: "Supporting description shown below the `title`.",
       required: true,
       type: "html",
     },
     headingLevel: {
-      description: "Semantic heading level for the title.",
+      description:
+        "Semantic heading level for the title. Renders a `<div>` when omitted.",
       required: false,
       type: "enum",
       values: [1, 2, 3, 4, 5, 6],
     },
     href: {
-      description: "Link destination for the title.",
+      description: "Link destination for the `title`.",
       required: false,
       type: "string",
     },
     note: {
-      description: "Short note shown beneath the description.",
+      description: "Short note shown beneath the `description`.",
       required: false,
       type: "html",
     },

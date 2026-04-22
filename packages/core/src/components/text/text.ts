@@ -5,11 +5,17 @@ export type ClbrTextAs = "p" | "span";
 export type ClbrTextSize = "xs" | "sm" | "md" | "lg";
 export type ClbrTextTone = "default" | "muted";
 
-export interface ClbrTextCommonProps {
-  /** Trusted inner HTML. */
+export interface ClbrTextProps {
+  /** Text content. Supports inline markup such as `<em>`, `<strong>`, `<a>`, `<code>`, `<cite>`, etc. */
   children: string;
+  /** Element tag. @default "span" */
+  as?: ClbrTextAs;
+  /** Text alignment. Ignored when `as` is `span`. @default "start" */
+  align?: ClbrAlign;
   /** Enables visited-state styling for links inside text. @default true */
   linkVisited?: boolean;
+  /** Applies max measure constraints for long-form readability. Ignored when `as` is `span`. @default true */
+  measured?: boolean;
   /** Enables breakpoint-responsive body scale. @default false */
   responsive?: boolean;
   /** Text size. @default "md" */
@@ -18,63 +24,45 @@ export interface ClbrTextCommonProps {
   tone?: ClbrTextTone;
 }
 
-export interface ClbrTextSpanProps extends ClbrTextCommonProps {
-  /** Element tag. @default "span" */
-  as?: "span";
-}
-
-export interface ClbrTextParagraphProps extends ClbrTextCommonProps {
-  /** Element tag. */
-  as: "p";
-  /** Text alignment. @default "start" */
-  align?: ClbrAlign;
-  /** Applies max measure constraints for long-form readability. @default true */
-  measured?: boolean;
-}
-
-export type ClbrTextProps = ClbrTextSpanProps | ClbrTextParagraphProps;
-
 /**
  * SSR renderer for the Calibrate text component.
  *
  * @param props - Text component props.
  * @returns HTML string for a text paragraph or span element.
  */
-export function renderClbrText(props: ClbrTextProps): string {
-  const {
-    children,
-    linkVisited = true,
-    responsive,
-    size = "md",
-    tone = "default",
-  } = props;
-  const as: ClbrTextAs = props.as === "p" ? "p" : "span";
-  let align: ClbrAlign | undefined;
-  let measured: boolean | undefined;
+export function renderClbrText({
+  align,
+  as,
+  children,
+  linkVisited = true,
+  measured,
+  responsive,
+  size = "md",
+  tone = "default",
+}: ClbrTextProps): string {
+  const tag: ClbrTextAs = as === "p" ? "p" : "span";
+  const isParagraph = tag === "p";
+  const resolvedAlign = isParagraph ? (align ?? "start") : undefined;
+  const resolvedMeasured = isParagraph ? (measured ?? true) : undefined;
 
-  if (props.as === "p") {
-    align = props.align ?? "start";
-    measured = props.measured ?? true;
-  }
-
-  const isParagraph = as === "p";
   const textAttrs = attrs({
     class: "text",
-    "data-align": isParagraph && align !== "start" ? align : undefined,
+    "data-align":
+      resolvedAlign && resolvedAlign !== "start" ? resolvedAlign : undefined,
     "data-link-visited": linkVisited ? undefined : "off",
-    "data-measured": isParagraph && measured,
+    "data-measured": resolvedMeasured,
     "data-responsive": responsive,
     "data-size": size,
     "data-tone": tone === "muted" ? "muted" : undefined,
   });
 
-  return `<${as} ${textAttrs}>${children}</${as}>`;
+  return `<${tag} ${textAttrs}>${children}</${tag}>`;
 }
 
 /** Declarative text contract mirror for tooling, docs, and adapters. */
 export const CLBR_TEXT_SPEC = {
   name: "text",
-  description: "Use `text` for inline or single paragraph body copy.",
+  description: "Use `text` for inline or paragraph body copy.",
   output: {
     modes: {
       paragraph: "p",
@@ -90,7 +78,8 @@ export const CLBR_TEXT_SPEC = {
       values: ["p", "span"],
     },
     children: {
-      description: "Text content.",
+      description:
+        "Text content. Supports inline markup such as `<em>`, `<strong>`, `<a>`, `<code>`, `<cite>`, etc.",
       required: true,
       type: "html",
     },
@@ -109,7 +98,7 @@ export const CLBR_TEXT_SPEC = {
     align: {
       default: "start",
       description: "Text alignment.",
-      ignoredWhen: "as is span",
+      ignoredWhen: "`as` is span",
       required: false,
       type: "enum",
       values: ["start", "center", "end"],
@@ -118,7 +107,7 @@ export const CLBR_TEXT_SPEC = {
     measured: {
       default: true,
       description: "Caps line length for comfortable reading.",
-      ignoredWhen: "as is span",
+      ignoredWhen: "`as` is span",
       required: false,
       type: "boolean",
       when: "as is p",

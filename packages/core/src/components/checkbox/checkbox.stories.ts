@@ -25,7 +25,7 @@ export const Default = {
   args: {
     checked: false,
     description: "Description",
-    descriptionId: "",
+    descriptionId: "description-id",
     disabled: false,
     invalid: false,
     label: "Label",

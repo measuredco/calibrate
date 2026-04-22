@@ -8,10 +8,7 @@ import {
 const baseArgTypes = specToArgTypes(CLBR_PANEL_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

@@ -22,13 +22,7 @@ defineClbrSidebar();
 const baseArgTypes = specToArgTypes(CLBR_PAGE_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    banner: { ...baseArgTypes.banner, control: false },
-    children: { ...baseArgTypes.children, control: false },
-    footer: { ...baseArgTypes.footer, control: false },
-    header: { ...baseArgTypes.header, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
@@ -50,7 +44,9 @@ const simpleIcons = {
 
 export const Default = {
   args: {
+    centerMain: false,
     stickyHeader: "always",
+    banner: undefined,
     header: renderClbrContainer({
       gutter: "narrow",
       maxInlineSize: "wide",
@@ -68,6 +64,7 @@ export const Default = {
             })}</a>`,
             renderClbrNav({
               collapsible: "belowTablet",
+              contentId: "default-content-id",
               expanderPosition: "end",
               items: [
                 { current: true, href: "/", label: "About" },
@@ -227,11 +224,9 @@ export const Alt = {
                     { id: "vector", label: "Vector" },
                     { id: "web", label: "Web" },
                   ],
-                  trigger: {
-                    icon: "download",
-                    label: "Export",
-                    labelVisibility: "hiddenBelowTablet",
-                  },
+                  triggerIcon: "download",
+                  triggerLabel: "Export",
+                  triggerLabelVisibility: "hiddenBelowTablet",
                   size: "sm",
                 }),
                 renderClbrButton({
@@ -326,10 +321,8 @@ export const Banner = {
     centerMain: false,
     stickyHeader: "always",
     banner: renderClbrBanner({
-      action: {
-        href: "/",
-        label: "Action link",
-      },
+      actionHref: "/",
+      actionLabel: "Action link",
       message:
         "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.",
     }),
@@ -350,6 +343,7 @@ export const Banner = {
             })}</a>`,
             renderClbrNav({
               collapsible: "belowTablet",
+              contentId: "banner-content-id",
               expanderPosition: "end",
               items: [
                 { current: true, href: "/", label: "About" },

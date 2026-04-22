@@ -20,19 +20,6 @@ export interface ClbrMenuItem {
   label: string;
 }
 
-export interface ClbrMenuTriggerProps {
-  /** Optional icon name for the trigger button. */
-  icon?: string;
-  /** Optional icon mirroring mode for the trigger button icon. */
-  iconMirrored?: ClbrIconMirrorMode;
-  /** Optional icon placement within the trigger button. */
-  iconPlacement?: ClbrButtonPlacement;
-  /** Accessible and visible trigger label text. Escaped before render. */
-  label: string;
-  /** Optional trigger label visibility treatment. */
-  labelVisibility?: ClbrButtonLabelVisibility;
-}
-
 export interface ClbrMenuProps {
   /** Popup alignment relative to the trigger. @default "start" */
   align?: ClbrMenuAlign;
@@ -42,8 +29,16 @@ export interface ClbrMenuProps {
   items: ClbrMenuItem[];
   /** Control size applied to the host and composed trigger button. @default "md" */
   size?: ClbrControlSize;
-  /** Trigger button configuration composed internally via `renderClbrButton()`. */
-  trigger: ClbrMenuTriggerProps;
+  /** Icon name for the trigger button. */
+  triggerIcon?: string;
+  /** Icon mirroring mode for the trigger button icon. */
+  triggerIconMirrored?: ClbrIconMirrorMode;
+  /** Icon placement within the trigger button. @default "start" */
+  triggerIconPlacement?: ClbrButtonPlacement;
+  /** Accessible and visible trigger label text. Escaped before render. */
+  triggerLabel: string;
+  /** Trigger label visibility treatment. @default "visible" */
+  triggerLabelVisibility?: ClbrButtonLabelVisibility;
 }
 
 /**
@@ -61,7 +56,11 @@ export function renderClbrMenu({
   id,
   items,
   size = "md",
-  trigger,
+  triggerIcon,
+  triggerIconMirrored,
+  triggerIconPlacement,
+  triggerLabel,
+  triggerLabelVisibility,
 }: ClbrMenuProps): string {
   const normalizedId = id.trim();
 
@@ -96,12 +95,16 @@ export function renderClbrMenu({
     role: "menu",
   });
   const triggerMarkup = renderClbrButton({
-    ...trigger,
     appearance: "outline",
     controls: menuId,
     disclosure: true,
     haspopup: "menu",
+    icon: triggerIcon,
+    iconMirrored: triggerIconMirrored,
+    iconPlacement: triggerIconPlacement,
     id: triggerId,
+    label: triggerLabel,
+    labelVisibility: triggerLabelVisibility,
     mode: "button",
     size,
     tone: "neutral",
@@ -442,35 +445,35 @@ export const CLBR_MENU_SPEC = {
       type: "enum",
       values: ["sm", "md"],
     },
-    trigger: {
-      description: "Trigger button configuration.",
+    triggerIcon: {
+      description: "Icon name for the trigger button.",
+      required: false,
+      type: "iconName",
+    },
+    triggerIconMirrored: {
+      description: "Icon mirroring mode for the trigger button icon.",
+      required: false,
+      type: "enum",
+      values: ["always", "rtl"],
+    },
+    triggerIconPlacement: {
+      default: "start",
+      description: "Icon placement within the trigger button.",
+      required: false,
+      type: "enum",
+      values: ["start", "end"],
+    },
+    triggerLabel: {
+      description: "Accessible and visible trigger label text.",
       required: true,
-      type: "object",
-      shape: {
-        icon: {
-          required: false,
-          type: "iconName",
-        },
-        iconMirrored: {
-          required: false,
-          type: "enum",
-          values: ["always", "rtl"],
-        },
-        iconPlacement: {
-          required: false,
-          type: "enum",
-          values: ["start", "end"],
-        },
-        label: {
-          required: true,
-          type: "text",
-        },
-        labelVisibility: {
-          required: false,
-          type: "enum",
-          values: ["visible", "hidden", "hiddenBelowTablet"],
-        },
-      },
+      type: "text",
+    },
+    triggerLabelVisibility: {
+      default: "visible",
+      description: "Trigger label visibility treatment.",
+      required: false,
+      type: "enum",
+      values: ["visible", "hidden", "hiddenBelowTablet"],
     },
   },
   rules: {
@@ -522,7 +525,7 @@ export const CLBR_MENU_SPEC = {
       {
         behavior: "always",
         value:
-          "renderClbrButton({ ...trigger, appearance: 'outline', controls: `${id}-popup`, disclosure: true, haspopup: 'menu', id: `${id}-button`, mode: 'button', size, tone: 'neutral', type: 'button' })",
+          "renderClbrButton({ appearance: 'outline', controls: `${id}-popup`, disclosure: true, haspopup: 'menu', icon: triggerIcon, iconMirrored: triggerIconMirrored, iconPlacement: triggerIconPlacement, id: `${id}-button`, label: triggerLabel, labelVisibility: triggerLabelVisibility, mode: 'button', size, tone: 'neutral', type: 'button' })",
       },
       {
         behavior: "always",

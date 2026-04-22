@@ -190,7 +190,7 @@ export const CLBR_ALERT_SPEC = {
     dismissibleLabel: {
       default: dismissibleLabelDefault,
       description: "Accessible label for the dismiss control.",
-      ignoredWhen: "dismissible is false",
+      ignoredWhen: "`dismissible` is false",
       required: false,
       type: "string",
     },
@@ -213,7 +213,7 @@ export const CLBR_ALERT_SPEC = {
       values: ["info", "success", "warning", "error"],
     },
     title: {
-      description: "Short heading above the message.",
+      description: "Bold text above the message.",
       required: false,
       type: "text",
     },

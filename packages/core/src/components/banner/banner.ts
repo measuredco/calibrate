@@ -10,11 +10,12 @@ export const CLBR_BANNER_EVENT_DISMISS = "clbr-banner-dismiss";
 const dismissibleLabelDefault = "Dismiss banner";
 
 export interface ClbrBannerProps {
-  /** Optional secondary link action rendered inline within the message. */
-  action?: {
-    href: string;
-    label: string;
-  };
+  /** URL for an optional secondary link action rendered inline within the message.
+   * Must be provided together with `actionLabel`. */
+  actionHref?: string;
+  /** Text label for an optional secondary link action rendered inline within the message.
+   * Must be provided together with `actionHref`. */
+  actionLabel?: string;
   /** Whether the runtime custom element should inject a dismiss control. @default true */
   dismissible?: boolean;
   /** Accessible label for the runtime dismiss control. Ignored when not dismissible.
@@ -55,12 +56,17 @@ function createDismissButtonElement(
  * @returns HTML string for a `clbr-banner` host.
  */
 export function renderClbrBanner({
-  action,
+  actionHref,
+  actionLabel,
   dismissible = true,
   dismissibleLabel = dismissibleLabelDefault,
   message,
   tone,
 }: ClbrBannerProps): string {
+  if (Boolean(actionHref) !== Boolean(actionLabel)) {
+    throw new Error("actionHref and actionLabel must be provided together.");
+  }
+
   const normalizedDismissibleLabel =
     dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
@@ -74,13 +80,14 @@ export function renderClbrBanner({
     "data-tone": tone || undefined,
   });
 
-  const actionMarkup = action
-    ? ` ${renderClbrLink({
-        href: action.href,
-        label: action.label,
-        underline: true,
-      })}`
-    : "";
+  const actionMarkup =
+    actionHref && actionLabel
+      ? ` ${renderClbrLink({
+          href: actionHref,
+          label: actionLabel,
+          underline: true,
+        })}`
+      : "";
 
   return `<${CLBR_BANNER_TAG_NAME} ${bannerAttrs}><p class="message">${escapeHtml(
     message,
@@ -160,20 +167,17 @@ export const CLBR_BANNER_SPEC = {
     children: ["p.message", 'optional runtime div[data-part="close"]'],
   },
   props: {
-    action: {
-      description: "Inline link action rendered after the message.",
+    actionHref: {
+      description: "URL for an inline link action rendered after the `message`.",
       required: false,
-      shape: {
-        href: {
-          required: true,
-          type: "string",
-        },
-        label: {
-          required: true,
-          type: "text",
-        },
-      },
-      type: "object",
+      requiredWhen: "`actionLabel` is provided",
+      type: "string",
+    },
+    actionLabel: {
+      description: "Text label for an inline link action rendered after the `message`.",
+      required: false,
+      requiredWhen: "`actionHref` is provided",
+      type: "text",
     },
     dismissible: {
       default: true,
@@ -184,7 +188,7 @@ export const CLBR_BANNER_SPEC = {
     dismissibleLabel: {
       default: dismissibleLabelDefault,
       description: "Accessible label for the dismiss control.",
-      ignoredWhen: "dismissible is false",
+      ignoredWhen: "`dismissible` is false",
       required: false,
       type: "string",
     },
@@ -233,7 +237,7 @@ export const CLBR_BANNER_SPEC = {
       {
         behavior: "emit",
         value: "p.message > a.link",
-        when: "action is provided",
+        when: "actionHref and actionLabel are provided",
       },
       {
         behavior: "runtime",

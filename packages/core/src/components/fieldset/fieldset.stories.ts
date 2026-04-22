@@ -8,10 +8,7 @@ import {
 const baseArgTypes = specToArgTypes(CLBR_FIELDSET_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
@@ -29,7 +26,7 @@ export const Default = {
     children: '<div class="example-content"></div>',
     description: "Description",
     disabled: false,
-    id: "fieldsetId",
+    id: "fieldset-id",
     inlineSize: "fit",
     invalid: false,
     legend: "Legend",

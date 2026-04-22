@@ -78,7 +78,8 @@ export const CLBR_BLOCKQUOTE_SPEC = {
       values: ["start", "center", "end"],
     },
     attribution: {
-      description: "Attribution HTML shown beneath the quote.",
+      description:
+        "Attribution shown beneath the quote. Supports inline markup such as `<a>`, `<cite>`, `<em>`, etc.",
       required: true,
       type: "html",
     },
@@ -89,7 +90,8 @@ export const CLBR_BLOCKQUOTE_SPEC = {
       type: "boolean",
     },
     quote: {
-      description: "Quote HTML.",
+      description:
+        "Quote content. Supports inline markup such as `<em>`, `<strong>`, `<cite>`, etc.",
       required: true,
       type: "html",
     },

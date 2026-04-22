@@ -109,9 +109,9 @@ export const CLBR_CHECKBOX_SPEC = {
     },
     descriptionId: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id for the description element.",
+      description: "HTML id for the `description` element.",
       required: false,
-      requiredWhen: "description is provided",
+      requiredWhen: "`description` is provided",
       type: "string",
     },
     disabled: {
@@ -123,7 +123,7 @@ export const CLBR_CHECKBOX_SPEC = {
     invalid: {
       default: false,
       description: "Marks the checkbox as invalid.",
-      ignoredWhen: "disabled is true",
+      ignoredWhen: "`disabled` is true",
       required: false,
       type: "boolean",
     },

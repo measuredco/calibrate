@@ -8,10 +8,7 @@ import {
 const baseArgTypes = specToArgTypes(CLBR_INLINE_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
@@ -29,11 +26,16 @@ export const Default = {
   args: {
     as: "div",
     align: "center",
-    children:
-      '<div class="example-content"></div><div class="example-content" style="min-block-size: 3rem"></div><div class="example-content"></div>',
+    children: "",
     gap: "md",
     justify: "start",
     nowrap: false,
   } satisfies ClbrInlineProps,
-  render: (args: ClbrInlineProps) => renderClbrInline(args),
+  render: (args: ClbrInlineProps) => {
+    const itemTag = args.as === "ul" ? "li" : "div";
+    return renderClbrInline({
+      ...args,
+      children: `<${itemTag} class="example-content"></${itemTag}><${itemTag} class="example-content" style="min-block-size: 3rem"></${itemTag}><${itemTag} class="example-content"></${itemTag}>`,
+    });
+  },
 };

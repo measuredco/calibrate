@@ -234,7 +234,7 @@ export const CLBR_BUTTON_SPEC = {
     disabled: {
       default: false,
       description: "Prevents interaction.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "boolean",
     },
@@ -245,7 +245,7 @@ export const CLBR_BUTTON_SPEC = {
     },
     controls: {
       description: "ID of the element this button controls.",
-      ignoredWhen: "mode is link or disclosure is false",
+      ignoredWhen: "`mode` is link or `disclosure` is false",
       required: false,
       type: "string",
     },
@@ -253,14 +253,14 @@ export const CLBR_BUTTON_SPEC = {
       default: false,
       description:
         "Marks the button as a disclosure toggle for another element.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "boolean",
     },
     haspopup: {
       description:
         "Signals that activating the button opens a popup of this type.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "enum",
       values: ["menu"],
@@ -268,31 +268,31 @@ export const CLBR_BUTTON_SPEC = {
     download: {
       description:
         "Saves the target instead of navigating. Pass a filename or `true`.",
-      ignoredWhen: "mode is button",
+      ignoredWhen: "`mode` is button",
       required: false,
       type: "boolean|string",
     },
     form: {
       description: "ID of the form this button belongs to.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "string",
     },
     href: {
       description: "Link destination.",
       required: false,
-      requiredWhen: "mode is link",
+      requiredWhen: "`mode` is link",
       type: "string",
     },
     icon: {
       description: "Icon shown alongside the label.",
-      requiredWhen: "labelVisibility is hidden or hiddenBelowTablet",
+      requiredWhen: "`labelVisibility` is hidden or hiddenBelowTablet",
       required: false,
       type: "string",
     },
     iconMirrored: {
       description: "Mirrors the icon horizontally.",
-      ignoredWhen: "icon is omitted",
+      ignoredWhen: "`icon` is omitted",
       required: false,
       type: "enum",
       values: ["always", "rtl"],
@@ -300,7 +300,7 @@ export const CLBR_BUTTON_SPEC = {
     iconPlacement: {
       default: "start",
       description: "Where the icon sits relative to the label.",
-      ignoredWhen: "icon is omitted",
+      ignoredWhen: "`icon` is omitted",
       required: false,
       type: "enum",
       values: ["start", "end"],
@@ -319,7 +319,7 @@ export const CLBR_BUTTON_SPEC = {
     },
     name: {
       description: "Name submitted with the form.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "string",
     },
@@ -332,7 +332,7 @@ export const CLBR_BUTTON_SPEC = {
     },
     rel: {
       description: "Explicit `rel` attribute.",
-      ignoredWhen: "mode is button or download is set",
+      ignoredWhen: "`mode` is button or `download` is set",
       required: false,
       type: "string",
     },
@@ -345,7 +345,7 @@ export const CLBR_BUTTON_SPEC = {
     },
     target: {
       description: "Where to open the link.",
-      ignoredWhen: "mode is button or download is set",
+      ignoredWhen: "`mode` is button or `download` is set",
       required: false,
       type: "enum",
       values: ["_blank", "_parent", "_self", "_top"],
@@ -360,14 +360,14 @@ export const CLBR_BUTTON_SPEC = {
     type: {
       default: "button",
       description: "Native button type.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "enum",
       values: ["button", "submit"],
     },
     value: {
       description: "Value submitted with the form.",
-      ignoredWhen: "mode is link",
+      ignoredWhen: "`mode` is link",
       required: false,
       type: "string",
     },

@@ -169,7 +169,7 @@ export const CLBR_INPUT_SPEC = {
     invalid: {
       default: false,
       description: "Marks the input as invalid.",
-      ignoredWhen: "disabled is true or readOnly is true",
+      ignoredWhen: "`disabled` is true or `readOnly` is true",
       required: false,
       type: "boolean",
     },
@@ -191,7 +191,7 @@ export const CLBR_INPUT_SPEC = {
     readOnly: {
       default: false,
       description: "Makes the input read-only.",
-      ignoredWhen: "disabled is true",
+      ignoredWhen: "`disabled` is true",
       required: false,
       type: "boolean",
     },

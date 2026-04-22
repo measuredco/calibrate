@@ -40,10 +40,8 @@ describe("renderClbrBanner", () => {
   it("renders an action link when provided", () => {
     const banner = mountBanner(
       renderClbrBanner({
-        action: {
-          href: "/docs",
-          label: "Learn more",
-        },
+        actionHref: "/docs",
+        actionLabel: "Learn more",
         message: "Body copy",
       }),
     );
@@ -53,6 +51,15 @@ describe("renderClbrBanner", () => {
     expect(banner.querySelector(".message .link")).toBe(action);
     expect(action?.getAttribute("href")).toBe("/docs");
     expect(action?.textContent).toContain("Learn more");
+  });
+
+  it("throws when actionHref and actionLabel are not provided together", () => {
+    expect(() =>
+      renderClbrBanner({ actionHref: "/docs", message: "Body copy" }),
+    ).toThrow("actionHref and actionLabel must be provided together.");
+    expect(() =>
+      renderClbrBanner({ actionLabel: "Learn more", message: "Body copy" }),
+    ).toThrow("actionHref and actionLabel must be provided together.");
   });
 
   it("renders dismissible attributes and tone when provided", () => {

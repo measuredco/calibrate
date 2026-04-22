@@ -20,13 +20,13 @@ export interface ClbrGridItemProps {
   colSpan?: ClbrGridTrack;
   /** Column span at narrow container threshold. */
   colSpanNarrow?: ClbrGridTrack;
-  /** Column span at wide container threshold. */
+  /** Column span at wide container threshold. Effect is only visible above the wide breakpoint. */
   colSpanWide?: ClbrGridTrack;
   /** Column start at default container threshold. */
   colStart?: ClbrGridTrack;
   /** Column start at narrow container threshold. */
   colStartNarrow?: ClbrGridTrack;
-  /** Column start at wide container threshold. */
+  /** Column start at wide container threshold. Effect is only visible above the wide breakpoint. */
   colStartWide?: ClbrGridTrack;
   /** Justify-self. */
   justify?: ClbrAlign;
@@ -34,13 +34,13 @@ export interface ClbrGridItemProps {
   rowSpan?: ClbrGridTrack;
   /** Row span at narrow container threshold. */
   rowSpanNarrow?: ClbrGridTrack;
-  /** Row span at wide container threshold. */
+  /** Row span at wide container threshold. Effect is only visible above the wide breakpoint. */
   rowSpanWide?: ClbrGridTrack;
   /** Row start at default container threshold. */
   rowStart?: ClbrGridTrack;
   /** Row start at narrow container threshold. */
   rowStartNarrow?: ClbrGridTrack;
-  /** Row start at wide container threshold. */
+  /** Row start at wide container threshold. Effect is only visible above the wide breakpoint. */
   rowStartWide?: ClbrGridTrack;
 }
 
@@ -123,13 +123,13 @@ export const CLBR_GRID_SPEC = {
   },
   props: {
     children: {
-      description: "Grid items rendered inside the grid.",
+      description: "`grid-item` components rendered inside the grid.",
       required: false,
       type: "html",
     },
     gap: {
       default: "default",
-      description: "Space between grid items.",
+      description: "Space between the `grid-item` components.",
       required: false,
       type: "enum",
       values: ["default", "expanded", "none"],
@@ -208,7 +208,8 @@ export const CLBR_GRID_ITEM_SPEC = {
     },
     rowSpanWide: {
       constraints: ["integer", "min:1", "max:12"],
-      description: "Rows spanned at the wide breakpoint.",
+      description:
+        "Rows spanned at the wide breakpoint. Effect is only visible above the wide breakpoint.",
       required: false,
       type: "number",
     },
@@ -226,7 +227,8 @@ export const CLBR_GRID_ITEM_SPEC = {
     },
     rowStartWide: {
       constraints: ["integer", "min:1", "max:12"],
-      description: "Starting row at the wide breakpoint.",
+      description:
+        "Starting row at the wide breakpoint. Effect is only visible above the wide breakpoint.",
       required: false,
       type: "number",
     },
@@ -244,13 +246,15 @@ export const CLBR_GRID_ITEM_SPEC = {
     },
     colSpanWide: {
       constraints: ["integer", "min:1", "max:12"],
-      description: "Columns spanned at the wide breakpoint.",
+      description:
+        "Columns spanned at the wide breakpoint. Effect is only visible above the wide breakpoint.",
       required: false,
       type: "number",
     },
     colStartWide: {
       constraints: ["integer", "min:1", "max:12"],
-      description: "Starting column at the wide breakpoint.",
+      description:
+        "Starting column at the wide breakpoint. Effect is only visible above the wide breakpoint.",
       required: false,
       type: "number",
     },

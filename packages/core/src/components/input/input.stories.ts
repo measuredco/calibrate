@@ -1,9 +1,5 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import {
-  CLBR_INPUT_SPEC,
-  type ClbrInputProps,
-  renderClbrInput,
-} from "./input";
+import { CLBR_INPUT_SPEC, type ClbrInputProps, renderClbrInput } from "./input";
 
 const baseArgTypes = specToArgTypes(CLBR_INPUT_SPEC);
 
@@ -32,7 +28,7 @@ export const Default = {
     autocomplete: "off",
     description: "Description",
     disabled: false,
-    id: "inputId",
+    id: "input-id",
     inlineSize: "fit",
     invalid: false,
     label: "Label",

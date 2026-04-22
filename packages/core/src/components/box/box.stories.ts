@@ -4,10 +4,7 @@ import { CLBR_BOX_SPEC, type ClbrBoxProps, renderClbrBox } from "./box";
 const baseArgTypes = specToArgTypes(CLBR_BOX_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

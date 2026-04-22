@@ -32,7 +32,7 @@ export const Default = {
     autocomplete: "off",
     description: "Description",
     disabled: false,
-    id: "textareaId",
+    id: "textarea-id",
     invalid: false,
     inlineSize: "fit",
     label: "Label",

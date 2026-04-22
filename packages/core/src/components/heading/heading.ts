@@ -55,7 +55,7 @@ export function renderClbrHeading({
 /** Declarative heading contract mirror for tooling, docs, and adapters. */
 export const CLBR_HEADING_SPEC = {
   name: "heading",
-  description: "Use `heading` to render a section title with consistent type.",
+  description: "Use `heading` to render heading text with consistent type.",
   output: {
     modes: {
       level1: "h1",

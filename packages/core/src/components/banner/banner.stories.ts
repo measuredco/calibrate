@@ -27,16 +27,23 @@ export default meta;
 
 export const Default = {
   args: {
-    action: {
-      href: "/",
-      label: "Action link",
-    },
+    actionHref: "/",
+    actionLabel: "Action link",
     dismissible: true,
     dismissibleLabel: "Dismiss banner",
     message: `Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.`,
     tone: undefined,
   } satisfies ClbrBannerProps,
-  render: (args: ClbrBannerProps) => renderClbrBanner(args),
+  render: (args: ClbrBannerProps) => {
+    const hasAction = Boolean(
+      args.actionHref?.trim() && args.actionLabel?.trim(),
+    );
+    return renderClbrBanner({
+      ...args,
+      actionHref: hasAction ? args.actionHref : undefined,
+      actionLabel: hasAction ? args.actionLabel : undefined,
+    });
+  },
 };
 
 export const Tone = {
@@ -45,42 +52,22 @@ export const Tone = {
     renderClbrStack({
       children: [
         renderClbrBanner({
-          action: {
-            href: "/",
-            label: "Default",
-          },
-          message: "Lorem ipsum dolor sit amet.",
+          message: "Default",
         }),
         renderClbrBanner({
-          action: {
-            href: "/",
-            label: "Info",
-          },
-          message: "Lorem ipsum dolor sit amet.",
+          message: "Info",
           tone: "info",
         }),
         renderClbrBanner({
-          action: {
-            href: "/",
-            label: "Success",
-          },
-          message: "Lorem ipsum dolor sit amet.",
+          message: "Success",
           tone: "success",
         }),
         renderClbrBanner({
-          action: {
-            href: "/",
-            label: "Warning",
-          },
-          message: "Lorem ipsum dolor sit amet.",
+          message: "Warning",
           tone: "warning",
         }),
         renderClbrBanner({
-          action: {
-            href: "/",
-            label: "Error",
-          },
-          message: "Lorem ipsum dolor sit amet.",
+          message: "Error",
           tone: "error",
         }),
       ].join(""),

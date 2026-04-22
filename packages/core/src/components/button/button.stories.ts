@@ -1,5 +1,10 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import {
+  specToArgTypes,
+  specToComponentDescription,
+  specToPropsTable,
+} from "../../helpers/spec";
 import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
+import { renderClbrInline } from "../inline/inline";
 import {
   CLBR_BUTTON_SPEC,
   type ClbrButtonElementProps,
@@ -30,35 +35,24 @@ const buttonArgTypes = {
   mode: { ...baseArgTypes.mode, control: false },
 };
 
-const linkArgTypes = {
-  ...baseArgTypes,
-  icon: iconArgType,
-  ...hideControls(
-    "controls",
-    "disabled",
-    "disclosure",
-    "form",
-    "haspopup",
-    "name",
-    "type",
-    "value",
-  ),
-  mode: { ...baseArgTypes.mode, control: false },
-};
-
-const downloadLinkArgTypes = {
-  ...linkArgTypes,
-  ...hideControls("rel", "target"),
-  download: { ...baseArgTypes.download, control: false },
-};
+const linkPropsTable = specToPropsTable({
+  name: CLBR_BUTTON_SPEC.name,
+  props: {
+    href: CLBR_BUTTON_SPEC.props.href,
+    download: CLBR_BUTTON_SPEC.props.download,
+    rel: CLBR_BUTTON_SPEC.props.rel,
+    target: CLBR_BUTTON_SPEC.props.target,
+  },
+});
 
 const meta = {
+  argTypes: buttonArgTypes,
   parameters: {
     docs: {
       description: {
         component: [
           specToComponentDescription(CLBR_BUTTON_SPEC),
-          `Arg table controls are scoped to \`mode="button"\` props only. See secondary \`mode="link"\` stories below for link-specific props and behavior.`,
+          `Docs controls drive \`mode="button"\` in the primary story. See \`Link\` story below for \`mode="link"\` variant and its additional props.`,
         ]
           .filter(Boolean)
           .join("\n\n"),
@@ -70,25 +64,25 @@ const meta = {
 
 export default meta;
 
-export const ButtonMode = {
+export const Button = {
   args: {
-    mode: "button",
-    label: "Button",
     appearance: "outline",
-    tone: "default",
-    size: "md",
-    labelVisibility: "visible",
-    icon: undefined,
-    iconPlacement: "start",
-    iconMirrored: undefined,
+    controls: "",
     disabled: false,
     disclosure: false,
-    haspopup: undefined,
-    type: "button",
-    controls: "",
-    id: "",
     form: "",
+    haspopup: undefined,
+    icon: undefined,
+    iconMirrored: undefined,
+    iconPlacement: "start",
+    id: "",
+    label: "Button",
+    labelVisibility: "visible",
+    mode: "button",
     name: "",
+    size: "md",
+    tone: "default",
+    type: "button",
     value: "",
   } satisfies ClbrButtonElementProps,
   argTypes: buttonArgTypes,
@@ -102,71 +96,41 @@ export const ButtonMode = {
     }),
 };
 
-export const LinkMode = {
-  args: {
-    mode: "link",
+const linkExamples = [
+  {
     label: "Link",
     href: "#",
-    appearance: "outline",
-    tone: "default",
-    size: "md",
-    icon: undefined,
-    iconPlacement: "start",
-    id: "",
-    labelVisibility: "visible",
-    iconMirrored: undefined,
-    rel: "noreferrer",
-    target: "_self",
-  } satisfies ClbrButtonLinkProps,
-  argTypes: linkArgTypes,
-  render: (args: ClbrButtonLinkProps) =>
-    renderClbrButton({
-      ...args,
-      labelVisibility: args.icon ? args.labelVisibility : "visible",
-    }),
-};
-
-export const LinkModeDownload = {
-  args: {
-    mode: "link",
-    download: true,
+  },
+  {
     label: "Download",
     href: "#",
-    appearance: "outline",
-    tone: "default",
-    size: "md",
-    icon: "download",
-    iconPlacement: "start",
-    id: "",
-    labelVisibility: "visible",
-    iconMirrored: undefined,
-  } satisfies ClbrButtonLinkProps,
-  argTypes: downloadLinkArgTypes,
-  render: (args: ClbrButtonLinkProps) =>
-    renderClbrButton({
-      ...args,
-      labelVisibility: args.icon ? args.labelVisibility : "visible",
-    }),
-};
-
-export const LinkModeNamedDownload = {
-  args: {
-    mode: "link",
     download: "storybook.html",
-    label: "Download",
-    href: "#",
-    appearance: "outline",
-    tone: "default",
-    size: "md",
-    icon: "download",
-    iconPlacement: "start",
-    labelVisibility: "visible",
-    iconMirrored: undefined,
-  } satisfies ClbrButtonLinkProps,
-  argTypes: downloadLinkArgTypes,
-  render: (args: ClbrButtonLinkProps) =>
-    renderClbrButton({
-      ...args,
-      labelVisibility: args.icon ? args.labelVisibility : "visible",
+  },
+] satisfies Array<Partial<ClbrButtonLinkProps>>;
+
+export const Link = {
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: `Link mode renders an \`<a class="button">\` with the shared visual props plus link-specific props. Examples below show a plain link and a named download.\n\n${linkPropsTable}`,
+      },
+    },
+  },
+  render: () =>
+    renderClbrInline({
+      align: "start",
+      gap: "xs",
+      children: linkExamples
+        .map((example) =>
+          renderClbrButton({
+            appearance: "outline",
+            mode: "link",
+            size: "md",
+            tone: "default",
+            ...example,
+          } as ClbrButtonLinkProps),
+        )
+        .join(""),
     }),
 };

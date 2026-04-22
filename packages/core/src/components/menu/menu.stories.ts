@@ -1,10 +1,5 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import {
-  type ClbrButtonLabelVisibility,
-  type ClbrButtonPlacement,
-} from "../button/button";
 import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
-import type { ClbrIconMirrorMode } from "../icon/icon";
 import {
   CLBR_MENU_SPEC,
   type ClbrMenuProps,
@@ -14,37 +9,16 @@ import {
 
 defineClbrMenu();
 
-interface ClbrMenuStoryArgs extends Omit<ClbrMenuProps, "trigger"> {
-  triggerIcon?: string;
-  triggerIconMirrored?: ClbrIconMirrorMode;
-  triggerIconPlacement?: ClbrButtonPlacement;
-  triggerLabel: string;
-  triggerLabelVisibility?: ClbrButtonLabelVisibility;
-}
-
 const baseArgTypes = specToArgTypes(CLBR_MENU_SPEC);
 
 const meta = {
   argTypes: {
     ...baseArgTypes,
     items: { ...baseArgTypes.items, control: false },
-    trigger: { ...baseArgTypes.trigger, control: false },
     triggerIcon: {
-      control: "select",
-      options: CLBR_ICON_RECOMMENDED,
-    },
-    triggerIconMirrored: {
-      control: "select",
-      options: ["always", "rtl"],
-    },
-    triggerIconPlacement: {
-      control: "select",
-      options: ["start", "end"],
-    },
-    triggerLabel: { control: "text" },
-    triggerLabelVisibility: {
-      control: "select",
-      options: ["visible", "hidden", "hiddenBelowTablet"],
+      ...baseArgTypes.triggerIcon,
+      control: { type: "select" as const },
+      options: [undefined, ...CLBR_ICON_RECOMMENDED],
     },
   },
   parameters: {
@@ -62,7 +36,7 @@ export default meta;
 export const Default = {
   args: {
     align: "start",
-    id: "menuId",
+    id: "menu-id",
     items: [
       { id: "first", label: "Item one" },
       { id: "second", label: "Item two" },
@@ -70,26 +44,15 @@ export const Default = {
       { disabled: true, id: "fourth", label: "Item four" },
     ],
     size: "md",
-    triggerLabel: "Label",
-    triggerLabelVisibility: "visible",
     triggerIcon: undefined,
     triggerIconMirrored: undefined,
     triggerIconPlacement: "start",
-  } satisfies ClbrMenuStoryArgs,
-  render: (args: ClbrMenuStoryArgs) =>
+    triggerLabel: "Label",
+    triggerLabelVisibility: "visible",
+  } satisfies ClbrMenuProps,
+  render: (args: ClbrMenuProps) =>
     `<div style="min-block-size: 12rem">${renderClbrMenu({
+      ...args,
       id: args.id || "storybook-fallback-id",
-      align: args.align,
-      items: args.items,
-      size: args.size,
-      trigger: {
-        icon: args.triggerIcon || undefined,
-        iconMirrored: args.triggerIcon ? args.triggerIconMirrored : undefined,
-        iconPlacement: args.triggerIcon ? args.triggerIconPlacement : "start",
-        label: args.triggerLabel,
-        labelVisibility: args.triggerIcon
-          ? args.triggerLabelVisibility
-          : "visible",
-      },
     })}</div>`,
 };

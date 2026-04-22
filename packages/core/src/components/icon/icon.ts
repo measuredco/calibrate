@@ -201,14 +201,14 @@ export const CLBR_ICON_SPEC = {
     title: {
       description: "Accessible title announced by assistive technology.",
       required: false,
-      requiredWhen: "ariaHidden is false or omitted",
+      requiredWhen: "`ariaHidden` is false or omitted",
       type: "string",
     },
     titleId: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id for the accessible title element.",
+      description: "HTML id for the accessible `title` element.",
       required: false,
-      requiredWhen: "ariaHidden is false or omitted",
+      requiredWhen: "`ariaHidden` is false or omitted",
       type: "string",
     },
   },

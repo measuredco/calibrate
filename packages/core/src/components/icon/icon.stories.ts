@@ -21,7 +21,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: `${specToComponentDescription(CLBR_ICON_SPEC)}\n\nThe \`name\` control uses a recommended icon subset; browse all available icon names at https://lucide.dev/icons/.`,
+        component: `${specToComponentDescription(CLBR_ICON_SPEC)}\n\nArg table name control uses a recommended icon subset; component supports all available icon names at https://lucide.dev/icons/.`,
       },
     },
   },

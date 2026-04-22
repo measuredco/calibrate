@@ -35,7 +35,7 @@ export default meta;
 export const Default = {
   args: {
     collapsible: undefined,
-    contentId: "",
+    contentId: "content-id",
     expanderLabel: "",
     expanderPosition: "start",
     items,
@@ -43,5 +43,10 @@ export const Default = {
     size: "md",
   } satisfies ClbrNavProps,
   render: (args: ClbrNavProps) =>
-    `<div style="min-block-size: 21rem">${renderClbrNav(args)}</div>`,
+    `<div style="min-block-size: 21rem">${renderClbrNav({
+      ...args,
+      contentId: args.collapsible
+        ? args.contentId?.trim() || "storybook-fallback-content-id"
+        : args.contentId,
+    })}</div>`,
 };

@@ -8,7 +8,7 @@ export interface ClbrContainerProps {
   children?: string;
   /** Inline gutter behavior. @default "default" */
   gutter?: ClbrContainerGutter;
-  /** Max-inline-size behavior. @default "default" */
+  /** Max-inline-size behavior. Effect is only visible on wider viewports. @default "default" */
   maxInlineSize?: ClbrContainerMaxInlineSize;
 }
 
@@ -55,7 +55,8 @@ export const CLBR_CONTAINER_SPEC = {
     },
     maxInlineSize: {
       default: "default",
-      description: "Maximum content width.",
+      description:
+        "Maximum content width. Effect is only visible in wider viewports.",
       required: false,
       type: "enum",
       values: ["default", "wide", "none"],

@@ -1,17 +1,10 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import {
-  CLBR_PROSE_SPEC,
-  type ClbrProseProps,
-  renderClbrProse,
-} from "./prose";
+import { CLBR_PROSE_SPEC, type ClbrProseProps, renderClbrProse } from "./prose";
 
 const baseArgTypes = specToArgTypes(CLBR_PROSE_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

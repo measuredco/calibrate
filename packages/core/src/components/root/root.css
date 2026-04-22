@@ -28,11 +28,10 @@
    */
 
   .clbr {
-    /* Establish an isolated styling boundary. */
-    all: initial;
-
     /* Establish system defaults. */
     accent-color: var(--clbr-color-interactive-default);
+    /* Establish an isolated styling boundary. */
+    all: initial;
     background-color: var(--clbr-color-background-default);
     box-sizing: border-box;
     color: var(--clbr-color-foreground-default);
@@ -41,18 +40,18 @@
     font-feature-settings: "ss03" 1;
     font-optical-sizing: none;
     font-size: var(--clbr-typography-type-step-200-font-size);
-    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
+    font-synthesis: none;
     font-weight: var(--clbr-typography-font-weight-regular);
     line-height: var(--clbr-typography-type-step-200-line-height);
+
+    /* Preserve document writing semantics. */
+    quotes: inherit;
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
       transparent
     );
-
-    /* Preserve document writing semantics. */
-    quotes: inherit;
     text-combine-upright: inherit;
     text-orientation: inherit;
     writing-mode: inherit;
@@ -166,10 +165,17 @@
 
     :where(.example-content) {
       background: #ff69b450;
+      color: var(--clbr-color-foreground-prose);
+      font-family: var(--clbr-typography-font-family-mono);
+      font-size: var(--clbr-typography-type-step-100-font-size);
+      line-height: var(--clbr-typography-type-step-100-line-height);
       min-block-size: 6rem;
       min-inline-size: 15rem;
       outline: 0.0625rem solid #ff69b4;
       outline-offset: -0.0625rem;
+      padding-inline: 0.5rem;
+      place-content: center;
+      text-align: center;
     }
   }
 }

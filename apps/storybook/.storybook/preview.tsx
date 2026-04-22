@@ -1,3 +1,11 @@
+import {
+  Controls,
+  Description,
+  Primary,
+  Stories,
+  Subtitle,
+  Title,
+} from "@storybook/addon-docs/blocks";
 import type { Preview } from "@storybook/web-components-vite";
 import { themes } from "storybook/theming";
 import { renderClbrRoot } from "../../../packages/core/src/components/root/root";
@@ -139,6 +147,16 @@ const preview: Preview = {
       grid: { disable: true },
     },
     docs: {
+      page: () => (
+        <>
+          <Title />
+          <Subtitle />
+          <Description />
+          <Primary />
+          <Controls />
+          <Stories includePrimary={false} />
+        </>
+      ),
       source: {
         excludeDecorators: true,
         transform: (source: string) => formatSourceForDocs(source),

@@ -4,10 +4,7 @@ import { CLBR_STACK_SPEC, type ClbrStackProps, renderClbrStack } from "./stack";
 const baseArgTypes = specToArgTypes(CLBR_STACK_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
@@ -25,10 +22,15 @@ export const Default = {
   args: {
     align: "stretch",
     as: "div",
-    children:
-      '<div class="example-content"></div><div class="example-content"></div><div class="example-content"></div>',
+    children: "",
     gap: "md",
     responsive: false,
   } satisfies ClbrStackProps,
-  render: (args: ClbrStackProps) => renderClbrStack(args),
+  render: (args: ClbrStackProps) => {
+    const itemTag = args.as === "ul" ? "li" : "div";
+    const children = Array.from({ length: 3 })
+      .map(() => `<${itemTag} class="example-content"></${itemTag}>`)
+      .join("");
+    return renderClbrStack({ ...args, children });
+  },
 };

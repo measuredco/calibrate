@@ -27,7 +27,7 @@ export const Default = {
     alt: "",
     ariaHidden: false,
     color: undefined,
-    entity: undefined,
+    entity: "person",
     initials: "",
     name: "",
     size: "md",

@@ -45,13 +45,13 @@ export interface ClbrImageSource {
 export interface ClbrImageProps {
   /** Alternative text. Empty string is valid and used by default. @default "" */
   alt?: string;
-  /** Aspect ratio for the wrapper. Applies only when `cover` is true and not both `width`/`height` are set. */
+  /** Aspect ratio applied to the wrapper. Only used when `cover` is true; ignored when both `width` and `height` are set. */
   aspectRatio?: ClbrImageAspectRatio;
-  /** Enables `object-fit: cover`. @default false */
+  /** Renders the image as a cropped fill (`object-fit: cover`). Switches `width`/`height` from intrinsic `<img>` dimensions to wrapper sizing. @default false */
   cover?: boolean;
   /** Enables default image shadow treatment. @default false */
   shadow?: boolean;
-  /** Height in pixels. For `cover`, applied to the wrapper. */
+  /** Height in pixels. When `cover` is false, sets the intrinsic `<img>` height attribute. When `cover` is true, sizes the wrapper; if only one of `width`/`height` is set, the wrapper still follows `aspectRatio`, but setting both takes precedence over `aspectRatio`. */
   height?: number;
   /** Emit `loading="lazy"` on the image. @default false */
   lazy?: boolean;
@@ -59,7 +59,7 @@ export interface ClbrImageProps {
   priority?: boolean;
   /** Focal gravity for cover fit. @default "C" */
   gravity?: ClbrImageGravity;
-  /** Radius strategy. Omitted by default. */
+  /** Radius strategy. `ratio` scales with the image's shortest side — requires `width`/`height` (or `cover` with `aspectRatio`) to determine it, otherwise falls back to `xs`. Omitted by default. */
   radius?: ClbrImageRadius;
   /** HTML `sizes` attribute. Ignored on `<img>` when `sources` are provided. */
   sizes?: string;
@@ -69,7 +69,7 @@ export interface ClbrImageProps {
   srcSet?: string;
   /** Image source URL. */
   src: string;
-  /** Width in pixels. For `cover`, applied to the wrapper. */
+  /** Width in pixels. When `cover` is false, sets the intrinsic `<img>` width attribute. When `cover` is true, sizes the wrapper; if only one of `width`/`height` is set, the wrapper still follows `aspectRatio`, but setting both takes precedence over `aspectRatio`. */
   width?: number;
 }
 
@@ -177,7 +177,8 @@ export function renderClbrImage({
 /** Declarative image contract mirror for tooling, docs, and adapters. */
 export const CLBR_IMAGE_SPEC = {
   name: "image",
-  description: "Use `image` to render a responsive image with optional cover fit.",
+  description:
+    "Use `image` to render a responsive image with optional cover fit.",
   output: {
     modes: {
       image: "img",
@@ -194,37 +195,42 @@ export const CLBR_IMAGE_SPEC = {
     },
     gravity: {
       default: "C",
-      description: "Focal point used when cropping with `cover`.",
+      description: "Focal point used when cropping.",
+      ignoredWhen: "`cover` is false",
       required: false,
       type: "enum",
       values: ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"],
     },
     radius: {
-      description: "Corner radius treatment.",
+      description:
+        "Corner radius treatment. `ratio` scales with the image's shortest side — requires `width`/`height` (or `cover` with `aspectRatio`) to determine this, otherwise falls back to `xs`.",
       required: false,
       type: "enum",
       values: ["xs", "ratio"],
     },
     aspectRatio: {
-      description: "Aspect ratio for the wrapper when using `cover`.",
+      description: "Aspect ratio applied to the wrapper.",
+      ignoredWhen: "`cover` is false, or both `width` and `height` are set",
       required: false,
       type: "enum",
       values: ["1:1", "4:5", "3:2", "16:9", "21:9"],
     },
     cover: {
       default: false,
-      description: "Crops the image to fill the wrapper.",
+      description:
+        "Renders the image as a cropped fill (`object-fit: cover`). Switches `width`/`height` from intrinsic `<img>` dimensions to wrapper sizing.",
       required: false,
       type: "boolean",
     },
     shadow: {
       default: false,
-      description: "Applies a soft shadow to the image.",
+      description: "Applies a drop shadow to the image.",
       required: false,
       type: "boolean",
     },
     height: {
-      description: "Height in pixels.",
+      description:
+        "Height in pixels. When `cover` is false, sets the intrinsic `<img>` height. When `cover` is true, sizes the wrapper — alone it defers to `aspectRatio`, together with `width` it overrides `aspectRatio`.",
       required: false,
       type: "number",
     },
@@ -262,7 +268,8 @@ export const CLBR_IMAGE_SPEC = {
       type: "string",
     },
     width: {
-      description: "Width in pixels.",
+      description:
+        "Width in pixels. When `cover` is false, sets the intrinsic `<img>` width. When `cover` is true, sizes the wrapper — alone it defers to `aspectRatio`, together with `height` it overrides `aspectRatio`.",
       required: false,
       type: "number",
     },

@@ -162,8 +162,7 @@ export function renderClbrRadios({
 /** Declarative radios contract mirror for tooling, docs, and adapters. */
 export const CLBR_RADIOS_SPEC = {
   name: "radios",
-  description:
-    "Use `radios` to let users select one option from a short list.",
+  description: "Use `radios` to let users select one option from a short list.",
   output: {
     element: "fieldset",
   },
@@ -181,14 +180,15 @@ export const CLBR_RADIOS_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "Unique id used to associate the group with its descriptions.",
+      description:
+        "Unique id used to associate the group with its descriptions.",
       required: true,
       type: "string",
     },
     invalid: {
       default: false,
       description: "Marks the group as invalid.",
-      ignoredWhen: "disabled is true",
+      ignoredWhen: "`disabled` is true",
       required: false,
       type: "boolean",
     },

@@ -8,11 +8,7 @@ import {
 const baseArgTypes = specToArgTypes(CLBR_BLOCKQUOTE_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    attribution: { ...baseArgTypes.attribution, control: false },
-    quote: { ...baseArgTypes.quote, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

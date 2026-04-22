@@ -1,23 +1,14 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import {
-  CLBR_TEXT_SPEC,
-  type ClbrTextParagraphProps,
-  type ClbrTextSpanProps,
-  renderClbrText,
-} from "./text";
+import { CLBR_TEXT_SPEC, type ClbrTextProps, renderClbrText } from "./text";
 
 const baseArgTypes = specToArgTypes(CLBR_TEXT_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    as: { ...baseArgTypes.as, control: false },
-    measured: { ...baseArgTypes.measured, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
-        component: `${specToComponentDescription(CLBR_TEXT_SPEC)}\n\nDocs controls are scoped to the default \`as: "span"\` story. See Paragraph stories below for \`as: "p"\` props and behavior.`,
+        component: specToComponentDescription(CLBR_TEXT_SPEC),
       },
     },
   },
@@ -28,32 +19,20 @@ export default meta;
 
 export const Default = {
   args: {
-    as: "span",
-    children: 'Text with <a href="/">link</a>.',
-    linkVisited: true,
-    responsive: false,
-    size: "md",
-    tone: "default",
-  } satisfies ClbrTextSpanProps,
-  render: (args: ClbrTextSpanProps) => renderClbrText({ ...args }),
-};
-
-export const Paragraph = {
-  args: {
-    as: "p",
     align: "start",
+    as: "span",
     children:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="/">Ut enim ad minim</a>, nostrud exercitation ullamco laboris nisi ut aliquip ex ea.',
     linkVisited: true,
     measured: true,
     responsive: false,
     size: "md",
     tone: "default",
-  } satisfies ClbrTextParagraphProps,
-  render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
+  } satisfies ClbrTextProps,
+  render: (args: ClbrTextProps) => renderClbrText({ ...args }),
 };
 
-export const ParagraphWithMarkup = {
+export const Markup = {
   args: {
     as: "p",
     align: "start",
@@ -64,6 +43,6 @@ export const ParagraphWithMarkup = {
     responsive: false,
     size: "md",
     tone: "default",
-  } satisfies ClbrTextParagraphProps,
-  render: (args: ClbrTextParagraphProps) => renderClbrText({ ...args }),
+  } satisfies ClbrTextProps,
+  render: (args: ClbrTextProps) => renderClbrText({ ...args }),
 };

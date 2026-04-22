@@ -23,7 +23,7 @@ export default meta;
 export const Default = {
   args: {
     description: "Description",
-    headingLevel: 3,
+    headingLevel: undefined,
     href: "#",
     note: "Read",
     surface: undefined,

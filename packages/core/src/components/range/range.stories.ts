@@ -28,7 +28,7 @@ export const Default = {
   args: {
     description: "Description",
     disabled: false,
-    id: "rangeId",
+    id: "range-id",
     inlineSize: "fit",
     label: "Label",
     max: 100,

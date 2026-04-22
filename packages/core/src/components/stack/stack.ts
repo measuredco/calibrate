@@ -60,7 +60,7 @@ export const CLBR_STACK_SPEC = {
     },
     as: {
       default: "div",
-      description: "Element tag to render.",
+      description: "Element tag to render. `ul` children must be `<li>`.",
       required: false,
       type: "enum",
       values: ["div", "ul"],

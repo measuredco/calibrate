@@ -4,10 +4,7 @@ import { CLBR_ROOT_SPEC, ClbrRootProps, renderClbrRoot } from "./root";
 const baseArgTypes = specToArgTypes(CLBR_ROOT_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

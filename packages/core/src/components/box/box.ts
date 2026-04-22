@@ -65,7 +65,7 @@ export function renderClbrBox({
 /** Declarative box contract mirror for tooling, docs, and adapters. */
 export const CLBR_BOX_SPEC = {
   name: "box",
-  description: "Use `box` as a primitive to inset content.",
+  description: "Use `box` to inset content.",
   output: {
     element: "div",
     class: "box",

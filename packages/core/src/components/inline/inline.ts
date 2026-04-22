@@ -58,7 +58,7 @@ export const CLBR_INLINE_SPEC = {
   props: {
     as: {
       default: "div",
-      description: "Element tag to render.",
+      description: "Element tag to render. `ul` children must be `<li>`.",
       required: false,
       type: "enum",
       values: ["div", "ul"],

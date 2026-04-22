@@ -28,10 +28,9 @@ export default meta;
 export const Default = {
   args: {
     dismissible: false,
-    dismissibleLabel: "",
-    inlineSize: "fit",
-    message:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    dismissibleLabel: "Dissmiss alert",
+    inlineSize: "full",
+    message: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.",
     title: "",
     tone: undefined,
   } satisfies ClbrAlertProps,
@@ -45,30 +44,30 @@ export const Tone = {
       children: [
         renderClbrAlert({
           inlineSize: "fit",
-          message: "Lorem ipsum dolor sit amet",
+          message: "Lorem ipsum dolor sit amet.",
           title: "Default",
         }),
         renderClbrAlert({
           inlineSize: "fit",
-          message: "Lorem ipsum dolor sit amet",
+          message: "Lorem ipsum dolor sit amet.",
           title: "Info",
           tone: "info",
         }),
         renderClbrAlert({
           inlineSize: "fit",
-          message: "Lorem ipsum dolor sit amet",
+          message: "Lorem ipsum dolor sit amet.",
           title: "Success",
           tone: "success",
         }),
         renderClbrAlert({
           inlineSize: "fit",
-          message: "Lorem ipsum dolor sit amet",
+          message: "Lorem ipsum dolor sit amet.",
           title: "Warning",
           tone: "warning",
         }),
         renderClbrAlert({
           inlineSize: "fit",
-          message: "Lorem ipsum dolor sit amet",
+          message: "Lorem ipsum dolor sit amet.",
           title: "Error",
           tone: "error",
         }),

@@ -12,12 +12,7 @@ defineClbrSidebar();
 const baseArgTypes = specToArgTypes(CLBR_SIDEBAR_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
-    footer: { ...baseArgTypes.footer, control: false },
-    header: { ...baseArgTypes.header, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {
@@ -35,7 +30,7 @@ export const Default = {
   args: {
     aboveNotebook: "persistent",
     collapseLabel: "Collapse sidebar",
-    id: "storybook-sidebar",
+    id: "sidebar-id",
     size: "md",
     triggerLabel: "Open sidebar",
     header: renderClbrBox({
@@ -46,13 +41,16 @@ export const Default = {
     children: `<div class="example-content"></div>`,
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar(args)}</div></div>`,
+    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar({
+      ...args,
+      id: args.id?.trim() || "storybook-fallback-sidebar-id",
+    })}</div></div>`,
 };
 
 export const Footer = {
   args: {
     aboveNotebook: "overlay",
-    id: "storybook-footer-sidebar",
+    id: "footer-sidebar-id",
     size: "sm",
     header: renderClbrBox({
       paddingBlock: "none",
@@ -67,5 +65,8 @@ export const Footer = {
     }),
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar(args)}</div></div>`,
+    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar({
+      ...args,
+      id: args.id?.trim() || "storybook-fallback-sidebar-id",
+    })}</div></div>`,
 };

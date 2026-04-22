@@ -9,10 +9,7 @@ const simpleIcons = `<svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://w
 const baseArgTypes = specToArgTypes(CLBR_LINK_SPEC);
 
 const meta = {
-  argTypes: {
-    ...baseArgTypes,
-    icon: { ...baseArgTypes.icon, control: false },
-  },
+  argTypes: baseArgTypes,
   parameters: {
     docs: {
       description: {

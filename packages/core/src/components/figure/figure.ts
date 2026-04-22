@@ -60,7 +60,8 @@ export const CLBR_FIGURE_SPEC = {
       values: ["start", "center", "end"],
     },
     caption: {
-      description: "Caption HTML shown below the media.",
+      description:
+        "Caption shown below the media. Supports inline markup such as `<em>`, `<strong>`, `<cite>`, etc.",
       required: true,
       type: "html",
     },

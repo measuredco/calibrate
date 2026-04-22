@@ -18,9 +18,7 @@ const baseArgTypes = specToArgTypes(CLBR_POSTER_SPEC);
 const meta = {
   argTypes: {
     ...baseArgTypes,
-    children: { ...baseArgTypes.children, control: false },
     contentTheme: { ...baseArgTypes.contentTheme, control: false },
-    image: { ...baseArgTypes.image, control: false },
   },
   parameters: {
     docs: {
@@ -37,8 +35,6 @@ export default meta;
 
 export const Default = {
   args: {
-    surface: "brand",
-    contentTheme: "dark",
     children: renderClbrContainer({
       children: renderClbrBox({
         background: "transparent",
@@ -71,6 +67,7 @@ export const Default = {
         }),
       }),
     }),
+    contentTheme: "dark",
     image: renderClbrImage({
       cover: true,
       gravity: "SE",
@@ -81,6 +78,7 @@ export const Default = {
       srcSet:
         "https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_344,h_194,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 344w, https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_640,h_360,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 640w, https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_688,h_387,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 688w, https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_1032,h_581,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 1032w, https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_1280,h_720,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 1280w, https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_1920,h_1080,c_fill/v1771287162/facet/facet-965825281_gatqoa.png 1920w",
     }),
+    surface: "brand",
   } satisfies ClbrPosterProps,
   render: (args: ClbrPosterProps) => renderClbrPoster(args),
 };

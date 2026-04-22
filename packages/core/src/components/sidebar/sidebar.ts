@@ -390,8 +390,7 @@ export function defineClbrSidebar(): void {
 /** Declarative sidebar contract mirror for tooling, docs, and adapters. */
 export const CLBR_SIDEBAR_SPEC = {
   name: "sidebar",
-  description:
-    "Use `clbr-sidebar` for a collapsible side panel alongside main content.",
+  description: "Use `clbr-sidebar` for a side panel alongside main content.",
   output: {
     element: CLBR_SIDEBAR_TAG_NAME,
     children: [
