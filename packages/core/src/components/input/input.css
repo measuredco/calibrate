@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .input-field {
+  :where(.clbr) .clbr-input {
     --clbr-input-block-size: var(--clbr-spacing-vertical-800);
 
     display: flex;
@@ -76,7 +76,7 @@
         cursor: not-allowed;
       }
 
-      .input-field[data-size="sm"] & {
+      .clbr-input[data-size="sm"] & {
         padding-block: var(--clbr-spacing-vertical-200);
       }
     }

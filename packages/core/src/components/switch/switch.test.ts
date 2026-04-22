@@ -16,7 +16,7 @@ describe("renderClbrSwitch", () => {
   it("renders switch with label and default size", () => {
     const root = mountSwitch(renderClbrSwitch({ label: "Notifications" }));
     const input = getByRole(root, "switch", { name: "Notifications" });
-    const field = root.querySelector(".switch-field");
+    const field = root.querySelector(".clbr-switch");
 
     expect(field?.getAttribute("data-size")).toBe("md");
     expect(input.getAttribute("type")).toBe("checkbox");
@@ -56,7 +56,7 @@ describe("renderClbrSwitch", () => {
         size: "sm",
       }),
     );
-    const field = root.querySelector(".switch-field");
+    const field = root.querySelector(".clbr-switch");
 
     expect(field?.getAttribute("data-size")).toBe("sm");
   });

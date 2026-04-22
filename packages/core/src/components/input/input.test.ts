@@ -12,7 +12,7 @@ describe("renderClbrInput", () => {
   it("renders input with required id/label wiring and default size/type", () => {
     const root = mountInput(renderClbrInput({ id: "email", label: "Email" }));
     const input = getByLabelText(root, "Email") as HTMLInputElement;
-    const field = root.querySelector(".input-field");
+    const field = root.querySelector(".clbr-input");
 
     expect(field?.getAttribute("data-size")).toBe("md");
     expect(field?.getAttribute("data-inline-size")).toBeNull();
@@ -24,13 +24,13 @@ describe("renderClbrInput", () => {
     const fitRoot = mountInput(
       renderClbrInput({ id: "email", inlineSize: "fit", label: "Email" }),
     );
-    const fitField = fitRoot.querySelector(".input-field");
+    const fitField = fitRoot.querySelector(".clbr-input");
     expect(fitField?.getAttribute("data-inline-size")).toBe("fit");
 
     const fullRoot = mountInput(
       renderClbrInput({ id: "email", inlineSize: "full", label: "Email" }),
     );
-    const fullField = fullRoot.querySelector(".input-field");
+    const fullField = fullRoot.querySelector(".clbr-input");
     expect(fullField?.getAttribute("data-inline-size")).toBeNull();
   });
 

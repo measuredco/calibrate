@@ -16,7 +16,7 @@ describe("renderClbrCheckbox", () => {
   it("renders checkbox with label", () => {
     const root = mountCheckbox(renderClbrCheckbox({ label: "Subscribe" }));
     const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
-    const field = root.querySelector(".checkbox-field");
+    const field = root.querySelector(".clbr-checkbox");
 
     expect(field).toBeTruthy();
     expect(field?.getAttribute("data-size")).toBe("md");
@@ -30,7 +30,7 @@ describe("renderClbrCheckbox", () => {
         size: "sm",
       }),
     );
-    const field = root.querySelector(".checkbox-field");
+    const field = root.querySelector(".clbr-checkbox");
 
     expect(field?.getAttribute("data-size")).toBe("sm");
   });

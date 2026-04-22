@@ -69,7 +69,7 @@ export function renderClbrRange({
     : undefined;
 
   const fieldAttrs = attrs({
-    class: "range-field",
+    class: "clbr-range",
     "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
     "data-size": size,
   });
@@ -147,9 +147,9 @@ export const CLBR_RANGE_SPEC = {
     "Use `clbr-range` to let users pick a numeric value along a scale.",
   output: {
     element: CLBR_RANGE_TAG_NAME,
-    class: "range-field (inner)",
+    class: "clbr-range (inner)",
     children: [
-      "div.range-field",
+      "div.clbr-range",
       "div.label-wrapper",
       "label.label",
       "output.output",
@@ -224,17 +224,17 @@ export const CLBR_RANGE_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "div.range-field@class",
-        value: "range-field",
+        target: "div.clbr-range@class",
+        value: "clbr-range",
       },
       {
         behavior: "always",
-        target: "div.range-field@data-size",
+        target: "div.clbr-range@data-size",
         value: "{size}",
       },
       {
         behavior: "emit",
-        target: "div.range-field@data-inline-size",
+        target: "div.clbr-range@data-inline-size",
         value: "fit",
         when: "inlineSize is fit",
       },

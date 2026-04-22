@@ -112,7 +112,7 @@ export function renderClbrTextarea({
     : "";
 
   const wrapperAttrs = attrs({
-    class: "textarea-field",
+    class: "clbr-textarea",
     "data-resize": resize === "none" ? "none" : undefined,
     "data-size": size,
     "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
@@ -230,7 +230,7 @@ export const CLBR_TEXTAREA_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "textarea-field",
+        value: "clbr-textarea",
       },
       {
         behavior: "always",

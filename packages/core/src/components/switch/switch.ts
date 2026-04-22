@@ -70,7 +70,7 @@ export function renderClbrSwitch({
       )}</p>`
     : "";
 
-  return `<div class="switch-field" data-size="${size}"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
+  return `<div class="clbr-switch" data-size="${size}"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
     label,
   )}</span></label>${descriptionMarkup}</div>`;
 }
@@ -136,7 +136,7 @@ export const CLBR_SWITCH_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "switch-field",
+        value: "clbr-switch",
       },
       {
         behavior: "always",

@@ -125,7 +125,7 @@ export function renderClbrInput({
     : "";
 
   const wrapperAttrs = attrs({
-    class: "input-field",
+    class: "clbr-input",
     "data-size": size,
     "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
   });
@@ -238,7 +238,7 @@ export const CLBR_INPUT_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "input-field",
+        value: "clbr-input",
       },
       {
         behavior: "always",

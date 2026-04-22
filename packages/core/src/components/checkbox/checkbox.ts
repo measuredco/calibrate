@@ -79,7 +79,7 @@ export function renderClbrCheckbox({
       )}</p>`
     : "";
   const fieldAttrs = attrs({
-    class: "checkbox-field",
+    class: "clbr-checkbox",
     "data-size": size,
   });
 
@@ -161,7 +161,7 @@ export const CLBR_CHECKBOX_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "checkbox-field",
+        value: "clbr-checkbox",
       },
       {
         behavior: "always",

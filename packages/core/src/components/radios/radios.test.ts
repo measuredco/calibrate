@@ -29,7 +29,7 @@ describe("renderClbrRadios", () => {
     );
 
     const fieldset = root.querySelector(".clbr-fieldset");
-    const radios = root.querySelector(".radios");
+    const radios = root.querySelector(".clbr-radios");
 
     expect(fieldset?.getAttribute("id")).toBe("contact");
     expect(radios?.getAttribute("data-orientation")).toBe("vertical");
@@ -118,7 +118,7 @@ describe("renderClbrRadios", () => {
     ).toThrow("radios values must be unique.");
   });
 
-  it("maps orientation to the .radios container", () => {
+  it("maps orientation to the .clbr-radios container", () => {
     const root = mountRadios(
       renderClbrRadios({
         id: "contact",
@@ -130,11 +130,11 @@ describe("renderClbrRadios", () => {
     );
 
     expect(
-      root.querySelector(".radios")?.getAttribute("data-orientation"),
+      root.querySelector(".clbr-radios")?.getAttribute("data-orientation"),
     ).toBe("horizontal");
   });
 
-  it("maps size to the .radios container", () => {
+  it("maps size to the .clbr-radios container", () => {
     const root = mountRadios(
       renderClbrRadios({
         id: "contact",
@@ -145,7 +145,7 @@ describe("renderClbrRadios", () => {
       }),
     );
 
-    expect(root.querySelector(".radios")?.getAttribute("data-size")).toBe("sm");
+    expect(root.querySelector(".clbr-radios")?.getAttribute("data-size")).toBe("sm");
   });
 
   it("maps selected value to checked radio and leaves unmatched values unchecked", () => {

@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .radios {
+  :where(.clbr) .clbr-radios {
     --clbr-radio-gap: var(--clbr-spacing-horizontal-400);
     --clbr-radio-inset: var(--clbr-spacing-vertical-200);
     --clbr-radio-size: var(--clbr-layout-icon-size-sm);

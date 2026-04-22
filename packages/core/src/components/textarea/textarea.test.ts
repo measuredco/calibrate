@@ -18,7 +18,7 @@ describe("renderClbrTextarea", () => {
       renderClbrTextarea({ id: "message", label: "Message" }),
     );
     const textarea = getByLabelText(root, "Message") as HTMLTextAreaElement;
-    const field = root.querySelector(".textarea-field");
+    const field = root.querySelector(".clbr-textarea");
 
     expect(field?.getAttribute("data-size")).toBe("md");
     expect(field?.getAttribute("data-inline-size")).toBeNull();
@@ -65,7 +65,7 @@ describe("renderClbrTextarea", () => {
         label: "Message",
       }),
     );
-    const fitField = fitRoot.querySelector(".textarea-field");
+    const fitField = fitRoot.querySelector(".clbr-textarea");
     expect(fitField?.getAttribute("data-inline-size")).toBe("fit");
 
     const fullRoot = mountTextarea(
@@ -75,7 +75,7 @@ describe("renderClbrTextarea", () => {
         label: "Message",
       }),
     );
-    const fullField = fullRoot.querySelector(".textarea-field");
+    const fullField = fullRoot.querySelector(".clbr-textarea");
     expect(fullField?.getAttribute("data-inline-size")).toBeNull();
   });
 
@@ -83,7 +83,7 @@ describe("renderClbrTextarea", () => {
     const noneRoot = mountTextarea(
       renderClbrTextarea({ id: "message", label: "Message", resize: "none" }),
     );
-    const noneField = noneRoot.querySelector(".textarea-field");
+    const noneField = noneRoot.querySelector(".clbr-textarea");
     expect(noneField?.getAttribute("data-resize")).toBe("none");
 
     const verticalRoot = mountTextarea(
@@ -93,7 +93,7 @@ describe("renderClbrTextarea", () => {
         resize: "vertical",
       }),
     );
-    const verticalField = verticalRoot.querySelector(".textarea-field");
+    const verticalField = verticalRoot.querySelector(".clbr-textarea");
     expect(verticalField?.getAttribute("data-resize")).toBeNull();
   });
 

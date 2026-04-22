@@ -144,7 +144,7 @@ export function renderClbrRadios({
     .join("");
 
   const radiosAttrs = attrs({
-    class: "radios",
+    class: "clbr-radios",
     "data-orientation": orientation,
     "data-size": size,
   });
@@ -249,17 +249,17 @@ export const CLBR_RADIOS_SPEC = {
       },
       {
         behavior: "always",
-        target: "div.radios[class]",
-        value: "radios",
+        target: "div.clbr-radios[class]",
+        value: "clbr-radios",
       },
       {
         behavior: "always",
-        target: "div.radios[data-orientation]",
+        target: "div.clbr-radios[data-orientation]",
         value: "{orientation}",
       },
       {
         behavior: "always",
-        target: "div.radios[data-size]",
+        target: "div.clbr-radios[data-size]",
         value: "{size}",
       },
       {
@@ -324,7 +324,7 @@ export const CLBR_RADIOS_SPEC = {
     content: [
       {
         behavior: "always",
-        element: "div.radios",
+        element: "div.clbr-radios",
         value: "radio group container",
       },
       {

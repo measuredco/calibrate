@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .textarea-field {
+  :where(.clbr) .clbr-textarea {
     --clbr-textarea-leading: var(--clbr-spacing-vertical-700);
     --clbr-textarea-min-block-size: calc(
       var(--clbr-spacing-vertical-800) + var(--clbr-textarea-leading)

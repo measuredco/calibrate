@@ -19,7 +19,7 @@ describe("renderClbrRange", () => {
     const root = mountRange(renderClbrRange({ id: "volume", label: "Volume" }));
     const host = root.querySelector(CLBR_RANGE_TAG_NAME);
     const input = getByLabelText(root, "Volume") as HTMLInputElement;
-    const field = root.querySelector(".range-field");
+    const field = root.querySelector(".clbr-range");
     const output = root.querySelector(".output");
 
     expect(host).not.toBeNull();
@@ -35,14 +35,14 @@ describe("renderClbrRange", () => {
       renderClbrRange({ id: "volume", inlineSize: "fit", label: "Volume" }),
     );
     expect(
-      fitRoot.querySelector(".range-field")?.getAttribute("data-inline-size"),
+      fitRoot.querySelector(".clbr-range")?.getAttribute("data-inline-size"),
     ).toBe("fit");
 
     const fullRoot = mountRange(
       renderClbrRange({ id: "volume", inlineSize: "full", label: "Volume" }),
     );
     expect(
-      fullRoot.querySelector(".range-field")?.getAttribute("data-inline-size"),
+      fullRoot.querySelector(".clbr-range")?.getAttribute("data-inline-size"),
     ).toBeNull();
   });
 

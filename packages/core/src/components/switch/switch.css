@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) .switch-field {
+  :where(.clbr) .clbr-switch {
     --clbr-switch-block-size: var(--clbr-layout-icon-size-md);
     --clbr-switch-inline-size: var(--clbr-spacing-horizontal-900);
     --clbr-switch-inset: var(--clbr-spacing-vertical-250);
