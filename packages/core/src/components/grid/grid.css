@@ -1,10 +1,10 @@
 @layer clbr.components {
-  :where(.clbr) .grid-container {
+  :where(.clbr) .clbr-grid {
     container-type: inline-size;
     block-size: 100%;
     inline-size: 100%;
 
-    .clbr-grid {
+    .grid {
       block-size: 100%;
       display: grid;
       gap: var(--clbr-layout-grid-gap-md) var(--clbr-layout-grid-gap-sm);
@@ -23,12 +23,12 @@
 
       /* (--clbr-layout-grid-item-min-width * 4) + (--clbr-layout-grid-gap-lg * 3) */
       @container (min-inline-size: 78rem) {
-        &[data-gap="expanded"] {
+        .clbr-grid[data-gap="expanded"] > & {
           gap: var(--clbr-layout-grid-gap-lg);
         }
       }
 
-      &[data-gap="none"] {
+      .clbr-grid[data-gap="none"] > & {
         gap: 0;
       }
     }

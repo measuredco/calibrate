@@ -16,31 +16,31 @@ function mountGrid(html: string): HTMLElement {
 }
 
 describe("renderClbrGrid", () => {
-  it("renders a grid container with inner grid and default gap omitted", () => {
+  it("renders a clbr-grid host with inner grid and default gap omitted", () => {
     const root = mountGrid(renderClbrGrid({ children: "Body" }));
-    const gridContainer = root.querySelector(".grid-container");
-    const grid = root.querySelector(".clbr-grid");
+    const host = root.querySelector(".clbr-grid");
+    const grid = host?.querySelector(".grid");
 
-    expect(gridContainer?.tagName).toBe("DIV");
-    expect(gridContainer?.classList.contains("grid-container")).toBe(true);
-    expect(grid?.classList.contains("clbr-grid")).toBe(true);
-    expect(grid?.hasAttribute("data-gap")).toBe(false);
+    expect(host?.tagName).toBe("DIV");
+    expect(host?.classList.contains("clbr-grid")).toBe(true);
+    expect(grid?.classList.contains("grid")).toBe(true);
+    expect(host?.hasAttribute("data-gap")).toBe(false);
   });
 
-  it("emits explicit non-default gap values", () => {
+  it("emits explicit non-default gap values on the host", () => {
     const expandedRoot = mountGrid(
       renderClbrGrid({ children: "Body", gap: "expanded" }),
     );
-    const expandedGrid = expandedRoot.querySelector(".clbr-grid");
+    const expandedHost = expandedRoot.querySelector(".clbr-grid");
 
-    expect(expandedGrid?.getAttribute("data-gap")).toBe("expanded");
+    expect(expandedHost?.getAttribute("data-gap")).toBe("expanded");
 
     const noneRoot = mountGrid(
       renderClbrGrid({ children: "Body", gap: "none" }),
     );
-    const noneGrid = noneRoot.querySelector(".clbr-grid");
+    const noneHost = noneRoot.querySelector(".clbr-grid");
 
-    expect(noneGrid?.getAttribute("data-gap")).toBe("none");
+    expect(noneHost?.getAttribute("data-gap")).toBe("none");
   });
 
   it("renders trusted HTML children", () => {

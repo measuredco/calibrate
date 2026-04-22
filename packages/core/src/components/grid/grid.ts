@@ -62,12 +62,15 @@ export function renderClbrGrid({
   children,
   gap = "default",
 }: ClbrGridProps): string {
-  const gridAttrs = attrs({
+  const containerAttrs = attrs({
     class: "clbr-grid",
     "data-gap": gap === "default" ? undefined : gap,
   });
+  const gridAttrs = attrs({
+    class: "grid",
+  });
 
-  return `<div class="grid-container"><div ${gridAttrs}>${children ?? ""}</div></div>`;
+  return `<div ${containerAttrs}><div ${gridAttrs}>${children ?? ""}</div></div>`;
 }
 
 /**
@@ -120,6 +123,8 @@ export const CLBR_GRID_SPEC = {
   description: "Use `grid` to lay out content in a 12-column responsive grid.",
   output: {
     element: "div",
+    class: "clbr-grid",
+    children: ["div.grid"],
   },
   props: {
     children: {
@@ -140,18 +145,24 @@ export const CLBR_GRID_SPEC = {
       {
         behavior: "always",
         target: "class",
-        value: "grid-container",
+        value: "clbr-grid",
       },
       {
         behavior: "emit",
-        target: "div.grid[data-gap]",
+        target: "data-gap",
         value: "{gap}",
         when: "gap is expanded or none",
       },
       {
         behavior: "always",
-        target: "div.grid",
-        value: "class=grid",
+        target: "div.grid@class",
+        value: "grid",
+      },
+    ],
+    composition: [
+      {
+        behavior: "always",
+        value: "div.grid",
       },
     ],
   },
