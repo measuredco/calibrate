@@ -3,13 +3,15 @@
     --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-300));
     --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-lg);
 
-    display: flex;
-    position: relative;
-    z-index: 1;
-
     &[data-size="sm"] {
       --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-250));
       --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-md);
+    }
+
+    .nav {
+      display: flex;
+      position: relative;
+      z-index: 1;
     }
 
     [data-part="expander"] {
@@ -71,7 +73,7 @@
       }
 
       .clbr-nav[data-collapsible="always"]:has(
-          > [data-part="expander"] [aria-expanded="true"]
+          .nav > [data-part="expander"] [aria-expanded="true"]
         )
         & {
         background-color: var(--clbr-color-background-default);
@@ -100,7 +102,7 @@
         }
 
         .clbr-nav[data-collapsible="belowTablet"]:has(
-            > [data-part="expander"] [aria-expanded="true"]
+            .nav > [data-part="expander"] [aria-expanded="true"]
           )
           & {
           background-color: var(--clbr-color-background-default);
@@ -141,7 +143,7 @@
       }
 
       .clbr-nav[data-collapsible="always"]:has(
-          > [data-part="expander"] [aria-expanded="true"]
+          .nav > [data-part="expander"] [aria-expanded="true"]
         )
         & {
         align-items: start;
@@ -155,7 +157,7 @@
 
       @media (width < 48rem) {
         .clbr-nav[data-collapsible="belowTablet"]:has(
-            > [data-part="expander"] [aria-expanded="true"]
+            .nav > [data-part="expander"] [aria-expanded="true"]
           )
           & {
           align-items: start;
@@ -184,7 +186,7 @@
       }
 
       .clbr-nav[data-collapsible="always"]:has(
-          > [data-part="expander"] [aria-expanded="true"]
+          .nav > [data-part="expander"] [aria-expanded="true"]
         )
         & {
         padding-block: var(--clbr-spacing-vertical-300);
@@ -208,7 +210,7 @@
 
       @media (width < 48rem) {
         .clbr-nav[data-collapsible="belowTablet"]:has(
-            > [data-part="expander"] [aria-expanded="true"]
+            .nav > [data-part="expander"] [aria-expanded="true"]
           )
           & {
           padding-block: var(--clbr-spacing-vertical-300);
@@ -246,7 +248,7 @@
         );
 
         .clbr-nav[data-collapsible="always"]:has(
-            > [data-part="expander"] [aria-expanded="true"]
+            .nav > [data-part="expander"] [aria-expanded="true"]
           )
           & {
           text-decoration: none;
@@ -264,7 +266,7 @@
 
         @media (width < 48rem) {
           .clbr-nav[data-collapsible="belowTablet"]:has(
-              > [data-part="expander"] [aria-expanded="true"]
+              .nav > [data-part="expander"] [aria-expanded="true"]
             )
             & {
             text-decoration: none;

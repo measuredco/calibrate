@@ -67,9 +67,8 @@ export function renderClbrNav({
     );
   }
 
-  const navAttrs = attrs({
+  const hostAttrs = attrs({
     class: "clbr-nav",
-    "aria-label": label || undefined,
     "data-collapsible": collapsible,
     "data-expander-label":
       collapsible && normalizedExpanderLabel
@@ -77,6 +76,11 @@ export function renderClbrNav({
         : undefined,
     "data-expander-position": collapsible ? expanderPosition : undefined,
     "data-size": size,
+  });
+
+  const navAttrs = attrs({
+    "aria-label": label || undefined,
+    class: "nav",
   });
 
   const listMarkup = items
@@ -96,7 +100,7 @@ export function renderClbrNav({
     id: normalizedContentId,
   });
 
-  return `<${CLBR_NAV_TAG_NAME}><nav ${navAttrs}><div ${contentAttrs}><ul class="list">${listMarkup}</ul></div></nav></${CLBR_NAV_TAG_NAME}>`;
+  return `<${CLBR_NAV_TAG_NAME} ${hostAttrs}><nav ${navAttrs}><div ${contentAttrs}><ul class="list">${listMarkup}</ul></div></nav></${CLBR_NAV_TAG_NAME}>`;
 }
 
 class ClbrNavElement extends HTMLElement {
@@ -120,7 +124,9 @@ class ClbrNavElement extends HTMLElement {
   }
 
   #getNav(): HTMLElement | null {
-    return this.querySelector<HTMLElement>(".clbr-nav[data-collapsible]");
+    if (!this.hasAttribute("data-collapsible")) return null;
+
+    return this.querySelector<HTMLElement>(".nav");
   }
 
   #getExpanderButton(): HTMLButtonElement | null {
@@ -143,8 +149,8 @@ class ClbrNavElement extends HTMLElement {
       "afterbegin",
       `<div data-part="expander">${renderClbrExpander({
         controlsId: content.id || undefined,
-        label: nav.getAttribute("data-expander-label") || undefined,
-        size: nav.getAttribute("data-size") === "sm" ? "md" : "lg",
+        label: this.getAttribute("data-expander-label") || undefined,
+        size: this.getAttribute("data-size") === "sm" ? "md" : "lg",
       })}</div>`,
     );
   }
@@ -192,7 +198,7 @@ class ClbrNavElement extends HTMLElement {
 
     windowRef.addEventListener("keydown", this.#onKeyDown);
 
-    if (nav.getAttribute("data-collapsible") !== "belowTablet") return;
+    if (this.getAttribute("data-collapsible") !== "belowTablet") return;
     if (typeof windowRef.matchMedia !== "function") return;
 
     const mediaQueryList = windowRef.matchMedia("(min-width: 48em)");
@@ -264,11 +270,11 @@ export const CLBR_NAV_SPEC = {
   description: "Use `clbr-nav` to render a primary navigation list.",
   output: {
     element: CLBR_NAV_TAG_NAME,
-    class: "clbr-nav (inner)",
+    class: "clbr-nav",
     children: [
-      "nav.clbr-nav",
-      "nav.clbr-nav > div.content",
-      "nav.clbr-nav > div.content > ul.list > li > a",
+      "nav.nav",
+      "nav.nav > div.content",
+      "nav.nav > div.content > ul.list > li > a",
       "optional runtime div[data-part='expander'] > button.expander",
     ],
   },
@@ -335,42 +341,42 @@ export const CLBR_NAV_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "class",
+        target: `${CLBR_NAV_TAG_NAME}@class`,
         value: "clbr-nav",
       },
       {
         behavior: "emit",
-        target: "aria-label",
+        target: "nav.nav@aria-label",
         value: "{label}",
         when: "label is provided",
       },
       {
         behavior: "emit",
-        target: "data-collapsible",
+        target: `${CLBR_NAV_TAG_NAME}@data-collapsible`,
         value: "{collapsible}",
         when: "collapsible is always or belowTablet",
       },
       {
         behavior: "emit",
-        target: "data-expander-position",
+        target: `${CLBR_NAV_TAG_NAME}@data-expander-position`,
         value: "{expanderPosition}",
         when: "collapsible is always or belowTablet",
       },
       {
         behavior: "emit",
-        target: ".content@id",
+        target: "div.content@id",
         value: "{contentId}",
         when: "contentId is provided",
       },
       {
         behavior: "emit",
-        target: "data-expander-label",
+        target: `${CLBR_NAV_TAG_NAME}@data-expander-label`,
         value: "{expanderLabel}",
         when: "collapsible is provided and expanderLabel is non-empty",
       },
       {
         behavior: "always",
-        target: "data-size",
+        target: `${CLBR_NAV_TAG_NAME}@data-size`,
         value: "{size}",
       },
     ],

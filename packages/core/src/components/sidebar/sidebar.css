@@ -1,5 +1,5 @@
 @layer clbr.components {
-  :where(.clbr) clbr-sidebar {
+  :where(.clbr) .clbr-sidebar {
     display: inline-block;
 
     @media (min-width: 68em) {
@@ -12,19 +12,19 @@
       display: inline-flex;
       margin-inline: calc(0rem - var(--clbr-spacing-vertical-300));
 
-      clbr-sidebar[data-size="sm"] & {
+      .clbr-sidebar[data-size="sm"] & {
         margin-inline: calc(0rem - var(--clbr-spacing-vertical-250));
       }
 
       @media (min-width: 68em) {
-        clbr-sidebar[data-above-notebook="collapsible"] &,
-        clbr-sidebar[data-above-notebook="persistent"] & {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
           display: none;
         }
       }
     }
 
-    .clbr-sidebar {
+    .sidebar {
       background-color: var(--clbr-color-background-panel);
       color: var(--clbr-color-foreground-default);
       display: flex;
@@ -43,7 +43,7 @@
       visibility: hidden;
       z-index: 1;
 
-      clbr-sidebar[data-open] & {
+      .clbr-sidebar[data-open] & {
         box-shadow: var(--clbr-effect-shadow-default);
         transform: translateX(0);
         transition:
@@ -57,7 +57,7 @@
         }
       }
 
-      clbr-sidebar[data-collapsed] & {
+      .clbr-sidebar[data-collapsed] & {
         inline-size: var(--clbr-spacing-horizontal-900);
       }
 
@@ -73,7 +73,7 @@
         );
         padding-block-start: var(--clbr-layout-spacing-vertical-600);
 
-        clbr-sidebar[data-size="sm"] .clbr-sidebar > & {
+        .clbr-sidebar[data-size="sm"] .sidebar > & {
           min-block-size: var(--clbr-spacing-vertical-950);
           padding-block-end: calc(
             var(--clbr-spacing-vertical-500) -
@@ -82,7 +82,7 @@
           padding-block-start: var(--clbr-spacing-vertical-500);
         }
 
-        clbr-sidebar[data-collapsed] & {
+        .clbr-sidebar[data-collapsed] & {
           justify-content: center;
 
           > :not([data-part="close"]) {
@@ -95,7 +95,7 @@
           margin-inline-end: var(--clbr-spacing-horizontal-400);
           margin-inline-start: auto;
 
-          clbr-sidebar[data-collapsed] & {
+          .clbr-sidebar[data-collapsed] & {
             margin-inline: 0;
           }
         }
@@ -119,15 +119,15 @@
     }
 
     [data-part="backdrop"] {
-      clbr-sidebar[data-open] & {
+      .clbr-sidebar[data-open] & {
         background-color: #00000092;
         inset: 0;
         position: fixed;
       }
 
       @media (min-width: 68em) {
-        clbr-sidebar[data-above-notebook="collapsible"] &,
-        clbr-sidebar[data-above-notebook="persistent"] & {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
           display: none;
         }
       }

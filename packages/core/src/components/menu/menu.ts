@@ -81,11 +81,9 @@ export function renderClbrMenu({
   const triggerId = `${normalizedId}-button`;
   const menuId = `${normalizedId}-popup`;
   const hostAttrs = attrs({
-    "data-align": align === "start" ? undefined : align,
-    "data-size": size === "md" ? undefined : size,
-  });
-  const menuWrapperAttrs = attrs({
     class: "clbr-menu",
+    "data-align": align === "start" ? undefined : align,
+    "data-size": size,
   });
   const menuAttrs = attrs({
     "aria-labelledby": triggerId,
@@ -124,7 +122,7 @@ export function renderClbrMenu({
     })
     .join("");
 
-  return `<${CLBR_MENU_TAG_NAME} ${hostAttrs}><div ${menuWrapperAttrs}><div data-part="trigger">${triggerMarkup}</div><div ${menuAttrs}>${itemsMarkup}</div></div></${CLBR_MENU_TAG_NAME}>`;
+  return `<${CLBR_MENU_TAG_NAME} ${hostAttrs}><div data-part="trigger">${triggerMarkup}</div><div ${menuAttrs}>${itemsMarkup}</div></${CLBR_MENU_TAG_NAME}>`;
 }
 
 class ClbrMenuElement extends HTMLElement {
@@ -398,8 +396,8 @@ export const CLBR_MENU_SPEC = {
     "Use `clbr-menu` to show a list of actions from a trigger button.",
   output: {
     element: CLBR_MENU_TAG_NAME,
+    class: "clbr-menu",
     children: [
-      "div.clbr-menu",
       'div[data-part="trigger"] > button.clbr-button',
       'div.popup[role="menu"] > button[role="menuitem"]',
     ],
@@ -480,7 +478,7 @@ export const CLBR_MENU_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "div.clbr-menu@class",
+        target: `${CLBR_MENU_TAG_NAME}@class`,
         value: "clbr-menu",
       },
       {
@@ -505,10 +503,9 @@ export const CLBR_MENU_SPEC = {
         when: "align is 'end'",
       },
       {
-        behavior: "emit",
+        behavior: "always",
         target: `${CLBR_MENU_TAG_NAME}@data-size`,
         value: "{size}",
-        when: "size is not 'md'",
       },
       {
         behavior: "always",

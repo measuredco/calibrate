@@ -18,7 +18,7 @@ const meta = {
     triggerIcon: {
       ...baseArgTypes.triggerIcon,
       control: { type: "select" as const },
-      options: [undefined, ...CLBR_ICON_RECOMMENDED],
+      options: CLBR_ICON_RECOMMENDED,
     },
   },
   parameters: {

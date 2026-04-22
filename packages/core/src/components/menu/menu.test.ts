@@ -83,7 +83,7 @@ describe("renderClbrMenu", () => {
     ).toBe("end");
   });
 
-  it("omits data-size for default md size and emits non-default sizes on the host", () => {
+  it("always emits data-size on the host", () => {
     mount(
       renderClbrMenu({
         id: "foo",
@@ -97,7 +97,7 @@ describe("renderClbrMenu", () => {
       name: "Actions",
     });
 
-    expect(defaultHost?.hasAttribute("data-size")).toBe(false);
+    expect(defaultHost?.getAttribute("data-size")).toBe("md");
     expect(defaultTrigger.getAttribute("data-size")).toBe("md");
 
     mount(

@@ -93,9 +93,9 @@ export function renderClbrRange({
       )}</p>`
     : "";
 
-  return `<${CLBR_RANGE_TAG_NAME}><div ${fieldAttrs}><div class="label-wrapper"><label class="label" for="${normalizedId}">${escapeHtml(
+  return `<${CLBR_RANGE_TAG_NAME} ${fieldAttrs}><div class="label-wrapper"><label class="label" for="${normalizedId}">${escapeHtml(
     label,
-  )}</label><output class="output" for="${normalizedId}"></output></div><input ${inputAttrs}>${descriptionMarkup}</div></${CLBR_RANGE_TAG_NAME}>`;
+  )}</label><output class="output" for="${normalizedId}"></output></div><input ${inputAttrs}>${descriptionMarkup}</${CLBR_RANGE_TAG_NAME}>`;
 }
 
 class ClbrRangeElement extends HTMLElement {
@@ -147,9 +147,8 @@ export const CLBR_RANGE_SPEC = {
     "Use `clbr-range` to let users pick a numeric value along a scale.",
   output: {
     element: CLBR_RANGE_TAG_NAME,
-    class: "clbr-range (inner)",
+    class: "clbr-range",
     children: [
-      "div.clbr-range",
       "div.label-wrapper",
       "label.label",
       "output.output",
@@ -224,17 +223,17 @@ export const CLBR_RANGE_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "div.clbr-range@class",
+        target: `${CLBR_RANGE_TAG_NAME}@class`,
         value: "clbr-range",
       },
       {
         behavior: "always",
-        target: "div.clbr-range@data-size",
+        target: `${CLBR_RANGE_TAG_NAME}@data-size`,
         value: "{size}",
       },
       {
         behavior: "emit",
-        target: "div.clbr-range@data-inline-size",
+        target: `${CLBR_RANGE_TAG_NAME}@data-inline-size`,
         value: "fit",
         when: "inlineSize is fit",
       },

@@ -1,23 +1,19 @@
 @layer clbr.components {
-  :where(.clbr) clbr-menu {
+  :where(.clbr) .clbr-menu {
     --clbr-menu-trigger-block-size: var(--clbr-spacing-vertical-800);
-
-    display: inline-block;
 
     &[data-size="sm"] {
       --clbr-menu-trigger-block-size: var(--clbr-spacing-vertical-775);
     }
 
-    .clbr-menu {
-      border-radius: calc(
-        var(--clbr-menu-trigger-block-size) * var(--clbr-radius-ratio-default)
-      );
-      display: inline-block;
+    border-radius: calc(
+      var(--clbr-menu-trigger-block-size) * var(--clbr-radius-ratio-default)
+    );
+    display: inline-block;
 
-      &:has([aria-expanded="true"]) {
-        box-shadow: var(--clbr-effect-shadow-default);
-        position: relative;
-      }
+    &:has([aria-expanded="true"]) {
+      box-shadow: var(--clbr-effect-shadow-default);
+      position: relative;
     }
 
     .popup {
@@ -47,7 +43,7 @@
         display: none;
       }
 
-      clbr-menu[data-align="end"] & {
+      .clbr-menu[data-align="end"] & {
         inset-inline-end: 0;
         inset-inline-start: inherit;
       }
@@ -92,12 +88,12 @@
           }
         }
 
-        clbr-menu[data-align="end"] & {
+        .clbr-menu[data-align="end"] & {
           justify-content: end;
           text-align: end;
         }
 
-        clbr-menu[data-size="sm"] & {
+        .clbr-menu[data-size="sm"] & {
           font-size: var(--clbr-typography-type-step-100-font-size);
           line-height: var(--clbr-typography-type-step-100-line-height);
           padding-block: var(--clbr-spacing-vertical-250);

@@ -41,10 +41,10 @@ export const Default = {
     children: `<div class="example-content"></div>`,
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar({
+    `<div style="min-block-size: 21rem">${renderClbrSidebar({
       ...args,
       id: args.id?.trim() || "storybook-fallback-sidebar-id",
-    })}</div></div>`,
+    })}</div>`,
 };
 
 export const Footer = {
@@ -65,8 +65,8 @@ export const Footer = {
     }),
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem"><div>${renderClbrSidebar({
+    `<div style="min-block-size: 21rem">${renderClbrSidebar({
       ...args,
       id: args.id?.trim() || "storybook-fallback-sidebar-id",
-    })}</div></div>`,
+    })}</div>`,
 };

@@ -70,7 +70,7 @@ describe("renderClbrNav", () => {
       size: "sm",
     });
 
-    expect(html.startsWith("<clbr-nav>")).toBe(true);
+    expect(html.startsWith("<clbr-nav ")).toBe(true);
     expect(html.includes('data-collapsible="belowTablet"')).toBe(true);
     expect(html.includes('data-expander-position="end"')).toBe(true);
     expect(html.includes("data-expander-label=")).toBe(false);
