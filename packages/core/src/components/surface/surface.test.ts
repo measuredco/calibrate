@@ -19,7 +19,7 @@ describe("renderClbrSurface", () => {
     );
     const surface = root.querySelector(".surface") as HTMLElement;
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-surface")).toBe("default");
+    expect(surface.getAttribute("data-clbr-surface")).toBe("default");
   });
 
   it("renders brand surface variant attribute", () => {
@@ -31,7 +31,7 @@ describe("renderClbrSurface", () => {
     );
     const surface = root.querySelector(".surface") as HTMLElement;
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-surface")).toBe("brand");
+    expect(surface.getAttribute("data-clbr-surface")).toBe("brand");
   });
 
   it("renders inverse surface variant attribute", () => {
@@ -43,7 +43,7 @@ describe("renderClbrSurface", () => {
     );
     const surface = root.querySelector(".surface") as HTMLElement;
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-surface")).toBe("inverse");
+    expect(surface.getAttribute("data-clbr-surface")).toBe("inverse");
   });
 
   it("renders brand-inverse surface variant attribute", () => {
@@ -55,7 +55,7 @@ describe("renderClbrSurface", () => {
     );
     const surface = root.querySelector(".surface") as HTMLElement;
     expect(surface.classList.contains("surface")).toBe(true);
-    expect(surface.getAttribute("data-surface")).toBe("brand-inverse");
+    expect(surface.getAttribute("data-clbr-surface")).toBe("brand-inverse");
   });
 
   it("injects children HTML content", () => {

@@ -41,7 +41,7 @@ describe("renderClbrPoster", () => {
     );
   });
 
-  it("emits data-surface when surface is provided", () => {
+  it("emits data-clbr-surface when surface is provided", () => {
     const root = mountPoster(
       renderClbrPoster({
         image: '<div class="image"><img src="/image.jpg" alt="Alt" /></div>',
@@ -49,7 +49,7 @@ describe("renderClbrPoster", () => {
       }),
     );
 
-    expect(root.querySelector(".poster")?.getAttribute("data-surface")).toBe(
+    expect(root.querySelector(".poster")?.getAttribute("data-clbr-surface")).toBe(
       "brand",
     );
   });
@@ -63,8 +63,8 @@ describe("renderClbrPoster", () => {
     );
     const poster = root.querySelector(".poster") as HTMLElement;
 
-    expect(poster.getAttribute("data-content-theme")).toBe("dark");
-    expect(poster.getAttribute("data-surface")).toBe("default");
+    expect(poster.getAttribute("data-clbr-content-theme")).toBe("dark");
+    expect(poster.getAttribute("data-clbr-surface")).toBe("default");
   });
 
   it("preserves an explicit brand surface when contentTheme is provided", () => {
@@ -77,8 +77,8 @@ describe("renderClbrPoster", () => {
     );
     const poster = root.querySelector(".poster") as HTMLElement;
 
-    expect(poster.getAttribute("data-content-theme")).toBe("light");
-    expect(poster.getAttribute("data-surface")).toBe("brand");
+    expect(poster.getAttribute("data-clbr-content-theme")).toBe("light");
+    expect(poster.getAttribute("data-clbr-surface")).toBe("brand");
   });
 });
 

@@ -25,7 +25,7 @@ export function renderClbrSurface({
 }: ClbrSurfaceProps): string {
   const surfaceAttrs = attrs({
     class: "surface",
-    "data-surface": variant,
+    "data-clbr-surface": variant,
   });
 
   return `<div ${surfaceAttrs}>${children}</div>`;
@@ -56,7 +56,7 @@ export const CLBR_SURFACE_SPEC = {
     attributes: [
       {
         behavior: "always",
-        target: "data-surface",
+        target: "data-clbr-surface",
         value: "{variant}",
       },
     ],

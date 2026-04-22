@@ -21,7 +21,7 @@ describe("renderClbrBox", () => {
     expect(box.getAttribute("data-padding-inline")).toBe("md");
     expect(box.hasAttribute("data-radius")).toBe(false);
     expect(box.hasAttribute("data-responsive")).toBe(false);
-    expect(box.hasAttribute("data-surface")).toBe(false);
+    expect(box.hasAttribute("data-clbr-surface")).toBe(false);
   });
 
   it("renders trusted child HTML without escaping", () => {
@@ -65,7 +65,7 @@ describe("renderClbrBox", () => {
     expect(box.getAttribute("data-padding-inline")).toBe("sm");
     expect(box.getAttribute("data-radius")).toBe("md");
     expect(box.hasAttribute("data-responsive")).toBe(true);
-    expect(box.getAttribute("data-surface")).toBe("brand");
+    expect(box.getAttribute("data-clbr-surface")).toBe("brand");
   });
 
   it("omits optional attrs when their variants are unset", () => {
@@ -86,7 +86,7 @@ describe("renderClbrBox", () => {
     expect(box.getAttribute("data-padding-inline")).toBe("xs");
     expect(box.hasAttribute("data-radius")).toBe(false);
     expect(box.hasAttribute("data-responsive")).toBe(false);
-    expect(box.hasAttribute("data-surface")).toBe(false);
+    expect(box.hasAttribute("data-clbr-surface")).toBe(false);
   });
 
   it("supports none for both padding axes", () => {

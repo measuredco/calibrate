@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
+  :where(.clbr[data-clbr-brand="msrd"], .clbr[data-clbr-brand="msrd"] [data-clbr-surface="default"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -323,7 +323,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+  :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -639,7 +639,7 @@
   }
 
   /* contentLightDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="default"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="default"] {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -955,7 +955,7 @@
   }
 
   /* contentLightBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="brand"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="brand"] {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -1271,7 +1271,7 @@
   }
 
   /* lightBrandInverse | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+  :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -1588,7 +1588,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
       --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
       --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
       --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -1905,7 +1905,7 @@
   }
 
   /* contentDarkDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="default"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="default"] {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -2221,7 +2221,7 @@
   }
 
   /* contentDarkBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="brand"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="brand"] {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -2538,7 +2538,7 @@
 
   /* darkInverse | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="inverse"]) {
       --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
       --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
       --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);
@@ -2856,7 +2856,7 @@
 
   /* darkBrandInverse | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
       --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
       --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
       --clbr-primitive-color-alpha-brand-08: rgba(1, 88, 173, 0.08);

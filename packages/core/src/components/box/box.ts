@@ -56,7 +56,7 @@ export function renderClbrBox({
     "data-padding-inline": paddingInline,
     "data-radius": radius,
     "data-responsive": responsive,
-    "data-surface": surface,
+    "data-clbr-surface": surface,
   });
 
   return `<div ${boxAttrs}>${children ?? ""}</div>`;
@@ -166,7 +166,7 @@ export const CLBR_BOX_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-surface",
+        target: "data-clbr-surface",
         value: "{surface}",
         when: "surface is provided",
       },

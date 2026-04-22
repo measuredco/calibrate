@@ -76,7 +76,7 @@ export function renderClbrBanner({
     "data-dismissible-label": dismissible
       ? normalizedDismissibleLabel
       : undefined,
-    "data-surface": "inverse",
+    "data-clbr-surface": "inverse",
     "data-tone": tone || undefined,
   });
 

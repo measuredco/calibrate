@@ -9,10 +9,10 @@ function mountRoot(html: string): HTMLElement {
 }
 
 describe("renderClbrRoot", () => {
-  it("renders root class and default data-brand when brand is omitted", () => {
+  it("renders root class and default data-clbr-brand when brand is omitted", () => {
     const root = mountRoot(renderClbrRoot({ children: "<p>content</p>" }));
     expect(root.classList.contains("clbr")).toBe(true);
-    expect(root.getAttribute("data-brand")).toBe("msrd");
+    expect(root.getAttribute("data-clbr-brand")).toBe("msrd");
   });
 
   it("does not render data-app-root by default", () => {
@@ -66,7 +66,7 @@ describe("renderClbrRoot", () => {
         children: "<p>content</p>",
       }),
     );
-    expect(root.getAttribute("data-brand")).toBe("wrfr");
+    expect(root.getAttribute("data-clbr-brand")).toBe("wrfr");
   });
 
   it("renders theme attribute when provided", () => {
@@ -76,12 +76,12 @@ describe("renderClbrRoot", () => {
         theme: "dark",
       }),
     );
-    expect(root.getAttribute("data-theme")).toBe("dark");
+    expect(root.getAttribute("data-clbr-theme")).toBe("dark");
   });
 
   it("does not render theme attribute when omitted", () => {
     const root = mountRoot(renderClbrRoot({ children: "<p>content</p>" }));
-    expect(root.hasAttribute("data-theme")).toBe(false);
+    expect(root.hasAttribute("data-clbr-theme")).toBe(false);
   });
 
   it("renders dir when provided", () => {

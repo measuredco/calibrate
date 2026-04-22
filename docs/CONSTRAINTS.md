@@ -74,7 +74,7 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - `packages/core/` is the canonical package boundary for component contracts built on token outputs.
 - Component markup grammar (SSR-first):
   - structural semantics use classes (function-focused nouns, not appearance naming).
-  - state/variant semantics use attributes (for example `data-surface`, `data-size`, ARIA state attrs).
+  - state/variant semantics use attributes (for example `data-clbr-surface`, `data-size`, ARIA state attrs).
   - public renderer props should map directly to emitted DOM semantics (props -> attributes).
 - Component implementation model:
   - components that do not require runtime JS behavior should be authored as pure SSR renderers that emit native HTML.
@@ -225,12 +225,12 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - CSS layering contract (`@layer clbr, clbr.brand, clbr.root, clbr.components;`) is normative and must be preserved in distributed bundles.
 - Root scoping contract:
   - all token usage must live under a `.clbr` scope root
-  - select a brand via `data-brand="<brand>"` on the same scope root
+  - select a brand via `data-clbr-brand="<brand>"` on the same scope root
 - Theme forcing contract:
-  - `data-theme="dark"` and `data-theme="light"` force mode on the scoped brand root
+  - `data-clbr-theme="dark"` and `data-clbr-theme="light"` force mode on the scoped brand root
   - without force attributes, theme follows authored media query behavior
 - Surface contract:
-  - descendant surface scopes are expressed with `data-surface`
+  - descendant surface scopes are expressed with `data-clbr-surface`
   - supported public surface values are:
     - `default`
     - `brand`
@@ -239,11 +239,11 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
   - `default` is the inherited/base surface context
   - `brand`, `inverse`, and `brand-inverse` are sibling surface contexts and must not rely on ancestor surface fallback to complete their token sets
 - Local content-theme override contract:
-  - `data-content-theme="light"` and `data-content-theme="dark"` are reserved for absolute local foreground theme overrides on poster-like content over non-themeable media
+  - `data-clbr-content-theme="light"` and `data-clbr-content-theme="dark"` are reserved for absolute local foreground theme overrides on poster-like content over non-themeable media
   - local content-theme overrides are intentionally stronger than normal theme/surface selectors
-  - local content-theme overrides currently pair with `data-surface="default"` or `data-surface="brand"`
+  - local content-theme overrides currently pair with `data-clbr-surface="default"` or `data-clbr-surface="brand"`
 - Multi-brand on one page is supported:
-  - use isolated wrapper roots per brand (`.clbr[data-brand="msrd"]`, `.clbr[data-brand="wrfr"]`, etc.)
+  - use isolated wrapper roots per brand (`.clbr[data-clbr-brand="msrd"]`, `.clbr[data-clbr-brand="wrfr"]`, etc.)
   - do not mix multiple brands on the same scope root
 
 ## Domain Conventions

@@ -25,8 +25,8 @@ export interface ClbrRootProps {
 /**
  * SSR renderer for the Calibrate root component.
  *
- * Emits a `<div>` with the Calibrate root class, required `data-brand`,
- * optional `data-theme`, and optional `dir`/`lang` attributes, then injects
+ * Emits a `<div>` with the Calibrate root class, required `data-clbr-brand`,
+ * optional `data-clbr-theme`, and optional `dir`/`lang` attributes, then injects
  * the provided HTML content inside.
  *
  * @param props - Root component props.
@@ -48,8 +48,8 @@ export function renderClbrRoot(props: ClbrRootProps): string {
     "data-app-root": appRoot,
     "data-app-overscroll-behavior":
       appOverscrollBehavior === "none" ? "none" : undefined,
-    "data-brand": brand,
-    "data-theme": theme,
+    "data-clbr-brand": brand,
+    "data-clbr-theme": theme,
     lang: lang === "" ? undefined : lang,
     dir,
   });
@@ -123,12 +123,12 @@ export const CLBR_ROOT_SPEC = {
       },
       {
         behavior: "always",
-        target: "data-brand",
+        target: "data-clbr-brand",
         value: "{brand}",
       },
       {
         behavior: "emit",
-        target: "data-theme",
+        target: "data-clbr-theme",
         value: "{theme}",
         when: "theme is provided",
       },

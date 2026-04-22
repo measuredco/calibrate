@@ -14,7 +14,7 @@ export interface ClbrPosterProps {
   contentTheme?: ClbrTheme;
   /** Background image HTML (usually `renderClbrImage(...)`). Caller sanitizes untrusted content. */
   image: string;
-  /** Surface context. Emits `data-surface` when provided. */
+  /** Surface context. Emits `data-clbr-surface` when provided. */
   surface?: ClbrPosterSurface;
 }
 
@@ -38,8 +38,8 @@ export function renderClbrPoster({
   const resolvedSurface = contentTheme ? (surface ?? "default") : surface;
   const posterAttrs = attrs({
     class: "poster",
-    "data-content-theme": contentTheme,
-    "data-surface": resolvedSurface,
+    "data-clbr-content-theme": contentTheme,
+    "data-clbr-surface": resolvedSurface,
   });
   const contentMarkup = children
     ? `<div class="content">${children}</div>`
@@ -92,13 +92,13 @@ export const CLBR_POSTER_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-content-theme",
+        target: "data-clbr-content-theme",
         value: "{contentTheme}",
         when: "contentTheme is light or dark",
       },
       {
         behavior: "emit",
-        target: "data-surface",
+        target: "data-clbr-surface",
         value: "{resolvedSurface}",
         when: "surface is provided or contentTheme is provided (defaulting to default when only contentTheme is set)",
       },

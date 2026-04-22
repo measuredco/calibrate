@@ -7,7 +7,7 @@
 
 @layer clbr.brand {
   /* lightDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
+  :where(.clbr[data-clbr-brand="msrd"], .clbr[data-clbr-brand="msrd"] [data-clbr-surface="default"]) {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -226,7 +226,7 @@
   }
 
   /* lightBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+  :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -441,7 +441,7 @@
   }
 
   /* contentLightDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="default"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="default"] {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -660,7 +660,7 @@
   }
 
   /* contentLightBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="brand"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="brand"] {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -875,7 +875,7 @@
   }
 
   /* lightInverse | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] [data-surface="inverse"]) {
+  :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="inverse"]) {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -948,7 +948,7 @@
   }
 
   /* lightBrandInverse | baseline | default-states */
-  :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+  :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -1164,7 +1164,7 @@
 
   /* darkDefault | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
+    :where(.clbr[data-clbr-brand="msrd"], .clbr[data-clbr-brand="msrd"] [data-clbr-surface="default"]) {
       --clbr-color-avatar-01: #df98df;
       --clbr-color-avatar-02: #ebbdeb;
       --clbr-color-avatar-03: #f6e3f7;
@@ -1239,7 +1239,7 @@
 
   /* darkBrand | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
       --clbr-color-avatar-01: #df98df;
       --clbr-color-avatar-02: #ebbdeb;
       --clbr-color-avatar-03: #f6e3f7;
@@ -1455,7 +1455,7 @@
   }
 
   /* contentDarkDefault | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="default"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="default"] {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -1670,7 +1670,7 @@
   }
 
   /* contentDarkBrand | baseline | default-states */
-  :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="brand"] {
+  :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="brand"] {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -1886,7 +1886,7 @@
 
   /* darkInverse | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="inverse"]) {
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -2107,7 +2107,7 @@
 
   /* darkBrandInverse | baseline | default-states */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -2324,7 +2324,7 @@
 
   /* lightDefault | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"], .clbr[data-brand="msrd"][data-theme="light"] [data-surface="default"]) {
+    :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="light"], .clbr[data-clbr-brand="msrd"][data-clbr-theme="light"] [data-clbr-surface="default"]) {
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -2399,7 +2399,7 @@
 
   /* lightBrand | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"] [data-surface="brand"]) {
+    :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="light"] [data-clbr-surface="brand"]) {
       --clbr-color-avatar-01: #a942ad;
       --clbr-color-avatar-02: #810489;
       --clbr-color-avatar-03: #45024a;
@@ -2473,7 +2473,7 @@
 
   /* lightInverse | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"] [data-surface="inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="light"] [data-clbr-surface="inverse"]) {
       --clbr-color-avatar-01: #df98df;
       --clbr-color-avatar-02: #ebbdeb;
       --clbr-color-avatar-03: #f6e3f7;
@@ -2548,7 +2548,7 @@
 
   /* lightBrandInverse | baseline | default-states | variant:forcedLight */
   @media (prefers-color-scheme: dark) {
-    :where(.clbr[data-brand="msrd"][data-theme="light"] [data-surface="brand-inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="light"] [data-clbr-surface="brand-inverse"]) {
       --clbr-color-avatar-01: #df98df;
       --clbr-color-avatar-02: #ebbdeb;
       --clbr-color-avatar-03: #f6e3f7;
@@ -2621,7 +2621,7 @@
   }
 
   /* darkDefault | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"], .clbr[data-brand="msrd"][data-theme="dark"] [data-surface="default"]) {
+  :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="dark"], .clbr[data-clbr-brand="msrd"][data-clbr-theme="dark"] [data-clbr-surface="default"]) {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -2694,7 +2694,7 @@
   }
 
   /* darkBrand | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"] [data-surface="brand"]) {
+  :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="dark"] [data-clbr-surface="brand"]) {
     --clbr-color-avatar-01: #df98df;
     --clbr-color-avatar-02: #ebbdeb;
     --clbr-color-avatar-03: #f6e3f7;
@@ -2766,7 +2766,7 @@
   }
 
   /* darkInverse | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"] [data-surface="inverse"]) {
+  :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="dark"] [data-clbr-surface="inverse"]) {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -2839,7 +2839,7 @@
   }
 
   /* darkBrandInverse | baseline | default-states | variant:forcedDark */
-  :where(.clbr[data-brand="msrd"][data-theme="dark"] [data-surface="brand-inverse"]) {
+  :where(.clbr[data-clbr-brand="msrd"][data-clbr-theme="dark"] [data-clbr-surface="brand-inverse"]) {
     --clbr-color-avatar-01: #a942ad;
     --clbr-color-avatar-02: #810489;
     --clbr-color-avatar-03: #45024a;
@@ -2912,7 +2912,7 @@
 
   /* lightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
+    :where(.clbr[data-clbr-brand="msrd"], .clbr[data-clbr-brand="msrd"] [data-clbr-surface="default"]) {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -2931,7 +2931,7 @@
 
   /* lightBrand | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -2950,7 +2950,7 @@
 
   /* contentLightDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="default"] {
+    :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="default"] {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -2969,7 +2969,7 @@
 
   /* contentLightBrand | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"]) [data-content-theme="light"][data-surface="brand"] {
+    :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="light"][data-clbr-surface="brand"] {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -2988,7 +2988,7 @@
 
   /* lightBrandInverse | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3008,7 +3008,7 @@
   /* darkBrand | tablet | default-states */
   @media (prefers-color-scheme: dark) {
     @media (min-width: 48em) {
-      :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+      :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
         --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3028,7 +3028,7 @@
 
   /* contentDarkDefault | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="default"] {
+    :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="default"] {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3047,7 +3047,7 @@
 
   /* contentDarkBrand | tablet | default-states */
   @media (min-width: 48em) {
-    :where(.clbr[data-brand="msrd"]) [data-content-theme="dark"][data-surface="brand"] {
+    :where(.clbr[data-clbr-brand="msrd"]) [data-clbr-content-theme="dark"][data-clbr-surface="brand"] {
       --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3067,7 +3067,7 @@
   /* darkInverse | tablet | default-states */
   @media (prefers-color-scheme: dark) {
     @media (min-width: 48em) {
-      :where(.clbr[data-brand="msrd"] [data-surface="inverse"]) {
+      :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="inverse"]) {
         --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3088,7 +3088,7 @@
   /* darkBrandInverse | tablet | default-states */
   @media (prefers-color-scheme: dark) {
     @media (min-width: 48em) {
-      :where(.clbr[data-brand="msrd"] [data-surface="brand-inverse"]) {
+      :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand-inverse"]) {
         --clbr-typography-text-body-responsive-lg: 400 1.5rem/1.5 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-md: 400 1.25rem/1.8 InterVariable, system-ui, sans-serif;
         --clbr-typography-text-body-responsive-sm: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif;
@@ -3108,7 +3108,7 @@
 
   /* lightDefault | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="msrd"], .clbr[data-brand="msrd"] [data-surface="default"]) {
+    :where(.clbr[data-clbr-brand="msrd"], .clbr[data-clbr-brand="msrd"] [data-clbr-surface="default"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }
@@ -3116,7 +3116,7 @@
 
   /* lightBrand | baseline | forcedColors:on */
   @media (forced-colors: active) {
-    :where(.clbr[data-brand="msrd"] [data-surface="brand"]) {
+    :where(.clbr[data-clbr-brand="msrd"] [data-clbr-surface="brand"]) {
       --clbr-color-logo-default: CanvasText;
       --clbr-color-logo-neutral: CanvasText;
     }

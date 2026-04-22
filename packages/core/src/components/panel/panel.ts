@@ -26,7 +26,7 @@ export function renderClbrPanel({
   const panelAttrs = attrs({
     class: "panel",
     "data-padding": padding,
-    "data-surface": surface,
+    "data-clbr-surface": surface,
   });
 
   return `<div ${panelAttrs}>${children ?? ""}</div>`;
@@ -81,7 +81,7 @@ export const CLBR_PANEL_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-surface",
+        target: "data-clbr-surface",
         value: "{surface}",
         when: "surface is provided",
       },

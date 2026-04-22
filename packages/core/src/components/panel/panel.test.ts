@@ -16,7 +16,7 @@ describe("renderClbrPanel", () => {
     expect(panel.className).toBe("panel");
     expect(panel.textContent).toBe("Body");
     expect(panel.getAttribute("data-padding")).toBe("md");
-    expect(panel.hasAttribute("data-surface")).toBe(false);
+    expect(panel.hasAttribute("data-clbr-surface")).toBe(false);
   });
 
   it("renders trusted child HTML without escaping", () => {
@@ -50,7 +50,7 @@ describe("renderClbrPanel", () => {
     const panel = root.querySelector(".panel") as HTMLElement;
 
     expect(panel.getAttribute("data-padding")).toBe("xl");
-    expect(panel.getAttribute("data-surface")).toBe("inverse");
+    expect(panel.getAttribute("data-clbr-surface")).toBe("inverse");
   });
 });
 

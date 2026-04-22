@@ -12,7 +12,7 @@ export interface ClbrCardProps {
   href?: string;
   /** Optional note HTML content. Caller sanitizes untrusted content. */
   note?: string;
-  /** Surface context. Emits `data-surface` when provided. */
+  /** Surface context. Emits `data-clbr-surface` when provided. */
   surface?: ClbrSurfaceVariant;
   /** Card title text content (escaped before render). */
   title: string;
@@ -37,7 +37,7 @@ export function renderClbrCard({
   surface,
   title,
 }: ClbrCardProps): string {
-  const rootAttrs = attrs({ class: "card", "data-surface": surface });
+  const rootAttrs = attrs({ class: "card", "data-clbr-surface": surface });
   const headingTag = headingLevel ? `h${headingLevel}` : `div`;
   const titleMarkup = href
     ? `<a href="${escapeHtml(href)}">${escapeHtml(title)}</a>`
@@ -117,7 +117,7 @@ export const CLBR_CARD_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-surface",
+        target: "data-clbr-surface",
         value: "{surface}",
         when: "surface is provided",
       },

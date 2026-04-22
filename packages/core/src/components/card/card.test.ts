@@ -19,7 +19,7 @@ describe("renderClbrCard", () => {
 
     expect(card.tagName).toBe("DIV");
     expect(card.className).toBe("card");
-    expect(card.hasAttribute("data-surface")).toBe(false);
+    expect(card.hasAttribute("data-clbr-surface")).toBe(false);
     expect(card.querySelector(".dots")).toBeTruthy();
     expect(card.querySelector("div.title")?.textContent).toBe("Card title");
     expect(card.querySelector("p.description")?.textContent).toBe(
@@ -92,7 +92,7 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".card")?.getAttribute("data-surface")).toBe(
+    expect(root.querySelector(".card")?.getAttribute("data-clbr-surface")).toBe(
       "brand-inverse",
     );
   });
