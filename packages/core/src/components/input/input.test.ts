@@ -1,6 +1,7 @@
 import { getByLabelText, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrInput } from "./input";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_INPUT_SPEC, renderClbrInput, type ClbrInputProps } from "./input";
 
 function mountInput(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -242,4 +243,10 @@ describe("renderClbrInput", () => {
     expect(getByLabelText(root, `<script>alert(1)</script>`)).toBeTruthy();
     expect(queryByText(root, "alert(1)")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrInputProps>({
+  baseProps: { id: "input-1", label: "Label" },
+  renderer: renderClbrInput,
+  spec: CLBR_INPUT_SPEC,
 });

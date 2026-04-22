@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrBadge } from "./badge";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_BADGE_SPEC, renderClbrBadge } from "./badge";
 
 function mountBadge(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -33,6 +34,7 @@ describe("renderClbrBadge", () => {
       renderClbrBadge({ floating: true, label: "1" }),
     );
     const floatingBadge = floatingRoot.querySelector(".badge") as HTMLElement;
+
     expect(floatingBadge.hasAttribute("data-floating")).toBe(true);
 
     const defaultRoot = mountBadge(renderClbrBadge({ label: "1" }));
@@ -51,4 +53,10 @@ describe("renderClbrBadge", () => {
     const defaultBadge = defaultRoot.querySelector(".badge") as HTMLElement;
     expect(defaultBadge.getAttribute("data-size")).toBe("md");
   });
+});
+
+describeSpecConsistency({
+  baseProps: { label: "Badge" },
+  renderer: renderClbrBadge,
+  spec: CLBR_BADGE_SPEC,
 });

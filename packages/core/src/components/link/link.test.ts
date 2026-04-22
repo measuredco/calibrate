@@ -1,6 +1,7 @@
 import { getByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrLink } from "./link";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_LINK_SPEC, type ClbrLinkProps, renderClbrLink } from "./link";
 
 function mount(html: string): void {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -74,4 +75,10 @@ describe("renderClbrLink", () => {
 
     expect(link.hasAttribute("data-underline")).toBe(true);
   });
+});
+
+describeSpecConsistency<ClbrLinkProps>({
+  baseProps: { href: "/docs", label: "Docs" },
+  renderer: renderClbrLink,
+  spec: CLBR_LINK_SPEC,
 });

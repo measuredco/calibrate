@@ -1,14 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrPage } from "./page";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_PAGE_SPEC, type ClbrPageProps, renderClbrPage } from "./page";
 
 function mountPage(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".page") as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrPage", () => {
   it("renders the page shell with prescribed regions", () => {
-    const page = mountPage(
+    const root = mountPage(
       renderClbrPage({
         banner: '<div class="page-banner">Banner</div>',
         children: "Main",
@@ -17,6 +18,7 @@ describe("renderClbrPage", () => {
         header: "<div>Header</div>",
       }),
     );
+    const page = root.querySelector(".page") as HTMLElement;
 
     expect(page.tagName).toBe("DIV");
     expect(page.className).toBe("page");
@@ -29,7 +31,7 @@ describe("renderClbrPage", () => {
   });
 
   it("renders trusted main HTML without escaping", () => {
-    const page = mountPage(
+    const root = mountPage(
       renderClbrPage({
         banner: '<a href="/banner">Banner</a>',
         children: "<p>Main <em>body</em></p>",
@@ -37,6 +39,7 @@ describe("renderClbrPage", () => {
         header: '<a href="/header">Header</a>',
       }),
     );
+    const page = root.querySelector(".page") as HTMLElement;
 
     expect(page.querySelector(".main em")?.textContent).toBe("body");
     expect(page.firstElementChild?.getAttribute("href")).toBe("/banner");
@@ -49,7 +52,7 @@ describe("renderClbrPage", () => {
   });
 
   it("omits data-center-main when centerMain is false", () => {
-    const page = mountPage(
+    const root = mountPage(
       renderClbrPage({
         children: "Main",
         footer: "<div>Footer</div>",
@@ -57,11 +60,13 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(page.hasAttribute("data-center-main")).toBe(false);
+    expect(root.querySelector(".page")?.hasAttribute("data-center-main")).toBe(
+      false,
+    );
   });
 
   it("omits banner content when banner is not provided", () => {
-    const page = mountPage(
+    const root = mountPage(
       renderClbrPage({
         children: "Main",
         footer: "<div>Footer</div>",
@@ -69,11 +74,13 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(page.firstElementChild?.tagName).toBe("HEADER");
+    expect(root.querySelector(".page")?.firstElementChild?.tagName).toBe(
+      "HEADER",
+    );
   });
 
   it("emits data-sticky-header when provided", () => {
-    const page = mountPage(
+    const root = mountPage(
       renderClbrPage({
         children: "Main",
         footer: "<div>Footer</div>",
@@ -82,6 +89,14 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(page.getAttribute("data-sticky-header")).toBe("always");
+    expect(
+      root.querySelector(".page")?.getAttribute("data-sticky-header"),
+    ).toBe("always");
   });
+});
+
+describeSpecConsistency<ClbrPageProps>({
+  baseProps: { footer: "<div>F</div>", header: "<div>H</div>" },
+  renderer: renderClbrPage,
+  spec: CLBR_PAGE_SPEC,
 });

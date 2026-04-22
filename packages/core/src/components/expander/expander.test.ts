@@ -1,6 +1,11 @@
 import { getByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrExpander } from "./expander";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_EXPANDER_SPEC,
+  type ClbrExpanderProps,
+  renderClbrExpander,
+} from "./expander";
 
 function mount(html: string): void {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -48,4 +53,10 @@ describe("renderClbrExpander", () => {
 
     expect(button).not.toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrExpanderProps>({
+  baseProps: {},
+  renderer: renderClbrExpander,
+  spec: CLBR_EXPANDER_SPEC,
 });

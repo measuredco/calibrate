@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrImage } from "./image";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_IMAGE_SPEC, renderClbrImage, type ClbrImageProps } from "./image";
 
 function mountImage(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -230,4 +231,10 @@ describe("renderClbrImage", () => {
     const defaultRoot = mountImage(renderClbrImage({ src: "/image.jpg" }));
     expect(getImg(defaultRoot).hasAttribute("fetchpriority")).toBe(false);
   });
+});
+
+describeSpecConsistency<ClbrImageProps>({
+  baseProps: { src: "/img.jpg" },
+  renderer: renderClbrImage,
+  spec: CLBR_IMAGE_SPEC,
 });

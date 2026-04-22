@@ -1,6 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrText } from "./text";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_TEXT_SPEC, renderClbrText, type ClbrTextProps } from "./text";
 
 function mountText(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -148,4 +149,10 @@ describe("renderClbrText", () => {
     expect(root.querySelector("strong")?.textContent).toBe("strength");
     expect(root.querySelector("a")?.getAttribute("href")).toBe("/docs");
   });
+});
+
+describeSpecConsistency<ClbrTextProps>({
+  baseProps: { children: "Body" },
+  renderer: renderClbrText,
+  spec: CLBR_TEXT_SPEC,
 });

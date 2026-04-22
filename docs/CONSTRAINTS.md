@@ -84,7 +84,12 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Public component contracts (renderer props and/or component attributes/properties/events) must include JSDoc.
 - Public renderers should include a co-located declarative spec mirror for tooling/docs/adapter use.
 - Every component must include tests with contract/behavior coverage.
-  - use Testing Library where semantic DOM behavior is under test.
+  - mount markup into a `<div class="clbr">…</div>` wrapper and return the wrapper as the test root (`.clbr` is the styling/runtime frame and mirrors the production mount).
+  - prefer Testing Library queries (`getByRole` / `getByLabelText` / `getByText`, plus `queryBy*` / `findBy*` / `getAllByRole`) whenever a role / label / text target exists.
+  - reserve `querySelector(".class")` for SSR structural-contract assertions where no user-facing affordance applies (for example primitives like `box`, `stack`, `divider`).
+  - use `@testing-library/user-event` for click, keyboard, and focus interactions. Direct `.click()` / `dispatchEvent(new KeyboardEvent(...))` stays only when DOM-level event semantics are specifically under test.
+  - every renderer that mixes trusted and escaped string props must include an explicit escape test.
+  - describe grouping stays flat per public function (`describe("renderClbrFoo", ...)`, `describe("defineClbrFoo", ...)`); avoid nested sub-describes unless they carry substantial (6+) cases each.
 - Every component must include Storybook stories.
 - Component package quality gates use repo-level ESLint and Prettier.
 - Component package browser support baseline is centralized in `@measured/calibrate-config/browserslist` (`baseline widely available` query + Vite/esbuild target) with PostCSS+Autoprefixer enabled.

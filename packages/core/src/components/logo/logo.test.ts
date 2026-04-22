@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrLogo } from "./logo";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_LOGO_SPEC, renderClbrLogo, type ClbrLogoProps } from "./logo";
 
 function mountLogo(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -49,4 +50,10 @@ describe("renderClbrLogo", () => {
     expect(label.textContent).toBe("Measured <Logo>");
     expect(label.querySelector("logo")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrLogoProps>({
+  baseProps: { label: "Brand" },
+  renderer: renderClbrLogo,
+  spec: CLBR_LOGO_SPEC,
 });

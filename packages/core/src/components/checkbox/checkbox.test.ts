@@ -1,6 +1,11 @@
 import { getByRole, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrCheckbox } from "./checkbox";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_CHECKBOX_SPEC,
+  renderClbrCheckbox,
+  type ClbrCheckboxProps,
+} from "./checkbox";
 
 function mountCheckbox(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -221,4 +226,10 @@ describe("renderClbrCheckbox", () => {
     ).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+});
+
+describeSpecConsistency<ClbrCheckboxProps>({
+  baseProps: { label: "Label" },
+  renderer: renderClbrCheckbox,
+  spec: CLBR_CHECKBOX_SPEC,
 });

@@ -1,6 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrStack } from "./stack";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_STACK_SPEC, renderClbrStack, type ClbrStackProps } from "./stack";
 
 function mountStack(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -118,4 +119,10 @@ describe("renderClbrStack", () => {
     const stretchStack = getByText(stretchRoot, "Body");
     expect(stretchStack.hasAttribute("data-align")).toBe(false);
   });
+});
+
+describeSpecConsistency<ClbrStackProps>({
+  baseProps: {},
+  renderer: renderClbrStack,
+  spec: CLBR_STACK_SPEC,
 });

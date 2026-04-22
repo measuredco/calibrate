@@ -1,6 +1,11 @@
 import { getByRole, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrSwitch } from "./switch";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_SWITCH_SPEC,
+  renderClbrSwitch,
+  type ClbrSwitchProps,
+} from "./switch";
 
 function mountSwitch(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -179,4 +184,13 @@ describe("renderClbrSwitch", () => {
     ).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+});
+
+describeSpecConsistency<ClbrSwitchProps>({
+  baseProps: { label: "Label" },
+  propOverrides: {
+    descriptionId: { description: "Desc" },
+  },
+  renderer: renderClbrSwitch,
+  spec: CLBR_SWITCH_SPEC,
 });

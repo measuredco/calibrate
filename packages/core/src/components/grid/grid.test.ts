@@ -1,6 +1,14 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrGrid, renderClbrGridItem } from "./grid";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_GRID_ITEM_SPEC,
+  CLBR_GRID_SPEC,
+  renderClbrGrid,
+  renderClbrGridItem,
+  type ClbrGridItemProps,
+  type ClbrGridProps,
+} from "./grid";
 
 function mountGrid(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -133,4 +141,16 @@ describe("renderClbrGridItem", () => {
     expect(getByText(root, "A").classList.contains("grid-item")).toBe(true);
     expect(getByText(root, "B").classList.contains("grid-item")).toBe(true);
   });
+});
+
+describeSpecConsistency<ClbrGridProps>({
+  baseProps: {},
+  renderer: renderClbrGrid,
+  spec: CLBR_GRID_SPEC,
+});
+
+describeSpecConsistency<ClbrGridItemProps>({
+  baseProps: {},
+  renderer: renderClbrGridItem,
+  spec: CLBR_GRID_ITEM_SPEC,
 });

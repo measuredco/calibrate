@@ -1,19 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrFigure } from "./figure";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_FIGURE_SPEC,
+  type ClbrFigureProps,
+  renderClbrFigure,
+} from "./figure";
 
 function mountFigure(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".figure") as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrFigure", () => {
   it("renders the default figure contract", () => {
-    const figure = mountFigure(
+    const root = mountFigure(
       renderClbrFigure({
         caption: "Caption",
         children: '<img src="/image.jpg" alt="Alt" />',
       }),
     );
+    const figure = root.querySelector(".figure") as HTMLElement;
 
     expect(figure.tagName).toBe("FIGURE");
     expect(figure.className).toBe("figure");
@@ -31,7 +37,7 @@ describe("renderClbrFigure", () => {
   });
 
   it("emits non-default align attributes", () => {
-    const figure = mountFigure(
+    const root = mountFigure(
       renderClbrFigure({
         align: "center",
         caption: "Caption",
@@ -39,11 +45,13 @@ describe("renderClbrFigure", () => {
       }),
     );
 
-    expect(figure.getAttribute("data-align")).toBe("center");
+    expect(root.querySelector(".figure")?.getAttribute("data-align")).toBe(
+      "center",
+    );
   });
 
   it("renders trusted HTML for caption and children", () => {
-    const figure = mountFigure(
+    const root = mountFigure(
       renderClbrFigure({
         caption: 'See the <a href="/docs">documentation</a>.',
         children: '<picture><img src="/image.jpg" alt="Alt" /></picture>',
@@ -51,13 +59,15 @@ describe("renderClbrFigure", () => {
     );
 
     expect(
-      figure.querySelector("figcaption.figcaption a")?.getAttribute("href"),
+      root
+        .querySelector(".figure figcaption.figcaption a")
+        ?.getAttribute("href"),
     ).toBe("/docs");
-    expect(figure.querySelector("picture img")).toBeTruthy();
+    expect(root.querySelector(".figure picture img")).toBeTruthy();
   });
 
   it("passes responsive through to the caption text", () => {
-    const figure = mountFigure(
+    const root = mountFigure(
       renderClbrFigure({
         caption: "Caption",
         children: '<img src="/image.jpg" alt="Alt" />',
@@ -66,9 +76,15 @@ describe("renderClbrFigure", () => {
     );
 
     expect(
-      figure
-        .querySelector("figcaption.figcaption > span.text")
+      root
+        .querySelector(".figure figcaption.figcaption > span.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
+});
+
+describeSpecConsistency<ClbrFigureProps>({
+  baseProps: { caption: "Caption", children: '<img src="/i.jpg" alt="" />' },
+  renderer: renderClbrFigure,
+  spec: CLBR_FIGURE_SPEC,
 });

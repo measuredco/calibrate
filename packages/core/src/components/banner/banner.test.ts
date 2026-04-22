@@ -1,26 +1,28 @@
+import { getByRole, queryByRole } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { describeSpecConsistency } from "../../testing/spec";
 import {
   CLBR_BANNER_EVENT_BEFORE_DISMISS,
   CLBR_BANNER_EVENT_DISMISS,
+  CLBR_BANNER_SPEC,
   CLBR_BANNER_TAG_NAME,
   defineClbrBanner,
   renderClbrBanner,
+  type ClbrBannerProps,
 } from "./banner";
 
 function mountBanner(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 defineClbrBanner();
 
 describe("renderClbrBanner", () => {
   it("renders the default banner contract", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        message: "Body copy",
-      }),
-    );
+    const root = mountBanner(renderClbrBanner({ message: "Body copy" }));
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
     expect(banner.tagName).toBe("CLBR-BANNER");
     expect(banner.className).toBe("banner");
@@ -34,11 +36,13 @@ describe("renderClbrBanner", () => {
       "Body copy",
     );
     expect(banner.querySelector(".link")).toBeNull();
-    expect(banner.querySelector('[data-part="close"] .button')).not.toBeNull();
+    expect(
+      getByRole(root, "button", { name: "Dismiss banner" }),
+    ).not.toBeNull();
   });
 
   it("renders an action link when provided", () => {
-    const banner = mountBanner(
+    const root = mountBanner(
       renderClbrBanner({
         actionHref: "/docs",
         actionLabel: "Learn more",
@@ -46,11 +50,9 @@ describe("renderClbrBanner", () => {
       }),
     );
 
-    const action = banner.querySelector(".link");
-
-    expect(banner.querySelector(".message .link")).toBe(action);
-    expect(action?.getAttribute("href")).toBe("/docs");
-    expect(action?.textContent).toContain("Learn more");
+    const action = getByRole(root, "link", { name: "Learn more" });
+    expect(action.getAttribute("href")).toBe("/docs");
+    expect(action.classList.contains("link")).toBe(true);
   });
 
   it("throws when actionHref and actionLabel are not provided together", () => {
@@ -63,7 +65,7 @@ describe("renderClbrBanner", () => {
   });
 
   it("renders dismissible attributes and tone when provided", () => {
-    const banner = mountBanner(
+    const root = mountBanner(
       renderClbrBanner({
         dismissible: true,
         dismissibleLabel: "Close banner",
@@ -71,6 +73,7 @@ describe("renderClbrBanner", () => {
         tone: "error",
       }),
     );
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
     expect(banner.getAttribute("data-tone")).toBe("error");
     expect(banner.hasAttribute("data-dismissible")).toBe(true);
@@ -78,35 +81,47 @@ describe("renderClbrBanner", () => {
   });
 
   it("escapes message text content", () => {
-    const banner = mountBanner(
+    const root = mountBanner(
       renderClbrBanner({
         message: 'Body <em>copy</em> <a href="/docs">docs</a>',
       }),
     );
 
-    expect(banner.querySelector(".message em")).toBeNull();
-    expect(banner.querySelector(".message a")).toBeNull();
-    expect(banner.querySelector(".message")?.innerHTML).toContain("&lt;em&gt;");
+    expect(root.querySelector(".message em")).toBeNull();
+    expect(root.querySelector(".message .link")).toBeNull();
+    expect(root.querySelector(".message")?.innerHTML).toContain("&lt;em&gt;");
+  });
+
+  it("escapes action label text", () => {
+    const root = mountBanner(
+      renderClbrBanner({
+        actionHref: "/docs",
+        actionLabel: "<strong>Learn more</strong>",
+        message: "Body copy",
+      }),
+    );
+
+    const action = root.querySelector(".link") as HTMLElement;
+    expect(action.innerHTML).toContain(
+      "&lt;strong&gt;Learn more&lt;/strong&gt;",
+    );
+    expect(action.querySelector("strong")).toBeNull();
   });
 });
 
 describe("defineClbrBanner", () => {
   it("upgrades dismissible SSR markup with a dismiss control", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        dismissible: true,
-        message: "Body copy",
-      }),
+    const root = mountBanner(
+      renderClbrBanner({ dismissible: true, message: "Body copy" }),
     );
 
-    expect(banner.querySelector('[data-part="close"] .button')).not.toBeNull();
     expect(
-      banner.querySelector('[data-part="close"] .label')?.textContent,
-    ).toBe("Dismiss banner");
+      getByRole(root, "button", { name: "Dismiss banner" }),
+    ).not.toBeNull();
   });
 
   it("uses a custom dismiss label when provided", () => {
-    const banner = mountBanner(
+    const root = mountBanner(
       renderClbrBanner({
         dismissible: true,
         dismissibleLabel: "Close banner",
@@ -114,111 +129,97 @@ describe("defineClbrBanner", () => {
       }),
     );
 
-    expect(
-      banner.querySelector('[data-part="close"] .label')?.textContent,
-    ).toBe("Close banner");
+    expect(getByRole(root, "button", { name: "Close banner" })).not.toBeNull();
   });
 
   it("falls back to the default dismiss label when provided as an empty string", () => {
-    const banner = mountBanner(
+    const root = mountBanner(
       renderClbrBanner({
         dismissible: true,
         dismissibleLabel: "",
         message: "Body copy",
       }),
     );
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
     expect(banner.getAttribute("data-dismissible-label")).toBe(
       "Dismiss banner",
     );
     expect(
-      banner.querySelector('[data-part="close"] .label')?.textContent,
-    ).toBe("Dismiss banner");
+      getByRole(root, "button", { name: "Dismiss banner" }),
+    ).not.toBeNull();
   });
 
-  it("removes the banner when the dismiss control is clicked", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("removes the banner when the dismiss control is clicked", async () => {
+    const user = userEvent.setup();
+    const root = mountBanner(
+      renderClbrBanner({ dismissible: true, message: "Body copy" }),
     );
 
-    const dismissButton = banner.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss banner" }));
 
-    dismissButton.click();
-
-    expect(document.body.querySelector(CLBR_BANNER_TAG_NAME)).toBeNull();
+    expect(root.querySelector(CLBR_BANNER_TAG_NAME)).toBeNull();
   });
 
-  it("dispatches a cancelable before-dismiss event and a dismiss event", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("dispatches a cancelable before-dismiss event and a dismiss event", async () => {
+    const user = userEvent.setup();
+    const root = mountBanner(
+      renderClbrBanner({ dismissible: true, message: "Body copy" }),
     );
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
-    const receivedEvents: string[] = [];
-
+    const received: string[] = [];
     banner.addEventListener(CLBR_BANNER_EVENT_BEFORE_DISMISS, () => {
-      receivedEvents.push(CLBR_BANNER_EVENT_BEFORE_DISMISS);
+      received.push(CLBR_BANNER_EVENT_BEFORE_DISMISS);
     });
-
     banner.addEventListener(CLBR_BANNER_EVENT_DISMISS, () => {
-      receivedEvents.push(CLBR_BANNER_EVENT_DISMISS);
+      received.push(CLBR_BANNER_EVENT_DISMISS);
     });
 
-    const dismissButton = banner.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss banner" }));
 
-    dismissButton.click();
-
-    expect(receivedEvents).toEqual([
+    expect(received).toEqual([
       CLBR_BANNER_EVENT_BEFORE_DISMISS,
       CLBR_BANNER_EVENT_DISMISS,
     ]);
   });
 
-  it("does not remove the banner when before-dismiss is prevented", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("does not remove the banner when before-dismiss is prevented", async () => {
+    const user = userEvent.setup();
+    const root = mountBanner(
+      renderClbrBanner({ dismissible: true, message: "Body copy" }),
     );
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
 
-    let dismissEventFired = false;
-
+    let dismissFired = false;
     banner.addEventListener(CLBR_BANNER_EVENT_BEFORE_DISMISS, (event) => {
       event.preventDefault();
     });
-
     banner.addEventListener(CLBR_BANNER_EVENT_DISMISS, () => {
-      dismissEventFired = true;
+      dismissFired = true;
     });
 
-    const dismissButton = banner.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss banner" }));
 
-    dismissButton.click();
-
-    expect(document.body.querySelector(CLBR_BANNER_TAG_NAME)).toBe(banner);
-    expect(dismissEventFired).toBe(false);
+    expect(root.querySelector(CLBR_BANNER_TAG_NAME)).toBe(banner);
+    expect(dismissFired).toBe(false);
   });
 
   it("does not inject a dismiss control when dismissible is false", () => {
-    const banner = mountBanner(
-      renderClbrBanner({
-        dismissible: false,
-        message: "Body copy",
-      }),
+    const root = mountBanner(
+      renderClbrBanner({ dismissible: false, message: "Body copy" }),
     );
 
-    expect(banner.querySelector('[data-part="close"]')).toBeNull();
+    expect(queryByRole(root, "button")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrBannerProps>({
+  baseProps: { message: "Body copy" },
+  propOverrides: {
+    actionHref: { actionLabel: "Learn more" },
+    actionLabel: { actionHref: "/docs" },
+  },
+  renderer: renderClbrBanner,
+  spec: CLBR_BANNER_SPEC,
 });

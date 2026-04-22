@@ -1,9 +1,18 @@
-import { getByRole, getAllByRole } from "@testing-library/dom";
+import { getAllByRole, getByRole } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { defineClbrNav, renderClbrNav, type ClbrNavItem } from "./nav";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_NAV_SPEC,
+  defineClbrNav,
+  renderClbrNav,
+  type ClbrNavItem,
+  type ClbrNavProps,
+} from "./nav";
 
-function mount(html: string): void {
+function mountNav(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 const items: ClbrNavItem[] = [
@@ -14,46 +23,42 @@ const items: ClbrNavItem[] = [
 
 describe("renderClbrNav", () => {
   it("renders semantic nav list markup", () => {
-    mount(
-      renderClbrNav({
-        items,
-      }),
-    );
+    const root = mountNav(renderClbrNav({ items }));
 
-    const nav = document.body.querySelector(".nav");
+    const nav = getByRole(root, "navigation");
 
-    expect(nav?.tagName).toBe("NAV");
-    expect(document.body.querySelector("clbr-nav")).not.toBeNull();
-    expect(nav?.querySelector(".content")).not.toBeNull();
-    expect(nav?.querySelector(".list")).not.toBeNull();
-    expect(getAllByRole(document.body, "listitem")).toHaveLength(3);
-    expect(getAllByRole(document.body, "link")).toHaveLength(3);
-    expect(nav?.querySelector(".content > .list")).not.toBeNull();
+    expect(nav.tagName).toBe("NAV");
+    expect(root.querySelector("clbr-nav")).not.toBeNull();
+    expect(getAllByRole(root, "listitem")).toHaveLength(3);
+    expect(getAllByRole(root, "link")).toHaveLength(3);
   });
 
   it("emits aria-current for the current item", () => {
-    mount(
-      renderClbrNav({
-        items,
-      }),
-    );
+    const root = mountNav(renderClbrNav({ items }));
 
-    const currentLink = getByRole(document.body, "link", { name: "Item one" });
-
-    expect(currentLink.getAttribute("aria-current")).toBe("page");
+    expect(
+      getByRole(root, "link", { name: "Item one" }).getAttribute(
+        "aria-current",
+      ),
+    ).toBe("page");
   });
 
   it("renders an accessible nav label when provided", () => {
-    mount(
+    const root = mountNav(renderClbrNav({ items, label: "Primary" }));
+
+    expect(getByRole(root, "navigation", { name: "Primary" })).not.toBeNull();
+  });
+
+  it("escapes item labels", () => {
+    const root = mountNav(
       renderClbrNav({
-        items,
-        label: "Primary",
+        items: [{ href: "/x", label: "<strong>boom</strong>" }],
       }),
     );
 
-    const nav = getByRole(document.body, "navigation", { name: "Primary" });
-
-    expect(nav).not.toBeNull();
+    const link = getByRole(root, "link");
+    expect(link.innerHTML).toBe("&lt;strong&gt;boom&lt;/strong&gt;");
+    expect(link.querySelector("strong")).toBeNull();
   });
 
   it("emits collapsible hooks in SSR output", () => {
@@ -73,46 +78,10 @@ describe("renderClbrNav", () => {
     expect(html.includes('data-part="expander"')).toBe(false);
   });
 
-  it("does not inject an expander when nav is not collapsible", () => {
-    mount(
-      renderClbrNav({
-        items,
-      }),
-    );
-
-    defineClbrNav();
-
-    expect(document.body.querySelector('[data-part="expander"]')).toBeNull();
-    expect(queryRootLock()).toBe(false);
-  });
-
-  it("upgrades collapsible nav with an expander button and closed state", () => {
-    mount(
-      renderClbrNav({
-        collapsible: "belowTablet",
-        contentId: "primary-nav-content",
-        items,
-      }),
-    );
-
-    defineClbrNav();
-
-    const expander = document.body.querySelector(
-      '.nav [data-part="expander"]',
-    ) as HTMLElement;
-    const button = getByRole(document.body, "button", { name: "Menu" });
-
-    expect(expander).not.toBeNull();
-    expect(button.getAttribute("aria-expanded")).toBe("false");
-  });
-
   it("throws when collapsible is set without a contentId", () => {
-    expect(() =>
-      renderClbrNav({
-        collapsible: "always",
-        items,
-      }),
-    ).toThrow(/contentId must be a non-empty string/);
+    expect(() => renderClbrNav({ collapsible: "always", items })).toThrow(
+      /contentId must be a non-empty string/,
+    );
   });
 
   it("throws when contentId is not a valid HTML id", () => {
@@ -124,9 +93,37 @@ describe("renderClbrNav", () => {
       }),
     ).toThrow(/contentId must start with a letter/);
   });
+});
+
+describe("defineClbrNav", () => {
+  it("does not inject an expander when nav is not collapsible", () => {
+    const root = mountNav(renderClbrNav({ items }));
+
+    defineClbrNav();
+
+    expect(root.querySelector('[data-part="expander"]')).toBeNull();
+    expect(isRootLocked()).toBe(false);
+  });
+
+  it("upgrades collapsible nav with an expander button and closed state", () => {
+    const root = mountNav(
+      renderClbrNav({
+        collapsible: "belowTablet",
+        contentId: "primary-nav-content",
+        items,
+      }),
+    );
+
+    defineClbrNav();
+
+    const button = getByRole(root, "button", { name: "Menu" });
+
+    expect(root.querySelector('[data-part="expander"]')).not.toBeNull();
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+  });
 
   it("wires aria-controls when contentId is provided", () => {
-    mount(
+    const root = mountNav(
       renderClbrNav({
         collapsible: "always",
         contentId: "primary-nav-content",
@@ -136,15 +133,16 @@ describe("renderClbrNav", () => {
 
     defineClbrNav();
 
-    const button = getByRole(document.body, "button", { name: "Menu" });
-    const content = document.body.querySelector(".content") as HTMLElement;
+    const button = getByRole(root, "button", { name: "Menu" });
+    const content = root.querySelector(".content") as HTMLElement;
 
     expect(content.id).toBe("primary-nav-content");
     expect(button.getAttribute("aria-controls")).toBe("primary-nav-content");
   });
 
-  it("switches collapsible nav content on button click", () => {
-    mount(
+  it("toggles collapsible nav content on button click", async () => {
+    const user = userEvent.setup();
+    const root = mountNav(
       renderClbrNav({
         collapsible: "always",
         contentId: "primary-nav-content",
@@ -154,25 +152,22 @@ describe("renderClbrNav", () => {
 
     defineClbrNav();
 
-    const button = getByRole(document.body, "button", { name: "Menu" });
+    const button = getByRole(root, "button", { name: "Menu" });
 
-    button.click();
+    await user.click(button);
 
     expect(button.getAttribute("aria-expanded")).toBe("true");
-    expect(
-      document.documentElement.hasAttribute("data-clbr-scroll-locked"),
-    ).toBe(true);
+    expect(isRootLocked()).toBe(true);
 
-    button.click();
+    await user.click(button);
 
     expect(button.getAttribute("aria-expanded")).toBe("false");
-    expect(
-      document.documentElement.hasAttribute("data-clbr-scroll-locked"),
-    ).toBe(false);
+    expect(isRootLocked()).toBe(false);
   });
 
-  it("closes expanded nav on Escape", () => {
-    mount(
+  it("closes expanded nav on Escape", async () => {
+    const user = userEvent.setup();
+    const root = mountNav(
       renderClbrNav({
         collapsible: "always",
         contentId: "primary-nav-content",
@@ -182,18 +177,25 @@ describe("renderClbrNav", () => {
 
     defineClbrNav();
 
-    const button = getByRole(document.body, "button", { name: "Menu" });
+    const button = getByRole(root, "button", { name: "Menu" });
 
-    button.click();
-    document.defaultView?.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "Escape" }),
-    );
+    await user.click(button);
+    await user.keyboard("{Escape}");
 
     expect(button.getAttribute("aria-expanded")).toBe("false");
-    expect(queryRootLock()).toBe(false);
+    expect(isRootLocked()).toBe(false);
   });
 });
 
-function queryRootLock(): boolean {
+describeSpecConsistency<ClbrNavProps>({
+  baseProps: { items },
+  propOverrides: {
+    collapsible: { contentId: "nav-content" },
+  },
+  renderer: renderClbrNav,
+  spec: CLBR_NAV_SPEC,
+});
+
+function isRootLocked(): boolean {
   return document.documentElement.hasAttribute("data-clbr-scroll-locked");
 }

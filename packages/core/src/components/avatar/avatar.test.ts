@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrAvatar } from "./avatar";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_AVATAR_SPEC,
+  renderClbrAvatar,
+  type ClbrAvatarProps,
+} from "./avatar";
 
 function mountAvatar(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -163,4 +168,10 @@ describe("renderClbrAvatar", () => {
     const root = mountAvatar(renderClbrAvatar({ size: "xl" }));
     expect(getAvatar(root).getAttribute("data-size")).toBe("xl");
   });
+});
+
+describeSpecConsistency<ClbrAvatarProps>({
+  baseProps: {},
+  renderer: renderClbrAvatar,
+  spec: CLBR_AVATAR_SPEC,
 });

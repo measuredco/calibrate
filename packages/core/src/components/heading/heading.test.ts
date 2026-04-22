@@ -1,6 +1,11 @@
 import { getByRole, getByText, queryByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrHeading } from "./heading";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_HEADING_SPEC,
+  renderClbrHeading,
+  type ClbrHeadingProps,
+} from "./heading";
 
 function mountHeading(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -98,4 +103,10 @@ describe("renderClbrHeading", () => {
 
     expect(queryByRole(root, "heading")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrHeadingProps>({
+  baseProps: { children: "Heading" },
+  renderer: renderClbrHeading,
+  spec: CLBR_HEADING_SPEC,
 });

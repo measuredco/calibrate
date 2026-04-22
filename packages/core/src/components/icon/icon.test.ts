@@ -1,17 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrIcon } from "./icon";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_ICON_SPEC, type ClbrIconProps, renderClbrIcon } from "./icon";
 
-function mountIcon(html: string): SVGElement {
-  document.body.innerHTML = html;
-  return document.body.querySelector("svg") as SVGElement;
+function mountIcon(html: string): HTMLElement {
+  document.body.innerHTML = `<div class="clbr">${html}</div>`;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrIcon", () => {
   describe("decorative mode (ariaHidden true)", () => {
     it("renders decorative attributes and omits named-icon attributes", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({ ariaHidden: true, name: "check" }),
       );
+      const icon = root.querySelector("svg") as SVGElement;
 
       expect(icon.classList.contains("icon")).toBe(true);
       expect(icon.getAttribute("data-size")).toBe("md");
@@ -22,10 +24,10 @@ describe("renderClbrIcon", () => {
     });
 
     it("still renders when title props are omitted", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({ ariaHidden: true, name: "menu" }),
       );
-      expect(icon).toBeTruthy();
+      expect(root.querySelector("svg")).toBeTruthy();
     });
   });
 
@@ -37,7 +39,7 @@ describe("renderClbrIcon", () => {
     });
 
     it("renders role/img labelling and title", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
           name: "search",
@@ -46,6 +48,7 @@ describe("renderClbrIcon", () => {
           titleId: "search-icon-title",
         }),
       );
+      const icon = root.querySelector("svg") as SVGElement;
       const title = icon.querySelector("title");
 
       expect(icon.getAttribute("role")).toBe("img");
@@ -57,7 +60,7 @@ describe("renderClbrIcon", () => {
     });
 
     it("trims title and titleId input", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
           name: "x",
@@ -65,6 +68,7 @@ describe("renderClbrIcon", () => {
           titleId: "  close-icon-title  ",
         }),
       );
+      const icon = root.querySelector("svg") as SVGElement;
       const title = icon.querySelector("title");
 
       expect(icon.getAttribute("aria-labelledby")).toBe("close-icon-title");
@@ -73,7 +77,7 @@ describe("renderClbrIcon", () => {
     });
 
     it("escapes title text", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
           name: "x",
@@ -81,7 +85,7 @@ describe("renderClbrIcon", () => {
           titleId: "close-icon-title",
         }),
       );
-      const title = icon.querySelector("title");
+      const title = root.querySelector("svg title");
 
       expect(title?.textContent).toBe('"quoted" <unsafe>');
       expect(title?.querySelector("unsafe")).toBeNull();
@@ -132,63 +136,70 @@ describe("renderClbrIcon", () => {
 
   describe("icon name normalization", () => {
     it("accepts kebab-case names", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({ ariaHidden: true, name: "arrow-right" }),
       );
-      expect(icon.querySelector("path")).toBeTruthy();
+      expect(root.querySelector("svg path")).toBeTruthy();
     });
 
     it("accepts camelCase names", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({ ariaHidden: true, name: "arrowRight" }),
       );
-      expect(icon.querySelector("path")).toBeTruthy();
+      expect(root.querySelector("svg path")).toBeTruthy();
     });
 
     it("accepts PascalCase names", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({ ariaHidden: true, name: "ArrowRight" }),
       );
-      expect(icon.querySelector("path")).toBeTruthy();
+      expect(root.querySelector("svg path")).toBeTruthy();
     });
   });
 
   describe("rendered attribute contract", () => {
     it("emits mirrored modes and omits when absent", () => {
-      const always = mountIcon(
+      const alwaysRoot = mountIcon(
         renderClbrIcon({
           ariaHidden: true,
           mirrored: "always",
           name: "arrow-right",
         }),
       );
-      const rtl = mountIcon(
+      const rtlRoot = mountIcon(
         renderClbrIcon({
           ariaHidden: true,
           mirrored: "rtl",
           name: "arrow-right",
         }),
       );
-      const none = mountIcon(
+      const noneRoot = mountIcon(
         renderClbrIcon({
           ariaHidden: true,
           name: "arrow-right",
         }),
       );
 
-      expect(always.getAttribute("data-mirrored")).toBe("always");
-      expect(rtl.getAttribute("data-mirrored")).toBe("rtl");
-      expect(none.hasAttribute("data-mirrored")).toBe(false);
+      expect(
+        alwaysRoot.querySelector("svg")?.getAttribute("data-mirrored"),
+      ).toBe("always");
+      expect(rtlRoot.querySelector("svg")?.getAttribute("data-mirrored")).toBe(
+        "rtl",
+      );
+      expect(noneRoot.querySelector("svg")?.hasAttribute("data-mirrored")).toBe(
+        false,
+      );
     });
 
     it("always emits the base SVG attributes", () => {
-      const icon = mountIcon(
+      const root = mountIcon(
         renderClbrIcon({
           ariaHidden: true,
           name: "menu",
           size: "fill",
         }),
       );
+      const icon = root.querySelector("svg") as SVGElement;
 
       expect(icon.getAttribute("xmlns")).toBe("http://www.w3.org/2000/svg");
       expect(icon.getAttribute("viewBox")).toBe("0 0 24 24");
@@ -198,4 +209,10 @@ describe("renderClbrIcon", () => {
       expect(icon.getAttribute("data-size")).toBe("fill");
     });
   });
+});
+
+describeSpecConsistency<ClbrIconProps>({
+  baseProps: { name: "check", title: "Check", titleId: "check-title" },
+  renderer: renderClbrIcon,
+  spec: CLBR_ICON_SPEC,
 });

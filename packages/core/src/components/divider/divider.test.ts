@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrDivider } from "./divider";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_DIVIDER_SPEC,
+  renderClbrDivider,
+  type ClbrDividerProps,
+} from "./divider";
 
 function mountDivider(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -41,4 +46,10 @@ describe("renderClbrDivider", () => {
     const defaultTone = defaultRoot.querySelector(".divider") as HTMLElement;
     expect(defaultTone.hasAttribute("data-tone")).toBe(false);
   });
+});
+
+describeSpecConsistency<ClbrDividerProps>({
+  baseProps: {},
+  renderer: renderClbrDivider,
+  spec: CLBR_DIVIDER_SPEC,
 });

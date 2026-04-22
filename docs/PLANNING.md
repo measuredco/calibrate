@@ -6,27 +6,14 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Storybook docs fidelity
+### Web-component event surface
 
-Autodocs for the `web-components` flavor reads from a Custom Elements Manifest (class-based), not TypeScript interfaces + JSDoc. That pipeline can never cover our SSR function renderers, so pulling prop descriptions/defaults/controls into the docs page and args table needs a different source.
+Our class-based runtime WCs dispatch events (e.g. `clbr-alert-dismiss`, `clbr-banner-before-dismiss`, menu choose) that consumers need to wire into, but nothing canonical documents them today. Two paths:
 
-Direction: promote `CLBR_*_SPEC` to canonical docs/tooling source of truth (already mandated as a mirror per `CONSTRAINTS.md`). Demote JSDoc on public component contracts to a functional role — `@param`, `@default`, `@returns`, `@throws`, `@remarks`, plus short one-liners where hover DX benefits. SPEC carries rich human-facing descriptions, enum semantics, defaults, required/ignored clauses; JSDoc stays a tight hover hint.
+- **Extend SPEC with an `events` field** — keeps a single source of truth; reuses existing `specTo*` helpers for docs tables. Lighter lift, consistent with current direction.
+- **Adopt a CEM pipeline for class-based WCs only** — richer (events, slots, attributes, CSS parts), standard format, but introduces a second docgen source and only applies to the JS-enabled subset.
 
-Steps:
-
-- [x] Add a `specToArgTypes` helper (plus `specToComponentDescription`) that maps SPEC props to Storybook argTypes (control, options, description, `table.type`, `table.defaultValue`).
-- [x] POC migration of `button` to consume SPEC via the helper (SPEC gained top-level `description` and per-prop `description` fields).
-- [x] Add top-level `description` to every remaining `CLBR_*_SPEC`.
-- [x] Add per-prop `description` to every remaining `CLBR_*_SPEC` prop. Where a JSDoc already exists on the matching TS interface prop, mirror it as the starting point.
-- [x] Migrate remaining `*.stories.ts` to `argTypes: specToArgTypes(CLBR_*_SPEC)`, dropping hand-maintained argType blocks. Per-story overrides stay at the story level (e.g. Button's per-mode `hideControls(...)`, curated `icon` option lists).
-- [x] Demote JSDoc on public component contracts: strip descriptive prose that now lives in SPEC, keep `@param`/`@default`/`@returns` and short one-line hints where IDE hover benefits.
-- [x] Add `apps/storybook/tsconfig.json` so `.storybook/**` and story files get proper editor type-checking without relying on the core package's `tsconfig`.
-- [ ] Decide whether to enforce SPEC `description` presence via ESLint (rule scope: every prop in `CLBR_*_SPEC.props` has a non-empty `description`). Hold until the migration completes.
-
-Deferred:
-
-- CEM-based docgen path for class-based runtime web components (alert, banner, nav, menu, sidebar, range). The SPEC-based path already delivers parity docs for SSR + web-component renderers, so CEM is optional — revisit if we want per-attribute/event/slot metadata in the docs page that SPEC doesn't model.
-- SPEC/renderer drift prevention via shared test helper (e.g. `assertSpecConsistency(SPEC, renderer)`): default values match renderer's destructured defaults; `ignoredWhen` props genuinely don't affect output in that mode; enum `values` round-trip through the renderer. Prefer this over type-level enforcement (SPEC-as-types) since test-based checks don't require a specific authoring style.
+Decide which before adding to alert/banner/nav/menu/sidebar/range. Outcome feeds docs page + any future tooling integrations.
 
 ## Next
 
@@ -48,7 +35,7 @@ What we could be working on next.
 ### Component hygiene
 
 - Consider namespacing of component classes, data-surface, data-local-theme.
-- Are tests and SPECs consistent and coherent?
+- Are tests and consistent and coherent?
 
 ### Framework adapters (e.g. `@measured/calibrate-react`)
 
@@ -165,6 +152,24 @@ Revisit whether `@measured/calibrate-core` should emit a non-exported private CS
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Component test audit remediation and SPEC/renderer consistency helper landed:
+  - normalized mount convention across all 42 component test files — each local helper mounts into `<div class="clbr">…</div>` and returns the `.clbr` root per `CONSTRAINTS.md`
+  - adopted user-first Testing Library queries (`getByRole`/`getByLabelText`/`getByText`) where user-facing roles/labels exist; `querySelector` reserved for SSR structural-contract assertions on primitives
+  - migrated interactive-behavior tests (`alert`, `banner`, `nav`, `sidebar`) to `@testing-library/user-event` for keyboard/focus/pointer fidelity
+  - added escape/XSS coverage for every renderer that mixes trusted and escaped props
+  - flattened describe grouping to `describe("renderClbrFoo", ...)` + `describe("defineClbrFoo", ...)` per public function
+  - shipped `describeSpecConsistency<Props>` helper at `packages/core/src/testing/spec.ts` (description presence, defaults match, `ignoredWhen` no-ops, enum round-trip) and wired it into every component's test suite; `src/testing/` excluded from `tsconfig.build.json` so utilities don't ship in `.d.ts`
+  - test count grew from 874 → 1152 across 42 files with the consistency helper expanding branch coverage
+
+- Storybook docs fidelity migration completed:
+  - promoted `CLBR_*_SPEC` to canonical docs/tooling source of truth; added `specToArgTypes`, `specToComponentDescription`, and `specToPropsTable` helpers that map SPEC props to Storybook argTypes and Markdown tables
+  - added top-level `description` and per-prop `description` to every `CLBR_*_SPEC`
+  - migrated all `*.stories.ts` to consume SPEC-driven argTypes, with per-story overrides (e.g. Button's `hideControls(...)`, curated `icon` option lists) kept at the story level
+  - demoted JSDoc on public component contracts to a functional role (`@param`, `@default`, `@returns`); SPEC carries the human-facing prose
+  - added `apps/storybook/tsconfig.json` so `.storybook/**` and story files get proper editor type-checking without leaning on the core package's `tsconfig`
+  - added a docs-only Introduction MDX page, sorted first in the sidebar
+  - pinned `react-dom` to match `react` in `apps/storybook` to fix empty autodocs pages caused by React error #527 (mismatched react/react-dom versions)
 
 - Brand shape tokens implemented in system:
   - added a `shape` domain to `packages/system` for logo geometry and Measured visual-language shapes

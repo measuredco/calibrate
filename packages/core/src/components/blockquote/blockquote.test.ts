@@ -1,19 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrBlockquote } from "./blockquote";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_BLOCKQUOTE_SPEC,
+  type ClbrBlockquoteProps,
+  renderClbrBlockquote,
+} from "./blockquote";
 
 function mountBlockquote(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".blockquote") as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrBlockquote", () => {
   it("renders the default blockquote contract", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         attribution: "Measured",
         quote: "Quote",
       }),
     );
+    const blockquote = root.querySelector(".blockquote") as HTMLElement;
 
     expect(blockquote.tagName).toBe("FIGURE");
     expect(blockquote.className).toBe("blockquote");
@@ -44,7 +50,7 @@ describe("renderClbrBlockquote", () => {
   });
 
   it("passes size through to the quote text and keeps attribution at sm", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         attribution: "Measured",
         quote: "Quote",
@@ -53,19 +59,19 @@ describe("renderClbrBlockquote", () => {
     );
 
     expect(
-      blockquote
-        .querySelector("blockquote.quote > p.text")
+      root
+        .querySelector(".blockquote blockquote.quote > p.text")
         ?.getAttribute("data-size"),
     ).toBe("lg");
     expect(
-      blockquote
-        .querySelector("figcaption.attribution > span.text")
+      root
+        .querySelector(".blockquote figcaption.attribution > span.text")
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
 
   it("passes responsive through to both composed text elements", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         attribution: "Measured",
         quote: "Quote",
@@ -74,19 +80,19 @@ describe("renderClbrBlockquote", () => {
     );
 
     expect(
-      blockquote
-        .querySelector("blockquote.quote > p.text")
+      root
+        .querySelector(".blockquote blockquote.quote > p.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
     expect(
-      blockquote
-        .querySelector("figcaption.attribution > span.text")
+      root
+        .querySelector(".blockquote figcaption.attribution > span.text")
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
 
   it("passes align to the root and the composed quote paragraph", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         align: "center",
         attribution: "Measured",
@@ -94,16 +100,18 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(blockquote.getAttribute("data-align")).toBe("center");
+    expect(root.querySelector(".blockquote")?.getAttribute("data-align")).toBe(
+      "center",
+    );
     expect(
-      blockquote
-        .querySelector("blockquote.quote > p.text")
+      root
+        .querySelector(".blockquote blockquote.quote > p.text")
         ?.getAttribute("data-align"),
     ).toBe("center");
   });
 
   it("passes measured through to the quoted paragraph text", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         attribution: "Measured",
         measured: false,
@@ -112,27 +120,33 @@ describe("renderClbrBlockquote", () => {
     );
 
     expect(
-      blockquote
-        .querySelector("blockquote.quote > p.text")
+      root
+        .querySelector(".blockquote blockquote.quote > p.text")
         ?.hasAttribute("data-measured"),
     ).toBe(false);
   });
 
   it("renders trusted HTML through the composed text elements", () => {
-    const blockquote = mountBlockquote(
+    const root = mountBlockquote(
       renderClbrBlockquote({
         attribution: 'By <a href="/team">Measured</a>',
         quote: "Quote with <em>emphasis</em>",
       }),
     );
 
-    expect(blockquote.querySelector("blockquote em")?.textContent).toBe(
+    expect(root.querySelector(".blockquote blockquote em")?.textContent).toBe(
       "emphasis",
     );
     expect(
-      blockquote
-        .querySelector("figcaption.attribution a")
+      root
+        .querySelector(".blockquote figcaption.attribution a")
         ?.getAttribute("href"),
     ).toBe("/team");
   });
+});
+
+describeSpecConsistency<ClbrBlockquoteProps>({
+  baseProps: { attribution: "Measured", quote: "Quote" },
+  renderer: renderClbrBlockquote,
+  spec: CLBR_BLOCKQUOTE_SPEC,
 });

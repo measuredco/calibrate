@@ -1,6 +1,11 @@
 import { getByLabelText, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrTextarea } from "./textarea";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_TEXTAREA_SPEC,
+  renderClbrTextarea,
+  type ClbrTextareaProps,
+} from "./textarea";
 
 function mountTextarea(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -292,4 +297,10 @@ describe("renderClbrTextarea", () => {
     expect(queryByText(root, "alert(1)")).toBeNull();
     expect(root.querySelector("textarea")?.textContent).toBe("<b>unsafe</b>");
   });
+});
+
+describeSpecConsistency<ClbrTextareaProps>({
+  baseProps: { id: "ta", label: "Label" },
+  renderer: renderClbrTextarea,
+  spec: CLBR_TEXTAREA_SPEC,
 });

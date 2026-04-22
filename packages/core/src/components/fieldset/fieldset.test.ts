@@ -1,6 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrFieldset } from "./fieldset";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_FIELDSET_SPEC,
+  renderClbrFieldset,
+  type ClbrFieldsetProps,
+} from "./fieldset";
 
 function mountFieldset(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -144,4 +149,10 @@ describe("renderClbrFieldset", () => {
     expect(getByText(root, `<script>alert(1)</script>`)).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+});
+
+describeSpecConsistency<ClbrFieldsetProps>({
+  baseProps: { id: "fs", legend: "Legend" },
+  renderer: renderClbrFieldset,
+  spec: CLBR_FIELDSET_SPEC,
 });

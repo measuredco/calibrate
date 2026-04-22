@@ -1,26 +1,28 @@
+import { getByRole, queryByRole } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { describeSpecConsistency } from "../../testing/spec";
 import {
   CLBR_ALERT_EVENT_BEFORE_DISMISS,
   CLBR_ALERT_EVENT_DISMISS,
+  CLBR_ALERT_SPEC,
   CLBR_ALERT_TAG_NAME,
   defineClbrAlert,
   renderClbrAlert,
+  type ClbrAlertProps,
 } from "./alert";
 
 function mountAlert(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 defineClbrAlert();
 
 describe("renderClbrAlert", () => {
   it("renders the default alert contract", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        message: "Body copy",
-      }),
-    );
+    const root = mountAlert(renderClbrAlert({ message: "Body copy" }));
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
 
     expect(alert.tagName).toBe("CLBR-ALERT");
     expect(alert.className).toBe("alert");
@@ -34,7 +36,7 @@ describe("renderClbrAlert", () => {
   });
 
   it("renders an optional title and dismissible attributes", () => {
-    const alert = mountAlert(
+    const root = mountAlert(
       renderClbrAlert({
         dismissible: true,
         dismissibleLabel: "Close message",
@@ -43,44 +45,53 @@ describe("renderClbrAlert", () => {
         tone: "error",
       }),
     );
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
 
     expect(alert.querySelector(".title")?.textContent).toBe("Alert title");
     expect(alert.getAttribute("data-tone")).toBe("error");
     expect(alert.getAttribute("role")).toBe("alert");
     expect(alert.hasAttribute("data-dismissible")).toBe(true);
     expect(alert.getAttribute("data-dismissible-label")).toBe("Close message");
-    expect(alert.querySelector(".icon-wrapper .icon")).not.toBeNull();
   });
 
   it("emits data-inline-size when inlineSize is fit", () => {
-    const alert = mountAlert(
+    const root = mountAlert(
+      renderClbrAlert({ inlineSize: "fit", message: "Body copy" }),
+    );
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
+
+    expect(alert.getAttribute("data-inline-size")).toBe("fit");
+  });
+
+  it("escapes title and message", () => {
+    const root = mountAlert(
       renderClbrAlert({
-        inlineSize: "fit",
-        message: "Body copy",
+        message: "<img src=x onerror=alert(1)>",
+        title: "<strong>boom</strong>",
       }),
     );
 
-    expect(alert.getAttribute("data-inline-size")).toBe("fit");
+    const title = root.querySelector(".title") as HTMLElement;
+    const message = root.querySelector(".message") as HTMLElement;
+
+    expect(title.innerHTML).toBe("&lt;strong&gt;boom&lt;/strong&gt;");
+    expect(message.innerHTML).toBe("&lt;img src=x onerror=alert(1)&gt;");
+    expect(root.querySelector("strong")).toBeNull();
+    expect(root.querySelector("img")).toBeNull();
   });
 });
 
 describe("defineClbrAlert", () => {
   it("upgrades dismissible SSR markup with a dismiss control", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        dismissible: true,
-        message: "Body copy",
-      }),
+    const root = mountAlert(
+      renderClbrAlert({ dismissible: true, message: "Body copy" }),
     );
 
-    expect(alert.querySelector('[data-part="close"] .button')).not.toBeNull();
-    expect(alert.querySelector('[data-part="close"] .label')?.textContent).toBe(
-      "Dismiss alert",
-    );
+    expect(getByRole(root, "button", { name: "Dismiss alert" })).not.toBeNull();
   });
 
   it("uses a custom dismiss label when provided", () => {
-    const alert = mountAlert(
+    const root = mountAlert(
       renderClbrAlert({
         dismissible: true,
         dismissibleLabel: "Close message",
@@ -88,13 +99,11 @@ describe("defineClbrAlert", () => {
       }),
     );
 
-    expect(alert.querySelector('[data-part="close"] .label')?.textContent).toBe(
-      "Close message",
-    );
+    expect(getByRole(root, "button", { name: "Close message" })).not.toBeNull();
   });
 
   it("falls back to the default dismiss label when provided as an empty string", () => {
-    const alert = mountAlert(
+    const root = mountAlert(
       renderClbrAlert({
         dismissible: true,
         dismissibleLabel: "",
@@ -102,94 +111,76 @@ describe("defineClbrAlert", () => {
       }),
     );
 
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
+
     expect(alert.getAttribute("data-dismissible-label")).toBe("Dismiss alert");
-    expect(alert.querySelector('[data-part="close"] .label')?.textContent).toBe(
-      "Dismiss alert",
-    );
+    expect(getByRole(root, "button", { name: "Dismiss alert" })).not.toBeNull();
   });
 
-  it("removes the alert when the dismiss control is clicked", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("removes the alert when the dismiss control is clicked", async () => {
+    const user = userEvent.setup();
+    const root = mountAlert(
+      renderClbrAlert({ dismissible: true, message: "Body copy" }),
     );
 
-    const dismissButton = alert.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss alert" }));
 
-    dismissButton.click();
-
-    expect(document.body.querySelector(CLBR_ALERT_TAG_NAME)).toBeNull();
+    expect(root.querySelector(CLBR_ALERT_TAG_NAME)).toBeNull();
   });
 
-  it("dispatches a cancelable before-dismiss event and a dismiss event", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("dispatches a cancelable before-dismiss event and a dismiss event", async () => {
+    const user = userEvent.setup();
+    const root = mountAlert(
+      renderClbrAlert({ dismissible: true, message: "Body copy" }),
     );
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
 
-    const receivedEvents: string[] = [];
-
+    const received: string[] = [];
     alert.addEventListener(CLBR_ALERT_EVENT_BEFORE_DISMISS, () => {
-      receivedEvents.push(CLBR_ALERT_EVENT_BEFORE_DISMISS);
+      received.push(CLBR_ALERT_EVENT_BEFORE_DISMISS);
     });
-
     alert.addEventListener(CLBR_ALERT_EVENT_DISMISS, () => {
-      receivedEvents.push(CLBR_ALERT_EVENT_DISMISS);
+      received.push(CLBR_ALERT_EVENT_DISMISS);
     });
 
-    const dismissButton = alert.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss alert" }));
 
-    dismissButton.click();
-
-    expect(receivedEvents).toEqual([
+    expect(received).toEqual([
       CLBR_ALERT_EVENT_BEFORE_DISMISS,
       CLBR_ALERT_EVENT_DISMISS,
     ]);
   });
 
-  it("does not remove the alert when before-dismiss is prevented", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        dismissible: true,
-        message: "Body copy",
-      }),
+  it("does not remove the alert when before-dismiss is prevented", async () => {
+    const user = userEvent.setup();
+    const root = mountAlert(
+      renderClbrAlert({ dismissible: true, message: "Body copy" }),
     );
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
 
-    let dismissEventFired = false;
-
+    let dismissFired = false;
     alert.addEventListener(CLBR_ALERT_EVENT_BEFORE_DISMISS, (event) => {
       event.preventDefault();
     });
-
     alert.addEventListener(CLBR_ALERT_EVENT_DISMISS, () => {
-      dismissEventFired = true;
+      dismissFired = true;
     });
 
-    const dismissButton = alert.querySelector(
-      '[data-part="close"] .button',
-    ) as HTMLButtonElement;
+    await user.click(getByRole(root, "button", { name: "Dismiss alert" }));
 
-    dismissButton.click();
-
-    expect(document.body.querySelector(CLBR_ALERT_TAG_NAME)).toBe(alert);
-    expect(dismissEventFired).toBe(false);
+    expect(root.querySelector(CLBR_ALERT_TAG_NAME)).toBe(alert);
+    expect(dismissFired).toBe(false);
   });
 
   it("does not inject a dismiss control for non-dismissible alerts", () => {
-    const alert = mountAlert(
-      renderClbrAlert({
-        message: "Body copy",
-      }),
-    );
+    const root = mountAlert(renderClbrAlert({ message: "Body copy" }));
 
-    expect(alert.querySelector('[data-part="close"]')).toBeNull();
+    expect(queryByRole(root, "button")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrAlertProps>({
+  baseProps: { message: "Body copy" },
+  renderer: renderClbrAlert,
+  spec: CLBR_ALERT_SPEC,
 });

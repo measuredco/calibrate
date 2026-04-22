@@ -1,14 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrSpinner } from "./spinner";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_SPINNER_SPEC,
+  type ClbrSpinnerProps,
+  renderClbrSpinner,
+} from "./spinner";
 
 function mountSpinner(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".spinner") as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrSpinner", () => {
   it("renders the default spinner contract", () => {
-    const spinner = mountSpinner(renderClbrSpinner());
+    const root = mountSpinner(renderClbrSpinner());
+    const spinner = root.querySelector(".spinner") as HTMLElement;
     const svg = spinner.querySelector("svg") as SVGElement;
 
     expect(spinner.tagName).toBe("SPAN");
@@ -25,21 +31,28 @@ describe("renderClbrSpinner", () => {
   });
 
   it("emits the requested size", () => {
-    const spinner = mountSpinner(renderClbrSpinner({ size: "2xl" }));
+    const root = mountSpinner(renderClbrSpinner({ size: "2xl" }));
 
-    expect(spinner.getAttribute("data-size")).toBe("2xl");
+    expect(root.querySelector(".spinner")?.getAttribute("data-size")).toBe(
+      "2xl",
+    );
   });
 
   it("omits default tone and emits non-default tone", () => {
-    const defaultSpinner = mountSpinner(renderClbrSpinner({ tone: "default" }));
-    expect(defaultSpinner.hasAttribute("data-tone")).toBe(false);
+    const defaultRoot = mountSpinner(renderClbrSpinner({ tone: "default" }));
+    expect(
+      defaultRoot.querySelector(".spinner")?.hasAttribute("data-tone"),
+    ).toBe(false);
 
-    const brandSpinner = mountSpinner(renderClbrSpinner({ tone: "brand" }));
-    expect(brandSpinner.getAttribute("data-tone")).toBe("brand");
+    const brandRoot = mountSpinner(renderClbrSpinner({ tone: "brand" }));
+    expect(brandRoot.querySelector(".spinner")?.getAttribute("data-tone")).toBe(
+      "brand",
+    );
   });
 
   it("renders a status label when provided", () => {
-    const spinner = mountSpinner(renderClbrSpinner({ label: "Loading" }));
+    const root = mountSpinner(renderClbrSpinner({ label: "Loading" }));
+    const spinner = root.querySelector(".spinner") as HTMLElement;
     const hiddenLabel = spinner.querySelector(
       ".visually-hidden",
     ) as HTMLElement;
@@ -49,13 +62,19 @@ describe("renderClbrSpinner", () => {
   });
 
   it("escapes the status label", () => {
-    const spinner = mountSpinner(
+    const root = mountSpinner(
       renderClbrSpinner({ label: `<strong>Loading</strong>` }),
     );
-    const hiddenLabel = spinner.querySelector(
-      ".visually-hidden",
+    const hiddenLabel = root.querySelector(
+      ".spinner .visually-hidden",
     ) as HTMLElement;
 
     expect(hiddenLabel.innerHTML).toBe("&lt;strong&gt;Loading&lt;/strong&gt;");
   });
+});
+
+describeSpecConsistency<ClbrSpinnerProps>({
+  baseProps: {},
+  renderer: renderClbrSpinner,
+  spec: CLBR_SPINNER_SPEC,
 });

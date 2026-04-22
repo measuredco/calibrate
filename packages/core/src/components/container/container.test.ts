@@ -1,6 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrContainer } from "./container";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_CONTAINER_SPEC,
+  renderClbrContainer,
+  type ClbrContainerProps,
+} from "./container";
 
 function mountContainer(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -83,4 +88,10 @@ describe("renderClbrContainer", () => {
     expect(noneContainer.getAttribute("data-max-inline-size")).toBe("none");
     expect(noneContainer.getAttribute("data-gutter")).toBe("none");
   });
+});
+
+describeSpecConsistency<ClbrContainerProps>({
+  baseProps: {},
+  renderer: renderClbrContainer,
+  spec: CLBR_CONTAINER_SPEC,
 });

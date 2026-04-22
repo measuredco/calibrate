@@ -1,10 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrRoot } from "./root";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_ROOT_SPEC, type ClbrRootProps, renderClbrRoot } from "./root";
 
 function mountRoot(html: string): HTMLElement {
   document.body.innerHTML = html;
-  return document.body.firstElementChild as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrRoot", () => {
@@ -130,4 +131,10 @@ describe("renderClbrRoot", () => {
     expect(getByText(root, "Title")).toBeTruthy();
     expect(getByText(root, "Body")).toBeTruthy();
   });
+});
+
+describeSpecConsistency<ClbrRootProps>({
+  baseProps: { children: "<p>content</p>" },
+  renderer: renderClbrRoot,
+  spec: CLBR_ROOT_SPEC,
 });

@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrPattern } from "./pattern";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_PATTERN_SPEC,
+  renderClbrPattern,
+  type ClbrPatternProps,
+} from "./pattern";
 
 function mountPattern(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -54,4 +59,10 @@ describe("renderClbrPattern", () => {
     expect(content).toBeTruthy();
     expect(content.textContent).toBe("Pattern content");
   });
+});
+
+describeSpecConsistency<ClbrPatternProps>({
+  baseProps: {},
+  renderer: renderClbrPattern,
+  spec: CLBR_PATTERN_SPEC,
 });

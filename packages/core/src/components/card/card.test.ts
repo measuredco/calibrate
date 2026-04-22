@@ -1,19 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrCard } from "./card";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_CARD_SPEC, type ClbrCardProps, renderClbrCard } from "./card";
 
 function mountCard(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
-  return document.body.querySelector(".card") as HTMLElement;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 describe("renderClbrCard", () => {
   it("renders the default card contract", () => {
-    const card = mountCard(
+    const root = mountCard(
       renderClbrCard({
         description: "Description",
         title: "Card title",
       }),
     );
+    const card = root.querySelector(".card") as HTMLElement;
 
     expect(card.tagName).toBe("DIV");
     expect(card.className).toBe("card");
@@ -27,7 +29,7 @@ describe("renderClbrCard", () => {
   });
 
   it("renders a semantic heading when headingLevel is provided", () => {
-    const card = mountCard(
+    const root = mountCard(
       renderClbrCard({
         description: "Description",
         headingLevel: 4,
@@ -35,12 +37,14 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(card.querySelector("h4.title")?.textContent).toBe("Card title");
-    expect(card.querySelector("div.title")).toBeNull();
+    expect(root.querySelector(".card h4.title")?.textContent).toBe(
+      "Card title",
+    );
+    expect(root.querySelector(".card div.title")).toBeNull();
   });
 
   it("renders a linked title and trailing note icon when href and note are provided", () => {
-    const card = mountCard(
+    const root = mountCard(
       renderClbrCard({
         description: "Description",
         href: "/docs",
@@ -49,14 +53,20 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(card.querySelector(".title a")?.getAttribute("href")).toBe("/docs");
-    expect(card.querySelector(".title a")?.textContent).toBe("Card title");
-    expect(card.querySelector("p.note")?.textContent).toContain("Read more");
-    expect(card.querySelector("p.note .icon")).toBeTruthy();
+    expect(root.querySelector(".card .title a")?.getAttribute("href")).toBe(
+      "/docs",
+    );
+    expect(root.querySelector(".card .title a")?.textContent).toBe(
+      "Card title",
+    );
+    expect(root.querySelector(".card p.note")?.textContent).toContain(
+      "Read more",
+    );
+    expect(root.querySelector(".card p.note .icon")).toBeTruthy();
   });
 
   it("renders trusted HTML for description and note", () => {
-    const card = mountCard(
+    const root = mountCard(
       renderClbrCard({
         description: "Description with <em>emphasis</em>",
         note: 'By <a href="/team">Measured</a>',
@@ -64,15 +74,17 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(card.querySelector("p.description em")?.textContent).toBe(
+    expect(root.querySelector(".card p.description em")?.textContent).toBe(
       "emphasis",
     );
-    expect(card.querySelector("p.note a")?.getAttribute("href")).toBe("/team");
-    expect(card.querySelector("p.note .icon")).toBeNull();
+    expect(root.querySelector(".card p.note a")?.getAttribute("href")).toBe(
+      "/team",
+    );
+    expect(root.querySelector(".card p.note .icon")).toBeNull();
   });
 
   it("emits any supported surface variant when provided", () => {
-    const card = mountCard(
+    const root = mountCard(
       renderClbrCard({
         description: "Description",
         surface: "brand-inverse",
@@ -80,7 +92,9 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(card.getAttribute("data-surface")).toBe("brand-inverse");
+    expect(root.querySelector(".card")?.getAttribute("data-surface")).toBe(
+      "brand-inverse",
+    );
   });
 
   it("escapes title text", () => {
@@ -94,4 +108,10 @@ describe("renderClbrCard", () => {
     );
     expect(html).not.toContain("<script>");
   });
+});
+
+describeSpecConsistency<ClbrCardProps>({
+  baseProps: { description: "Description", title: "Title" },
+  renderer: renderClbrCard,
+  spec: CLBR_CARD_SPEC,
 });

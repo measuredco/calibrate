@@ -1,6 +1,11 @@
 import { getByRole, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrRadios } from "./radios";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_RADIOS_SPEC,
+  renderClbrRadios,
+  type ClbrRadiosProps,
+} from "./radios";
 
 function mountRadios(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -366,4 +371,18 @@ describe("renderClbrRadios", () => {
     expect(getByText(root, `<b>desc</b>`)).toBeTruthy();
     expect(queryByText(root, "alert(1)")).toBeNull();
   });
+});
+
+describeSpecConsistency<ClbrRadiosProps>({
+  baseProps: {
+    id: "r",
+    legend: "Legend",
+    name: "choice",
+    radios: [
+      { label: "A", value: "a" },
+      { label: "B", value: "b" },
+    ],
+  },
+  renderer: renderClbrRadios,
+  spec: CLBR_RADIOS_SPEC,
 });

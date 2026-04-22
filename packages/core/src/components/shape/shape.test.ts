@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { renderClbrShape } from "./shape";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_SHAPE_SPEC, renderClbrShape, type ClbrShapeProps } from "./shape";
 
 function mountShape(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -51,4 +52,10 @@ describe("renderClbrShape", () => {
     expect(shape.getAttribute("data-variant")).toBe("tile-slice-lg");
     expect(shape.getAttribute("data-size")).toBe("xl");
   });
+});
+
+describeSpecConsistency<ClbrShapeProps>({
+  baseProps: {},
+  renderer: renderClbrShape,
+  spec: CLBR_SHAPE_SPEC,
 });

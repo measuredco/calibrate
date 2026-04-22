@@ -1,6 +1,7 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrProse } from "./prose";
+import { describeSpecConsistency } from "../../testing/spec";
+import { CLBR_PROSE_SPEC, renderClbrProse, type ClbrProseProps } from "./prose";
 
 function mountProse(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -86,4 +87,10 @@ describe("renderClbrProse", () => {
     expect(whitespaceProse).toBeTruthy();
     expect(whitespaceProse?.innerHTML).toBe("   ");
   });
+});
+
+describeSpecConsistency<ClbrProseProps>({
+  baseProps: { children: "<p>Body</p>" },
+  renderer: renderClbrProse,
+  spec: CLBR_PROSE_SPEC,
 });

@@ -1,6 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { renderClbrInline } from "./inline";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_INLINE_SPEC,
+  renderClbrInline,
+  type ClbrInlineProps,
+} from "./inline";
 
 function mountInline(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -144,4 +149,10 @@ describe("renderClbrInline", () => {
     const betweenInline = getByText(betweenRoot, "Body");
     expect(betweenInline.getAttribute("data-justify")).toBe("between");
   });
+});
+
+describeSpecConsistency<ClbrInlineProps>({
+  baseProps: {},
+  renderer: renderClbrInline,
+  spec: CLBR_INLINE_SPEC,
 });

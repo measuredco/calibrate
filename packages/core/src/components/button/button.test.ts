@@ -1,6 +1,11 @@
 import { getByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { type ClbrButtonProps, renderClbrButton } from "./button";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_BUTTON_SPEC,
+  type ClbrButtonProps,
+  renderClbrButton,
+} from "./button";
 
 function mount(html: string): void {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -415,4 +420,18 @@ describe("renderClbrButton", () => {
       expect(html).not.toContain("<script>");
     });
   });
+});
+
+describeSpecConsistency<ClbrButtonProps>({
+  baseProps: { label: "Label" },
+  propOverrides: {
+    href: { href: "/target", mode: "link" },
+    labelVisibility: { icon: "arrow-right" },
+    mode: { href: "/target" },
+    target: { href: "/target", mode: "link" },
+    download: { href: "/target", mode: "link" },
+    rel: { href: "/target", mode: "link" },
+  },
+  renderer: renderClbrButton,
+  spec: CLBR_BUTTON_SPEC,
 });

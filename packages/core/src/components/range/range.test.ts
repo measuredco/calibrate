@@ -1,6 +1,13 @@
 import { fireEvent, getByLabelText, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { CLBR_RANGE_TAG_NAME, defineClbrRange, renderClbrRange } from "./range";
+import { describeSpecConsistency } from "../../testing/spec";
+import {
+  CLBR_RANGE_SPEC,
+  CLBR_RANGE_TAG_NAME,
+  defineClbrRange,
+  renderClbrRange,
+  type ClbrRangeProps,
+} from "./range";
 
 function mountRange(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
@@ -129,4 +136,10 @@ describe("renderClbrRange", () => {
     expect(getByLabelText(root, `<script>alert(1)</script>`)).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+});
+
+describeSpecConsistency<ClbrRangeProps>({
+  baseProps: { id: "r", label: "Range" },
+  renderer: renderClbrRange,
+  spec: CLBR_RANGE_SPEC,
 });

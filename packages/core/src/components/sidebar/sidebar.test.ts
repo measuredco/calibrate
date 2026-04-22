@@ -1,10 +1,14 @@
 import { getByRole, getByText } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { describeSpecConsistency } from "../../testing/spec";
 import {
+  CLBR_SIDEBAR_SPEC,
   CLBR_SIDEBAR_TAG_NAME,
   defineClbrSidebar,
-  type ClbrSidebarAboveNotebook,
   renderClbrSidebar,
+  type ClbrSidebarAboveNotebook,
+  type ClbrSidebarProps,
 } from "./sidebar";
 
 let mediaQueryChange:
@@ -12,8 +16,9 @@ let mediaQueryChange:
   | undefined;
 let mediaQueryMatches = false;
 
-function mount(html: string): void {
+function mountSidebar(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;
+  return document.body.querySelector(".clbr") as HTMLElement;
 }
 
 function installMatchMediaMock(): void {
@@ -48,7 +53,7 @@ function setAboveNotebook(matches: boolean): void {
 
 describe("renderClbrSidebar", () => {
   it("renders semantic sidebar markup inside host", () => {
-    mount(
+    const root = mountSidebar(
       renderClbrSidebar({
         children: "<p>Body</p>",
         footer: "<p>Footer</p>",
@@ -57,20 +62,18 @@ describe("renderClbrSidebar", () => {
       }),
     );
 
-    const host = document.body.querySelector(CLBR_SIDEBAR_TAG_NAME);
-    const sidebar = document.body.querySelector(".sidebar");
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+    const sidebar = root.querySelector(".sidebar") as HTMLElement;
 
     expect(host).not.toBeNull();
-    expect(host?.getAttribute("data-above-notebook")).toBe("persistent");
-    expect(host?.getAttribute("data-size")).toBe("md");
-    expect(sidebar?.classList.contains("sidebar")).toBe(true);
-    expect(document.body.querySelector('[data-part="backdrop"]')).toBeTruthy();
-    expect(
-      getByRole(document.body, "button", { name: "Open sidebar" }),
-    ).toBeTruthy();
-    expect(getByText(document.body, "Header")).toBeTruthy();
-    expect(getByText(document.body, "Body")).toBeTruthy();
-    expect(getByText(document.body, "Footer")).toBeTruthy();
+    expect(host.getAttribute("data-above-notebook")).toBe("persistent");
+    expect(host.getAttribute("data-size")).toBe("md");
+    expect(sidebar.classList.contains("sidebar")).toBe(true);
+    expect(root.querySelector('[data-part="backdrop"]')).not.toBeNull();
+    expect(getByRole(root, "button", { name: "Open sidebar" })).not.toBeNull();
+    expect(getByText(root, "Header")).not.toBeNull();
+    expect(getByText(root, "Body")).not.toBeNull();
+    expect(getByText(root, "Footer")).not.toBeNull();
   });
 
   it("emits owned trigger markup in SSR output without runtime close control", () => {
@@ -85,9 +88,11 @@ describe("renderClbrSidebar", () => {
     expect(html.includes('data-part="close"')).toBe(false);
     expect(html.includes('aria-controls="sidebar"')).toBe(true);
   });
+});
 
+describe("defineClbrSidebar", () => {
   it("injects a close button on upgrade", () => {
-    mount(
+    const root = mountSidebar(
       renderClbrSidebar({
         children: "<p>Body</p>",
         id: "sidebar",
@@ -97,17 +102,14 @@ describe("renderClbrSidebar", () => {
 
     defineClbrSidebar();
 
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+
+    expect(host.getAttribute("data-size")).toBe("sm");
     expect(
-      document.body
-        .querySelector(CLBR_SIDEBAR_TAG_NAME)
-        ?.getAttribute("data-size"),
-    ).toBe("sm");
-    expect(document.body.querySelector('[data-part="close"]')).not.toBeNull();
+      getByRole(root, "button", { name: "Collapse sidebar" }),
+    ).not.toBeNull();
     expect(
-      getByRole(document.body, "button", { name: "Collapse sidebar" }),
-    ).toBeTruthy();
-    expect(
-      document.body
+      root
         .querySelector('[data-part="close"] .button')
         ?.getAttribute("data-size"),
     ).toBe("md");
@@ -116,7 +118,7 @@ describe("renderClbrSidebar", () => {
   it("uses a custom collapse label when provided", () => {
     installMatchMediaMock();
 
-    mount(
+    const root = mountSidebar(
       renderClbrSidebar({
         children: "<p>Body</p>",
         collapseLabel: "Collapse navigation",
@@ -127,8 +129,8 @@ describe("renderClbrSidebar", () => {
     defineClbrSidebar();
 
     expect(
-      getByRole(document.body, "button", { name: "Collapse navigation" }),
-    ).toBeTruthy();
+      getByRole(root, "button", { name: "Collapse navigation" }),
+    ).not.toBeNull();
   });
 
   it.each([["collapsible"], ["overlay"]] satisfies Array<
@@ -138,7 +140,7 @@ describe("renderClbrSidebar", () => {
     (aboveNotebook) => {
       installMatchMediaMock();
 
-      mount(
+      const root = mountSidebar(
         renderClbrSidebar({
           aboveNotebook,
           children: "<p>Body</p>",
@@ -149,30 +151,24 @@ describe("renderClbrSidebar", () => {
       defineClbrSidebar();
       setAboveNotebook(true);
 
-      expect(document.body.querySelector('[data-part="close"]')).not.toBeNull();
+      expect(root.querySelector('[data-part="close"]')).not.toBeNull();
     },
   );
 
-  it("opens from the owned trigger", () => {
+  it("opens from the owned trigger", async () => {
     installMatchMediaMock();
 
-    mount(
-      renderClbrSidebar({
-        children: "<p>Body</p>",
-        id: "sidebar",
-      }),
+    const user = userEvent.setup();
+    const root = mountSidebar(
+      renderClbrSidebar({ children: "<p>Body</p>", id: "sidebar" }),
     );
 
     defineClbrSidebar();
 
-    const trigger = getByRole(document.body, "button", {
-      name: "Open sidebar",
-    });
-    const host = document.body.querySelector(
-      CLBR_SIDEBAR_TAG_NAME,
-    ) as HTMLElement;
+    const trigger = getByRole(root, "button", { name: "Open sidebar" });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
 
-    trigger.click();
+    await user.click(trigger);
 
     expect(host.hasAttribute("data-open")).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
@@ -181,66 +177,47 @@ describe("renderClbrSidebar", () => {
     ).toBe(true);
   });
 
-  it("closes on Escape and returns focus to the trigger", () => {
+  it("closes on Escape and returns focus to the trigger", async () => {
     installMatchMediaMock();
 
-    mount(
-      renderClbrSidebar({
-        children: "<p>Body</p>",
-        id: "sidebar",
-      }),
+    const user = userEvent.setup();
+    const root = mountSidebar(
+      renderClbrSidebar({ children: "<p>Body</p>", id: "sidebar" }),
     );
 
     defineClbrSidebar();
 
-    const trigger = getByRole(document.body, "button", {
-      name: "Open sidebar",
-    });
+    const trigger = getByRole(root, "button", { name: "Open sidebar" });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
 
-    trigger.click();
-    (
-      getByRole(document.body, "button", {
-        name: "Collapse sidebar",
-      }) as HTMLButtonElement
-    ).dispatchEvent(
-      new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }),
-    );
+    await user.click(trigger);
+    await user.keyboard("{Escape}");
 
-    expect(
-      document.body
-        .querySelector(CLBR_SIDEBAR_TAG_NAME)
-        ?.hasAttribute("data-open"),
-    ).toBe(false);
+    expect(host.hasAttribute("data-open")).toBe(false);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
     expect(document.activeElement).toBe(trigger);
   });
 
-  it("closes on backdrop click", () => {
+  it("closes on backdrop click", async () => {
     installMatchMediaMock();
 
-    mount(
-      renderClbrSidebar({
-        children: "<p>Body</p>",
-        id: "sidebar",
-      }),
+    const user = userEvent.setup();
+    const root = mountSidebar(
+      renderClbrSidebar({ children: "<p>Body</p>", id: "sidebar" }),
     );
 
     defineClbrSidebar();
 
-    const trigger = getByRole(document.body, "button", {
-      name: "Open sidebar",
-    });
+    const trigger = getByRole(root, "button", { name: "Open sidebar" });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+    const backdrop = root.querySelector(
+      '[data-part="backdrop"]',
+    ) as HTMLElement;
 
-    trigger.click();
-    (
-      document.body.querySelector('[data-part="backdrop"]') as HTMLElement
-    ).click();
+    await user.click(trigger);
+    await user.click(backdrop);
 
-    expect(
-      document.body
-        .querySelector(CLBR_SIDEBAR_TAG_NAME)
-        ?.hasAttribute("data-open"),
-    ).toBe(false);
+    expect(host.hasAttribute("data-open")).toBe(false);
     expect(
       document.documentElement.hasAttribute("data-clbr-scroll-locked"),
     ).toBe(false);
@@ -252,22 +229,14 @@ describe("renderClbrSidebar", () => {
 
     defineClbrSidebar();
 
-    mount(
-      renderClbrSidebar({
-        children: "<p>Body</p>",
-        id: "sidebar",
-      }),
+    const root = mountSidebar(
+      renderClbrSidebar({ children: "<p>Body</p>", id: "sidebar" }),
     );
 
-    const trigger = getByRole(document.body, "button", {
-      name: "Open sidebar",
-    });
+    const trigger = getByRole(root, "button", { name: "Open sidebar" });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
 
-    expect(
-      document.body
-        .querySelector(CLBR_SIDEBAR_TAG_NAME)
-        ?.hasAttribute("data-open"),
-    ).toBe(true);
+    expect(host.hasAttribute("data-open")).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
     expect(
       document.documentElement.hasAttribute("data-clbr-scroll-locked"),
@@ -278,22 +247,19 @@ describe("renderClbrSidebar", () => {
     installMatchMediaMock();
     mediaQueryMatches = true;
 
-    mount(
-      renderClbrSidebar({
-        children: "<p>Body</p>",
-        id: "sidebar",
-      }),
+    const root = mountSidebar(
+      renderClbrSidebar({ children: "<p>Body</p>", id: "sidebar" }),
     );
 
     defineClbrSidebar();
 
-    expect(document.body.querySelector('[data-part="close"]')).toBeNull();
+    expect(root.querySelector('[data-part="close"]')).toBeNull();
   });
 
   it("stays closed above notebook when behavior is overlay", () => {
     installMatchMediaMock();
 
-    mount(
+    const root = mountSidebar(
       renderClbrSidebar({
         aboveNotebook: "overlay",
         children: "<p>Body</p>",
@@ -304,23 +270,20 @@ describe("renderClbrSidebar", () => {
     defineClbrSidebar();
     setAboveNotebook(true);
 
-    const host = document.body.querySelector(
-      CLBR_SIDEBAR_TAG_NAME,
-    ) as HTMLElement;
-    const trigger = getByRole(document.body, "button", {
-      name: "Open sidebar",
-    });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+    const trigger = getByRole(root, "button", { name: "Open sidebar" });
 
     expect(host.hasAttribute("data-open")).toBe(false);
     expect(host.hasAttribute("data-collapsed")).toBe(false);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
 
-  it("toggles collapsed state from the close button above notebook when behavior is collapsible", () => {
+  it("toggles collapsed state from the close button above notebook when behavior is collapsible", async () => {
     installMatchMediaMock();
     mediaQueryMatches = true;
 
-    mount(
+    const user = userEvent.setup();
+    const root = mountSidebar(
       renderClbrSidebar({
         aboveNotebook: "collapsible",
         children: "<p>Body</p>",
@@ -330,24 +293,26 @@ describe("renderClbrSidebar", () => {
 
     defineClbrSidebar();
 
-    const host = document.body.querySelector(
-      CLBR_SIDEBAR_TAG_NAME,
-    ) as HTMLElement;
-    const close = getByRole(document.body, "button", {
-      name: "Collapse sidebar",
-    });
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+    const close = getByRole(root, "button", { name: "Collapse sidebar" });
 
     expect(host.hasAttribute("data-open")).toBe(true);
     expect(host.hasAttribute("data-collapsed")).toBe(false);
 
-    close.click();
+    await user.click(close);
 
     expect(host.hasAttribute("data-open")).toBe(true);
     expect(host.hasAttribute("data-collapsed")).toBe(true);
 
-    close.click();
+    await user.click(close);
 
     expect(host.hasAttribute("data-open")).toBe(true);
     expect(host.hasAttribute("data-collapsed")).toBe(false);
   });
+});
+
+describeSpecConsistency<ClbrSidebarProps>({
+  baseProps: { id: "sidebar" },
+  renderer: renderClbrSidebar,
+  spec: CLBR_SIDEBAR_SPEC,
 });

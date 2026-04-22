@@ -1,9 +1,12 @@
 import { getByRole } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { describeSpecConsistency } from "../../testing/spec";
 import {
   CLBR_MENU_EVENT_CHOOSE,
+  CLBR_MENU_SPEC,
   CLBR_MENU_TAG_NAME,
+  type ClbrMenuProps,
   defineClbrMenu,
   renderClbrMenu,
 } from "./menu";
@@ -462,4 +465,17 @@ describe("renderClbrMenu", () => {
     expect(host.hasAttribute("data-open")).toBe(false);
     expect(document.activeElement).toBe(trigger);
   });
+});
+
+describeSpecConsistency<ClbrMenuProps>({
+  baseProps: {
+    id: "m",
+    items: [{ label: "Item" }],
+    triggerLabel: "Actions",
+  },
+  propOverrides: {
+    triggerLabelVisibility: { triggerIcon: "menu" },
+  },
+  renderer: renderClbrMenu,
+  spec: CLBR_MENU_SPEC,
 });
