@@ -47,8 +47,7 @@ export function renderClbrShape({
 /** Declarative shape contract mirror for tooling, docs, and adapters. */
 export const CLBR_SHAPE_SPEC = {
   name: "shape",
-  description:
-    "Use `shape` to render decorative brand visual language components.",
+  description: "Use `shape` to render brand visual language components.",
   output: {
     element: "div",
     class: "shape",

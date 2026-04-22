@@ -42,7 +42,7 @@ export function renderClbrPattern({
 export const CLBR_PATTERN_SPEC = {
   name: "pattern",
   description:
-    "Use `pattern` to render a decorative repeated shape behind content.",
+    "Use `pattern` to render repeated visual language components behind content.",
   output: {
     element: "div",
     class: "pattern",

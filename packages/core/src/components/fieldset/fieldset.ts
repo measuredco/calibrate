@@ -102,7 +102,7 @@ export const CLBR_FIELDSET_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id for the fieldset.",
+      description: "`id` for the fieldset.",
       required: true,
       type: "string",
     },

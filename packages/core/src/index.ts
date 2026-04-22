@@ -274,7 +274,7 @@ export {
 
 export {
   CLBR_PROSE_SPEC,
-  type ClbrProseHangingIndent,
+  type ClbrProseHangingPunctuation,
   type ClbrProseProps,
   renderClbrProse,
 } from "./components/prose/prose";

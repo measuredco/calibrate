@@ -19,13 +19,13 @@ export default meta;
 export const Default = {
   args: {
     size: "md",
-    tone: "default",
+    tone: "brand",
     variant: "corner",
   } satisfies ClbrShapeProps,
   render: (args: ClbrShapeProps) => renderClbrShape(args),
 };
 
-export const Shapes = {
+export const Variant = {
   parameters: { controls: { disable: true } },
   render: () =>
     renderClbrInline({

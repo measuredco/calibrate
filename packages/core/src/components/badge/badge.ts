@@ -39,7 +39,7 @@ export function renderClbrBadge({
 /** Declarative badge contract mirror for tooling, docs, and adapters. */
 export const CLBR_BADGE_SPEC = {
   name: "badge",
-  description: "Use `badge` to label related content.",
+  description: "Use `badge` to annotate content with a short label.",
   output: {
     element: "span",
   },

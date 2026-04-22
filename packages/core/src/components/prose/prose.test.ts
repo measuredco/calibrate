@@ -31,22 +31,22 @@ describe("renderClbrProse", () => {
     expect(centeredProse.getAttribute("data-align")).toBe("center");
   });
 
-  it("omits hanging indent by default and emits enum values", () => {
+  it("omits hanging punctuation by default and emits enum values", () => {
     const defaultRoot = mountProse(renderClbrProse({ children: "Body" }));
     const defaultProse = getByText(defaultRoot, "Body");
-    expect(defaultProse.hasAttribute("data-hanging-indent")).toBe(false);
+    expect(defaultProse.hasAttribute("data-hanging-punctuation")).toBe(false);
 
     const alwaysRoot = mountProse(
-      renderClbrProse({ children: "Body", hangingIndent: "always" }),
+      renderClbrProse({ children: "Body", hangingPunctuation: "always" }),
     );
     const alwaysProse = getByText(alwaysRoot, "Body");
-    expect(alwaysProse.getAttribute("data-hanging-indent")).toBe("always");
+    expect(alwaysProse.getAttribute("data-hanging-punctuation")).toBe("always");
 
     const notebookRoot = mountProse(
-      renderClbrProse({ children: "Body", hangingIndent: "notebook" }),
+      renderClbrProse({ children: "Body", hangingPunctuation: "notebook" }),
     );
     const notebookProse = getByText(notebookRoot, "Body");
-    expect(notebookProse.getAttribute("data-hanging-indent")).toBe("notebook");
+    expect(notebookProse.getAttribute("data-hanging-punctuation")).toBe("notebook");
   });
 
   it("emits measured by default and omits responsive by default", () => {

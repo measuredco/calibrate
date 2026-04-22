@@ -109,7 +109,7 @@ export const CLBR_CHECKBOX_SPEC = {
     },
     descriptionId: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id for the `description` element.",
+      description: "`id` for the `description` element.",
       required: false,
       requiredWhen: "`description` is provided",
       type: "string",

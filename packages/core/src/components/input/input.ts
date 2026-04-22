@@ -162,7 +162,7 @@ export const CLBR_INPUT_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id. Links the label to the input.",
+      description: "`id` linking the label to the input.",
       required: true,
       type: "string",
     },

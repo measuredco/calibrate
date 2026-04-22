@@ -49,7 +49,7 @@ export function renderClbrPage({
 export const CLBR_PAGE_SPEC = {
   name: "page",
   description:
-    "Use `page` as the top-level shell for header, main, and footer regions.",
+    "Use `page` as the primary layout for header, main, and footer regions.",
   output: {
     element: "div",
     class: "page",

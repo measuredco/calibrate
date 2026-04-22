@@ -318,7 +318,7 @@ export const CLBR_NAV_SPEC = {
     },
     contentId: {
       constraints: ["validHtmlId"],
-      description: "HTML id for the collapsible content region.",
+      description: "`id` for the collapsible content region.",
       required: false,
       requiredWhen: "`collapsible` is provided",
       type: "string",

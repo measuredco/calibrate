@@ -12,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: specToComponentDescription(CLBR_SURFACE_SPEC),
+        component: `${specToComponentDescription(CLBR_SURFACE_SPEC)}\n\nToolbar surface is ignored on this page; use variant control instead.`,
       },
     },
     withSurface: false,

@@ -73,7 +73,7 @@ export const CLBR_ROOT_SPEC = {
     },
     appRoot: {
       default: false,
-      description: "Marks this wrapper as the top-level app root.",
+      description: "Marks this wrapper as the app root.",
       required: false,
       type: "boolean",
     },

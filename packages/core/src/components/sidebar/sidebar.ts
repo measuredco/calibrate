@@ -434,7 +434,7 @@ export const CLBR_SIDEBAR_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "Unique id used to wire the trigger to the sidebar.",
+      description: "`id` used to wire the trigger to the sidebar.",
       required: true,
       type: "string",
     },

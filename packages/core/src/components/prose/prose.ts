@@ -1,7 +1,7 @@
 import { attrs } from "../../helpers/html";
 import type { ClbrAlign } from "../../types";
 
-export type ClbrProseHangingIndent = "always" | "notebook";
+export type ClbrProseHangingPunctuation = "always" | "notebook";
 
 export interface ClbrProseProps {
   /** Trusted inner HTML. */
@@ -9,7 +9,7 @@ export interface ClbrProseProps {
   /** Text alignment. @default "start" */
   align?: ClbrAlign;
   /** Hanging-indent layout behavior. */
-  hangingIndent?: ClbrProseHangingIndent;
+  hangingPunctuation?: ClbrProseHangingPunctuation;
   /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
   /** Enables breakpoint-responsive body scale. @default false */
@@ -25,14 +25,14 @@ export interface ClbrProseProps {
 export function renderClbrProse({
   align = "start",
   children,
-  hangingIndent,
+  hangingPunctuation,
   measured = true,
   responsive,
 }: ClbrProseProps): string {
   const proseAttrs = attrs({
     class: "prose",
     "data-align": align !== "start" ? align : undefined,
-    "data-hanging-indent": hangingIndent,
+    "data-hanging-punctuation": hangingPunctuation,
     "data-measured": measured,
     "data-responsive": responsive,
   });
@@ -60,8 +60,9 @@ export const CLBR_PROSE_SPEC = {
       type: "enum",
       values: ["start", "center", "end"],
     },
-    hangingIndent: {
-      description: "Indents paragraphs with a hanging first line.",
+    hangingPunctuation: {
+      description:
+        "Position list markers and leading quote marks in the margin, with text aligned.",
       required: false,
       type: "enum",
       values: ["always", "notebook"],
@@ -94,9 +95,9 @@ export const CLBR_PROSE_SPEC = {
       },
       {
         behavior: "emit",
-        target: "data-hanging-indent",
-        value: "{hangingIndent}",
-        when: "hangingIndent is provided",
+        target: "data-hanging-punctuation",
+        value: "{hangingPunctuation}",
+        when: "hangingPunctuation is provided",
       },
       {
         behavior: "emit",

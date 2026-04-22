@@ -25,7 +25,7 @@ export const Default = {
     description: "Description",
     headingLevel: undefined,
     href: "#",
-    note: "Read",
+    note: "Note",
     surface: undefined,
     title: "Title",
   } satisfies ClbrCardProps,
@@ -44,7 +44,7 @@ export const Cards = {
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
           href: "#",
-          note: "Read",
+          note: "Note",
           title: "Title",
         }),
       }),
@@ -55,7 +55,7 @@ export const Cards = {
         children: renderClbrCard({
           description: "Description",
           href: "#",
-          note: "Read",
+          note: "Note",
           title: "Title",
         }),
       }),

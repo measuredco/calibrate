@@ -454,7 +454,7 @@
         }
       }
 
-      .prose[data-hanging-indent="always"] > & {
+      .prose[data-hanging-punctuation="always"] > & {
         margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
         [data-align="center"] & {
@@ -463,7 +463,7 @@
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-indent="notebook"] > & {
+        .prose[data-hanging-punctuation="notebook"] > & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
@@ -681,7 +681,7 @@
       line-height: var(--clbr-typography-type-step-200-line-height);
       padding-block-start: var(--clbr-spacing-vertical-500);
 
-      [data-hanging-indent="always"] & {
+      [data-hanging-punctuation="always"] & {
         margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
         [data-align="center"] & {
@@ -690,7 +690,7 @@
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-indent="notebook"] & {
+        .prose[data-hanging-punctuation="notebook"] & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
@@ -709,12 +709,12 @@
         position: relative;
       }
 
-      .prose[data-hanging-indent="always"] &::before {
+      .prose[data-hanging-punctuation="always"] &::before {
         inset-inline-start: var(--clbr-prose-marker-gutter);
       }
 
       @media (min-width: 64em) {
-        .prose[data-hanging-indent="notebook"] &::before {
+        .prose[data-hanging-punctuation="notebook"] &::before {
           inset-inline-start: var(--clbr-prose-marker-gutter);
         }
       }

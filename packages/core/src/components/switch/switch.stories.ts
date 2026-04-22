@@ -23,7 +23,7 @@ export default meta;
 
 export const Default = {
   args: {
-    checked: false,
+    checked: true,
     description: "Description",
     descriptionId: "description-id",
     disabled: false,

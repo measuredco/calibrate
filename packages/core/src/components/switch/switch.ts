@@ -97,7 +97,7 @@ export const CLBR_SWITCH_SPEC = {
     },
     descriptionId: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "Id of the `description` element referenced by the input.",
+      description: "`id` of the `description` element referenced by the input.",
       required: false,
       requiredWhen: "`description` is provided",
       type: "string",

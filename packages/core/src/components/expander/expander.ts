@@ -55,7 +55,7 @@ export const CLBR_EXPANDER_SPEC = {
   },
   props: {
     controlsId: {
-      description: "ID of the element this toggle controls.",
+      description: "`id` of the element this toggle controls.",
       required: false,
       type: "string",
     },

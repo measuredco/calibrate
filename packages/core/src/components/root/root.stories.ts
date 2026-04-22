@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: `${specToComponentDescription(CLBR_ROOT_SPEC)}\n\nToolbar globals are ignored on this page; use arg table controls instead.`,
+        component: `${specToComponentDescription(CLBR_ROOT_SPEC)}\n\nToolbar globals are ignored on this page; use controls instead.`,
       },
     },
     withRoot: false,

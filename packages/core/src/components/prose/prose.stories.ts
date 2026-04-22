@@ -21,7 +21,7 @@ export default meta;
 export const Default = {
   args: {
     align: "start",
-    hangingIndent: undefined,
+    hangingPunctuation: undefined,
     measured: true,
     responsive: false,
     children: `<h1 id="an-h1-heading">An <code>h1</code> heading</h1>

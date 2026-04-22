@@ -29,7 +29,7 @@ export const Default = {
   args: {
     dismissible: false,
     dismissibleLabel: "Dissmiss alert",
-    inlineSize: "full",
+    inlineSize: "fit",
     message: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.",
     title: "",
     tone: undefined,

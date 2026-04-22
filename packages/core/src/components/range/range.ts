@@ -171,7 +171,7 @@ export const CLBR_RANGE_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "Unique id used to associate the input with its label.",
+      description: "`id` used to associate the input with its label.",
       required: true,
       type: "string",
     },

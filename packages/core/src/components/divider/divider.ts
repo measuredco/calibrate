@@ -37,7 +37,7 @@ export function renderClbrDivider({
 /** Declarative divider contract mirror for tooling, docs, and adapters. */
 export const CLBR_DIVIDER_SPEC = {
   name: "divider",
-  description: "Use `divider` to separate related content with a rule.",
+  description: "Use `divider` to separate sections with a rule.",
   output: {
     modes: {
       horizontal: "hr",

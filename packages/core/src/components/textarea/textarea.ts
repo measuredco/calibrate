@@ -152,7 +152,7 @@ export const CLBR_TEXTAREA_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "Unique id used to associate the textarea with its label.",
+      description: "`id` used to associate the textarea with its label.",
       required: true,
       type: "string",
     },

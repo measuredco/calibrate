@@ -239,12 +239,12 @@ export const CLBR_BUTTON_SPEC = {
       type: "boolean",
     },
     id: {
-      description: "HTML id for the button.",
+      description: "`id` for the button.",
       required: false,
       type: "string",
     },
     controls: {
-      description: "ID of the element this button controls.",
+      description: "`id` of the element this button controls.",
       ignoredWhen: "`mode` is link or `disclosure` is false",
       required: false,
       type: "string",
@@ -273,7 +273,7 @@ export const CLBR_BUTTON_SPEC = {
       type: "boolean|string",
     },
     form: {
-      description: "ID of the form this button belongs to.",
+      description: "`id` of the form this button belongs to.",
       ignoredWhen: "`mode` is link",
       required: false,
       type: "string",

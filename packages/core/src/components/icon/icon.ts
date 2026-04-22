@@ -168,7 +168,7 @@ export function renderClbrIcon({
 /** Declarative icon contract mirror for tooling, docs, and adapters. */
 export const CLBR_ICON_SPEC = {
   name: "icon",
-  description: "Use `icon` to render a Lucide icon inline.",
+  description: "Use `icon` to render a Lucide icon.",
   output: {
     element: "svg",
   },
@@ -206,7 +206,7 @@ export const CLBR_ICON_SPEC = {
     },
     titleId: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id for the accessible `title` element.",
+      description: "`id` for the accessible `title` element.",
       required: false,
       requiredWhen: "`ariaHidden` is false or omitted",
       type: "string",

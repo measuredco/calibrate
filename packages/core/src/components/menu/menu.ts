@@ -414,7 +414,7 @@ export const CLBR_MENU_SPEC = {
     },
     id: {
       constraints: ["non-empty", "validHtmlId"],
-      description: "HTML id seed used for the trigger and popup.",
+      description: "`id` seed used for the trigger and popup.",
       required: true,
       type: "string",
     },
