@@ -539,14 +539,16 @@ export const CLBR_MENU_SPEC = {
       },
       {
         behavior: "runtime",
-        value: CLBR_MENU_EVENT_CHOOSE,
-        when: "a menu item is activated and defineClbrMenu() has upgraded the host",
-      },
-      {
-        behavior: "runtime",
         value: `${CLBR_MENU_TAG_NAME}[data-open]`,
         when: "the popup menu is open after defineClbrMenu() has upgraded the host",
       },
     ],
+  },
+  events: {
+    [CLBR_MENU_EVENT_CHOOSE]: {
+      bubbles: true,
+      description: "Fired when a menu item is activated.",
+      detail: "{ id?: string; index: number; label: string }",
+    },
   },
 } as const;

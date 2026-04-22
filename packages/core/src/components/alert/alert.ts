@@ -282,16 +282,19 @@ export const CLBR_ALERT_SPEC = {
         value: 'div[data-part="close"] > button',
         when: "dismissible is true and defineClbrAlert() has upgraded the host",
       },
-      {
-        behavior: "runtime",
-        value: CLBR_ALERT_EVENT_BEFORE_DISMISS,
-        when: "dismiss control is activated before removal; event is cancelable and bubbles",
-      },
-      {
-        behavior: "runtime",
-        value: CLBR_ALERT_EVENT_DISMISS,
-        when: "alert has been removed after an allowed dismiss action; event bubbles",
-      },
     ],
+  },
+  events: {
+    [CLBR_ALERT_EVENT_BEFORE_DISMISS]: {
+      bubbles: true,
+      cancelable: true,
+      description:
+        "Fired before the alert is removed by a dismiss action. Call `preventDefault()` to keep the alert mounted.",
+    },
+    [CLBR_ALERT_EVENT_DISMISS]: {
+      bubbles: true,
+      description:
+        "Fired after the alert has been removed by an allowed dismiss action.",
+    },
   },
 } as const;

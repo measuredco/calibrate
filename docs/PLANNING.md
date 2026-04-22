@@ -6,15 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Web-component event surface
-
-Our class-based runtime WCs dispatch events (e.g. `clbr-alert-dismiss`, `clbr-banner-before-dismiss`, menu choose) that consumers need to wire into, but nothing canonical documents them today. Two paths:
-
-- **Extend SPEC with an `events` field** — keeps a single source of truth; reuses existing `specTo*` helpers for docs tables. Lighter lift, consistent with current direction.
-- **Adopt a CEM pipeline for class-based WCs only** — richer (events, slots, attributes, CSS parts), standard format, but introduces a second docgen source and only applies to the JS-enabled subset.
-
-Decide which before adding to alert/banner/nav/menu/sidebar/range. Outcome feeds docs page + any future tooling integrations.
-
 ## Next
 
 What we could be working on next.
@@ -35,7 +26,6 @@ What we could be working on next.
 ### Component hygiene
 
 - Consider namespacing of component classes, data-surface, data-local-theme.
-- Are tests and consistent and coherent?
 
 ### Framework adapters (e.g. `@measured/calibrate-react`)
 
@@ -152,6 +142,13 @@ Revisit whether `@measured/calibrate-core` should emit a non-exported private CS
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Web-component event surface landed as a SPEC `events` field (chose extension over CEM to keep a single docgen source across SSR + class-based components):
+  - added `ClbrSpecEvent` and `events?: Record<string, ClbrSpecEvent>` to `ClbrComponentSpec`
+  - extended `specToArgTypes` to emit event entries with `action: <name>` under `table.category: "events"` so Storybook Controls renders them in a separate group and the Actions panel logs firings
+  - added sibling `specToEventsTable` helper for external docs consumption, matching `specToPropsTable`
+  - populated `events` on `CLBR_ALERT_SPEC`, `CLBR_BANNER_SPEC`, `CLBR_MENU_SPEC`; dropped duplicated runtime event entries from `output.composition`
+  - `describeSpecConsistency` now validates each event has a non-empty description and uses the `clbr-` name prefix
 
 - Component test audit remediation and SPEC/renderer consistency helper landed:
   - normalized mount convention across all 42 component test files — each local helper mounts into `<div class="clbr">…</div>` and returns the `.clbr` root per `CONSTRAINTS.md`

@@ -9,10 +9,18 @@ export interface ClbrSpecProp {
   readonly values?: ReadonlyArray<string | number>;
 }
 
+export interface ClbrSpecEvent {
+  readonly bubbles?: boolean;
+  readonly cancelable?: boolean;
+  readonly description?: string;
+  readonly detail?: string;
+}
+
 export interface ClbrComponentSpec {
   readonly name: string;
   readonly description?: string;
   readonly props: Readonly<Record<string, ClbrSpecProp>>;
+  readonly events?: Readonly<Record<string, ClbrSpecEvent>>;
 }
 
 type StoryArgType = Record<string, unknown>;
@@ -77,32 +85,62 @@ const composeDescription = (prop: ClbrSpecProp): string | undefined => {
   return parts.length > 0 ? parts.join("\n\n") : undefined;
 };
 
+const eventSummaryType = (event: ClbrSpecEvent): string =>
+  event.detail ? `CustomEvent<${event.detail}>` : "CustomEvent";
+
+const composeEventDescription = (event: ClbrSpecEvent): string | undefined => {
+  const parts: string[] = [];
+  if (event.description) parts.push(event.description);
+  const traits: string[] = [];
+  if (event.bubbles) traits.push("bubbles");
+  if (event.cancelable) traits.push("cancelable");
+  if (traits.length > 0) parts.push(`Event ${traits.join(", ")}.`);
+  return parts.length > 0 ? parts.join("\n\n") : undefined;
+};
+
 export const specToArgTypes = (
   spec: ClbrComponentSpec,
-): Record<string, StoryArgType> =>
-  Object.fromEntries(
-    Object.entries(spec.props).map(([name, prop]) => {
-      const control = controlFor(prop);
-      const options = prop.values ? [...prop.values] : undefined;
-      const description = composeDescription(prop);
-      const summaryDefault = summaryDefaultFor(prop);
-      return [
-        name,
-        {
-          ...(control !== undefined ? { control } : {}),
-          ...(options ? { options } : {}),
-          ...(description ? { description } : {}),
-          ...(prop.required ? { type: { required: true } } : {}),
-          table: {
-            type: { summary: summaryTypeFor(prop) },
-            ...(summaryDefault
-              ? { defaultValue: { summary: summaryDefault } }
-              : {}),
-          },
+): Record<string, StoryArgType> => {
+  const propEntries = Object.entries(spec.props).map(([name, prop]) => {
+    const control = controlFor(prop);
+    const options = prop.values ? [...prop.values] : undefined;
+    const description = composeDescription(prop);
+    const summaryDefault = summaryDefaultFor(prop);
+    return [
+      name,
+      {
+        ...(control !== undefined ? { control } : {}),
+        ...(options ? { options } : {}),
+        ...(description ? { description } : {}),
+        ...(prop.required ? { type: { required: true } } : {}),
+        table: {
+          type: { summary: summaryTypeFor(prop) },
+          ...(summaryDefault
+            ? { defaultValue: { summary: summaryDefault } }
+            : {}),
         },
-      ];
-    }),
-  );
+      },
+    ] as const;
+  });
+
+  const eventEntries = Object.entries(spec.events ?? {}).map(([name, event]) => {
+    const description = composeEventDescription(event);
+    return [
+      name,
+      {
+        action: name,
+        control: false,
+        ...(description ? { description } : {}),
+        table: {
+          category: "events",
+          type: { summary: eventSummaryType(event) },
+        },
+      },
+    ] as const;
+  });
+
+  return Object.fromEntries([...propEntries, ...eventEntries]);
+};
 
 export const specToComponentDescription = (
   spec: ClbrComponentSpec,
@@ -128,4 +166,20 @@ export const specToPropsTable = (spec: ClbrComponentSpec): string => {
     "| --- | --- | --- |",
     ...rows,
   ].join("\n");
+};
+
+export const specToEventsTable = (spec: ClbrComponentSpec): string | undefined => {
+  const entries = Object.entries(spec.events ?? {});
+  if (entries.length === 0) return undefined;
+
+  const rows = entries.map(([name, event]) => {
+    const description = composeEventDescription(event) ?? "";
+    const type = `\`${escapeCell(eventSummaryType(event))}\``;
+    const descriptionCell = description
+      ? `${escapeCell(description)}<br>${type}`
+      : type;
+    return `| \`${name}\` | ${descriptionCell} |`;
+  });
+
+  return ["| Name | Description |", "| --- | --- |", ...rows].join("\n");
 };

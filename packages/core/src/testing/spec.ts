@@ -51,5 +51,15 @@ export function describeSpecConsistency<Props extends object>(
         }
       }
     }
+
+    for (const [name, event] of Object.entries(spec.events ?? {})) {
+      it(`declares a non-empty description for event "${name}"`, () => {
+        expect(event.description?.trim()).toBeTruthy();
+      });
+
+      it(`uses the clbr- prefix for event "${name}"`, () => {
+        expect(name.startsWith("clbr-")).toBe(true);
+      });
+    }
   });
 }
