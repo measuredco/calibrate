@@ -138,8 +138,12 @@ describe("renderClbrGridItem", () => {
     ];
     const root = mountGrid(renderClbrGrid({ children: items.join("") }));
 
-    expect(getByText(root, "A").classList.contains("clbr-grid-item")).toBe(true);
-    expect(getByText(root, "B").classList.contains("clbr-grid-item")).toBe(true);
+    expect(getByText(root, "A").classList.contains("clbr-grid-item")).toBe(
+      true,
+    );
+    expect(getByText(root, "B").classList.contains("clbr-grid-item")).toBe(
+      true,
+    );
   });
 });
 

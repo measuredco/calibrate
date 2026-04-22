@@ -46,7 +46,9 @@ describe("renderClbrProse", () => {
       renderClbrProse({ children: "Body", hangingPunctuation: "notebook" }),
     );
     const notebookProse = getByText(notebookRoot, "Body");
-    expect(notebookProse.getAttribute("data-hanging-punctuation")).toBe("notebook");
+    expect(notebookProse.getAttribute("data-hanging-punctuation")).toBe(
+      "notebook",
+    );
   });
 
   it("emits measured by default and omits responsive by default", () => {

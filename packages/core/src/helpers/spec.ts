@@ -123,21 +123,23 @@ export const specToArgTypes = (
     ] as const;
   });
 
-  const eventEntries = Object.entries(spec.events ?? {}).map(([name, event]) => {
-    const description = composeEventDescription(event);
-    return [
-      name,
-      {
-        action: name,
-        control: false,
-        ...(description ? { description } : {}),
-        table: {
-          category: "events",
-          type: { summary: eventSummaryType(event) },
+  const eventEntries = Object.entries(spec.events ?? {}).map(
+    ([name, event]) => {
+      const description = composeEventDescription(event);
+      return [
+        name,
+        {
+          action: name,
+          control: false,
+          ...(description ? { description } : {}),
+          table: {
+            category: "events",
+            type: { summary: eventSummaryType(event) },
+          },
         },
-      },
-    ] as const;
-  });
+      ] as const;
+    },
+  );
 
   return Object.fromEntries([...propEntries, ...eventEntries]);
 };
@@ -168,7 +170,9 @@ export const specToPropsTable = (spec: ClbrComponentSpec): string => {
   ].join("\n");
 };
 
-export const specToEventsTable = (spec: ClbrComponentSpec): string | undefined => {
+export const specToEventsTable = (
+  spec: ClbrComponentSpec,
+): string | undefined => {
   const entries = Object.entries(spec.events ?? {});
   if (entries.length === 0) return undefined;
 

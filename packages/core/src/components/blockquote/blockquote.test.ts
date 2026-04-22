@@ -65,7 +65,9 @@ describe("renderClbrBlockquote", () => {
     ).toBe("lg");
     expect(
       root
-        .querySelector(".clbr-blockquote figcaption.attribution > span.clbr-text")
+        .querySelector(
+          ".clbr-blockquote figcaption.attribution > span.clbr-text",
+        )
         ?.getAttribute("data-size"),
     ).toBe("sm");
   });
@@ -86,7 +88,9 @@ describe("renderClbrBlockquote", () => {
     ).toBe(true);
     expect(
       root
-        .querySelector(".clbr-blockquote figcaption.attribution > span.clbr-text")
+        .querySelector(
+          ".clbr-blockquote figcaption.attribution > span.clbr-text",
+        )
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
@@ -100,9 +104,9 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-blockquote")?.getAttribute("data-align")).toBe(
-      "center",
-    );
+    expect(
+      root.querySelector(".clbr-blockquote")?.getAttribute("data-align"),
+    ).toBe("center");
     expect(
       root
         .querySelector(".clbr-blockquote blockquote.quote > p.clbr-text")
@@ -134,9 +138,9 @@ describe("renderClbrBlockquote", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-blockquote blockquote em")?.textContent).toBe(
-      "emphasis",
-    );
+    expect(
+      root.querySelector(".clbr-blockquote blockquote em")?.textContent,
+    ).toBe("emphasis");
     expect(
       root
         .querySelector(".clbr-blockquote figcaption.attribution a")

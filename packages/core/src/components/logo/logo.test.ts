@@ -45,7 +45,9 @@ describe("renderClbrLogo", () => {
 
   it("escapes label content", () => {
     const root = mountLogo(renderClbrLogo({ label: "Measured <Logo>" }));
-    const label = root.querySelector(".clbr-logo .visually-hidden") as HTMLElement;
+    const label = root.querySelector(
+      ".clbr-logo .visually-hidden",
+    ) as HTMLElement;
 
     expect(label.textContent).toBe("Measured <Logo>");
     expect(label.querySelector("logo")).toBeNull();

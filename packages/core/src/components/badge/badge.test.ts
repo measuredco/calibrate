@@ -33,12 +33,16 @@ describe("renderClbrBadge", () => {
     const floatingRoot = mountBadge(
       renderClbrBadge({ floating: true, label: "1" }),
     );
-    const floatingBadge = floatingRoot.querySelector(".clbr-badge") as HTMLElement;
+    const floatingBadge = floatingRoot.querySelector(
+      ".clbr-badge",
+    ) as HTMLElement;
 
     expect(floatingBadge.hasAttribute("data-floating")).toBe(true);
 
     const defaultRoot = mountBadge(renderClbrBadge({ label: "1" }));
-    const defaultBadge = defaultRoot.querySelector(".clbr-badge") as HTMLElement;
+    const defaultBadge = defaultRoot.querySelector(
+      ".clbr-badge",
+    ) as HTMLElement;
     expect(defaultBadge.hasAttribute("data-floating")).toBe(false);
   });
 
@@ -50,7 +54,9 @@ describe("renderClbrBadge", () => {
     expect(smallBadge.getAttribute("data-size")).toBe("sm");
 
     const defaultRoot = mountBadge(renderClbrBadge({ label: "Badge" }));
-    const defaultBadge = defaultRoot.querySelector(".clbr-badge") as HTMLElement;
+    const defaultBadge = defaultRoot.querySelector(
+      ".clbr-badge",
+    ) as HTMLElement;
     expect(defaultBadge.getAttribute("data-size")).toBe("md");
   });
 });

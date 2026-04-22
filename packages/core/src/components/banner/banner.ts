@@ -160,7 +160,7 @@ export function defineClbrBanner(): void {
 /** Declarative banner contract mirror for tooling, docs, and adapters. */
 export const CLBR_BANNER_SPEC = {
   name: "banner",
-  description: "Use `clbr-banner` to display a prominent site-wide message.",
+  description: "Use `banner` to display a prominent site-wide message.",
   output: {
     element: CLBR_BANNER_TAG_NAME,
     class: "clbr-banner",

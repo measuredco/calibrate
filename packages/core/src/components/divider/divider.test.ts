@@ -43,7 +43,9 @@ describe("renderClbrDivider", () => {
     expect(brand.getAttribute("data-tone")).toBe("brand");
 
     const defaultRoot = mountDivider(renderClbrDivider({ tone: "default" }));
-    const defaultTone = defaultRoot.querySelector(".clbr-divider") as HTMLElement;
+    const defaultTone = defaultRoot.querySelector(
+      ".clbr-divider",
+    ) as HTMLElement;
     expect(defaultTone.hasAttribute("data-tone")).toBe(false);
   });
 });

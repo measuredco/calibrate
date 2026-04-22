@@ -170,7 +170,7 @@ export function defineClbrAlert(): void {
 /** Declarative alert contract mirror for tooling, docs, and adapters. */
 export const CLBR_ALERT_SPEC = {
   name: "alert",
-  description: "Use `clbr-alert` to surface short, important messages.",
+  description: "Use `alert` to surface short, important messages.",
   output: {
     element: CLBR_ALERT_TAG_NAME,
     class: "clbr-alert",

@@ -28,7 +28,9 @@ describe("renderClbrPanel", () => {
 
     expect(root.querySelector(".clbr-panel p")?.textContent).toContain("Lorem");
     expect(root.querySelector(".clbr-panel em")?.textContent).toBe("ipsum");
-    expect(root.querySelector(".clbr-panel a")?.getAttribute("href")).toBe("/docs");
+    expect(root.querySelector(".clbr-panel a")?.getAttribute("href")).toBe(
+      "/docs",
+    );
   });
 
   it("supports omitted or empty children", () => {

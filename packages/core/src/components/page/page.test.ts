@@ -60,9 +60,9 @@ describe("renderClbrPage", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-page")?.hasAttribute("data-center-main")).toBe(
-      false,
-    );
+    expect(
+      root.querySelector(".clbr-page")?.hasAttribute("data-center-main"),
+    ).toBe(false);
   });
 
   it("omits banner content when banner is not provided", () => {

@@ -15,7 +15,8 @@ describe("renderClbrPoster", () => {
   it("renders the default poster contract", () => {
     const root = mountPoster(
       renderClbrPoster({
-        image: '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        image:
+          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
       }),
     );
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
@@ -23,7 +24,9 @@ describe("renderClbrPoster", () => {
     expect(poster.tagName).toBe("DIV");
     expect(poster.className).toBe("clbr-poster");
     expect(
-      poster.querySelector(".image-wrapper .clbr-image img")?.getAttribute("src"),
+      poster
+        .querySelector(".image-wrapper .clbr-image img")
+        ?.getAttribute("src"),
     ).toBe("/image.jpg");
     expect(poster.querySelector(".content")).toBeFalsy();
   });
@@ -32,7 +35,8 @@ describe("renderClbrPoster", () => {
     const root = mountPoster(
       renderClbrPoster({
         children: '<div class="copy">Poster content</div>',
-        image: '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        image:
+          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
       }),
     );
 
@@ -44,21 +48,23 @@ describe("renderClbrPoster", () => {
   it("emits data-clbr-surface when surface is provided", () => {
     const root = mountPoster(
       renderClbrPoster({
-        image: '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        image:
+          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
         surface: "brand",
       }),
     );
 
-    expect(root.querySelector(".clbr-poster")?.getAttribute("data-clbr-surface")).toBe(
-      "brand",
-    );
+    expect(
+      root.querySelector(".clbr-poster")?.getAttribute("data-clbr-surface"),
+    ).toBe("brand");
   });
 
   it("emits content theme and default surface when contentTheme is provided", () => {
     const root = mountPoster(
       renderClbrPoster({
         contentTheme: "dark",
-        image: '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        image:
+          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
       }),
     );
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
@@ -71,7 +77,8 @@ describe("renderClbrPoster", () => {
     const root = mountPoster(
       renderClbrPoster({
         contentTheme: "light",
-        image: '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        image:
+          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
         surface: "brand",
       }),
     );

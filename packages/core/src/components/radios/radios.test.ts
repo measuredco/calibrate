@@ -145,7 +145,9 @@ describe("renderClbrRadios", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-radios")?.getAttribute("data-size")).toBe("sm");
+    expect(root.querySelector(".clbr-radios")?.getAttribute("data-size")).toBe(
+      "sm",
+    );
   });
 
   it("maps selected value to checked radio and leaves unmatched values unchecked", () => {

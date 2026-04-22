@@ -45,9 +45,9 @@ describe("renderClbrSpinner", () => {
     ).toBe(false);
 
     const brandRoot = mountSpinner(renderClbrSpinner({ tone: "brand" }));
-    expect(brandRoot.querySelector(".clbr-spinner")?.getAttribute("data-tone")).toBe(
-      "brand",
-    );
+    expect(
+      brandRoot.querySelector(".clbr-spinner")?.getAttribute("data-tone"),
+    ).toBe("brand");
   });
 
   it("renders a status label when provided", () => {

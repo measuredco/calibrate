@@ -27,7 +27,8 @@ describe("renderClbrFigure", () => {
     expect(figure.querySelector("img")?.getAttribute("src")).toBe("/image.jpg");
     expect(figure.querySelector("figcaption.figcaption")).toBeTruthy();
     expect(
-      figure.querySelector("figcaption.figcaption > span.clbr-text")?.textContent,
+      figure.querySelector("figcaption.figcaption > span.clbr-text")
+        ?.textContent,
     ).toBe("Caption");
     expect(
       figure

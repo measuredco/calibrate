@@ -267,7 +267,7 @@ export function defineClbrNav(): void {
 /** Declarative nav contract mirror for tooling, docs, and adapters. */
 export const CLBR_NAV_SPEC = {
   name: "nav",
-  description: "Use `clbr-nav` to render a primary navigation list.",
+  description: "Use `nav` to render a primary navigation list.",
   output: {
     element: CLBR_NAV_TAG_NAME,
     class: "clbr-nav",

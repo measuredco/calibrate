@@ -33,7 +33,9 @@ describe("renderClbrBox", () => {
 
     expect(root.querySelector(".clbr-box p")?.textContent).toContain("Lorem");
     expect(root.querySelector(".clbr-box em")?.textContent).toBe("ipsum");
-    expect(root.querySelector(".clbr-box a")?.getAttribute("href")).toBe("/docs");
+    expect(root.querySelector(".clbr-box a")?.getAttribute("href")).toBe(
+      "/docs",
+    );
   });
 
   it("supports omitted or empty children", () => {

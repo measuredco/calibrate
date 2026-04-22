@@ -143,8 +143,7 @@ export function defineClbrRange(): void {
 /** Declarative range contract mirror for tooling, docs, and adapters. */
 export const CLBR_RANGE_SPEC = {
   name: "range",
-  description:
-    "Use `clbr-range` to let users pick a numeric value along a scale.",
+  description: "Use `range` to let users pick a numeric value along a scale.",
   output: {
     element: CLBR_RANGE_TAG_NAME,
     class: "clbr-range",

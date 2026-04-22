@@ -392,8 +392,7 @@ export function defineClbrMenu(): void {
 /** Declarative menu contract mirror for tooling, docs, and adapters. */
 export const CLBR_MENU_SPEC = {
   name: "menu",
-  description:
-    "Use `clbr-menu` to show a list of actions from a trigger button.",
+  description: "Use `menu` to show a list of actions from a trigger button.",
   output: {
     element: CLBR_MENU_TAG_NAME,
     class: "clbr-menu",

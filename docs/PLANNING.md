@@ -23,10 +23,6 @@ What we could be working on next.
 - `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required, a11y)
 
-### Component hygiene
-
-- Consider namespacing of component classes, data-surface, data-local-theme.
-
 ### Framework adapters (e.g. `@measured/calibrate-react`)
 
 Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.

@@ -47,7 +47,9 @@ describe("renderClbrDetails", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-details")?.hasAttribute("open")).toBe(true);
+    expect(root.querySelector(".clbr-details")?.hasAttribute("open")).toBe(
+      true,
+    );
   });
 
   it('emits data-inline-size only when inlineSize is "fit"', () => {

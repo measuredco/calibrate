@@ -53,9 +53,9 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-card .title a")?.getAttribute("href")).toBe(
-      "/docs",
-    );
+    expect(
+      root.querySelector(".clbr-card .title a")?.getAttribute("href"),
+    ).toBe("/docs");
     expect(root.querySelector(".clbr-card .title a")?.textContent).toBe(
       "Card title",
     );
@@ -77,9 +77,9 @@ describe("renderClbrCard", () => {
     expect(root.querySelector(".clbr-card p.description em")?.textContent).toBe(
       "emphasis",
     );
-    expect(root.querySelector(".clbr-card p.note a")?.getAttribute("href")).toBe(
-      "/team",
-    );
+    expect(
+      root.querySelector(".clbr-card p.note a")?.getAttribute("href"),
+    ).toBe("/team");
     expect(root.querySelector(".clbr-card p.note .clbr-icon")).toBeNull();
   });
 
@@ -92,9 +92,9 @@ describe("renderClbrCard", () => {
       }),
     );
 
-    expect(root.querySelector(".clbr-card")?.getAttribute("data-clbr-surface")).toBe(
-      "brand-inverse",
-    );
+    expect(
+      root.querySelector(".clbr-card")?.getAttribute("data-clbr-surface"),
+    ).toBe("brand-inverse");
   });
 
   it("escapes title text", () => {
