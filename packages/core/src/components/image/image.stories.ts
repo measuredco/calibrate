@@ -1,9 +1,5 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import {
-  CLBR_IMAGE_SPEC,
-  type ClbrImageProps,
-  renderClbrImage,
-} from "./image";
+import { CLBR_IMAGE_SPEC, type ClbrImageProps, renderClbrImage } from "./image";
 
 const baseArgTypes = specToArgTypes(CLBR_IMAGE_SPEC);
 

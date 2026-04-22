@@ -128,8 +128,7 @@ export function renderClbrTextarea({
 /** Declarative textarea contract mirror for tooling, docs, and adapters. */
 export const CLBR_TEXTAREA_SPEC = {
   name: "textarea",
-  description:
-    "Use `textarea` to collect multiple lines of text from users.",
+  description: "Use `textarea` to collect multiple lines of text from users.",
   output: {
     element: "div",
   },
@@ -140,7 +139,8 @@ export const CLBR_TEXTAREA_SPEC = {
       type: "string|false",
     },
     description: {
-      description: "Helper text shown below the textarea; also used for validation guidance.",
+      description:
+        "Helper text shown below the textarea; also used for validation guidance.",
       required: false,
       type: "string",
     },

@@ -48,7 +48,8 @@ export function renderClbrPage({
 /** Declarative page contract mirror for tooling, docs, and adapters. */
 export const CLBR_PAGE_SPEC = {
   name: "page",
-  description: "Use `page` as the top-level shell for header, main, and footer regions.",
+  description:
+    "Use `page` as the top-level shell for header, main, and footer regions.",
   output: {
     element: "div",
     class: "page",

@@ -7,7 +7,7 @@ const config: StorybookConfig = {
     "@storybook/addon-vitest",
   ],
   framework: "@storybook/web-components-vite",
-  stories: ["../../../packages/*/src/**/*.stories.ts"],
+  stories: ["../stories/**/*.mdx", "../../../packages/*/src/**/*.stories.ts"],
 };
 
 export default config;

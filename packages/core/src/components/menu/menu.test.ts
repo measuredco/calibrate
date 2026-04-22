@@ -58,9 +58,11 @@ describe("renderClbrMenu", () => {
       }),
     );
 
-    expect(document.body.querySelector(CLBR_MENU_TAG_NAME)?.hasAttribute("data-align")).toBe(
-      false,
-    );
+    expect(
+      document.body
+        .querySelector(CLBR_MENU_TAG_NAME)
+        ?.hasAttribute("data-align"),
+    ).toBe(false);
 
     mount(
       renderClbrMenu({
@@ -71,9 +73,11 @@ describe("renderClbrMenu", () => {
       }),
     );
 
-    expect(document.body.querySelector(CLBR_MENU_TAG_NAME)?.getAttribute("data-align")).toBe(
-      "end",
-    );
+    expect(
+      document.body
+        .querySelector(CLBR_MENU_TAG_NAME)
+        ?.getAttribute("data-align"),
+    ).toBe("end");
   });
 
   it("omits data-size for default md size and emits non-default sizes on the host", () => {
@@ -86,7 +90,9 @@ describe("renderClbrMenu", () => {
     );
 
     const defaultHost = document.body.querySelector(CLBR_MENU_TAG_NAME);
-    const defaultTrigger = getByRole(document.body, "button", { name: "Actions" });
+    const defaultTrigger = getByRole(document.body, "button", {
+      name: "Actions",
+    });
 
     expect(defaultHost?.hasAttribute("data-size")).toBe(false);
     expect(defaultTrigger.getAttribute("data-size")).toBe("md");
@@ -101,7 +107,9 @@ describe("renderClbrMenu", () => {
     );
 
     const largeHost = document.body.querySelector(CLBR_MENU_TAG_NAME);
-    const largeTrigger = getByRole(document.body, "button", { name: "Actions" });
+    const largeTrigger = getByRole(document.body, "button", {
+      name: "Actions",
+    });
 
     expect(largeHost?.getAttribute("data-size")).toBe("sm");
     expect(largeTrigger.getAttribute("data-size")).toBe("sm");
@@ -185,7 +193,9 @@ describe("renderClbrMenu", () => {
 
     trigger.focus();
 
-    trigger.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "ArrowDown" }));
+    trigger.dispatchEvent(
+      new KeyboardEvent("keydown", { bubbles: true, key: "ArrowDown" }),
+    );
 
     const firstItem = getByRole(document.body, "menuitem", {
       name: "First action",
@@ -197,14 +207,18 @@ describe("renderClbrMenu", () => {
     );
 
     trigger.focus();
-    trigger.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "ArrowUp" }));
+    trigger.dispatchEvent(
+      new KeyboardEvent("keydown", { bubbles: true, key: "ArrowUp" }),
+    );
 
     const secondItem = getByRole(document.body, "menuitem", {
       name: "Second action",
     });
-    expect(document.body.querySelector(CLBR_MENU_TAG_NAME)?.hasAttribute("data-open")).toBe(
-      true,
-    );
+    expect(
+      document.body
+        .querySelector(CLBR_MENU_TAG_NAME)
+        ?.hasAttribute("data-open"),
+    ).toBe(true);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
     expect(document.activeElement).toBe(secondItem);
   });

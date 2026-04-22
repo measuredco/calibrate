@@ -34,8 +34,7 @@ export function renderClbrSurface({
 /** Declarative surface contract mirror for tooling, docs, and adapters. */
 export const CLBR_SURFACE_SPEC = {
   name: "surface",
-  description:
-    "Use `surface` to set a colour context for nested content.",
+  description: "Use `surface` to set a colour context for nested content.",
   output: {
     element: "div",
   },

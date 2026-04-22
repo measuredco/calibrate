@@ -164,6 +164,11 @@ const preview: Preview = {
       theme: getSystemTheme() === "dark" ? themes.dark : themes.light,
     },
     layout: "fullscreen",
+    options: {
+      storySort: {
+        order: ["Introduction", "*"],
+      },
+    },
     withRoot: true,
     withSurface: true,
   },

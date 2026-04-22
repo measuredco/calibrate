@@ -28,7 +28,9 @@ const numericConstraint = (
   return Number.isFinite(value) ? value : undefined;
 };
 
-const controlFor = (prop: ClbrSpecProp): StoryArgType["control"] | undefined => {
+const controlFor = (
+  prop: ClbrSpecProp,
+): StoryArgType["control"] | undefined => {
   if (prop.values && prop.values.length > 0) return { type: "select" };
   switch (prop.type) {
     case "boolean":
@@ -56,7 +58,9 @@ const controlFor = (prop: ClbrSpecProp): StoryArgType["control"] | undefined => 
 
 const summaryTypeFor = (prop: ClbrSpecProp): string =>
   prop.values && prop.values.length > 0
-    ? prop.values.map((v) => (typeof v === "string" ? v : String(v))).join(" | ")
+    ? prop.values
+        .map((v) => (typeof v === "string" ? v : String(v)))
+        .join(" | ")
     : prop.type;
 
 const summaryDefaultFor = (prop: ClbrSpecProp): string | undefined => {

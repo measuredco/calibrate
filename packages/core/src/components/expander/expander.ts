@@ -48,7 +48,8 @@ export function renderClbrExpander({
 /** Declarative expander contract mirror for tooling, docs, and adapters. */
 export const CLBR_EXPANDER_SPEC = {
   name: "expander",
-  description: "Use `expander` as a toggle for disclosure regions such as menus.",
+  description:
+    "Use `expander` as a toggle for disclosure regions such as menus.",
   output: {
     default: "button",
   },

@@ -56,7 +56,9 @@ export function renderClbrNav({
   const normalizedContentId = contentId?.trim();
 
   if (collapsible && !normalizedContentId) {
-    throw new Error("contentId must be a non-empty string when collapsible is set.");
+    throw new Error(
+      "contentId must be a non-empty string when collapsible is set.",
+    );
   }
 
   if (normalizedContentId && !isValidHtmlId(normalizedContentId)) {

@@ -202,7 +202,9 @@ describe("renderClbrSidebar", () => {
       getByRole(document.body, "button", {
         name: "Collapse sidebar",
       }) as HTMLButtonElement
-    ).dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }));
+    ).dispatchEvent(
+      new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }),
+    );
 
     expect(
       document.body

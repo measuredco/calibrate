@@ -44,8 +44,7 @@ export function renderClbrSpinner({
 /** Declarative spinner contract mirror for tooling, docs, and adapters. */
 export const CLBR_SPINNER_SPEC = {
   name: "spinner",
-  description:
-    "Use `spinner` to indicate loading or in-progress state.",
+  description: "Use `spinner` to indicate loading or in-progress state.",
   output: {
     element: "span",
   },

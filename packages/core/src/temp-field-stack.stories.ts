@@ -8,11 +8,7 @@ import { renderClbrTextarea } from "./components/textarea/textarea";
 
 // Temporary sandbox story for quick cross-component visual checks.
 const meta = {
-  parameters: {
-    docs: {
-      disable: true,
-    },
-  },
+  tags: ["!autodocs"],
   title: "Sandbox/Field Stack",
 };
 

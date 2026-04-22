@@ -168,13 +168,15 @@ export const CLBR_BANNER_SPEC = {
   },
   props: {
     actionHref: {
-      description: "URL for an inline link action rendered after the `message`.",
+      description:
+        "URL for an inline link action rendered after the `message`.",
       required: false,
       requiredWhen: "`actionLabel` is provided",
       type: "string",
     },
     actionLabel: {
-      description: "Text label for an inline link action rendered after the `message`.",
+      description:
+        "Text label for an inline link action rendered after the `message`.",
       required: false,
       requiredWhen: "`actionHref` is provided",
       type: "text",
