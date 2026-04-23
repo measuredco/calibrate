@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrExpanderSize = "sm" | "md" | "lg";
 
@@ -46,78 +47,60 @@ export function renderClbrExpander({
 }
 
 /** Declarative expander contract mirror for tooling, docs, and adapters. */
-export const CLBR_EXPANDER_SPEC = {
+export const CLBR_EXPANDER_SPEC: ClbrStructuredSpec = {
   name: "expander",
   description:
     "Use `expander` as a toggle for disclosure regions such as menus.",
-  output: {
-    default: "button",
-  },
+  output: { element: "button", class: "clbr-expander" },
+  content: { kind: "text", prop: "label" },
   props: {
     controlsId: {
       description: "`id` of the element this toggle controls.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     expanded: {
       default: false,
       description: "Whether the controlled region is expanded.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     label: {
       default: expanderLabelDefault,
       description: "Accessible label.",
-      required: false,
-      type: "text",
+      type: { kind: "text" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md", "lg"],
+      type: { kind: "enum", values: ["sm", "md", "lg"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-expander",
+        target: { on: "host" },
+        attribute: "type",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "button" },
       },
       {
-        behavior: "always",
-        target: "type",
-        value: "button",
+        target: { on: "host" },
+        attribute: "aria-expanded",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{expanded}" },
       },
       {
-        behavior: "always",
-        target: "aria-expanded",
-        value: "{expanded}",
+        target: { on: "host" },
+        attribute: "aria-controls",
+        condition: { kind: "when-non-empty", prop: "controlsId" },
+        value: { kind: "prop", prop: "controlsId" },
       },
       {
-        behavior: "emit",
-        target: "aria-controls",
-        value: "{controlsId}",
-        when: "controlsId is provided",
-      },
-      {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "span.expander-box > span.expander-inner",
-      },
-      {
-        behavior: "always",
-        element: "span.visually-hidden",
-        value: "{label}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
     ],
   },
-} as const;
+};

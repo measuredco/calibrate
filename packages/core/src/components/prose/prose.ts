@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrProseHangingPunctuation = "always" | "notebook";
@@ -41,76 +42,67 @@ export function renderClbrProse({
 }
 
 /** Declarative prose contract mirror for tooling, docs, and adapters. */
-export const CLBR_PROSE_SPEC = {
+export const CLBR_PROSE_SPEC: ClbrStructuredSpec = {
   name: "prose",
   description: "Use `prose` to style rich-text markup.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr-prose" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered inside the prose wrapper.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     align: {
       default: "start",
       description: "Text alignment.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     hangingPunctuation: {
       description:
         "Position list markers and leading quote marks in the margin, with text aligned.",
-      required: false,
-      type: "enum",
-      values: ["always", "notebook"],
+      type: { kind: "enum", values: ["always", "notebook"] },
     },
     measured: {
       default: true,
       description: "Caps line length for comfortable reading.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     responsive: {
       default: false,
       description: "Scales body text across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-prose",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["center", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is center or end",
+        target: { on: "host" },
+        attribute: "data-hanging-punctuation",
+        condition: { kind: "when-provided", prop: "hangingPunctuation" },
+        value: { kind: "prop", prop: "hangingPunctuation" },
       },
       {
-        behavior: "emit",
-        target: "data-hanging-punctuation",
-        value: "{hangingPunctuation}",
-        when: "hangingPunctuation is provided",
+        target: { on: "host" },
+        attribute: "data-measured",
+        condition: { kind: "when-truthy", prop: "measured" },
       },
       {
-        behavior: "emit",
-        target: "data-measured",
-        value: "present",
-        when: "measured is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-responsive",
-        value: "present",
-        when: "responsive is true",
+        target: { on: "host" },
+        attribute: "data-responsive",
+        condition: { kind: "when-truthy", prop: "responsive" },
       },
     ],
   },
-} as const;
+};

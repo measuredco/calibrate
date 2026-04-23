@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
@@ -58,88 +59,64 @@ export function renderClbrBlockquote({
 }
 
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */
-export const CLBR_BLOCKQUOTE_SPEC = {
+export const CLBR_BLOCKQUOTE_SPEC: ClbrStructuredSpec = {
   name: "blockquote",
   description: "Use `blockquote` to display a quote with attribution.",
-  output: {
-    element: "figure",
-    class: "clbr-blockquote",
-    children: [
-      "blockquote.quote > renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
-      "figcaption.attribution > renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
+  output: { element: "figure", class: "clbr-blockquote" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "quote", kind: "html" },
+      { prop: "attribution", kind: "html" },
     ],
   },
   props: {
     align: {
       default: "start",
       description: "Text alignment.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     attribution: {
       description:
         "Attribution shown beneath the quote. Supports inline markup such as `<a>`, `<cite>`, `<em>`, etc.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     measured: {
       default: true,
       description: "Caps line length for comfortable reading.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     quote: {
       description:
         "Quote content. Supports inline markup such as `<em>`, `<strong>`, `<cite>`, etc.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     responsive: {
       default: false,
       description: "Scales type across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     size: {
       default: "md",
       description: "Size variant for the quote.",
-      required: false,
-      type: "enum",
-      values: ["md", "lg"],
+      type: { kind: "enum", values: ["md", "lg"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-blockquote",
-      },
-      {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is center or end",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "blockquote.quote",
-      },
-      {
-        behavior: "always",
-        value:
-          "renderClbrText({ as: 'p', align, children: quote, measured, responsive, size })",
-        when: "inside blockquote.quote element",
-      },
-      {
-        behavior: "always",
-        value:
-          "renderClbrText({ as: 'span', children: attribution, responsive, size: 'sm' })",
-        when: "inside figcaption.attribution element",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["center", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
     ],
   },
-} as const;
+};

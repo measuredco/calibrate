@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrTextAs = "p" | "span";
@@ -60,127 +61,108 @@ export function renderClbrText({
 }
 
 /** Declarative text contract mirror for tooling, docs, and adapters. */
-export const CLBR_TEXT_SPEC = {
+export const CLBR_TEXT_SPEC: ClbrStructuredSpec = {
   name: "text",
   description: "Use `text` for inline or paragraph body copy.",
   output: {
-    modes: {
-      paragraph: "p",
-      span: "span",
-    },
+    element: { kind: "switch", prop: "as", cases: { p: "p", span: "span" } },
+    class: "clbr-text",
   },
+  content: { kind: "html", prop: "children" },
   props: {
     as: {
       default: "span",
       description: "HTML element used for the text.",
-      required: false,
-      type: "enum",
-      values: ["p", "span"],
+      type: { kind: "enum", values: ["p", "span"] },
     },
     children: {
       description:
         "Text content. Supports inline markup such as `<em>`, `<strong>`, `<a>`, `<code>`, `<cite>`, etc.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     linkVisited: {
       default: true,
       description: "Styles visited links inside the text.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     responsive: {
       default: false,
       description: "Scales text across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     align: {
       default: "start",
       description: "Text alignment.",
       ignoredWhen: "`as` is span",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
-      when: "as is p",
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     measured: {
       default: true,
       description: "Caps line length for comfortable reading.",
       ignoredWhen: "`as` is span",
-      required: false,
-      type: "boolean",
-      when: "as is p",
+      type: { kind: "boolean" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg"],
+      type: { kind: "enum", values: ["xs", "sm", "md", "lg"] },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "muted"],
+      type: { kind: "enum", values: ["default", "muted"] },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "span",
-        when: "as is span or omitted (span mode)",
-      },
-      {
-        behavior: "render-as",
-        value: "p",
-        when: "as is p (paragraph mode)",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-text",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "as", to: "p" },
+            { kind: "when-in", prop: "align", values: ["center", "end"] },
+          ],
+        },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "as is p and align is center or end",
+        target: { on: "host" },
+        attribute: "data-link-visited",
+        condition: { kind: "when-equals", prop: "linkVisited", to: false },
+        value: { kind: "literal", text: "off" },
       },
       {
-        behavior: "emit",
-        target: "data-link-visited",
-        value: "off",
-        when: "linkVisited is false",
+        target: { on: "host" },
+        attribute: "data-measured",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "as", to: "p" },
+            { kind: "when-truthy", prop: "measured" },
+          ],
+        },
       },
       {
-        behavior: "emit",
-        target: "data-measured",
-        value: "present",
-        when: "as is p and measured is true",
+        target: { on: "host" },
+        attribute: "data-responsive",
+        condition: { kind: "when-truthy", prop: "responsive" },
       },
       {
-        behavior: "emit",
-        target: "data-responsive",
-        value: "present",
-        when: "responsive is true",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "muted",
-        when: "tone is muted",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-equals", prop: "tone", to: "muted" },
+        value: { kind: "literal", text: "muted" },
       },
     ],
   },
-} as const;
+};

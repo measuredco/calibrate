@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
 
@@ -44,85 +45,53 @@ export function renderClbrDetails({
 }
 
 /** Declarative details contract mirror for tooling, docs, and adapters. */
-export const CLBR_DETAILS_SPEC = {
+export const CLBR_DETAILS_SPEC: ClbrStructuredSpec = {
   name: "details",
   description:
     "Use `details` to let users expand and collapse a section of content.",
-  output: {
-    element: "details",
+  output: { element: "details", class: "clbr-details" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "summary", kind: "text" },
+      { prop: "children", kind: "html" },
+    ],
   },
   props: {
     children: {
       description: "Content revealed when the details is open.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     inlineSize: {
       default: "full",
       description: "Whether the details fills its container or shrinks to fit.",
-      required: false,
-      type: "enum",
-      values: ["full", "fit"],
+      type: { kind: "enum", values: ["full", "fit"] },
     },
     open: {
       default: false,
       description: "Opens the details by default.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     summary: {
       description: "Summary shown in the toggle.",
       required: true,
-      type: "string",
+      type: { kind: "text" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-details",
+        target: { on: "host" },
+        attribute: "data-inline-size",
+        condition: { kind: "when-equals", prop: "inlineSize", to: "fit" },
+        value: { kind: "literal", text: "fit" },
       },
       {
-        behavior: "emit",
-        target: "data-inline-size",
-        value: "fit",
-        when: "inlineSize is fit",
-      },
-      {
-        behavior: "emit",
-        when: "open is true",
-        target: "open",
-        value: "present",
-      },
-    ],
-    children: [
-      {
-        behavior: "always",
-        target: "summary.summary",
-      },
-      {
-        behavior: "always",
-        target: "summary.summary > span.marker",
-      },
-      {
-        behavior: "always",
-        target: "summary.summary > span.marker > svg.icon",
-      },
-      {
-        behavior: "always",
-        target: "div.content",
-      },
-    ],
-    content: [
-      {
-        behavior: "escape-html",
-        target: "summary",
-      },
-      {
-        behavior: "trusted-html",
-        target: "children",
+        target: { on: "host" },
+        attribute: "open",
+        condition: { kind: "when-truthy", prop: "open" },
       },
     ],
   },
-} as const;
+};

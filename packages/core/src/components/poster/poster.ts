@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrTheme } from "../root/root";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -49,75 +50,65 @@ export function renderClbrPoster({
 }
 
 /** Declarative poster contract mirror for tooling, docs, and adapters. */
-export const CLBR_POSTER_SPEC = {
+export const CLBR_POSTER_SPEC: ClbrStructuredSpec = {
   name: "poster",
   description: "Use `poster` to layer content over a background image.",
-  output: {
-    element: "div",
-    class: "clbr-poster",
-    children: ["div.image-wrapper", "optional div.content"],
+  output: { element: "div", class: "clbr-poster" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "image", kind: "html" },
+      { prop: "children", kind: "html" },
+    ],
   },
   props: {
     children: {
       description: "Foreground content rendered over the image.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     contentTheme: {
       description:
         "Fixed theme for foreground content over non-themeable media.",
-      required: false,
-      type: "enum",
-      values: ["light", "dark"],
+      type: { kind: "enum", values: ["light", "dark"] },
     },
     image: {
       description:
         "Background image markup, usually a calibrate image component.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     surface: {
       description: "Surface context.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand"],
+      type: { kind: "enum", values: ["default", "brand"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-poster",
+        target: { on: "host" },
+        attribute: "data-clbr-content-theme",
+        condition: { kind: "when-provided", prop: "contentTheme" },
+        value: { kind: "prop", prop: "contentTheme" },
       },
       {
-        behavior: "emit",
-        target: "data-clbr-content-theme",
-        value: "{contentTheme}",
-        when: "contentTheme is light or dark",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-provided", prop: "contentTheme" },
+            { kind: "not", of: { kind: "when-provided", prop: "surface" } },
+          ],
+        },
+        value: { kind: "literal", text: "default" },
       },
       {
-        behavior: "emit",
-        target: "data-clbr-surface",
-        value: "{resolvedSurface}",
-        when: "surface is provided or contentTheme is provided (defaulting to default when only contentTheme is set)",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "div.image-wrapper",
-      },
-      {
-        behavior: "always",
-        value: "trusted image HTML",
-        when: "inside div.image-wrapper",
-      },
-      {
-        behavior: "emit",
-        value: "div.content",
-        when: "children are provided",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "when-provided", prop: "surface" },
+        value: { kind: "prop", prop: "surface" },
       },
     ],
   },
-} as const;
+};

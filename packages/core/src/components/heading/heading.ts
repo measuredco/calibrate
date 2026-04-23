@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign, ClbrHeadingLevel } from "../../types";
 export type ClbrHeadingSize =
   | "xs"
@@ -53,101 +54,88 @@ export function renderClbrHeading({
 }
 
 /** Declarative heading contract mirror for tooling, docs, and adapters. */
-export const CLBR_HEADING_SPEC = {
+export const CLBR_HEADING_SPEC: ClbrStructuredSpec = {
   name: "heading",
   description: "Use `heading` to render heading text with consistent type.",
   output: {
-    modes: {
-      level1: "h1",
-      level2: "h2",
-      level3: "h3",
-      level4: "h4",
-      level5: "h5",
-      level6: "h6",
-      span: "span",
+    element: {
+      kind: "switch",
+      prop: "level",
+      cases: {
+        "1": "h1",
+        "2": "h2",
+        "3": "h3",
+        "4": "h4",
+        "5": "h5",
+        "6": "h6",
+      },
     },
+    class: "clbr-heading",
   },
+  content: { kind: "text", prop: "children" },
   props: {
     align: {
       default: "start",
       description: "Text alignment.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     children: {
       description: "Heading text.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     level: {
       description: "Semantic heading level. Renders a `<span>` when omitted.",
-      required: false,
-      type: "enum",
-      values: [1, 2, 3, 4, 5, 6],
+      type: { kind: "enum", values: [1, 2, 3, 4, 5, 6] },
     },
     opticalInline: {
       default: false,
       description: "Optically aligns the first glyph to the inline edge.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     responsive: {
       default: false,
       description: "Scales type across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
+      type: {
+        kind: "enum",
+        values: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
+      },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "span",
-        when: "level is omitted",
-      },
-      {
-        behavior: "render-as",
-        value: "h{level}",
-        when: "level is provided",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-heading",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["center", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is center or end",
+        target: { on: "host" },
+        attribute: "data-optical-inline",
+        condition: { kind: "when-truthy", prop: "opticalInline" },
       },
       {
-        behavior: "emit",
-        target: "data-optical-inline",
-        value: "present",
-        when: "opticalInline is true",
+        target: { on: "host" },
+        attribute: "data-responsive",
+        condition: { kind: "when-truthy", prop: "responsive" },
       },
       {
-        behavior: "emit",
-        target: "data-responsive",
-        value: "present",
-        when: "responsive is true",
-      },
-      {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
     ],
   },
-} as const;
+};

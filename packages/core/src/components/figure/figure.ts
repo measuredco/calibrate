@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
@@ -40,69 +41,53 @@ export function renderClbrFigure({
 }
 
 /** Declarative figure contract mirror for tooling, docs, and adapters. */
-export const CLBR_FIGURE_SPEC = {
+export const CLBR_FIGURE_SPEC: ClbrStructuredSpec = {
   name: "figure",
   description: "Use `figure` to present media with a caption.",
-  output: {
-    element: "figure",
-    class: "clbr-figure",
-    children: [
-      "trusted media HTML",
-      "figcaption.figcaption > renderClbrText({ as: 'span', children: caption, size: 'sm' })",
+  output: { element: "figure", class: "clbr-figure" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "children", kind: "html" },
+      { prop: "caption", kind: "html" },
     ],
   },
   props: {
     align: {
       default: "start",
       description: "Alignment within available space.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     caption: {
       description:
         "Caption shown below the media. Supports inline markup such as `<em>`, `<strong>`, `<cite>`, etc.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     children: {
       description: "Media rendered inside the figure.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     responsive: {
       default: false,
       description: "Scales the caption across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-figure",
-      },
-      {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is center or end",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "trusted media HTML",
-        when: "inside figure.figure",
-      },
-      {
-        behavior: "always",
-        value:
-          "figcaption.figcaption > renderClbrText({ as: 'span', children: caption, responsive, size: 'sm' })",
-        when: "inside figure.figure",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["center", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
     ],
   },
-} as const;
+};

@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { renderClbrLink } from "../link/link";
@@ -158,95 +159,47 @@ export function defineClbrBanner(): void {
 }
 
 /** Declarative banner contract mirror for tooling, docs, and adapters. */
-export const CLBR_BANNER_SPEC = {
+export const CLBR_BANNER_SPEC: ClbrStructuredSpec = {
   name: "banner",
   description: "Use `banner` to display a prominent site-wide message.",
-  output: {
-    element: CLBR_BANNER_TAG_NAME,
-    class: "clbr-banner",
-    children: ["p.message", 'optional runtime div[data-part="close"]'],
-  },
+  output: { element: CLBR_BANNER_TAG_NAME, class: "clbr-banner" },
+  content: { kind: "text", prop: "message" },
   props: {
     actionHref: {
       description:
         "URL for an inline link action rendered after the `message`.",
-      required: false,
       requiredWhen: "`actionLabel` is provided",
-      type: "string",
+      type: { kind: "string" },
     },
     actionLabel: {
       description:
         "Text label for an inline link action rendered after the `message`.",
-      required: false,
       requiredWhen: "`actionHref` is provided",
-      type: "text",
+      type: { kind: "text" },
     },
     dismissible: {
       default: true,
       description: "Shows a dismiss control that removes the banner.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     dismissibleLabel: {
       default: dismissibleLabelDefault,
       description: "Accessible label for the dismiss control.",
       ignoredWhen: "`dismissible` is false",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     message: {
       description: "Body text of the banner.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     tone: {
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["info", "success", "warning", "error"],
+      type: {
+        kind: "enum",
+        values: ["info", "success", "warning", "error"],
+      },
     },
-  },
-  rules: {
-    attributes: [
-      {
-        behavior: "always",
-        target: "class",
-        value: "clbr-banner",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: "tone is provided",
-      },
-      {
-        behavior: "emit",
-        target: "data-dismissible",
-        when: "dismissible is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-dismissible-label",
-        value: "{dismissibleLabel}",
-        when: "dismissible is true",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "p.message",
-      },
-      {
-        behavior: "emit",
-        value: "p.message > a.link",
-        when: "actionHref and actionLabel are provided",
-      },
-      {
-        behavior: "runtime",
-        value: 'div[data-part="close"] > button',
-        when: "dismissible is true and defineClbrBanner() has upgraded the host",
-      },
-    ],
   },
   events: {
     [CLBR_BANNER_EVENT_BEFORE_DISMISS]: {
@@ -261,4 +214,25 @@ export const CLBR_BANNER_SPEC = {
         "Fired after the banner has been removed by an allowed dismiss action.",
     },
   },
-} as const;
+  rules: {
+    attributes: [
+      {
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "inverse" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-provided", prop: "tone" },
+        value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-dismissible",
+        condition: { kind: "when-truthy", prop: "dismissible" },
+      },
+    ],
+  },
+};

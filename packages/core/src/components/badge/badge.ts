@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 
 export type ClbrBadgeSize = "sm" | "md";
@@ -37,66 +38,52 @@ export function renderClbrBadge({
 }
 
 /** Declarative badge contract mirror for tooling, docs, and adapters. */
-export const CLBR_BADGE_SPEC = {
+export const CLBR_BADGE_SPEC: ClbrStructuredSpec = {
   name: "badge",
   description: "Use `badge` to annotate content with a short label.",
-  output: {
-    element: "span",
-  },
+  output: { element: "span", class: "clbr-badge" },
+  content: { kind: "text", prop: "label" },
   props: {
     floating: {
       default: false,
       description: "Positions the badge as a floating overlay.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     label: {
       description: "Badge text.",
       required: true,
-      type: "string",
+      type: { kind: "text" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     tone: {
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["info", "success", "warning", "error"],
+      type: { kind: "enum", values: ["info", "success", "warning", "error"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-badge",
+        target: { on: "host" },
+        attribute: "data-floating",
+        condition: { kind: "when-truthy", prop: "floating" },
       },
       {
-        behavior: "emit",
-        target: "data-floating",
-        value: "present",
-        when: "floating is true",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: "tone is provided",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-provided", prop: "tone" },
+        value: { kind: "prop", prop: "tone" },
       },
     ],
-    content: {
-      behavior: "escape-html",
-      target: "label",
-    },
   },
-} as const;
+};
