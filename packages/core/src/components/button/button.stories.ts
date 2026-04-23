@@ -17,7 +17,7 @@ const baseArgTypes = specToArgTypes(CLBR_BUTTON_SPEC);
 const iconArgType = {
   ...baseArgTypes.icon,
   control: { type: "select" as const },
-  options: [undefined, ...CLBR_ICON_RECOMMENDED],
+  options: CLBR_ICON_RECOMMENDED,
 };
 
 const hideControls = (...names: string[]): Record<string, unknown> =>
