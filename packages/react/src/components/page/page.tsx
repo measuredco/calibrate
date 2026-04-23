@@ -6,46 +6,49 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_BANNER = "__CLBR_SLOT_PAGE_BANNER__";
-const SLOT_CHILDREN = "__CLBR_SLOT_PAGE_CHILDREN__";
-const SLOT_FOOTER = "__CLBR_SLOT_PAGE_FOOTER__";
-const SLOT_HEADER = "__CLBR_SLOT_PAGE_HEADER__";
+const SLOT_PAGE_BANNER = "__CLBR_SLOT_PAGE_BANNER__";
+const SLOT_PAGE_HEADER = "__CLBR_SLOT_PAGE_HEADER__";
+const SLOT_PAGE_CHILDREN = "__CLBR_SLOT_PAGE_CHILDREN__";
+const SLOT_PAGE_FOOTER = "__CLBR_SLOT_PAGE_FOOTER__";
 
-type PageSlotKey = "banner" | "children" | "footer" | "header";
-
-export type PageProps = Omit<ClbrPageProps, PageSlotKey> & {
+export type PageProps = Omit<
+  ClbrPageProps,
+  "banner" | "header" | "children" | "footer"
+> & {
   banner?: ReactNode;
+  header: ReactNode;
   children?: ReactNode;
   footer: ReactNode;
-  header: ReactNode;
 } & NativeAttrsFor<HTMLDivElement>;
 
-export function Page(props: PageProps) {
+export function Page(props: PageProps): ReturnType<typeof reactify> {
   const {
     banner,
-    centerMain,
     children,
-    footer,
+    centerMain,
     header,
     stickyHeader,
+    footer,
     ...rest
   } = props;
+  const hasBanner = banner != null && banner !== false;
+  const hasChildren = children != null && children !== false;
   const node = buildClbrPage({
-    banner: banner ? SLOT_BANNER : undefined,
+    banner: hasBanner ? SLOT_PAGE_BANNER : undefined,
+    children: hasChildren ? SLOT_PAGE_CHILDREN : undefined,
     centerMain,
-    children: children ? SLOT_CHILDREN : undefined,
-    footer: SLOT_FOOTER,
-    header: SLOT_HEADER,
+    header: SLOT_PAGE_HEADER,
     stickyHeader,
+    footer: SLOT_PAGE_FOOTER,
   });
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
     {
-      [SLOT_BANNER]: banner,
-      [SLOT_CHILDREN]: children,
-      [SLOT_FOOTER]: footer,
-      [SLOT_HEADER]: header,
+      ...(hasBanner ? { [SLOT_PAGE_BANNER]: banner } : {}),
+      [SLOT_PAGE_HEADER]: header,
+      ...(hasChildren ? { [SLOT_PAGE_CHILDREN]: children } : {}),
+      [SLOT_PAGE_FOOTER]: footer,
     },
   );
 }
