@@ -227,6 +227,7 @@ export {
 } from "./components/logo/logo";
 
 export {
+  buildClbrLink,
   CLBR_LINK_SPEC,
   type ClbrLinkProps,
   type ClbrLinkSize,

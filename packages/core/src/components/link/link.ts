@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrLinkSize = "sm" | "md";
@@ -25,15 +25,15 @@ export interface ClbrLinkProps {
 }
 
 /**
- * SSR renderer for the Calibrate link component.
+ * Builds the IR tree for the Calibrate link component.
  *
  * @param props - Link component props.
- * @returns HTML string for an `<a>` element.
+ * @returns IR node for an `<a>` element.
  * @remarks
  * - `label` is escaped before render
  * - `icon`, when provided, is rendered as trusted inline markup
  */
-export function renderClbrLink(props: ClbrLinkProps): string {
+export function buildClbrLink(props: ClbrLinkProps): ClbrNode {
   const {
     href,
     icon,
@@ -45,23 +45,47 @@ export function renderClbrLink(props: ClbrLinkProps): string {
     underline,
   } = props;
 
-  const normalizedRel = rel || undefined;
-  const normalizedTarget = target || undefined;
   const normalizedIcon = icon?.trim() || undefined;
-  const content = normalizedIcon
-    ? `<span class="icon-wrapper">${normalizedIcon}</span><span class="label">${escapeHtml(label)}</span>`
-    : `<span class="label">${escapeHtml(label)}</span>`;
-  const linkAttrs = attrs({
-    class: "clbr-link",
-    href,
-    rel: normalizedRel,
-    target: normalizedTarget,
-    "data-size": size,
-    "data-tone": tone === "neutral" ? "neutral" : undefined,
-    "data-underline": underline || undefined,
+  const children: ClbrNode[] = [];
+  if (normalizedIcon) {
+    children.push({
+      kind: "element",
+      tag: "span",
+      attrs: { class: "icon-wrapper" },
+      children: [{ kind: "raw", html: normalizedIcon }],
+    });
+  }
+  children.push({
+    kind: "element",
+    tag: "span",
+    attrs: { class: "label" },
+    children: [{ kind: "text", value: label }],
   });
 
-  return `<a ${linkAttrs}>${content}</a>`;
+  return {
+    kind: "element",
+    tag: "a",
+    attrs: {
+      class: "clbr-link",
+      href,
+      rel: rel || undefined,
+      target: target || undefined,
+      "data-size": size,
+      "data-tone": tone === "neutral" ? "neutral" : undefined,
+      "data-underline": underline || undefined,
+    },
+    children,
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate link component.
+ *
+ * @param props - Link component props.
+ * @returns HTML string for an `<a>` element.
+ */
+export function renderClbrLink(props: ClbrLinkProps): string {
+  return serializeClbrNode(buildClbrLink(props));
 }
 
 /** Declarative link contract mirror for tooling, docs, and adapters. */
