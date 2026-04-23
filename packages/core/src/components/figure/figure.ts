@@ -1,7 +1,7 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
-import { renderClbrText } from "../text/text";
+import { buildClbrText } from "../text/text";
 
 export interface ClbrFigureProps {
   /** Alignment within available space. @default "start" */
@@ -15,29 +15,51 @@ export interface ClbrFigureProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate figure component.
+ *
+ * @param props - Figure component props.
+ * @returns IR node for a figure wrapper.
+ */
+export function buildClbrFigure({
+  align = "start",
+  caption,
+  children,
+  responsive = false,
+}: ClbrFigureProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "figure",
+    attrs: {
+      class: "clbr-figure",
+      "data-align": align === "start" ? undefined : align,
+    },
+    children: [
+      { kind: "raw", html: children },
+      {
+        kind: "element",
+        tag: "figcaption",
+        attrs: { class: "figcaption" },
+        children: [
+          buildClbrText({
+            as: "span",
+            children: caption,
+            responsive,
+            size: "sm",
+          }),
+        ],
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate figure component.
  *
  * @param props - Figure component props.
  * @returns HTML string for a figure wrapper.
  */
-export function renderClbrFigure({
-  align = "start",
-  caption,
-  children,
-  responsive = false,
-}: ClbrFigureProps): string {
-  const rootAttrs = attrs({
-    class: "clbr-figure",
-    "data-align": align === "start" ? undefined : align,
-  });
-  const captionMarkup = `<figcaption class="figcaption">${renderClbrText({
-    as: "span",
-    children: caption,
-    responsive,
-    size: "sm",
-  })}</figcaption>`;
-
-  return `<figure ${rootAttrs}>${children}${captionMarkup}</figure>`;
+export function renderClbrFigure(props: ClbrFigureProps): string {
+  return serializeClbrNode(buildClbrFigure(props));
 }
 
 /** Declarative figure contract mirror for tooling, docs, and adapters. */

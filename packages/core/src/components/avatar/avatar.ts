@@ -1,7 +1,7 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import { collapseWhitespace } from "../../helpers/string";
-import { renderClbrIcon } from "../icon/icon";
+import { buildClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
 
 export type ClbrAvatarColor =
@@ -121,12 +121,12 @@ function resolveAvatarColor({
 }
 
 /**
- * SSR renderer for the Calibrate avatar component.
+ * Builds the IR tree for the Calibrate avatar component.
  *
  * @param props - Avatar component props.
- * @returns HTML string for an avatar wrapper with image/initials/icon content.
+ * @returns IR node for an avatar wrapper with image/initials/icon content.
  */
-export function renderClbrAvatar({
+export function buildClbrAvatar({
   alt,
   ariaHidden,
   color,
@@ -135,7 +135,7 @@ export function renderClbrAvatar({
   name,
   size = "md",
   src,
-}: ClbrAvatarProps): string {
+}: ClbrAvatarProps): ClbrNode {
   const normalizedInitials = normalizeInitials(initials);
   const normalizedName = collapseWhitespace(name);
   const normalizedSrc = collapseWhitespace(src);
@@ -151,7 +151,7 @@ export function renderClbrAvatar({
     name: normalizedName,
   });
 
-  const avatarAttrs = attrs({
+  const avatarAttrs = {
     "aria-hidden": ariaHidden ? "true" : undefined,
     "aria-label": !ariaHidden && !renderAsImage ? accessibleLabel : undefined,
     class: "clbr-avatar",
@@ -159,29 +159,58 @@ export function renderClbrAvatar({
     "data-entity": entity === "person" ? undefined : entity,
     "data-size": size,
     role: !ariaHidden && !renderAsImage ? "img" : undefined,
-  });
+  };
 
+  let child: ClbrNode;
   if (renderAsImage) {
-    const imgAttrs = attrs({
-      alt: ariaHidden ? "" : accessibleLabel || "",
-      class: "img",
-      src: normalizedSrc,
-    });
-
-    return `<span ${avatarAttrs}><img ${imgAttrs}></span>`;
+    child = {
+      kind: "element",
+      tag: "img",
+      attrs: {
+        alt: ariaHidden ? "" : accessibleLabel || "",
+        class: "img",
+        src: normalizedSrc,
+      },
+      children: [],
+    };
+  } else if (derivedInitials) {
+    child = {
+      kind: "element",
+      tag: "span",
+      attrs: { class: "initials" },
+      children: [{ kind: "text", value: derivedInitials }],
+    };
+  } else {
+    child = {
+      kind: "element",
+      tag: "span",
+      attrs: { class: "icon-wrapper" },
+      children: [
+        buildClbrIcon({
+          ariaHidden: true,
+          name: ENTITY_ICON_MAP[entity],
+          size: "fill",
+        }),
+      ],
+    };
   }
 
-  if (derivedInitials) {
-    return `<span ${avatarAttrs}><span class="initials">${escapeHtml(derivedInitials)}</span></span>`;
-  }
+  return {
+    kind: "element",
+    tag: "span",
+    attrs: avatarAttrs,
+    children: [child],
+  };
+}
 
-  const iconMarkup = renderClbrIcon({
-    ariaHidden: true,
-    name: ENTITY_ICON_MAP[entity],
-    size: "fill",
-  });
-
-  return `<span ${avatarAttrs}><span class="icon-wrapper">${iconMarkup}</span></span>`;
+/**
+ * SSR renderer for the Calibrate avatar component.
+ *
+ * @param props - Avatar component props.
+ * @returns HTML string for an avatar wrapper with image/initials/icon content.
+ */
+export function renderClbrAvatar(props: ClbrAvatarProps): string {
+  return serializeClbrNode(buildClbrAvatar(props));
 }
 
 /** Declarative avatar contract mirror for tooling, docs, and adapters. */

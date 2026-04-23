@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrShapeVariant } from "../shape/shape";
 
@@ -18,25 +18,38 @@ export interface ClbrPatternProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate pattern component.
+ *
+ * @param props - Pattern component props.
+ * @returns IR node for a pattern container.
+ */
+export function buildClbrPattern({
+  children,
+  size = "md",
+  tone = "default",
+  variant = "corner",
+}: ClbrPatternProps = {}): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-pattern",
+      "data-size": size,
+      "data-tone": tone === "default" ? undefined : tone,
+      "data-variant": variant,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate pattern component.
  *
  * @param props - Pattern component props.
  * @returns HTML string for a pattern container.
  */
-export function renderClbrPattern({
-  children,
-  size = "md",
-  tone = "default",
-  variant = "corner",
-}: ClbrPatternProps = {}): string {
-  const patternAttrs = attrs({
-    class: "clbr-pattern",
-    "data-size": size,
-    "data-tone": tone === "default" ? undefined : tone,
-    "data-variant": variant,
-  });
-
-  return `<div ${patternAttrs}>${children ?? ""}</div>`;
+export function renderClbrPattern(props: ClbrPatternProps = {}): string {
+  return serializeClbrNode(buildClbrPattern(props));
 }
 
 /** Declarative pattern contract mirror for tooling, docs, and adapters. */

@@ -1,5 +1,6 @@
 import { icons } from "lucide";
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;
@@ -86,39 +87,36 @@ function resolveIconNode(name: string): LucideIconNode | undefined {
   return LUCIDE_ICONS[normalizedKey];
 }
 
-function serializeIconNode(iconNode: LucideIconNode): string {
-  return iconNode
-    .map(([tag, nodeAttrs]) => {
-      const serializedAttrs = attrs(
-        Object.fromEntries(
-          Object.entries(nodeAttrs).map(([key, value]) => [
-            key,
-            value == null ? undefined : String(value),
-          ]),
-        ),
-      );
-
-      return `<${tag} ${serializedAttrs}></${tag}>`;
-    })
-    .join("");
+function iconNodeToChildren(iconNode: LucideIconNode): ClbrNode[] {
+  return iconNode.map(([tag, nodeAttrs]) => ({
+    kind: "element",
+    tag,
+    attrs: Object.fromEntries(
+      Object.entries(nodeAttrs).map(([key, value]) => [
+        key,
+        value == null ? undefined : String(value),
+      ]),
+    ),
+    children: [],
+  }));
 }
 
 /**
- * SSR renderer for the Calibrate icon component.
+ * Builds the IR tree for the Calibrate icon component.
  *
  * Emits inline `<svg>` markup for the Lucide icon set.
  *
  * @param props - Icon component props.
- * @returns HTML string for the Calibrate icon component.
+ * @returns IR node for the Calibrate icon component.
  */
-export function renderClbrIcon({
+export function buildClbrIcon({
   ariaHidden,
   mirrored,
   name,
   size = "md",
   title,
   titleId,
-}: ClbrIconProps): string {
+}: ClbrIconProps): ClbrNode {
   const iconNode = resolveIconNode(name);
 
   if (!iconNode) {
@@ -142,28 +140,50 @@ export function renderClbrIcon({
     );
   }
 
-  const titleNode = !ariaHidden
-    ? `<title id="${normalizedTitleId}">${escapeHtml(normalizedTitle!)}</title>`
-    : "";
+  const children: ClbrNode[] = [];
+  if (!ariaHidden) {
+    children.push({
+      kind: "element",
+      tag: "title",
+      attrs: { id: normalizedTitleId },
+      children: [{ kind: "text", value: normalizedTitle! }],
+    });
+  }
+  children.push(...iconNodeToChildren(iconNode));
 
-  const svgAttrs = attrs({
-    "aria-hidden": ariaHidden ? "true" : undefined,
-    "aria-labelledby": !ariaHidden ? normalizedTitleId : undefined,
-    class: "clbr-icon",
-    "data-mirrored": mirrored,
-    "data-size": size,
-    fill: "none",
-    height: "24",
-    role: !ariaHidden ? "img" : undefined,
-    stroke: "currentColor",
-    "stroke-linecap": "round",
-    "stroke-linejoin": "round",
-    "stroke-width": "2",
-    viewBox: "0 0 24 24",
-    xmlns: "http://www.w3.org/2000/svg",
-  });
+  return {
+    kind: "element",
+    tag: "svg",
+    attrs: {
+      "aria-hidden": ariaHidden ? "true" : undefined,
+      "aria-labelledby": !ariaHidden ? normalizedTitleId : undefined,
+      class: "clbr-icon",
+      "data-mirrored": mirrored,
+      "data-size": size,
+      fill: "none",
+      height: "24",
+      role: !ariaHidden ? "img" : undefined,
+      stroke: "currentColor",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      "stroke-width": "2",
+      viewBox: "0 0 24 24",
+      xmlns: "http://www.w3.org/2000/svg",
+    },
+    children,
+  };
+}
 
-  return `<svg ${svgAttrs}>${titleNode}${serializeIconNode(iconNode)}</svg>`;
+/**
+ * SSR renderer for the Calibrate icon component.
+ *
+ * Emits inline `<svg>` markup for the Lucide icon set.
+ *
+ * @param props - Icon component props.
+ * @returns HTML string for the Calibrate icon component.
+ */
+export function renderClbrIcon(props: ClbrIconProps): string {
+  return serializeClbrNode(buildClbrIcon(props));
 }
 
 /** Declarative icon contract mirror for tooling, docs, and adapters. */

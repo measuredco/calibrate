@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrLogoTone = "default" | "neutral";
@@ -21,25 +21,45 @@ export interface ClbrLogoProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate logo component.
+ *
+ * @param props - Logo component props.
+ * @returns IR node for a masked logo element.
+ */
+export function buildClbrLogo({
+  label,
+  size = "md",
+  tone = "default",
+  variant = "primary",
+}: ClbrLogoProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-logo",
+      "data-size": size,
+      "data-tone": tone === "neutral" ? "neutral" : undefined,
+      "data-variant": variant === "primary" ? undefined : variant,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "span",
+        attrs: { class: "visually-hidden" },
+        children: [{ kind: "text", value: label }],
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate logo component.
  *
  * @param props - Logo component props.
  * @returns HTML string for a masked logo element.
  */
-export function renderClbrLogo({
-  label,
-  size = "md",
-  tone = "default",
-  variant = "primary",
-}: ClbrLogoProps): string {
-  const logoAttrs = attrs({
-    class: "clbr-logo",
-    "data-size": size,
-    "data-tone": tone === "neutral" ? "neutral" : undefined,
-    "data-variant": variant === "primary" ? undefined : variant,
-  });
-
-  return `<div ${logoAttrs}><span class="visually-hidden">${escapeHtml(label)}</span></div>`;
+export function renderClbrLogo(props: ClbrLogoProps): string {
+  return serializeClbrNode(buildClbrLogo(props));
 }
 
 /** Declarative logo contract mirror for tooling, docs, and adapters. */

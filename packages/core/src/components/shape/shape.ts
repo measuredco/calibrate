@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrShapeSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
@@ -22,27 +22,40 @@ export interface ClbrShapeProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate shape component.
+ *
+ * @param props - Shape component props.
+ * @returns IR node for a masked shape element.
+ */
+export function buildClbrShape({
+  variant = "corner",
+  tone = "default",
+  size = "md",
+}: ClbrShapeProps = {}): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-shape",
+      "data-size": size,
+      "data-tone":
+        tone === "neutral" || tone === "brand" || tone === "support"
+          ? tone
+          : undefined,
+      "data-variant": variant,
+    },
+    children: [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate shape component.
  *
  * @param props - Shape component props.
  * @returns HTML string for a masked shape element.
  */
-export function renderClbrShape({
-  variant = "corner",
-  tone = "default",
-  size = "md",
-}: ClbrShapeProps = {}): string {
-  const shapeAttrs = attrs({
-    class: "clbr-shape",
-    "data-size": size,
-    "data-tone":
-      tone === "neutral" || tone === "brand" || tone === "support"
-        ? tone
-        : undefined,
-    "data-variant": variant,
-  });
-
-  return `<div ${shapeAttrs}></div>`;
+export function renderClbrShape(props: ClbrShapeProps = {}): string {
+  return serializeClbrNode(buildClbrShape(props));
 }
 
 /** Declarative shape contract mirror for tooling, docs, and adapters. */

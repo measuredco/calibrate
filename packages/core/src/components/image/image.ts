@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
@@ -75,12 +75,12 @@ export interface ClbrImageProps {
 }
 
 /**
- * SSR renderer for the Calibrate image component.
+ * Builds the IR tree for the Calibrate image component.
  *
  * @param props - Image component props.
- * @returns HTML string for image/picture markup.
+ * @returns IR node for image/picture markup.
  */
-export function renderClbrImage({
+export function buildClbrImage({
   alt = "",
   aspectRatio,
   cover,
@@ -95,7 +95,7 @@ export function renderClbrImage({
   src,
   srcSet,
   width,
-}: ClbrImageProps): string {
+}: ClbrImageProps): ClbrNode {
   const normalizedSrc = src.trim();
   const normalizedSrcSet = srcSet?.trim();
   const normalizedSizes = sizes?.trim();
@@ -124,55 +124,78 @@ export function renderClbrImage({
     throw new Error("src must be a non-empty string.");
   }
 
-  const imgAttrs = attrs({
-    alt,
-    class: "img",
-    fetchpriority: priority ? "high" : undefined,
-    height: cover ? undefined : height ? String(height) : undefined,
-    loading: lazy && !priority ? "lazy" : undefined,
-    sizes:
-      normalizedSources.length > 0 ? undefined : normalizedSizes || undefined,
-    src: normalizedSrc,
-    srcset: normalizedSrcSet || undefined,
-    width: cover ? undefined : width ? String(width) : undefined,
-  });
+  const imgNode: ClbrNode = {
+    kind: "element",
+    tag: "img",
+    attrs: {
+      alt,
+      class: "img",
+      fetchpriority: priority ? "high" : undefined,
+      height: cover ? undefined : height ? String(height) : undefined,
+      loading: lazy && !priority ? "lazy" : undefined,
+      sizes:
+        normalizedSources.length > 0 ? undefined : normalizedSizes || undefined,
+      src: normalizedSrc,
+      srcset: normalizedSrcSet || undefined,
+      width: cover ? undefined : width ? String(width) : undefined,
+    },
+    children: [],
+  };
 
-  const sourcesMarkup = normalizedSources
-    .map((source) => {
-      const sourceAttrs = attrs({
+  let imageNode: ClbrNode;
+  if (normalizedSources.length > 0) {
+    const sourceNodes: ClbrNode[] = normalizedSources.map((source) => ({
+      kind: "element",
+      tag: "source",
+      attrs: {
         height: source.height ? String(source.height) : undefined,
         media: source.media,
         sizes: source.sizes,
         srcset: source.srcSet,
         type: source.type,
         width: source.width ? String(source.width) : undefined,
-      });
-
-      return `<source ${sourceAttrs}>`;
-    })
-    .join("");
-
-  const imageMarkup =
-    normalizedSources.length > 0
-      ? `<picture>${sourcesMarkup}<img ${imgAttrs}></picture>`
-      : `<img ${imgAttrs}>`;
+      },
+      children: [],
+    }));
+    imageNode = {
+      kind: "element",
+      tag: "picture",
+      attrs: {},
+      children: [...sourceNodes, imgNode],
+    };
+  } else {
+    imageNode = imgNode;
+  }
 
   const styleChunks: string[] = [];
-
   if (height) styleChunks.push(`--clbr-image-block-size: ${height / 16}rem`);
   if (width) styleChunks.push(`--clbr-image-inline-size: ${width / 16}rem`);
 
-  const wrapperAttrs = attrs({
-    class: "clbr-image",
-    "data-aspect-ratio": cover && !(height && width) ? aspectRatio : undefined,
-    "data-gravity": cover && gravity !== "C" ? gravity : undefined,
-    "data-shadow": Boolean(shadow),
-    "data-object-fit": cover ? "cover" : undefined,
-    "data-radius": radius,
-    style: styleChunks.length > 0 ? styleChunks.join("; ") : undefined,
-  });
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-image",
+      "data-aspect-ratio":
+        cover && !(height && width) ? aspectRatio : undefined,
+      "data-gravity": cover && gravity !== "C" ? gravity : undefined,
+      "data-shadow": Boolean(shadow),
+      "data-object-fit": cover ? "cover" : undefined,
+      "data-radius": radius,
+      style: styleChunks.length > 0 ? styleChunks.join("; ") : undefined,
+    },
+    children: [imageNode],
+  };
+}
 
-  return `<div ${wrapperAttrs}>${imageMarkup}</div>`;
+/**
+ * SSR renderer for the Calibrate image component.
+ *
+ * @param props - Image component props.
+ * @returns HTML string for image/picture markup.
+ */
+export function renderClbrImage(props: ClbrImageProps): string {
+  return serializeClbrNode(buildClbrImage(props));
 }
 
 /** Declarative image contract mirror for tooling, docs, and adapters. */

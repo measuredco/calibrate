@@ -53,6 +53,7 @@ export {
 } from "./components/banner/banner";
 
 export {
+  buildClbrAvatar,
   CLBR_AVATAR_SPEC,
   getClbrInitials,
   type ClbrAvatarColor,
@@ -156,6 +157,7 @@ export {
 } from "./components/fieldset/fieldset";
 
 export {
+  buildClbrFigure,
   CLBR_FIGURE_SPEC,
   type ClbrFigureProps,
   renderClbrFigure,
@@ -183,6 +185,7 @@ export {
 } from "./components/heading/heading";
 
 export {
+  buildClbrIcon,
   CLBR_ICON_RECOMMENDED,
   CLBR_ICON_SPEC,
   type ClbrIconMirrorMode,
@@ -192,6 +195,7 @@ export {
 } from "./components/icon/icon";
 
 export {
+  buildClbrImage,
   CLBR_IMAGE_SPEC,
   type ClbrImageAspectRatio,
   type ClbrImageGravity,
@@ -218,6 +222,7 @@ export {
 } from "./components/input/input";
 
 export {
+  buildClbrLogo,
   CLBR_LOGO_SPEC,
   type ClbrLogoProps,
   type ClbrLogoSize,
@@ -271,6 +276,7 @@ export {
 } from "./components/page/page";
 
 export {
+  buildClbrPattern,
   CLBR_PATTERN_SPEC,
   type ClbrPatternProps,
   type ClbrPatternSize,
@@ -340,6 +346,7 @@ export {
 } from "./components/stack/stack";
 
 export {
+  buildClbrShape,
   CLBR_SHAPE_SPEC,
   type ClbrShapeProps,
   type ClbrShapeSize,
@@ -349,6 +356,7 @@ export {
 } from "./components/shape/shape";
 
 export {
+  buildClbrSpinner,
   CLBR_SPINNER_SPEC,
   type ClbrSpinnerProps,
   type ClbrSpinnerSize,
