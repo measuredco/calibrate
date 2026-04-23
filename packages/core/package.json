@@ -16,7 +16,7 @@
     "./styles.css": "./dist/core.css"
   },
   "scripts": {
-    "build": "pnpm run build:types && vite build",
+    "build": "vite build && pnpm run build:types",
     "build:types": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "test": "vitest run",
