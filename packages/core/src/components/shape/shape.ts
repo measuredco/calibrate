@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrShapeSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
 export type ClbrShapeTone = "default" | "brand" | "support" | "neutral";
@@ -46,7 +46,7 @@ export function renderClbrShape({
 }
 
 /** Declarative shape contract mirror for tooling, docs, and adapters. */
-export const CLBR_SHAPE_SPEC: ClbrStructuredSpec = {
+export const CLBR_SHAPE_SPEC: ClbrComponentSpec = {
   name: "shape",
   description: "Use `shape` to render brand visual language components.",
   output: { element: "div", class: "clbr-shape" },

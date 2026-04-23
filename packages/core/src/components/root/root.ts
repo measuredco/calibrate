@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
@@ -59,7 +59,7 @@ export function renderClbrRoot(props: ClbrRootProps): string {
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */
-export const CLBR_ROOT_SPEC: ClbrStructuredSpec = {
+export const CLBR_ROOT_SPEC: ClbrComponentSpec = {
   name: "root",
   description: "Mandatory top-level `root` wrapper for the Calibrate system.",
   output: { element: "div", class: "clbr" },

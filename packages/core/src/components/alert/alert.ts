@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { renderClbrIcon } from "../icon/icon";
@@ -169,7 +169,7 @@ export function defineClbrAlert(): void {
 }
 
 /** Declarative alert contract mirror for tooling, docs, and adapters. */
-export const CLBR_ALERT_SPEC: ClbrStructuredSpec = {
+export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
   name: "alert",
   description: "Use `alert` to surface short, important messages.",
   output: {

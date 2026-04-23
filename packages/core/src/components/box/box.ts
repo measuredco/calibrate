@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrBoxBackground = "default" | "panel" | "transparent";
@@ -64,7 +64,7 @@ export function renderClbrBox({
 }
 
 /** Declarative box contract mirror for tooling, docs, and adapters. */
-export const CLBR_BOX_SPEC: ClbrStructuredSpec = {
+export const CLBR_BOX_SPEC: ClbrComponentSpec = {
   name: "box",
   description: "Use `box` to inset content.",
   output: { element: "div", class: "clbr-box" },

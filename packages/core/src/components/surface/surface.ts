@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrSurfaceVariant =
   | "default"
@@ -33,7 +33,7 @@ export function renderClbrSurface({
 }
 
 /** Declarative surface contract mirror for tooling, docs, and adapters. */
-export const CLBR_SURFACE_SPEC: ClbrStructuredSpec = {
+export const CLBR_SURFACE_SPEC: ClbrComponentSpec = {
   name: "surface",
   description: "Use `surface` to set a colour context for nested content.",
   output: { element: "div", class: "clbr-surface" },

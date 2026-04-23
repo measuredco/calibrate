@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrExpanderSize = "sm" | "md" | "lg";
 
@@ -47,7 +47,7 @@ export function renderClbrExpander({
 }
 
 /** Declarative expander contract mirror for tooling, docs, and adapters. */
-export const CLBR_EXPANDER_SPEC: ClbrStructuredSpec = {
+export const CLBR_EXPANDER_SPEC: ClbrComponentSpec = {
   name: "expander",
   description:
     "Use `expander` as a toggle for disclosure regions such as menus.",

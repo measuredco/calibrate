@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrSwitchProps {
@@ -77,7 +77,7 @@ export function renderClbrSwitch({
 }
 
 /** Declarative switch contract mirror for tooling, docs, and adapters. */
-export const CLBR_SWITCH_SPEC: ClbrStructuredSpec = {
+export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
   name: "switch",
   description:
     "Use `switch` to let users instantly toggle a setting on or off.",

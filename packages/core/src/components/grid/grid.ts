@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrGridGap = "default" | "expanded" | "none";
@@ -119,7 +119,7 @@ export function renderClbrGridItem({
 }
 
 /** Declarative grid contract mirror for tooling, docs, and adapters. */
-export const CLBR_GRID_SPEC: ClbrStructuredSpec = {
+export const CLBR_GRID_SPEC: ClbrComponentSpec = {
   name: "grid",
   description: "Use `grid` to lay out content in a 12-column responsive grid.",
   output: { element: "div", class: "clbr-grid" },
@@ -160,7 +160,7 @@ const gridTrackType = {
 } as const;
 
 /** Declarative grid-item contract mirror for tooling, docs, and adapters. */
-export const CLBR_GRID_ITEM_SPEC: ClbrStructuredSpec = {
+export const CLBR_GRID_ITEM_SPEC: ClbrComponentSpec = {
   name: "grid-item",
   description: "Use `grid-item` to place content within a `grid` layout.",
   output: { element: "div", class: "clbr-grid-item" },

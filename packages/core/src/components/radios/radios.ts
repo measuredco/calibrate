@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 import { renderClbrFieldset } from "../fieldset/fieldset";
 
@@ -161,7 +161,7 @@ export function renderClbrRadios({
 }
 
 /** Declarative radios contract mirror for tooling, docs, and adapters. */
-export const CLBR_RADIOS_SPEC: ClbrStructuredSpec = {
+export const CLBR_RADIOS_SPEC: ClbrComponentSpec = {
   name: "radios",
   description: "Use `radios` to let users select one option from a short list.",
   output: { element: "fieldset", class: "clbr-fieldset" },

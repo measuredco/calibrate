@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 
 export type ClbrBadgeSize = "sm" | "md";
@@ -38,7 +38,7 @@ export function renderClbrBadge({
 }
 
 /** Declarative badge contract mirror for tooling, docs, and adapters. */
-export const CLBR_BADGE_SPEC: ClbrStructuredSpec = {
+export const CLBR_BADGE_SPEC: ClbrComponentSpec = {
   name: "badge",
   description: "Use `badge` to annotate content with a short label.",
   output: { element: "span", class: "clbr-badge" },

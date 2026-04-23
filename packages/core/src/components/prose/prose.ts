@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrProseHangingPunctuation = "always" | "notebook";
@@ -42,7 +42,7 @@ export function renderClbrProse({
 }
 
 /** Declarative prose contract mirror for tooling, docs, and adapters. */
-export const CLBR_PROSE_SPEC: ClbrStructuredSpec = {
+export const CLBR_PROSE_SPEC: ClbrComponentSpec = {
   name: "prose",
   description: "Use `prose` to style rich-text markup.",
   output: { element: "div", class: "clbr-prose" },

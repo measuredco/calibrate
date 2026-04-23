@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrContainerGutter = "default" | "narrow" | "none";
 export type ClbrContainerMaxInlineSize = "default" | "wide" | "none";
@@ -35,7 +35,7 @@ export function renderClbrContainer({
 }
 
 /** Declarative container contract mirror for tooling, docs, and adapters. */
-export const CLBR_CONTAINER_SPEC: ClbrStructuredSpec = {
+export const CLBR_CONTAINER_SPEC: ClbrComponentSpec = {
   name: "container",
   description: "Use `container` to wrap page-level content.",
   output: { element: "div", class: "clbr-container" },

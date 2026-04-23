@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import { renderClbrExpander } from "../expander/expander";
 
 export const CLBR_NAV_TAG_NAME = "clbr-nav";
@@ -266,7 +266,7 @@ export function defineClbrNav(): void {
 }
 
 /** Declarative nav contract mirror for tooling, docs, and adapters. */
-export const CLBR_NAV_SPEC: ClbrStructuredSpec = {
+export const CLBR_NAV_SPEC: ClbrComponentSpec = {
   name: "nav",
   description: "Use `nav` to render a primary navigation list.",
   output: { element: CLBR_NAV_TAG_NAME, class: "clbr-nav" },

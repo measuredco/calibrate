@@ -4,16 +4,14 @@ import {
   collectValueProps,
   evaluateSpecCondition,
   resolveSpecValue,
-  structuredSpecToLegacy,
   type ClbrComponentSpec,
+  type ClbrComponentSpecProp,
   type ClbrSpecAttributeRule,
   type ClbrSpecPropType,
-  type ClbrStructuredSpec,
-  type ClbrStructuredSpecProp,
 } from "../helpers/spec";
 
 export interface SpecConsistencyConfig<Props> {
-  readonly spec: ClbrComponentSpec | ClbrStructuredSpec;
+  readonly spec: ClbrComponentSpec;
   readonly renderer: (props: Props) => string;
   readonly baseProps: Props;
   /**
@@ -27,11 +25,7 @@ export interface SpecConsistencyConfig<Props> {
 export function describeSpecConsistency<Props extends object>(
   config: SpecConsistencyConfig<Props>,
 ): void {
-  const { spec: inputSpec, renderer, baseProps, propOverrides = {} } = config;
-  const structured = "content" in inputSpec ? inputSpec : undefined;
-  const spec: ClbrComponentSpec = structured
-    ? structuredSpecToLegacy(structured)
-    : (inputSpec as ClbrComponentSpec);
+  const { spec, renderer, baseProps, propOverrides = {} } = config;
 
   describe(`${spec.name} SPEC consistency`, () => {
     for (const [name, prop] of Object.entries(spec.props)) {
@@ -56,8 +50,8 @@ export function describeSpecConsistency<Props extends object>(
         });
       }
 
-      if (prop.values && prop.values.length > 0) {
-        for (const value of prop.values) {
+      if (prop.type.kind === "enum") {
+        for (const value of prop.type.values) {
           it(`renders without throwing when "${name}" is ${JSON.stringify(value)}`, () => {
             expect(() =>
               renderer({ ...baseProps, ...overrides, [name]: value } as Props),
@@ -67,7 +61,7 @@ export function describeSpecConsistency<Props extends object>(
       }
     }
 
-    for (const [name, event] of Object.entries(spec.events ?? {})) {
+    for (const [name, event] of Object.entries(spec.events)) {
       it(`declares a non-empty description for event "${name}"`, () => {
         expect(event.description?.trim()).toBeTruthy();
       });
@@ -78,18 +72,11 @@ export function describeSpecConsistency<Props extends object>(
     }
   });
 
-  if (structured) {
-    describeStructuredRuleConsistency({
-      spec: structured,
-      renderer,
-      baseProps,
-      propOverrides,
-    });
-  }
+  describeRuleConsistency({ spec, renderer, baseProps, propOverrides });
 }
 
 // -----------------------------------------------------------------------------
-// Structured rule consistency.
+// Rule consistency.
 //
 // For each attribute rule, probe a bounded cross-product over the props the
 // rule references and assert the renderer's actual output on the target
@@ -124,7 +111,7 @@ const probeValuesForType = (type: ClbrSpecPropType): ReadonlyArray<unknown> => {
   }
 };
 
-const probeValues = (prop: ClbrStructuredSpecProp): ReadonlyArray<unknown> => {
+const probeValues = (prop: ClbrComponentSpecProp): ReadonlyArray<unknown> => {
   const raw = probeValuesForType(prop.type);
   if (!prop.required) return raw;
   return raw.filter((value) => value !== undefined && value !== "");
@@ -137,9 +124,7 @@ const cartesian = <T>(lists: ReadonlyArray<ReadonlyArray<T>>): T[][] => {
   return head.flatMap((value) => tail.map((combo) => [value, ...combo]));
 };
 
-const resolveHostElement = (
-  html: string,
-): Element => {
+const resolveHostElement = (html: string): Element => {
   document.body.innerHTML = html;
   const host = document.body.firstElementChild;
   if (!host) throw new Error("Renderer produced no root element.");
@@ -160,19 +145,19 @@ const formatProbe = (probe: Readonly<Record<string, unknown>>): string =>
     .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
     .join(", ") || "(baseline)";
 
-interface StructuredRuleConsistencyConfig<Props> {
-  readonly spec: ClbrStructuredSpec;
+interface RuleConsistencyConfig<Props> {
+  readonly spec: ClbrComponentSpec;
   readonly renderer: (props: Props) => string;
   readonly baseProps: Props;
   readonly propOverrides: Readonly<Record<string, Partial<Props>>>;
 }
 
-function describeStructuredRuleConsistency<Props extends object>(
-  config: StructuredRuleConsistencyConfig<Props>,
+function describeRuleConsistency<Props extends object>(
+  config: RuleConsistencyConfig<Props>,
 ): void {
   const { spec, renderer, baseProps, propOverrides } = config;
 
-  describe(`${spec.name} structured rule consistency`, () => {
+  describe(`${spec.name} rule consistency`, () => {
     const groups = new Map<string, ClbrSpecAttributeRule[]>();
     for (const rule of spec.rules.attributes) {
       const key =

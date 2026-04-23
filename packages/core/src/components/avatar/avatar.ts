@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import { collapseWhitespace } from "../../helpers/string";
 import { renderClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
@@ -185,7 +185,7 @@ export function renderClbrAvatar({
 }
 
 /** Declarative avatar contract mirror for tooling, docs, and adapters. */
-export const CLBR_AVATAR_SPEC: ClbrStructuredSpec = {
+export const CLBR_AVATAR_SPEC: ClbrComponentSpec = {
   name: "avatar",
   description: "Use `avatar` to visually represent a person, team, or entity.",
   output: { element: "span", class: "clbr-avatar" },

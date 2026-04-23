@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign, ClbrHeadingLevel } from "../../types";
 export type ClbrHeadingSize =
   | "xs"
@@ -54,7 +54,7 @@ export function renderClbrHeading({
 }
 
 /** Declarative heading contract mirror for tooling, docs, and adapters. */
-export const CLBR_HEADING_SPEC: ClbrStructuredSpec = {
+export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
   name: "heading",
   description: "Use `heading` to render heading text with consistent type.",
   output: {

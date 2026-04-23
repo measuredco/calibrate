@@ -1,6 +1,6 @@
 import { icons } from "lucide";
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;
 type LucideIconNode = Array<[tag: string, attrs: LucideSvgAttrs]>;
@@ -167,7 +167,7 @@ export function renderClbrIcon({
 }
 
 /** Declarative icon contract mirror for tooling, docs, and adapters. */
-export const CLBR_ICON_SPEC: ClbrStructuredSpec = {
+export const CLBR_ICON_SPEC: ClbrComponentSpec = {
   name: "icon",
   description: "Use `icon` to render a Lucide icon.",
   output: { element: "svg", class: "clbr-icon" },

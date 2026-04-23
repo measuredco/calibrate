@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrSpinnerSize =
   | "2xs"
@@ -43,7 +43,7 @@ export function renderClbrSpinner({
 }
 
 /** Declarative spinner contract mirror for tooling, docs, and adapters. */
-export const CLBR_SPINNER_SPEC: ClbrStructuredSpec = {
+export const CLBR_SPINNER_SPEC: ClbrComponentSpec = {
   name: "spinner",
   description: "Use `spinner` to indicate loading or in-progress state.",
   output: { element: "span", class: "clbr-spinner" },

@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
@@ -59,7 +59,7 @@ export function renderClbrBlockquote({
 }
 
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */
-export const CLBR_BLOCKQUOTE_SPEC: ClbrStructuredSpec = {
+export const CLBR_BLOCKQUOTE_SPEC: ClbrComponentSpec = {
   name: "blockquote",
   description: "Use `blockquote` to display a quote with attribution.",
   output: { element: "figure", class: "clbr-blockquote" },

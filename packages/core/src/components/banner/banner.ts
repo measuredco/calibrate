@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { renderClbrLink } from "../link/link";
@@ -159,7 +159,7 @@ export function defineClbrBanner(): void {
 }
 
 /** Declarative banner contract mirror for tooling, docs, and adapters. */
-export const CLBR_BANNER_SPEC: ClbrStructuredSpec = {
+export const CLBR_BANNER_SPEC: ClbrComponentSpec = {
   name: "banner",
   description: "Use `banner` to display a prominent site-wide message.",
   output: { element: CLBR_BANNER_TAG_NAME, class: "clbr-banner" },

@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export type ClbrInputType =
@@ -137,7 +137,7 @@ export function renderClbrInput({
 }
 
 /** Declarative input contract mirror for tooling, docs, and adapters. */
-export const CLBR_INPUT_SPEC: ClbrStructuredSpec = {
+export const CLBR_INPUT_SPEC: ClbrComponentSpec = {
   name: "input",
   description: "Use `input` to collect a single line of text from users.",
   output: { element: "div", class: "clbr-input" },

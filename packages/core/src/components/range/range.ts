@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export const CLBR_RANGE_TAG_NAME = "clbr-range";
@@ -142,7 +142,7 @@ export function defineClbrRange(): void {
 }
 
 /** Declarative range contract mirror for tooling, docs, and adapters. */
-export const CLBR_RANGE_SPEC: ClbrStructuredSpec = {
+export const CLBR_RANGE_SPEC: ClbrComponentSpec = {
   name: "range",
   description: "Use `range` to let users pick a numeric value along a scale.",
   output: { element: CLBR_RANGE_TAG_NAME, class: "clbr-range" },

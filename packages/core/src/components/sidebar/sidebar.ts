@@ -1,5 +1,5 @@
 import { attrs, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import { renderClbrButton } from "../button/button";
 
 export const CLBR_SIDEBAR_TAG_NAME = "clbr-sidebar";
@@ -392,7 +392,7 @@ export function defineClbrSidebar(): void {
 }
 
 /** Declarative sidebar contract mirror for tooling, docs, and adapters. */
-export const CLBR_SIDEBAR_SPEC: ClbrStructuredSpec = {
+export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
   name: "sidebar",
   description: "Use `sidebar` for a side panel alongside main content.",
   output: {

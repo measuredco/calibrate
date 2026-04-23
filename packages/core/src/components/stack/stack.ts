@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
 export type ClbrStackAs = "div" | "ul";
@@ -42,7 +42,7 @@ export function renderClbrStack({
 }
 
 /** Declarative stack contract mirror for tooling, docs, and adapters. */
-export const CLBR_STACK_SPEC: ClbrStructuredSpec = {
+export const CLBR_STACK_SPEC: ClbrComponentSpec = {
   name: "stack",
   description: "Use `stack` to lay out content in a vertical column.",
   output: {

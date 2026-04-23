@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 import { renderClbrText } from "../text/text";
 
@@ -41,7 +41,7 @@ export function renderClbrFigure({
 }
 
 /** Declarative figure contract mirror for tooling, docs, and adapters. */
-export const CLBR_FIGURE_SPEC: ClbrStructuredSpec = {
+export const CLBR_FIGURE_SPEC: ClbrComponentSpec = {
   name: "figure",
   description: "Use `figure` to present media with a caption.",
   output: { element: "figure", class: "clbr-figure" },

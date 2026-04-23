@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrLinkSize = "sm" | "md";
 export type ClbrLinkTarget = "_blank" | "_parent" | "_self" | "_top";
@@ -65,7 +65,7 @@ export function renderClbrLink(props: ClbrLinkProps): string {
 }
 
 /** Declarative link contract mirror for tooling, docs, and adapters. */
-export const CLBR_LINK_SPEC: ClbrStructuredSpec = {
+export const CLBR_LINK_SPEC: ClbrComponentSpec = {
   name: "link",
   description: "Use `link` to navigate to another page or resource.",
   output: { element: "a", class: "clbr-link" },

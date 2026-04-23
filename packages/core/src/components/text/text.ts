@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrTextAs = "p" | "span";
@@ -61,7 +61,7 @@ export function renderClbrText({
 }
 
 /** Declarative text contract mirror for tooling, docs, and adapters. */
-export const CLBR_TEXT_SPEC: ClbrStructuredSpec = {
+export const CLBR_TEXT_SPEC: ClbrComponentSpec = {
   name: "text",
   description: "Use `text` for inline or paragraph body copy.",
   output: {

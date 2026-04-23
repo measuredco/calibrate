@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrInlineAs = "div" | "ul";
@@ -47,7 +47,7 @@ export function renderClbrInline({
 }
 
 /** Declarative inline contract mirror for tooling, docs, and adapters. */
-export const CLBR_INLINE_SPEC: ClbrStructuredSpec = {
+export const CLBR_INLINE_SPEC: ClbrComponentSpec = {
   name: "inline",
   description: "Use `inline` to lay out content in a horizontal row.",
   output: {

@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrPanelPadding = "xs" | "sm" | "md" | "lg" | "xl";
@@ -34,7 +34,7 @@ export function renderClbrPanel({
 }
 
 /** Declarative panel contract mirror for tooling, docs, and adapters. */
-export const CLBR_PANEL_SPEC: ClbrStructuredSpec = {
+export const CLBR_PANEL_SPEC: ClbrComponentSpec = {
   name: "panel",
   description: "Use `panel` to group related content in a contained region.",
   output: { element: "div", class: "clbr-panel" },

@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
@@ -215,7 +215,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
 }
 
 /** Declarative button contract mirror for tooling, docs, and adapters. */
-export const CLBR_BUTTON_SPEC: ClbrStructuredSpec = {
+export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
   name: "button",
   description: "Use `button` to let users trigger actions.",
   output: {

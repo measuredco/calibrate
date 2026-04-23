@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrShapeVariant } from "../shape/shape";
 
 export type ClbrPatternSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
@@ -40,7 +40,7 @@ export function renderClbrPattern({
 }
 
 /** Declarative pattern contract mirror for tooling, docs, and adapters. */
-export const CLBR_PATTERN_SPEC: ClbrStructuredSpec = {
+export const CLBR_PATTERN_SPEC: ClbrComponentSpec = {
   name: "pattern",
   description:
     "Use `pattern` to render repeated visual language components behind content.",

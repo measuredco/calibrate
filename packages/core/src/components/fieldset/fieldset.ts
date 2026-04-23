@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
 
 export interface ClbrFieldsetProps {
@@ -77,7 +77,7 @@ export function renderClbrFieldset({
 }
 
 /** Declarative fieldset contract mirror for tooling, docs, and adapters. */
-export const CLBR_FIELDSET_SPEC: ClbrStructuredSpec = {
+export const CLBR_FIELDSET_SPEC: ClbrComponentSpec = {
   name: "fieldset",
   description: "Use `fieldset` to group related form controls under a legend.",
   output: { element: "fieldset", class: "clbr-fieldset" },

@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export type ClbrTextareaResize = "vertical" | "none";
@@ -127,7 +127,7 @@ export function renderClbrTextarea({
 }
 
 /** Declarative textarea contract mirror for tooling, docs, and adapters. */
-export const CLBR_TEXTAREA_SPEC: ClbrStructuredSpec = {
+export const CLBR_TEXTAREA_SPEC: ClbrComponentSpec = {
   name: "textarea",
   description: "Use `textarea` to collect multiple lines of text from users.",
   output: { element: "div", class: "clbr-textarea" },

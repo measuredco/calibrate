@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 import {
   type ClbrButtonLabelVisibility,
@@ -391,7 +391,7 @@ export function defineClbrMenu(): void {
 }
 
 /** Declarative menu contract mirror for tooling, docs, and adapters. */
-export const CLBR_MENU_SPEC: ClbrStructuredSpec = {
+export const CLBR_MENU_SPEC: ClbrComponentSpec = {
   name: "menu",
   description: "Use `menu` to show a list of actions from a trigger button.",
   output: {

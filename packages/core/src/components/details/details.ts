@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
 
@@ -45,7 +45,7 @@ export function renderClbrDetails({
 }
 
 /** Declarative details contract mirror for tooling, docs, and adapters. */
-export const CLBR_DETAILS_SPEC: ClbrStructuredSpec = {
+export const CLBR_DETAILS_SPEC: ClbrComponentSpec = {
   name: "details",
   description:
     "Use `details` to let users expand and collapse a section of content.",

@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
 export type ClbrImageGravity =
@@ -176,7 +176,7 @@ export function renderClbrImage({
 }
 
 /** Declarative image contract mirror for tooling, docs, and adapters. */
-export const CLBR_IMAGE_SPEC: ClbrStructuredSpec = {
+export const CLBR_IMAGE_SPEC: ClbrComponentSpec = {
   name: "image",
   description:
     "Use `image` to render a responsive image with optional cover fit.",

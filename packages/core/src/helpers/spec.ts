@@ -1,53 +1,19 @@
-export interface ClbrSpecProp {
-  readonly constraints?: ReadonlyArray<string>;
-  readonly default?: unknown;
-  readonly description?: string;
-  readonly ignoredWhen?: string;
-  readonly required?: boolean;
-  readonly requiredWhen?: string;
-  readonly type: string;
-  readonly values?: ReadonlyArray<string | number>;
-}
-
-export interface ClbrSpecEvent {
-  readonly bubbles?: boolean;
-  readonly cancelable?: boolean;
-  readonly description?: string;
-  readonly detail?: string;
-}
-
-export interface ClbrComponentSpec {
-  readonly name: string;
-  readonly description?: string;
-  readonly props: Readonly<Record<string, ClbrSpecProp>>;
-  readonly events?: Readonly<Record<string, ClbrSpecEvent>>;
-}
-
 // -----------------------------------------------------------------------------
-// Structured spec schema (target contract).
+// Component spec schema.
 //
-// The shape below is the destination for the framework-adapter work tracked in
-// `docs/PLANNING.md`. Components migrate from `ClbrComponentSpec` to
-// `ClbrStructuredSpec` incrementally; once every component is migrated, the
-// legacy shape above is removed and `ClbrStructuredSpec` assumes the canonical
-// `ClbrComponentSpec` name.
-//
-// Invariants:
-// - Every structured spec declares `output`, `content`, `events` (possibly
-//   empty), and `rules.attributes` (possibly empty).
-// - Prop-level prose (`description`, `requiredWhen`, `ignoredWhen`) is the
-//   canonical source for human-readable docs; structured `rules` target
-//   machines. The two coexist.
-// - Attribute rules describe what the renderer and custom element emit; they
-//   never redefine behavior. The renderer/CE remain the frozen oracle.
+// Machine-readable contract that every Calibrate component exports alongside
+// its renderer. Drives framework-adapter code generation (React, Vue, Svelte),
+// Storybook controls, and documentation tables. The renderer remains the
+// frozen oracle — rules here describe what the renderer emits, never redefine
+// behavior.
 // -----------------------------------------------------------------------------
 
-/** Where a structured rule applies. */
+/** Where a rule applies. */
 export type ClbrSpecTarget =
   | { readonly on: "host" }
   | { readonly on: "descendant"; readonly selector: string };
 
-/** Condition under which a structured rule fires. */
+/** Condition under which a rule fires. */
 export type ClbrSpecCondition =
   | { readonly kind: "always" }
   | { readonly kind: "when-provided"; readonly prop: string }
@@ -86,11 +52,7 @@ export interface ClbrSpecAttributeRule {
   readonly value?: ClbrSpecValue;
 }
 
-/**
- * Machine-readable type of a structured prop. Narrows what today's free-form
- * `type: string` + `constraints: string[]` carry, so adapters and validators
- * can reason about prop shape without prose parsing.
- */
+/** Machine-readable type of a prop. */
 export type ClbrSpecPropType =
   | { readonly kind: "string" }
   | { readonly kind: "text" }
@@ -108,7 +70,7 @@ export type ClbrSpecPropType =
     }
   | {
       readonly kind: "array";
-      readonly itemShape: Readonly<Record<string, ClbrStructuredSpecProp>>;
+      readonly itemShape: Readonly<Record<string, ClbrComponentSpecProp>>;
     }
   | { readonly kind: "iconName" }
   | {
@@ -116,7 +78,7 @@ export type ClbrSpecPropType =
       readonly variants: ReadonlyArray<ClbrSpecPropType>;
     };
 
-export interface ClbrStructuredSpecProp {
+export interface ClbrComponentSpecProp {
   readonly description: string;
   readonly type: ClbrSpecPropType;
   readonly required?: boolean;
@@ -125,7 +87,7 @@ export interface ClbrStructuredSpecProp {
   readonly default?: unknown;
 }
 
-export interface ClbrStructuredSpecEvent {
+export interface ClbrComponentSpecEvent {
   readonly description: string;
   readonly bubbles?: boolean;
   readonly cancelable?: boolean;
@@ -159,8 +121,7 @@ export interface ClbrSpecOutput {
  * - `html`: single slot of trusted HTML string, named by `prop`.
  * - `structured`: typed record array, named by `prop`; item shape lives on
  *   that prop's `ClbrSpecPropType` (`kind: "array"`).
- * - `slots`: multiple named content props (e.g. sidebar header/children/footer,
- *   card title/description/note). Each slot names its prop and kind.
+ * - `slots`: multiple named content props. Each slot names its prop and kind.
  */
 export type ClbrSpecContent =
   | { readonly kind: "none" }
@@ -175,26 +136,25 @@ export type ClbrSpecContent =
       }>;
     };
 
-/** The target structured contract for every component. */
-export interface ClbrStructuredSpec {
+export interface ClbrComponentSpec {
   readonly name: string;
   readonly description: string;
   readonly output: ClbrSpecOutput;
   readonly content: ClbrSpecContent;
-  readonly props: Readonly<Record<string, ClbrStructuredSpecProp>>;
-  readonly events: Readonly<Record<string, ClbrStructuredSpecEvent>>;
+  readonly props: Readonly<Record<string, ClbrComponentSpecProp>>;
+  readonly events: Readonly<Record<string, ClbrComponentSpecEvent>>;
   readonly rules: {
     readonly attributes: ReadonlyArray<ClbrSpecAttributeRule>;
   };
 }
 
 // -----------------------------------------------------------------------------
-// Structured rule evaluation.
+// Rule evaluation.
 //
 // Pure evaluators for `ClbrSpecCondition` and `ClbrSpecValue` against a props
 // object. Used by the testing helper to verify renderers match their declared
-// structured rules, and available to adapters (React etc.) that need to
-// compute attribute output from a SPEC without running the renderer.
+// rules, and available to adapters (React etc.) that need to compute attribute
+// output from a SPEC without running the renderer.
 // -----------------------------------------------------------------------------
 
 type PropBag = Readonly<Record<string, unknown>>;
@@ -203,7 +163,7 @@ type PropBag = Readonly<Record<string, unknown>>;
 const effectiveProp = (
   name: string,
   props: PropBag,
-  spec: ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): unknown => {
   const supplied = props[name];
   if (supplied !== undefined) return supplied;
@@ -213,7 +173,7 @@ const effectiveProp = (
 export const evaluateSpecCondition = (
   condition: ClbrSpecCondition,
   props: PropBag,
-  spec: ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): boolean => {
   switch (condition.kind) {
     case "always":
@@ -249,8 +209,6 @@ export const evaluateSpecCondition = (
  * Resolved expected attribute output.
  * - `"present"`: attribute is emitted without a value (boolean attribute)
  * - string: attribute is emitted with that exact value
- * - `"absent"`: attribute is not emitted (caller should typically skip this;
- *   callers derive absence from `evaluateSpecCondition` returning false)
  */
 export type ResolvedSpecValue =
   | { readonly kind: "present" }
@@ -259,7 +217,7 @@ export type ResolvedSpecValue =
 export const resolveSpecValue = (
   value: ClbrSpecValue | undefined,
   props: PropBag,
-  spec: ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): ResolvedSpecValue => {
   if (!value) return { kind: "present" };
   switch (value.kind) {
@@ -322,149 +280,76 @@ export const collectValueProps = (
 };
 
 // -----------------------------------------------------------------------------
-// Structured → legacy adapter.
+// Docs + Storybook helpers.
 //
-// Temporary: lets the existing tooling helpers (argTypes, prop/event tables,
-// docs descriptions) and the test consistency helper keep operating during the
-// per-component migration. Removed once every component is on the structured
-// shape and those helpers target structured directly.
+// Project spec props into Storybook `argTypes` and Markdown prop/event tables.
 // -----------------------------------------------------------------------------
-
-const legacyPropType = (
-  type: ClbrSpecPropType,
-): { type: string; values?: ReadonlyArray<string | number>; constraints?: string[] } => {
-  switch (type.kind) {
-    case "string":
-      return { type: "string" };
-    case "text":
-      return { type: "text" };
-    case "html":
-      return { type: "html" };
-    case "boolean":
-      return { type: "boolean" };
-    case "number": {
-      const constraints: string[] = [];
-      if (type.min !== undefined) constraints.push(`min:${type.min}`);
-      if (type.max !== undefined) constraints.push(`max:${type.max}`);
-      if (type.integer) constraints.push("integer");
-      return {
-        type: "number",
-        ...(constraints.length > 0 ? { constraints } : {}),
-      };
-    }
-    case "enum":
-      return { type: "enum", values: type.values };
-    case "array":
-      return { type: "array" };
-    case "iconName":
-      return { type: "iconName" };
-    case "union":
-      return {
-        type: type.variants.map((variant) => legacyPropType(variant).type).join("|"),
-      };
-  }
-};
-
-const isStructuredSpec = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
-): spec is ClbrStructuredSpec => "content" in spec;
-
-export const structuredSpecToLegacy = (
-  spec: ClbrStructuredSpec,
-): ClbrComponentSpec => {
-  const props: Record<string, ClbrSpecProp> = {};
-  for (const [name, prop] of Object.entries(spec.props)) {
-    const { type, values, constraints } = legacyPropType(prop.type);
-    props[name] = {
-      description: prop.description,
-      type,
-      ...(values ? { values } : {}),
-      ...(constraints ? { constraints } : {}),
-      ...(prop.required ? { required: prop.required } : {}),
-      ...(prop.requiredWhen ? { requiredWhen: prop.requiredWhen } : {}),
-      ...(prop.ignoredWhen ? { ignoredWhen: prop.ignoredWhen } : {}),
-      ...(prop.default !== undefined ? { default: prop.default } : {}),
-    };
-  }
-
-  const events: Record<string, ClbrSpecEvent> = {};
-  for (const [name, event] of Object.entries(spec.events)) {
-    events[name] = {
-      description: event.description,
-      ...(event.bubbles ? { bubbles: event.bubbles } : {}),
-      ...(event.cancelable ? { cancelable: event.cancelable } : {}),
-      ...(event.detail ? { detail: event.detail } : {}),
-    };
-  }
-
-  return {
-    name: spec.name,
-    description: spec.description,
-    props,
-    ...(Object.keys(events).length > 0 ? { events } : {}),
-  };
-};
-
-const asLegacy = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
-): ClbrComponentSpec =>
-  isStructuredSpec(spec) ? structuredSpecToLegacy(spec) : spec;
 
 type StoryArgType = Record<string, unknown>;
 
-const numericConstraint = (
-  constraints: ReadonlyArray<string> | undefined,
-  key: "min" | "max",
-): number | undefined => {
-  const prefix = `${key}:`;
-  const match = constraints?.find((entry) => entry.startsWith(prefix));
-  if (!match) return undefined;
-  const value = Number(match.slice(prefix.length));
-  return Number.isFinite(value) ? value : undefined;
+const summaryTypeFor = (prop: ClbrComponentSpecProp): string => {
+  const type = prop.type;
+  switch (type.kind) {
+    case "enum":
+      return type.values
+        .map((v) => (typeof v === "string" ? v : String(v)))
+        .join(" | ");
+    case "union":
+      return type.variants
+        .map((variant) => summaryTypeFor({ description: "", type: variant }))
+        .join(" | ");
+    case "number":
+      return "number";
+    case "array":
+      return "array";
+    default:
+      return type.kind;
+  }
 };
 
 const controlFor = (
-  prop: ClbrSpecProp,
+  prop: ClbrComponentSpecProp,
 ): StoryArgType["control"] | undefined => {
-  if (prop.values && prop.values.length > 0) return { type: "select" };
-  switch (prop.type) {
+  const type = prop.type;
+  if (type.kind === "enum") return { type: "select" };
+  switch (type.kind) {
     case "boolean":
       return { type: "boolean" };
-    case "number": {
-      const min = numericConstraint(prop.constraints, "min");
-      const max = numericConstraint(prop.constraints, "max");
+    case "number":
       return {
         type: "number",
-        ...(min !== undefined ? { min } : {}),
-        ...(max !== undefined ? { max } : {}),
+        ...(type.min !== undefined ? { min: type.min } : {}),
+        ...(type.max !== undefined ? { max: type.max } : {}),
       };
-    }
     case "array":
-    case "object":
       return { type: "object" };
     case "html":
       return false;
     case "iconName":
       return undefined;
+    case "union":
+      return { type: "text" };
     default:
       return { type: "text" };
   }
 };
 
-const summaryTypeFor = (prop: ClbrSpecProp): string =>
-  prop.values && prop.values.length > 0
-    ? prop.values
-        .map((v) => (typeof v === "string" ? v : String(v)))
-        .join(" | ")
-    : prop.type;
+const optionsFor = (
+  prop: ClbrComponentSpecProp,
+): ReadonlyArray<string | number> | undefined =>
+  prop.type.kind === "enum" ? [...prop.type.values] : undefined;
 
-const summaryDefaultFor = (prop: ClbrSpecProp): string | undefined => {
+const summaryDefaultFor = (
+  prop: ClbrComponentSpecProp,
+): string | undefined => {
   if (prop.default === undefined) return undefined;
   if (typeof prop.default === "string") return `"${prop.default}"`;
   return String(prop.default);
 };
 
-const composeDescription = (prop: ClbrSpecProp): string | undefined => {
+const composeDescription = (
+  prop: ClbrComponentSpecProp,
+): string | undefined => {
   const parts: string[] = [];
   if (prop.description) parts.push(prop.description);
   if (prop.requiredWhen) parts.push(`Required when ${prop.requiredWhen}.`);
@@ -472,10 +357,12 @@ const composeDescription = (prop: ClbrSpecProp): string | undefined => {
   return parts.length > 0 ? parts.join("\n\n") : undefined;
 };
 
-const eventSummaryType = (event: ClbrSpecEvent): string =>
+const eventSummaryType = (event: ClbrComponentSpecEvent): string =>
   event.detail ? `CustomEvent<${event.detail}>` : "CustomEvent";
 
-const composeEventDescription = (event: ClbrSpecEvent): string | undefined => {
+const composeEventDescription = (
+  event: ClbrComponentSpecEvent,
+): string | undefined => {
   const parts: string[] = [];
   if (event.description) parts.push(event.description);
   const traits: string[] = [];
@@ -486,12 +373,11 @@ const composeEventDescription = (event: ClbrSpecEvent): string | undefined => {
 };
 
 export const specToArgTypes = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): Record<string, StoryArgType> => {
-  const legacy = asLegacy(spec);
-  const propEntries = Object.entries(legacy.props).map(([name, prop]) => {
+  const propEntries = Object.entries(spec.props).map(([name, prop]) => {
     const control = controlFor(prop);
-    const options = prop.values ? [...prop.values] : undefined;
+    const options = optionsFor(prop);
     const description = composeDescription(prop);
     const summaryDefault = summaryDefaultFor(prop);
     return [
@@ -511,39 +397,34 @@ export const specToArgTypes = (
     ] as const;
   });
 
-  const eventEntries = Object.entries(legacy.events ?? {}).map(
-    ([name, event]) => {
-      const description = composeEventDescription(event);
-      return [
-        name,
-        {
-          action: name,
-          control: false,
-          ...(description ? { description } : {}),
-          table: {
-            category: "events",
-            type: { summary: eventSummaryType(event) },
-          },
+  const eventEntries = Object.entries(spec.events).map(([name, event]) => {
+    const description = composeEventDescription(event);
+    return [
+      name,
+      {
+        action: name,
+        control: false,
+        ...(description ? { description } : {}),
+        table: {
+          category: "events",
+          type: { summary: eventSummaryType(event) },
         },
-      ] as const;
-    },
-  );
+      },
+    ] as const;
+  });
 
   return Object.fromEntries([...propEntries, ...eventEntries]);
 };
 
 export const specToComponentDescription = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): string | undefined => spec.description;
 
 const escapeCell = (value: string): string =>
   value.replace(/\|/g, "\\|").replace(/\n+/g, " ");
 
-export const specToPropsTable = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
-): string => {
-  const legacy = asLegacy(spec);
-  const rows = Object.entries(legacy.props).map(([name, prop]) => {
+export const specToPropsTable = (spec: ClbrComponentSpec): string => {
+  const rows = Object.entries(spec.props).map(([name, prop]) => {
     const label = prop.required ? `\`${name}\`*` : `\`${name}\``;
     const defaultValue = summaryDefaultFor(prop) ?? "-";
     const description = composeDescription(prop) ?? "";
@@ -562,10 +443,9 @@ export const specToPropsTable = (
 };
 
 export const specToEventsTable = (
-  spec: ClbrComponentSpec | ClbrStructuredSpec,
+  spec: ClbrComponentSpec,
 ): string | undefined => {
-  const legacy = asLegacy(spec);
-  const entries = Object.entries(legacy.events ?? {});
+  const entries = Object.entries(spec.events);
   if (entries.length === 0) return undefined;
 
   const rows = entries.map(([name, event]) => {

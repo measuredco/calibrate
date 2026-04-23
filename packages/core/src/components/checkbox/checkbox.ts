@@ -1,5 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrCheckboxProps {
@@ -90,7 +90,7 @@ export function renderClbrCheckbox({
 }
 
 /** Declarative checkbox contract mirror for tooling, docs, and adapters. */
-export const CLBR_CHECKBOX_SPEC: ClbrStructuredSpec = {
+export const CLBR_CHECKBOX_SPEC: ClbrComponentSpec = {
   name: "checkbox",
   description: "Use `checkbox` to let users toggle a single option on or off.",
   output: { element: "div", class: "clbr-checkbox" },

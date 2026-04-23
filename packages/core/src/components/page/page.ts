@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
 
@@ -47,7 +47,7 @@ export function renderClbrPage({
 }
 
 /** Declarative page contract mirror for tooling, docs, and adapters. */
-export const CLBR_PAGE_SPEC: ClbrStructuredSpec = {
+export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
   name: "page",
   description:
     "Use `page` as the primary layout for header, main, and footer regions.",

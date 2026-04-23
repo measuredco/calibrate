@@ -1,5 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrLogoTone = "default" | "neutral";
 export type ClbrLogoSize = "sm" | "md" | "lg" | "fill";
@@ -43,7 +43,7 @@ export function renderClbrLogo({
 }
 
 /** Declarative logo contract mirror for tooling, docs, and adapters. */
-export const CLBR_LOGO_SPEC: ClbrStructuredSpec = {
+export const CLBR_LOGO_SPEC: ClbrComponentSpec = {
   name: "logo",
   description: "Use `logo` to display the brand mark.",
   output: { element: "div", class: "clbr-logo" },

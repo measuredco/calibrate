@@ -1,5 +1,5 @@
 import { attrs } from "../../helpers/html";
-import type { ClbrStructuredSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrTheme } from "../root/root";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -50,7 +50,7 @@ export function renderClbrPoster({
 }
 
 /** Declarative poster contract mirror for tooling, docs, and adapters. */
-export const CLBR_POSTER_SPEC: ClbrStructuredSpec = {
+export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
   name: "poster",
   description: "Use `poster` to layer content over a background image.",
   output: { element: "div", class: "clbr-poster" },
