@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrBrand = "msrd" | "wrfr";
@@ -24,6 +24,38 @@ export interface ClbrRootProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate root component.
+ *
+ * @param props - Root component props.
+ * @returns IR node for the Calibrate root component.
+ */
+export function buildClbrRoot({
+  appOverscrollBehavior,
+  appRoot,
+  brand = "msrd",
+  children,
+  dir,
+  lang,
+  theme,
+}: ClbrRootProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr",
+      "data-app-root": appRoot,
+      "data-app-overscroll-behavior":
+        appOverscrollBehavior === "none" ? "none" : undefined,
+      "data-clbr-brand": brand,
+      "data-clbr-theme": theme,
+      lang: lang === "" ? undefined : lang,
+      dir,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate root component.
  *
  * Emits a `<div>` with the Calibrate root class, required `data-clbr-brand`,
@@ -34,28 +66,7 @@ export interface ClbrRootProps {
  * @returns HTML string for the Calibrate root component.
  */
 export function renderClbrRoot(props: ClbrRootProps): string {
-  const {
-    appOverscrollBehavior,
-    appRoot,
-    brand = "msrd",
-    children,
-    dir,
-    lang,
-    theme,
-  } = props;
-
-  const rootAttrs = attrs({
-    class: "clbr",
-    "data-app-root": appRoot,
-    "data-app-overscroll-behavior":
-      appOverscrollBehavior === "none" ? "none" : undefined,
-    "data-clbr-brand": brand,
-    "data-clbr-theme": theme,
-    lang: lang === "" ? undefined : lang,
-    dir,
-  });
-
-  return `<div ${rootAttrs}>${children}</div>`;
+  return serializeClbrNode(buildClbrRoot(props));
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */

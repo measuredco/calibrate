@@ -110,6 +110,7 @@ export {
 } from "./components/button/button";
 
 export {
+  buildClbrCard,
   CLBR_CARD_SPEC,
   type ClbrCardProps,
   renderClbrCard,
@@ -278,6 +279,7 @@ export {
 } from "./components/panel/panel";
 
 export {
+  buildClbrPage,
   CLBR_PAGE_SPEC,
   type ClbrPageProps,
   type ClbrPageStickyHeader,
@@ -295,6 +297,7 @@ export {
 } from "./components/pattern/pattern";
 
 export {
+  buildClbrPoster,
   CLBR_POSTER_SPEC,
   type ClbrPosterProps,
   type ClbrPosterSurface,
@@ -328,6 +331,7 @@ export {
 } from "./components/range/range";
 
 export {
+  buildClbrRoot,
   CLBR_ROOT_SPEC,
   type ClbrAppOverscrollBehavior,
   type ClbrBrand,

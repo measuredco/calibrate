@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
@@ -19,6 +19,57 @@ export interface ClbrPageProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate page shell.
+ *
+ * @param props - Page shell props.
+ * @returns IR node for a page wrapper.
+ */
+export function buildClbrPage({
+  banner,
+  centerMain,
+  children,
+  footer,
+  header,
+  stickyHeader,
+}: ClbrPageProps): ClbrNode {
+  const regionChildren: ClbrNode[] = [];
+
+  if (banner) regionChildren.push({ kind: "raw", html: banner });
+
+  regionChildren.push({
+    kind: "element",
+    tag: "header",
+    attrs: { class: "header" },
+    children: [{ kind: "raw", html: header }],
+  });
+
+  regionChildren.push({
+    kind: "element",
+    tag: "main",
+    attrs: { class: "main" },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  });
+
+  regionChildren.push({
+    kind: "element",
+    tag: "footer",
+    attrs: { class: "footer" },
+    children: [{ kind: "raw", html: footer }],
+  });
+
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-page",
+      "data-center-main": centerMain,
+      "data-sticky-header": stickyHeader,
+    },
+    children: regionChildren,
+  };
+}
+
+/**
  * SSR renderer for the Calibrate page shell.
  *
  * Emits a prescribed page structure with an optional banner region followed by
@@ -29,21 +80,8 @@ export interface ClbrPageProps {
  * @param props - Page shell props.
  * @returns HTML string for a page wrapper.
  */
-export function renderClbrPage({
-  banner,
-  centerMain,
-  children,
-  footer,
-  header,
-  stickyHeader,
-}: ClbrPageProps): string {
-  const pageAttrs = attrs({
-    class: "clbr-page",
-    "data-center-main": centerMain,
-    "data-sticky-header": stickyHeader,
-  });
-
-  return `<div ${pageAttrs}>${banner ?? ""}<header class="header">${header}</header><main class="main">${children ?? ""}</main><footer class="footer">${footer}</footer></div>`;
+export function renderClbrPage(props: ClbrPageProps): string {
+  return serializeClbrNode(buildClbrPage(props));
 }
 
 /** Declarative page contract mirror for tooling, docs, and adapters. */

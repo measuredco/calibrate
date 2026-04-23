@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrTheme } from "../root/root";
 import type { ClbrSurfaceVariant } from "../surface/surface";
@@ -20,6 +20,49 @@ export interface ClbrPosterProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate poster component.
+ *
+ * @param props - Poster component props.
+ * @returns IR node for a poster container.
+ */
+export function buildClbrPoster({
+  children,
+  contentTheme,
+  image,
+  surface,
+}: ClbrPosterProps): ClbrNode {
+  const resolvedSurface = contentTheme ? (surface ?? "default") : surface;
+  const posterChildren: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "div",
+      attrs: { class: "image-wrapper" },
+      children: [{ kind: "raw", html: image }],
+    },
+  ];
+
+  if (children) {
+    posterChildren.push({
+      kind: "element",
+      tag: "div",
+      attrs: { class: "content" },
+      children: [{ kind: "raw", html: children }],
+    });
+  }
+
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-poster",
+      "data-clbr-content-theme": contentTheme,
+      "data-clbr-surface": resolvedSurface,
+    },
+    children: posterChildren,
+  };
+}
+
+/**
  * SSR renderer for the Calibrate poster component.
  *
  * Emits a single `div.poster` root containing an image wrapper behind optional
@@ -30,23 +73,8 @@ export interface ClbrPosterProps {
  * @param props - Poster component props.
  * @returns HTML string for a poster container.
  */
-export function renderClbrPoster({
-  children,
-  contentTheme,
-  image,
-  surface,
-}: ClbrPosterProps): string {
-  const resolvedSurface = contentTheme ? (surface ?? "default") : surface;
-  const posterAttrs = attrs({
-    class: "clbr-poster",
-    "data-clbr-content-theme": contentTheme,
-    "data-clbr-surface": resolvedSurface,
-  });
-  const contentMarkup = children
-    ? `<div class="content">${children}</div>`
-    : "";
-
-  return `<div ${posterAttrs}><div class="image-wrapper">${image}</div>${contentMarkup}</div>`;
+export function renderClbrPoster(props: ClbrPosterProps): string {
+  return serializeClbrNode(buildClbrPoster(props));
 }
 
 /** Declarative poster contract mirror for tooling, docs, and adapters. */

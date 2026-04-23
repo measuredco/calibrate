@@ -1,7 +1,7 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrHeadingLevel } from "../../types";
-import { renderClbrIcon } from "../icon/icon";
+import { buildClbrIcon } from "../icon/icon";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export interface ClbrCardProps {
@@ -20,6 +20,90 @@ export interface ClbrCardProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate card component.
+ *
+ * @param props - Card component props.
+ * @returns IR node for a card wrapper.
+ */
+export function buildClbrCard({
+  description,
+  headingLevel,
+  href,
+  note,
+  surface,
+  title,
+}: ClbrCardProps): ClbrNode {
+  const headingTag = headingLevel ? `h${headingLevel}` : "div";
+  const titleChildren: ClbrNode[] = href
+    ? [
+        {
+          kind: "element",
+          tag: "a",
+          attrs: { href },
+          children: [{ kind: "text", value: title }],
+        },
+      ]
+    : [{ kind: "text", value: title }];
+
+  const noteChildren: ClbrNode[] = note ? [{ kind: "raw", html: note }] : [];
+
+  if (note && href) {
+    noteChildren.push({
+      kind: "element",
+      tag: "span",
+      attrs: { class: "icon-wrapper" },
+      children: [
+        buildClbrIcon({
+          ariaHidden: true,
+          mirrored: "rtl",
+          name: "arrow-right",
+          size: "xs",
+        }),
+      ],
+    });
+  }
+
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "span",
+      attrs: { class: "dots" },
+      children: [
+        { kind: "element", tag: "span", attrs: {}, children: [] },
+      ],
+    },
+    {
+      kind: "element",
+      tag: headingTag,
+      attrs: { class: "title" },
+      children: titleChildren,
+    },
+    {
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description" },
+      children: [{ kind: "raw", html: description }],
+    },
+  ];
+
+  if (note) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "note" },
+      children: noteChildren,
+    });
+  }
+
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: { class: "clbr-card", "data-clbr-surface": surface },
+    children,
+  };
+}
+
+/**
  * SSR renderer for the Calibrate card component.
  *
  * Emits a `div.card` root with decorative dots, a title, supporting description,
@@ -30,34 +114,8 @@ export interface ClbrCardProps {
  * @param props - Card component props.
  * @returns HTML string for a card wrapper.
  */
-export function renderClbrCard({
-  description,
-  headingLevel,
-  href,
-  note,
-  surface,
-  title,
-}: ClbrCardProps): string {
-  const rootAttrs = attrs({ class: "clbr-card", "data-clbr-surface": surface });
-  const headingTag = headingLevel ? `h${headingLevel}` : `div`;
-  const titleMarkup = href
-    ? `<a href="${escapeHtml(href)}">${escapeHtml(title)}</a>`
-    : escapeHtml(title);
-  const descriptionMarkup = `<p class="description">${description}</p>`;
-  const noteMarkup = note
-    ? `<p class="note">${note}${
-        href
-          ? `<span class="icon-wrapper">${renderClbrIcon({
-              ariaHidden: true,
-              mirrored: "rtl",
-              name: "arrow-right",
-              size: "xs",
-            })}</span>`
-          : ""
-      }</p>`
-    : "";
-
-  return `<div ${rootAttrs}><span class="dots"><span></span></span><${headingTag} class="title">${titleMarkup}</${headingTag}>${descriptionMarkup}${noteMarkup}</div>`;
+export function renderClbrCard(props: ClbrCardProps): string {
+  return serializeClbrNode(buildClbrCard(props));
 }
 
 /** Declarative card contract mirror for tooling, docs, and adapters. */
