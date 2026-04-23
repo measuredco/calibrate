@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrDividerOrientation = "horizontal" | "vertical";
@@ -12,27 +12,36 @@ export interface ClbrDividerProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate divider component.
+ *
+ * @param props - Divider component props.
+ * @returns IR node for a separator element.
+ */
+export function buildClbrDivider({
+  orientation = "horizontal",
+  tone = "default",
+}: ClbrDividerProps = {}): ClbrNode {
+  return {
+    kind: "element",
+    tag: orientation === "horizontal" ? "hr" : "span",
+    attrs: {
+      "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
+      class: "clbr-divider",
+      "data-tone": tone === "subtle" || tone === "brand" ? tone : undefined,
+      role: orientation === "vertical" ? "separator" : undefined,
+    },
+    children: [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate divider component.
  *
  * @param props - Divider component props.
  * @returns HTML string for a separator element.
  */
-export function renderClbrDivider({
-  orientation = "horizontal",
-  tone = "default",
-}: ClbrDividerProps = {}): string {
-  const dividerAttrs = attrs({
-    "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
-    class: "clbr-divider",
-    "data-tone": tone === "subtle" || tone === "brand" ? tone : undefined,
-    role: orientation === "vertical" ? "separator" : undefined,
-  });
-
-  if (orientation === "horizontal") {
-    return `<hr ${dividerAttrs}>`;
-  }
-
-  return `<span ${dividerAttrs}></span>`;
+export function renderClbrDivider(props: ClbrDividerProps = {}): string {
+  return serializeClbrNode(buildClbrDivider(props));
 }
 
 /** Declarative divider contract mirror for tooling, docs, and adapters. */

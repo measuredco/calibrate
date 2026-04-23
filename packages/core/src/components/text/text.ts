@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
@@ -26,12 +26,12 @@ export interface ClbrTextProps {
 }
 
 /**
- * SSR renderer for the Calibrate text component.
+ * Builds the IR tree for the Calibrate text component.
  *
  * @param props - Text component props.
- * @returns HTML string for a text paragraph or span element.
+ * @returns IR node for a text paragraph or span element.
  */
-export function renderClbrText({
+export function buildClbrText({
   align,
   as,
   children,
@@ -40,24 +40,37 @@ export function renderClbrText({
   responsive,
   size = "md",
   tone = "default",
-}: ClbrTextProps): string {
+}: ClbrTextProps): ClbrNode {
   const tag: ClbrTextAs = as === "p" ? "p" : "span";
   const isParagraph = tag === "p";
   const resolvedAlign = isParagraph ? (align ?? "start") : undefined;
   const resolvedMeasured = isParagraph ? (measured ?? true) : undefined;
 
-  const textAttrs = attrs({
-    class: "clbr-text",
-    "data-align":
-      resolvedAlign && resolvedAlign !== "start" ? resolvedAlign : undefined,
-    "data-link-visited": linkVisited ? undefined : "off",
-    "data-measured": resolvedMeasured,
-    "data-responsive": responsive,
-    "data-size": size,
-    "data-tone": tone === "muted" ? "muted" : undefined,
-  });
+  return {
+    kind: "element",
+    tag,
+    attrs: {
+      class: "clbr-text",
+      "data-align":
+        resolvedAlign && resolvedAlign !== "start" ? resolvedAlign : undefined,
+      "data-link-visited": linkVisited ? undefined : "off",
+      "data-measured": resolvedMeasured,
+      "data-responsive": responsive,
+      "data-size": size,
+      "data-tone": tone === "muted" ? "muted" : undefined,
+    },
+    children: [{ kind: "raw", html: children }],
+  };
+}
 
-  return `<${tag} ${textAttrs}>${children}</${tag}>`;
+/**
+ * SSR renderer for the Calibrate text component.
+ *
+ * @param props - Text component props.
+ * @returns HTML string for a text paragraph or span element.
+ */
+export function renderClbrText(props: ClbrTextProps): string {
+  return serializeClbrNode(buildClbrText(props));
 }
 
 /** Declarative text contract mirror for tooling, docs, and adapters. */

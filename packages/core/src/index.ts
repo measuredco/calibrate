@@ -63,6 +63,7 @@ export {
 } from "./components/avatar/avatar";
 
 export {
+  buildClbrBadge,
   CLBR_BADGE_SPEC,
   type ClbrBadgeProps,
   type ClbrBadgeSize,
@@ -70,6 +71,7 @@ export {
 } from "./components/badge/badge";
 
 export {
+  buildClbrBlockquote,
   CLBR_BLOCKQUOTE_SPEC,
   type ClbrBlockquoteProps,
   type ClbrBlockquoteSize,
@@ -132,6 +134,7 @@ export {
 } from "./components/details/details";
 
 export {
+  buildClbrDivider,
   CLBR_DIVIDER_SPEC,
   type ClbrDividerOrientation,
   type ClbrDividerTone,
@@ -172,6 +175,7 @@ export {
 } from "./components/grid/grid";
 
 export {
+  buildClbrHeading,
   CLBR_HEADING_SPEC,
   type ClbrHeadingProps,
   type ClbrHeadingSize,
@@ -373,6 +377,7 @@ export {
 } from "./components/textarea/textarea";
 
 export {
+  buildClbrText,
   CLBR_TEXT_SPEC,
   type ClbrTextAs,
   type ClbrTextProps,

@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 
@@ -16,25 +16,38 @@ export interface ClbrBadgeProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate badge component.
+ *
+ * @param props - Badge component props.
+ * @returns IR node for a badge element.
+ */
+export function buildClbrBadge({
+  floating,
+  label,
+  size = "md",
+  tone,
+}: ClbrBadgeProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "span",
+    attrs: {
+      class: "clbr-badge",
+      "data-floating": floating,
+      "data-size": size,
+      "data-tone": tone || undefined,
+    },
+    children: [{ kind: "text", value: label }],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate badge component.
  *
  * @param props - Badge component props.
  * @returns HTML string for a badge element.
  */
-export function renderClbrBadge({
-  floating,
-  label,
-  size = "md",
-  tone,
-}: ClbrBadgeProps): string {
-  const badgeAttrs = attrs({
-    class: "clbr-badge",
-    "data-floating": floating,
-    "data-size": size,
-    "data-tone": tone || undefined,
-  });
-
-  return `<span ${badgeAttrs}>${escapeHtml(label)}</span>`;
+export function renderClbrBadge(props: ClbrBadgeProps): string {
+  return serializeClbrNode(buildClbrBadge(props));
 }
 
 /** Declarative badge contract mirror for tooling, docs, and adapters. */

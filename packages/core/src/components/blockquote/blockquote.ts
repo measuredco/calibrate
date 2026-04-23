@@ -1,7 +1,7 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
-import { renderClbrText } from "../text/text";
+import { buildClbrText } from "../text/text";
 
 export type ClbrBlockquoteSize = "md" | "lg";
 
@@ -21,41 +21,67 @@ export interface ClbrBlockquoteProps {
 }
 
 /**
- * SSR renderer for the Calibrate blockquote component.
+ * Builds the IR tree for the Calibrate blockquote component.
  *
  * @param props - Blockquote component props.
- * @returns HTML string for a blockquote wrapper.
+ * @returns IR node for a blockquote wrapper.
  */
-export function renderClbrBlockquote({
+export function buildClbrBlockquote({
   align = "start",
   attribution,
   measured = true,
   quote,
   responsive = false,
   size = "md",
-}: ClbrBlockquoteProps): string {
-  const rootAttrs = attrs({
-    class: "clbr-blockquote",
-    "data-align": align === "start" ? undefined : align,
-  });
+}: ClbrBlockquoteProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "figure",
+    attrs: {
+      class: "clbr-blockquote",
+      "data-align": align === "start" ? undefined : align,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "blockquote",
+        attrs: { class: "quote" },
+        children: [
+          buildClbrText({
+            align,
+            as: "p",
+            children: quote,
+            measured,
+            responsive,
+            size,
+          }),
+        ],
+      },
+      {
+        kind: "element",
+        tag: "figcaption",
+        attrs: { class: "attribution" },
+        children: [
+          buildClbrText({
+            as: "span",
+            children: attribution,
+            responsive,
+            size: "sm",
+          }),
+        ],
+      },
+    ],
+  };
+}
 
-  const quoteMarkup = renderClbrText({
-    align,
-    as: "p",
-    children: quote,
-    measured,
-    responsive,
-    size,
-  });
-
-  const attributionMarkup = renderClbrText({
-    as: "span",
-    children: attribution,
-    responsive,
-    size: "sm",
-  });
-
-  return `<figure ${rootAttrs}><blockquote class="quote">${quoteMarkup}</blockquote><figcaption class="attribution">${attributionMarkup}</figcaption></figure>`;
+/**
+ * SSR renderer for the Calibrate blockquote component.
+ *
+ * @param props - Blockquote component props.
+ * @returns HTML string for a blockquote wrapper.
+ */
+export function renderClbrBlockquote(props: ClbrBlockquoteProps): string {
+  return serializeClbrNode(buildClbrBlockquote(props));
 }
 
 /** Declarative blockquote contract mirror for tooling, docs, and adapters. */

@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign, ClbrHeadingLevel } from "../../types";
 export type ClbrHeadingSize =
@@ -28,29 +28,42 @@ export interface ClbrHeadingProps {
 }
 
 /**
- * SSR renderer for the Calibrate heading component.
+ * Builds the IR tree for the Calibrate heading component.
  *
  * @param props - Heading component props.
- * @returns HTML string for a heading element (`h1`..`h6`) or `span`.
+ * @returns IR node for a heading element (`h1`..`h6`) or `span`.
  */
-export function renderClbrHeading({
+export function buildClbrHeading({
   align = "start",
   children,
   level,
   opticalInline,
   responsive,
   size = "md",
-}: ClbrHeadingProps): string {
+}: ClbrHeadingProps): ClbrNode {
   const tag = level ? (`h${level}` as const) : "span";
-  const headingAttrs = attrs({
-    class: "clbr-heading",
-    "data-align": align === "start" ? undefined : align,
-    "data-optical-inline": opticalInline,
-    "data-responsive": responsive,
-    "data-size": size,
-  });
+  return {
+    kind: "element",
+    tag,
+    attrs: {
+      class: "clbr-heading",
+      "data-align": align === "start" ? undefined : align,
+      "data-optical-inline": opticalInline,
+      "data-responsive": responsive,
+      "data-size": size,
+    },
+    children: [{ kind: "text", value: children }],
+  };
+}
 
-  return `<${tag} ${headingAttrs}>${escapeHtml(children)}</${tag}>`;
+/**
+ * SSR renderer for the Calibrate heading component.
+ *
+ * @param props - Heading component props.
+ * @returns HTML string for a heading element (`h1`..`h6`) or `span`.
+ */
+export function renderClbrHeading(props: ClbrHeadingProps): string {
+  return serializeClbrNode(buildClbrHeading(props));
 }
 
 /** Declarative heading contract mirror for tooling, docs, and adapters. */
