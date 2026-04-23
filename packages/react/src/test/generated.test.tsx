@@ -1,0 +1,182 @@
+import * as core from "@measured/calibrate-core";
+import type {
+  ClbrComponentSpec,
+  ClbrComponentSpecProp,
+  ClbrSpecPropType,
+} from "@measured/calibrate-core";
+import { type ComponentType, createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it } from "vitest";
+import * as adapter from "../index";
+
+// -----------------------------------------------------------------------------
+// SSR-parity sweep across every CLBR_*_SPEC.
+//
+// Renders each generated React wrapper with a SPEC-synthesized prop set and
+// asserts the DOM matches the corresponding `renderClbr*` output. Catches
+// regressions in the hand-written `reactify` walker and any drift between
+// core's SSR serializer and the adapter's React rendering. Grows with core
+// automatically — new SPECs are picked up on the next test run.
+// -----------------------------------------------------------------------------
+
+function pascal(name: string): string {
+  return name
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((p) => p[0]!.toUpperCase() + p.slice(1))
+    .join("");
+}
+
+function toElement(html: string): Element {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  const child = container.firstElementChild;
+  if (!child) throw new Error(`No element in html: ${html}`);
+  return child;
+}
+
+/**
+ * React 19 hoists resource-preload `<link>` tags into the output when it
+ * encounters `<img src>` and similar. Core doesn't emit these hints —
+ * they're outside the component's rendered DOM — so strip them before
+ * comparing.
+ */
+function stripReactPreloadHints(html: string): string {
+  return html.replace(/<link\b[^>]*\brel="preload"[^>]*\/?>/gi, "");
+}
+
+type Audience = "core" | "react";
+
+/**
+ * Synthesize a minimum-valid value for a SPEC prop type. For `html`-kind
+ * props, core and React need different shapes: core takes a trusted raw
+ * HTML string; React takes a ReactNode that renders the equivalent.
+ */
+function synthesize(
+  type: ClbrSpecPropType,
+  propName: string,
+  audience: Audience,
+  options: {
+    minArrayLength?: number;
+    uniqueItemFields?: ReadonlyArray<string>;
+  } = {},
+): unknown {
+  switch (type.kind) {
+    case "string":
+      if (propName === "id" || propName.endsWith("Id")) return "clbr-test-id";
+      return "x";
+    case "text":
+      return "x";
+    case "html":
+      return audience === "core"
+        ? "<span>x</span>"
+        : createElement("span", null, "x");
+    case "boolean":
+      return true;
+    case "number":
+      return type.min ?? 0;
+    case "enum":
+      return type.values[0]!;
+    case "iconName":
+      return "shuffle";
+    case "array": {
+      const count = Math.max(1, options.minArrayLength ?? 1);
+      const unique = new Set(options.uniqueItemFields ?? []);
+      const items: Array<Record<string, unknown>> = [];
+      for (let i = 0; i < count; i++) {
+        const item: Record<string, unknown> = {};
+        for (const [k, p] of Object.entries(type.itemShape)) {
+          if (p.required || p.default === undefined) {
+            const value = synthesize(p.type, k, audience);
+            item[k] = unique.has(k) ? `${value}-${i}` : value;
+          }
+        }
+        items.push(item);
+      }
+      return items;
+    }
+    case "union":
+      return synthesize(type.variants[0]!, propName, audience);
+  }
+}
+
+/** Per-component overrides to satisfy runtime validation core performs. */
+const FIXTURE_OVERRIDES: Record<
+  string,
+  {
+    minArrayLength?: Partial<Record<string, number>>;
+    uniqueItemFields?: Partial<Record<string, ReadonlyArray<string>>>;
+    extra?: (audience: Audience) => Record<string, unknown>;
+  }
+> = {
+  icon: {
+    // Core rejects an icon with aria-hidden false and no title/titleId.
+    extra: () => ({ title: "x", titleId: "clbr-test-title-id" }),
+  },
+  radios: {
+    minArrayLength: { radios: 2 },
+    uniqueItemFields: { radios: ["value"] },
+  },
+};
+
+/** Build a minimal required-props-only fixture for a SPEC. */
+function fixtureFor(
+  spec: ClbrComponentSpec,
+  audience: Audience,
+): Record<string, unknown> {
+  const override = FIXTURE_OVERRIDES[spec.name];
+  const out: Record<string, unknown> = {};
+  for (const [name, prop] of Object.entries(spec.props) as Array<
+    [string, ClbrComponentSpecProp]
+  >) {
+    if (!prop.required) continue;
+    out[name] = synthesize(prop.type, name, audience, {
+      minArrayLength: override?.minArrayLength?.[name],
+      uniqueItemFields: override?.uniqueItemFields?.[name],
+    });
+  }
+  if (override?.extra) Object.assign(out, override.extra(audience));
+  return out;
+}
+
+const adapterRegistry = adapter as unknown as Record<
+  string,
+  ComponentType<Record<string, unknown>>
+>;
+const coreRegistry = core as unknown as Record<
+  string,
+  (props: Record<string, unknown>) => string
+>;
+
+const specs: ReadonlyArray<ClbrComponentSpec> = Object.entries(core)
+  .filter(([key]) => key.startsWith("CLBR_") && key.endsWith("_SPEC"))
+  .map(([, value]) => value as ClbrComponentSpec)
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+describe("generated React wrappers match core SSR DOM", () => {
+  for (const spec of specs) {
+    const Pascal = pascal(spec.name);
+    const Wrapper = adapterRegistry[Pascal];
+    const renderCore = coreRegistry[`renderClbr${Pascal}`];
+    const hasWrapper = typeof Wrapper === "function";
+    const hasRenderer = typeof renderCore === "function";
+
+    it(spec.name, () => {
+      expect(hasWrapper).toBe(true);
+      expect(hasRenderer).toBe(true);
+      if (!hasWrapper || !hasRenderer) return;
+
+      const coreHtml = renderCore(fixtureFor(spec, "core"));
+      const reactHtml = stripReactPreloadHints(
+        renderToStaticMarkup(<Wrapper {...fixtureFor(spec, "react")} />),
+      );
+      const coreEl = toElement(coreHtml);
+      const reactEl = toElement(reactHtml);
+      if (!reactEl.isEqualNode(coreEl)) {
+        throw new Error(
+          `${spec.name} DOM mismatch\n  core:  ${coreHtml}\n  react: ${reactHtml}`,
+        );
+      }
+    });
+  }
+});

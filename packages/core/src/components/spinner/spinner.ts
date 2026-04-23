@@ -65,7 +65,6 @@ export function buildClbrSpinner({
             cy: "419",
             fill: "currentColor",
             r: "64",
-            style: "transform-origin: 272px",
           },
           children: [],
         },

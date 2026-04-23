@@ -55,6 +55,7 @@
     .circle-sm {
       animation: clbr-animation-name-spin var(--clbr-motion-duration-600) linear
         infinite;
+      transform-origin: 272px;
       will-change: transform;
 
       @media (prefers-reduced-motion: reduce) {
