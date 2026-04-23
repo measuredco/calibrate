@@ -124,6 +124,41 @@ export function emitWrapperSource(spec: ClbrComponentSpec): string {
   return renderParts(parts);
 }
 
+/**
+ * Emit the barrel `packages/react/src/index.ts` that re-exports every
+ * generated wrapper plus its derived types.
+ */
+export function emitIndexSource(
+  specs: ReadonlyArray<ClbrComponentSpec>,
+): string {
+  const sorted = [...specs].sort((a, b) => a.name.localeCompare(b.name));
+  const blocks: string[] = [
+    `export { defineClbrComponents as defineClbrAll } from "@measured/calibrate-core";`,
+  ];
+  for (const spec of sorted) {
+    const pascal = pascalCase(spec.name);
+    const names: string[] = [pascal];
+    const events = Object.entries(spec.events);
+    for (const [eventName, eventSpec] of events) {
+      const action = stripClbrPrefix(eventName, spec.name);
+      const baseName = `${pascal}${pascalCase(action)}`;
+      if (eventSpec.detail) {
+        names.push(`type ${baseName}Detail`);
+        names.push(`type ${baseName}Event`);
+      }
+      names.push(`type ${baseName}Handler`);
+    }
+    names.push(`type ${pascal}Props`);
+    names.sort((a, b) =>
+      a.replace(/^type /, "").localeCompare(b.replace(/^type /, "")),
+    );
+    blocks.push(
+      `export {\n${names.map((n) => `  ${n},`).join("\n")}\n} from "./components/${spec.name}/${spec.name}";`,
+    );
+  }
+  return blocks.join("\n\n") + "\n";
+}
+
 function isCustomElement(spec: ClbrComponentSpec): boolean {
   const element = spec.output.element;
   if (typeof element !== "string") return false;
@@ -223,6 +258,18 @@ function slotsFromContent(spec: ClbrComponentSpec): ReadonlyArray<SlotInfo> {
 }
 
 function contributeSlotted(parts: EmitParts, spec: ClbrComponentSpec): void {
+  const slots = slotsFromContent(spec);
+  const htmlSlots = slots.filter((s) => s.kind === "html");
+
+  // All-text slots have no ReactNode substitution work — the slot values
+  // are scalar strings that flow straight through to buildClbr*. Route to
+  // the pass-through emitter instead of generating an `Omit<X,>` with no
+  // omission keys (which TS rejects).
+  if (htmlSlots.length === 0) {
+    contributePassThrough(parts, spec);
+    return;
+  }
+
   const pascal = pascalCase(spec.name);
   const buildFn = `buildClbr${pascal}`;
   const corePropsType = `Clbr${pascal}Props`;
@@ -231,10 +278,7 @@ function contributeSlotted(parts: EmitParts, spec: ClbrComponentSpec): void {
   parts.coreValueImports.add(buildFn);
   parts.coreTypeImports.add(corePropsType);
 
-  const slots = slotsFromContent(spec);
-  const htmlSlots = slots.filter((s) => s.kind === "html");
-
-  if (htmlSlots.length > 0) parts.reactTypeImports.add("ReactNode");
+  parts.reactTypeImports.add("ReactNode");
 
   const sentinelName = (slot: SlotInfo) =>
     `SLOT_${screamingSnake(spec.name)}_${screamingSnake(slot.prop)}`;

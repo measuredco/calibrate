@@ -1,54 +1,33 @@
-import {
-  CLBR_BANNER_SPEC,
-  CLBR_BOX_SPEC,
-  CLBR_BUTTON_SPEC,
-  type ClbrComponentSpec,
-  CLBR_CONTAINER_SPEC,
-  CLBR_DIVIDER_SPEC,
-  CLBR_HEADING_SPEC,
-  CLBR_INLINE_SPEC,
-  CLBR_LINK_SPEC,
-  CLBR_LOGO_SPEC,
-  CLBR_MENU_SPEC,
-  CLBR_NAV_SPEC,
-  CLBR_PAGE_SPEC,
-  CLBR_ROOT_SPEC,
-  CLBR_SIDEBAR_SPEC,
-  CLBR_STACK_SPEC,
-  CLBR_SURFACE_SPEC,
-} from "@measured/calibrate-core";
+import * as core from "@measured/calibrate-core";
+import type { ClbrComponentSpec } from "@measured/calibrate-core";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import prettier from "prettier";
-import { emitWrapperSource } from "./emit.ts";
+import { emitIndexSource, emitWrapperSource } from "./emit.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const REACT_COMPONENTS_DIR = resolve(
-  __dirname,
-  "../../../react/src/components",
-);
+const REACT_SRC_DIR = resolve(__dirname, "../../../react/src");
+const REACT_COMPONENTS_DIR = resolve(REACT_SRC_DIR, "components");
 
-const TARGETS: ReadonlyArray<ClbrComponentSpec> = [
-  CLBR_BANNER_SPEC,
-  CLBR_BOX_SPEC,
-  CLBR_BUTTON_SPEC,
-  CLBR_CONTAINER_SPEC,
-  CLBR_DIVIDER_SPEC,
-  CLBR_HEADING_SPEC,
-  CLBR_INLINE_SPEC,
-  CLBR_LINK_SPEC,
-  CLBR_LOGO_SPEC,
-  CLBR_MENU_SPEC,
-  CLBR_NAV_SPEC,
-  CLBR_PAGE_SPEC,
-  CLBR_ROOT_SPEC,
-  CLBR_SIDEBAR_SPEC,
-  CLBR_STACK_SPEC,
-  CLBR_SURFACE_SPEC,
-];
+function isSpec(value: unknown): value is ClbrComponentSpec {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "name" in value &&
+    "output" in value &&
+    "content" in value &&
+    "rules" in value
+  );
+}
+
+const TARGETS: ReadonlyArray<ClbrComponentSpec> = Object.entries(core)
+  .filter(([key]) => key.startsWith("CLBR_") && key.endsWith("_SPEC"))
+  .map(([, value]) => value)
+  .filter(isSpec)
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 async function emit(spec: ClbrComponentSpec): Promise<void> {
   const raw = emitWrapperSource(spec);
@@ -60,11 +39,20 @@ async function emit(spec: ClbrComponentSpec): Promise<void> {
   console.log(`  wrote ${outPath}`);
 }
 
+async function emitIndex(): Promise<void> {
+  const raw = emitIndexSource(TARGETS);
+  const formatted = await prettier.format(raw, { parser: "typescript" });
+  const outPath = resolve(REACT_SRC_DIR, "index.ts");
+  await writeFile(outPath, formatted);
+  console.log(`  wrote ${outPath}`);
+}
+
 async function main(): Promise<void> {
   console.log(`generating ${TARGETS.length} React wrapper(s)`);
   for (const spec of TARGETS) {
     await emit(spec);
   }
+  await emitIndex();
   console.log("done");
 }
 

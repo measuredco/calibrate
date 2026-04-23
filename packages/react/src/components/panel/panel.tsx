@@ -1,0 +1,30 @@
+import { buildClbrPanel, type ClbrPanelProps } from "@measured/calibrate-core";
+import type { ReactNode } from "react";
+import {
+  type NativeAttrsFor,
+  pickNativeExtras,
+  reactify,
+} from "../../reactify";
+
+const SLOT_PANEL_CHILDREN = "__CLBR_SLOT_PANEL_CHILDREN__";
+
+export type PanelProps = Omit<ClbrPanelProps, "children"> & {
+  children?: ReactNode;
+} & NativeAttrsFor<HTMLDivElement>;
+
+export function Panel(props: PanelProps): ReturnType<typeof reactify> {
+  const { children, padding, surface, ...rest } = props;
+  const hasChildren = children != null && children !== false;
+  const node = buildClbrPanel({
+    children: hasChildren ? SLOT_PANEL_CHILDREN : undefined,
+    padding,
+    surface,
+  });
+  return reactify(
+    node,
+    pickNativeExtras(rest as unknown as Record<string, unknown>),
+    {
+      ...(hasChildren ? { [SLOT_PANEL_CHILDREN]: children } : {}),
+    },
+  );
+}

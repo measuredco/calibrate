@@ -1,0 +1,62 @@
+import {
+  buildClbrGridItem,
+  type ClbrGridItemProps,
+} from "@measured/calibrate-core";
+import type { ReactNode } from "react";
+import {
+  type NativeAttrsFor,
+  pickNativeExtras,
+  reactify,
+} from "../../reactify";
+
+const SLOT_GRID_ITEM_CHILDREN = "__CLBR_SLOT_GRID_ITEM_CHILDREN__";
+
+export type GridItemProps = Omit<ClbrGridItemProps, "children"> & {
+  children?: ReactNode;
+} & NativeAttrsFor<HTMLDivElement>;
+
+export function GridItem(props: GridItemProps): ReturnType<typeof reactify> {
+  const {
+    children,
+    align,
+    justify,
+    colSpan,
+    colStart,
+    rowSpan,
+    rowSpanNarrow,
+    rowSpanWide,
+    rowStart,
+    rowStartNarrow,
+    rowStartWide,
+    colSpanNarrow,
+    colStartNarrow,
+    colSpanWide,
+    colStartWide,
+    ...rest
+  } = props;
+  const hasChildren = children != null && children !== false;
+  const node = buildClbrGridItem({
+    children: hasChildren ? SLOT_GRID_ITEM_CHILDREN : undefined,
+    align,
+    justify,
+    colSpan,
+    colStart,
+    rowSpan,
+    rowSpanNarrow,
+    rowSpanWide,
+    rowStart,
+    rowStartNarrow,
+    rowStartWide,
+    colSpanNarrow,
+    colStartNarrow,
+    colSpanWide,
+    colStartWide,
+  });
+  return reactify(
+    node,
+    pickNativeExtras(rest as unknown as Record<string, unknown>),
+    {
+      ...(hasChildren ? { [SLOT_GRID_ITEM_CHILDREN]: children } : {}),
+    },
+  );
+}

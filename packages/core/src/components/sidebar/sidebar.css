@@ -1,6 +1,6 @@
 @layer clbr.components {
   :where(.clbr) .clbr-sidebar {
-    display: inline-block;
+    display: flex;
 
     @media (min-width: 68em) {
       &[data-above-notebook="persistent"] {

@@ -1,0 +1,44 @@
+import {
+  buildClbrBlockquote,
+  type ClbrBlockquoteProps,
+} from "@measured/calibrate-core";
+import type { ReactNode } from "react";
+import {
+  type NativeAttrsFor,
+  pickNativeExtras,
+  reactify,
+} from "../../reactify";
+
+const SLOT_BLOCKQUOTE_QUOTE = "__CLBR_SLOT_BLOCKQUOTE_QUOTE__";
+const SLOT_BLOCKQUOTE_ATTRIBUTION = "__CLBR_SLOT_BLOCKQUOTE_ATTRIBUTION__";
+
+export type BlockquoteProps = Omit<
+  ClbrBlockquoteProps,
+  "quote" | "attribution"
+> & {
+  quote: ReactNode;
+  attribution: ReactNode;
+} & NativeAttrsFor<HTMLElement>;
+
+export function Blockquote(
+  props: BlockquoteProps,
+): ReturnType<typeof reactify> {
+  const { align, attribution, measured, quote, responsive, size, ...rest } =
+    props;
+  const node = buildClbrBlockquote({
+    align,
+    attribution: SLOT_BLOCKQUOTE_ATTRIBUTION,
+    measured,
+    quote: SLOT_BLOCKQUOTE_QUOTE,
+    responsive,
+    size,
+  });
+  return reactify(
+    node,
+    pickNativeExtras(rest as unknown as Record<string, unknown>),
+    {
+      [SLOT_BLOCKQUOTE_QUOTE]: quote,
+      [SLOT_BLOCKQUOTE_ATTRIBUTION]: attribution,
+    },
+  );
+}
