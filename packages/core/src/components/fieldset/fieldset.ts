@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
 
 export interface ClbrFieldsetProps {
@@ -76,110 +77,93 @@ export function renderClbrFieldset({
 }
 
 /** Declarative fieldset contract mirror for tooling, docs, and adapters. */
-export const CLBR_FIELDSET_SPEC = {
+export const CLBR_FIELDSET_SPEC: ClbrStructuredSpec = {
   name: "fieldset",
   description: "Use `fieldset` to group related form controls under a legend.",
-  output: {
-    element: "fieldset",
+  output: { element: "fieldset", class: "clbr-fieldset" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "legend", kind: "text" },
+      { prop: "children", kind: "html" },
+    ],
   },
   props: {
     children: {
       description: "Form controls grouped inside the fieldset.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     description: {
       description:
         "Description shown below the legend; also used for validation guidance.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Prevents interaction with controls in the group.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     id: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` for the fieldset.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     invalid: {
       default: false,
       description: "Marks the group as invalid.",
       ignoredWhen: "`disabled` is true",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     legend: {
       description: "Legend shown above the group.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     inlineSize: {
       default: "full",
       description:
         "Whether the fieldset fills its container or shrinks to fit.",
-      required: false,
-      type: "enum",
-      values: ["full", "fit"],
+      type: { kind: "enum", values: ["full", "fit"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-fieldset",
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}" },
       },
       {
-        behavior: "always",
-        target: "id",
-        value: "{id}",
+        target: { on: "host" },
+        attribute: "data-inline-size",
+        condition: { kind: "when-equals", prop: "inlineSize", to: "fit" },
+        value: { kind: "literal", text: "fit" },
       },
       {
-        behavior: "emit",
-        target: "data-inline-size",
-        value: "fit",
-        when: "inlineSize is fit",
+        target: { on: "host" },
+        attribute: "disabled",
+        condition: { kind: "when-truthy", prop: "disabled" },
       },
       {
-        behavior: "emit",
-        target: "disabled",
-        when: "disabled is true",
+        target: { on: "host" },
+        attribute: "aria-invalid",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "invalid" },
+            { kind: "not", of: { kind: "when-truthy", prop: "disabled" } },
+          ],
+        },
+        value: { kind: "literal", text: "true" },
       },
       {
-        behavior: "emit",
-        target: "aria-invalid",
-        value: "true",
-        when: "invalid is true and disabled is false",
-      },
-      {
-        behavior: "emit",
-        target: "aria-describedby",
-        value: "{id}-description",
-        when: "description is a non-empty string",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "legend.legend",
-        value: "escaped legend",
-      },
-      {
-        behavior: "emit",
-        element: "p.description",
-        value: "escaped description",
-        when: "description is provided",
-      },
-      {
-        behavior: "always",
-        element: "children",
-        value: "trusted HTML",
+        target: { on: "host" },
+        attribute: "aria-describedby",
+        condition: { kind: "when-non-empty", prop: "description" },
+        value: { kind: "template", pattern: "{id}-description" },
       },
     ],
   },
-} as const;
+};

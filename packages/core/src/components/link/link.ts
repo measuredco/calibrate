@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrLinkSize = "sm" | "md";
 export type ClbrLinkTarget = "_blank" | "_parent" | "_self" | "_top";
@@ -64,116 +65,98 @@ export function renderClbrLink(props: ClbrLinkProps): string {
 }
 
 /** Declarative link contract mirror for tooling, docs, and adapters. */
-export const CLBR_LINK_SPEC = {
+export const CLBR_LINK_SPEC: ClbrStructuredSpec = {
   name: "link",
   description: "Use `link` to navigate to another page or resource.",
-  output: {
-    default: "a",
+  output: { element: "a", class: "clbr-link" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "label", kind: "text" },
+      { prop: "icon", kind: "html" },
+    ],
   },
   props: {
     href: {
       description: "Link destination.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     icon: {
       description:
         "Icon markup shown alongside the label. Calibrate icon component, or SVG markup from https://simpleicons.org/ for third-party logos.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     label: {
       description: "Accessible label.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     rel: {
       description: "Explicit `rel` attribute.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     target: {
       description: "Where to open the link.",
-      required: false,
-      type: "enum",
-      values: ["_blank", "_parent", "_self", "_top"],
+      type: {
+        kind: "enum",
+        values: ["_blank", "_parent", "_self", "_top"],
+      },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "neutral"],
+      type: { kind: "enum", values: ["default", "neutral"] },
     },
     underline: {
       default: false,
       description: "Underlines the link.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-link",
+        target: { on: "host" },
+        attribute: "href",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "href" },
       },
       {
-        behavior: "emit",
-        target: "href",
-        value: "{href}",
-        when: "href is provided",
+        target: { on: "host" },
+        attribute: "rel",
+        condition: { kind: "when-non-empty", prop: "rel" },
+        value: { kind: "prop", prop: "rel" },
       },
       {
-        behavior: "emit",
-        target: "rel",
-        value: "{rel}",
-        when: "rel is non-empty",
+        target: { on: "host" },
+        attribute: "target",
+        condition: { kind: "when-provided", prop: "target" },
+        value: { kind: "prop", prop: "target" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "target",
-        value: "{target}",
-        when: "target is non-empty",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-equals", prop: "tone", to: "neutral" },
+        value: { kind: "literal", text: "neutral" },
       },
       {
-        behavior: "emit",
-        target: "data-tone",
-        value: "neutral",
-        when: "tone is neutral",
-      },
-      {
-        behavior: "emit",
-        target: "data-underline",
-        value: "present",
-        when: "underline is true",
-      },
-    ],
-    content: [
-      {
-        behavior: "emit",
-        element: "span.icon-wrapper",
-        value: "{icon}",
-        when: "icon is a non-empty string",
-      },
-      {
-        behavior: "always",
-        element: "span.label",
-        value: "{label}",
+        target: { on: "host" },
+        attribute: "data-underline",
+        condition: { kind: "when-truthy", prop: "underline" },
       },
     ],
   },
-} as const;
+};

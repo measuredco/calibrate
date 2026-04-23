@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import { renderClbrExpander } from "../expander/expander";
 
 export const CLBR_NAV_TAG_NAME = "clbr-nav";
@@ -265,160 +266,109 @@ export function defineClbrNav(): void {
 }
 
 /** Declarative nav contract mirror for tooling, docs, and adapters. */
-export const CLBR_NAV_SPEC = {
+export const CLBR_NAV_SPEC: ClbrStructuredSpec = {
   name: "nav",
   description: "Use `nav` to render a primary navigation list.",
-  output: {
-    element: CLBR_NAV_TAG_NAME,
-    class: "clbr-nav",
-    children: [
-      "nav.nav",
-      "nav.nav > div.content",
-      "nav.nav > div.content > ul.list > li > a",
-      "optional runtime div[data-part='expander'] > button.expander",
-    ],
-  },
+  output: { element: CLBR_NAV_TAG_NAME, class: "clbr-nav" },
+  content: { kind: "structured", prop: "items" },
   props: {
     items: {
       description: "Nav links shown in the list.",
       required: true,
-      type: "array",
-      shape: {
-        href: {
-          required: true,
-          type: "string",
-        },
-        label: {
-          required: true,
-          type: "text",
-        },
-        current: {
-          default: false,
-          required: false,
-          type: "boolean",
+      type: {
+        kind: "array",
+        itemShape: {
+          current: {
+            default: false,
+            description: "Emits `aria-current=\"page\"` when true.",
+            type: { kind: "boolean" },
+          },
+          href: {
+            description: "Link destination.",
+            required: true,
+            type: { kind: "string" },
+          },
+          label: {
+            description: "Link label.",
+            required: true,
+            type: { kind: "text" },
+          },
         },
       },
     },
     label: {
       description: "Accessible label for the nav landmark.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     expanderLabel: {
       description: "Accessible label for the collapsible expander button.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     expanderPosition: {
       default: "start",
-      description: "Where the expander sits within the compostion.",
-      required: false,
-      type: "enum",
-      values: ["start", "end"],
+      description: "Where the expander sits within the composition.",
+      type: { kind: "enum", values: ["start", "end"] },
     },
     collapsible: {
       description: "When to collapse the nav behind an expander.",
-      required: false,
-      type: "enum",
-      values: ["always", "belowTablet"],
+      type: { kind: "enum", values: ["always", "belowTablet"] },
     },
     contentId: {
-      constraints: ["validHtmlId"],
       description: "`id` for the collapsible content region.",
-      required: false,
       requiredWhen: "`collapsible` is provided",
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: `${CLBR_NAV_TAG_NAME}@class`,
-        value: "clbr-nav",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "nav.nav@aria-label",
-        value: "{label}",
-        when: "label is provided",
+        target: { on: "host" },
+        attribute: "data-collapsible",
+        condition: { kind: "when-provided", prop: "collapsible" },
+        value: { kind: "prop", prop: "collapsible" },
       },
       {
-        behavior: "emit",
-        target: `${CLBR_NAV_TAG_NAME}@data-collapsible`,
-        value: "{collapsible}",
-        when: "collapsible is always or belowTablet",
+        target: { on: "host" },
+        attribute: "data-expander-position",
+        condition: { kind: "when-provided", prop: "collapsible" },
+        value: { kind: "prop", prop: "expanderPosition" },
       },
       {
-        behavior: "emit",
-        target: `${CLBR_NAV_TAG_NAME}@data-expander-position`,
-        value: "{expanderPosition}",
-        when: "collapsible is always or belowTablet",
+        target: { on: "host" },
+        attribute: "data-expander-label",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-provided", prop: "collapsible" },
+            { kind: "when-non-empty", prop: "expanderLabel" },
+          ],
+        },
+        value: { kind: "prop", prop: "expanderLabel" },
       },
       {
-        behavior: "emit",
-        target: "div.content@id",
-        value: "{contentId}",
-        when: "contentId is provided",
+        target: { on: "descendant", selector: "nav" },
+        attribute: "aria-label",
+        condition: { kind: "when-non-empty", prop: "label" },
+        value: { kind: "prop", prop: "label" },
       },
       {
-        behavior: "emit",
-        target: `${CLBR_NAV_TAG_NAME}@data-expander-label`,
-        value: "{expanderLabel}",
-        when: "collapsible is provided and expanderLabel is non-empty",
-      },
-      {
-        behavior: "always",
-        target: `${CLBR_NAV_TAG_NAME}@data-size`,
-        value: "{size}",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "div.content",
-      },
-      {
-        behavior: "always",
-        value: "div.content > ul.list",
-      },
-      {
-        behavior: "always",
-        value: "div.content > ul.list > li > a",
-      },
-      {
-        behavior: "runtime",
-        value: 'div[data-part="expander"] > button.expander',
-        when: "collapsible is provided and defineClbrNav() has upgraded the host",
-      },
-      {
-        behavior: "runtime",
-        value: 'button.expander[aria-expanded="false" | "true"]',
-        when: "collapsible is provided and defineClbrNav() has upgraded the host",
-      },
-      {
-        behavior: "runtime",
-        value: "Escape closes expanded nav",
-        when: "defineClbrNav() has upgraded the host",
-      },
-      {
-        behavior: "runtime",
-        value:
-          "belowTablet nav closes when viewport crosses to min-width: 48em",
-        when: 'collapsible is "belowTablet" and matchMedia is available',
-      },
-      {
-        behavior: "emit",
-        value: 'a[aria-current=\"page\"]',
-        when: "item.current is true",
+        target: { on: "descendant", selector: "div.content" },
+        attribute: "id",
+        condition: { kind: "when-provided", prop: "contentId" },
+        value: { kind: "prop", prop: "contentId" },
       },
     ],
   },
-} as const;
+};
