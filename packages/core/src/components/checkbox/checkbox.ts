@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrCheckboxProps {
@@ -89,145 +90,127 @@ export function renderClbrCheckbox({
 }
 
 /** Declarative checkbox contract mirror for tooling, docs, and adapters. */
-export const CLBR_CHECKBOX_SPEC = {
+export const CLBR_CHECKBOX_SPEC: ClbrStructuredSpec = {
   name: "checkbox",
   description: "Use `checkbox` to let users toggle a single option on or off.",
-  output: {
-    element: "div",
+  output: { element: "div", class: "clbr-checkbox" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "label", kind: "text" },
+      { prop: "description", kind: "text" },
+    ],
   },
   props: {
     checked: {
       default: false,
       description: "Whether the checkbox is checked.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     description: {
       description: "Helper text shown below the label.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     descriptionId: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` for the `description` element.",
-      required: false,
       requiredWhen: "`description` is provided",
-      type: "string",
+      type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Prevents interaction.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     invalid: {
       default: false,
       description: "Marks the checkbox as invalid.",
       ignoredWhen: "`disabled` is true",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     label: {
       description: "Label shown next to the checkbox.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     name: {
       description: "Name submitted with the form.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     required: {
       default: false,
       description: "Marks the checkbox as required.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     value: {
       description: "Value submitted with the form.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-checkbox",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "div[data-size]",
-        value: "{size}",
+        target: { on: "descendant", selector: "input" },
+        attribute: "class",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "checkbox" },
       },
       {
-        behavior: "emit",
-        target: "input[aria-describedby]",
-        value: "{descriptionId}",
-        when: "description is provided",
+        target: { on: "descendant", selector: "input" },
+        attribute: "type",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "checkbox" },
       },
       {
-        behavior: "emit",
-        target: "input[aria-invalid]",
-        value: "true",
-        when: "invalid is true and disabled is false",
+        target: { on: "descendant", selector: "input" },
+        attribute: "checked",
+        condition: { kind: "when-truthy", prop: "checked" },
       },
       {
-        behavior: "always",
-        target: "input[class]",
-        value: "checkbox",
+        target: { on: "descendant", selector: "input" },
+        attribute: "disabled",
+        condition: { kind: "when-truthy", prop: "disabled" },
       },
       {
-        behavior: "always",
-        target: "input[type]",
-        value: "checkbox",
+        target: { on: "descendant", selector: "input" },
+        attribute: "required",
+        condition: { kind: "when-truthy", prop: "required" },
       },
       {
-        behavior: "emit",
-        target: "input[checked]",
-        when: "checked is true",
+        target: { on: "descendant", selector: "input" },
+        attribute: "name",
+        condition: { kind: "when-non-empty", prop: "name" },
+        value: { kind: "prop", prop: "name" },
       },
       {
-        behavior: "emit",
-        target: "input[disabled]",
-        when: "disabled is true",
+        target: { on: "descendant", selector: "input" },
+        attribute: "value",
+        condition: { kind: "when-non-empty", prop: "value" },
+        value: { kind: "prop", prop: "value" },
       },
       {
-        behavior: "emit",
-        target: "input[name]",
-        when: "name is a non-empty string",
-      },
-      {
-        behavior: "emit",
-        target: "input[required]",
-        when: "required is true",
-      },
-      {
-        behavior: "emit",
-        target: "input[value]",
-        when: "value is a non-empty string",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "label.label",
-        value: "escaped label",
-      },
-      {
-        behavior: "emit",
-        element: "p.description",
-        value: "escaped description",
-        when: "description is provided",
+        target: { on: "descendant", selector: "input" },
+        attribute: "aria-invalid",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "invalid" },
+            { kind: "not", of: { kind: "when-truthy", prop: "disabled" } },
+          ],
+        },
+        value: { kind: "literal", text: "true" },
       },
     ],
   },
-} as const;
+};

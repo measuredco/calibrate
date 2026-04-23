@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 import { renderClbrFieldset } from "../fieldset/fieldset";
 
@@ -160,200 +161,153 @@ export function renderClbrRadios({
 }
 
 /** Declarative radios contract mirror for tooling, docs, and adapters. */
-export const CLBR_RADIOS_SPEC = {
+export const CLBR_RADIOS_SPEC: ClbrStructuredSpec = {
   name: "radios",
   description: "Use `radios` to let users select one option from a short list.",
-  output: {
-    element: "fieldset",
-  },
+  output: { element: "fieldset", class: "clbr-fieldset" },
+  content: { kind: "structured", prop: "radios" },
   props: {
     description: {
       description: "Helper text shown below the legend.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Disables every option in the group.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     id: {
-      constraints: ["non-empty", "validHtmlId"],
       description:
         "Unique id used to associate the group with its descriptions.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     invalid: {
       default: false,
       description: "Marks the group as invalid.",
       ignoredWhen: "`disabled` is true",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     radios: {
-      constraints: [
-        "minItems:2",
-        "uniqueValues",
-        "nonEmptyValue",
-        "nonEmptyLabel",
-      ],
       description: "Options shown in the group.",
       required: true,
-      type: "array",
+      type: {
+        kind: "array",
+        itemShape: {
+          description: {
+            description: "Optional per-item helper text.",
+            type: { kind: "string" },
+          },
+          disabled: {
+            default: false,
+            description: "Optional per-item disabled override.",
+            type: { kind: "boolean" },
+          },
+          label: {
+            description: "Radio option label.",
+            required: true,
+            type: { kind: "text" },
+          },
+          value: {
+            description: "Submitted value and selection key.",
+            required: true,
+            type: { kind: "string" },
+          },
+        },
+      },
     },
     legend: {
       description: "Group label.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     name: {
-      constraints: ["non-empty"],
       description: "Form field name shared by all options.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     orientation: {
       default: "vertical",
       description: "Layout direction.",
-      required: false,
-      type: "enum",
-      values: ["vertical", "horizontal"],
+      type: { kind: "enum", values: ["vertical", "horizontal"] },
     },
     required: {
       default: false,
       description: "Requires a selection before submission.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     value: {
       description: "Currently selected value.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "fieldset",
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}" },
       },
       {
-        behavior: "always",
-        target: "div.clbr-radios[class]",
-        value: "clbr-radios",
+        target: { on: "host" },
+        attribute: "disabled",
+        condition: { kind: "when-truthy", prop: "disabled" },
       },
       {
-        behavior: "always",
-        target: "div.clbr-radios[data-orientation]",
-        value: "{orientation}",
+        target: { on: "host" },
+        attribute: "aria-invalid",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "invalid" },
+            { kind: "not", of: { kind: "when-truthy", prop: "disabled" } },
+          ],
+        },
+        value: { kind: "literal", text: "true" },
       },
       {
-        behavior: "always",
-        target: "div.clbr-radios[data-size]",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "aria-describedby",
+        condition: { kind: "when-non-empty", prop: "description" },
+        value: { kind: "template", pattern: "{id}-description" },
       },
       {
-        behavior: "always",
-        target: "id",
-        value: "{id}",
+        target: { on: "descendant", selector: "div.clbr-radios" },
+        attribute: "data-orientation",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "orientation" },
       },
       {
-        behavior: "emit",
-        target: "disabled",
-        when: "disabled is true",
+        target: { on: "descendant", selector: "div.clbr-radios" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "aria-invalid",
-        value: "true",
-        when: "invalid is true and disabled is false",
+        target: { on: "descendant", selector: "input" },
+        attribute: "class",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "radio" },
       },
       {
-        behavior: "emit",
-        target: "aria-describedby",
-        value: "{id}-description",
-        when: "description is a non-empty string",
+        target: { on: "descendant", selector: "input" },
+        attribute: "type",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "radio" },
       },
       {
-        behavior: "always",
-        target: "input[type]",
-        value: "radio",
-      },
-      {
-        behavior: "always",
-        target: "input[class]",
-        value: "radio",
-      },
-      {
-        behavior: "always",
-        target: "input[name]",
-        value: "{name}",
-      },
-      {
-        behavior: "emit",
-        target: "input[checked]",
-        when: "item value matches group value",
-      },
-      {
-        behavior: "emit",
-        target: "input[disabled]",
-        when: "item disabled is true",
-      },
-      {
-        behavior: "emit",
-        target: "input[required]",
-        when: "required is true and group disabled is false and item disabled is false",
-      },
-      {
-        behavior: "emit",
-        target: "input[aria-describedby]",
-        value: "{id}-{item.value}-description",
-        when: "item description is provided",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "div.clbr-radios",
-        value: "radio group container",
-      },
-      {
-        behavior: "always",
-        element: "div.radio-field",
-        value: "radio item wrapper",
-      },
-      {
-        behavior: "always",
-        element: "legend.legend",
-        value: "escaped legend",
-      },
-      {
-        behavior: "emit",
-        element: "p.description",
-        value: "escaped description",
-        when: "group description is provided",
-      },
-      {
-        behavior: "always",
-        element: "span",
-        value: "escaped item label",
-      },
-      {
-        behavior: "emit",
-        element: "p.radio-description",
-        value: "escaped item description",
-        when: "item description is provided",
+        target: { on: "descendant", selector: "input" },
+        attribute: "name",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "name" },
       },
     ],
   },
-} as const;
+};

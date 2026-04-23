@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrSwitchProps {
@@ -76,127 +77,106 @@ export function renderClbrSwitch({
 }
 
 /** Declarative switch contract mirror for tooling, docs, and adapters. */
-export const CLBR_SWITCH_SPEC = {
+export const CLBR_SWITCH_SPEC: ClbrStructuredSpec = {
   name: "switch",
   description:
     "Use `switch` to let users instantly toggle a setting on or off.",
-  output: {
-    element: "div",
+  output: { element: "div", class: "clbr-switch" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "label", kind: "text" },
+      { prop: "description", kind: "text" },
+    ],
   },
   props: {
     checked: {
       default: false,
       description: "Whether the switch is on.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     description: {
       description: "Helper text shown below the label.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     descriptionId: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` of the `description` element referenced by the input.",
-      required: false,
       requiredWhen: "`description` is provided",
-      type: "string",
+      type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Disables the switch.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     label: {
       description: "Label text.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     name: {
       description: "Form field name.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     value: {
       description: "Submitted value when checked.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-switch",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "descendant", selector: "input" },
+        attribute: "class",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "switch" },
       },
       {
-        behavior: "emit",
-        target: "input[aria-describedby]",
-        value: "{descriptionId}",
-        when: "description is provided",
+        target: { on: "descendant", selector: "input" },
+        attribute: "type",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "checkbox" },
       },
       {
-        behavior: "always",
-        target: "input[class]",
-        value: "switch",
+        target: { on: "descendant", selector: "input" },
+        attribute: "role",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "switch" },
       },
       {
-        behavior: "always",
-        target: "input[type]",
-        value: "checkbox",
+        target: { on: "descendant", selector: "input" },
+        attribute: "checked",
+        condition: { kind: "when-truthy", prop: "checked" },
       },
       {
-        behavior: "always",
-        target: "input[role]",
-        value: "switch",
+        target: { on: "descendant", selector: "input" },
+        attribute: "disabled",
+        condition: { kind: "when-truthy", prop: "disabled" },
       },
       {
-        behavior: "emit",
-        target: "input[checked]",
-        when: "checked is true",
+        target: { on: "descendant", selector: "input" },
+        attribute: "name",
+        condition: { kind: "when-non-empty", prop: "name" },
+        value: { kind: "prop", prop: "name" },
       },
       {
-        behavior: "emit",
-        target: "input[disabled]",
-        when: "disabled is true",
-      },
-      {
-        behavior: "emit",
-        target: "input[name]",
-        when: "name is a non-empty string",
-      },
-      {
-        behavior: "emit",
-        target: "input[value]",
-        when: "value is a non-empty string",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "label.label",
-        value: "escaped label",
-      },
-      {
-        behavior: "emit",
-        element: "p.description",
-        value: "escaped description",
-        when: "description is provided",
+        target: { on: "descendant", selector: "input" },
+        attribute: "value",
+        condition: { kind: "when-non-empty", prop: "value" },
+        value: { kind: "prop", prop: "value" },
       },
     ],
   },
-} as const;
+};
