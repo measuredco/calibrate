@@ -2,7 +2,8 @@ export { defineClbrComponents as defineClbrAll } from "@measured/calibrate-core"
 
 export {
   Banner,
-  type BannerEventHandler,
+  type BannerBeforeDismissHandler,
+  type BannerDismissHandler,
   type BannerProps,
 } from "./components/banner/banner";
 

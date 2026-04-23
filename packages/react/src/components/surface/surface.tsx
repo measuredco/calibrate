@@ -17,7 +17,6 @@ export type SurfaceProps = Omit<ClbrSurfaceProps, "children"> & {
 
 export function Surface(props: SurfaceProps): ReturnType<typeof reactify> {
   const { children, variant, ...rest } = props;
-
   const node = buildClbrSurface({
     children: SLOT_SURFACE_CHILDREN,
     variant,

@@ -23,7 +23,6 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
     theme,
     ...rest
   } = props;
-
   const node = buildClbrRoot({
     appOverscrollBehavior,
     appRoot,

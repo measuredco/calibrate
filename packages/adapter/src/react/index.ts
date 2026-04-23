@@ -17,6 +17,7 @@ import { emitWrapperSource } from "./emit.ts";
 };
 
 const {
+  CLBR_BANNER_SPEC,
   CLBR_BOX_SPEC,
   CLBR_BUTTON_SPEC,
   CLBR_CONTAINER_SPEC,
@@ -25,8 +26,11 @@ const {
   CLBR_INLINE_SPEC,
   CLBR_LINK_SPEC,
   CLBR_LOGO_SPEC,
+  CLBR_MENU_SPEC,
+  CLBR_NAV_SPEC,
   CLBR_PAGE_SPEC,
   CLBR_ROOT_SPEC,
+  CLBR_SIDEBAR_SPEC,
   CLBR_STACK_SPEC,
   CLBR_SURFACE_SPEC,
 } = await import("@measured/calibrate-core");
@@ -40,6 +44,7 @@ const REACT_COMPONENTS_DIR = resolve(
 );
 
 const TARGETS: ReadonlyArray<ClbrComponentSpec> = [
+  CLBR_BANNER_SPEC,
   CLBR_BOX_SPEC,
   CLBR_BUTTON_SPEC,
   CLBR_CONTAINER_SPEC,
@@ -48,8 +53,11 @@ const TARGETS: ReadonlyArray<ClbrComponentSpec> = [
   CLBR_INLINE_SPEC,
   CLBR_LINK_SPEC,
   CLBR_LOGO_SPEC,
+  CLBR_MENU_SPEC,
+  CLBR_NAV_SPEC,
   CLBR_PAGE_SPEC,
   CLBR_ROOT_SPEC,
+  CLBR_SIDEBAR_SPEC,
   CLBR_STACK_SPEC,
   CLBR_SURFACE_SPEC,
 ];

@@ -16,7 +16,6 @@ export function Nav(props: NavProps): ReturnType<typeof reactify> {
   useEffect(() => {
     defineClbrNav();
   }, []);
-
   return reactify(
     buildClbrNav(props),
     pickNativeExtras(props as unknown as Record<string, unknown>),

@@ -18,43 +18,50 @@ import {
   reactify,
 } from "../../reactify";
 
-export type BannerEventHandler = (event: Event) => void;
-
-export type BannerProps = ClbrBannerProps &
-  NativeAttrsFor<HTMLElement> & {
-    onBeforeDismiss?: BannerEventHandler;
-    onDismiss?: BannerEventHandler;
-  };
-
 function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
   if (typeof ref === "function") ref(value);
   else if (ref) (ref as { current: T | null }).current = value;
 }
 
+export type BannerBeforeDismissHandler = (event: Event) => void;
+
+export type BannerDismissHandler = (event: Event) => void;
+
+export type BannerProps = ClbrBannerProps &
+  NativeAttrsFor<HTMLElement> & {
+    onBeforeDismiss?: BannerBeforeDismissHandler;
+    onDismiss?: BannerDismissHandler;
+  };
+
 export function Banner(props: BannerProps): ReturnType<typeof reactify> {
   const { onBeforeDismiss, onDismiss, ref: callerRef, ...rest } = props;
-
-  const elRef = useRef<HTMLElement | null>(null);
-
   useEffect(() => {
     defineClbrBanner();
   }, []);
-
+  const elRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     const el = elRef.current;
     if (!el || !onBeforeDismiss) return;
-    el.addEventListener(CLBR_BANNER_EVENT_BEFORE_DISMISS, onBeforeDismiss);
+    el.addEventListener(
+      CLBR_BANNER_EVENT_BEFORE_DISMISS,
+      onBeforeDismiss as EventListener,
+    );
     return () =>
-      el.removeEventListener(CLBR_BANNER_EVENT_BEFORE_DISMISS, onBeforeDismiss);
+      el.removeEventListener(
+        CLBR_BANNER_EVENT_BEFORE_DISMISS,
+        onBeforeDismiss as EventListener,
+      );
   }, [onBeforeDismiss]);
-
   useEffect(() => {
     const el = elRef.current;
     if (!el || !onDismiss) return;
-    el.addEventListener(CLBR_BANNER_EVENT_DISMISS, onDismiss);
-    return () => el.removeEventListener(CLBR_BANNER_EVENT_DISMISS, onDismiss);
+    el.addEventListener(CLBR_BANNER_EVENT_DISMISS, onDismiss as EventListener);
+    return () =>
+      el.removeEventListener(
+        CLBR_BANNER_EVENT_DISMISS,
+        onDismiss as EventListener,
+      );
   }, [onDismiss]);
-
   const mergedRef = useCallback<RefCallback<HTMLElement>>(
     (node) => {
       elRef.current = node;
@@ -62,7 +69,6 @@ export function Banner(props: BannerProps): ReturnType<typeof reactify> {
     },
     [callerRef],
   );
-
   return reactify(buildClbrBanner(props), {
     ...pickNativeExtras(rest as unknown as Record<string, unknown>),
     ref: mergedRef,

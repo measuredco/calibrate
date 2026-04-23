@@ -11,29 +11,23 @@ import type { ClbrComponentSpec } from "@measured/calibrate-core";
  * - `kind: "html"` → trusted HTML string in core, opened up to ReactNode
  *   in React via sentinel substitution (`slotted-html` / `slotted-multi`).
  */
-export type Archetype =
-  | "pass-through"
-  | "slotted-html"
-  | "slotted-multi"
-  | "structured-items"
-  | "custom-element-with-events";
+export type Archetype = "pass-through" | "slotted-html" | "slotted-multi";
 
 /**
- * Classify a SPEC into an archetype so the emitter can pick the right
- * template. As more components are added, new archetypes will surface and
- * need additional cases.
+ * Classify a SPEC's content shape into an archetype so the emitter can
+ * pick the right template. Custom-element registration and event wiring
+ * are orthogonal concerns layered on top by separate contributors.
+ *
+ * `structured` content (e.g. Nav's items array, Menu's items array) routes
+ * to `pass-through` — at the React level the items array is a scalar prop
+ * that flows through to `buildClbr*` unchanged.
  */
 export function classify(spec: ClbrComponentSpec): Archetype {
-  const hasEvents = Object.keys(spec.events).length > 0;
   const content = spec.content;
-
-  if (content.kind === "structured") return "structured-items";
-  if (hasEvents) return "custom-element-with-events";
-
   switch (content.kind) {
     case "none":
-      return "pass-through";
     case "text":
+    case "structured":
       return "pass-through";
     case "html":
       return "slotted-html";
