@@ -1,4 +1,4 @@
-import { isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import { buildClbrButton, renderClbrButton } from "../button/button";

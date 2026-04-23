@@ -1,5 +1,5 @@
 import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
-import { isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/string";
 import {
   CLBR_ICON_RECOMMENDED,
   CLBR_ICON_SPEC,
