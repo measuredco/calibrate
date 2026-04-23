@@ -1,8 +1,7 @@
 {
-  "name": "@measured/calibrate-core",
+  "name": "@measured/calibrate-react",
   "version": "0.0.0",
   "type": "module",
-  "style": "./dist/core.css",
   "files": [
     "dist",
     "README.md"
@@ -12,8 +11,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./styles.css": "./dist/core.css"
+    }
   },
   "scripts": {
     "build": "pnpm run build:types && vite build",
@@ -23,21 +21,21 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@measured/calibrate-system": "workspace:*",
-    "lucide": "0.577.0"
-  },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/user-event": "^14.6.1",
+    "@measured/calibrate-core": "workspace:*",
     "@types/node": "catalog:",
-    "autoprefixer": "^10.4.21",
+    "@types/react": "catalog:",
     "jsdom": "catalog:",
-    "postcss": "^8.5.6",
-    "prettier": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@measured/calibrate-core": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   }
 }
