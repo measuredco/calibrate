@@ -9,7 +9,7 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_CHILDREN = "__CLBR_SLOT_CONTAINER_CHILDREN__";
+const SLOT_CONTAINER_CHILDREN = "__CLBR_SLOT_CONTAINER_CHILDREN__";
 
 export type ContainerProps = Omit<ClbrContainerProps, "children"> & {
   children?: ReactNode;
@@ -19,13 +19,15 @@ export function Container(props: ContainerProps): ReturnType<typeof reactify> {
   const { children, gutter, maxInlineSize, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrContainer({
-    children: hasChildren ? SLOT_CHILDREN : undefined,
+    children: hasChildren ? SLOT_CONTAINER_CHILDREN : undefined,
     gutter,
     maxInlineSize,
   });
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
-    hasChildren ? { [SLOT_CHILDREN]: children } : {},
+    {
+      ...(hasChildren ? { [SLOT_CONTAINER_CHILDREN]: children } : {}),
+    },
   );
 }

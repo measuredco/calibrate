@@ -9,7 +9,7 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_CHILDREN = "__CLBR_SLOT_SURFACE_CHILDREN__";
+const SLOT_SURFACE_CHILDREN = "__CLBR_SLOT_SURFACE_CHILDREN__";
 
 export type SurfaceProps = Omit<ClbrSurfaceProps, "children"> & {
   children: ReactNode;
@@ -17,13 +17,16 @@ export type SurfaceProps = Omit<ClbrSurfaceProps, "children"> & {
 
 export function Surface(props: SurfaceProps): ReturnType<typeof reactify> {
   const { children, variant, ...rest } = props;
+
   const node = buildClbrSurface({
-    children: SLOT_CHILDREN,
+    children: SLOT_SURFACE_CHILDREN,
     variant,
   });
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
-    { [SLOT_CHILDREN]: children },
+    {
+      [SLOT_SURFACE_CHILDREN]: children,
+    },
   );
 }

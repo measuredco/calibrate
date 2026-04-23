@@ -16,8 +16,9 @@ export function emitWrapperSource(spec: ClbrComponentSpec): string {
   switch (archetype) {
     case "pass-through":
       return emitPassThrough(spec);
+    case "slotted-html":
     case "slotted-multi":
-      return emitSlottedMulti(spec);
+      return emitSlotted(spec);
     default:
       throw new Error(
         `emitWrapperSource: archetype "${archetype}" not yet supported for "${spec.name}"`,
@@ -124,11 +125,16 @@ export function ${pascal}(props: ${pascal}Props) {
 }
 
 // -----------------------------------------------------------------------------
-// Slotted-multi archetype.
+// Slotted archetype.
 //
-// SPEC `content.kind: "slots"` with per-slot kind of `"text"` or `"html"`.
-// Html slots become `ReactNode` with sentinel substitution; text slots stay
-// as scalar strings on the outer React type.
+// Covers:
+// - `content.kind: "html"` (single trusted-HTML slot; the common case for
+//   layout primitives like Box, Container, Inline, Stack, Root, Surface).
+// - `content.kind: "slots"` with per-slot kind of `"text"` or `"html"`
+//   (multi-slot components like Link, Page).
+//
+// Html slots become `ReactNode` with sentinel substitution; text slots
+// stay as scalar strings on the outer React type.
 // -----------------------------------------------------------------------------
 
 interface SlotInfo {
@@ -137,23 +143,35 @@ interface SlotInfo {
   required: boolean;
 }
 
-function emitSlottedMulti(spec: ClbrComponentSpec): string {
-  if (spec.content.kind !== "slots") {
-    throw new Error(
-      `emitSlottedMulti: expected "slots" content for "${spec.name}"`,
-    );
+function slotsFromContent(spec: ClbrComponentSpec): ReadonlyArray<SlotInfo> {
+  if (spec.content.kind === "html") {
+    return [
+      {
+        prop: spec.content.prop,
+        kind: "html",
+        required: spec.props[spec.content.prop]?.required === true,
+      },
+    ];
   }
+  if (spec.content.kind === "slots") {
+    return spec.content.slots.map((s) => ({
+      prop: s.prop,
+      kind: s.kind,
+      required: spec.props[s.prop]?.required === true,
+    }));
+  }
+  throw new Error(
+    `slotsFromContent: content kind "${spec.content.kind}" is not slotted for "${spec.name}"`,
+  );
+}
 
+function emitSlotted(spec: ClbrComponentSpec): string {
   const pascal = pascalCase(spec.name);
   const buildFn = `buildClbr${pascal}`;
   const corePropsType = `Clbr${pascal}Props`;
   const element = hostInterface(spec);
 
-  const slots: ReadonlyArray<SlotInfo> = spec.content.slots.map((s) => ({
-    prop: s.prop,
-    kind: s.kind,
-    required: spec.props[s.prop]?.required === true,
-  }));
+  const slots = slotsFromContent(spec);
 
   const htmlSlots = slots.filter((s) => s.kind === "html");
   const htmlOmitUnion = htmlSlots.map((s) => `"${s.prop}"`).join(" | ");

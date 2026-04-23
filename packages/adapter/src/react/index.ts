@@ -17,11 +17,17 @@ import { emitWrapperSource } from "./emit.ts";
 };
 
 const {
+  CLBR_BOX_SPEC,
   CLBR_BUTTON_SPEC,
+  CLBR_CONTAINER_SPEC,
   CLBR_DIVIDER_SPEC,
   CLBR_HEADING_SPEC,
+  CLBR_INLINE_SPEC,
   CLBR_LINK_SPEC,
   CLBR_LOGO_SPEC,
+  CLBR_ROOT_SPEC,
+  CLBR_STACK_SPEC,
+  CLBR_SURFACE_SPEC,
 } = await import("@measured/calibrate-core");
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,11 +39,17 @@ const REACT_COMPONENTS_DIR = resolve(
 );
 
 const TARGETS: ReadonlyArray<ClbrComponentSpec> = [
+  CLBR_BOX_SPEC,
   CLBR_BUTTON_SPEC,
+  CLBR_CONTAINER_SPEC,
   CLBR_DIVIDER_SPEC,
   CLBR_HEADING_SPEC,
+  CLBR_INLINE_SPEC,
   CLBR_LINK_SPEC,
   CLBR_LOGO_SPEC,
+  CLBR_ROOT_SPEC,
+  CLBR_STACK_SPEC,
+  CLBR_SURFACE_SPEC,
 ];
 
 async function emit(spec: ClbrComponentSpec): Promise<void> {

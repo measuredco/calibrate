@@ -6,7 +6,7 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_CHILDREN = "__CLBR_SLOT_STACK_CHILDREN__";
+const SLOT_STACK_CHILDREN = "__CLBR_SLOT_STACK_CHILDREN__";
 
 export type StackProps = Omit<ClbrStackProps, "children"> & {
   children?: ReactNode;
@@ -18,13 +18,15 @@ export function Stack(props: StackProps): ReturnType<typeof reactify> {
   const node = buildClbrStack({
     align,
     as,
-    children: hasChildren ? SLOT_CHILDREN : undefined,
+    children: hasChildren ? SLOT_STACK_CHILDREN : undefined,
     gap,
     responsive,
   });
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
-    hasChildren ? { [SLOT_CHILDREN]: children } : {},
+    {
+      ...(hasChildren ? { [SLOT_STACK_CHILDREN]: children } : {}),
+    },
   );
 }

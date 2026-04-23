@@ -6,7 +6,7 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_CHILDREN = "__CLBR_SLOT_ROOT_CHILDREN__";
+const SLOT_ROOT_CHILDREN = "__CLBR_SLOT_ROOT_CHILDREN__";
 
 export type RootProps = Omit<ClbrRootProps, "children"> & {
   children: ReactNode;
@@ -23,11 +23,12 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
     theme,
     ...rest
   } = props;
+
   const node = buildClbrRoot({
     appOverscrollBehavior,
     appRoot,
     brand,
-    children: SLOT_CHILDREN,
+    children: SLOT_ROOT_CHILDREN,
     dir,
     lang,
     theme,
@@ -35,6 +36,8 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
-    { [SLOT_CHILDREN]: children },
+    {
+      [SLOT_ROOT_CHILDREN]: children,
+    },
   );
 }
