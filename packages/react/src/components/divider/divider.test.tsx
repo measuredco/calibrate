@@ -18,7 +18,10 @@ const CASES: { name: string; props: ClbrDividerProps }[] = [
   { name: "default horizontal", props: {} },
   { name: "vertical", props: { orientation: "vertical" } },
   { name: "subtle tone", props: { tone: "subtle" } },
-  { name: "brand tone vertical", props: { orientation: "vertical", tone: "brand" } },
+  {
+    name: "brand tone vertical",
+    props: { orientation: "vertical", tone: "brand" },
+  },
 ];
 
 describe("Divider adapter matches core SSR DOM", () => {

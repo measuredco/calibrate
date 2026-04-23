@@ -1,7 +1,4 @@
-import {
-  renderClbrLink,
-  type ClbrLinkProps,
-} from "@measured/calibrate-core";
+import { renderClbrLink, type ClbrLinkProps } from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Link, type LinkProps } from "./link";

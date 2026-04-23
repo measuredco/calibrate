@@ -97,11 +97,7 @@ describe("Menu React plumbing", () => {
 
   it("re-renders when items prop changes", () => {
     render(
-      <Menu
-        id="actions"
-        items={[{ label: "Edit" }]}
-        triggerLabel="Actions"
-      />,
+      <Menu id="actions" items={[{ label: "Edit" }]} triggerLabel="Actions" />,
     );
     expect(getMenuItems()).toHaveLength(1);
 

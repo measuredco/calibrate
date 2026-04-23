@@ -1,7 +1,4 @@
-import {
-  buildClbrBox,
-  type ClbrBoxProps,
-} from "@measured/calibrate-core";
+import { buildClbrBox, type ClbrBoxProps } from "@measured/calibrate-core";
 import type { ReactNode } from "react";
 import {
   type NativeAttrsFor,

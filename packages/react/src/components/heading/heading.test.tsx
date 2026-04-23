@@ -17,8 +17,14 @@ function toElement(html: string): Element {
 const CASES: { name: string; props: ClbrHeadingProps }[] = [
   { name: "default span", props: { children: "Title" } },
   { name: "h1 xl", props: { children: "Title", level: 1, size: "xl" } },
-  { name: "h2 with center align", props: { align: "center", children: "Centered", level: 2 } },
-  { name: "escape-sensitive", props: { children: `<script>alert("x")</script>` } },
+  {
+    name: "h2 with center align",
+    props: { align: "center", children: "Centered", level: 2 },
+  },
+  {
+    name: "escape-sensitive",
+    props: { children: `<script>alert("x")</script>` },
+  },
 ];
 
 describe("Heading adapter matches core SSR DOM", () => {

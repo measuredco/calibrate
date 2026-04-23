@@ -1,7 +1,4 @@
-import {
-  renderClbrPage,
-  type ClbrPageProps,
-} from "@measured/calibrate-core";
+import { renderClbrPage, type ClbrPageProps } from "@measured/calibrate-core";
 import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
@@ -130,7 +127,9 @@ describe("Page adapter matches core SSR DOM", () => {
     expect(el.querySelector("main > article > h2")!.textContent).toBe(
       "Article",
     );
-    expect(el.querySelector("footer > p")!.textContent).toBe("Footer paragraph");
+    expect(el.querySelector("footer > p")!.textContent).toBe(
+      "Footer paragraph",
+    );
   });
 
   it("omits banner when not provided", () => {

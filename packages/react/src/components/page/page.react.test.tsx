@@ -85,7 +85,11 @@ describe("Page React plumbing", () => {
     expect(root.children).toHaveLength(3);
 
     rerender(
-      <Page banner={<span>Notice</span>} footer={<p>F</p>} header={<h1>H</h1>} />,
+      <Page
+        banner={<span>Notice</span>}
+        footer={<p>F</p>}
+        header={<h1>H</h1>}
+      />,
     );
     const afterRoot = container.firstElementChild as HTMLElement;
     expect(afterRoot.children).toHaveLength(4);

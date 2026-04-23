@@ -1,7 +1,4 @@
-import {
-  buildClbrPage,
-  type ClbrPageProps,
-} from "@measured/calibrate-core";
+import { buildClbrPage, type ClbrPageProps } from "@measured/calibrate-core";
 import type { ReactNode } from "react";
 import {
   type NativeAttrsFor,

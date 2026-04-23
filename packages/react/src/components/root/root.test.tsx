@@ -1,7 +1,4 @@
-import {
-  type ClbrRootProps,
-  renderClbrRoot,
-} from "@measured/calibrate-core";
+import { type ClbrRootProps, renderClbrRoot } from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Root } from "./root";

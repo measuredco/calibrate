@@ -40,9 +40,7 @@ describe("Container adapter matches core SSR DOM", () => {
   for (const { name, core, react } of CASES) {
     it(name, () => {
       const coreEl = toElement(renderClbrContainer(core));
-      const reactEl = toElement(
-        renderToStaticMarkup(<Container {...react} />),
-      );
+      const reactEl = toElement(renderToStaticMarkup(<Container {...react} />));
       expect(reactEl.isEqualNode(coreEl)).toBe(true);
     });
   }

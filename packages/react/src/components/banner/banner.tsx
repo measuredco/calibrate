@@ -5,7 +5,13 @@ import {
   type ClbrBannerProps,
   defineClbrBanner,
 } from "@measured/calibrate-core";
-import { type Ref, type RefCallback, useCallback, useEffect, useRef } from "react";
+import {
+  type Ref,
+  type RefCallback,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import {
   type NativeAttrsFor,
   pickNativeExtras,
@@ -26,12 +32,7 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
 }
 
 export function Banner(props: BannerProps): ReturnType<typeof reactify> {
-  const {
-    onBeforeDismiss,
-    onDismiss,
-    ref: callerRef,
-    ...rest
-  } = props;
+  const { onBeforeDismiss, onDismiss, ref: callerRef, ...rest } = props;
 
   const elRef = useRef<HTMLElement | null>(null);
 

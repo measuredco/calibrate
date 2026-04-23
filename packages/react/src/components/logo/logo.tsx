@@ -1,7 +1,4 @@
-import {
-  buildClbrLogo,
-  type ClbrLogoProps,
-} from "@measured/calibrate-core";
+import { buildClbrLogo, type ClbrLogoProps } from "@measured/calibrate-core";
 import type { ReactNode } from "react";
 import {
   type NativeAttrsFor,

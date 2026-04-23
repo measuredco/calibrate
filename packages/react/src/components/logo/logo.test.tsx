@@ -1,7 +1,4 @@
-import {
-  renderClbrLogo,
-  type ClbrLogoProps,
-} from "@measured/calibrate-core";
+import { renderClbrLogo, type ClbrLogoProps } from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Logo } from "./logo";
@@ -16,7 +13,10 @@ function toElement(html: string): Element {
 
 const CASES: { name: string; props: ClbrLogoProps }[] = [
   { name: "default", props: { label: "Brand" } },
-  { name: "lg neutral", props: { label: "Brand", size: "lg", tone: "neutral" } },
+  {
+    name: "lg neutral",
+    props: { label: "Brand", size: "lg", tone: "neutral" },
+  },
   { name: "graphic variant", props: { label: "Brand", variant: "graphic" } },
 ];
 

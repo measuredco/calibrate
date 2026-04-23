@@ -1,7 +1,4 @@
-import {
-  buildClbrLink,
-  type ClbrLinkProps,
-} from "@measured/calibrate-core";
+import { buildClbrLink, type ClbrLinkProps } from "@measured/calibrate-core";
 import type { ReactNode } from "react";
 import {
   type NativeAttrsFor,
@@ -18,17 +15,8 @@ export type LinkProps = Omit<ClbrLinkProps, "icon" | "label"> & {
 } & NativeAttrsFor<HTMLAnchorElement>;
 
 export function Link(props: LinkProps): ReturnType<typeof reactify> {
-  const {
-    href,
-    icon,
-    label,
-    rel,
-    size,
-    target,
-    tone,
-    underline,
-    ...rest
-  } = props;
+  const { href, icon, label, rel, size, target, tone, underline, ...rest } =
+    props;
   const hasIcon = icon != null && icon !== false;
   const node = buildClbrLink({
     href,

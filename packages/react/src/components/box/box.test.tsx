@@ -1,7 +1,4 @@
-import {
-  renderClbrBox,
-  type ClbrBoxProps,
-} from "@measured/calibrate-core";
+import { renderClbrBox, type ClbrBoxProps } from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Box } from "./box";

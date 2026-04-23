@@ -1,7 +1,4 @@
-import {
-  renderClbrStack,
-  type ClbrStackProps,
-} from "@measured/calibrate-core";
+import { renderClbrStack, type ClbrStackProps } from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Stack } from "./stack";
