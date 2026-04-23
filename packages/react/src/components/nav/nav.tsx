@@ -1,0 +1,24 @@
+import {
+  buildClbrNav,
+  type ClbrNavProps,
+  defineClbrNav,
+} from "@measured/calibrate-core";
+import { useEffect } from "react";
+import {
+  type NativeAttrsFor,
+  pickNativeExtras,
+  reactify,
+} from "../../reactify";
+
+export type NavProps = ClbrNavProps & NativeAttrsFor<HTMLElement>;
+
+export function Nav(props: NavProps): ReturnType<typeof reactify> {
+  useEffect(() => {
+    defineClbrNav();
+  }, []);
+
+  return reactify(
+    buildClbrNav(props),
+    pickNativeExtras(props as unknown as Record<string, unknown>),
+  );
+}

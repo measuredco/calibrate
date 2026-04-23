@@ -106,7 +106,12 @@ function renderNode(
   key: number | undefined,
   slots: Record<string, ReactNode>,
 ): ReactNode {
-  if (node.kind === "text") return node.value;
+  if (node.kind === "text") {
+    if (node.value in slots) {
+      return createElement(Fragment, { key }, slots[node.value]);
+    }
+    return node.value;
+  }
   if (node.kind === "raw") {
     if (node.html in slots) {
       return createElement(Fragment, { key }, slots[node.html]);
