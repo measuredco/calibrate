@@ -1,4 +1,7 @@
-import { renderClbrButton, type ClbrButtonProps } from "@measured/calibrate-core";
+import {
+  renderClbrButton,
+  type ClbrButtonProps,
+} from "@measured/calibrate-core";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Button } from "./button";

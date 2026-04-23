@@ -55,7 +55,10 @@ function buildElementProps(
   node: Extract<ClbrNode, { kind: "element" }>,
   extras: Record<string, unknown>,
 ): { props: Record<string, unknown>; children: ReactNode[] | null } {
-  const props: Record<string, unknown> = { ...toReactProps(node.attrs), ...extras };
+  const props: Record<string, unknown> = {
+    ...toReactProps(node.attrs),
+    ...extras,
+  };
   const hasRaw = node.children.some((child) => child.kind === "raw");
   if (hasRaw) {
     // React forbids mixing `dangerouslySetInnerHTML` with `children`, so when
@@ -65,7 +68,9 @@ function buildElementProps(
     };
     return { props, children: null };
   }
-  const children = node.children.map((child, index) => renderNode(child, index));
+  const children = node.children.map((child, index) =>
+    renderNode(child, index),
+  );
   return { props, children };
 }
 

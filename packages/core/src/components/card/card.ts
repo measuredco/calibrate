@@ -68,9 +68,7 @@ export function buildClbrCard({
       kind: "element",
       tag: "span",
       attrs: { class: "dots" },
-      children: [
-        { kind: "element", tag: "span", attrs: {}, children: [] },
-      ],
+      children: [{ kind: "element", tag: "span", attrs: {}, children: [] }],
     },
     {
       kind: "element",
