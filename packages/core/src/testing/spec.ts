@@ -173,7 +173,8 @@ function describeRuleConsistency<Props extends object>(
       const representative = rules[0];
       const referencedSet = new Set<string>();
       for (const rule of rules) {
-        for (const p of collectConditionProps(rule.condition)) referencedSet.add(p);
+        for (const p of collectConditionProps(rule.condition))
+          referencedSet.add(p);
         for (const p of collectValueProps(rule.value)) referencedSet.add(p);
       }
       const referenced = [...referencedSet];

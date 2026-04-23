@@ -242,7 +242,10 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
       {
         target: { on: "host" },
         attribute: "role",
-        condition: { kind: "not", of: { kind: "when-truthy", prop: "ariaHidden" } },
+        condition: {
+          kind: "not",
+          of: { kind: "when-truthy", prop: "ariaHidden" },
+        },
         value: { kind: "literal", text: "img" },
       },
       {

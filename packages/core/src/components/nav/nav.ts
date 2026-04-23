@@ -280,7 +280,7 @@ export const CLBR_NAV_SPEC: ClbrComponentSpec = {
         itemShape: {
           current: {
             default: false,
-            description: "Emits `aria-current=\"page\"` when true.",
+            description: 'Emits `aria-current="page"` when true.',
             type: { kind: "boolean" },
           },
           href: {

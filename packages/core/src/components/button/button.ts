@@ -403,7 +403,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-truthy", prop: "disabled" },
           ],
         },
@@ -414,7 +417,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-truthy", prop: "disclosure" },
           ],
         },
@@ -426,7 +432,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-truthy", prop: "disclosure" },
             { kind: "when-non-empty", prop: "controls" },
           ],
@@ -439,7 +448,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-provided", prop: "haspopup" },
           ],
         },
@@ -463,7 +475,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-non-empty", prop: "form" },
           ],
         },
@@ -487,7 +502,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-non-empty", prop: "name" },
           ],
         },
@@ -534,7 +552,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            {
+              kind: "not",
+              of: { kind: "when-equals", prop: "mode", to: "link" },
+            },
             { kind: "when-non-empty", prop: "value" },
           ],
         },

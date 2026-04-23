@@ -282,7 +282,10 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
           kind: "all",
           of: [
             { kind: "when-truthy", prop: "dismissible" },
-            { kind: "not", of: { kind: "when-non-empty", prop: "dismissibleLabel" } },
+            {
+              kind: "not",
+              of: { kind: "when-non-empty", prop: "dismissibleLabel" },
+            },
           ],
         },
         value: { kind: "literal", text: dismissibleLabelDefault },

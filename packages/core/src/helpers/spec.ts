@@ -225,7 +225,8 @@ export const resolveSpecValue = (
       return { kind: "value", text: value.text };
     case "prop": {
       const v = effectiveProp(value.prop, props, spec);
-      if (v === true || v === undefined || v === null) return { kind: "present" };
+      if (v === true || v === undefined || v === null)
+        return { kind: "present" };
       return { kind: "value", text: String(v) };
     }
     case "template": {
@@ -339,9 +340,7 @@ const optionsFor = (
 ): ReadonlyArray<string | number> | undefined =>
   prop.type.kind === "enum" ? [...prop.type.values] : undefined;
 
-const summaryDefaultFor = (
-  prop: ClbrComponentSpecProp,
-): string | undefined => {
+const summaryDefaultFor = (prop: ClbrComponentSpecProp): string | undefined => {
   if (prop.default === undefined) return undefined;
   if (typeof prop.default === "string") return `"${prop.default}"`;
   return String(prop.default);
