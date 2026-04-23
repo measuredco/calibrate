@@ -1,25 +1,8 @@
-import type { ClbrComponentSpec } from "@measured/calibrate-core";
-import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import prettier from "prettier";
-import { emitWrapperSource } from "./emit.ts";
-
-// Core's main entry defines custom element classes at module load (e.g.
-// `class extends HTMLElement {}`), which throws in Node. Stub the base class
-// so class bodies evaluate cleanly — we never call `defineClbr*()`, so no
-// actual custom-element registration happens. TODO: replace with a
-// `@measured/calibrate-core/specs` Node-safe subpath export.
-(globalThis as unknown as { HTMLElement: unknown }).HTMLElement ??= class {};
-(globalThis as unknown as { customElements: unknown }).customElements ??= {
-  define: () => {},
-  get: () => undefined,
-};
-
-const {
+import {
   CLBR_BANNER_SPEC,
   CLBR_BOX_SPEC,
   CLBR_BUTTON_SPEC,
+  type ClbrComponentSpec,
   CLBR_CONTAINER_SPEC,
   CLBR_DIVIDER_SPEC,
   CLBR_HEADING_SPEC,
@@ -33,7 +16,12 @@ const {
   CLBR_SIDEBAR_SPEC,
   CLBR_STACK_SPEC,
   CLBR_SURFACE_SPEC,
-} = await import("@measured/calibrate-core");
+} from "@measured/calibrate-core";
+import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import prettier from "prettier";
+import { emitWrapperSource } from "./emit.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -144,65 +144,70 @@ export function renderClbrAlert(props: ClbrAlertProps): string {
   return serializeClbrNode(buildClbrAlert(props));
 }
 
-class ClbrAlertElement extends HTMLElement {
-  #onClick = (event: Event) => {
-    const target = event.target;
-
-    if (!(target instanceof Element)) return;
-    if (!target.closest('[data-part="close"]')) return;
-
-    const beforeDismissEvent = new CustomEvent(
-      CLBR_ALERT_EVENT_BEFORE_DISMISS,
-      {
-        bubbles: true,
-        cancelable: true,
-      },
-    );
-
-    if (!this.dispatchEvent(beforeDismissEvent)) return;
-
-    this.remove();
-    this.dispatchEvent(
-      new CustomEvent(CLBR_ALERT_EVENT_DISMISS, {
-        bubbles: true,
-      }),
-    );
-  };
-
-  connectedCallback(): void {
-    this.removeEventListener("click", this.#onClick);
-
-    if (!this.hasAttribute("data-dismissible")) return;
-
-    this.#ensureDismissControl();
-    this.addEventListener("click", this.#onClick);
-  }
-
-  disconnectedCallback(): void {
-    this.removeEventListener("click", this.#onClick);
-  }
-
-  #ensureDismissControl(): void {
-    if (this.querySelector('[data-part="close"]')) return;
-
-    this.append(
-      createDismissButtonElement(
-        this.getAttribute("data-dismissible-label") ?? dismissibleLabelDefault,
-        this.ownerDocument,
-      ),
-    );
-  }
-}
-
 /**
  * Defines the `clbr-alert` custom element runtime.
  *
  * Safe to call multiple times. Existing SSR-rendered `clbr-alert` hosts will
  * upgrade in place and, when dismissible, receive an interactive dismiss
  * control in light DOM.
+ *
+ * Class declaration is nested so importing this module in environments
+ * without an `HTMLElement` global (Node-based tooling like the adapter
+ * codegen) doesn't throw at load time.
  */
 export function defineClbrAlert(): void {
   if (customElements.get(CLBR_ALERT_TAG_NAME)) return;
+
+  class ClbrAlertElement extends HTMLElement {
+    #onClick = (event: Event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) return;
+      if (!target.closest('[data-part="close"]')) return;
+
+      const beforeDismissEvent = new CustomEvent(
+        CLBR_ALERT_EVENT_BEFORE_DISMISS,
+        {
+          bubbles: true,
+          cancelable: true,
+        },
+      );
+
+      if (!this.dispatchEvent(beforeDismissEvent)) return;
+
+      this.remove();
+      this.dispatchEvent(
+        new CustomEvent(CLBR_ALERT_EVENT_DISMISS, {
+          bubbles: true,
+        }),
+      );
+    };
+
+    connectedCallback(): void {
+      this.removeEventListener("click", this.#onClick);
+
+      if (!this.hasAttribute("data-dismissible")) return;
+
+      this.#ensureDismissControl();
+      this.addEventListener("click", this.#onClick);
+    }
+
+    disconnectedCallback(): void {
+      this.removeEventListener("click", this.#onClick);
+    }
+
+    #ensureDismissControl(): void {
+      if (this.querySelector('[data-part="close"]')) return;
+
+      this.append(
+        createDismissButtonElement(
+          this.getAttribute("data-dismissible-label") ??
+            dismissibleLabelDefault,
+          this.ownerDocument,
+        ),
+      );
+    }
+  }
 
   customElements.define(CLBR_ALERT_TAG_NAME, ClbrAlertElement);
 }

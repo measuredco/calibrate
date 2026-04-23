@@ -140,36 +140,6 @@ export function renderClbrRange(props: ClbrRangeProps): string {
   return serializeClbrNode(buildClbrRange(props));
 }
 
-class ClbrRangeElement extends HTMLElement {
-  #onInput = (event: Event) => {
-    const target = event.target;
-
-    if (!(target instanceof HTMLInputElement)) return;
-    if (!target.matches(".range")) return;
-
-    this.#syncOutput();
-  };
-
-  connectedCallback(): void {
-    this.removeEventListener("input", this.#onInput);
-    this.#syncOutput();
-    this.addEventListener("input", this.#onInput);
-  }
-
-  disconnectedCallback(): void {
-    this.removeEventListener("input", this.#onInput);
-  }
-
-  #syncOutput(): void {
-    const input = this.querySelector<HTMLInputElement>(".range");
-    const output = this.querySelector<HTMLOutputElement>(".output");
-
-    if (!input || !output) return;
-
-    output.textContent = input.value;
-  }
-}
-
 /**
  * Defines the `clbr-range` custom element runtime.
  *
@@ -178,6 +148,36 @@ class ClbrRangeElement extends HTMLElement {
  */
 export function defineClbrRange(): void {
   if (customElements.get(CLBR_RANGE_TAG_NAME)) return;
+
+  class ClbrRangeElement extends HTMLElement {
+    #onInput = (event: Event) => {
+      const target = event.target;
+
+      if (!(target instanceof HTMLInputElement)) return;
+      if (!target.matches(".range")) return;
+
+      this.#syncOutput();
+    };
+
+    connectedCallback(): void {
+      this.removeEventListener("input", this.#onInput);
+      this.#syncOutput();
+      this.addEventListener("input", this.#onInput);
+    }
+
+    disconnectedCallback(): void {
+      this.removeEventListener("input", this.#onInput);
+    }
+
+    #syncOutput(): void {
+      const input = this.querySelector<HTMLInputElement>(".range");
+      const output = this.querySelector<HTMLOutputElement>(".output");
+
+      if (!input || !output) return;
+
+      output.textContent = input.value;
+    }
+  }
 
   customElements.define(CLBR_RANGE_TAG_NAME, ClbrRangeElement);
 }

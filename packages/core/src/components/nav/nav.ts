@@ -141,155 +141,6 @@ export function renderClbrNav(props: ClbrNavProps): string {
   return serializeClbrNode(buildClbrNav(props));
 }
 
-class ClbrNavElement extends HTMLElement {
-  #onClick?: (event: Event) => void;
-  #mediaQueryList?: MediaQueryList;
-  #onKeyDown?: (event: KeyboardEvent) => void;
-  #onMediaQueryChange?: (event: MediaQueryListEvent) => void;
-
-  connectedCallback(): void {
-    this.#teardownClickListener();
-    this.#teardownRuntimeListeners();
-    this.#ensureExpander();
-    this.#setupClickListener();
-    this.#setupRuntimeListeners();
-  }
-
-  disconnectedCallback(): void {
-    this.#setExpanded(false);
-    this.#teardownClickListener();
-    this.#teardownRuntimeListeners();
-  }
-
-  #getNav(): HTMLElement | null {
-    if (!this.hasAttribute("data-collapsible")) return null;
-
-    return this.querySelector<HTMLElement>(".nav");
-  }
-
-  #getExpanderButton(): HTMLButtonElement | null {
-    return this.querySelector<HTMLButtonElement>(
-      '[data-part="expander"] .clbr-expander',
-    );
-  }
-
-  #ensureExpander(): void {
-    const nav = this.#getNav();
-
-    if (!nav) return;
-    if (nav.querySelector('[data-part="expander"]')) return;
-
-    const content = nav.querySelector<HTMLElement>(".content");
-
-    if (!content) return;
-
-    nav.insertAdjacentHTML(
-      "afterbegin",
-      `<div data-part="expander">${renderClbrExpander({
-        controlsId: content.id || undefined,
-        label: this.getAttribute("data-expander-label") || undefined,
-        size: this.getAttribute("data-size") === "sm" ? "md" : "lg",
-      })}</div>`,
-    );
-  }
-
-  #setExpanded(expanded: boolean): void {
-    const button = this.#getExpanderButton();
-
-    if (!button) return;
-
-    const isOpen = button.getAttribute("aria-expanded") === "true";
-
-    if (isOpen === expanded) return;
-
-    button.setAttribute("aria-expanded", expanded ? "true" : "false");
-    this.#setScrollLocked(expanded);
-  }
-
-  #setupClickListener(): void {
-    this.#onClick = (event: Event) => {
-      const target = event.target;
-
-      if (!(target instanceof Element)) return;
-      if (!target.closest('[data-part="expander"] .clbr-expander')) return;
-
-      const button = this.#getExpanderButton();
-
-      if (!button) return;
-
-      this.#setExpanded(button.getAttribute("aria-expanded") !== "true");
-    };
-
-    this.addEventListener("click", this.#onClick);
-  }
-
-  #setupRuntimeListeners(): void {
-    const nav = this.#getNav();
-    const windowRef = this.ownerDocument.defaultView;
-
-    if (!nav || !windowRef) return;
-
-    this.#onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" && event.key !== "Esc") return;
-      this.#setExpanded(false);
-    };
-
-    windowRef.addEventListener("keydown", this.#onKeyDown);
-
-    if (this.getAttribute("data-collapsible") !== "belowTablet") return;
-    if (typeof windowRef.matchMedia !== "function") return;
-
-    const mediaQueryList = windowRef.matchMedia("(min-width: 48em)");
-
-    this.#mediaQueryList = mediaQueryList;
-    this.#onMediaQueryChange = (event: MediaQueryListEvent) => {
-      if (!event.matches) return;
-      this.#setExpanded(false);
-    };
-
-    mediaQueryList.addEventListener("change", this.#onMediaQueryChange);
-  }
-
-  #setScrollLocked(locked: boolean): void {
-    const root = this.ownerDocument.documentElement;
-
-    if (!root) return;
-
-    if (locked) {
-      root.setAttribute(scrollLockAttr, "");
-      return;
-    }
-
-    root.removeAttribute(scrollLockAttr);
-  }
-
-  #teardownClickListener(): void {
-    if (!this.#onClick) return;
-
-    this.removeEventListener("click", this.#onClick);
-    this.#onClick = undefined;
-  }
-
-  #teardownRuntimeListeners(): void {
-    const windowRef = this.ownerDocument.defaultView;
-
-    if (this.#onKeyDown && windowRef) {
-      windowRef.removeEventListener("keydown", this.#onKeyDown);
-    }
-
-    if (this.#mediaQueryList && this.#onMediaQueryChange) {
-      this.#mediaQueryList.removeEventListener(
-        "change",
-        this.#onMediaQueryChange,
-      );
-    }
-
-    this.#onKeyDown = undefined;
-    this.#onMediaQueryChange = undefined;
-    this.#mediaQueryList = undefined;
-  }
-}
-
 /**
  * Defines the `clbr-nav` custom element runtime.
  *
@@ -298,6 +149,155 @@ class ClbrNavElement extends HTMLElement {
  */
 export function defineClbrNav(): void {
   if (customElements.get(CLBR_NAV_TAG_NAME)) return;
+
+  class ClbrNavElement extends HTMLElement {
+    #onClick?: (event: Event) => void;
+    #mediaQueryList?: MediaQueryList;
+    #onKeyDown?: (event: KeyboardEvent) => void;
+    #onMediaQueryChange?: (event: MediaQueryListEvent) => void;
+
+    connectedCallback(): void {
+      this.#teardownClickListener();
+      this.#teardownRuntimeListeners();
+      this.#ensureExpander();
+      this.#setupClickListener();
+      this.#setupRuntimeListeners();
+    }
+
+    disconnectedCallback(): void {
+      this.#setExpanded(false);
+      this.#teardownClickListener();
+      this.#teardownRuntimeListeners();
+    }
+
+    #getNav(): HTMLElement | null {
+      if (!this.hasAttribute("data-collapsible")) return null;
+
+      return this.querySelector<HTMLElement>(".nav");
+    }
+
+    #getExpanderButton(): HTMLButtonElement | null {
+      return this.querySelector<HTMLButtonElement>(
+        '[data-part="expander"] .clbr-expander',
+      );
+    }
+
+    #ensureExpander(): void {
+      const nav = this.#getNav();
+
+      if (!nav) return;
+      if (nav.querySelector('[data-part="expander"]')) return;
+
+      const content = nav.querySelector<HTMLElement>(".content");
+
+      if (!content) return;
+
+      nav.insertAdjacentHTML(
+        "afterbegin",
+        `<div data-part="expander">${renderClbrExpander({
+          controlsId: content.id || undefined,
+          label: this.getAttribute("data-expander-label") || undefined,
+          size: this.getAttribute("data-size") === "sm" ? "md" : "lg",
+        })}</div>`,
+      );
+    }
+
+    #setExpanded(expanded: boolean): void {
+      const button = this.#getExpanderButton();
+
+      if (!button) return;
+
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+
+      if (isOpen === expanded) return;
+
+      button.setAttribute("aria-expanded", expanded ? "true" : "false");
+      this.#setScrollLocked(expanded);
+    }
+
+    #setupClickListener(): void {
+      this.#onClick = (event: Event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) return;
+        if (!target.closest('[data-part="expander"] .clbr-expander')) return;
+
+        const button = this.#getExpanderButton();
+
+        if (!button) return;
+
+        this.#setExpanded(button.getAttribute("aria-expanded") !== "true");
+      };
+
+      this.addEventListener("click", this.#onClick);
+    }
+
+    #setupRuntimeListeners(): void {
+      const nav = this.#getNav();
+      const windowRef = this.ownerDocument.defaultView;
+
+      if (!nav || !windowRef) return;
+
+      this.#onKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== "Escape" && event.key !== "Esc") return;
+        this.#setExpanded(false);
+      };
+
+      windowRef.addEventListener("keydown", this.#onKeyDown);
+
+      if (this.getAttribute("data-collapsible") !== "belowTablet") return;
+      if (typeof windowRef.matchMedia !== "function") return;
+
+      const mediaQueryList = windowRef.matchMedia("(min-width: 48em)");
+
+      this.#mediaQueryList = mediaQueryList;
+      this.#onMediaQueryChange = (event: MediaQueryListEvent) => {
+        if (!event.matches) return;
+        this.#setExpanded(false);
+      };
+
+      mediaQueryList.addEventListener("change", this.#onMediaQueryChange);
+    }
+
+    #setScrollLocked(locked: boolean): void {
+      const root = this.ownerDocument.documentElement;
+
+      if (!root) return;
+
+      if (locked) {
+        root.setAttribute(scrollLockAttr, "");
+        return;
+      }
+
+      root.removeAttribute(scrollLockAttr);
+    }
+
+    #teardownClickListener(): void {
+      if (!this.#onClick) return;
+
+      this.removeEventListener("click", this.#onClick);
+      this.#onClick = undefined;
+    }
+
+    #teardownRuntimeListeners(): void {
+      const windowRef = this.ownerDocument.defaultView;
+
+      if (this.#onKeyDown && windowRef) {
+        windowRef.removeEventListener("keydown", this.#onKeyDown);
+      }
+
+      if (this.#mediaQueryList && this.#onMediaQueryChange) {
+        this.#mediaQueryList.removeEventListener(
+          "change",
+          this.#onMediaQueryChange,
+        );
+      }
+
+      this.#onKeyDown = undefined;
+      this.#onMediaQueryChange = undefined;
+      this.#mediaQueryList = undefined;
+    }
+  }
 
   customElements.define(CLBR_NAV_TAG_NAME, ClbrNavElement);
 }

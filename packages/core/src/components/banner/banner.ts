@@ -117,56 +117,6 @@ export function renderClbrBanner(props: ClbrBannerProps): string {
   return serializeClbrNode(buildClbrBanner(props));
 }
 
-class ClbrBannerElement extends HTMLElement {
-  #onClick = (event: Event) => {
-    const target = event.target;
-
-    if (!(target instanceof Element)) return;
-    if (!target.closest('[data-part="close"]')) return;
-
-    const beforeDismissEvent = new CustomEvent(
-      CLBR_BANNER_EVENT_BEFORE_DISMISS,
-      {
-        bubbles: true,
-        cancelable: true,
-      },
-    );
-
-    if (!this.dispatchEvent(beforeDismissEvent)) return;
-
-    this.remove();
-    this.dispatchEvent(
-      new CustomEvent(CLBR_BANNER_EVENT_DISMISS, {
-        bubbles: true,
-      }),
-    );
-  };
-
-  connectedCallback(): void {
-    this.removeEventListener("click", this.#onClick);
-
-    if (!this.hasAttribute("data-dismissible")) return;
-
-    this.#ensureDismissControl();
-    this.addEventListener("click", this.#onClick);
-  }
-
-  disconnectedCallback(): void {
-    this.removeEventListener("click", this.#onClick);
-  }
-
-  #ensureDismissControl(): void {
-    if (this.querySelector('[data-part="close"]')) return;
-
-    this.append(
-      createDismissButtonElement(
-        this.getAttribute("data-dismissible-label") ?? dismissibleLabelDefault,
-        this.ownerDocument,
-      ),
-    );
-  }
-}
-
 /**
  * Defines the `clbr-banner` custom element runtime.
  *
@@ -176,6 +126,57 @@ class ClbrBannerElement extends HTMLElement {
  */
 export function defineClbrBanner(): void {
   if (customElements.get(CLBR_BANNER_TAG_NAME)) return;
+
+  class ClbrBannerElement extends HTMLElement {
+    #onClick = (event: Event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) return;
+      if (!target.closest('[data-part="close"]')) return;
+
+      const beforeDismissEvent = new CustomEvent(
+        CLBR_BANNER_EVENT_BEFORE_DISMISS,
+        {
+          bubbles: true,
+          cancelable: true,
+        },
+      );
+
+      if (!this.dispatchEvent(beforeDismissEvent)) return;
+
+      this.remove();
+      this.dispatchEvent(
+        new CustomEvent(CLBR_BANNER_EVENT_DISMISS, {
+          bubbles: true,
+        }),
+      );
+    };
+
+    connectedCallback(): void {
+      this.removeEventListener("click", this.#onClick);
+
+      if (!this.hasAttribute("data-dismissible")) return;
+
+      this.#ensureDismissControl();
+      this.addEventListener("click", this.#onClick);
+    }
+
+    disconnectedCallback(): void {
+      this.removeEventListener("click", this.#onClick);
+    }
+
+    #ensureDismissControl(): void {
+      if (this.querySelector('[data-part="close"]')) return;
+
+      this.append(
+        createDismissButtonElement(
+          this.getAttribute("data-dismissible-label") ??
+            dismissibleLabelDefault,
+          this.ownerDocument,
+        ),
+      );
+    }
+  }
 
   customElements.define(CLBR_BANNER_TAG_NAME, ClbrBannerElement);
 }

@@ -161,263 +161,6 @@ export function renderClbrSidebar(props: ClbrSidebarProps): string {
   return serializeClbrNode(buildClbrSidebar(props));
 }
 
-class ClbrSidebarElement extends HTMLElement {
-  #mediaQuery?: MediaQueryList;
-  #onClick?: (event: Event) => void;
-  #onKeyDown?: (event: KeyboardEvent) => void;
-  #onMediaChange?: (event: MediaQueryListEvent) => void;
-
-  connectedCallback(): void {
-    this.#teardownListeners();
-    this.#ensureCloseControl();
-    this.#syncResponsiveState();
-    this.#setupListeners();
-  }
-
-  disconnectedCallback(): void {
-    this.close();
-    this.#teardownListeners();
-  }
-
-  open(): void {
-    this.#setOpen(true);
-  }
-
-  close(): void {
-    this.#setOpen(false);
-  }
-
-  #getSidebar(): HTMLElement | null {
-    return this.querySelector<HTMLElement>(".sidebar");
-  }
-
-  #getCloseButton(): HTMLButtonElement | null {
-    return this.querySelector<HTMLButtonElement>(
-      '[data-part="close"] .clbr-button',
-    );
-  }
-
-  #getTriggerButton(): HTMLButtonElement | null {
-    return this.querySelector<HTMLButtonElement>(
-      '[data-part="trigger"] .clbr-button',
-    );
-  }
-
-  #isOpen(): boolean {
-    return this.hasAttribute("data-open");
-  }
-
-  #isCollapsed(): boolean {
-    return this.hasAttribute("data-collapsed");
-  }
-
-  #getAboveNotebook(): ClbrSidebarAboveNotebook {
-    const value = this.getAttribute("data-above-notebook");
-
-    if (value === "collapsible" || value === "overlay") return value;
-
-    return "persistent";
-  }
-
-  #ensureCloseControl(): void {
-    const sidebar = this.#getSidebar();
-
-    if (!sidebar) return;
-    if (sidebar.querySelector('[data-part="close"]')) return;
-
-    const header = sidebar.querySelector<HTMLElement>(".header");
-    const collapseLabel =
-      this.getAttribute("data-collapse-label") || collapseLabelDefault;
-    const size = this.getAttribute("data-size") === "sm" ? "sm" : "md";
-
-    header?.insertAdjacentHTML(
-      "beforeend",
-      createCloseButtonMarkup(collapseLabel, size),
-    );
-  }
-
-  #removeCloseControl(): void {
-    this.querySelector('[data-part="close"]')?.remove();
-  }
-
-  #focusSidebar(): void {
-    const closeButton = this.#getCloseButton();
-
-    if (closeButton) {
-      closeButton.focus();
-      return;
-    }
-
-    this.#getSidebar()?.focus();
-  }
-
-  #isAboveNotebook(): boolean {
-    return this.#mediaQuery?.matches ?? false;
-  }
-
-  #setState({ collapsed, open }: { collapsed: boolean; open: boolean }): void {
-    const trigger = this.#getTriggerButton();
-
-    this.toggleAttribute("data-open", open);
-    this.toggleAttribute("data-collapsed", collapsed);
-    trigger?.setAttribute("aria-expanded", open ? "true" : "false");
-  }
-
-  #syncResponsiveState(): void {
-    const aboveNotebook = this.#getAboveNotebook();
-
-    if (this.#isAboveNotebook()) {
-      if (aboveNotebook === "overlay") {
-        this.#ensureCloseControl();
-        this.#setState({ collapsed: false, open: false });
-        this.#setScrollLocked(false);
-
-        return;
-      }
-
-      if (aboveNotebook === "collapsible") {
-        this.#ensureCloseControl();
-        this.#setState({
-          collapsed: this.#isCollapsed(),
-          open: true,
-        });
-        this.#setScrollLocked(false);
-
-        return;
-      }
-
-      this.#removeCloseControl();
-      this.#setState({ collapsed: false, open: true });
-      this.#setScrollLocked(false);
-
-      return;
-    }
-
-    this.#ensureCloseControl();
-    this.#setState({ collapsed: false, open: false });
-    this.#setScrollLocked(false);
-  }
-
-  #setOpen(open: boolean): void {
-    const aboveNotebook = this.#getAboveNotebook();
-
-    if (this.#isAboveNotebook()) {
-      if (aboveNotebook === "persistent") {
-        this.#setState({ collapsed: false, open: true });
-        this.#setScrollLocked(false);
-
-        return;
-      }
-
-      if (aboveNotebook === "collapsible") {
-        this.#setState({ collapsed: !open, open: true });
-        this.#setScrollLocked(false);
-
-        if (open) this.#focusSidebar();
-
-        return;
-      }
-    }
-
-    if (this.#isOpen() === open) return;
-
-    if (open) {
-      this.#setState({ collapsed: false, open: true });
-      this.#setScrollLocked(true);
-      this.#focusSidebar();
-
-      return;
-    }
-
-    this.#setState({ collapsed: false, open: false });
-    this.#setScrollLocked(false);
-    this.#getTriggerButton()?.focus();
-  }
-
-  #setScrollLocked(locked: boolean): void {
-    const root = this.ownerDocument.documentElement;
-
-    if (!root) return;
-
-    if (locked) {
-      root.setAttribute("data-clbr-scroll-locked", "");
-      return;
-    }
-
-    root.removeAttribute("data-clbr-scroll-locked");
-  }
-
-  #setupListeners(): void {
-    const windowRef = this.ownerDocument.defaultView;
-
-    if (!windowRef) return;
-
-    if (typeof windowRef.matchMedia === "function") {
-      this.#mediaQuery = windowRef.matchMedia(aboveNotebookMedia);
-      this.#onMediaChange = () => {
-        this.#syncResponsiveState();
-      };
-      this.#mediaQuery.addEventListener("change", this.#onMediaChange);
-      this.#syncResponsiveState();
-    }
-
-    this.#onClick = (event: Event) => {
-      const target = event.target;
-
-      if (!(target instanceof Element)) return;
-
-      if (target.closest('[data-part="trigger"] .clbr-button')) {
-        this.open();
-        return;
-      }
-
-      if (target.closest('[data-part="close"] .clbr-button')) {
-        if (
-          this.#isAboveNotebook() &&
-          this.#getAboveNotebook() === "collapsible"
-        ) {
-          this.#setOpen(this.#isCollapsed());
-          return;
-        }
-
-        this.close();
-        return;
-      }
-
-      if (target.closest('[data-part="backdrop"]')) {
-        this.close();
-      }
-    };
-
-    this.#onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" && event.key !== "Esc") return;
-      this.close();
-    };
-
-    this.addEventListener("click", this.#onClick);
-    this.addEventListener("keydown", this.#onKeyDown);
-  }
-
-  #teardownListeners(): void {
-    if (this.#onClick) {
-      this.removeEventListener("click", this.#onClick);
-    }
-
-    if (this.#onKeyDown) {
-      this.removeEventListener("keydown", this.#onKeyDown);
-    }
-
-    if (this.#mediaQuery && this.#onMediaChange) {
-      this.#mediaQuery.removeEventListener("change", this.#onMediaChange);
-    }
-
-    this.#onClick = undefined;
-    this.#onKeyDown = undefined;
-    this.#mediaQuery = undefined;
-    this.#onMediaChange = undefined;
-  }
-}
-
 /**
  * Defines the `clbr-sidebar` custom element runtime.
  *
@@ -426,6 +169,269 @@ class ClbrSidebarElement extends HTMLElement {
  */
 export function defineClbrSidebar(): void {
   if (customElements.get(CLBR_SIDEBAR_TAG_NAME)) return;
+
+  class ClbrSidebarElement extends HTMLElement {
+    #mediaQuery?: MediaQueryList;
+    #onClick?: (event: Event) => void;
+    #onKeyDown?: (event: KeyboardEvent) => void;
+    #onMediaChange?: (event: MediaQueryListEvent) => void;
+
+    connectedCallback(): void {
+      this.#teardownListeners();
+      this.#ensureCloseControl();
+      this.#syncResponsiveState();
+      this.#setupListeners();
+    }
+
+    disconnectedCallback(): void {
+      this.close();
+      this.#teardownListeners();
+    }
+
+    open(): void {
+      this.#setOpen(true);
+    }
+
+    close(): void {
+      this.#setOpen(false);
+    }
+
+    #getSidebar(): HTMLElement | null {
+      return this.querySelector<HTMLElement>(".sidebar");
+    }
+
+    #getCloseButton(): HTMLButtonElement | null {
+      return this.querySelector<HTMLButtonElement>(
+        '[data-part="close"] .clbr-button',
+      );
+    }
+
+    #getTriggerButton(): HTMLButtonElement | null {
+      return this.querySelector<HTMLButtonElement>(
+        '[data-part="trigger"] .clbr-button',
+      );
+    }
+
+    #isOpen(): boolean {
+      return this.hasAttribute("data-open");
+    }
+
+    #isCollapsed(): boolean {
+      return this.hasAttribute("data-collapsed");
+    }
+
+    #getAboveNotebook(): ClbrSidebarAboveNotebook {
+      const value = this.getAttribute("data-above-notebook");
+
+      if (value === "collapsible" || value === "overlay") return value;
+
+      return "persistent";
+    }
+
+    #ensureCloseControl(): void {
+      const sidebar = this.#getSidebar();
+
+      if (!sidebar) return;
+      if (sidebar.querySelector('[data-part="close"]')) return;
+
+      const header = sidebar.querySelector<HTMLElement>(".header");
+      const collapseLabel =
+        this.getAttribute("data-collapse-label") || collapseLabelDefault;
+      const size = this.getAttribute("data-size") === "sm" ? "sm" : "md";
+
+      header?.insertAdjacentHTML(
+        "beforeend",
+        createCloseButtonMarkup(collapseLabel, size),
+      );
+    }
+
+    #removeCloseControl(): void {
+      this.querySelector('[data-part="close"]')?.remove();
+    }
+
+    #focusSidebar(): void {
+      const closeButton = this.#getCloseButton();
+
+      if (closeButton) {
+        closeButton.focus();
+        return;
+      }
+
+      this.#getSidebar()?.focus();
+    }
+
+    #isAboveNotebook(): boolean {
+      return this.#mediaQuery?.matches ?? false;
+    }
+
+    #setState({
+      collapsed,
+      open,
+    }: {
+      collapsed: boolean;
+      open: boolean;
+    }): void {
+      const trigger = this.#getTriggerButton();
+
+      this.toggleAttribute("data-open", open);
+      this.toggleAttribute("data-collapsed", collapsed);
+      trigger?.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    #syncResponsiveState(): void {
+      const aboveNotebook = this.#getAboveNotebook();
+
+      if (this.#isAboveNotebook()) {
+        if (aboveNotebook === "overlay") {
+          this.#ensureCloseControl();
+          this.#setState({ collapsed: false, open: false });
+          this.#setScrollLocked(false);
+
+          return;
+        }
+
+        if (aboveNotebook === "collapsible") {
+          this.#ensureCloseControl();
+          this.#setState({
+            collapsed: this.#isCollapsed(),
+            open: true,
+          });
+          this.#setScrollLocked(false);
+
+          return;
+        }
+
+        this.#removeCloseControl();
+        this.#setState({ collapsed: false, open: true });
+        this.#setScrollLocked(false);
+
+        return;
+      }
+
+      this.#ensureCloseControl();
+      this.#setState({ collapsed: false, open: false });
+      this.#setScrollLocked(false);
+    }
+
+    #setOpen(open: boolean): void {
+      const aboveNotebook = this.#getAboveNotebook();
+
+      if (this.#isAboveNotebook()) {
+        if (aboveNotebook === "persistent") {
+          this.#setState({ collapsed: false, open: true });
+          this.#setScrollLocked(false);
+
+          return;
+        }
+
+        if (aboveNotebook === "collapsible") {
+          this.#setState({ collapsed: !open, open: true });
+          this.#setScrollLocked(false);
+
+          if (open) this.#focusSidebar();
+
+          return;
+        }
+      }
+
+      if (this.#isOpen() === open) return;
+
+      if (open) {
+        this.#setState({ collapsed: false, open: true });
+        this.#setScrollLocked(true);
+        this.#focusSidebar();
+
+        return;
+      }
+
+      this.#setState({ collapsed: false, open: false });
+      this.#setScrollLocked(false);
+      this.#getTriggerButton()?.focus();
+    }
+
+    #setScrollLocked(locked: boolean): void {
+      const root = this.ownerDocument.documentElement;
+
+      if (!root) return;
+
+      if (locked) {
+        root.setAttribute("data-clbr-scroll-locked", "");
+        return;
+      }
+
+      root.removeAttribute("data-clbr-scroll-locked");
+    }
+
+    #setupListeners(): void {
+      const windowRef = this.ownerDocument.defaultView;
+
+      if (!windowRef) return;
+
+      if (typeof windowRef.matchMedia === "function") {
+        this.#mediaQuery = windowRef.matchMedia(aboveNotebookMedia);
+        this.#onMediaChange = () => {
+          this.#syncResponsiveState();
+        };
+        this.#mediaQuery.addEventListener("change", this.#onMediaChange);
+        this.#syncResponsiveState();
+      }
+
+      this.#onClick = (event: Event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) return;
+
+        if (target.closest('[data-part="trigger"] .clbr-button')) {
+          this.open();
+          return;
+        }
+
+        if (target.closest('[data-part="close"] .clbr-button')) {
+          if (
+            this.#isAboveNotebook() &&
+            this.#getAboveNotebook() === "collapsible"
+          ) {
+            this.#setOpen(this.#isCollapsed());
+            return;
+          }
+
+          this.close();
+          return;
+        }
+
+        if (target.closest('[data-part="backdrop"]')) {
+          this.close();
+        }
+      };
+
+      this.#onKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== "Escape" && event.key !== "Esc") return;
+        this.close();
+      };
+
+      this.addEventListener("click", this.#onClick);
+      this.addEventListener("keydown", this.#onKeyDown);
+    }
+
+    #teardownListeners(): void {
+      if (this.#onClick) {
+        this.removeEventListener("click", this.#onClick);
+      }
+
+      if (this.#onKeyDown) {
+        this.removeEventListener("keydown", this.#onKeyDown);
+      }
+
+      if (this.#mediaQuery && this.#onMediaChange) {
+        this.#mediaQuery.removeEventListener("change", this.#onMediaChange);
+      }
+
+      this.#onClick = undefined;
+      this.#onKeyDown = undefined;
+      this.#mediaQuery = undefined;
+      this.#onMediaChange = undefined;
+    }
+  }
 
   customElements.define(CLBR_SIDEBAR_TAG_NAME, ClbrSidebarElement);
 }
