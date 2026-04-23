@@ -36,7 +36,7 @@ const buttonArgTypes = {
 };
 
 const linkPropsTable = specToPropsTable({
-  name: CLBR_BUTTON_SPEC.name,
+  ...CLBR_BUTTON_SPEC,
   props: {
     href: CLBR_BUTTON_SPEC.props.href,
     download: CLBR_BUTTON_SPEC.props.download,

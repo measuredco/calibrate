@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
-import type { ClbrComponentSpec } from "../helpers/spec";
+import {
+  structuredSpecToLegacy,
+  type ClbrComponentSpec,
+  type ClbrStructuredSpec,
+} from "../helpers/spec";
 
 export interface SpecConsistencyConfig<Props> {
-  readonly spec: ClbrComponentSpec;
+  readonly spec: ClbrComponentSpec | ClbrStructuredSpec;
   readonly renderer: (props: Props) => string;
   readonly baseProps: Props;
   /**
@@ -16,7 +20,9 @@ export interface SpecConsistencyConfig<Props> {
 export function describeSpecConsistency<Props extends object>(
   config: SpecConsistencyConfig<Props>,
 ): void {
-  const { spec, renderer, baseProps, propOverrides = {} } = config;
+  const { spec: inputSpec, renderer, baseProps, propOverrides = {} } = config;
+  const spec: ClbrComponentSpec =
+    "content" in inputSpec ? structuredSpecToLegacy(inputSpec) : inputSpec;
 
   describe(`${spec.name} SPEC consistency`, () => {
     for (const [name, prop] of Object.entries(spec.props)) {

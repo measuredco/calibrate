@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { renderClbrIcon } from "../icon/icon";
@@ -168,121 +169,50 @@ export function defineClbrAlert(): void {
 }
 
 /** Declarative alert contract mirror for tooling, docs, and adapters. */
-export const CLBR_ALERT_SPEC = {
+export const CLBR_ALERT_SPEC: ClbrStructuredSpec = {
   name: "alert",
   description: "Use `alert` to surface short, important messages.",
   output: {
     element: CLBR_ALERT_TAG_NAME,
     class: "clbr-alert",
-    children: [
-      "div.icon-wrapper",
-      "div.content",
-      'optional runtime div[data-part="close"]',
+  },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "title", kind: "text" },
+      { prop: "message", kind: "text" },
     ],
   },
   props: {
     dismissible: {
       default: false,
       description: "Shows a dismiss control that removes the alert.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     dismissibleLabel: {
       default: dismissibleLabelDefault,
       description: "Accessible label for the dismiss control.",
       ignoredWhen: "`dismissible` is false",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     inlineSize: {
       default: "full",
       description: "Whether the alert fills its container or shrinks to fit.",
-      required: false,
-      type: "enum",
-      values: ["full", "fit"],
+      type: { kind: "enum", values: ["full", "fit"] },
     },
     message: {
       description: "Body text of the alert.",
       required: true,
-      type: "text",
-    },
-    tone: {
-      description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["info", "success", "warning", "error"],
+      type: { kind: "text" },
     },
     title: {
       description: "Bold text above the message.",
-      required: false,
-      type: "text",
+      type: { kind: "text" },
     },
-  },
-  rules: {
-    attributes: [
-      {
-        behavior: "always",
-        target: "class",
-        value: "clbr-alert",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: "tone is provided",
-      },
-      {
-        behavior: "always",
-        target: "role",
-        value: "{role}",
-      },
-      {
-        behavior: "emit",
-        target: "data-dismissible",
-        when: "dismissible is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-dismissible-label",
-        value: "{dismissibleLabel}",
-        when: "dismissible is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-inline-size",
-        value: "fit",
-        when: "inlineSize is fit",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "div.icon-wrapper",
-      },
-      {
-        behavior: "always",
-        value: "{toneIcon}",
-        when: "inside div.icon-wrapper as a md icon",
-      },
-      {
-        behavior: "always",
-        value: "div.content",
-      },
-      {
-        behavior: "emit",
-        value: "p.title",
-        when: "title is provided",
-      },
-      {
-        behavior: "always",
-        value: "p.message",
-      },
-      {
-        behavior: "runtime",
-        value: 'div[data-part="close"] > button',
-        when: "dismissible is true and defineClbrAlert() has upgraded the host",
-      },
-    ],
+    tone: {
+      description: "Semantic tone.",
+      type: { kind: "enum", values: ["info", "success", "warning", "error"] },
+    },
   },
   events: {
     [CLBR_ALERT_EVENT_BEFORE_DISMISS]: {
@@ -297,4 +227,54 @@ export const CLBR_ALERT_SPEC = {
         "Fired after the alert has been removed by an allowed dismiss action.",
     },
   },
-} as const;
+  rules: {
+    attributes: [
+      {
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-provided", prop: "tone" },
+        value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "role",
+        condition: {
+          kind: "when-in",
+          prop: "tone",
+          values: ["warning", "error"],
+        },
+        value: { kind: "literal", text: "alert" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "role",
+        condition: {
+          kind: "not",
+          of: {
+            kind: "when-in",
+            prop: "tone",
+            values: ["warning", "error"],
+          },
+        },
+        value: { kind: "literal", text: "status" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-dismissible",
+        condition: { kind: "when-truthy", prop: "dismissible" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-dismissible-label",
+        condition: { kind: "when-truthy", prop: "dismissible" },
+        value: { kind: "prop", prop: "dismissibleLabel" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-inline-size",
+        condition: { kind: "when-equals", prop: "inlineSize", to: "fit" },
+        value: { kind: "literal", text: "fit" },
+      },
+    ],
+  },
+};

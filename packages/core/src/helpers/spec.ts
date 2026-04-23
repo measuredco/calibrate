@@ -67,7 +67,10 @@ export type ClbrSpecCondition =
       readonly kind: "when-not-in";
       readonly prop: string;
       readonly values: ReadonlyArray<string | number | boolean>;
-    };
+    }
+  | { readonly kind: "all"; readonly of: ReadonlyArray<ClbrSpecCondition> }
+  | { readonly kind: "any"; readonly of: ReadonlyArray<ClbrSpecCondition> }
+  | { readonly kind: "not"; readonly of: ClbrSpecCondition };
 
 /** Value expression for an emitted attribute. Omit to mean presence-only. */
 export type ClbrSpecValue =
@@ -107,7 +110,11 @@ export type ClbrSpecPropType =
       readonly kind: "array";
       readonly itemShape: Readonly<Record<string, ClbrStructuredSpecProp>>;
     }
-  | { readonly kind: "iconName" };
+  | { readonly kind: "iconName" }
+  | {
+      readonly kind: "union";
+      readonly variants: ReadonlyArray<ClbrSpecPropType>;
+    };
 
 export interface ClbrStructuredSpecProp {
   readonly description: string;
@@ -125,9 +132,22 @@ export interface ClbrStructuredSpecEvent {
   readonly detail?: string;
 }
 
+/**
+ * Host element identity. A plain string names a fixed element; the object form
+ * switches the element tag by the value of a discriminant prop (e.g. `button`
+ * renders as `<button>` or `<a>` depending on `mode`).
+ */
+export type ClbrSpecElement =
+  | string
+  | {
+      readonly kind: "switch";
+      readonly prop: string;
+      readonly cases: Readonly<Record<string, string>>;
+    };
+
 /** Host element identity. `class` is the always-emit host class, if any. */
 export interface ClbrSpecOutput {
-  readonly element: string;
+  readonly element: ClbrSpecElement;
   readonly class?: string;
 }
 
@@ -167,6 +187,95 @@ export interface ClbrStructuredSpec {
     readonly attributes: ReadonlyArray<ClbrSpecAttributeRule>;
   };
 }
+
+// -----------------------------------------------------------------------------
+// Structured → legacy adapter.
+//
+// Temporary: lets the existing tooling helpers (argTypes, prop/event tables,
+// docs descriptions) and the test consistency helper keep operating during the
+// per-component migration. Removed once every component is on the structured
+// shape and those helpers target structured directly.
+// -----------------------------------------------------------------------------
+
+const legacyPropType = (
+  type: ClbrSpecPropType,
+): { type: string; values?: ReadonlyArray<string | number>; constraints?: string[] } => {
+  switch (type.kind) {
+    case "string":
+      return { type: "string" };
+    case "text":
+      return { type: "text" };
+    case "html":
+      return { type: "html" };
+    case "boolean":
+      return { type: "boolean" };
+    case "number": {
+      const constraints: string[] = [];
+      if (type.min !== undefined) constraints.push(`min:${type.min}`);
+      if (type.max !== undefined) constraints.push(`max:${type.max}`);
+      if (type.integer) constraints.push("integer");
+      return {
+        type: "number",
+        ...(constraints.length > 0 ? { constraints } : {}),
+      };
+    }
+    case "enum":
+      return { type: "enum", values: type.values };
+    case "array":
+      return { type: "array" };
+    case "iconName":
+      return { type: "iconName" };
+    case "union":
+      return {
+        type: type.variants.map((variant) => legacyPropType(variant).type).join("|"),
+      };
+  }
+};
+
+const isStructuredSpec = (
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
+): spec is ClbrStructuredSpec => "content" in spec;
+
+export const structuredSpecToLegacy = (
+  spec: ClbrStructuredSpec,
+): ClbrComponentSpec => {
+  const props: Record<string, ClbrSpecProp> = {};
+  for (const [name, prop] of Object.entries(spec.props)) {
+    const { type, values, constraints } = legacyPropType(prop.type);
+    props[name] = {
+      description: prop.description,
+      type,
+      ...(values ? { values } : {}),
+      ...(constraints ? { constraints } : {}),
+      ...(prop.required ? { required: prop.required } : {}),
+      ...(prop.requiredWhen ? { requiredWhen: prop.requiredWhen } : {}),
+      ...(prop.ignoredWhen ? { ignoredWhen: prop.ignoredWhen } : {}),
+      ...(prop.default !== undefined ? { default: prop.default } : {}),
+    };
+  }
+
+  const events: Record<string, ClbrSpecEvent> = {};
+  for (const [name, event] of Object.entries(spec.events)) {
+    events[name] = {
+      description: event.description,
+      ...(event.bubbles ? { bubbles: event.bubbles } : {}),
+      ...(event.cancelable ? { cancelable: event.cancelable } : {}),
+      ...(event.detail ? { detail: event.detail } : {}),
+    };
+  }
+
+  return {
+    name: spec.name,
+    description: spec.description,
+    props,
+    ...(Object.keys(events).length > 0 ? { events } : {}),
+  };
+};
+
+const asLegacy = (
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
+): ClbrComponentSpec =>
+  isStructuredSpec(spec) ? structuredSpecToLegacy(spec) : spec;
 
 type StoryArgType = Record<string, unknown>;
 
@@ -244,9 +353,10 @@ const composeEventDescription = (event: ClbrSpecEvent): string | undefined => {
 };
 
 export const specToArgTypes = (
-  spec: ClbrComponentSpec,
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
 ): Record<string, StoryArgType> => {
-  const propEntries = Object.entries(spec.props).map(([name, prop]) => {
+  const legacy = asLegacy(spec);
+  const propEntries = Object.entries(legacy.props).map(([name, prop]) => {
     const control = controlFor(prop);
     const options = prop.values ? [...prop.values] : undefined;
     const description = composeDescription(prop);
@@ -268,7 +378,7 @@ export const specToArgTypes = (
     ] as const;
   });
 
-  const eventEntries = Object.entries(spec.events ?? {}).map(
+  const eventEntries = Object.entries(legacy.events ?? {}).map(
     ([name, event]) => {
       const description = composeEventDescription(event);
       return [
@@ -290,14 +400,17 @@ export const specToArgTypes = (
 };
 
 export const specToComponentDescription = (
-  spec: ClbrComponentSpec,
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
 ): string | undefined => spec.description;
 
 const escapeCell = (value: string): string =>
   value.replace(/\|/g, "\\|").replace(/\n+/g, " ");
 
-export const specToPropsTable = (spec: ClbrComponentSpec): string => {
-  const rows = Object.entries(spec.props).map(([name, prop]) => {
+export const specToPropsTable = (
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
+): string => {
+  const legacy = asLegacy(spec);
+  const rows = Object.entries(legacy.props).map(([name, prop]) => {
     const label = prop.required ? `\`${name}\`*` : `\`${name}\``;
     const defaultValue = summaryDefaultFor(prop) ?? "-";
     const description = composeDescription(prop) ?? "";
@@ -316,9 +429,10 @@ export const specToPropsTable = (spec: ClbrComponentSpec): string => {
 };
 
 export const specToEventsTable = (
-  spec: ClbrComponentSpec,
+  spec: ClbrComponentSpec | ClbrStructuredSpec,
 ): string | undefined => {
-  const entries = Object.entries(spec.events ?? {});
+  const legacy = asLegacy(spec);
+  const entries = Object.entries(legacy.events ?? {});
   if (entries.length === 0) return undefined;
 
   const rows = entries.map(([name, event]) => {

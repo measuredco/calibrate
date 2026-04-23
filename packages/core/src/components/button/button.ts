@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
@@ -214,319 +215,325 @@ export function renderClbrButton(props: ClbrButtonProps): string {
 }
 
 /** Declarative button contract mirror for tooling, docs, and adapters. */
-export const CLBR_BUTTON_SPEC = {
+export const CLBR_BUTTON_SPEC: ClbrStructuredSpec = {
   name: "button",
   description: "Use `button` to let users trigger actions.",
   output: {
-    modes: {
-      button: "button",
-      link: "a",
+    element: {
+      kind: "switch",
+      prop: "mode",
+      cases: { button: "button", link: "a" },
     },
+    class: "clbr-button",
   },
+  content: { kind: "text", prop: "label" },
   props: {
     appearance: {
       default: "outline",
       description: "Visual appearance.",
-      required: false,
-      type: "enum",
-      values: ["outline", "solid", "text"],
+      type: { kind: "enum", values: ["outline", "solid", "text"] },
+    },
+    controls: {
+      description: "`id` of the element this button controls.",
+      ignoredWhen: "`mode` is link or `disclosure` is false",
+      type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Prevents interaction.",
       ignoredWhen: "`mode` is link",
-      required: false,
-      type: "boolean",
-    },
-    id: {
-      description: "`id` for the button.",
-      required: false,
-      type: "string",
-    },
-    controls: {
-      description: "`id` of the element this button controls.",
-      ignoredWhen: "`mode` is link or `disclosure` is false",
-      required: false,
-      type: "string",
+      type: { kind: "boolean" },
     },
     disclosure: {
       default: false,
       description:
         "Marks the button as a disclosure toggle for another element.",
       ignoredWhen: "`mode` is link",
-      required: false,
-      type: "boolean",
-    },
-    haspopup: {
-      description:
-        "Signals that activating the button opens a popup of this type.",
-      ignoredWhen: "`mode` is link",
-      required: false,
-      type: "enum",
-      values: ["menu"],
+      type: { kind: "boolean" },
     },
     download: {
       description:
         "Saves the target instead of navigating. Pass a filename or `true`.",
       ignoredWhen: "`mode` is button",
-      required: false,
-      type: "boolean|string",
+      type: {
+        kind: "union",
+        variants: [{ kind: "boolean" }, { kind: "string" }],
+      },
     },
     form: {
       description: "`id` of the form this button belongs to.",
       ignoredWhen: "`mode` is link",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
+    },
+    haspopup: {
+      description:
+        "Signals that activating the button opens a popup of this type.",
+      ignoredWhen: "`mode` is link",
+      type: { kind: "enum", values: ["menu"] },
     },
     href: {
       description: "Link destination.",
-      required: false,
       requiredWhen: "`mode` is link",
-      type: "string",
+      type: { kind: "string" },
     },
     icon: {
       description: "Icon shown alongside the label.",
       requiredWhen: "`labelVisibility` is hidden or hiddenBelowTablet",
-      required: false,
-      type: "string",
+      type: { kind: "iconName" },
     },
     iconMirrored: {
       description: "Mirrors the icon horizontally.",
       ignoredWhen: "`icon` is omitted",
-      required: false,
-      type: "enum",
-      values: ["always", "rtl"],
+      type: { kind: "enum", values: ["always", "rtl"] },
     },
     iconPlacement: {
       default: "start",
       description: "Where the icon sits relative to the label.",
       ignoredWhen: "`icon` is omitted",
-      required: false,
-      type: "enum",
-      values: ["start", "end"],
+      type: { kind: "enum", values: ["start", "end"] },
     },
-    labelVisibility: {
-      default: "visible",
-      description: "How the label is shown. Hidden values require an icon.",
-      required: false,
-      type: "enum",
-      values: ["visible", "hidden", "hiddenBelowTablet"],
+    id: {
+      description: "`id` for the button.",
+      type: { kind: "string" },
     },
     label: {
       description: "Accessible label.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
-    name: {
-      description: "Name submitted with the form.",
-      ignoredWhen: "`mode` is link",
-      required: false,
-      type: "string",
+    labelVisibility: {
+      default: "visible",
+      description: "How the label is shown. Hidden values require an icon.",
+      type: {
+        kind: "enum",
+        values: ["visible", "hidden", "hiddenBelowTablet"],
+      },
     },
     mode: {
       default: "button",
       description: "Render as a button or as a link.",
-      required: false,
-      type: "enum",
-      values: ["button", "link"],
+      type: { kind: "enum", values: ["button", "link"] },
+    },
+    name: {
+      description: "Name submitted with the form.",
+      ignoredWhen: "`mode` is link",
+      type: { kind: "string" },
     },
     rel: {
       description: "Explicit `rel` attribute.",
       ignoredWhen: "`mode` is button or `download` is set",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md", "lg"],
+      type: { kind: "enum", values: ["sm", "md", "lg"] },
     },
     target: {
       description: "Where to open the link.",
       ignoredWhen: "`mode` is button or `download` is set",
-      required: false,
-      type: "enum",
-      values: ["_blank", "_parent", "_self", "_top"],
+      type: {
+        kind: "enum",
+        values: ["_blank", "_parent", "_self", "_top"],
+      },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "neutral"],
+      type: { kind: "enum", values: ["default", "neutral"] },
     },
     type: {
       default: "button",
       description: "Native button type.",
       ignoredWhen: "`mode` is link",
-      required: false,
-      type: "enum",
-      values: ["button", "submit"],
+      type: { kind: "enum", values: ["button", "submit"] },
     },
     value: {
       description: "Value submitted with the form.",
       ignoredWhen: "`mode` is link",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "a",
-        when: "mode is link",
-      },
-      {
-        behavior: "render-as",
-        value: "button",
-        when: "mode is button or omitted",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-button",
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
       {
-        behavior: "emit",
-        target: "id",
-        value: "{id}",
-        when: "id is provided",
+        target: { on: "host" },
+        attribute: "data-appearance",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "appearance" },
       },
       {
-        behavior: "always",
-        target: "data-appearance",
-        value: "{appearance}",
+        target: { on: "host" },
+        attribute: "data-label-visibility",
+        condition: {
+          kind: "when-in",
+          prop: "labelVisibility",
+          values: ["hidden", "hiddenBelowTablet"],
+        },
+        value: { kind: "prop", prop: "labelVisibility" },
       },
       {
-        behavior: "emit",
-        target: "data-label-visibility",
-        value: "{labelVisibility}",
-        when: "labelVisibility is hidden or hiddenBelowTablet",
+        target: { on: "host" },
+        attribute: "data-mode",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "mode" },
       },
       {
-        behavior: "emit",
-        target: "data-mode",
-        value: "button",
-        when: "mode is button or omitted",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "data-mode",
-        value: "link",
-        when: "mode is link",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-equals", prop: "tone", to: "neutral" },
+        value: { kind: "literal", text: "neutral" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "disabled",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-truthy", prop: "disabled" },
+          ],
+        },
       },
       {
-        behavior: "emit",
-        target: "data-tone",
-        value: "neutral",
-        when: "tone is neutral",
+        target: { on: "host" },
+        attribute: "aria-expanded",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-truthy", prop: "disclosure" },
+          ],
+        },
+        value: { kind: "literal", text: "false" },
       },
       {
-        behavior: "emit",
-        target: "disabled",
-        value: "true",
-        when: "mode is button and disabled is true",
+        target: { on: "host" },
+        attribute: "aria-controls",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-truthy", prop: "disclosure" },
+            { kind: "when-non-empty", prop: "controls" },
+          ],
+        },
+        value: { kind: "prop", prop: "controls" },
       },
       {
-        behavior: "emit",
-        target: "aria-expanded",
-        value: "false",
-        when: "mode is button and disclosure is true",
+        target: { on: "host" },
+        attribute: "aria-haspopup",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-provided", prop: "haspopup" },
+          ],
+        },
+        value: { kind: "prop", prop: "haspopup" },
       },
       {
-        behavior: "emit",
-        target: "aria-controls",
-        value: "{controls}",
-        when: "mode is button and disclosure is true and controls is non-empty",
+        target: { on: "host" },
+        attribute: "download",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "mode", to: "link" },
+            { kind: "when-truthy", prop: "download" },
+          ],
+        },
+        value: { kind: "prop", prop: "download" },
       },
       {
-        behavior: "emit",
-        target: "aria-haspopup",
-        value: "{haspopup}",
-        when: "mode is button and haspopup is provided",
+        target: { on: "host" },
+        attribute: "form",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-non-empty", prop: "form" },
+          ],
+        },
+        value: { kind: "prop", prop: "form" },
       },
       {
-        behavior: "emit",
-        target: "download",
-        value: "{download}",
-        when: "mode is link and download is true or a non-empty string",
+        target: { on: "host" },
+        attribute: "href",
+        condition: { kind: "when-equals", prop: "mode", to: "link" },
+        value: { kind: "prop", prop: "href" },
       },
       {
-        behavior: "emit",
-        target: "form",
-        value: "{form}",
-        when: "mode is button and form is non-empty",
+        target: { on: "host" },
+        attribute: "name",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-non-empty", prop: "name" },
+          ],
+        },
+        value: { kind: "prop", prop: "name" },
       },
       {
-        behavior: "emit",
-        target: "href",
-        value: "{href}",
-        when: "mode is link",
+        target: { on: "host" },
+        attribute: "rel",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "mode", to: "link" },
+            { kind: "when-non-empty", prop: "rel" },
+            { kind: "not", of: { kind: "when-truthy", prop: "download" } },
+          ],
+        },
+        value: { kind: "prop", prop: "rel" },
       },
       {
-        behavior: "emit",
-        target: "name",
-        value: "{name}",
-        when: "mode is button and name is non-empty",
+        target: { on: "host" },
+        attribute: "target",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "mode", to: "link" },
+            { kind: "when-non-empty", prop: "target" },
+            { kind: "not", of: { kind: "when-truthy", prop: "download" } },
+          ],
+        },
+        value: { kind: "prop", prop: "target" },
       },
       {
-        behavior: "emit",
-        target: "rel",
-        value: "{rel}",
-        when: "mode is link, rel is non-empty, and download is omitted",
+        target: { on: "host" },
+        attribute: "type",
+        condition: {
+          kind: "not",
+          of: { kind: "when-equals", prop: "mode", to: "link" },
+        },
+        value: { kind: "prop", prop: "type" },
       },
       {
-        behavior: "emit",
-        target: "target",
-        value: "{target}",
-        when: "mode is link, target is non-empty, and download is omitted",
-      },
-      {
-        behavior: "emit",
-        target: "type",
-        value: "{type}",
-        when: "mode is button",
-      },
-      {
-        behavior: "emit",
-        target: "value",
-        value: "{value}",
-        when: "mode is button and value is non-empty",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        element: "span.label",
-        value: "{label}",
-      },
-      {
-        behavior: "emit",
-        element: "span.icon-wrapper",
-        value:
-          "renderClbrIcon({ name: icon, ariaHidden: true, mirrored: iconMirrored, size: 'fill' })",
-        when: "icon is a non-empty string",
-      },
-      {
-        behavior: "order",
-        value: ["span.icon-wrapper", "span.label"],
-        when: "icon is a non-empty string and iconPlacement is start or omitted",
-      },
-      {
-        behavior: "order",
-        value: ["span.label", "span.icon-wrapper"],
-        when: "icon is a non-empty string and iconPlacement is end",
+        target: { on: "host" },
+        attribute: "value",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "not", of: { kind: "when-equals", prop: "mode", to: "link" } },
+            { kind: "when-non-empty", prop: "value" },
+          ],
+        },
+        value: { kind: "prop", prop: "value" },
       },
     ],
   },
-} as const;
+};
