@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrPanelPadding = "xs" | "sm" | "md" | "lg" | "xl";
@@ -33,58 +34,44 @@ export function renderClbrPanel({
 }
 
 /** Declarative panel contract mirror for tooling, docs, and adapters. */
-export const CLBR_PANEL_SPEC = {
+export const CLBR_PANEL_SPEC: ClbrStructuredSpec = {
   name: "panel",
   description: "Use `panel` to group related content in a contained region.",
-  output: {
-    element: "div",
-    class: "clbr-panel",
-    children: "trusted HTML",
-    fixedStyles: [
-      "background: panel",
-      "border: default",
-      "shadow: default",
-      "radius: lg",
-    ],
-  },
+  output: { element: "div", class: "clbr-panel" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered inside the panel.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     padding: {
       default: "md",
       description: "Inner spacing scale.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl"],
+      type: { kind: "enum", values: ["xs", "sm", "md", "lg", "xl"] },
     },
     surface: {
       description: "Surface context.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand", "inverse", "brand-inverse"],
+      type: {
+        kind: "enum",
+        values: ["default", "brand", "inverse", "brand-inverse"],
+      },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-panel",
+        target: { on: "host" },
+        attribute: "data-padding",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "padding" },
       },
       {
-        behavior: "always",
-        target: "data-padding",
-        value: "{padding}",
-      },
-      {
-        behavior: "emit",
-        target: "data-clbr-surface",
-        value: "{surface}",
-        when: "surface is provided",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "when-provided", prop: "surface" },
+        value: { kind: "prop", prop: "surface" },
       },
     ],
   },
-} as const;
+};

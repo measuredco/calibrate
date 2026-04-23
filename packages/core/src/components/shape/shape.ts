@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrShapeSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
 export type ClbrShapeTone = "default" | "brand" | "support" | "neutral";
@@ -45,69 +46,67 @@ export function renderClbrShape({
 }
 
 /** Declarative shape contract mirror for tooling, docs, and adapters. */
-export const CLBR_SHAPE_SPEC = {
+export const CLBR_SHAPE_SPEC: ClbrStructuredSpec = {
   name: "shape",
   description: "Use `shape` to render brand visual language components.",
-  output: {
-    element: "div",
-    class: "clbr-shape",
-    rendering:
-      "CSS-driven masked shape using generated image/block-size token variables.",
-  },
+  output: { element: "div", class: "clbr-shape" },
+  content: { kind: "none" },
   props: {
     variant: {
       default: "corner",
       description: "Shape to render.",
-      required: false,
-      type: "enum",
-      values: [
-        "corner",
-        "tile-lg",
-        "tile-slice-lg",
-        "tile-sm",
-        "tile-slice-sm",
-        "circle-lg",
-        "circle-sm",
-      ],
+      type: {
+        kind: "enum",
+        values: [
+          "corner",
+          "tile-lg",
+          "tile-slice-lg",
+          "tile-sm",
+          "tile-slice-sm",
+          "circle-lg",
+          "circle-sm",
+        ],
+      },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "neutral", "brand", "support"],
+      type: {
+        kind: "enum",
+        values: ["default", "neutral", "brand", "support"],
+      },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl", "fill"],
+      type: { kind: "enum", values: ["xs", "sm", "md", "lg", "xl", "fill"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-shape",
+        target: { on: "host" },
+        attribute: "data-variant",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "variant" },
       },
       {
-        behavior: "always",
-        target: "data-variant",
-        value: "{variant}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: 'tone is "neutral", "brand", or "support"',
-      },
-      {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: {
+          kind: "when-in",
+          prop: "tone",
+          values: ["neutral", "brand", "support"],
+        },
+        value: { kind: "prop", prop: "tone" },
       },
     ],
   },
-} as const;
+};

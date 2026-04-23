@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
 export type ClbrStackAs = "div" | "ul";
@@ -41,85 +42,64 @@ export function renderClbrStack({
 }
 
 /** Declarative stack contract mirror for tooling, docs, and adapters. */
-export const CLBR_STACK_SPEC = {
+export const CLBR_STACK_SPEC: ClbrStructuredSpec = {
   name: "stack",
   description: "Use `stack` to lay out content in a vertical column.",
   output: {
-    modes: {
-      div: "div",
-      list: "ul",
-    },
+    element: { kind: "switch", prop: "as", cases: { div: "div", ul: "ul" } },
+    class: "clbr-stack",
   },
+  content: { kind: "html", prop: "children" },
   props: {
     align: {
       default: "stretch",
       description: "Aligns items on the cross axis.",
-      required: false,
-      type: "enum",
-      values: ["stretch", "start", "center", "end"],
+      type: { kind: "enum", values: ["stretch", "start", "center", "end"] },
     },
     as: {
       default: "div",
       description: "Element tag to render. `ul` children must be `<li>`.",
-      required: false,
-      type: "enum",
-      values: ["div", "ul"],
+      type: { kind: "enum", values: ["div", "ul"] },
     },
     children: {
       description: "Items laid out in a column.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     gap: {
       default: "md",
       description: "Space between children.",
-      required: false,
-      type: "enum",
-      values: ["none", "xs", "sm", "md", "lg"],
+      type: { kind: "enum", values: ["none", "xs", "sm", "md", "lg"] },
     },
     responsive: {
       default: false,
       description: "Scales spacing across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "div",
-        when: "as is div or omitted",
-      },
-      {
-        behavior: "render-as",
-        value: "ul",
-        when: "as is ul",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-stack",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["start", "center", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is start, center, or end",
+        target: { on: "host" },
+        attribute: "data-gap",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "gap" },
       },
       {
-        behavior: "always",
-        target: "data-gap",
-        value: "{gap}",
-      },
-      {
-        behavior: "emit",
-        target: "data-responsive",
-        value: "present",
-        when: "responsive is true",
+        target: { on: "host" },
+        attribute: "data-responsive",
+        condition: { kind: "when-truthy", prop: "responsive" },
       },
     ],
   },
-} as const;
+};

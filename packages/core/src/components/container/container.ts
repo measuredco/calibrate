@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrContainerGutter = "default" | "narrow" | "none";
 export type ClbrContainerMaxInlineSize = "default" | "wide" | "none";
@@ -34,53 +35,51 @@ export function renderClbrContainer({
 }
 
 /** Declarative container contract mirror for tooling, docs, and adapters. */
-export const CLBR_CONTAINER_SPEC = {
+export const CLBR_CONTAINER_SPEC: ClbrStructuredSpec = {
   name: "container",
   description: "Use `container` to wrap page-level content.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr-container" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered inside the container.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     gutter: {
       default: "default",
       description: "Horizontal gutter width.",
-      required: false,
-      type: "enum",
-      values: ["default", "narrow", "none"],
+      type: { kind: "enum", values: ["default", "narrow", "none"] },
     },
     maxInlineSize: {
       default: "default",
       description:
         "Maximum content width. Effect is only visible in wider viewports.",
-      required: false,
-      type: "enum",
-      values: ["default", "wide", "none"],
+      type: { kind: "enum", values: ["default", "wide", "none"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-container",
+        target: { on: "host" },
+        attribute: "data-max-inline-size",
+        condition: {
+          kind: "when-in",
+          prop: "maxInlineSize",
+          values: ["wide", "none"],
+        },
+        value: { kind: "prop", prop: "maxInlineSize" },
       },
       {
-        behavior: "emit",
-        target: "data-max-inline-size",
-        value: "{maxInlineSize}",
-        when: "maxInlineSize is wide or none",
-      },
-      {
-        behavior: "emit",
-        target: "data-gutter",
-        value: "{gutter}",
-        when: "gutter is narrow or none",
+        target: { on: "host" },
+        attribute: "data-gutter",
+        condition: {
+          kind: "when-in",
+          prop: "gutter",
+          values: ["narrow", "none"],
+        },
+        value: { kind: "prop", prop: "gutter" },
       },
     ],
   },
-} as const;
+};

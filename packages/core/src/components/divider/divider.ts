@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrDividerOrientation = "horizontal" | "vertical";
 export type ClbrDividerTone = "default" | "subtle" | "brand";
@@ -35,68 +36,55 @@ export function renderClbrDivider({
 }
 
 /** Declarative divider contract mirror for tooling, docs, and adapters. */
-export const CLBR_DIVIDER_SPEC = {
+export const CLBR_DIVIDER_SPEC: ClbrStructuredSpec = {
   name: "divider",
   description: "Use `divider` to separate sections with a rule.",
   output: {
-    modes: {
-      horizontal: "hr",
-      vertical: "span",
+    element: {
+      kind: "switch",
+      prop: "orientation",
+      cases: { horizontal: "hr", vertical: "span" },
     },
+    class: "clbr-divider",
   },
+  content: { kind: "none" },
   props: {
     orientation: {
       default: "horizontal",
       description: "Divider orientation.",
-      required: false,
-      type: "enum",
-      values: ["horizontal", "vertical"],
+      type: { kind: "enum", values: ["horizontal", "vertical"] },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "subtle", "brand"],
+      type: { kind: "enum", values: ["default", "subtle", "brand"] },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "hr",
-        when: "orientation is horizontal or omitted",
-      },
-      {
-        behavior: "render-as",
-        value: "span",
-        when: "orientation is vertical",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-divider",
+        target: { on: "host" },
+        attribute: "role",
+        condition: { kind: "when-equals", prop: "orientation", to: "vertical" },
+        value: { kind: "literal", text: "separator" },
       },
       {
-        behavior: "emit",
-        target: "role",
-        value: "separator",
-        when: "orientation is vertical",
+        target: { on: "host" },
+        attribute: "aria-orientation",
+        condition: { kind: "when-equals", prop: "orientation", to: "vertical" },
+        value: { kind: "literal", text: "vertical" },
       },
       {
-        behavior: "emit",
-        target: "aria-orientation",
-        value: "vertical",
-        when: "orientation is vertical",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: "tone is subtle or brand",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: {
+          kind: "when-in",
+          prop: "tone",
+          values: ["subtle", "brand"],
+        },
+        value: { kind: "prop", prop: "tone" },
       },
     ],
   },
-} as const;
+};

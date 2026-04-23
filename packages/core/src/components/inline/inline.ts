@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrInlineAs = "div" | "ul";
@@ -46,97 +47,78 @@ export function renderClbrInline({
 }
 
 /** Declarative inline contract mirror for tooling, docs, and adapters. */
-export const CLBR_INLINE_SPEC = {
+export const CLBR_INLINE_SPEC: ClbrStructuredSpec = {
   name: "inline",
   description: "Use `inline` to lay out content in a horizontal row.",
   output: {
-    modes: {
-      div: "div",
-      list: "ul",
-    },
+    element: { kind: "switch", prop: "as", cases: { div: "div", ul: "ul" } },
+    class: "clbr-inline",
   },
+  content: { kind: "html", prop: "children" },
   props: {
     as: {
       default: "div",
       description: "Element tag to render. `ul` children must be `<li>`.",
-      required: false,
-      type: "enum",
-      values: ["div", "ul"],
+      type: { kind: "enum", values: ["div", "ul"] },
     },
     align: {
       default: "center",
       description: "Aligns items on the cross axis.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     children: {
       description: "Items laid out in a row.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     gap: {
       default: "md",
       description: "Space between children.",
-      required: false,
-      type: "enum",
-      values: ["2xs", "xs", "sm", "md", "lg"],
+      type: { kind: "enum", values: ["2xs", "xs", "sm", "md", "lg"] },
     },
     justify: {
       default: "start",
       description: "Distributes items along the main axis.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end", "between"],
+      type: { kind: "enum", values: ["start", "center", "end", "between"] },
     },
     nowrap: {
       description: "Prevents items from wrapping onto new lines.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
   },
+  events: {},
   rules: {
-    modes: [
-      {
-        behavior: "render-as",
-        value: "div",
-        when: "as is div or omitted",
-      },
-      {
-        behavior: "render-as",
-        value: "ul",
-        when: "as is ul",
-      },
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-inline",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: {
+          kind: "when-in",
+          prop: "align",
+          values: ["start", "end"],
+        },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is start or end",
+        target: { on: "host" },
+        attribute: "data-gap",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "gap" },
       },
       {
-        behavior: "always",
-        target: "data-gap",
-        value: "{gap}",
+        target: { on: "host" },
+        attribute: "data-justify",
+        condition: {
+          kind: "when-in",
+          prop: "justify",
+          values: ["center", "end", "between"],
+        },
+        value: { kind: "prop", prop: "justify" },
       },
       {
-        behavior: "emit",
-        target: "data-justify",
-        value: "{justify}",
-        when: "justify is center, end, or between",
-      },
-      {
-        behavior: "emit",
-        target: "data-nowrap",
-        value: "present",
-        when: "nowrap is true",
+        target: { on: "host" },
+        attribute: "data-nowrap",
+        condition: { kind: "when-truthy", prop: "nowrap" },
       },
     ],
   },
-} as const;
+};

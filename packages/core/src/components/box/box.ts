@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrBoxBackground = "default" | "panel" | "transparent";
@@ -63,113 +64,106 @@ export function renderClbrBox({
 }
 
 /** Declarative box contract mirror for tooling, docs, and adapters. */
-export const CLBR_BOX_SPEC = {
+export const CLBR_BOX_SPEC: ClbrStructuredSpec = {
   name: "box",
   description: "Use `box` to inset content.",
-  output: {
-    element: "div",
-    class: "clbr-box",
-    children: "trusted HTML",
-  },
+  output: { element: "div", class: "clbr-box" },
+  content: { kind: "html", prop: "children" },
   props: {
     background: {
       default: "default",
       description: "Background treatment.",
-      required: false,
-      type: "enum",
-      values: ["default", "panel", "transparent"],
+      type: { kind: "enum", values: ["default", "panel", "transparent"] },
     },
     border: {
       default: false,
       description: "Shows a subtle border around the box.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     children: {
       description: "Content rendered inside the box.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     paddingBlock: {
       default: "md",
       description: "Vertical padding.",
-      required: false,
-      type: "enum",
-      values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      type: {
+        kind: "enum",
+        values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      },
     },
     paddingInline: {
       default: "md",
       description: "Horizontal padding.",
-      required: false,
-      type: "enum",
-      values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      type: {
+        kind: "enum",
+        values: ["none", "2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      },
     },
     radius: {
       description: "Corner radius.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     responsive: {
       default: false,
       description: "Scales vertical padding across breakpoints.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     surface: {
       description: "Surface context.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand", "inverse", "brand-inverse"],
+      type: {
+        kind: "enum",
+        values: ["default", "brand", "inverse", "brand-inverse"],
+      },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-box",
+        target: { on: "host" },
+        attribute: "data-background",
+        condition: {
+          kind: "when-in",
+          prop: "background",
+          values: ["panel", "transparent"],
+        },
+        value: { kind: "prop", prop: "background" },
       },
       {
-        behavior: "emit",
-        target: "data-background",
-        value: "{background}",
-        when: "background is panel or transparent",
+        target: { on: "host" },
+        attribute: "data-border",
+        condition: { kind: "when-truthy", prop: "border" },
       },
       {
-        behavior: "emit",
-        target: "data-border",
-        value: "present",
-        when: "border is true",
+        target: { on: "host" },
+        attribute: "data-padding-block",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "paddingBlock" },
       },
       {
-        behavior: "always",
-        target: "data-padding-block",
-        value: "{paddingBlock}",
+        target: { on: "host" },
+        attribute: "data-padding-inline",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "paddingInline" },
       },
       {
-        behavior: "always",
-        target: "data-padding-inline",
-        value: "{paddingInline}",
+        target: { on: "host" },
+        attribute: "data-radius",
+        condition: { kind: "when-provided", prop: "radius" },
+        value: { kind: "prop", prop: "radius" },
       },
       {
-        behavior: "emit",
-        target: "data-radius",
-        value: "{radius}",
-        when: "radius is sm or md",
+        target: { on: "host" },
+        attribute: "data-responsive",
+        condition: { kind: "when-truthy", prop: "responsive" },
       },
       {
-        behavior: "emit",
-        target: "data-responsive",
-        value: "present",
-        when: "responsive is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-clbr-surface",
-        value: "{surface}",
-        when: "surface is provided",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "when-provided", prop: "surface" },
+        value: { kind: "prop", prop: "surface" },
       },
     ],
   },
-} as const;
+};

@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrBrand = "msrd" | "wrfr";
 export type ClbrDirection = "ltr" | "rtl";
@@ -58,96 +59,86 @@ export function renderClbrRoot(props: ClbrRootProps): string {
 }
 
 /** Declarative root contract mirror for tooling, docs, and adapters. */
-export const CLBR_ROOT_SPEC = {
+export const CLBR_ROOT_SPEC: ClbrStructuredSpec = {
   name: "root",
   description: "Mandatory top-level `root` wrapper for the Calibrate system.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr" },
+  content: { kind: "html", prop: "children" },
   props: {
     appOverscrollBehavior: {
       description: "Disables overscroll bounce for app-shell integrations.",
-      required: false,
-      type: "enum",
-      values: ["none"],
+      type: { kind: "enum", values: ["none"] },
     },
     appRoot: {
       default: false,
       description: "Marks this wrapper as the app root.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     brand: {
       default: "msrd",
       description: "Brand identity applied to the wrapper.",
-      required: false,
-      type: "enum",
-      values: ["msrd", "wrfr"],
+      type: { kind: "enum", values: ["msrd", "wrfr"] },
     },
     children: {
       description: "Content rendered inside the root.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     dir: {
       description: "Text direction.",
-      required: false,
-      type: "enum",
-      values: ["ltr", "rtl"],
+      type: { kind: "enum", values: ["ltr", "rtl"] },
     },
     lang: {
       description: "BCP47 language tag (e.g. `en-GB`).",
-      format: "bcp47",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     theme: {
       description: "Colour theme.",
-      required: false,
-      type: "enum",
-      values: ["light", "dark"],
+      type: { kind: "enum", values: ["light", "dark"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "emit",
-        target: "data-app-overscroll-behavior",
-        value: "none",
-        when: "appOverscrollBehavior is provided",
+        target: { on: "host" },
+        attribute: "data-app-overscroll-behavior",
+        condition: {
+          kind: "when-equals",
+          prop: "appOverscrollBehavior",
+          to: "none",
+        },
+        value: { kind: "literal", text: "none" },
       },
       {
-        behavior: "emit",
-        target: "data-app-root",
-        when: "appRoot is true",
+        target: { on: "host" },
+        attribute: "data-app-root",
+        condition: { kind: "when-truthy", prop: "appRoot" },
       },
       {
-        behavior: "always",
-        target: "data-clbr-brand",
-        value: "{brand}",
+        target: { on: "host" },
+        attribute: "data-clbr-brand",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "brand" },
       },
       {
-        behavior: "emit",
-        target: "data-clbr-theme",
-        value: "{theme}",
-        when: "theme is provided",
+        target: { on: "host" },
+        attribute: "data-clbr-theme",
+        condition: { kind: "when-provided", prop: "theme" },
+        value: { kind: "prop", prop: "theme" },
       },
       {
-        behavior: "emit",
-        target: "dir",
-        when: "dir is provided",
+        target: { on: "host" },
+        attribute: "dir",
+        condition: { kind: "when-provided", prop: "dir" },
+        value: { kind: "prop", prop: "dir" },
       },
       {
-        behavior: "emit",
-        target: "lang",
-        when: "lang is a non-empty string",
-      },
-    ],
-    classes: [
-      {
-        behavior: "always",
-        value: "clbr",
+        target: { on: "host" },
+        attribute: "lang",
+        condition: { kind: "when-non-empty", prop: "lang" },
+        value: { kind: "prop", prop: "lang" },
       },
     ],
   },
-} as const;
+};

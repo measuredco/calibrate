@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
 
@@ -46,92 +47,63 @@ export function renderClbrPage({
 }
 
 /** Declarative page contract mirror for tooling, docs, and adapters. */
-export const CLBR_PAGE_SPEC = {
+export const CLBR_PAGE_SPEC: ClbrStructuredSpec = {
   name: "page",
   description:
     "Use `page` as the primary layout for header, main, and footer regions.",
-  output: {
-    element: "div",
-    class: "clbr-page",
-    children: [
-      "optional {banner}",
-      "header.header",
-      "main.main",
-      "footer.footer",
+  output: { element: "div", class: "clbr-page" },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "banner", kind: "html" },
+      { prop: "header", kind: "html" },
+      { prop: "children", kind: "html" },
+      { prop: "footer", kind: "html" },
     ],
   },
   props: {
     banner: {
       description: "Banner rendered above the header.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     children: {
       description: "Main content of the page.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     centerMain: {
       default: false,
       description: "Centers the main region within the page shell.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     header: {
       description: "Header content.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     stickyHeader: {
       description: "When the header stays stuck to the top of the viewport.",
-      required: false,
-      type: "enum",
-      values: ["always", "belowNotebook"],
+      type: { kind: "enum", values: ["always", "belowNotebook"] },
     },
     footer: {
       description: "Footer content.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-page",
+        target: { on: "host" },
+        attribute: "data-center-main",
+        condition: { kind: "when-truthy", prop: "centerMain" },
       },
       {
-        behavior: "emit",
-        target: "data-center-main",
-        value: "present",
-        when: "centerMain is true",
-      },
-      {
-        behavior: "emit",
-        target: "data-sticky-header",
-        value: "{stickyHeader}",
-        when: "stickyHeader is always or belowNotebook",
-      },
-    ],
-    composition: [
-      {
-        behavior: "emit",
-        value: "{banner}",
-        when: "banner is provided",
-      },
-      {
-        behavior: "always",
-        value: "header.header",
-      },
-      {
-        behavior: "always",
-        value: "main.main",
-      },
-      {
-        behavior: "always",
-        value: "footer.footer",
+        target: { on: "host" },
+        attribute: "data-sticky-header",
+        condition: { kind: "when-provided", prop: "stickyHeader" },
+        value: { kind: "prop", prop: "stickyHeader" },
       },
     ],
   },
-} as const;
+};

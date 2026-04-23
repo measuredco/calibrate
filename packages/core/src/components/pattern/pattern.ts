@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrShapeVariant } from "../shape/shape";
 
 export type ClbrPatternSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
@@ -39,76 +40,69 @@ export function renderClbrPattern({
 }
 
 /** Declarative pattern contract mirror for tooling, docs, and adapters. */
-export const CLBR_PATTERN_SPEC = {
+export const CLBR_PATTERN_SPEC: ClbrStructuredSpec = {
   name: "pattern",
   description:
     "Use `pattern` to render repeated visual language components behind content.",
-  output: {
-    element: "div",
-    class: "clbr-pattern",
-    children: "trusted HTML",
-    rendering:
-      "CSS-driven repeated masked layer using generated shape image/block-size token variables.",
-  },
+  output: { element: "div", class: "clbr-pattern" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered above the pattern.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "subtle", "support"],
+      type: { kind: "enum", values: ["default", "subtle", "support"] },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl", "fill"],
+      type: { kind: "enum", values: ["xs", "sm", "md", "lg", "xl", "fill"] },
     },
     variant: {
       default: "corner",
       description: "Shape used for the pattern tile.",
-      required: false,
-      type: "enum",
-      values: [
-        "corner",
-        "tile-lg",
-        "tile-slice-lg",
-        "tile-sm",
-        "tile-slice-sm",
-        "circle-lg",
-        "circle-sm",
-      ],
+      type: {
+        kind: "enum",
+        values: [
+          "corner",
+          "tile-lg",
+          "tile-slice-lg",
+          "tile-sm",
+          "tile-slice-sm",
+          "circle-lg",
+          "circle-sm",
+        ],
+      },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-pattern",
+        target: { on: "host" },
+        attribute: "data-variant",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "variant" },
       },
       {
-        behavior: "always",
-        target: "data-variant",
-        value: "{variant}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
-      },
-      {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: 'tone is "subtle" or "support"',
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: {
+          kind: "when-in",
+          prop: "tone",
+          values: ["subtle", "support"],
+        },
+        value: { kind: "prop", prop: "tone" },
       },
     ],
   },
-} as const;
+};

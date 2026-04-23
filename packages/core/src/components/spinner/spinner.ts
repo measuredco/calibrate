@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrSpinnerSize =
   | "2xs"
@@ -42,82 +43,51 @@ export function renderClbrSpinner({
 }
 
 /** Declarative spinner contract mirror for tooling, docs, and adapters. */
-export const CLBR_SPINNER_SPEC = {
+export const CLBR_SPINNER_SPEC: ClbrStructuredSpec = {
   name: "spinner",
   description: "Use `spinner` to indicate loading or in-progress state.",
-  output: {
-    element: "span",
-  },
+  output: { element: "span", class: "clbr-spinner" },
+  content: { kind: "text", prop: "label" },
   props: {
     label: {
       description: "Accessible status label announced to assistive tech.",
-      type: "string",
-      required: false,
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "fill"],
+      type: {
+        kind: "enum",
+        values: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "fill"],
+      },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand"],
+      type: { kind: "enum", values: ["default", "brand"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-spinner",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "2xs | xs | sm | md | lg | xl | 2xl | fill",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-equals", prop: "tone", to: "brand" },
+        value: { kind: "literal", text: "brand" },
       },
       {
-        behavior: "conditional",
-        condition: 'emit data-tone when tone is not "default"',
-        target: "data-tone",
-        value: "brand",
-      },
-      {
-        behavior: "conditional",
-        condition: 'emit role="status" when label is present',
-        target: "role",
-        value: "status",
-      },
-    ],
-    children: [
-      {
-        behavior: "always",
-        target: "svg",
-      },
-      {
-        behavior: "always",
-        target: "svg circle.circle-lg",
-      },
-      {
-        behavior: "always",
-        target: "svg circle.circle-sm",
-      },
-      {
-        behavior: "always",
-        target: "svg",
-        attribute: "aria-hidden",
-        value: "true",
-      },
-      {
-        behavior: "conditional",
-        condition: "render visually hidden label text when label is present",
-        target: "span.visually-hidden",
+        target: { on: "host" },
+        attribute: "role",
+        condition: { kind: "when-non-empty", prop: "label" },
+        value: { kind: "literal", text: "status" },
       },
     ],
   },
-} as const;
+};

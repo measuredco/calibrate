@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrSurfaceVariant =
   | "default"
@@ -32,39 +33,35 @@ export function renderClbrSurface({
 }
 
 /** Declarative surface contract mirror for tooling, docs, and adapters. */
-export const CLBR_SURFACE_SPEC = {
+export const CLBR_SURFACE_SPEC: ClbrStructuredSpec = {
   name: "surface",
   description: "Use `surface` to set a colour context for nested content.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr-surface" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered inside the surface.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     variant: {
       default: "default",
       description: "Surface context.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand", "inverse", "brand-inverse"],
+      type: {
+        kind: "enum",
+        values: ["default", "brand", "inverse", "brand-inverse"],
+      },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "data-clbr-surface",
-        value: "{variant}",
-      },
-    ],
-    classes: [
-      {
-        behavior: "always",
-        value: "clbr-surface",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "variant" },
       },
     ],
   },
-} as const;
+};

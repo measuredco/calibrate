@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
 export type ClbrGridGap = "default" | "expanded" | "none";
@@ -118,249 +119,205 @@ export function renderClbrGridItem({
 }
 
 /** Declarative grid contract mirror for tooling, docs, and adapters. */
-export const CLBR_GRID_SPEC = {
+export const CLBR_GRID_SPEC: ClbrStructuredSpec = {
   name: "grid",
   description: "Use `grid` to lay out content in a 12-column responsive grid.",
-  output: {
-    element: "div",
-    class: "clbr-grid",
-    children: ["div.grid"],
-  },
+  output: { element: "div", class: "clbr-grid" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "`grid-item` components rendered inside the grid.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     gap: {
       default: "default",
       description: "Space between the `grid-item` components.",
-      required: false,
-      type: "enum",
-      values: ["default", "expanded", "none"],
+      type: { kind: "enum", values: ["default", "expanded", "none"] },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-grid",
-      },
-      {
-        behavior: "emit",
-        target: "data-gap",
-        value: "{gap}",
-        when: "gap is expanded or none",
-      },
-      {
-        behavior: "always",
-        target: "div.grid@class",
-        value: "grid",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "div.grid",
+        target: { on: "host" },
+        attribute: "data-gap",
+        condition: {
+          kind: "when-in",
+          prop: "gap",
+          values: ["expanded", "none"],
+        },
+        value: { kind: "prop", prop: "gap" },
       },
     ],
   },
+};
+
+const gridTrackType = {
+  kind: "number",
+  min: 1,
+  max: 12,
+  integer: true,
 } as const;
 
 /** Declarative grid-item contract mirror for tooling, docs, and adapters. */
-export const CLBR_GRID_ITEM_SPEC = {
+export const CLBR_GRID_ITEM_SPEC: ClbrStructuredSpec = {
   name: "grid-item",
   description: "Use `grid-item` to place content within a `grid` layout.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr-grid-item" },
+  content: { kind: "html", prop: "children" },
   props: {
     children: {
       description: "Content rendered inside the grid item.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     align: {
       description: "Block-axis alignment within the grid cell.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     justify: {
       description: "Inline-axis alignment within the grid cell.",
-      required: false,
-      type: "enum",
-      values: ["start", "center", "end"],
+      type: { kind: "enum", values: ["start", "center", "end"] },
     },
     colSpan: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Columns spanned at the default breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     colStart: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Starting column at the default breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowSpan: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Rows spanned at the default breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowSpanNarrow: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Rows spanned at the narrow breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowSpanWide: {
-      constraints: ["integer", "min:1", "max:12"],
       description:
         "Rows spanned at the wide breakpoint. Effect is only visible above the wide breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowStart: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Starting row at the default breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowStartNarrow: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Starting row at the narrow breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     rowStartWide: {
-      constraints: ["integer", "min:1", "max:12"],
       description:
         "Starting row at the wide breakpoint. Effect is only visible above the wide breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     colSpanNarrow: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Columns spanned at the narrow breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     colStartNarrow: {
-      constraints: ["integer", "min:1", "max:12"],
       description: "Starting column at the narrow breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     colSpanWide: {
-      constraints: ["integer", "min:1", "max:12"],
       description:
         "Columns spanned at the wide breakpoint. Effect is only visible above the wide breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
     colStartWide: {
-      constraints: ["integer", "min:1", "max:12"],
       description:
         "Starting column at the wide breakpoint. Effect is only visible above the wide breakpoint.",
-      required: false,
-      type: "number",
+      type: gridTrackType,
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-grid-item",
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: { kind: "when-provided", prop: "align" },
+        value: { kind: "prop", prop: "align" },
       },
       {
-        behavior: "emit",
-        target: "data-align",
-        value: "{align}",
-        when: "align is provided",
+        target: { on: "host" },
+        attribute: "data-justify",
+        condition: { kind: "when-provided", prop: "justify" },
+        value: { kind: "prop", prop: "justify" },
       },
       {
-        behavior: "emit",
-        target: "data-justify",
-        value: "{justify}",
-        when: "justify is provided",
+        target: { on: "host" },
+        attribute: "data-col-span",
+        condition: { kind: "when-provided", prop: "colSpan" },
+        value: { kind: "prop", prop: "colSpan" },
       },
       {
-        behavior: "emit",
-        target: "data-col-span",
-        value: "{colSpan}",
-        when: "colSpan is provided",
+        target: { on: "host" },
+        attribute: "data-col-start",
+        condition: { kind: "when-provided", prop: "colStart" },
+        value: { kind: "prop", prop: "colStart" },
       },
       {
-        behavior: "emit",
-        target: "data-col-start",
-        value: "{colStart}",
-        when: "colStart is provided",
+        target: { on: "host" },
+        attribute: "data-col-span-narrow",
+        condition: { kind: "when-provided", prop: "colSpanNarrow" },
+        value: { kind: "prop", prop: "colSpanNarrow" },
       },
       {
-        behavior: "emit",
-        target: "data-row-span",
-        value: "{rowSpan}",
-        when: "rowSpan is provided",
+        target: { on: "host" },
+        attribute: "data-col-start-narrow",
+        condition: { kind: "when-provided", prop: "colStartNarrow" },
+        value: { kind: "prop", prop: "colStartNarrow" },
       },
       {
-        behavior: "emit",
-        target: "data-row-span-narrow",
-        value: "{rowSpanNarrow}",
-        when: "rowSpanNarrow is provided",
+        target: { on: "host" },
+        attribute: "data-col-span-wide",
+        condition: { kind: "when-provided", prop: "colSpanWide" },
+        value: { kind: "prop", prop: "colSpanWide" },
       },
       {
-        behavior: "emit",
-        target: "data-row-span-wide",
-        value: "{rowSpanWide}",
-        when: "rowSpanWide is provided",
+        target: { on: "host" },
+        attribute: "data-col-start-wide",
+        condition: { kind: "when-provided", prop: "colStartWide" },
+        value: { kind: "prop", prop: "colStartWide" },
       },
       {
-        behavior: "emit",
-        target: "data-row-start",
-        value: "{rowStart}",
-        when: "rowStart is provided",
+        target: { on: "host" },
+        attribute: "data-row-span",
+        condition: { kind: "when-provided", prop: "rowSpan" },
+        value: { kind: "prop", prop: "rowSpan" },
       },
       {
-        behavior: "emit",
-        target: "data-row-start-narrow",
-        value: "{rowStartNarrow}",
-        when: "rowStartNarrow is provided",
+        target: { on: "host" },
+        attribute: "data-row-start",
+        condition: { kind: "when-provided", prop: "rowStart" },
+        value: { kind: "prop", prop: "rowStart" },
       },
       {
-        behavior: "emit",
-        target: "data-row-start-wide",
-        value: "{rowStartWide}",
-        when: "rowStartWide is provided",
+        target: { on: "host" },
+        attribute: "data-row-span-narrow",
+        condition: { kind: "when-provided", prop: "rowSpanNarrow" },
+        value: { kind: "prop", prop: "rowSpanNarrow" },
       },
       {
-        behavior: "emit",
-        target: "data-col-span-narrow",
-        value: "{colSpanNarrow}",
-        when: "colSpanNarrow is provided",
+        target: { on: "host" },
+        attribute: "data-row-start-narrow",
+        condition: { kind: "when-provided", prop: "rowStartNarrow" },
+        value: { kind: "prop", prop: "rowStartNarrow" },
       },
       {
-        behavior: "emit",
-        target: "data-col-start-narrow",
-        value: "{colStartNarrow}",
-        when: "colStartNarrow is provided",
+        target: { on: "host" },
+        attribute: "data-row-span-wide",
+        condition: { kind: "when-provided", prop: "rowSpanWide" },
+        value: { kind: "prop", prop: "rowSpanWide" },
       },
       {
-        behavior: "emit",
-        target: "data-col-span-wide",
-        value: "{colSpanWide}",
-        when: "colSpanWide is provided",
-      },
-      {
-        behavior: "emit",
-        target: "data-col-start-wide",
-        value: "{colStartWide}",
-        when: "colStartWide is provided",
+        target: { on: "host" },
+        attribute: "data-row-start-wide",
+        condition: { kind: "when-provided", prop: "rowStartWide" },
+        value: { kind: "prop", prop: "rowStartWide" },
       },
     ],
   },
-} as const;
+};

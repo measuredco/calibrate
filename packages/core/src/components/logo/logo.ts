@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrLogoTone = "default" | "neutral";
 export type ClbrLogoSize = "sm" | "md" | "lg" | "fill";
@@ -42,71 +43,61 @@ export function renderClbrLogo({
 }
 
 /** Declarative logo contract mirror for tooling, docs, and adapters. */
-export const CLBR_LOGO_SPEC = {
+export const CLBR_LOGO_SPEC: ClbrStructuredSpec = {
   name: "logo",
   description: "Use `logo` to display the brand mark.",
-  output: {
-    element: "div",
-  },
+  output: { element: "div", class: "clbr-logo" },
+  content: { kind: "text", prop: "label" },
   props: {
     label: {
       description: "Accessible label.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md", "lg", "fill"],
+      type: { kind: "enum", values: ["sm", "md", "lg", "fill"] },
     },
     tone: {
       default: "default",
       description: "Semantic tone.",
-      required: false,
-      type: "enum",
-      values: ["default", "neutral"],
+      type: { kind: "enum", values: ["default", "neutral"] },
     },
     variant: {
       default: "primary",
       description: "Logo variant.",
-      required: false,
-      type: "enum",
-      values: ["primary", "secondary", "typographic", "graphic"],
+      type: {
+        kind: "enum",
+        values: ["primary", "secondary", "typographic", "graphic"],
+      },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-logo",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-tone",
+        condition: { kind: "when-equals", prop: "tone", to: "neutral" },
+        value: { kind: "literal", text: "neutral" },
       },
       {
-        behavior: "emit",
-        target: "data-tone",
-        value: "{tone}",
-        when: "tone is neutral",
-      },
-      {
-        behavior: "emit",
-        target: "data-variant",
-        value: "{variant}",
-        when: "variant is secondary, typographic, or graphic",
-      },
-    ],
-    content: [
-      {
-        behavior: "always",
-        target: "span.visually-hidden",
-        value: "{label}",
+        target: { on: "host" },
+        attribute: "data-variant",
+        condition: {
+          kind: "when-in",
+          prop: "variant",
+          values: ["secondary", "typographic", "graphic"],
+        },
+        value: { kind: "prop", prop: "variant" },
       },
     ],
   },
-} as const;
+};
