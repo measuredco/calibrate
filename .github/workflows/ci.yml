@@ -107,8 +107,8 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Build core types
-        run: pnpm --filter @measured/calibrate-core run build:types
+      - name: Build core
+        run: pnpm run core:build
 
       - name: Typecheck react
         run: pnpm run react:typecheck
