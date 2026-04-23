@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
@@ -54,33 +54,50 @@ const validateGridTrack = (
 };
 
 /**
+ * Builds the IR tree for the Calibrate grid component.
+ *
+ * @param props - Grid component props.
+ * @returns IR node for a grid wrapper.
+ */
+export function buildClbrGrid({
+  children,
+  gap = "default",
+}: ClbrGridProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-grid",
+      "data-gap": gap === "default" ? undefined : gap,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { class: "grid" },
+        children: children ? [{ kind: "raw", html: children }] : [],
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate grid component.
  *
  * @param props - Grid component props.
  * @returns HTML string for a grid wrapper.
  */
-export function renderClbrGrid({
-  children,
-  gap = "default",
-}: ClbrGridProps): string {
-  const containerAttrs = attrs({
-    class: "clbr-grid",
-    "data-gap": gap === "default" ? undefined : gap,
-  });
-  const gridAttrs = attrs({
-    class: "grid",
-  });
-
-  return `<div ${containerAttrs}><div ${gridAttrs}>${children ?? ""}</div></div>`;
+export function renderClbrGrid(props: ClbrGridProps): string {
+  return serializeClbrNode(buildClbrGrid(props));
 }
 
 /**
- * SSR renderer for the Calibrate grid-item component.
+ * Builds the IR tree for the Calibrate grid-item component.
  *
  * @param props - Grid-item component props.
- * @returns HTML string for a grid item.
+ * @returns IR node for a grid item.
  */
-export function renderClbrGridItem({
+export function buildClbrGridItem({
   align,
   children,
   colSpan,
@@ -96,26 +113,39 @@ export function renderClbrGridItem({
   rowStart,
   rowStartNarrow,
   rowStartWide,
-}: ClbrGridItemProps): string {
-  const gridItemAttrs = attrs({
-    class: "clbr-grid-item",
-    "data-align": align,
-    "data-justify": justify,
-    "data-col-span-narrow": validateGridTrack(colSpanNarrow),
-    "data-col-start-narrow": validateGridTrack(colStartNarrow),
-    "data-col-span": validateGridTrack(colSpan),
-    "data-col-start": validateGridTrack(colStart),
-    "data-col-span-wide": validateGridTrack(colSpanWide),
-    "data-col-start-wide": validateGridTrack(colStartWide),
-    "data-row-span-narrow": validateGridTrack(rowSpanNarrow),
-    "data-row-start-narrow": validateGridTrack(rowStartNarrow),
-    "data-row-span": validateGridTrack(rowSpan),
-    "data-row-start": validateGridTrack(rowStart),
-    "data-row-span-wide": validateGridTrack(rowSpanWide),
-    "data-row-start-wide": validateGridTrack(rowStartWide),
-  });
+}: ClbrGridItemProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-grid-item",
+      "data-align": align,
+      "data-justify": justify,
+      "data-col-span-narrow": validateGridTrack(colSpanNarrow),
+      "data-col-start-narrow": validateGridTrack(colStartNarrow),
+      "data-col-span": validateGridTrack(colSpan),
+      "data-col-start": validateGridTrack(colStart),
+      "data-col-span-wide": validateGridTrack(colSpanWide),
+      "data-col-start-wide": validateGridTrack(colStartWide),
+      "data-row-span-narrow": validateGridTrack(rowSpanNarrow),
+      "data-row-start-narrow": validateGridTrack(rowStartNarrow),
+      "data-row-span": validateGridTrack(rowSpan),
+      "data-row-start": validateGridTrack(rowStart),
+      "data-row-span-wide": validateGridTrack(rowSpanWide),
+      "data-row-start-wide": validateGridTrack(rowStartWide),
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
 
-  return `<div ${gridItemAttrs}>${children ?? ""}</div>`;
+/**
+ * SSR renderer for the Calibrate grid-item component.
+ *
+ * @param props - Grid-item component props.
+ * @returns HTML string for a grid item.
+ */
+export function renderClbrGridItem(props: ClbrGridItemProps): string {
+  return serializeClbrNode(buildClbrGridItem(props));
 }
 
 /** Declarative grid contract mirror for tooling, docs, and adapters. */

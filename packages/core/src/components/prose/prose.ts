@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
@@ -18,27 +18,40 @@ export interface ClbrProseProps {
 }
 
 /**
- * SSR renderer for the Calibrate prose component.
+ * Builds the IR tree for the Calibrate prose component.
  *
  * @param props - Prose component props.
- * @returns HTML string for a prose wrapper.
+ * @returns IR node for a prose wrapper.
  */
-export function renderClbrProse({
+export function buildClbrProse({
   align = "start",
   children,
   hangingPunctuation,
   measured = true,
   responsive,
-}: ClbrProseProps): string {
-  const proseAttrs = attrs({
-    class: "clbr-prose",
-    "data-align": align !== "start" ? align : undefined,
-    "data-hanging-punctuation": hangingPunctuation,
-    "data-measured": measured,
-    "data-responsive": responsive,
-  });
+}: ClbrProseProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-prose",
+      "data-align": align !== "start" ? align : undefined,
+      "data-hanging-punctuation": hangingPunctuation,
+      "data-measured": measured,
+      "data-responsive": responsive,
+    },
+    children: [{ kind: "raw", html: children }],
+  };
+}
 
-  return `<div ${proseAttrs}>${children}</div>`;
+/**
+ * SSR renderer for the Calibrate prose component.
+ *
+ * @param props - Prose component props.
+ * @returns HTML string for a prose wrapper.
+ */
+export function renderClbrProse(props: ClbrProseProps): string {
+  return serializeClbrNode(buildClbrProse(props));
 }
 
 /** Declarative prose contract mirror for tooling, docs, and adapters. */

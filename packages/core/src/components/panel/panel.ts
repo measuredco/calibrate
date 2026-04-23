@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -14,23 +14,36 @@ export interface ClbrPanelProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate panel component.
+ *
+ * @param props - Panel component props.
+ * @returns IR node for a panel wrapper.
+ */
+export function buildClbrPanel({
+  children,
+  padding = "md",
+  surface,
+}: ClbrPanelProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-panel",
+      "data-padding": padding,
+      "data-clbr-surface": surface,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate panel component.
  *
  * @param props - Panel component props.
  * @returns HTML string for a panel wrapper.
  */
-export function renderClbrPanel({
-  children,
-  padding = "md",
-  surface,
-}: ClbrPanelProps): string {
-  const panelAttrs = attrs({
-    class: "clbr-panel",
-    "data-padding": padding,
-    "data-clbr-surface": surface,
-  });
-
-  return `<div ${panelAttrs}>${children ?? ""}</div>`;
+export function renderClbrPanel(props: ClbrPanelProps): string {
+  return serializeClbrNode(buildClbrPanel(props));
 }
 
 /** Declarative panel contract mirror for tooling, docs, and adapters. */

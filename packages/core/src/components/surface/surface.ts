@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrSurfaceVariant =
@@ -15,21 +15,34 @@ export interface ClbrSurfaceProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate surface component.
+ *
+ * @param props - Surface component props.
+ * @returns IR node for a surface wrapper.
+ */
+export function buildClbrSurface({
+  children,
+  variant = "default",
+}: ClbrSurfaceProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-surface",
+      "data-clbr-surface": variant,
+    },
+    children: [{ kind: "raw", html: children }],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate surface component.
  *
  * @param props - Surface component props.
  * @returns HTML string for a surface wrapper.
  */
-export function renderClbrSurface({
-  children,
-  variant = "default",
-}: ClbrSurfaceProps): string {
-  const surfaceAttrs = attrs({
-    class: "clbr-surface",
-    "data-clbr-surface": variant,
-  });
-
-  return `<div ${surfaceAttrs}>${children}</div>`;
+export function renderClbrSurface(props: ClbrSurfaceProps): string {
+  return serializeClbrNode(buildClbrSurface(props));
 }
 
 /** Declarative surface contract mirror for tooling, docs, and adapters. */

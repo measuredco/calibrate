@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
@@ -19,26 +19,39 @@ export interface ClbrStackProps {
 }
 
 /**
- * SSR renderer for the Calibrate stack component.
+ * Builds the IR tree for the Calibrate stack component.
  *
  * @param props - Stack component props.
- * @returns HTML string for a stack wrapper.
+ * @returns IR node for a stack wrapper.
  */
-export function renderClbrStack({
+export function buildClbrStack({
   align = "stretch",
   as = "div",
   children,
   gap = "md",
   responsive,
-}: ClbrStackProps): string {
-  const stackAttrs = attrs({
-    class: "clbr-stack",
-    "data-align": align === "stretch" ? undefined : align,
-    "data-gap": gap,
-    "data-responsive": responsive,
-  });
+}: ClbrStackProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: as,
+    attrs: {
+      class: "clbr-stack",
+      "data-align": align === "stretch" ? undefined : align,
+      "data-gap": gap,
+      "data-responsive": responsive,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
 
-  return `<${as} ${stackAttrs}>${children ?? ""}</${as}>`;
+/**
+ * SSR renderer for the Calibrate stack component.
+ *
+ * @param props - Stack component props.
+ * @returns HTML string for a stack wrapper.
+ */
+export function renderClbrStack(props: ClbrStackProps): string {
+  return serializeClbrNode(buildClbrStack(props));
 }
 
 /** Declarative stack contract mirror for tooling, docs, and adapters. */

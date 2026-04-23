@@ -77,6 +77,7 @@ export {
 } from "./components/blockquote/blockquote";
 
 export {
+  buildClbrBox,
   CLBR_BOX_SPEC,
   type ClbrBoxBackground,
   type ClbrBoxPadding,
@@ -116,6 +117,7 @@ export {
 } from "./components/checkbox/checkbox";
 
 export {
+  buildClbrContainer,
   CLBR_CONTAINER_SPEC,
   type ClbrContainerGutter,
   type ClbrContainerMaxInlineSize,
@@ -157,6 +159,8 @@ export {
 } from "./components/figure/figure";
 
 export {
+  buildClbrGrid,
+  buildClbrGridItem,
   CLBR_GRID_ITEM_SPEC,
   CLBR_GRID_SPEC,
   type ClbrGridGap,
@@ -194,6 +198,7 @@ export {
 } from "./components/image/image";
 
 export {
+  buildClbrInline,
   CLBR_INLINE_SPEC,
   type ClbrInlineGap,
   type ClbrInlineJustify,
@@ -246,6 +251,7 @@ export {
 } from "./components/nav/nav";
 
 export {
+  buildClbrPanel,
   CLBR_PANEL_SPEC,
   type ClbrPanelPadding,
   type ClbrPanelProps,
@@ -276,6 +282,7 @@ export {
 } from "./components/poster/poster";
 
 export {
+  buildClbrProse,
   CLBR_PROSE_SPEC,
   type ClbrProseHangingPunctuation,
   type ClbrProseProps,
@@ -319,6 +326,7 @@ export {
 } from "./components/sidebar/sidebar";
 
 export {
+  buildClbrStack,
   CLBR_STACK_SPEC,
   type ClbrStackAlign,
   type ClbrStackGap,
@@ -344,6 +352,7 @@ export {
 } from "./components/spinner/spinner";
 
 export {
+  buildClbrSurface,
   CLBR_SURFACE_SPEC,
   type ClbrSurfaceProps,
   type ClbrSurfaceVariant,

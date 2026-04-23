@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -34,12 +34,12 @@ export interface ClbrBoxProps {
 }
 
 /**
- * SSR renderer for the Calibrate box component.
+ * Builds the IR tree for the Calibrate box component.
  *
  * @param props - Box component props.
- * @returns HTML string for a box wrapper.
+ * @returns IR node for a box wrapper.
  */
-export function renderClbrBox({
+export function buildClbrBox({
   background = "default",
   children,
   border,
@@ -48,19 +48,32 @@ export function renderClbrBox({
   radius,
   responsive,
   surface,
-}: ClbrBoxProps): string {
-  const boxAttrs = attrs({
-    class: "clbr-box",
-    "data-background": background === "default" ? undefined : background,
-    "data-border": border,
-    "data-padding-block": paddingBlock,
-    "data-padding-inline": paddingInline,
-    "data-radius": radius,
-    "data-responsive": responsive,
-    "data-clbr-surface": surface,
-  });
+}: ClbrBoxProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-box",
+      "data-background": background === "default" ? undefined : background,
+      "data-border": border,
+      "data-padding-block": paddingBlock,
+      "data-padding-inline": paddingInline,
+      "data-radius": radius,
+      "data-responsive": responsive,
+      "data-clbr-surface": surface,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
 
-  return `<div ${boxAttrs}>${children ?? ""}</div>`;
+/**
+ * SSR renderer for the Calibrate box component.
+ *
+ * @param props - Box component props.
+ * @returns HTML string for a box wrapper.
+ */
+export function renderClbrBox(props: ClbrBoxProps): string {
+  return serializeClbrNode(buildClbrBox(props));
 }
 
 /** Declarative box contract mirror for tooling, docs, and adapters. */

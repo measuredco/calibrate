@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrContainerGutter = "default" | "narrow" | "none";
@@ -14,24 +14,37 @@ export interface ClbrContainerProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate container component.
+ *
+ * @param props - Container component props.
+ * @returns IR node for a container wrapper.
+ */
+export function buildClbrContainer({
+  children,
+  gutter = "default",
+  maxInlineSize = "default",
+}: ClbrContainerProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-container",
+      "data-gutter": gutter === "default" ? undefined : gutter,
+      "data-max-inline-size":
+        maxInlineSize === "default" ? undefined : maxInlineSize,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate container component.
  *
  * @param props - Container component props.
  * @returns HTML string for a container wrapper.
  */
-export function renderClbrContainer({
-  children,
-  gutter = "default",
-  maxInlineSize = "default",
-}: ClbrContainerProps): string {
-  const containerAttrs = attrs({
-    class: "clbr-container",
-    "data-gutter": gutter === "default" ? undefined : gutter,
-    "data-max-inline-size":
-      maxInlineSize === "default" ? undefined : maxInlineSize,
-  });
-
-  return `<div ${containerAttrs}>${children ?? ""}</div>`;
+export function renderClbrContainer(props: ClbrContainerProps): string {
+  return serializeClbrNode(buildClbrContainer(props));
 }
 
 /** Declarative container contract mirror for tooling, docs, and adapters. */

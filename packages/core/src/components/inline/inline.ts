@@ -1,4 +1,4 @@
-import { attrs } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrAlign } from "../../types";
 
@@ -22,28 +22,41 @@ export interface ClbrInlineProps {
 }
 
 /**
- * SSR renderer for the Calibrate inline component.
+ * Builds the IR tree for the Calibrate inline component.
  *
  * @param props - Inline component props.
- * @returns HTML string for an inline wrapper.
+ * @returns IR node for an inline wrapper.
  */
-export function renderClbrInline({
+export function buildClbrInline({
   align = "center",
   as = "div",
   children,
   gap = "md",
   justify = "start",
   nowrap,
-}: ClbrInlineProps): string {
-  const inlineAttrs = attrs({
-    class: "clbr-inline",
-    "data-align": align === "center" ? undefined : align,
-    "data-gap": gap,
-    "data-justify": justify === "start" ? undefined : justify,
-    "data-nowrap": nowrap,
-  });
+}: ClbrInlineProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: as,
+    attrs: {
+      class: "clbr-inline",
+      "data-align": align === "center" ? undefined : align,
+      "data-gap": gap,
+      "data-justify": justify === "start" ? undefined : justify,
+      "data-nowrap": nowrap,
+    },
+    children: children ? [{ kind: "raw", html: children }] : [],
+  };
+}
 
-  return `<${as} ${inlineAttrs}>${children ?? ""}</${as}>`;
+/**
+ * SSR renderer for the Calibrate inline component.
+ *
+ * @param props - Inline component props.
+ * @returns HTML string for an inline wrapper.
+ */
+export function renderClbrInline(props: ClbrInlineProps): string {
+  return serializeClbrNode(buildClbrInline(props));
 }
 
 /** Declarative inline contract mirror for tooling, docs, and adapters. */
