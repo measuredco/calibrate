@@ -122,10 +122,10 @@
   "status": {
     "error": {
       "default": {
-        "$value": "{primitive.color.red.900}"
+        "$value": "{foreground.default}"
       },
       "subtle": {
-        "$value": "{primitive.color.red.100}"
+        "$value": "{background.subtle}"
       }
     },
     "info": {
