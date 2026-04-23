@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import { renderClbrExpander } from "../expander/expander";
 
@@ -35,16 +36,12 @@ export interface ClbrNavProps {
 }
 
 /**
- * SSR renderer for the Calibrate nav component.
- *
- * Emits semantic `nav > ul > li > a` markup inside a `clbr-nav` host. When
- * `collapsible` is provided, the renderer emits structural hooks only;
- * interactive expander/menu behavior is deferred to custom element upgrade.
+ * Builds the IR tree for the Calibrate nav component.
  *
  * @param props - Nav component props.
- * @returns HTML string for a nav wrapper.
+ * @returns IR node for a nav wrapper.
  */
-export function renderClbrNav({
+export function buildClbrNav({
   collapsible,
   contentId,
   expanderLabel,
@@ -52,7 +49,7 @@ export function renderClbrNav({
   items,
   label,
   size = "md",
-}: ClbrNavProps): string {
+}: ClbrNavProps): ClbrNode {
   const normalizedExpanderLabel = expanderLabel?.trim() || undefined;
   const normalizedContentId = contentId?.trim();
 
@@ -68,40 +65,80 @@ export function renderClbrNav({
     );
   }
 
-  const hostAttrs = attrs({
-    class: "clbr-nav",
-    "data-collapsible": collapsible,
-    "data-expander-label":
-      collapsible && normalizedExpanderLabel
-        ? normalizedExpanderLabel
-        : undefined,
-    "data-expander-position": collapsible ? expanderPosition : undefined,
-    "data-size": size,
-  });
+  const listItems: ClbrNode[] = items.map((item) => ({
+    kind: "element",
+    tag: "li",
+    attrs: {},
+    children: [
+      {
+        kind: "element",
+        tag: "a",
+        attrs: {
+          "aria-current": item.current ? "page" : undefined,
+          class: "item",
+          href: item.href,
+        },
+        children: [{ kind: "text", value: item.label }],
+      },
+    ],
+  }));
 
-  const navAttrs = attrs({
-    "aria-label": label || undefined,
-    class: "nav",
-  });
+  return {
+    kind: "element",
+    tag: CLBR_NAV_TAG_NAME,
+    attrs: {
+      class: "clbr-nav",
+      "data-collapsible": collapsible,
+      "data-expander-label":
+        collapsible && normalizedExpanderLabel
+          ? normalizedExpanderLabel
+          : undefined,
+      "data-expander-position": collapsible ? expanderPosition : undefined,
+      "data-size": size,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "nav",
+        attrs: {
+          "aria-label": label || undefined,
+          class: "nav",
+        },
+        children: [
+          {
+            kind: "element",
+            tag: "div",
+            attrs: {
+              class: "content",
+              id: normalizedContentId,
+            },
+            children: [
+              {
+                kind: "element",
+                tag: "ul",
+                attrs: { class: "list" },
+                children: listItems,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+}
 
-  const listMarkup = items
-    .map((item) => {
-      const linkAttrs = attrs({
-        "aria-current": item.current ? "page" : undefined,
-        class: "item",
-        href: item.href,
-      });
-
-      return `<li><a ${linkAttrs}>${escapeHtml(item.label)}</a></li>`;
-    })
-    .join("");
-
-  const contentAttrs = attrs({
-    class: "content",
-    id: normalizedContentId,
-  });
-
-  return `<${CLBR_NAV_TAG_NAME} ${hostAttrs}><nav ${navAttrs}><div ${contentAttrs}><ul class="list">${listMarkup}</ul></div></nav></${CLBR_NAV_TAG_NAME}>`;
+/**
+ * SSR renderer for the Calibrate nav component.
+ *
+ * Emits semantic `nav > ul > li > a` markup inside a `clbr-nav` host. When
+ * `collapsible` is provided, the renderer emits structural hooks only;
+ * interactive expander/menu behavior is deferred to custom element upgrade.
+ *
+ * @param props - Nav component props.
+ * @returns HTML string for a nav wrapper.
+ */
+export function renderClbrNav(props: ClbrNavProps): string {
+  return serializeClbrNode(buildClbrNav(props));
 }
 
 class ClbrNavElement extends HTMLElement {

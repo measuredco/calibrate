@@ -33,6 +33,7 @@ export type {
 export { type ClbrNode, serializeClbrNode } from "./helpers/node";
 
 export {
+  buildClbrAlert,
   CLBR_ALERT_EVENT_BEFORE_DISMISS,
   CLBR_ALERT_EVENT_DISMISS,
   CLBR_ALERT_SPEC,
@@ -43,6 +44,7 @@ export {
 } from "./components/alert/alert";
 
 export {
+  buildClbrBanner,
   CLBR_BANNER_EVENT_BEFORE_DISMISS,
   CLBR_BANNER_EVENT_DISMISS,
   CLBR_BANNER_SPEC,
@@ -247,6 +249,7 @@ export {
 } from "./components/link/link";
 
 export {
+  buildClbrMenu,
   CLBR_MENU_EVENT_CHOOSE,
   CLBR_MENU_SPEC,
   CLBR_MENU_TAG_NAME,
@@ -257,6 +260,7 @@ export {
 } from "./components/menu/menu";
 
 export {
+  buildClbrNav,
   CLBR_NAV_TAG_NAME,
   CLBR_NAV_SPEC,
   defineClbrNav,
@@ -334,6 +338,7 @@ export {
 } from "./components/root/root";
 
 export {
+  buildClbrSidebar,
   CLBR_SIDEBAR_SPEC,
   CLBR_SIDEBAR_TAG_NAME,
   defineClbrSidebar,

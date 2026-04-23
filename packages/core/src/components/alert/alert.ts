@@ -1,8 +1,8 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
-import { renderClbrIcon } from "../icon/icon";
+import { buildClbrIcon } from "../icon/icon";
 
 export const CLBR_ALERT_TAG_NAME = "clbr-alert";
 export const CLBR_ALERT_EVENT_BEFORE_DISMISS = "clbr-alert-before-dismiss";
@@ -61,6 +61,75 @@ function getAlertRole(tone?: ClbrStatusTone): "status" | "alert" {
 }
 
 /**
+ * Builds the IR tree for the Calibrate alert component.
+ *
+ * @param props - Alert component props.
+ * @returns IR node for a `clbr-alert` host.
+ */
+export function buildClbrAlert({
+  dismissible,
+  dismissibleLabel = dismissibleLabelDefault,
+  inlineSize = "full",
+  message,
+  tone,
+  title,
+}: ClbrAlertProps): ClbrNode {
+  const normalizedDismissibleLabel =
+    dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
+
+  const contentChildren: ClbrNode[] = [];
+  if (title) {
+    contentChildren.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "title" },
+      children: [{ kind: "text", value: title }],
+    });
+  }
+  contentChildren.push({
+    kind: "element",
+    tag: "p",
+    attrs: { class: "message" },
+    children: [{ kind: "text", value: message }],
+  });
+
+  return {
+    kind: "element",
+    tag: CLBR_ALERT_TAG_NAME,
+    attrs: {
+      class: "clbr-alert",
+      "data-dismissible": dismissible,
+      "data-dismissible-label": dismissible
+        ? normalizedDismissibleLabel
+        : undefined,
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+      "data-tone": tone || undefined,
+      role: getAlertRole(tone),
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { class: "icon-wrapper" },
+        children: [
+          buildClbrIcon({
+            ariaHidden: true,
+            name: getAlertIconName(tone),
+            size: "md",
+          }),
+        ],
+      },
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { class: "content" },
+        children: contentChildren,
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate alert component.
  *
  * Emits meaningful light-DOM HTML inside a `clbr-alert` host. When
@@ -71,38 +140,8 @@ function getAlertRole(tone?: ClbrStatusTone): "status" | "alert" {
  * @param props - Alert component props.
  * @returns HTML string for a `clbr-alert` host.
  */
-export function renderClbrAlert({
-  dismissible,
-  dismissibleLabel = dismissibleLabelDefault,
-  inlineSize = "full",
-  message,
-  tone,
-  title,
-}: ClbrAlertProps): string {
-  const normalizedDismissibleLabel =
-    dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
-
-  const alertAttrs = attrs({
-    class: "clbr-alert",
-    "data-dismissible": dismissible,
-    "data-dismissible-label": dismissible
-      ? normalizedDismissibleLabel
-      : undefined,
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-    "data-tone": tone || undefined,
-    role: getAlertRole(tone),
-  });
-
-  const titleMarkup = title ? `<p class="title">${escapeHtml(title)}</p>` : "";
-  const iconMarkup = `<div class="icon-wrapper">${renderClbrIcon({
-    ariaHidden: true,
-    name: getAlertIconName(tone),
-    size: "md",
-  })}</div>`;
-
-  return `<${CLBR_ALERT_TAG_NAME} ${alertAttrs}>${iconMarkup}<div class="content">${titleMarkup}<p class="message">${escapeHtml(
-    message,
-  )}</p></div></${CLBR_ALERT_TAG_NAME}>`;
+export function renderClbrAlert(props: ClbrAlertProps): string {
+  return serializeClbrNode(buildClbrAlert(props));
 }
 
 class ClbrAlertElement extends HTMLElement {

@@ -1,10 +1,11 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 import {
+  buildClbrButton,
   type ClbrButtonLabelVisibility,
   type ClbrButtonPlacement,
-  renderClbrButton,
 } from "../button/button";
 import type { ClbrIconMirrorMode } from "../icon/icon";
 
@@ -43,16 +44,12 @@ export interface ClbrMenuProps {
 }
 
 /**
- * SSR renderer for the Calibrate menu component.
- *
- * Emits a `clbr-menu` host containing a trigger button and a semantic
- * `role="menu"` menu of button actions. Interactive open/close, focus
- * management, and choose events are deferred to custom element upgrade.
+ * Builds the IR tree for the Calibrate menu component.
  *
  * @param props - Menu component props.
- * @returns HTML string for a `clbr-menu` host.
+ * @returns IR node for a `clbr-menu` host.
  */
-export function renderClbrMenu({
+export function buildClbrMenu({
   align = "start",
   id,
   items,
@@ -62,7 +59,7 @@ export function renderClbrMenu({
   triggerIconPlacement,
   triggerLabel,
   triggerLabelVisibility,
-}: ClbrMenuProps): string {
+}: ClbrMenuProps): ClbrNode {
   const normalizedId = id.trim();
 
   if (!normalizedId) {
@@ -81,49 +78,80 @@ export function renderClbrMenu({
 
   const triggerId = `${normalizedId}-button`;
   const menuId = `${normalizedId}-popup`;
-  const hostAttrs = attrs({
-    class: "clbr-menu",
-    "data-align": align === "start" ? undefined : align,
-    "data-size": size,
-  });
-  const menuAttrs = attrs({
-    "aria-labelledby": triggerId,
-    class: "popup",
-    hidden: true,
-    id: menuId,
-    role: "menu",
-  });
-  const triggerMarkup = renderClbrButton({
-    appearance: "outline",
-    controls: menuId,
-    disclosure: true,
-    haspopup: "menu",
-    icon: triggerIcon,
-    iconMirrored: triggerIconMirrored,
-    iconPlacement: triggerIconPlacement,
-    id: triggerId,
-    label: triggerLabel,
-    labelVisibility: triggerLabelVisibility,
-    mode: "button",
-    size,
-    tone: "neutral",
-    type: "button",
-  });
-  const itemsMarkup = items
-    .map((item) => {
-      const itemAttrs = attrs({
-        "aria-disabled": item.disabled ? "true" : undefined,
-        "data-item-id": item.id || undefined,
-        role: "menuitem",
-        tabindex: "-1",
-        type: "button",
-      });
 
-      return `<button ${itemAttrs}>${escapeHtml(item.label)}</button>`;
-    })
-    .join("");
+  const itemNodes: ClbrNode[] = items.map((item) => ({
+    kind: "element",
+    tag: "button",
+    attrs: {
+      "aria-disabled": item.disabled ? "true" : undefined,
+      "data-item-id": item.id || undefined,
+      role: "menuitem",
+      tabindex: "-1",
+      type: "button",
+    },
+    children: [{ kind: "text", value: item.label }],
+  }));
 
-  return `<${CLBR_MENU_TAG_NAME} ${hostAttrs}><div data-part="trigger">${triggerMarkup}</div><div ${menuAttrs}>${itemsMarkup}</div></${CLBR_MENU_TAG_NAME}>`;
+  return {
+    kind: "element",
+    tag: CLBR_MENU_TAG_NAME,
+    attrs: {
+      class: "clbr-menu",
+      "data-align": align === "start" ? undefined : align,
+      "data-size": size,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { "data-part": "trigger" },
+        children: [
+          buildClbrButton({
+            appearance: "outline",
+            controls: menuId,
+            disclosure: true,
+            haspopup: "menu",
+            icon: triggerIcon,
+            iconMirrored: triggerIconMirrored,
+            iconPlacement: triggerIconPlacement,
+            id: triggerId,
+            label: triggerLabel,
+            labelVisibility: triggerLabelVisibility,
+            mode: "button",
+            size,
+            tone: "neutral",
+            type: "button",
+          }),
+        ],
+      },
+      {
+        kind: "element",
+        tag: "div",
+        attrs: {
+          "aria-labelledby": triggerId,
+          class: "popup",
+          hidden: true,
+          id: menuId,
+          role: "menu",
+        },
+        children: itemNodes,
+      },
+    ],
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate menu component.
+ *
+ * Emits a `clbr-menu` host containing a trigger button and a semantic
+ * `role="menu"` menu of button actions. Interactive open/close, focus
+ * management, and choose events are deferred to custom element upgrade.
+ *
+ * @param props - Menu component props.
+ * @returns HTML string for a `clbr-menu` host.
+ */
+export function renderClbrMenu(props: ClbrMenuProps): string {
+  return serializeClbrNode(buildClbrMenu(props));
 }
 
 class ClbrMenuElement extends HTMLElement {

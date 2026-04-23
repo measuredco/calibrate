@@ -1,8 +1,8 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
-import { renderClbrLink } from "../link/link";
+import { buildClbrLink } from "../link/link";
 
 export const CLBR_BANNER_TAG_NAME = "clbr-banner";
 export const CLBR_BANNER_EVENT_BEFORE_DISMISS = "clbr-banner-before-dismiss";
@@ -46,6 +46,63 @@ function createDismissButtonElement(
 }
 
 /**
+ * Builds the IR tree for the Calibrate banner component.
+ *
+ * @param props - Banner component props.
+ * @returns IR node for a `clbr-banner` host.
+ */
+export function buildClbrBanner({
+  actionHref,
+  actionLabel,
+  dismissible = true,
+  dismissibleLabel = dismissibleLabelDefault,
+  message,
+  tone,
+}: ClbrBannerProps): ClbrNode {
+  if (Boolean(actionHref) !== Boolean(actionLabel)) {
+    throw new Error("actionHref and actionLabel must be provided together.");
+  }
+
+  const normalizedDismissibleLabel =
+    dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
+
+  const messageChildren: ClbrNode[] = [{ kind: "text", value: message }];
+
+  if (actionHref && actionLabel) {
+    messageChildren.push({ kind: "text", value: " " });
+    messageChildren.push(
+      buildClbrLink({
+        href: actionHref,
+        label: actionLabel,
+        underline: true,
+      }),
+    );
+  }
+
+  return {
+    kind: "element",
+    tag: CLBR_BANNER_TAG_NAME,
+    attrs: {
+      class: "clbr-banner",
+      "data-dismissible": dismissible,
+      "data-dismissible-label": dismissible
+        ? normalizedDismissibleLabel
+        : undefined,
+      "data-clbr-surface": "inverse",
+      "data-tone": tone || undefined,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "p",
+        attrs: { class: "message" },
+        children: messageChildren,
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate banner component.
  *
  * Emits meaningful light-DOM HTML inside a `clbr-banner` host. When
@@ -56,43 +113,8 @@ function createDismissButtonElement(
  * @param props - Banner component props.
  * @returns HTML string for a `clbr-banner` host.
  */
-export function renderClbrBanner({
-  actionHref,
-  actionLabel,
-  dismissible = true,
-  dismissibleLabel = dismissibleLabelDefault,
-  message,
-  tone,
-}: ClbrBannerProps): string {
-  if (Boolean(actionHref) !== Boolean(actionLabel)) {
-    throw new Error("actionHref and actionLabel must be provided together.");
-  }
-
-  const normalizedDismissibleLabel =
-    dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
-
-  const bannerAttrs = attrs({
-    class: "clbr-banner",
-    "data-dismissible": dismissible,
-    "data-dismissible-label": dismissible
-      ? normalizedDismissibleLabel
-      : undefined,
-    "data-clbr-surface": "inverse",
-    "data-tone": tone || undefined,
-  });
-
-  const actionMarkup =
-    actionHref && actionLabel
-      ? ` ${renderClbrLink({
-          href: actionHref,
-          label: actionLabel,
-          underline: true,
-        })}`
-      : "";
-
-  return `<${CLBR_BANNER_TAG_NAME} ${bannerAttrs}><p class="message">${escapeHtml(
-    message,
-  )}${actionMarkup}</p></${CLBR_BANNER_TAG_NAME}>`;
+export function renderClbrBanner(props: ClbrBannerProps): string {
+  return serializeClbrNode(buildClbrBanner(props));
 }
 
 class ClbrBannerElement extends HTMLElement {

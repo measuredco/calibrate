@@ -1,6 +1,7 @@
-import { attrs, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
-import { renderClbrButton } from "../button/button";
+import { buildClbrButton, renderClbrButton } from "../button/button";
 
 export const CLBR_SIDEBAR_TAG_NAME = "clbr-sidebar";
 export type ClbrSidebarAboveNotebook = "persistent" | "collapsible" | "overlay";
@@ -42,38 +43,13 @@ function createCloseButtonMarkup(label: string, size: ClbrSidebarSize): string {
   })}</div>`;
 }
 
-function createTriggerButtonMarkup(
-  id: string,
-  label: string,
-  size: ClbrSidebarSize,
-): string {
-  return `<div data-part="trigger">${renderClbrButton({
-    appearance: "text",
-    controls: id,
-    disclosure: true,
-    icon: "PanelLeft",
-    iconMirrored: "rtl",
-    label,
-    labelVisibility: "hidden",
-    size: size === "sm" ? "md" : "lg",
-    tone: "neutral",
-    type: "button",
-  })}</div>`;
-}
-
 /**
- * SSR renderer for the Calibrate sidebar component.
- *
- * Emits a component-owned trigger plus structural sidebar markup inside a
- * `clbr-sidebar` host. The host also owns a backdrop element used for overlay
- * dismissal on narrow screens. Above notebook width, behavior is controlled by
- * `aboveNotebook`. Page-shell layout decisions are intentionally left to parent
- * composition.
+ * Builds the IR tree for the Calibrate sidebar component.
  *
  * @param props - Sidebar component props.
- * @returns HTML string for a `clbr-sidebar` host.
+ * @returns IR node for a `clbr-sidebar` host.
  */
-export function renderClbrSidebar({
+export function buildClbrSidebar({
   aboveNotebook = "persistent",
   children,
   collapseLabel = collapseLabelDefault,
@@ -82,7 +58,7 @@ export function renderClbrSidebar({
   id,
   size = "md",
   triggerLabel = triggerLabelDefault,
-}: ClbrSidebarProps): string {
+}: ClbrSidebarProps): ClbrNode {
   const normalizedId = id.trim();
   const normalizedCollapseLabel = collapseLabel.trim() || collapseLabelDefault;
   const normalizedTriggerLabel = triggerLabel.trim() || triggerLabelDefault;
@@ -97,29 +73,92 @@ export function renderClbrSidebar({
     );
   }
 
-  const sidebarAttrs = attrs({
-    class: "sidebar",
-    id: normalizedId,
-    tabindex: "-1",
-  });
-  const hostAttrs = attrs({
-    class: "clbr-sidebar",
-    "data-above-notebook": aboveNotebook,
-    "data-collapse-label":
-      normalizedCollapseLabel !== collapseLabelDefault
-        ? normalizedCollapseLabel
-        : undefined,
-    "data-size": size,
-  });
-  const triggerMarkup = createTriggerButtonMarkup(
-    normalizedId,
-    normalizedTriggerLabel,
-    size,
-  );
-  const headerMarkup = `<div class="header">${header ?? ""}</div>`;
-  const footerMarkup = footer ? `<div class="footer">${footer}</div>` : "";
+  const sidebarChildren: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "div",
+      attrs: { class: "header" },
+      children: header ? [{ kind: "raw", html: header }] : [],
+    },
+    {
+      kind: "element",
+      tag: "div",
+      attrs: { class: "content" },
+      children: children ? [{ kind: "raw", html: children }] : [],
+    },
+  ];
 
-  return `<${CLBR_SIDEBAR_TAG_NAME} ${hostAttrs}>${triggerMarkup}<div ${sidebarAttrs}>${headerMarkup}<div class="content">${children ?? ""}</div>${footerMarkup}</div><div data-part="backdrop"></div></${CLBR_SIDEBAR_TAG_NAME}>`;
+  if (footer) {
+    sidebarChildren.push({
+      kind: "element",
+      tag: "div",
+      attrs: { class: "footer" },
+      children: [{ kind: "raw", html: footer }],
+    });
+  }
+
+  return {
+    kind: "element",
+    tag: CLBR_SIDEBAR_TAG_NAME,
+    attrs: {
+      class: "clbr-sidebar",
+      "data-above-notebook": aboveNotebook,
+      "data-collapse-label":
+        normalizedCollapseLabel !== collapseLabelDefault
+          ? normalizedCollapseLabel
+          : undefined,
+      "data-size": size,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { "data-part": "trigger" },
+        children: [
+          buildClbrButton({
+            appearance: "text",
+            controls: normalizedId,
+            disclosure: true,
+            icon: "PanelLeft",
+            iconMirrored: "rtl",
+            label: normalizedTriggerLabel,
+            labelVisibility: "hidden",
+            size: size === "sm" ? "md" : "lg",
+            tone: "neutral",
+            type: "button",
+          }),
+        ],
+      },
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { class: "sidebar", id: normalizedId, tabindex: "-1" },
+        children: sidebarChildren,
+      },
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { "data-part": "backdrop" },
+        children: [],
+      },
+    ],
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate sidebar component.
+ *
+ * Emits a component-owned trigger plus structural sidebar markup inside a
+ * `clbr-sidebar` host. The host also owns a backdrop element used for overlay
+ * dismissal on narrow screens. Above notebook width, behavior is controlled by
+ * `aboveNotebook`. Page-shell layout decisions are intentionally left to parent
+ * composition.
+ *
+ * @param props - Sidebar component props.
+ * @returns HTML string for a `clbr-sidebar` host.
+ */
+export function renderClbrSidebar(props: ClbrSidebarProps): string {
+  return serializeClbrNode(buildClbrSidebar(props));
 }
 
 class ClbrSidebarElement extends HTMLElement {
