@@ -8,54 +8,25 @@ What we're working on now.
 
 ### Framework adapters via structured SPECs
 
-Promote `CLBR_*_SPEC` to a fully machine-readable component contract, and derive framework adapters (`@measured/calibrate-react` first, then Vue/Svelte/Solid) from that contract rather than hand-writing per-component wrappers per framework.
+With the structured SPEC contract landed across every component, derive framework adapters from that contract rather than hand-writing per-component wrappers per framework. `@measured/calibrate-react` is the first template; a second framework (Vue or Svelte) validates that per-framework cost scales as one template, not one wrapper per component per framework.
 
-Approach:
+Principles:
 
 - SSR renderers and custom element runtimes in `packages/core` remain source of truth for behavior; adapters are thin typed surfaces over the existing `clbr-*` custom elements.
 - React 19+ only (lowercase custom event props, DOM property pass-through, unknown attrs).
 - Per-consumer experience stays runtime-only (no consumer build step); any code generation runs inside the adapter package at publish time.
-- Per-framework cost scales as one template, not one wrapper per component per framework.
-
-Contract tightening in `CLBR_*_SPEC` (the load-bearing investment):
-
-- Replace prose `rules.attributes[].when` with a closed `condition` enum (`always | provided | non-empty | truthy | equals`) plus a typed value expression (`literal | prop | template`).
-- Normalize `target` into an explicit `on` placement (`host` or a structured inner selector) + `attribute` name.
-- Make `events` a required (possibly empty) field; align dispatched events across menu/sidebar alongside alert.
-- Declare `content: { kind: "html" | "structured" | "none", prop? }` so adapters know whether to pass React/Vue/Svelte children through or treat them as data.
-- Preserve prop-level prose fields (`description`, `requiredWhen`, `ignoredWhen`) as the canonical human-readable source for docs and Storybook args tables via `specToPropsTable` / `specToArgTypes`. Structured `rules` target machines; prop-level prose targets humans; the two coexist.
-- Drop `rules.composition` during the per-component migration. It's documentation-only today (not consumed by tooling, tests, or adapters) and duplicates inner-DOM structure the renderer tests already freeze. Consumer-observable composition is covered by `content` (slots), `events` (dispatch contract), and `rules.attributes`. Any runtime behavioral guarantees previously captured as composition prose fold into the top-level `description` or per-event `description`.
-
-`describeSpecConsistency` becomes the contract enforcer: interprets structured rules and asserts the hand-written renderer emits the declared attributes/events under the declared conditions. Catches drift automatically.
-
-Component kinds to validate:
-
-Two independent axes matter: the runtime kind (pure SSR vs SSR + custom element), and the prop/content shape (scalar props, structured item arrays, multiple named HTML slots, element-switching by prop). The structured SPEC schema must cover both axes in one shape; `events` is empty for pure SSR and populated for WC components.
-
-Archetypes pick one representative from each cell of the matrix as it becomes relevant:
-
-- `button` — pure SSR; enums, always-emit, conditional emit, mode-driven element switching (`button` vs `a`), escaped label, icon composition, no events.
-- `alert` — SSR + WC; runtime-injected markup, cancelable and non-cancelable events, dismissible state, composes icon + button internally.
-- `card` or `sidebar` — multiple named trusted-HTML slots (`title`/`description`/`note` or `header`/`children`/`footer`); stresses the adapter's slot-to-React-prop mapping.
-- `menu` — SSR + WC with a structured `items[]` array and event dispatch (`choose`); stresses typed-array prop generation and composition of the owned trigger button.
-
-Media-query-driven runtime behavior (`nav.collapsible: "belowTablet"`, `sidebar.aboveNotebook`) stays inside the CE and needs no new SPEC field; the CE remains the source of truth for that logic.
-
-Behavior-preservation invariant:
-
-The migration must produce zero change in rendered output, CE behavior, accessibility, or presentation. Renderers and custom elements are the frozen oracle; SPECs are catching up to them, not redefining them. The existing 1162-test suite is the safety net — any component that changes output after its SPEC migration indicates a mistake in the SPEC translation, not intended evolution. The extended `describeSpecConsistency` (step 3) adds a second, complementary net that pins spec-renderer agreement. Any behavior changes motivated during this work should be deferred to a separate follow-up, not folded in.
+- `@measured/calibrate-core` is a peer dep of each adapter, not a direct dep: `customElements.define()` throws on duplicate registration, so the consumer must pin a single core version (which they'd do anyway to load the shared CSS).
+- Shared tooling reuse: adapter packages extend the root ESLint config, consume `@measured/calibrate-config/browserslist`, and share cross-package deps via the pnpm workspace catalog once a dep actually becomes shared (not preemptively).
+- Behavior-preservation invariant still applies: adapters must produce the same rendered output and CE behavior as direct SSR calls. The 2219-test core suite and `describeSpecConsistency` remain the oracle.
 
 Sequencing:
 
-1. Land the structured SPEC schema as TS types in `packages/core` (no component migrated yet).
-2. Schema-shape pass — migrate `button` and `alert` end-to-end to prove the schema is expressive enough for both runtime kinds, basic attribute emission, and event dispatch.
-3. Extend `describeSpecConsistency` to interpret structured rules against the renderer and validate declared events against the CE's dispatch behavior; validate both schema-shape archetypes.
-4. Generator-shape pass — migrate `menu` and one of `card`/`sidebar` to prove the adapter template handles structured item arrays and multi-slot content before mechanical rollout.
-5. Migrate remaining components mechanically.
-6. Build `@measured/calibrate-react` as a generation pipeline off the structured SPECs; ship typed JSX intrinsic augmentation + `defineAllClbr()` alongside generated wrappers.
-7. Add a second framework template (Vue or Svelte) to verify template-per-framework scaling.
+1. Build `@measured/calibrate-react` as a generation pipeline off the structured SPECs; ship typed JSX intrinsic augmentation + `defineAllClbr()` alongside generated wrappers.
+   - Scope v0 to whatever `page.stories.ts` (default + alt) composes; the archetype floor (`button` pure SSR, `alert` SSR+WC w/ events, `menu` structured items + events, `card` named slots) falls out naturally from that.
+   - Test harness lives at `apps/react` (or similar under `apps/`) alongside `apps/storybook`, not inside the adapter package, so the published package stays lean.
+2. Add a second framework template (Vue or Svelte) to verify template-per-framework scaling.
 
-Out of scope for now: generating the SSR renderer itself from the SPEC (deferred; the imperative custom element class stays hand-written regardless).
+Out of scope: generating the SSR renderer itself from the SPEC (deferred; the imperative custom element class stays hand-written regardless).
 
 ## Next
 
@@ -185,6 +156,14 @@ Revisit whether `@measured/calibrate-core` should emit a non-exported private CS
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Structured SPEC migration completed; all 42 components migrated and legacy shape removed:
+  - `CLBR_*_SPEC` now uses a single machine-readable shape with `output`, `content`, `props`, `events`, `rules.attributes`
+  - closed `condition` enum (`always | when-provided | when-non-empty | when-truthy | when-equals | when-in | when-not-in | all | any | not`) and typed value expressions (`literal | prop | template`) replace prose rule fields
+  - `target` normalized to `host` or `descendant` + selector; `events` made required (possibly empty); `content` kinds are `none | text | html | structured | slots`
+  - `describeSpecConsistency` extended to probe-drive each rule against the hand-written renderer, asserting declared attributes/events hold under declared conditions
+  - test count grew 1152 → 2219 across 42 files as probe coverage expanded
+  - legacy `ClbrComponentSpec` / `ClbrSpecProp` / `ClbrSpecEvent` types and their adapters (`structuredSpecToLegacy`, `isStructuredSpec`, `asLegacy`, `legacyPropType`, `numericConstraint`) deleted; structured shape is now the sole `ClbrComponentSpec`
 
 - Web-component event surface landed as a SPEC `events` field (chose extension over CEM to keep a single docgen source across SSR + class-based components):
   - added `ClbrSpecEvent` and `events?: Record<string, ClbrSpecEvent>` to `ClbrComponentSpec`
