@@ -266,8 +266,26 @@ export const CLBR_ALERT_SPEC: ClbrStructuredSpec = {
       {
         target: { on: "host" },
         attribute: "data-dismissible-label",
-        condition: { kind: "when-truthy", prop: "dismissible" },
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "dismissible" },
+            { kind: "when-non-empty", prop: "dismissibleLabel" },
+          ],
+        },
         value: { kind: "prop", prop: "dismissibleLabel" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-dismissible-label",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "dismissible" },
+            { kind: "not", of: { kind: "when-non-empty", prop: "dismissibleLabel" } },
+          ],
+        },
+        value: { kind: "literal", text: dismissibleLabelDefault },
       },
       {
         target: { on: "host" },

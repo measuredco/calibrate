@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  collectConditionProps,
+  collectValueProps,
+  evaluateSpecCondition,
+  resolveSpecValue,
   structuredSpecToLegacy,
   type ClbrComponentSpec,
+  type ClbrSpecAttributeRule,
+  type ClbrSpecPropType,
   type ClbrStructuredSpec,
 } from "../helpers/spec";
 
@@ -21,8 +27,10 @@ export function describeSpecConsistency<Props extends object>(
   config: SpecConsistencyConfig<Props>,
 ): void {
   const { spec: inputSpec, renderer, baseProps, propOverrides = {} } = config;
-  const spec: ClbrComponentSpec =
-    "content" in inputSpec ? structuredSpecToLegacy(inputSpec) : inputSpec;
+  const structured = "content" in inputSpec ? inputSpec : undefined;
+  const spec: ClbrComponentSpec = structured
+    ? structuredSpecToLegacy(structured)
+    : (inputSpec as ClbrComponentSpec);
 
   describe(`${spec.name} SPEC consistency`, () => {
     for (const [name, prop] of Object.entries(spec.props)) {
@@ -66,6 +74,178 @@ export function describeSpecConsistency<Props extends object>(
       it(`uses the clbr- prefix for event "${name}"`, () => {
         expect(name.startsWith("clbr-")).toBe(true);
       });
+    }
+  });
+
+  if (structured) {
+    describeStructuredRuleConsistency({
+      spec: structured,
+      renderer,
+      baseProps,
+      propOverrides,
+    });
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Structured rule consistency.
+//
+// For each attribute rule, probe a bounded cross-product over the props the
+// rule references and assert the renderer's actual output on the target
+// element matches what the rule declares.
+// -----------------------------------------------------------------------------
+
+const SAMPLE_STRING = "probe";
+const SAMPLE_ICON = "X";
+
+const probeValues = (type: ClbrSpecPropType): ReadonlyArray<unknown> => {
+  switch (type.kind) {
+    case "boolean":
+      return [true, false, undefined];
+    case "enum":
+      return [...type.values, undefined];
+    case "number":
+      return [type.min ?? 0, type.max ?? 1, undefined];
+    case "string":
+    case "text":
+    case "html":
+      return [SAMPLE_STRING, "", undefined];
+    case "iconName":
+      return [SAMPLE_ICON, "", undefined];
+    case "array":
+      return [[], undefined];
+    case "union":
+      return [
+        ...new Set(type.variants.flatMap((variant) => probeValues(variant))),
+      ];
+  }
+};
+
+const cartesian = <T>(lists: ReadonlyArray<ReadonlyArray<T>>): T[][] => {
+  if (lists.length === 0) return [[]];
+  const [head, ...rest] = lists;
+  const tail = cartesian(rest);
+  return head.flatMap((value) => tail.map((combo) => [value, ...combo]));
+};
+
+const resolveHostElement = (
+  html: string,
+): Element => {
+  document.body.innerHTML = html;
+  const host = document.body.firstElementChild;
+  if (!host) throw new Error("Renderer produced no root element.");
+  return host;
+};
+
+const resolveTargetElement = (
+  rule: ClbrSpecAttributeRule,
+  html: string,
+): Element | null => {
+  const host = resolveHostElement(html);
+  if (rule.target.on === "host") return host;
+  return host.querySelector(rule.target.selector);
+};
+
+const formatProbe = (probe: Readonly<Record<string, unknown>>): string =>
+  Object.entries(probe)
+    .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
+    .join(", ") || "(baseline)";
+
+interface StructuredRuleConsistencyConfig<Props> {
+  readonly spec: ClbrStructuredSpec;
+  readonly renderer: (props: Props) => string;
+  readonly baseProps: Props;
+  readonly propOverrides: Readonly<Record<string, Partial<Props>>>;
+}
+
+function describeStructuredRuleConsistency<Props extends object>(
+  config: StructuredRuleConsistencyConfig<Props>,
+): void {
+  const { spec, renderer, baseProps, propOverrides } = config;
+
+  describe(`${spec.name} structured rule consistency`, () => {
+    const groups = new Map<string, ClbrSpecAttributeRule[]>();
+    for (const rule of spec.rules.attributes) {
+      const key =
+        rule.target.on === "host"
+          ? `host|${rule.attribute}`
+          : `descendant:${rule.target.selector}|${rule.attribute}`;
+      const list = groups.get(key) ?? [];
+      list.push(rule);
+      groups.set(key, list);
+    }
+
+    for (const rules of groups.values()) {
+      const representative = rules[0];
+      const referencedSet = new Set<string>();
+      for (const rule of rules) {
+        for (const p of collectConditionProps(rule.condition)) referencedSet.add(p);
+        for (const p of collectValueProps(rule.value)) referencedSet.add(p);
+      }
+      const referenced = [...referencedSet];
+
+      const baselineOverrides: Record<string, unknown> = {};
+      for (const propName of referenced) {
+        Object.assign(baselineOverrides, propOverrides[propName] ?? {});
+      }
+
+      const valueLists = referenced.map((name) => {
+        const propType = spec.props[name]?.type;
+        return propType ? probeValues(propType) : [undefined];
+      });
+
+      const combos = cartesian(valueLists);
+      const groupLabel = `[${representative.attribute}] on ${
+        representative.target.on === "host"
+          ? "host"
+          : representative.target.selector
+      }`;
+
+      for (const combo of combos) {
+        const probe: Record<string, unknown> = {
+          ...(baseProps as unknown as Record<string, unknown>),
+          ...baselineOverrides,
+        };
+        referenced.forEach((name, index) => {
+          if (combo[index] === undefined) {
+            delete probe[name];
+          } else {
+            probe[name] = combo[index];
+          }
+        });
+
+        const firing = rules.filter((rule) =>
+          evaluateSpecCondition(rule.condition, probe, spec),
+        );
+        const expectedFires = firing.length > 0;
+        const expectedValue = expectedFires
+          ? resolveSpecValue(firing[firing.length - 1].value, probe, spec)
+          : undefined;
+
+        it(`${groupLabel} with ${formatProbe(
+          Object.fromEntries(referenced.map((n, i) => [n, combo[i]])),
+        )}`, () => {
+          const html = renderer(probe as Props);
+          const target = resolveTargetElement(representative, html);
+
+          if (!target) {
+            expect(expectedFires).toBe(false);
+            return;
+          }
+
+          if (!expectedFires) {
+            expect(target.hasAttribute(representative.attribute)).toBe(false);
+            return;
+          }
+
+          expect(target.hasAttribute(representative.attribute)).toBe(true);
+          if (expectedValue?.kind === "value") {
+            expect(target.getAttribute(representative.attribute)).toBe(
+              expectedValue.text,
+            );
+          }
+        });
+      }
     }
   });
 }

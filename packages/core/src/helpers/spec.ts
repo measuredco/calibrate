@@ -189,6 +189,139 @@ export interface ClbrStructuredSpec {
 }
 
 // -----------------------------------------------------------------------------
+// Structured rule evaluation.
+//
+// Pure evaluators for `ClbrSpecCondition` and `ClbrSpecValue` against a props
+// object. Used by the testing helper to verify renderers match their declared
+// structured rules, and available to adapters (React etc.) that need to
+// compute attribute output from a SPEC without running the renderer.
+// -----------------------------------------------------------------------------
+
+type PropBag = Readonly<Record<string, unknown>>;
+
+/** Effective value of a prop: user-supplied value, falling back to SPEC default. */
+const effectiveProp = (
+  name: string,
+  props: PropBag,
+  spec: ClbrStructuredSpec,
+): unknown => {
+  const supplied = props[name];
+  if (supplied !== undefined) return supplied;
+  return spec.props[name]?.default;
+};
+
+export const evaluateSpecCondition = (
+  condition: ClbrSpecCondition,
+  props: PropBag,
+  spec: ClbrStructuredSpec,
+): boolean => {
+  switch (condition.kind) {
+    case "always":
+      return true;
+    case "when-provided":
+      return props[condition.prop] !== undefined;
+    case "when-non-empty": {
+      const value = effectiveProp(condition.prop, props, spec);
+      return value !== undefined && value !== null && value !== "";
+    }
+    case "when-truthy":
+      return Boolean(effectiveProp(condition.prop, props, spec));
+    case "when-equals":
+      return effectiveProp(condition.prop, props, spec) === condition.to;
+    case "when-in": {
+      const value = effectiveProp(condition.prop, props, spec);
+      return condition.values.some((v) => v === value);
+    }
+    case "when-not-in": {
+      const value = effectiveProp(condition.prop, props, spec);
+      return !condition.values.some((v) => v === value);
+    }
+    case "all":
+      return condition.of.every((c) => evaluateSpecCondition(c, props, spec));
+    case "any":
+      return condition.of.some((c) => evaluateSpecCondition(c, props, spec));
+    case "not":
+      return !evaluateSpecCondition(condition.of, props, spec);
+  }
+};
+
+/**
+ * Resolved expected attribute output.
+ * - `"present"`: attribute is emitted without a value (boolean attribute)
+ * - string: attribute is emitted with that exact value
+ * - `"absent"`: attribute is not emitted (caller should typically skip this;
+ *   callers derive absence from `evaluateSpecCondition` returning false)
+ */
+export type ResolvedSpecValue =
+  | { readonly kind: "present" }
+  | { readonly kind: "value"; readonly text: string };
+
+export const resolveSpecValue = (
+  value: ClbrSpecValue | undefined,
+  props: PropBag,
+  spec: ClbrStructuredSpec,
+): ResolvedSpecValue => {
+  if (!value) return { kind: "present" };
+  switch (value.kind) {
+    case "literal":
+      return { kind: "value", text: value.text };
+    case "prop": {
+      const v = effectiveProp(value.prop, props, spec);
+      if (v === true || v === undefined || v === null) return { kind: "present" };
+      return { kind: "value", text: String(v) };
+    }
+    case "template": {
+      const text = value.pattern.replace(/\{(\w+)\}/g, (_, name: string) => {
+        const v = effectiveProp(name, props, spec);
+        return v === undefined || v === null ? "" : String(v);
+      });
+      return { kind: "value", text };
+    }
+  }
+};
+
+/** Collect every prop name referenced by a condition subtree. */
+export const collectConditionProps = (
+  condition: ClbrSpecCondition,
+): ReadonlyArray<string> => {
+  const out = new Set<string>();
+  const walk = (c: ClbrSpecCondition): void => {
+    switch (c.kind) {
+      case "always":
+        return;
+      case "all":
+      case "any":
+        c.of.forEach(walk);
+        return;
+      case "not":
+        walk(c.of);
+        return;
+      default:
+        out.add(c.prop);
+    }
+  };
+  walk(condition);
+  return [...out];
+};
+
+/** Collect every prop name referenced by a value expression. */
+export const collectValueProps = (
+  value: ClbrSpecValue | undefined,
+): ReadonlyArray<string> => {
+  if (!value) return [];
+  switch (value.kind) {
+    case "literal":
+      return [];
+    case "prop":
+      return [value.prop];
+    case "template": {
+      const names = [...value.pattern.matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
+      return [...new Set(names)];
+    }
+  }
+};
+
+// -----------------------------------------------------------------------------
 // Structured → legacy adapter.
 //
 // Temporary: lets the existing tooling helpers (argTypes, prop/event tables,

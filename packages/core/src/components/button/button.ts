@@ -472,7 +472,13 @@ export const CLBR_BUTTON_SPEC: ClbrStructuredSpec = {
       {
         target: { on: "host" },
         attribute: "href",
-        condition: { kind: "when-equals", prop: "mode", to: "link" },
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-equals", prop: "mode", to: "link" },
+            { kind: "when-provided", prop: "href" },
+          ],
+        },
         value: { kind: "prop", prop: "href" },
       },
       {
