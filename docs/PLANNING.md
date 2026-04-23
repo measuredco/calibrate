@@ -6,25 +6,29 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Framework adapters via structured SPECs
+### Framework adapters via shared IR
 
-With the structured SPEC contract landed across every component, derive framework adapters from that contract rather than hand-writing per-component wrappers per framework. `@measured/calibrate-react` is the first template; a second framework (Vue or Svelte) validates that per-framework cost scales as one template, not one wrapper per component per framework.
+Every core component now factors into `buildClbr*(props) → ClbrNode` (returns an IR tree) plus `renderClbr*(props) → string` (thin serializer over `buildClbr*`). The IR is the adapter seam: framework adapters walk the same `ClbrNode` tree that SSR serializes, rather than regenerating wrappers from the structured SPEC or post-processing HTML strings. `@measured/calibrate-react` is the first adapter; a second framework (Vue or Svelte) validates that per-framework cost scales as one IR walker, not one wrapper per component per framework.
 
 Principles:
 
-- SSR renderers and custom element runtimes in `packages/core` remain source of truth for behavior; adapters are thin typed surfaces over the existing `clbr-*` custom elements.
+- `buildClbr*` IR and custom element runtimes in `packages/core` remain the source of truth for behavior; adapters are thin typed surfaces that walk the IR and delegate to `clbr-*` custom elements where they exist.
+- Structured SPECs still drive typed prop surfaces, docs, and argTypes; they no longer drive wrapper code generation.
 - React 19+ only (lowercase custom event props, DOM property pass-through, unknown attrs).
-- Per-consumer experience stays runtime-only (no consumer build step); any code generation runs inside the adapter package at publish time.
+- Per-consumer experience stays runtime-only (no consumer build step). Inside the adapter package, a generator walks core at build time to produce per-component wrappers as a published artifact; the generated wrappers are thin because they delegate rendering to the shared IR walker.
 - `@measured/calibrate-core` is a peer dep of each adapter, not a direct dep: `customElements.define()` throws on duplicate registration, so the consumer must pin a single core version (which they'd do anyway to load the shared CSS).
 - Shared tooling reuse: adapter packages extend the root ESLint config, consume `@measured/calibrate-config/browserslist`, and share cross-package deps via the pnpm workspace catalog once a dep actually becomes shared (not preemptively).
 - Behavior-preservation invariant still applies: adapters must produce the same rendered output and CE behavior as direct SSR calls. The 2219-test core suite and `describeSpecConsistency` remain the oracle.
 
 Sequencing:
 
-1. Build `@measured/calibrate-react` as a generation pipeline off the structured SPECs; ship typed JSX intrinsic augmentation + `defineAllClbr()` alongside generated wrappers.
-   - Scope v0 to whatever `page.stories.ts` (default + alt) composes; the archetype floor (`button` pure SSR, `alert` SSR+WC w/ events, `menu` structured items + events, `card` named slots) falls out naturally from that.
+1. Build `@measured/calibrate-react` in two layers:
+   - a hand-authored shared IR walker that maps `kind: "element"` → `React.createElement`, `kind: "text"` → text children, `kind: "raw"` → `dangerouslySetInnerHTML`, plus CE event wiring helpers and typed JSX intrinsic augmentation + `defineAllClbr()`
+   - per-component wrappers that call `buildClbr*` and hand the IR to the walker — hand-written during v0 to settle the shape, then replaced by a generator that walks core's SPECs/types at adapter-build time so the published package is a build artifact rather than hand-maintained
+   - Scope v0 to whatever `page.stories.ts` (alt + banner) composes; the archetype floor (`button` pure SSR, `banner` SSR+WC w/ events, `menu` structured items + events, `page` named slots) falls out naturally from that.
    - Test harness lives at `apps/react` (or similar under `apps/`) alongside `apps/storybook`, not inside the adapter package, so the published package stays lean.
-2. Add a second framework template (Vue or Svelte) to verify template-per-framework scaling.
+2. Replace the hand-written v0 wrappers with the generator once the shape is settled; generator runs at adapter-package build time and emits typed per-component wrappers from core.
+3. Add a second framework template (Vue or Svelte) to verify generator-per-framework scaling.
 
 Out of scope: generating the SSR renderer itself from the SPEC (deferred; the imperative custom element class stays hand-written regardless).
 
@@ -156,6 +160,14 @@ Revisit whether `@measured/calibrate-core` should emit a non-exported private CS
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- Core renderers factored into shared intermediate representation (IR):
+  - introduced `ClbrNode` in `packages/core/src/helpers/node.ts` as a discriminated union (`element | text | raw`) plus `serializeClbrNode` walker
+  - every component now exposes `buildClbr*(props) → ClbrNode` alongside `renderClbr*(props) → string`, where the renderer is a thin `serializeClbrNode(buildClbr*(props))` wrapper
+  - IR is the new framework-adapter seam: adapters can walk the same tree SSR serializes instead of consuming HTML strings or regenerating wrappers from the structured SPEC
+  - runtime custom elements (`alert`, `banner`, `nav`, `sidebar`) retain string-based `innerHTML`/`insertAdjacentHTML` hydration paths since those require serialized HTML
+  - helpers directory consolidated: `attrs` and `escapeHtml` inlined as private implementation details of `node.ts`; `isValidHtmlId` and `collapseWhitespace` co-located in `helpers/string.ts`; `helpers/html.ts` removed
+  - 2219-test suite remained green throughout the migration
 
 - Structured SPEC migration completed; all 42 components migrated and legacy shape removed:
   - `CLBR_*_SPEC` now uses a single machine-readable shape with `output`, `content`, `props`, `events`, `rules.attributes`
