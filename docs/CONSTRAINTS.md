@@ -15,7 +15,6 @@ Resolver adapter details live in `packages/system/scripts/README.md`.
 - Use lockstep versioning across design-system packages by default to reduce token/component drift.
 - Preserve base token-model capabilities: multi-brand, theme/surface contexts, responsive behavior, and accessibility contexts.
 - Keep current bridge/build pipeline robust while resolver/SD support gaps are being closed upstream.
-- Treat probe artifacts (for example wireframe brand assets) as architecture-validation assets until explicitly promoted to long-term API commitments.
 
 ## API And Ownership
 

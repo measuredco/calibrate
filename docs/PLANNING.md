@@ -6,26 +6,59 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Framework adapters via structured SPECs
+
+Promote `CLBR_*_SPEC` to a fully machine-readable component contract, and derive framework adapters (`@measured/calibrate-react` first, then Vue/Svelte/Solid) from that contract rather than hand-writing per-component wrappers per framework.
+
+Approach:
+
+- SSR renderers and custom element runtimes in `packages/core` remain source of truth for behavior; adapters are thin typed surfaces over the existing `clbr-*` custom elements.
+- React 19+ only (lowercase custom event props, DOM property pass-through, unknown attrs).
+- Per-consumer experience stays runtime-only (no consumer build step); any code generation runs inside the adapter package at publish time.
+- Per-framework cost scales as one template, not one wrapper per component per framework.
+
+Contract tightening in `CLBR_*_SPEC` (the load-bearing investment):
+
+- Replace prose `rules.attributes[].when` with a closed `condition` enum (`always | provided | non-empty | truthy | equals`) plus a typed value expression (`literal | prop | template`).
+- Normalize `target` into an explicit `on` placement (`host` or a structured inner selector) + `attribute` name.
+- Make `events` a required (possibly empty) field; align dispatched events across menu/sidebar alongside alert.
+- Declare `content: { kind: "html" | "structured" | "none", prop? }` so adapters know whether to pass React/Vue/Svelte children through or treat them as data.
+- Preserve prop-level prose fields (`description`, `requiredWhen`, `ignoredWhen`) as the canonical human-readable source for docs and Storybook args tables via `specToPropsTable` / `specToArgTypes`. Structured `rules` target machines; prop-level prose targets humans; the two coexist.
+
+`describeSpecConsistency` becomes the contract enforcer: interprets structured rules and asserts the hand-written renderer emits the declared attributes/events under the declared conditions. Catches drift automatically.
+
+Component kinds to validate:
+
+Two independent axes matter: the runtime kind (pure SSR vs SSR + custom element), and the prop/content shape (scalar props, structured item arrays, multiple named HTML slots, element-switching by prop). The structured SPEC schema must cover both axes in one shape; `events` is empty for pure SSR and populated for WC components.
+
+Archetypes pick one representative from each cell of the matrix as it becomes relevant:
+
+- `button` — pure SSR; enums, always-emit, conditional emit, mode-driven element switching (`button` vs `a`), escaped label, icon composition, no events.
+- `alert` — SSR + WC; runtime-injected markup, cancelable and non-cancelable events, dismissible state, composes icon + button internally.
+- `card` or `sidebar` — multiple named trusted-HTML slots (`title`/`description`/`note` or `header`/`children`/`footer`); stresses the adapter's slot-to-React-prop mapping.
+- `menu` — SSR + WC with a structured `items[]` array and event dispatch (`choose`); stresses typed-array prop generation and composition of the owned trigger button.
+
+Media-query-driven runtime behavior (`nav.collapsible: "belowTablet"`, `sidebar.aboveNotebook`) stays inside the CE and needs no new SPEC field; the CE remains the source of truth for that logic.
+
+Behavior-preservation invariant:
+
+The migration must produce zero change in rendered output, CE behavior, accessibility, or presentation. Renderers and custom elements are the frozen oracle; SPECs are catching up to them, not redefining them. The existing 1162-test suite is the safety net — any component that changes output after its SPEC migration indicates a mistake in the SPEC translation, not intended evolution. The extended `describeSpecConsistency` (step 3) adds a second, complementary net that pins spec-renderer agreement. Any behavior changes motivated during this work should be deferred to a separate follow-up, not folded in.
+
+Sequencing:
+
+1. Land the structured SPEC schema as TS types in `packages/core` (no component migrated yet).
+2. Schema-shape pass — migrate `button` and `alert` end-to-end to prove the schema is expressive enough for both runtime kinds, basic attribute emission, and event dispatch.
+3. Extend `describeSpecConsistency` to interpret structured rules against the renderer and validate declared events against the CE's dispatch behavior; validate both schema-shape archetypes.
+4. Generator-shape pass — migrate `menu` and one of `card`/`sidebar` to prove the adapter template handles structured item arrays and multi-slot content before mechanical rollout.
+5. Migrate remaining components mechanically.
+6. Build `@measured/calibrate-react` as a generation pipeline off the structured SPECs; ship typed JSX intrinsic augmentation + `defineAllClbr()` alongside generated wrappers.
+7. Add a second framework template (Vue or Svelte) to verify template-per-framework scaling.
+
+Out of scope for now: generating the SSR renderer itself from the SPEC (deferred; the imperative custom element class stays hand-written regardless).
+
 ## Next
 
 What we could be working on next.
-
-### Web Components
-
-- `Control/Listbox` (JS required, selection/value semantics)
-- `Control/Form` (if it becomes a real stateful runtime abstraction)
-- `Control/Tag` (delete, remove, select)
-- `Status/Progress` (updating)
-- `Status/Skeleton` (resolve to loaded)
-- `Status/Toast` (dismissible, timer)
-- `Structure/Accordion` (JS for exclusive)
-- `Structure/Breadcrumb` (JS responsive)
-- `Structure/Code` (copy to clipboard)
-- `Structure/Tabs` (JS required, a11y)
-
-### Framework adapters (e.g. `@measured/calibrate-react`)
-
-Identify the minimum adapter surface needed to consume token/component contracts ergonomically across target frameworks.
 
 ## Later
 
@@ -48,6 +81,19 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 ### Component analytics
 
 Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note - Plausible implementation in Facet used classnames.
+
+### More components
+
+- `Control/Listbox` (JS required, selection/value semantics)
+- `Control/Form` (if it becomes a real stateful runtime abstraction)
+- `Control/Tag` (delete, remove, select)
+- `Status/Progress` (updating)
+- `Status/Skeleton` (resolve to loaded)
+- `Status/Toast` (dismissible, timer)
+- `Structure/Accordion` (JS for exclusive)
+- `Structure/Breadcrumb` (JS responsive)
+- `Structure/Code` (copy to clipboard)
+- `Structure/Tabs` (JS required, a11y)
 
 ### Tokens evolution
 
