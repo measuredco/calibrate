@@ -35,8 +35,13 @@ export type NativeAttrsFor<E extends Element> = Omit<
  * - `class` -> `className`
  * - `for` -> `htmlFor`
  * - `false` / `undefined` attrs are dropped
- * - `true` becomes the valueless boolean form React expects
- * - string-valued boolean attrs (e.g. `download`) pass through as strings
+ * - `true` on a native boolean attr (e.g. `disabled`) stays as `true` so
+ *   React emits the valueless form; `true` on a `data-*` attr becomes
+ *   `""` to match core SSR's valueless output (React would otherwise
+ *   stringify custom boolean props to `"true"`). `aria-*` booleans pass
+ *   through so React emits the correct `"true"` / `"false"` strings the
+ *   spec requires (e.g. `aria-expanded`).
+ * - string-valued attrs pass through as strings
  */
 function toReactProps(
   attrs: Record<string, string | boolean | undefined>,
@@ -46,7 +51,7 @@ function toReactProps(
     if (value === false || value == null) continue;
     const reactKey =
       key === "class" ? "className" : key === "for" ? "htmlFor" : key;
-    out[reactKey] = value;
+    out[reactKey] = value === true && key.startsWith("data-") ? "" : value;
   }
   return out;
 }
@@ -54,29 +59,44 @@ function toReactProps(
 function buildElementProps(
   node: Extract<ClbrNode, { kind: "element" }>,
   extras: Record<string, unknown>,
+  slots: Record<string, ReactNode>,
 ): { props: Record<string, unknown>; children: ReactNode[] | null } {
   const props: Record<string, unknown> = {
     ...toReactProps(node.attrs),
     ...extras,
   };
-  const hasRaw = node.children.some((child) => child.kind === "raw");
-  if (hasRaw) {
+  const hasUnmatchedRaw = node.children.some(
+    (child) => child.kind === "raw" && !(child.html in slots),
+  );
+  if (hasUnmatchedRaw) {
     // React forbids mixing `dangerouslySetInnerHTML` with `children`, so when
-    // any child is raw we serialize every sibling into a single HTML string.
+    // any child is unmatched raw HTML we serialize every sibling into a
+    // single HTML string. Wrappers must avoid placing slot sentinels
+    // alongside unrelated raw HTML siblings.
     props.dangerouslySetInnerHTML = {
       __html: node.children.map(serializeClbrNode).join(""),
     };
     return { props, children: null };
   }
-  const children = node.children.map((child, index) =>
-    renderNode(child, index),
-  );
+  const children = node.children.map((child, index) => {
+    if (child.kind === "raw" && child.html in slots) {
+      return createElement(Fragment, { key: index }, slots[child.html]);
+    }
+    return renderNode(child, index, slots);
+  });
   return { props, children };
 }
 
-function renderNode(node: ClbrNode, key?: number): ReactNode {
+function renderNode(
+  node: ClbrNode,
+  key: number | undefined,
+  slots: Record<string, ReactNode>,
+): ReactNode {
   if (node.kind === "text") return node.value;
   if (node.kind === "raw") {
+    if (node.html in slots) {
+      return createElement(Fragment, { key }, slots[node.html]);
+    }
     // Raw nodes should be handled by the parent element. If a raw node
     // appears at the top level, wrap it in a fragment-like span.
     return createElement("span", {
@@ -84,7 +104,7 @@ function renderNode(node: ClbrNode, key?: number): ReactNode {
       dangerouslySetInnerHTML: { __html: node.html },
     });
   }
-  const { props, children } = buildElementProps(node, {});
+  const { props, children } = buildElementProps(node, {}, slots);
   if (key !== undefined) props.key = key;
   return children === null
     ? createElement(node.tag, props)
@@ -94,6 +114,8 @@ function renderNode(node: ClbrNode, key?: number): ReactNode {
 /**
  * Renders a Calibrate IR tree as React elements, merging `rootExtras`
  * (event handlers, `ref`, `autoFocus`) into the root element's props.
+ * Slot sentinels passed via `slots` substitute raw IR children with the
+ * corresponding React node, enabling named-slot wrappers (e.g. `Page`).
  *
  * Non-element roots are wrapped in a fragment; `rootExtras` is ignored
  * in that case since there's no host element to attach handlers to.
@@ -101,11 +123,12 @@ function renderNode(node: ClbrNode, key?: number): ReactNode {
 export function reactify(
   node: ClbrNode,
   rootExtras: Record<string, unknown> = {},
+  slots: Record<string, ReactNode> = {},
 ): ReactNode {
   if (node.kind !== "element") {
-    return createElement(Fragment, null, renderNode(node));
+    return createElement(Fragment, null, renderNode(node, undefined, slots));
   }
-  const { props, children } = buildElementProps(node, rootExtras);
+  const { props, children } = buildElementProps(node, rootExtras, slots);
   return children === null
     ? createElement(node.tag, props)
     : createElement(node.tag, props, ...children);
