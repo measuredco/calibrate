@@ -1,4 +1,5 @@
 import { attrs } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
 export type ClbrImageGravity =
@@ -175,211 +176,180 @@ export function renderClbrImage({
 }
 
 /** Declarative image contract mirror for tooling, docs, and adapters. */
-export const CLBR_IMAGE_SPEC = {
+export const CLBR_IMAGE_SPEC: ClbrStructuredSpec = {
   name: "image",
   description:
     "Use `image` to render a responsive image with optional cover fit.",
-  output: {
-    modes: {
-      image: "img",
-      picture: "picture + source[] + img",
-    },
-    wrapper: "div.image",
-  },
+  output: { element: "div", class: "clbr-image" },
+  content: { kind: "none" },
   props: {
     alt: {
       default: "",
       description: "Alternative text. Leave empty for decorative images.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     gravity: {
       default: "C",
       description: "Focal point used when cropping.",
       ignoredWhen: "`cover` is false",
-      required: false,
-      type: "enum",
-      values: ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"],
+      type: {
+        kind: "enum",
+        values: ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "C"],
+      },
     },
     radius: {
       description:
         "Corner radius treatment. `ratio` scales with the image's shortest side — requires `width`/`height` (or `cover` with `aspectRatio`) to determine this, otherwise falls back to `xs`.",
-      required: false,
-      type: "enum",
-      values: ["xs", "ratio"],
+      type: { kind: "enum", values: ["xs", "ratio"] },
     },
     aspectRatio: {
       description: "Aspect ratio applied to the wrapper.",
       ignoredWhen: "`cover` is false, or both `width` and `height` are set",
-      required: false,
-      type: "enum",
-      values: ["1:1", "4:5", "3:2", "16:9", "21:9"],
+      type: {
+        kind: "enum",
+        values: ["1:1", "4:5", "3:2", "16:9", "21:9"],
+      },
     },
     cover: {
       default: false,
       description:
         "Renders the image as a cropped fill (`object-fit: cover`). Switches `width`/`height` from intrinsic `<img>` dimensions to wrapper sizing.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     shadow: {
       default: false,
       description: "Applies a drop shadow to the image.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     height: {
       description:
         "Height in pixels. When `cover` is false, sets the intrinsic `<img>` height. When `cover` is true, sizes the wrapper — alone it defers to `aspectRatio`, together with `width` it overrides `aspectRatio`.",
-      required: false,
-      type: "number",
+      type: { kind: "number" },
     },
     lazy: {
       default: false,
       description: "Defers loading until the image is near the viewport.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     priority: {
       default: false,
       description: "Marks the image as high priority for fetch.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     sizes: {
       description: "`sizes` attribute used with `srcSet`.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     sources: {
       description: "Responsive sources rendered inside a `<picture>`.",
-      required: false,
-      type: "array",
+      type: {
+        kind: "array",
+        itemShape: {
+          height: {
+            description: "Intrinsic height in pixels.",
+            type: { kind: "number" },
+          },
+          media: {
+            description: "`media` condition evaluated for the source.",
+            type: { kind: "string" },
+          },
+          sizes: {
+            description: "`sizes` attribute for the source.",
+            type: { kind: "string" },
+          },
+          srcSet: {
+            description: "Candidate sources for this media entry.",
+            required: true,
+            type: { kind: "string" },
+          },
+          type: {
+            description: "MIME type for the source resources.",
+            type: { kind: "string" },
+          },
+          width: {
+            description: "Intrinsic width in pixels.",
+            type: { kind: "number" },
+          },
+        },
+      },
     },
     srcSet: {
       description: "Candidate sources for the fallback image.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     src: {
-      constraints: ["non-empty"],
       description: "Image source URL.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     width: {
       description:
         "Width in pixels. When `cover` is false, sets the intrinsic `<img>` width. When `cover` is true, sizes the wrapper — alone it defers to `aspectRatio`, together with `height` it overrides `aspectRatio`.",
-      required: false,
-      type: "number",
+      type: { kind: "number" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "div[class]",
-        value: "image",
+        target: { on: "host" },
+        attribute: "data-object-fit",
+        condition: { kind: "when-truthy", prop: "cover" },
+        value: { kind: "literal", text: "cover" },
       },
       {
-        behavior: "emit",
-        target: "div[data-object-fit]",
-        value: "cover",
-        when: "cover is true",
+        target: { on: "host" },
+        attribute: "data-shadow",
+        condition: { kind: "when-truthy", prop: "shadow" },
       },
       {
-        behavior: "emit",
-        target: "div[data-shadow]",
-        when: "shadow is true",
+        target: { on: "host" },
+        attribute: "data-radius",
+        condition: { kind: "when-provided", prop: "radius" },
+        value: { kind: "prop", prop: "radius" },
       },
       {
-        behavior: "emit",
-        target: "div[data-gravity]",
-        value: "{gravity}",
-        when: "cover is true and gravity is not C",
+        target: { on: "descendant", selector: "img" },
+        attribute: "class",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "img" },
       },
       {
-        behavior: "emit",
-        target: "div[data-radius]",
-        value: "{radius}",
-        when: "radius is xs or ratio",
+        target: { on: "descendant", selector: "img" },
+        attribute: "alt",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "alt" },
       },
       {
-        behavior: "emit",
-        target: "div[data-aspect-ratio]",
-        value: "{aspectRatio}",
-        when: "cover is true and aspectRatio is provided and not both width and height are provided",
+        target: { on: "descendant", selector: "img" },
+        attribute: "src",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{src}" },
       },
       {
-        behavior: "always",
-        target: "img[alt]",
-        value: "{alt or ''}",
+        target: { on: "descendant", selector: "img" },
+        attribute: "srcset",
+        condition: { kind: "when-non-empty", prop: "srcSet" },
+        value: { kind: "prop", prop: "srcSet" },
       },
       {
-        behavior: "always",
-        target: "img[src]",
-        value: "{src}",
+        target: { on: "descendant", selector: "img" },
+        attribute: "fetchpriority",
+        condition: { kind: "when-truthy", prop: "priority" },
+        value: { kind: "literal", text: "high" },
       },
       {
-        behavior: "emit",
-        target: "img[srcset]",
-        value: "{srcSet}",
-        when: "srcSet is provided",
-      },
-      {
-        behavior: "emit",
-        target: "img[loading]",
-        value: "lazy",
-        when: "lazy is true and priority is false",
-      },
-      {
-        behavior: "emit",
-        target: "img[fetchpriority]",
-        value: "high",
-        when: "priority is true",
-      },
-      {
-        behavior: "emit",
-        target: "img[sizes]",
-        value: "{sizes}",
-        when: "sizes is provided and sources are omitted",
-      },
-      {
-        behavior: "emit",
-        target: "img[width], img[height]",
-        value: "{width}/{height}",
-        when: "cover is false and width/height are provided",
-      },
-      {
-        behavior: "emit",
-        target: "source[srcset]",
-        value: "{sources[].srcSet}",
-        when: "sources are provided",
-      },
-      {
-        behavior: "emit",
-        target: "source[media]",
-        value: "{sources[].media}",
-        when: "sources[].media is provided",
-      },
-      {
-        behavior: "emit",
-        target: "source[sizes]",
-        value: "{sources[].sizes}",
-        when: "sources[].sizes is provided",
-      },
-      {
-        behavior: "emit",
-        target: "source[type]",
-        value: "{sources[].type}",
-        when: "sources[].type is provided",
-      },
-      {
-        behavior: "emit",
-        target: "source[width], source[height]",
-        value: "{sources[].width}/{sources[].height}",
-        when: "sources[].width or sources[].height is provided",
+        target: { on: "descendant", selector: "img" },
+        attribute: "loading",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-truthy", prop: "lazy" },
+            { kind: "not", of: { kind: "when-truthy", prop: "priority" } },
+          ],
+        },
+        value: { kind: "literal", text: "lazy" },
       },
     ],
   },
-} as const;
+};

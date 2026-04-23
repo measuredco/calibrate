@@ -1,5 +1,6 @@
 import { icons } from "lucide";
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;
 type LucideIconNode = Array<[tag: string, attrs: LucideSvgAttrs]>;
@@ -166,138 +167,120 @@ export function renderClbrIcon({
 }
 
 /** Declarative icon contract mirror for tooling, docs, and adapters. */
-export const CLBR_ICON_SPEC = {
+export const CLBR_ICON_SPEC: ClbrStructuredSpec = {
   name: "icon",
   description: "Use `icon` to render a Lucide icon.",
-  output: {
-    element: "svg",
-  },
+  output: { element: "svg", class: "clbr-icon" },
+  content: { kind: "none" },
   props: {
     ariaHidden: {
       default: false,
       description: "Hides the icon from assistive technology.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     mirrored: {
       description: "Mirrors the icon horizontally.",
-      required: false,
-      type: "enum",
-      values: ["always", "rtl"],
+      type: { kind: "enum", values: ["always", "rtl"] },
     },
     name: {
       description: "Lucide icon name.",
-      format: "lucide-icon-name",
       required: true,
-      type: "string",
+      type: { kind: "iconName" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["2xs", "xs", "sm", "md", "lg", "fill"],
+      type: {
+        kind: "enum",
+        values: ["2xs", "xs", "sm", "md", "lg", "fill"],
+      },
     },
     title: {
       description: "Accessible title announced by assistive technology.",
-      required: false,
       requiredWhen: "`ariaHidden` is false or omitted",
-      type: "string",
+      type: { kind: "string" },
     },
     titleId: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` for the accessible `title` element.",
-      required: false,
       requiredWhen: "`ariaHidden` is false or omitted",
-      type: "string",
+      type: { kind: "string" },
     },
   },
-  recommendations: {
-    iconNames: CLBR_ICON_RECOMMENDED,
-  },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "emit",
-        target: "aria-hidden",
-        value: "true",
-        when: "ariaHidden is true",
+        target: { on: "host" },
+        attribute: "aria-hidden",
+        condition: { kind: "when-truthy", prop: "ariaHidden" },
+        value: { kind: "literal", text: "true" },
       },
       {
-        behavior: "emit",
-        target: "aria-labelledby",
-        value: "{titleId}",
-        when: "ariaHidden is false or omitted",
+        target: { on: "host" },
+        attribute: "data-mirrored",
+        condition: { kind: "when-provided", prop: "mirrored" },
+        value: { kind: "prop", prop: "mirrored" },
       },
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-icon",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: "data-mirrored",
-        value: "{mirrored}",
-        when: "mirrored is provided",
+        target: { on: "host" },
+        attribute: "fill",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "none" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "height",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "24" },
       },
       {
-        behavior: "always",
-        target: "fill",
-        value: "none",
+        target: { on: "host" },
+        attribute: "role",
+        condition: { kind: "not", of: { kind: "when-truthy", prop: "ariaHidden" } },
+        value: { kind: "literal", text: "img" },
       },
       {
-        behavior: "always",
-        target: "height",
-        value: "24",
+        target: { on: "host" },
+        attribute: "stroke",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "currentColor" },
       },
       {
-        behavior: "emit",
-        target: "role",
-        value: "img",
-        when: "ariaHidden is false or omitted",
+        target: { on: "host" },
+        attribute: "stroke-linecap",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "round" },
       },
       {
-        behavior: "always",
-        target: "stroke",
-        value: "currentColor",
+        target: { on: "host" },
+        attribute: "stroke-linejoin",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "round" },
       },
       {
-        behavior: "always",
-        target: "stroke-linecap",
-        value: "round",
+        target: { on: "host" },
+        attribute: "stroke-width",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "2" },
       },
       {
-        behavior: "always",
-        target: "stroke-linejoin",
-        value: "round",
+        target: { on: "host" },
+        attribute: "viewBox",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "0 0 24 24" },
       },
       {
-        behavior: "always",
-        target: "stroke-width",
-        value: "2",
-      },
-      {
-        behavior: "always",
-        target: "viewBox",
-        value: "0 0 24 24",
-      },
-      {
-        behavior: "always",
-        target: "xmlns",
-        value: "http://www.w3.org/2000/svg",
-      },
-    ],
-    content: [
-      {
-        behavior: "emit",
-        element: "title",
-        when: "ariaHidden is false or omitted",
+        target: { on: "host" },
+        attribute: "xmlns",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "http://www.w3.org/2000/svg" },
       },
     ],
   },
-} as const;
+};

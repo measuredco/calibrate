@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import { collapseWhitespace } from "../../helpers/string";
 import { renderClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
@@ -184,119 +185,103 @@ export function renderClbrAvatar({
 }
 
 /** Declarative avatar contract mirror for tooling, docs, and adapters. */
-export const CLBR_AVATAR_SPEC = {
+export const CLBR_AVATAR_SPEC: ClbrStructuredSpec = {
   name: "avatar",
   description: "Use `avatar` to visually represent a person, team, or entity.",
-  output: {
-    element: "span",
-    variants: ["image", "initials", "icon"],
-  },
+  output: { element: "span", class: "clbr-avatar" },
+  content: { kind: "none" },
   props: {
     alt: {
       description: "Accessible label for the avatar, overrides name.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     ariaHidden: {
       default: false,
       description: "Hides the avatar from assistive technology.",
-      required: false,
-      type: "boolean",
+      type: { kind: "boolean" },
     },
     entity: {
       default: "person",
       description: "Type of subject the avatar represents.",
-      required: false,
-      type: "enum",
-      values: ["bot", "organization", "person", "team"],
+      type: {
+        kind: "enum",
+        values: ["bot", "organization", "person", "team"],
+      },
     },
     color: {
       description: "Background color swatch. Derived from name when omitted.",
-      required: false,
-      type: "enum",
-      values: ["neutral", "01", "02", "03", "04", "05", "06", "07", "08", "09"],
+      type: {
+        kind: "enum",
+        values: [
+          "neutral",
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+        ],
+      },
     },
     initials: {
-      constraints: [
-        "trimmed",
-        "collapsedWhitespace",
-        "empty becomes omitted",
-        "length <= 3",
-        "alphabetic only (A-Z, a-z)",
-      ],
       description:
         "Initials to display. 1–3 alphabetic characters. Overrides name-derived initials.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     name: {
       description: "Full name. Used for the label and to derive initials.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["xs", "sm", "md", "lg", "xl"],
+      type: { kind: "enum", values: ["xs", "sm", "md", "lg", "xl"] },
     },
     src: {
       description: "Image source URL.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
-    precedence: [
-      "src",
-      "initials",
-      "name-derived initials",
-      "entity fallback icon",
-    ],
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-avatar",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "always",
-        target: "data-size",
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-entity",
+        condition: {
+          kind: "when-in",
+          prop: "entity",
+          values: ["bot", "organization", "team"],
+        },
+        value: { kind: "prop", prop: "entity" },
       },
       {
-        behavior: "emit",
-        target: "data-color",
-        value: "{color|hash(name)|neutral}",
-        when: "resolved color is non-default (not neutral)",
+        target: { on: "host" },
+        attribute: "data-color",
+        condition: {
+          kind: "when-in",
+          prop: "color",
+          values: ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
+        },
+        value: { kind: "prop", prop: "color" },
       },
       {
-        behavior: "emit",
-        target: "data-entity",
-        value: "{entity}",
-        when: "entity is bot, organization, or team",
-      },
-      {
-        behavior: "emit",
-        target: "aria-hidden",
-        value: "true",
-        when: "ariaHidden is true",
-      },
-      {
-        behavior: "emit",
-        target: "role",
-        value: "img",
-        when: "ariaHidden is false or omitted and variant is initials or icon",
-      },
-      {
-        behavior: "emit",
-        target: "aria-label",
-        value: "{alt|name|Avatar}",
-        when: "ariaHidden is false or omitted and variant is initials or icon",
+        target: { on: "host" },
+        attribute: "aria-hidden",
+        condition: { kind: "when-truthy", prop: "ariaHidden" },
+        value: { kind: "literal", text: "true" },
       },
     ],
   },
-} as const;
+};
 
 export { getClbrInitials } from "./get-initials";
