@@ -32,6 +32,20 @@ export type {
 
 export { type ClbrNode, serializeClbrNode } from "./helpers/node";
 
+export type {
+  ClbrComponentSpec,
+  ClbrComponentSpecEvent,
+  ClbrComponentSpecProp,
+  ClbrSpecAttributeRule,
+  ClbrSpecCondition,
+  ClbrSpecContent,
+  ClbrSpecElement,
+  ClbrSpecOutput,
+  ClbrSpecPropType,
+  ClbrSpecTarget,
+  ClbrSpecValue,
+} from "./helpers/spec";
+
 export {
   buildClbrAlert,
   CLBR_ALERT_EVENT_BEFORE_DISMISS,

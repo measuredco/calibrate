@@ -1,0 +1,20 @@
+{
+  "name": "@measured/calibrate-adapter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:react": "tsx src/react/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@measured/calibrate-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@measured/calibrate-config": "workspace:*",
+    "@types/node": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "^4.20.3",
+    "typescript": "catalog:"
+  }
+}
