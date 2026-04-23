@@ -15,6 +15,7 @@
     "playground:react:build": "pnpm --filter @measured/calibrate-playground-react run build",
     "playground:react:typecheck": "pnpm --filter @measured/calibrate-playground-react run typecheck",
     "react:build": "pnpm --filter @measured/calibrate-react run build",
+    "react:generate": "pnpm --filter @measured/calibrate-adapter run generate:react",
     "react:lint": "pnpm --filter @measured/calibrate-react run lint",
     "react:test": "pnpm --filter @measured/calibrate-react run test",
     "react:typecheck": "pnpm --filter @measured/calibrate-react run typecheck",

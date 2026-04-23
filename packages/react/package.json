@@ -14,6 +14,7 @@
     }
   },
   "scripts": {
+    "prebuild": "pnpm --filter @measured/calibrate-adapter run generate:react",
     "build": "vite build && pnpm run build:types",
     "build:types": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
@@ -22,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@measured/calibrate-adapter": "workspace:*",
     "@measured/calibrate-config": "workspace:*",
     "@measured/calibrate-core": "workspace:*",
     "@types/node": "catalog:",

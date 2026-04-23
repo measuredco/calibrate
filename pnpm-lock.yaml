@@ -222,6 +222,9 @@ importers:
 
   packages/react:
     devDependencies:
+      '@measured/calibrate-adapter':
+        specifier: workspace:*
+        version: link:../adapter
       '@measured/calibrate-config':
         specifier: workspace:*
         version: link:../config
