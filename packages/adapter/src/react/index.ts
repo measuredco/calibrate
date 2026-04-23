@@ -16,7 +16,13 @@ import { emitWrapperSource } from "./emit.ts";
   get: () => undefined,
 };
 
-const { CLBR_DIVIDER_SPEC } = await import("@measured/calibrate-core");
+const {
+  CLBR_BUTTON_SPEC,
+  CLBR_DIVIDER_SPEC,
+  CLBR_HEADING_SPEC,
+  CLBR_LINK_SPEC,
+  CLBR_LOGO_SPEC,
+} = await import("@measured/calibrate-core");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,7 +32,13 @@ const REACT_COMPONENTS_DIR = resolve(
   "../../../react/src/components",
 );
 
-const TARGETS: ReadonlyArray<ClbrComponentSpec> = [CLBR_DIVIDER_SPEC];
+const TARGETS: ReadonlyArray<ClbrComponentSpec> = [
+  CLBR_BUTTON_SPEC,
+  CLBR_DIVIDER_SPEC,
+  CLBR_HEADING_SPEC,
+  CLBR_LINK_SPEC,
+  CLBR_LOGO_SPEC,
+];
 
 async function emit(spec: ClbrComponentSpec): Promise<void> {
   const raw = emitWrapperSource(spec);

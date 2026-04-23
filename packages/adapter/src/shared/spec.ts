@@ -1,8 +1,18 @@
 import type { ClbrComponentSpec } from "@measured/calibrate-core";
 
+/**
+ * Archetype of an emitted wrapper. Drives which React template the emitter
+ * picks.
+ *
+ * Content handling follows SPEC semantics:
+ * - `kind: "text"` → scalar string in React (SPEC says the value is
+ *   escaped before render), so it needs no slot substitution and folds
+ *   into `pass-through`.
+ * - `kind: "html"` → trusted HTML string in core, opened up to ReactNode
+ *   in React via sentinel substitution (`slotted-html` / `slotted-multi`).
+ */
 export type Archetype =
   | "pass-through"
-  | "slotted-text"
   | "slotted-html"
   | "slotted-multi"
   | "structured-items"
@@ -10,8 +20,8 @@ export type Archetype =
 
 /**
  * Classify a SPEC into an archetype so the emitter can pick the right
- * template. Intentionally conservative at v0 — as more components are added,
- * new archetypes or sub-archetypes will surface and need additional cases.
+ * template. As more components are added, new archetypes will surface and
+ * need additional cases.
  */
 export function classify(spec: ClbrComponentSpec): Archetype {
   const hasEvents = Object.keys(spec.events).length > 0;
@@ -24,7 +34,7 @@ export function classify(spec: ClbrComponentSpec): Archetype {
     case "none":
       return "pass-through";
     case "text":
-      return "slotted-text";
+      return "pass-through";
     case "html":
       return "slotted-html";
     case "slots":
@@ -45,6 +55,11 @@ export function pascalCase(name: string): string {
     .filter(Boolean)
     .map((part) => part[0]!.toUpperCase() + part.slice(1))
     .join("");
+}
+
+/** SCREAMING_SNAKE_CASE a kebab/lower name for slot sentinel constants. */
+export function screamingSnake(name: string): string {
+  return name.replace(/[-\s]+/g, "_").toUpperCase();
 }
 
 /** Map a literal host element name to its DOM interface. */

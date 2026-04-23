@@ -66,13 +66,4 @@ describe("Link adapter matches core SSR DOM", () => {
       expect(reactEl.isEqualNode(coreEl)).toBe(true);
     });
   }
-
-  it("accepts JSX label content", () => {
-    const html = renderToStaticMarkup(
-      <Link href="/x" label={<strong>Bold</strong>} />,
-    );
-    const el = toElement(html) as HTMLElement;
-    expect(el.tagName.toLowerCase()).toBe("a");
-    expect(el.querySelector(".label strong")?.textContent).toBe("Bold");
-  });
 });

@@ -37,15 +37,4 @@ describe("Heading adapter matches core SSR DOM", () => {
       expect(reactEl.isEqualNode(coreEl)).toBe(true);
     });
   }
-
-  it("composes nested React children", () => {
-    const html = renderToStaticMarkup(
-      <Heading level={1}>
-        Title <em>italic</em>
-      </Heading>,
-    );
-    const el = toElement(html) as HTMLElement;
-    expect(el.tagName.toLowerCase()).toBe("h1");
-    expect(el.querySelector("em")?.textContent).toBe("italic");
-  });
 });

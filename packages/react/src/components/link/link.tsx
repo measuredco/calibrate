@@ -6,12 +6,10 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_ICON = "__CLBR_SLOT_LINK_ICON__";
-const SLOT_LABEL = "__CLBR_SLOT_LINK_LABEL__";
+const SLOT_LINK_ICON = "__CLBR_SLOT_LINK_ICON__";
 
-export type LinkProps = Omit<ClbrLinkProps, "icon" | "label"> & {
+export type LinkProps = Omit<ClbrLinkProps, "icon"> & {
   icon?: ReactNode;
-  label: ReactNode;
 } & NativeAttrsFor<HTMLAnchorElement>;
 
 export function Link(props: LinkProps): ReturnType<typeof reactify> {
@@ -20,8 +18,8 @@ export function Link(props: LinkProps): ReturnType<typeof reactify> {
   const hasIcon = icon != null && icon !== false;
   const node = buildClbrLink({
     href,
-    icon: hasIcon ? SLOT_ICON : undefined,
-    label: SLOT_LABEL,
+    icon: hasIcon ? SLOT_LINK_ICON : undefined,
+    label,
     rel,
     size,
     target,
@@ -32,8 +30,7 @@ export function Link(props: LinkProps): ReturnType<typeof reactify> {
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
     {
-      [SLOT_LABEL]: label,
-      ...(hasIcon ? { [SLOT_ICON]: icon } : {}),
+      ...(hasIcon ? { [SLOT_LINK_ICON]: icon } : {}),
     },
   );
 }
