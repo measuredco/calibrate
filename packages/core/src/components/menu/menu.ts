@@ -1,4 +1,5 @@
 import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 import {
   type ClbrButtonLabelVisibility,
@@ -390,155 +391,83 @@ export function defineClbrMenu(): void {
 }
 
 /** Declarative menu contract mirror for tooling, docs, and adapters. */
-export const CLBR_MENU_SPEC = {
+export const CLBR_MENU_SPEC: ClbrStructuredSpec = {
   name: "menu",
   description: "Use `menu` to show a list of actions from a trigger button.",
   output: {
     element: CLBR_MENU_TAG_NAME,
     class: "clbr-menu",
-    children: [
-      'div[data-part="trigger"] > button.clbr-button',
-      'div.popup[role="menu"] > button[role="menuitem"]',
-    ],
+  },
+  content: {
+    kind: "structured",
+    prop: "items",
   },
   props: {
     align: {
       default: "start",
       description: "Popup alignment relative to the trigger.",
-      required: false,
-      type: "enum",
-      values: ["start", "end"],
+      type: { kind: "enum", values: ["start", "end"] },
     },
     id: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` seed used for the trigger and popup.",
       required: true,
-      type: "string",
+      type: { kind: "string" },
     },
     items: {
       description: "Action items listed inside the popup.",
       required: true,
-      type: "array",
-      shape: {
-        disabled: {
-          default: false,
-          required: false,
-          type: "boolean",
-        },
-        id: {
-          required: false,
-          type: "string",
-        },
-        label: {
-          required: true,
-          type: "text",
+      type: {
+        kind: "array",
+        itemShape: {
+          disabled: {
+            default: false,
+            description: "Disables selection for this item.",
+            type: { kind: "boolean" },
+          },
+          id: {
+            description:
+              "Optional authored identifier surfaced in the choose event payload.",
+            type: { kind: "string" },
+          },
+          label: {
+            description: "Visible item label text.",
+            required: true,
+            type: { kind: "text" },
+          },
         },
       },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
     },
     triggerIcon: {
       description: "Icon name for the trigger button.",
-      required: false,
-      type: "iconName",
+      type: { kind: "iconName" },
     },
     triggerIconMirrored: {
       description: "Icon mirroring mode for the trigger button icon.",
-      required: false,
-      type: "enum",
-      values: ["always", "rtl"],
+      type: { kind: "enum", values: ["always", "rtl"] },
     },
     triggerIconPlacement: {
       default: "start",
       description: "Icon placement within the trigger button.",
-      required: false,
-      type: "enum",
-      values: ["start", "end"],
+      type: { kind: "enum", values: ["start", "end"] },
     },
     triggerLabel: {
       description: "Accessible and visible trigger label text.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
     triggerLabelVisibility: {
       default: "visible",
       description: "Trigger label visibility treatment.",
-      required: false,
-      type: "enum",
-      values: ["visible", "hidden", "hiddenBelowTablet"],
+      type: {
+        kind: "enum",
+        values: ["visible", "hidden", "hiddenBelowTablet"],
+      },
     },
-  },
-  rules: {
-    attributes: [
-      {
-        behavior: "always",
-        target: `${CLBR_MENU_TAG_NAME}@class`,
-        value: "clbr-menu",
-      },
-      {
-        behavior: "always",
-        target: 'div[data-part="trigger"] > button@id',
-        value: "{id}-button",
-      },
-      {
-        behavior: "always",
-        target: "div.popup@aria-labelledby",
-        value: "{id}-button",
-      },
-      {
-        behavior: "always",
-        target: "div.popup@id",
-        value: "{id}-popup",
-      },
-      {
-        behavior: "emit",
-        target: `${CLBR_MENU_TAG_NAME}@data-align`,
-        value: "{align}",
-        when: "align is 'end'",
-      },
-      {
-        behavior: "always",
-        target: `${CLBR_MENU_TAG_NAME}@data-size`,
-        value: "{size}",
-      },
-      {
-        behavior: "always",
-        target: "div.popup@role",
-        value: "menu",
-      },
-      {
-        behavior: "always",
-        target: "div.popup@hidden",
-        value: "true",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value:
-          "renderClbrButton({ appearance: 'outline', controls: `${id}-popup`, disclosure: true, haspopup: 'menu', icon: triggerIcon, iconMirrored: triggerIconMirrored, iconPlacement: triggerIconPlacement, id: `${id}-button`, label: triggerLabel, labelVisibility: triggerLabelVisibility, mode: 'button', size, tone: 'neutral', type: 'button' })",
-      },
-      {
-        behavior: "always",
-        value: 'div.popup[role="menu"] > button[role="menuitem"]',
-      },
-      {
-        behavior: "emit",
-        value:
-          'div.popup[role="menu"] > button[role="menuitem"][aria-disabled="true"]',
-        when: "an item has disabled: true",
-      },
-      {
-        behavior: "runtime",
-        value: `${CLBR_MENU_TAG_NAME}[data-open]`,
-        when: "the popup menu is open after defineClbrMenu() has upgraded the host",
-      },
-    ],
   },
   events: {
     [CLBR_MENU_EVENT_CHOOSE]: {
@@ -547,4 +476,52 @@ export const CLBR_MENU_SPEC = {
       detail: "{ id?: string; index: number; label: string }",
     },
   },
-} as const;
+  rules: {
+    attributes: [
+      {
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-align",
+        condition: { kind: "when-equals", prop: "align", to: "end" },
+        value: { kind: "prop", prop: "align" },
+      },
+      {
+        target: {
+          on: "descendant",
+          selector: 'div[data-part="trigger"] button',
+        },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}-button" },
+      },
+      {
+        target: { on: "descendant", selector: "div.popup" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}-popup" },
+      },
+      {
+        target: { on: "descendant", selector: "div.popup" },
+        attribute: "aria-labelledby",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}-button" },
+      },
+      {
+        target: { on: "descendant", selector: "div.popup" },
+        attribute: "role",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "menu" },
+      },
+      {
+        target: { on: "descendant", selector: "div.popup" },
+        attribute: "hidden",
+        condition: { kind: "always" },
+      },
+    ],
+  },
+};

@@ -9,6 +9,7 @@ import {
   type ClbrSpecAttributeRule,
   type ClbrSpecPropType,
   type ClbrStructuredSpec,
+  type ClbrStructuredSpecProp,
 } from "../helpers/spec";
 
 export interface SpecConsistencyConfig<Props> {
@@ -98,7 +99,7 @@ export function describeSpecConsistency<Props extends object>(
 const SAMPLE_STRING = "probe";
 const SAMPLE_ICON = "X";
 
-const probeValues = (type: ClbrSpecPropType): ReadonlyArray<unknown> => {
+const probeValuesForType = (type: ClbrSpecPropType): ReadonlyArray<unknown> => {
   switch (type.kind) {
     case "boolean":
       return [true, false, undefined];
@@ -116,9 +117,17 @@ const probeValues = (type: ClbrSpecPropType): ReadonlyArray<unknown> => {
       return [[], undefined];
     case "union":
       return [
-        ...new Set(type.variants.flatMap((variant) => probeValues(variant))),
+        ...new Set(
+          type.variants.flatMap((variant) => probeValuesForType(variant)),
+        ),
       ];
   }
+};
+
+const probeValues = (prop: ClbrStructuredSpecProp): ReadonlyArray<unknown> => {
+  const raw = probeValuesForType(prop.type);
+  if (!prop.required) return raw;
+  return raw.filter((value) => value !== undefined && value !== "");
 };
 
 const cartesian = <T>(lists: ReadonlyArray<ReadonlyArray<T>>): T[][] => {
@@ -190,8 +199,8 @@ function describeStructuredRuleConsistency<Props extends object>(
       }
 
       const valueLists = referenced.map((name) => {
-        const propType = spec.props[name]?.type;
-        return propType ? probeValues(propType) : [undefined];
+        const prop = spec.props[name];
+        return prop ? probeValues(prop) : [undefined];
       });
 
       const combos = cartesian(valueLists);

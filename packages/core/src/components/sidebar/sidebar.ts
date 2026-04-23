@@ -1,4 +1,5 @@
 import { attrs, isValidHtmlId } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import { renderClbrButton } from "../button/button";
 
 export const CLBR_SIDEBAR_TAG_NAME = "clbr-sidebar";
@@ -391,157 +392,109 @@ export function defineClbrSidebar(): void {
 }
 
 /** Declarative sidebar contract mirror for tooling, docs, and adapters. */
-export const CLBR_SIDEBAR_SPEC = {
+export const CLBR_SIDEBAR_SPEC: ClbrStructuredSpec = {
   name: "sidebar",
   description: "Use `sidebar` for a side panel alongside main content.",
   output: {
     element: CLBR_SIDEBAR_TAG_NAME,
     class: "clbr-sidebar",
-    children: [
-      'div[data-part="trigger"] > button',
-      "div.sidebar",
-      "div.sidebar > div.header",
-      "div.sidebar > div.content",
-      "optional div.sidebar > div.footer",
-      'div[data-part="backdrop"]',
-      'optional runtime div[data-part="close"] > button',
+  },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "header", kind: "html" },
+      { prop: "children", kind: "html" },
+      { prop: "footer", kind: "html" },
     ],
   },
   props: {
     aboveNotebook: {
       default: "persistent",
       description: "Layout behaviour on wider screens.",
-      required: false,
-      type: "enum",
-      values: ["persistent", "collapsible", "overlay"],
+      type: {
+        kind: "enum",
+        values: ["persistent", "collapsible", "overlay"],
+      },
     },
     children: {
       description: "Sidebar body content.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     collapseLabel: {
       default: collapseLabelDefault,
       description: "Accessible label for the collapse button.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     footer: {
       description: "Content rendered in the sidebar footer.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     header: {
       description: "Content rendered in the sidebar header.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     id: {
-      constraints: ["non-empty", "validHtmlId"],
       description: "`id` used to wire the trigger to the sidebar.",
       required: true,
-      type: "string",
-    },
-    triggerLabel: {
-      default: triggerLabelDefault,
-      description: "Accessible label for the open button.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
-      required: false,
-      type: "enum",
-      values: ["sm", "md"],
+      type: { kind: "enum", values: ["sm", "md"] },
+    },
+    triggerLabel: {
+      default: triggerLabelDefault,
+      description: "Accessible label for the open button.",
+      type: { kind: "string" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: `${CLBR_SIDEBAR_TAG_NAME}@data-above-notebook`,
-        value: "{aboveNotebook}",
+        target: { on: "host" },
+        attribute: "data-above-notebook",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "aboveNotebook" },
       },
       {
-        behavior: "always",
-        target: `${CLBR_SIDEBAR_TAG_NAME}@data-size`,
-        value: "{size}",
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
       {
-        behavior: "emit",
-        target: `${CLBR_SIDEBAR_TAG_NAME}@data-collapse-label`,
-        value: "{collapseLabel}",
-        when: "collapseLabel is non-default",
+        target: { on: "host" },
+        attribute: "data-collapse-label",
+        condition: {
+          kind: "all",
+          of: [
+            { kind: "when-non-empty", prop: "collapseLabel" },
+            {
+              kind: "not",
+              of: {
+                kind: "when-equals",
+                prop: "collapseLabel",
+                to: collapseLabelDefault,
+              },
+            },
+          ],
+        },
+        value: { kind: "prop", prop: "collapseLabel" },
       },
       {
-        behavior: "always",
-        target: 'div[data-part="trigger"] > button@aria-controls',
-        value: "{id}",
+        target: { on: "descendant", selector: "div.sidebar" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}" },
       },
       {
-        behavior: "always",
-        target: 'div[data-part="trigger"] > button@aria-expanded',
-        value: "false",
-      },
-      {
-        behavior: "always",
-        target: `${CLBR_SIDEBAR_TAG_NAME}@class`,
-        value: "clbr-sidebar",
-      },
-      {
-        behavior: "always",
-        target: "div.sidebar@class",
-        value: "sidebar",
-      },
-      {
-        behavior: "always",
-        target: "div.sidebar@id",
-        value: "{id}",
-      },
-      {
-        behavior: "always",
-        target: "div.sidebar@tabindex",
-        value: "-1",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: 'div[data-part="trigger"] > button',
-      },
-      {
-        behavior: "always",
-        value: "div.sidebar > div.header",
-      },
-      {
-        behavior: "always",
-        value: "div.sidebar > div.content",
-      },
-      {
-        behavior: "emit",
-        value: "div.sidebar > div.footer",
-        when: "footer is provided",
-      },
-      {
-        behavior: "always",
-        value: 'div[data-part="backdrop"]',
-      },
-      {
-        behavior: "runtime",
-        value: 'div.sidebar > div.header > div[data-part="close"] > button',
-        when: "defineClbrSidebar() has upgraded the host",
-      },
-      {
-        behavior: "runtime",
-        value: `${CLBR_SIDEBAR_TAG_NAME}[data-open]`,
-        when: "sidebar is open in overlay or expanded desktop states",
-      },
-      {
-        behavior: "runtime",
-        value: `${CLBR_SIDEBAR_TAG_NAME}[data-collapsed]`,
-        when: 'sidebar is in the desktop "collapsible" rail state',
+        target: { on: "descendant", selector: "div.sidebar" },
+        attribute: "tabindex",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "-1" },
       },
     ],
   },
-} as const;
+};

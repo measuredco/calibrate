@@ -1,4 +1,5 @@
 import { attrs, escapeHtml } from "../../helpers/html";
+import type { ClbrStructuredSpec } from "../../helpers/spec";
 import type { ClbrHeadingLevel } from "../../types";
 import { renderClbrIcon } from "../icon/icon";
 import type { ClbrSurfaceVariant } from "../surface/surface";
@@ -60,85 +61,62 @@ export function renderClbrCard({
 }
 
 /** Declarative card contract mirror for tooling, docs, and adapters. */
-export const CLBR_CARD_SPEC = {
+export const CLBR_CARD_SPEC: ClbrStructuredSpec = {
   name: "card",
   description: "Use `card` to display a summary for a single topic.",
   output: {
     element: "div",
     class: "clbr-card",
-    children: [
-      "span.dots",
-      "div.title or h{headingLevel}.title",
-      "p.description",
-      "optional p.note",
+  },
+  content: {
+    kind: "slots",
+    slots: [
+      { prop: "title", kind: "text" },
+      { prop: "description", kind: "html" },
+      { prop: "note", kind: "html" },
     ],
   },
   props: {
     description: {
       description: "Supporting description shown below the `title`.",
       required: true,
-      type: "html",
+      type: { kind: "html" },
     },
     headingLevel: {
       description:
         "Semantic heading level for the title. Renders a `<div>` when omitted.",
-      required: false,
-      type: "enum",
-      values: [1, 2, 3, 4, 5, 6],
+      type: { kind: "enum", values: [1, 2, 3, 4, 5, 6] },
     },
     href: {
       description: "Link destination for the `title`.",
-      required: false,
-      type: "string",
+      type: { kind: "string" },
     },
     note: {
       description: "Short note shown beneath the `description`.",
-      required: false,
-      type: "html",
+      type: { kind: "html" },
     },
     surface: {
       description: "Surface context.",
-      required: false,
-      type: "enum",
-      values: ["default", "brand", "inverse", "brand-inverse"],
+      type: {
+        kind: "enum",
+        values: ["default", "brand", "inverse", "brand-inverse"],
+      },
     },
     title: {
       description: "Card title.",
       required: true,
-      type: "text",
+      type: { kind: "text" },
     },
   },
+  events: {},
   rules: {
     attributes: [
       {
-        behavior: "always",
-        target: "class",
-        value: "clbr-card",
-      },
-      {
-        behavior: "emit",
-        target: "data-clbr-surface",
-        value: "{surface}",
-        when: "surface is provided",
-      },
-    ],
-    composition: [
-      {
-        behavior: "always",
-        value: "p.description",
-        when: "after the heading",
-      },
-      {
-        behavior: "emit",
-        value: "p.note",
-        when: "note is provided",
-      },
-      {
-        behavior: "emit",
-        value:
-          "span.icon-wrapper > renderClbrIcon({ name: 'arrow-right', size: 'xs', mirrored: 'rtl', ariaHidden: true })",
-        when: "href and note are provided",
+        target: { on: "host" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "when-provided", prop: "surface" },
+        value: { kind: "prop", prop: "surface" },
       },
     ],
   },
-} as const;
+};
