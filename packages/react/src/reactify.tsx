@@ -30,18 +30,33 @@ export type NativeAttrsFor<E extends Element> = Omit<
 };
 
 /**
+ * HTML-canonical attribute names that React exposes under camelCase prop
+ * names. `aria-*` and `data-*` stay kebab-case in React and are handled
+ * generically, so they're not listed here.
+ */
+const ATTR_NAME_MAP: Record<string, string> = {
+  autocomplete: "autoComplete",
+  class: "className",
+  for: "htmlFor",
+  readonly: "readOnly",
+  spellcheck: "spellCheck",
+  srcset: "srcSet",
+  tabindex: "tabIndex",
+};
+
+/**
  * Converts a Calibrate IR attr record into React props.
  *
- * - `class` -> `className`
- * - `for` -> `htmlFor`
- * - `false` / `undefined` attrs are dropped
+ * - Attribute names are remapped via `ATTR_NAME_MAP` (e.g. `class` ->
+ *   `className`, `tabindex` -> `tabIndex`).
+ * - `false` / `undefined` attrs are dropped.
  * - `true` on a native boolean attr (e.g. `disabled`) stays as `true` so
  *   React emits the valueless form; `true` on a `data-*` attr becomes
  *   `""` to match core SSR's valueless output (React would otherwise
  *   stringify custom boolean props to `"true"`). `aria-*` booleans pass
  *   through so React emits the correct `"true"` / `"false"` strings the
  *   spec requires (e.g. `aria-expanded`).
- * - string-valued attrs pass through as strings
+ * - string-valued attrs pass through as strings.
  */
 function toReactProps(
   attrs: Record<string, string | boolean | undefined>,
@@ -49,8 +64,7 @@ function toReactProps(
   const out: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(attrs)) {
     if (value === false || value == null) continue;
-    const reactKey =
-      key === "class" ? "className" : key === "for" ? "htmlFor" : key;
+    const reactKey = ATTR_NAME_MAP[key] ?? key;
     out[reactKey] = value === true && key.startsWith("data-") ? "" : value;
   }
   return out;

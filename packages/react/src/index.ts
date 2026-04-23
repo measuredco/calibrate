@@ -8,4 +8,12 @@ export {
 
 export { Button, type ButtonProps } from "./components/button/button";
 
+export {
+  Menu,
+  type MenuChooseDetail,
+  type MenuChooseEvent,
+  type MenuChooseHandler,
+  type MenuProps,
+} from "./components/menu/menu";
+
 export { Page, type PageProps } from "./components/page/page";
