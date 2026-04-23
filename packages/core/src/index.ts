@@ -130,6 +130,7 @@ export {
 } from "./components/container/container";
 
 export {
+  buildClbrDetails,
   CLBR_DETAILS_SPEC,
   type ClbrDetailsProps,
   renderClbrDetails,
@@ -145,6 +146,7 @@ export {
 } from "./components/divider/divider";
 
 export {
+  buildClbrExpander,
   CLBR_EXPANDER_SPEC,
   type ClbrExpanderProps,
   type ClbrExpanderSize,

@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 
 export type ClbrExpanderSize = "sm" | "md" | "lg";
@@ -17,6 +17,54 @@ export interface ClbrExpanderProps {
 const expanderLabelDefault = "Menu";
 
 /**
+ * Builds the IR tree for the Calibrate expander control.
+ *
+ * @param props - Expander component props.
+ * @returns IR node for a toggle button.
+ */
+export function buildClbrExpander({
+  controlsId,
+  expanded,
+  label = expanderLabelDefault,
+  size = "md",
+}: ClbrExpanderProps = {}): ClbrNode {
+  const normalizedLabel = label.trim() === "" ? expanderLabelDefault : label;
+
+  return {
+    kind: "element",
+    tag: "button",
+    attrs: {
+      "aria-controls": controlsId || undefined,
+      "aria-expanded": expanded ? "true" : "false",
+      class: "clbr-expander",
+      "data-size": size,
+      type: "button",
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "span",
+        attrs: { class: "expander-box" },
+        children: [
+          {
+            kind: "element",
+            tag: "span",
+            attrs: { class: "expander-inner" },
+            children: [],
+          },
+          {
+            kind: "element",
+            tag: "span",
+            attrs: { class: "visually-hidden" },
+            children: [{ kind: "text", value: normalizedLabel }],
+          },
+        ],
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate expander control.
  *
  * Emits a semantic `button` with accessible text and animated line glyph
@@ -25,25 +73,8 @@ const expanderLabelDefault = "Menu";
  * @param props - Expander component props.
  * @returns HTML string for a toggle button.
  */
-export function renderClbrExpander({
-  controlsId,
-  expanded,
-  label = expanderLabelDefault,
-  size = "md",
-}: ClbrExpanderProps = {}): string {
-  const normalizedLabel = label.trim() === "" ? expanderLabelDefault : label;
-
-  const expanderAttrs = attrs({
-    "aria-controls": controlsId || undefined,
-    "aria-expanded": expanded ? "true" : "false",
-    class: "clbr-expander",
-    "data-size": size,
-    type: "button",
-  });
-
-  return `<button ${expanderAttrs}><span class="expander-box"><span class="expander-inner"></span><span class="visually-hidden">${escapeHtml(
-    normalizedLabel,
-  )}</span></span></button>`;
+export function renderClbrExpander(props: ClbrExpanderProps = {}): string {
+  return serializeClbrNode(buildClbrExpander(props));
 }
 
 /** Declarative expander contract mirror for tooling, docs, and adapters. */

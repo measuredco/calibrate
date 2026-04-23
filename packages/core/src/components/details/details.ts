@@ -1,7 +1,7 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
-import { renderClbrIcon } from "../icon/icon";
+import { buildClbrIcon } from "../icon/icon";
 
 export interface ClbrDetailsProps {
   /** Content markup inside the details panel. Caller sanitizes untrusted content. */
@@ -15,6 +15,62 @@ export interface ClbrDetailsProps {
 }
 
 /**
+ * Builds the IR tree for the Calibrate details component.
+ *
+ * @param props - Details component props.
+ * @returns IR node for a details element.
+ */
+export function buildClbrDetails({
+  children,
+  open,
+  summary,
+  inlineSize = "full",
+}: ClbrDetailsProps): ClbrNode {
+  return {
+    kind: "element",
+    tag: "details",
+    attrs: {
+      class: "clbr-details",
+      open,
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+    },
+    children: [
+      {
+        kind: "element",
+        tag: "summary",
+        attrs: { class: "summary" },
+        children: [
+          {
+            kind: "element",
+            tag: "span",
+            attrs: { class: "marker" },
+            children: [
+              buildClbrIcon({
+                ariaHidden: true,
+                name: "chevron-right",
+                size: "sm",
+              }),
+            ],
+          },
+          {
+            kind: "element",
+            tag: "span",
+            attrs: {},
+            children: [{ kind: "text", value: summary }],
+          },
+        ],
+      },
+      {
+        kind: "element",
+        tag: "div",
+        attrs: { class: "content" },
+        children: children ? [{ kind: "raw", html: children }] : [],
+      },
+    ],
+  };
+}
+
+/**
  * SSR renderer for the Calibrate details component.
  *
  * Emits native `<details>`/`<summary>` markup with trusted HTML content in a
@@ -23,25 +79,8 @@ export interface ClbrDetailsProps {
  * @param props - Details component props.
  * @returns HTML string for a details element.
  */
-export function renderClbrDetails({
-  children,
-  open,
-  summary,
-  inlineSize = "full",
-}: ClbrDetailsProps): string {
-  const detailsAttrs = attrs({
-    class: "clbr-details",
-    open,
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-  });
-
-  const marker = renderClbrIcon({
-    ariaHidden: true,
-    name: "chevron-right",
-    size: "sm",
-  });
-
-  return `<details ${detailsAttrs}><summary class="summary"><span class="marker">${marker}</span><span>${escapeHtml(summary)}</span></summary><div class="content">${children ?? ""}</div></details>`;
+export function renderClbrDetails(props: ClbrDetailsProps): string {
+  return serializeClbrNode(buildClbrDetails(props));
 }
 
 /** Declarative details contract mirror for tooling, docs, and adapters. */
