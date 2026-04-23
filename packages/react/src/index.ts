@@ -37,6 +37,10 @@ export { Nav, type NavProps } from "./components/nav/nav";
 
 export { Page, type PageProps } from "./components/page/page";
 
+export { Root, type RootProps } from "./components/root/root";
+
 export { Sidebar, type SidebarProps } from "./components/sidebar/sidebar";
 
 export { Stack, type StackProps } from "./components/stack/stack";
+
+export { Surface, type SurfaceProps } from "./components/surface/surface";

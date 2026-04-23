@@ -2,6 +2,7 @@
 node_modules
 build
 .pnpm-store
+apps/playground-react/dist
 packages/core/dist
 packages/react/dist
 storybook-static
