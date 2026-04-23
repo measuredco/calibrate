@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
@@ -30,15 +31,12 @@ export interface ClbrRangeProps {
 }
 
 /**
- * SSR renderer for the Calibrate range component.
- *
- * Emits semantic range markup inside a `clbr-range` host. The runtime custom
- * element hydrates the `.output` element from the current input value.
+ * Builds the IR tree for the Calibrate range component.
  *
  * @param props - Range component props.
- * @returns HTML string for a `clbr-range` host.
+ * @returns IR node for a `clbr-range` host.
  */
-export function renderClbrRange({
+export function buildClbrRange({
   description,
   disabled,
   id,
@@ -50,7 +48,7 @@ export function renderClbrRange({
   size = "md",
   step,
   value,
-}: ClbrRangeProps): string {
+}: ClbrRangeProps): ClbrNode {
   const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
   const normalizedName = name?.trim();
@@ -69,34 +67,77 @@ export function renderClbrRange({
     ? `${normalizedId}-description`
     : undefined;
 
-  const fieldAttrs = attrs({
-    class: "clbr-range",
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-    "data-size": size,
-  });
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "div",
+      attrs: { class: "label-wrapper" },
+      children: [
+        {
+          kind: "element",
+          tag: "label",
+          attrs: { class: "label", for: normalizedId },
+          children: [{ kind: "text", value: label }],
+        },
+        {
+          kind: "element",
+          tag: "output",
+          attrs: { class: "output", for: normalizedId },
+          children: [],
+        },
+      ],
+    },
+    {
+      kind: "element",
+      tag: "input",
+      attrs: {
+        "aria-describedby": descriptionId,
+        class: "range",
+        disabled: Boolean(disabled),
+        id: normalizedId,
+        max: max != null ? String(max) : undefined,
+        min: min != null ? String(min) : undefined,
+        name: normalizedName || undefined,
+        step: step != null ? String(step) : undefined,
+        type: "range",
+        value: value != null ? String(value) : undefined,
+      },
+      children: [],
+    },
+  ];
 
-  const inputAttrs = attrs({
-    "aria-describedby": descriptionId,
-    class: "range",
-    disabled: Boolean(disabled),
-    id: normalizedId,
-    max: max != null ? String(max) : undefined,
-    min: min != null ? String(min) : undefined,
-    name: normalizedName || undefined,
-    step: step != null ? String(step) : undefined,
-    type: "range",
-    value: value != null ? String(value) : undefined,
-  });
+  if (normalizedDescription) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: descriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
 
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${descriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
+  return {
+    kind: "element",
+    tag: CLBR_RANGE_TAG_NAME,
+    attrs: {
+      class: "clbr-range",
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+      "data-size": size,
+    },
+    children,
+  };
+}
 
-  return `<${CLBR_RANGE_TAG_NAME} ${fieldAttrs}><div class="label-wrapper"><label class="label" for="${normalizedId}">${escapeHtml(
-    label,
-  )}</label><output class="output" for="${normalizedId}"></output></div><input ${inputAttrs}>${descriptionMarkup}</${CLBR_RANGE_TAG_NAME}>`;
+/**
+ * SSR renderer for the Calibrate range component.
+ *
+ * Emits semantic range markup inside a `clbr-range` host. The runtime custom
+ * element hydrates the `.output` element from the current input value.
+ *
+ * @param props - Range component props.
+ * @returns HTML string for a `clbr-range` host.
+ */
+export function renderClbrRange(props: ClbrRangeProps): string {
+  return serializeClbrNode(buildClbrRange(props));
 }
 
 class ClbrRangeElement extends HTMLElement {

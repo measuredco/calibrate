@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
@@ -38,12 +39,12 @@ export interface ClbrTextareaProps {
 }
 
 /**
- * SSR renderer for the Calibrate textarea component.
+ * Builds the IR tree for the Calibrate textarea component.
  *
  * @param props - Textarea component props.
- * @returns HTML string for a labeled textarea field wrapper.
+ * @returns IR node for a labeled textarea field wrapper.
  */
-export function renderClbrTextarea({
+export function buildClbrTextarea({
   autocomplete,
   description,
   disabled,
@@ -59,7 +60,7 @@ export function renderClbrTextarea({
   spellcheck,
   value,
   inlineSize = "full",
-}: ClbrTextareaProps): string {
+}: ClbrTextareaProps): ClbrNode {
   const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
   const normalizedAutocomplete =
@@ -89,41 +90,66 @@ export function renderClbrTextarea({
   const isReadOnly = !isDisabled && Boolean(readOnly);
   const isInvalid = !isDisabled && !isReadOnly && Boolean(invalid);
 
-  const textareaAttrs = attrs({
-    "aria-describedby": descriptionId,
-    "aria-invalid": isInvalid ? "true" : undefined,
-    autocomplete:
-      normalizedAutocomplete === false
-        ? "off"
-        : normalizedAutocomplete || undefined,
-    class: "textarea",
-    disabled: isDisabled,
-    id: normalizedId,
-    name: normalizedName || undefined,
-    readonly: isReadOnly,
-    required: Boolean(required),
-    rows: String(rows),
-    spellcheck: spellcheck === undefined ? undefined : String(spellcheck),
-  });
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "label",
+      attrs: { class: "label", for: normalizedId },
+      children: [{ kind: "text", value: label }],
+    },
+    {
+      kind: "element",
+      tag: "textarea",
+      attrs: {
+        "aria-describedby": descriptionId,
+        "aria-invalid": isInvalid ? "true" : undefined,
+        autocomplete:
+          normalizedAutocomplete === false
+            ? "off"
+            : normalizedAutocomplete || undefined,
+        class: "textarea",
+        disabled: isDisabled,
+        id: normalizedId,
+        name: normalizedName || undefined,
+        readonly: isReadOnly,
+        required: Boolean(required),
+        rows: String(rows),
+        spellcheck: spellcheck === undefined ? undefined : String(spellcheck),
+      },
+      children: [{ kind: "text", value: normalizedValue || "" }],
+    },
+  ];
 
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${descriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
+  if (normalizedDescription) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: descriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
 
-  const wrapperAttrs = attrs({
-    class: "clbr-textarea",
-    "data-resize": resize === "none" ? "none" : undefined,
-    "data-size": size,
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-  });
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-textarea",
+      "data-resize": resize === "none" ? "none" : undefined,
+      "data-size": size,
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+    },
+    children,
+  };
+}
 
-  return `<div ${wrapperAttrs}><label class="label" for="${normalizedId}">${escapeHtml(
-    label,
-  )}</label><textarea ${textareaAttrs}>${escapeHtml(
-    normalizedValue || "",
-  )}</textarea>${descriptionMarkup}</div>`;
+/**
+ * SSR renderer for the Calibrate textarea component.
+ *
+ * @param props - Textarea component props.
+ * @returns HTML string for a labeled textarea field wrapper.
+ */
+export function renderClbrTextarea(props: ClbrTextareaProps): string {
+  return serializeClbrNode(buildClbrTextarea(props));
 }
 
 /** Declarative textarea contract mirror for tooling, docs, and adapters. */

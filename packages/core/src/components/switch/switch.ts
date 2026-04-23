@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
@@ -22,12 +23,12 @@ export interface ClbrSwitchProps {
 }
 
 /**
- * SSR renderer for the Calibrate switch component.
+ * Builds the IR tree for the Calibrate switch component.
  *
  * @param props - Switch component props.
- * @returns HTML string for a switch field wrapper.
+ * @returns IR node for a switch field wrapper.
  */
-export function renderClbrSwitch({
+export function buildClbrSwitch({
   checked,
   description,
   descriptionId,
@@ -36,7 +37,7 @@ export function renderClbrSwitch({
   name,
   size = "md",
   value,
-}: ClbrSwitchProps): string {
+}: ClbrSwitchProps): ClbrNode {
   const normalizedDescription = description?.trim();
   const normalizedDescriptionId = descriptionId?.trim();
 
@@ -52,28 +53,64 @@ export function renderClbrSwitch({
     );
   }
 
-  const inputAttrs = attrs({
-    "aria-describedby": normalizedDescription
-      ? normalizedDescriptionId
-      : undefined,
-    checked: Boolean(checked),
-    class: "switch",
-    disabled: Boolean(disabled),
-    name: name || undefined,
-    role: "switch",
-    type: "checkbox",
-    value: value || undefined,
-  });
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "label",
+      attrs: { class: "label" },
+      children: [
+        {
+          kind: "element",
+          tag: "input",
+          attrs: {
+            "aria-describedby": normalizedDescription
+              ? normalizedDescriptionId
+              : undefined,
+            checked: Boolean(checked),
+            class: "switch",
+            disabled: Boolean(disabled),
+            name: name || undefined,
+            role: "switch",
+            type: "checkbox",
+            value: value || undefined,
+          },
+          children: [],
+        },
+        {
+          kind: "element",
+          tag: "span",
+          attrs: {},
+          children: [{ kind: "text", value: label }],
+        },
+      ],
+    },
+  ];
 
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${normalizedDescriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
+  if (normalizedDescription) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: normalizedDescriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
 
-  return `<div class="clbr-switch" data-size="${size}"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
-    label,
-  )}</span></label>${descriptionMarkup}</div>`;
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: { class: "clbr-switch", "data-size": size },
+    children,
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate switch component.
+ *
+ * @param props - Switch component props.
+ * @returns HTML string for a switch field wrapper.
+ */
+export function renderClbrSwitch(props: ClbrSwitchProps): string {
+  return serializeClbrNode(buildClbrSwitch(props));
 }
 
 /** Declarative switch contract mirror for tooling, docs, and adapters. */

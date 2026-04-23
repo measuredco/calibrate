@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrInlineSize } from "../../types";
 
@@ -20,12 +21,12 @@ export interface ClbrFieldsetProps {
 }
 
 /**
- * SSR renderer for the Calibrate fieldset component.
+ * Builds the IR tree for the Calibrate fieldset component.
  *
  * @param props - Fieldset component props.
- * @returns HTML string for a fieldset wrapper.
+ * @returns IR node for a fieldset wrapper.
  */
-export function renderClbrFieldset({
+export function buildClbrFieldset({
   children,
   description,
   disabled,
@@ -33,7 +34,7 @@ export function renderClbrFieldset({
   invalid,
   legend,
   inlineSize = "full",
-}: ClbrFieldsetProps): string {
+}: ClbrFieldsetProps): ClbrNode {
   const normalizedDescription = description?.trim();
   const normalizedId = id.trim();
 
@@ -54,26 +55,53 @@ export function renderClbrFieldset({
   const isDisabled = Boolean(disabled);
   const isInvalid = !isDisabled && Boolean(invalid);
 
-  const fieldsetAttrs = attrs({
-    "aria-describedby": normalizedDescription
-      ? derivedDescriptionId
-      : undefined,
-    "aria-invalid": isInvalid ? "true" : undefined,
-    class: "clbr-fieldset",
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-    disabled: isDisabled,
-    id: normalizedId,
-  });
+  const fieldsetChildren: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "legend",
+      attrs: { class: "legend" },
+      children: [{ kind: "text", value: legend }],
+    },
+  ];
 
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${derivedDescriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
+  if (normalizedDescription) {
+    fieldsetChildren.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: derivedDescriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
 
-  return `<fieldset ${fieldsetAttrs}><legend class="legend">${escapeHtml(
-    legend,
-  )}</legend>${descriptionMarkup}${children ?? ""}</fieldset>`;
+  if (children) {
+    fieldsetChildren.push({ kind: "raw", html: children });
+  }
+
+  return {
+    kind: "element",
+    tag: "fieldset",
+    attrs: {
+      "aria-describedby": normalizedDescription
+        ? derivedDescriptionId
+        : undefined,
+      "aria-invalid": isInvalid ? "true" : undefined,
+      class: "clbr-fieldset",
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+      disabled: isDisabled,
+      id: normalizedId,
+    },
+    children: fieldsetChildren,
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate fieldset component.
+ *
+ * @param props - Fieldset component props.
+ * @returns HTML string for a fieldset wrapper.
+ */
+export function renderClbrFieldset(props: ClbrFieldsetProps): string {
+  return serializeClbrNode(buildClbrFieldset(props));
 }
 
 /** Declarative fieldset contract mirror for tooling, docs, and adapters. */

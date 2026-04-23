@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
@@ -44,12 +45,12 @@ export interface ClbrInputProps {
 }
 
 /**
- * SSR renderer for the Calibrate input component.
+ * Builds the IR tree for the Calibrate input component.
  *
  * @param props - Input component props.
- * @returns HTML string for a labeled input field wrapper.
+ * @returns IR node for a labeled input field wrapper.
  */
-export function renderClbrInput({
+export function buildClbrInput({
   autocomplete,
   description,
   disabled,
@@ -65,7 +66,7 @@ export function renderClbrInput({
   type = "text",
   value,
   inlineSize = "full",
-}: ClbrInputProps): string {
+}: ClbrInputProps): ClbrNode {
   const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
   const normalizedAutocomplete =
@@ -98,42 +99,71 @@ export function renderClbrInput({
   const isReadOnly = !isDisabled && Boolean(readOnly);
   const isInvalid = !isDisabled && !isReadOnly && Boolean(invalid);
 
-  const inputAttrs = attrs({
-    "aria-describedby": descriptionId,
-    "aria-invalid": isInvalid ? "true" : undefined,
-    autocomplete:
-      normalizedAutocomplete === false
-        ? "off"
-        : normalizedAutocomplete || undefined,
-    class: "input",
-    disabled: isDisabled,
-    id: normalizedId,
-    inputmode: isNumeric ? "numeric" : undefined,
-    name: normalizedName || undefined,
-    pattern: resolvedPattern,
-    readonly: isReadOnly,
-    required: Boolean(required),
-    spellcheck:
-      resolvedSpellcheck === undefined ? undefined : String(resolvedSpellcheck),
-    type: resolvedType,
-    value: normalizedValue || undefined,
-  });
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "label",
+      attrs: { class: "label", for: normalizedId },
+      children: [{ kind: "text", value: label }],
+    },
+    {
+      kind: "element",
+      tag: "input",
+      attrs: {
+        "aria-describedby": descriptionId,
+        "aria-invalid": isInvalid ? "true" : undefined,
+        autocomplete:
+          normalizedAutocomplete === false
+            ? "off"
+            : normalizedAutocomplete || undefined,
+        class: "input",
+        disabled: isDisabled,
+        id: normalizedId,
+        inputmode: isNumeric ? "numeric" : undefined,
+        name: normalizedName || undefined,
+        pattern: resolvedPattern,
+        readonly: isReadOnly,
+        required: Boolean(required),
+        spellcheck:
+          resolvedSpellcheck === undefined
+            ? undefined
+            : String(resolvedSpellcheck),
+        type: resolvedType,
+        value: normalizedValue || undefined,
+      },
+      children: [],
+    },
+  ];
 
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${descriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
+  if (normalizedDescription) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: descriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
 
-  const wrapperAttrs = attrs({
-    class: "clbr-input",
-    "data-size": size,
-    "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
-  });
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-input",
+      "data-size": size,
+      "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+    },
+    children,
+  };
+}
 
-  return `<div ${wrapperAttrs}><label class="label" for="${normalizedId}">${escapeHtml(
-    label,
-  )}</label><input ${inputAttrs}>${descriptionMarkup}</div>`;
+/**
+ * SSR renderer for the Calibrate input component.
+ *
+ * @param props - Input component props.
+ * @returns HTML string for a labeled input field wrapper.
+ */
+export function renderClbrInput(props: ClbrInputProps): string {
+  return serializeClbrNode(buildClbrInput(props));
 }
 
 /** Declarative input contract mirror for tooling, docs, and adapters. */

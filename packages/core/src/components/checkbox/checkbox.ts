@@ -1,4 +1,5 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
 
@@ -26,12 +27,12 @@ export interface ClbrCheckboxProps {
 }
 
 /**
- * SSR renderer for the Calibrate checkbox component.
+ * Builds the IR tree for the Calibrate checkbox component.
  *
  * @param props - Checkbox component props.
- * @returns HTML string for a checkbox field wrapper.
+ * @returns IR node for a checkbox field wrapper.
  */
-export function renderClbrCheckbox({
+export function buildClbrCheckbox({
   checked,
   description,
   descriptionId,
@@ -42,7 +43,7 @@ export function renderClbrCheckbox({
   required,
   size = "md",
   value,
-}: ClbrCheckboxProps): string {
+}: ClbrCheckboxProps): ClbrNode {
   const normalizedDescription = description?.trim();
   const normalizedDescriptionId = descriptionId?.trim();
 
@@ -61,32 +62,65 @@ export function renderClbrCheckbox({
   const isDisabled = Boolean(disabled);
   const isInvalid = !isDisabled && Boolean(invalid);
 
-  const inputAttrs = attrs({
-    "aria-describedby": normalizedDescription
-      ? normalizedDescriptionId
-      : undefined,
-    "aria-invalid": isInvalid ? "true" : undefined,
-    checked: Boolean(checked),
-    class: "checkbox",
-    disabled: isDisabled,
-    name: name || undefined,
-    required: Boolean(required),
-    type: "checkbox",
-    value: value || undefined,
-  });
-  const descriptionMarkup = normalizedDescription
-    ? `<p class="description" id="${normalizedDescriptionId}">${escapeHtml(
-        normalizedDescription,
-      )}</p>`
-    : "";
-  const fieldAttrs = attrs({
-    class: "clbr-checkbox",
-    "data-size": size,
-  });
+  const children: ClbrNode[] = [
+    {
+      kind: "element",
+      tag: "label",
+      attrs: { class: "label" },
+      children: [
+        {
+          kind: "element",
+          tag: "input",
+          attrs: {
+            "aria-describedby": normalizedDescription
+              ? normalizedDescriptionId
+              : undefined,
+            "aria-invalid": isInvalid ? "true" : undefined,
+            checked: Boolean(checked),
+            class: "checkbox",
+            disabled: isDisabled,
+            name: name || undefined,
+            required: Boolean(required),
+            type: "checkbox",
+            value: value || undefined,
+          },
+          children: [],
+        },
+        {
+          kind: "element",
+          tag: "span",
+          attrs: {},
+          children: [{ kind: "text", value: label }],
+        },
+      ],
+    },
+  ];
 
-  return `<div ${fieldAttrs}><label class="label"><input ${inputAttrs}><span>${escapeHtml(
-    label,
-  )}</span></label>${descriptionMarkup}</div>`;
+  if (normalizedDescription) {
+    children.push({
+      kind: "element",
+      tag: "p",
+      attrs: { class: "description", id: normalizedDescriptionId },
+      children: [{ kind: "text", value: normalizedDescription }],
+    });
+  }
+
+  return {
+    kind: "element",
+    tag: "div",
+    attrs: { class: "clbr-checkbox", "data-size": size },
+    children,
+  };
+}
+
+/**
+ * SSR renderer for the Calibrate checkbox component.
+ *
+ * @param props - Checkbox component props.
+ * @returns HTML string for a checkbox field wrapper.
+ */
+export function renderClbrCheckbox(props: ClbrCheckboxProps): string {
+  return serializeClbrNode(buildClbrCheckbox(props));
 }
 
 /** Declarative checkbox contract mirror for tooling, docs, and adapters. */

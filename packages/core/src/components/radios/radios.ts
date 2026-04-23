@@ -1,7 +1,8 @@
-import { attrs, escapeHtml, isValidHtmlId } from "../../helpers/html";
+import { isValidHtmlId } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrControlSize } from "../../types";
-import { renderClbrFieldset } from "../fieldset/fieldset";
+import { buildClbrFieldset } from "../fieldset/fieldset";
 
 export type ClbrRadiosOrientation = "vertical" | "horizontal";
 
@@ -45,12 +46,12 @@ export interface ClbrRadiosProps {
 }
 
 /**
- * SSR renderer for the Calibrate radios component.
+ * Builds the IR tree for the Calibrate radios component.
  *
  * @param props - Radios component props.
- * @returns HTML string for a radios fieldset.
+ * @returns IR node for a radios fieldset.
  */
-export function renderClbrRadios({
+export function buildClbrRadios({
   description,
   disabled,
   id,
@@ -62,7 +63,7 @@ export function renderClbrRadios({
   required,
   size = "md",
   value,
-}: ClbrRadiosProps): string {
+}: ClbrRadiosProps): ClbrNode {
   const normalizedId = id.trim();
   const normalizedName = name.trim();
   const normalizedValue = value?.trim();
@@ -114,50 +115,90 @@ export function renderClbrRadios({
 
   const isGroupDisabled = Boolean(disabled);
 
-  const optionsMarkup = normalizedRadios
-    .map((item) => {
-      const isItemDisabled = Boolean(item.disabled);
-      const itemDescriptionId = item.description
-        ? `${normalizedId}-${item.value}-description`
-        : undefined;
+  const optionNodes: ClbrNode[] = normalizedRadios.map((item) => {
+    const isItemDisabled = Boolean(item.disabled);
+    const itemDescriptionId = item.description
+      ? `${normalizedId}-${item.value}-description`
+      : undefined;
 
-      const inputAttrs = attrs({
-        "aria-describedby": itemDescriptionId,
-        checked: normalizedValue === item.value,
-        class: "radio",
-        disabled: isItemDisabled,
-        name: normalizedName,
-        required: Boolean(required) && !isGroupDisabled && !isItemDisabled,
-        type: "radio",
-        value: item.value,
+    const fieldChildren: ClbrNode[] = [
+      {
+        kind: "element",
+        tag: "label",
+        attrs: { class: "label" },
+        children: [
+          {
+            kind: "element",
+            tag: "input",
+            attrs: {
+              "aria-describedby": itemDescriptionId,
+              checked: normalizedValue === item.value,
+              class: "radio",
+              disabled: isItemDisabled,
+              name: normalizedName,
+              required:
+                Boolean(required) && !isGroupDisabled && !isItemDisabled,
+              type: "radio",
+              value: item.value,
+            },
+            children: [],
+          },
+          {
+            kind: "element",
+            tag: "span",
+            attrs: {},
+            children: [{ kind: "text", value: item.label }],
+          },
+        ],
+      },
+    ];
+
+    if (item.description) {
+      fieldChildren.push({
+        kind: "element",
+        tag: "p",
+        attrs: { class: "radio-description", id: itemDescriptionId },
+        children: [{ kind: "text", value: item.description }],
       });
+    }
 
-      const descriptionMarkup = item.description
-        ? `<p class="radio-description" id="${itemDescriptionId}">${escapeHtml(
-            item.description,
-          )}</p>`
-        : "";
-
-      return `<div class="radio-field"><label class="label"><input ${inputAttrs}><span>${escapeHtml(
-        item.label,
-      )}</span></label>${descriptionMarkup}</div>`;
-    })
-    .join("");
-
-  const radiosAttrs = attrs({
-    class: "clbr-radios",
-    "data-orientation": orientation,
-    "data-size": size,
+    return {
+      kind: "element",
+      tag: "div",
+      attrs: { class: "radio-field" },
+      children: fieldChildren,
+    };
   });
 
-  return renderClbrFieldset({
-    children: `<div ${radiosAttrs}>${optionsMarkup}</div>`,
+  const radiosNode: ClbrNode = {
+    kind: "element",
+    tag: "div",
+    attrs: {
+      class: "clbr-radios",
+      "data-orientation": orientation,
+      "data-size": size,
+    },
+    children: optionNodes,
+  };
+
+  return buildClbrFieldset({
+    children: serializeClbrNode(radiosNode),
     description,
     disabled: isGroupDisabled,
     id: normalizedId,
     invalid,
     legend,
   });
+}
+
+/**
+ * SSR renderer for the Calibrate radios component.
+ *
+ * @param props - Radios component props.
+ * @returns HTML string for a radios fieldset.
+ */
+export function renderClbrRadios(props: ClbrRadiosProps): string {
+  return serializeClbrNode(buildClbrRadios(props));
 }
 
 /** Declarative radios contract mirror for tooling, docs, and adapters. */

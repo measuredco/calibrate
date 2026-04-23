@@ -114,6 +114,7 @@ export {
 } from "./components/card/card";
 
 export {
+  buildClbrCheckbox,
   CLBR_CHECKBOX_SPEC,
   type ClbrCheckboxProps,
   renderClbrCheckbox,
@@ -151,6 +152,7 @@ export {
 } from "./components/expander/expander";
 
 export {
+  buildClbrFieldset,
   CLBR_FIELDSET_SPEC,
   type ClbrFieldsetProps,
   renderClbrFieldset,
@@ -215,6 +217,7 @@ export {
 } from "./components/inline/inline";
 
 export {
+  buildClbrInput,
   CLBR_INPUT_SPEC,
   type ClbrInputProps,
   type ClbrInputType,
@@ -301,6 +304,7 @@ export {
 } from "./components/prose/prose";
 
 export {
+  buildClbrRadios,
   CLBR_RADIOS_SPEC,
   type ClbrRadioItem,
   type ClbrRadiosOrientation,
@@ -309,6 +313,7 @@ export {
 } from "./components/radios/radios";
 
 export {
+  buildClbrRange,
   CLBR_RANGE_SPEC,
   CLBR_RANGE_TAG_NAME,
   defineClbrRange,
@@ -373,12 +378,14 @@ export {
 } from "./components/surface/surface";
 
 export {
+  buildClbrSwitch,
   CLBR_SWITCH_SPEC,
   type ClbrSwitchProps,
   renderClbrSwitch,
 } from "./components/switch/switch";
 
 export {
+  buildClbrTextarea,
   CLBR_TEXTAREA_SPEC,
   type ClbrTextareaProps,
   type ClbrTextareaResize,
