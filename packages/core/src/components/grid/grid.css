@@ -650,5 +650,13 @@
         }
       }
     }
+
+    :where(.example-content-grid) {
+      background: #9e9e9e50;
+      min-block-size: 6rem;
+      min-inline-size: 15rem;
+      outline: 0.0625rem solid #9e9e9e;
+      outline-offset: -0.0625rem;
+    }
   }
 }

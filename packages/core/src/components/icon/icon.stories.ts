@@ -34,7 +34,7 @@ export const Default = {
   args: {
     ariaHidden: false,
     mirrored: undefined,
-    name: "layers",
+    name: "settings",
     size: "md",
     title: "Title",
     titleId: "title-id",

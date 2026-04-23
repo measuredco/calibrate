@@ -13,6 +13,10 @@ const baseArgTypes = specToArgTypes(CLBR_SIDEBAR_SPEC);
 
 const meta = {
   argTypes: baseArgTypes,
+  decorators: [
+    (Story: () => string) =>
+      `<div style="min-block-size: 12rem">${Story()}</div>`,
+  ],
   parameters: {
     docs: {
       description: {
@@ -41,10 +45,10 @@ export const Default = {
     children: `<div class="example-content"></div>`,
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem">${renderClbrSidebar({
+    renderClbrSidebar({
       ...args,
       id: args.id?.trim() || "storybook-fallback-sidebar-id",
-    })}</div>`,
+    }),
 };
 
 export const Footer = {
@@ -65,8 +69,8 @@ export const Footer = {
     }),
   } satisfies ClbrSidebarProps,
   render: (args: ClbrSidebarProps) =>
-    `<div style="min-block-size: 21rem">${renderClbrSidebar({
+    renderClbrSidebar({
       ...args,
       id: args.id?.trim() || "storybook-fallback-sidebar-id",
-    })}</div>`,
+    }),
 };

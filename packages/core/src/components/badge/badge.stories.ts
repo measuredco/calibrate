@@ -45,7 +45,7 @@ export const Floating = {
         floating: true,
         label: "1",
         tone: "info",
-      })}</button><a href="/">${renderClbrAvatar({
+      })}</button><a href="#">${renderClbrAvatar({
         entity: "person",
         name: "link",
         size: "lg",
@@ -63,7 +63,7 @@ export const Floating = {
         label: "1",
         size: "sm",
         tone: "info",
-      })}</button><a href="/">${renderClbrAvatar({
+      })}</button><a href="#">${renderClbrAvatar({
         entity: "person",
         name: "link",
         size: "md",

@@ -24,7 +24,7 @@ export default meta;
 
 export const Default = {
   args: {
-    href: "/",
+    href: "#",
     icon: undefined,
     label: "Link",
     rel: "",
@@ -46,14 +46,14 @@ export const Icon = {
           gap: "sm",
           children: [
             renderClbrLink({
-              href: "/",
+              href: "#",
               icon: renderClbrIcon({ ariaHidden: true, name: "link" }),
               label: "Link",
               size: "md",
               tone: "neutral",
             }),
             renderClbrLink({
-              href: "/",
+              href: "#",
               icon: renderClbrIcon({ ariaHidden: true, name: "link" }),
               label: "Link",
               size: "sm",
@@ -65,14 +65,14 @@ export const Icon = {
           gap: "sm",
           children: [
             renderClbrLink({
-              href: "/",
+              href: "#",
               icon: simpleIcons,
               label: "Simple Icons",
               size: "md",
               tone: "neutral",
             }),
             renderClbrLink({
-              href: "/",
+              href: "#",
               icon: simpleIcons,
               label: "Simple Icons",
               size: "sm",

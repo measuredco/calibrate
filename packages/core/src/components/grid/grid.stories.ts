@@ -42,7 +42,7 @@ export const Default = {
       children: [
         renderClbrGridItem({
           ...args,
-          children: `<div class="example-content" style="min-inline-size: 3.8125rem; min-block-size: 3rem">grid-item</div>`,
+          children: `<div class="example-content-item"></div>`,
         }),
         Array.from({ length: 11 })
           .map(() =>
@@ -50,7 +50,7 @@ export const Default = {
               colSpan: 4,
               colSpanNarrow: 6,
               colSpanWide: 3,
-              children: `<div class="example-content"></div>`,
+              children: `<div class="example-content-grid"></div>`,
             }),
           )
           .join(""),

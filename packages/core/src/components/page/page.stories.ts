@@ -58,7 +58,7 @@ export const Default = {
           gap: "sm",
           justify: "between",
           children: [
-            `<a href="/">${renderClbrLogo({
+            `<a href="#">${renderClbrLogo({
               label: "Measured",
               variant: "secondary",
             })}</a>`,
@@ -67,9 +67,9 @@ export const Default = {
               contentId: "default-content-id",
               expanderPosition: "end",
               items: [
-                { current: true, href: "/", label: "About" },
-                { href: "/", label: "Work" },
-                { href: "/", label: "Blog" },
+                { current: true, href: "#", label: "About" },
+                { href: "#", label: "Work" },
+                { href: "#", label: "Blog" },
               ],
             }),
           ].join(""),
@@ -102,19 +102,19 @@ export const Default = {
                 gap: "none",
                 children: [
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.gitHub,
                     label: "GitHub",
                     tone: "neutral",
                   })}</li>`,
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.linkedIn,
                     label: "LinkedIn",
                     tone: "neutral",
                   })}</li>`,
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.rss,
                     label: "RSS feed",
                     tone: "neutral",
@@ -131,19 +131,19 @@ export const Default = {
                     gap: "none",
                     children: [
                       `<li>${renderClbrLink({
-                        href: "/",
+                        href: "#",
                         label: "Privacy policy",
                         tone: "neutral",
                       })}</li>`,
                       `<li>${renderClbrLink({
-                        href: "/",
+                        href: "#",
                         label: "Terms and conditions",
                         tone: "neutral",
                       })}</li>`,
                     ].join(""),
                   }),
                   `<a
-                    href="/"
+                    href="#"
                     style="margin-block-end: var(--clbr-spacing-vertical-400)"
                   >${renderClbrLogo({
                     label: "Measured",
@@ -206,7 +206,7 @@ export const Alt = {
                     children: `Footer`,
                   }),
                 }),
-                `<a href="">${renderClbrHeading({
+                `<a href="#">${renderClbrHeading({
                   children: "Facet.",
                   size: "lg",
                 })}</a>`,
@@ -274,7 +274,7 @@ export const Alt = {
           justify: "between",
           children: [
             `<a
-              href="/"
+              href="#"
               style="margin-block-end: var(--clbr-spacing-vertical-400)"
             >${renderClbrLogo({
               label: "Measured",
@@ -288,20 +288,20 @@ export const Alt = {
               gap: "sm",
               children: [
                 `<li>${renderClbrLink({
-                  href: "/",
+                  href: "#",
                   icon: simpleIcons.gitHub,
                   label: "View source",
                   size: "sm",
                   tone: "neutral",
                 })}</li>`,
                 `<li>${renderClbrLink({
-                  href: "/",
+                  href: "#",
                   label: "About",
                   size: "sm",
                   tone: "neutral",
                 })}</li>`,
                 `<li>${renderClbrLink({
-                  href: "/",
+                  href: "#",
                   label: "Measured",
                   size: "sm",
                   tone: "neutral",
@@ -321,7 +321,7 @@ export const Banner = {
     centerMain: false,
     stickyHeader: "always",
     banner: renderClbrBanner({
-      actionHref: "/",
+      actionHref: "#",
       actionLabel: "Action link",
       message:
         "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.",
@@ -337,7 +337,7 @@ export const Banner = {
           gap: "sm",
           justify: "between",
           children: [
-            `<a href="/">${renderClbrLogo({
+            `<a href="#">${renderClbrLogo({
               label: "Measured",
               variant: "secondary",
             })}</a>`,
@@ -346,9 +346,9 @@ export const Banner = {
               contentId: "banner-content-id",
               expanderPosition: "end",
               items: [
-                { current: true, href: "/", label: "About" },
-                { href: "/", label: "Work" },
-                { href: "/", label: "Blog" },
+                { current: true, href: "#", label: "About" },
+                { href: "#", label: "Work" },
+                { href: "#", label: "Blog" },
               ],
             }),
           ].join(""),
@@ -381,19 +381,19 @@ export const Banner = {
                 gap: "none",
                 children: [
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.gitHub,
                     label: "GitHub",
                     tone: "neutral",
                   })}</li>`,
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.linkedIn,
                     label: "LinkedIn",
                     tone: "neutral",
                   })}</li>`,
                   `<li>${renderClbrLink({
-                    href: "/",
+                    href: "#",
                     icon: simpleIcons.rss,
                     label: "RSS feed",
                     tone: "neutral",
@@ -410,19 +410,19 @@ export const Banner = {
                     gap: "none",
                     children: [
                       `<li>${renderClbrLink({
-                        href: "/",
+                        href: "#",
                         label: "Privacy policy",
                         tone: "neutral",
                       })}</li>`,
                       `<li>${renderClbrLink({
-                        href: "/",
+                        href: "#",
                         label: "Terms and conditions",
                         tone: "neutral",
                       })}</li>`,
                     ].join(""),
                   }),
                   `<a
-                    href="/"
+                    href="#"
                     style="margin-block-end: var(--clbr-spacing-vertical-400)"
                   >${renderClbrLogo({
                     label: "Measured",

@@ -35,7 +35,7 @@ export const Default = {
     const itemTag = args.as === "ul" ? "li" : "div";
     return renderClbrInline({
       ...args,
-      children: `<${itemTag} class="example-content"></${itemTag}><${itemTag} class="example-content" style="min-block-size: 3rem"></${itemTag}><${itemTag} class="example-content"></${itemTag}>`,
+      children: `<${itemTag} class="example-content-item"></${itemTag}><${itemTag} class="example-content"></${itemTag}><${itemTag} class="example-content"></${itemTag}>`,
     });
   },
 };

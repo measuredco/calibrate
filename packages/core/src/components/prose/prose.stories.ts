@@ -27,7 +27,7 @@ export const Default = {
     children: `<h1 id="an-h1-heading">An <code>h1</code> heading</h1>
 <p>This is a paragraph, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
 <p><em>Emphasis</em>, <code>code</code>, <del>deleted</del>,  and <strong>bold</strong>.</p>
-<p>Here’s a link to <a href="https://measured.co">a website</a>, to a <a href="/">local
+<p>Here’s a link to <a href="https://measured.co">a website</a>, to a <a href="#">local
 doc</a>, and to a <a href="#an-h2-heading">section heading in the current
 doc</a>. Here’s a footnote <sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup> and another one <sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup>. And an autolink literal <a href="https://measured.co">measured.co</a>.</p>
 <p>Colour chips are supported <code>hotpink<span class="gfm-color-chip" style="background-color: #ff69b4;"></span></code> <code>#ff69b4<span class="gfm-color-chip" style="background-color: #ff69b4;"></span></code></p>

@@ -27,7 +27,7 @@ export default meta;
 
 export const Default = {
   args: {
-    actionHref: "/",
+    actionHref: "#",
     actionLabel: "Action link",
     dismissible: true,
     dismissibleLabel: "Dismiss banner",

@@ -50,9 +50,13 @@ export const Default = {
     triggerLabel: "Label",
     triggerLabelVisibility: "visible",
   } satisfies ClbrMenuProps,
+  decorators: [
+    (Story: () => string) =>
+      `<div style="min-block-size: 12rem">${Story()}</div>`,
+  ],
   render: (args: ClbrMenuProps) =>
-    `<div style="min-block-size: 12rem">${renderClbrMenu({
+    renderClbrMenu({
       ...args,
       id: args.id || "storybook-fallback-id",
-    })}</div>`,
+    }),
 };

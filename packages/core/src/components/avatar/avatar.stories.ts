@@ -92,7 +92,7 @@ export const Interactive = {
       children: `<button>${renderClbrAvatar({
         name: "Button",
         size: "md",
-      })}</button><a href="/">${renderClbrAvatar({
+      })}</button><a href="#">${renderClbrAvatar({
         name: "Link",
         size: "md",
       })}</a>`,

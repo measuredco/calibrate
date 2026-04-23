@@ -42,11 +42,15 @@ export const Default = {
     label: "",
     size: "md",
   } satisfies ClbrNavProps,
+  decorators: [
+    (Story: () => string) =>
+      `<div style="min-block-size: 12rem">${Story()}</div>`,
+  ],
   render: (args: ClbrNavProps) =>
-    `<div style="min-block-size: 21rem">${renderClbrNav({
+    renderClbrNav({
       ...args,
       contentId: args.collapsible
         ? args.contentId?.trim() || "storybook-fallback-content-id"
         : args.contentId,
-    })}</div>`,
+    }),
 };

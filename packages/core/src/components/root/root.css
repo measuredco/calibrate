@@ -163,19 +163,17 @@
       white-space: nowrap;
     }
 
-    :where(.example-content) {
+    :where(.example-content, .example-content-item) {
       background: #ff69b450;
-      color: var(--clbr-color-foreground-prose);
-      font-family: var(--clbr-typography-font-family-mono);
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
       min-block-size: 6rem;
       min-inline-size: 15rem;
       outline: 0.0625rem solid #ff69b4;
       outline-offset: -0.0625rem;
-      padding-inline: 0.5rem;
-      place-content: center;
-      text-align: center;
+    }
+
+    :where(.example-content-item) {
+      min-block-size: 3rem;
+      min-inline-size: 3.8125rem;
     }
   }
 }
