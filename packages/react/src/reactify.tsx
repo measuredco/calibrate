@@ -8,6 +8,28 @@ import {
 } from "react";
 
 /**
+ * HTML-canonical attribute names that React exposes under camelCase prop
+ * names. `aria-*` and `data-*` stay kebab-case in React and are handled
+ * generically, so they're not listed here.
+ *
+ * Small, stable, hand-maintained. React's rename set is narrow
+ * (reserved-word renames + a handful of camelCased exceptions), and
+ * React 19 passes unknown kebab-case attrs through without warning,
+ * so additions are rare. The SSR-parity suite catches functional drift
+ * for any wrapped component; for attrs that need renaming but pass
+ * undetected, React's dev-time warnings surface the miss.
+ */
+const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
+  autocomplete: "autoComplete",
+  class: "className",
+  for: "htmlFor",
+  readonly: "readOnly",
+  spellcheck: "spellCheck",
+  srcset: "srcSet",
+  tabindex: "tabIndex",
+};
+
+/**
  * Native attrs a Calibrate React wrapper forwards to the root element.
  *
  * Restricted to the React `DOMAttributes` surface (event handlers, minus
@@ -27,21 +49,6 @@ export type NativeAttrsFor<E extends Element> = Omit<
 > & {
   ref?: Ref<E>;
   autoFocus?: boolean;
-};
-
-/**
- * HTML-canonical attribute names that React exposes under camelCase prop
- * names. `aria-*` and `data-*` stay kebab-case in React and are handled
- * generically, so they're not listed here.
- */
-const ATTR_NAME_MAP: Record<string, string> = {
-  autocomplete: "autoComplete",
-  class: "className",
-  for: "htmlFor",
-  readonly: "readOnly",
-  spellcheck: "spellCheck",
-  srcset: "srcSet",
-  tabindex: "tabIndex",
 };
 
 /**
