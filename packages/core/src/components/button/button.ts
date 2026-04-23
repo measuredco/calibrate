@@ -1,4 +1,4 @@
-import { attrs, escapeHtml } from "../../helpers/html";
+import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
 import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
@@ -120,18 +120,12 @@ function normalizeDownload(
 }
 
 /**
- * SSR renderer for the Calibrate button component.
+ * Builds the `ClbrNode` IR for the Calibrate button component.
  *
- * @param props - Button component props.
- * @returns HTML string for either `<button>` or `<a>` mode.
- * @remarks
- * - `mode="button"` (or omitted) -> render `<button>`
- * - button mode ignores link-only `download`, `rel`, and `target`
- * - `mode="link"` -> render `<a>`
- * - link mode ignores button-only `disabled`, and `type`
- * - link mode ignores `rel` and `target` when `download` is set
+ * This is the shape consumed by framework adapters. The SSR renderer
+ * `renderClbrButton` is implemented as `serialize(buildClbrButton(props))`.
  */
-export function renderClbrButton(props: ClbrButtonProps): string {
+export function buildClbrButton(props: ClbrButtonProps): ClbrNode {
   const {
     appearance = "outline",
     id,
@@ -151,23 +145,39 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     throw new Error("labelVisibility requires icon when label is not visible.");
   }
 
-  let iconMarkup = "";
+  const iconNode: ClbrNode | null =
+    hasIcon && normalizedIconName
+      ? {
+          kind: "element",
+          tag: "span",
+          attrs: { class: "icon-wrapper" },
+          children: [
+            {
+              kind: "raw",
+              html: renderClbrIcon({
+                ariaHidden: true,
+                mirrored: iconMirrored,
+                name: normalizedIconName,
+                size: "fill",
+              }),
+            },
+          ],
+        }
+      : null;
 
-  if (hasIcon && normalizedIconName) {
-    iconMarkup = `<span class="icon-wrapper">${renderClbrIcon({
-      ariaHidden: true,
-      mirrored: iconMirrored,
-      name: normalizedIconName,
-      size: "fill",
-    })}</span>`;
-  }
+  const labelNode: ClbrNode = {
+    kind: "element",
+    tag: "span",
+    attrs: { class: "label" },
+    children: [{ kind: "text", value: label }],
+  };
 
-  const labelMarkup = `<span class="label">${escapeHtml(label)}</span>`;
-  const content = hasIcon
+  const children: ClbrNode[] = iconNode
     ? iconPlacement === "end"
-      ? `${labelMarkup}${iconMarkup}`
-      : `${iconMarkup}${labelMarkup}`
-    : labelMarkup;
+      ? [labelNode, iconNode]
+      : [iconNode, labelNode]
+    : [labelNode];
+
   const commonAttrs = {
     class: "clbr-button",
     "data-appearance": appearance,
@@ -184,34 +194,56 @@ export function renderClbrButton(props: ClbrButtonProps): string {
     const normalizedDownload = normalizeDownload(download);
     const normalizedRel = rel || undefined;
     const normalizedTarget = target || undefined;
-    const linkAttrs = attrs({
-      ...commonAttrs,
-      "data-mode": "link",
-      href,
-      download: normalizedDownload,
-      rel: normalizedDownload ? undefined : normalizedRel,
-      target: normalizedDownload ? undefined : normalizedTarget,
-    });
-
-    return `<a ${linkAttrs}>${content}</a>`;
+    return {
+      kind: "element",
+      tag: "a",
+      attrs: {
+        ...commonAttrs,
+        "data-mode": "link",
+        href,
+        download: normalizedDownload,
+        rel: normalizedDownload ? undefined : normalizedRel,
+        target: normalizedDownload ? undefined : normalizedTarget,
+      },
+      children,
+    };
   }
 
   const { controls, disabled, disclosure, form, haspopup, name, type, value } =
     props;
-  const buttonAttrs = attrs({
-    "aria-controls": disclosure ? controls || undefined : undefined,
-    "aria-expanded": disclosure ? "false" : undefined,
-    "aria-haspopup": haspopup || undefined,
-    ...commonAttrs,
-    "data-mode": "button",
-    disabled: Boolean(disabled),
-    form: form || undefined,
-    name: name || undefined,
-    type: type || "button",
-    value: value || undefined,
-  });
+  return {
+    kind: "element",
+    tag: "button",
+    attrs: {
+      "aria-controls": disclosure ? controls || undefined : undefined,
+      "aria-expanded": disclosure ? "false" : undefined,
+      "aria-haspopup": haspopup || undefined,
+      ...commonAttrs,
+      "data-mode": "button",
+      disabled: Boolean(disabled),
+      form: form || undefined,
+      name: name || undefined,
+      type: type || "button",
+      value: value || undefined,
+    },
+    children,
+  };
+}
 
-  return `<button ${buttonAttrs}>${content}</button>`;
+/**
+ * SSR renderer for the Calibrate button component.
+ *
+ * @param props - Button component props.
+ * @returns HTML string for either `<button>` or `<a>` mode.
+ * @remarks
+ * - `mode="button"` (or omitted) -> render `<button>`
+ * - button mode ignores link-only `download`, `rel`, and `target`
+ * - `mode="link"` -> render `<a>`
+ * - link mode ignores button-only `disabled`, and `type`
+ * - link mode ignores `rel` and `target` when `download` is set
+ */
+export function renderClbrButton(props: ClbrButtonProps): string {
+  return serializeClbrNode(buildClbrButton(props));
 }
 
 /** Declarative button contract mirror for tooling, docs, and adapters. */

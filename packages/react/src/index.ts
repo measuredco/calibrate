@@ -1,1 +1,3 @@
-export { defineClbrComponents as defineAllClbr } from "@measured/calibrate-core";
+export { defineClbrComponents as defineClbrAll } from "@measured/calibrate-core";
+
+export { Button, type ButtonProps } from "./components/button/button";

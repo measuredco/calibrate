@@ -30,6 +30,8 @@ export type {
   ClbrStatusTone,
 } from "./types";
 
+export { type ClbrNode, serializeClbrNode } from "./helpers/node";
+
 export {
   CLBR_ALERT_EVENT_BEFORE_DISMISS,
   CLBR_ALERT_EVENT_DISMISS,
@@ -84,6 +86,7 @@ export {
 } from "./components/box/box";
 
 export {
+  buildClbrButton,
   CLBR_BUTTON_SPEC,
   type ClbrButtonAppearance,
   type ClbrButtonCommonProps,
