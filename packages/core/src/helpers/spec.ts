@@ -23,6 +23,151 @@ export interface ClbrComponentSpec {
   readonly events?: Readonly<Record<string, ClbrSpecEvent>>;
 }
 
+// -----------------------------------------------------------------------------
+// Structured spec schema (target contract).
+//
+// The shape below is the destination for the framework-adapter work tracked in
+// `docs/PLANNING.md`. Components migrate from `ClbrComponentSpec` to
+// `ClbrStructuredSpec` incrementally; once every component is migrated, the
+// legacy shape above is removed and `ClbrStructuredSpec` assumes the canonical
+// `ClbrComponentSpec` name.
+//
+// Invariants:
+// - Every structured spec declares `output`, `content`, `events` (possibly
+//   empty), and `rules.attributes` (possibly empty).
+// - Prop-level prose (`description`, `requiredWhen`, `ignoredWhen`) is the
+//   canonical source for human-readable docs; structured `rules` target
+//   machines. The two coexist.
+// - Attribute rules describe what the renderer and custom element emit; they
+//   never redefine behavior. The renderer/CE remain the frozen oracle.
+// -----------------------------------------------------------------------------
+
+/** Where a structured rule applies. */
+export type ClbrSpecTarget =
+  | { readonly on: "host" }
+  | { readonly on: "descendant"; readonly selector: string };
+
+/** Condition under which a structured rule fires. */
+export type ClbrSpecCondition =
+  | { readonly kind: "always" }
+  | { readonly kind: "when-provided"; readonly prop: string }
+  | { readonly kind: "when-non-empty"; readonly prop: string }
+  | { readonly kind: "when-truthy"; readonly prop: string }
+  | {
+      readonly kind: "when-equals";
+      readonly prop: string;
+      readonly to: string | number | boolean;
+    }
+  | {
+      readonly kind: "when-in";
+      readonly prop: string;
+      readonly values: ReadonlyArray<string | number | boolean>;
+    }
+  | {
+      readonly kind: "when-not-in";
+      readonly prop: string;
+      readonly values: ReadonlyArray<string | number | boolean>;
+    };
+
+/** Value expression for an emitted attribute. Omit to mean presence-only. */
+export type ClbrSpecValue =
+  | { readonly kind: "literal"; readonly text: string }
+  | { readonly kind: "prop"; readonly prop: string }
+  | { readonly kind: "template"; readonly pattern: string };
+
+/** Single attribute-emission rule on the host or a structural descendant. */
+export interface ClbrSpecAttributeRule {
+  readonly target: ClbrSpecTarget;
+  readonly attribute: string;
+  readonly condition: ClbrSpecCondition;
+  readonly value?: ClbrSpecValue;
+}
+
+/**
+ * Machine-readable type of a structured prop. Narrows what today's free-form
+ * `type: string` + `constraints: string[]` carry, so adapters and validators
+ * can reason about prop shape without prose parsing.
+ */
+export type ClbrSpecPropType =
+  | { readonly kind: "string" }
+  | { readonly kind: "text" }
+  | { readonly kind: "html" }
+  | { readonly kind: "boolean" }
+  | {
+      readonly kind: "number";
+      readonly min?: number;
+      readonly max?: number;
+      readonly integer?: boolean;
+    }
+  | {
+      readonly kind: "enum";
+      readonly values: ReadonlyArray<string | number>;
+    }
+  | {
+      readonly kind: "array";
+      readonly itemShape: Readonly<Record<string, ClbrStructuredSpecProp>>;
+    }
+  | { readonly kind: "iconName" };
+
+export interface ClbrStructuredSpecProp {
+  readonly description: string;
+  readonly type: ClbrSpecPropType;
+  readonly required?: boolean;
+  readonly requiredWhen?: string;
+  readonly ignoredWhen?: string;
+  readonly default?: unknown;
+}
+
+export interface ClbrStructuredSpecEvent {
+  readonly description: string;
+  readonly bubbles?: boolean;
+  readonly cancelable?: boolean;
+  readonly detail?: string;
+}
+
+/** Host element identity. `class` is the always-emit host class, if any. */
+export interface ClbrSpecOutput {
+  readonly element: string;
+  readonly class?: string;
+}
+
+/**
+ * How the component accepts content.
+ *
+ * - `none`: component emits no user-supplied content.
+ * - `text`: single slot of escaped plain text, named by `prop`.
+ * - `html`: single slot of trusted HTML string, named by `prop`.
+ * - `structured`: typed record array, named by `prop`; item shape lives on
+ *   that prop's `ClbrSpecPropType` (`kind: "array"`).
+ * - `slots`: multiple named content props (e.g. sidebar header/children/footer,
+ *   card title/description/note). Each slot names its prop and kind.
+ */
+export type ClbrSpecContent =
+  | { readonly kind: "none" }
+  | { readonly kind: "text"; readonly prop: string }
+  | { readonly kind: "html"; readonly prop: string }
+  | { readonly kind: "structured"; readonly prop: string }
+  | {
+      readonly kind: "slots";
+      readonly slots: ReadonlyArray<{
+        readonly prop: string;
+        readonly kind: "text" | "html";
+      }>;
+    };
+
+/** The target structured contract for every component. */
+export interface ClbrStructuredSpec {
+  readonly name: string;
+  readonly description: string;
+  readonly output: ClbrSpecOutput;
+  readonly content: ClbrSpecContent;
+  readonly props: Readonly<Record<string, ClbrStructuredSpecProp>>;
+  readonly events: Readonly<Record<string, ClbrStructuredSpecEvent>>;
+  readonly rules: {
+    readonly attributes: ReadonlyArray<ClbrSpecAttributeRule>;
+  };
+}
+
 type StoryArgType = Record<string, unknown>;
 
 const numericConstraint = (

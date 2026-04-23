@@ -24,6 +24,7 @@ Contract tightening in `CLBR_*_SPEC` (the load-bearing investment):
 - Make `events` a required (possibly empty) field; align dispatched events across menu/sidebar alongside alert.
 - Declare `content: { kind: "html" | "structured" | "none", prop? }` so adapters know whether to pass React/Vue/Svelte children through or treat them as data.
 - Preserve prop-level prose fields (`description`, `requiredWhen`, `ignoredWhen`) as the canonical human-readable source for docs and Storybook args tables via `specToPropsTable` / `specToArgTypes`. Structured `rules` target machines; prop-level prose targets humans; the two coexist.
+- Drop `rules.composition` during the per-component migration. It's documentation-only today (not consumed by tooling, tests, or adapters) and duplicates inner-DOM structure the renderer tests already freeze. Consumer-observable composition is covered by `content` (slots), `events` (dispatch contract), and `rules.attributes`. Any runtime behavioral guarantees previously captured as composition prose fold into the top-level `description` or per-event `description`.
 
 `describeSpecConsistency` becomes the contract enforcer: interprets structured rules and asserts the hand-written renderer emits the declared attributes/events under the declared conditions. Catches drift automatically.
 
