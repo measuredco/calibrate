@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrHeadingLevel } from "../../types";
 import { buildClbrIcon } from "../icon/icon";
 import type { ClbrSurfaceVariant } from "../surface/surface";

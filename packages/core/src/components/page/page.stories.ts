@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { defineClbrBanner, renderClbrBanner } from "../banner/banner";
 import { renderClbrBox } from "../box/box";
 import { renderClbrButton } from "../button/button";

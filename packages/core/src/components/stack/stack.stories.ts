@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { CLBR_STACK_SPEC, type ClbrStackProps, renderClbrStack } from "./stack";
 
 const baseArgTypes = specToArgTypes(CLBR_STACK_SPEC);

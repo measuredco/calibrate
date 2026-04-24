@@ -44,7 +44,7 @@ export type {
   ClbrSpecPropType,
   ClbrSpecTarget,
   ClbrSpecValue,
-} from "./helpers/spec";
+} from "./spec";
 
 export {
   buildClbrAlert,
@@ -54,6 +54,7 @@ export {
   CLBR_ALERT_TAG_NAME,
   defineClbrAlert,
   type ClbrAlertProps,
+  type ClbrAlertSize,
   renderClbrAlert,
 } from "./components/alert/alert";
 

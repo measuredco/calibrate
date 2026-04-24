@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrStack } from "../stack/stack";
 import {
   CLBR_ALERT_SPEC,
@@ -32,6 +32,7 @@ export const Default = {
     inlineSize: "fit",
     message: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do.",
     title: "",
+    size: "md",
     tone: undefined,
   } satisfies ClbrAlertProps,
   render: (args: ClbrAlertProps) => renderClbrAlert(args),

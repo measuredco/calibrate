@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
 export type ClbrImageGravity =

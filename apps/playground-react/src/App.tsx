@@ -1,17 +1,29 @@
 import {
+  Alert,
   Banner,
   Box,
   Button,
+  Checkbox,
   Container,
+  Divider,
+  Grid,
+  GridItem,
   Heading,
   Inline,
+  Input,
   Link,
   Logo,
   Menu,
   Page,
+  Radios,
+  Range,
   Root,
   Sidebar,
+  Stack,
   Surface,
+  Switch,
+  Text,
+  Textarea,
 } from "@measured/calibrate-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -54,7 +66,7 @@ function Header({ announce }: { announce: (message: string) => void }) {
           <Inline gap="xs">
             <Sidebar
               aboveNotebook="overlay"
-              id="harness-sidebar"
+              id="sidebar"
               size="sm"
               header={
                 <Box background="panel" paddingBlock="none" paddingInline="sm">
@@ -79,8 +91,8 @@ function Header({ announce }: { announce: (message: string) => void }) {
                 </Box>
               </Box>
             </Sidebar>
-            <a href="#">
-              <Heading size="lg">Facet.</Heading>
+            <a href="/">
+              <Heading size="lg">Playground.</Heading>
             </a>
           </Inline>
           <Inline align="end" gap="xs">
@@ -96,15 +108,23 @@ function Header({ announce }: { announce: (message: string) => void }) {
               triggerLabel="Export"
               triggerLabelVisibility="hiddenBelowTablet"
               size="sm"
-              onChoose={(event) => announce(`Export: ${event.detail.label}`)}
+              onChoose={(event) =>
+                announce(`Export: ${event.detail.label} chosen`)
+              }
             />
-            <Button label="16:9" size="sm" tone="neutral" />
+            <Button
+              label="16:9"
+              size="sm"
+              tone="neutral"
+              onClick={() => announce("Aspect ratio clicked")}
+            />
             <Button
               icon="shuffle"
               appearance="solid"
               label="Shuffle"
               labelVisibility="hiddenBelowTablet"
               size="sm"
+              onClick={() => announce("Shuffle clicked")}
             />
             <Button
               icon="dice5"
@@ -112,7 +132,7 @@ function Header({ announce }: { announce: (message: string) => void }) {
               label="Randomise"
               labelVisibility="hiddenBelowTablet"
               size="sm"
-              onClick={() => announce("Randomised composition")}
+              onClick={() => announce("Randomise clicked")}
             />
           </Inline>
         </Inline>
@@ -127,7 +147,7 @@ function Footer() {
       <Box paddingBlock="xs" paddingInline="none">
         <Inline align="end" gap="xs" justify="between">
           <a
-            href="#"
+            href="/"
             style={{ marginBlockEnd: "var(--clbr-spacing-vertical-400)" }}
           >
             <Logo label="Measured" size="sm" tone="neutral" variant="graphic" />
@@ -143,10 +163,10 @@ function Footer() {
               />
             </li>
             <li>
-              <Link href="#" label="About" size="sm" tone="neutral" />
+              <Link href="/" label="About" size="sm" tone="neutral" />
             </li>
             <li>
-              <Link href="#" label="Measured" size="sm" tone="neutral" />
+              <Link href="/" label="Measured" size="sm" tone="neutral" />
             </li>
           </Inline>
         </Inline>
@@ -157,6 +177,14 @@ function Footer() {
 
 export function App() {
   const { announce, message } = useLiveAnnouncer();
+  const [email, setEmail] = useState("person@example.com");
+  const [spam, setSpam] = useState(60);
+  const [updates, setUpdates] = useState(false);
+  const [urgentNotifications, setUrgentNotifications] = useState(false);
+  const [contactMethod, setContactMethod] = useState("email");
+  const [messageDraft, setMessageDraft] = useState(
+    "Hi team, I need help with my account settings.",
+  );
 
   return (
     <Root appOverscrollBehavior="none" appRoot>
@@ -167,18 +195,141 @@ export function App() {
           footer={<Footer />}
           banner={
             <Banner
-              actionHref="#"
-              actionLabel="Action link"
-              message="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt."
+              actionHref="/"
+              actionLabel="Action"
+              message="Message."
               onDismiss={() => announce("Banner dismissed")}
             />
           }
         >
           <Container gutter="narrow">
             <Box paddingBlock="2xl" paddingInline="none">
-              <p role="status" aria-live="polite">
-                {message || "Waiting for events…"}
-              </p>
+              <Grid>
+                <GridItem
+                  colSpan={4}
+                  colStart={5}
+                  colSpanNarrow={6}
+                  colStartNarrow={4}
+                >
+                  <Stack gap="sm">
+                    <Text size="sm">
+                      <Alert
+                        message={message || "Waiting for events…"}
+                        size="sm"
+                        tone="info"
+                      />
+                    </Text>
+                    <Divider />
+                    <Heading size="xl">Form</Heading>
+                    <Input
+                      description="We'll only use this for account updates."
+                      id="playground-email"
+                      label="Email"
+                      name="email"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLInputElement) {
+                          setEmail(event.target.value);
+                        }
+                      }}
+                      size="sm"
+                      type="email"
+                      value={email}
+                    />
+                    <Range
+                      description="Set your spam tolerance level."
+                      id="playground-spam"
+                      label="Spam"
+                      max={100}
+                      min={0}
+                      name="volume"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLInputElement) {
+                          setSpam(Number(event.target.value));
+                        }
+                      }}
+                      size="sm"
+                      value={spam}
+                    />
+                    <Checkbox
+                      checked={updates}
+                      description="You can unsubscribe at any time."
+                      descriptionId="playground-updates-description"
+                      label="Send me product updates"
+                      name="updates"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLInputElement) {
+                          setUpdates(event.target.checked);
+                        }
+                      }}
+                      size="sm"
+                      value="yes"
+                    />
+                    <Switch
+                      checked={urgentNotifications}
+                      description="Enable this to receive urgent notifications."
+                      descriptionId="playground-notifications-description"
+                      label="Urgent notifications"
+                      name="urgentNotifications"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLInputElement) {
+                          setUrgentNotifications(event.target.checked);
+                        }
+                      }}
+                      size="sm"
+                      value="yes"
+                    />
+                    <Radios
+                      description="Choose one contact method."
+                      id="playground-contact-method"
+                      legend="Contact Method"
+                      name="contactMethod"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLInputElement) {
+                          setContactMethod(event.target.value);
+                        }
+                      }}
+                      radios={[
+                        { label: "Email", value: "email" },
+                        { label: "SMS", value: "sms" },
+                      ]}
+                      size="sm"
+                      value={contactMethod}
+                    />
+                    <Textarea
+                      description="Add any context that will help our support team."
+                      id="playground-message"
+                      label="Message"
+                      name="message"
+                      onChange={(event) => {
+                        if (event.target instanceof HTMLTextAreaElement) {
+                          setMessageDraft(event.target.value);
+                        }
+                      }}
+                      rows={2}
+                      size="sm"
+                      value={messageDraft}
+                    />
+                    <Inline gap="sm">
+                      <Button
+                        appearance="solid"
+                        label="Continue"
+                        size="sm"
+                        tone="default"
+                        type="button"
+                        onClick={() => announce("Continue clicked")}
+                      />
+                      <Button
+                        appearance="outline"
+                        label="Back"
+                        size="sm"
+                        tone="neutral"
+                        type="button"
+                        onClick={() => announce("Back clicked")}
+                      />
+                    </Inline>
+                  </Stack>
+                </GridItem>
+              </Grid>
             </Box>
           </Container>
         </Page>

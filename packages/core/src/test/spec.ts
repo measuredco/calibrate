@@ -8,7 +8,7 @@ import {
   type ClbrComponentSpecProp,
   type ClbrSpecAttributeRule,
   type ClbrSpecPropType,
-} from "../helpers/spec";
+} from "../spec";
 
 export interface SpecConsistencyConfig<Props> {
   readonly spec: ClbrComponentSpec;

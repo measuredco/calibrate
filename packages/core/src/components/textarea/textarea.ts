@@ -1,6 +1,6 @@
 import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize, ClbrInlineSize } from "../../types";
 
 export type ClbrTextareaResize = "vertical" | "none";

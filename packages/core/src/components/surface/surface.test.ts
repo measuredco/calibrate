@@ -1,6 +1,6 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
-import { describeSpecConsistency } from "../../testing/spec";
+import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_SURFACE_SPEC,
   type ClbrSurfaceProps,

@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrShapeVariant } from "../shape/shape";
 
 export type ClbrPatternSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";

@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { CLBR_PANEL_SPEC, type ClbrPanelProps, renderClbrPanel } from "./panel";
 
 const baseArgTypes = specToArgTypes(CLBR_PANEL_SPEC);

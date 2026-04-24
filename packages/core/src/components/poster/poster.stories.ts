@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrBox } from "../box/box";
 import { renderClbrButton } from "../button/button";
 import { renderClbrContainer } from "../container/container";

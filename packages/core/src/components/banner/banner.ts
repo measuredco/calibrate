@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { buildClbrLink } from "../link/link";

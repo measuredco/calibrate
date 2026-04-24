@@ -86,6 +86,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -301,6 +302,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -520,6 +522,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -735,6 +738,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -1023,6 +1027,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -1314,6 +1319,7 @@
       --clbr-motion-duration-100: 0ms;
       --clbr-motion-duration-150: 0ms;
       --clbr-motion-duration-200: 0ms;
+      --clbr-motion-duration-250: 0ms;
       --clbr-motion-duration-300: 0ms;
       --clbr-motion-duration-50: 0ms;
       --clbr-motion-duration-600: 0ms;
@@ -1530,6 +1536,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -1745,6 +1752,7 @@
     --clbr-motion-duration-100: 0ms;
     --clbr-motion-duration-150: 0ms;
     --clbr-motion-duration-200: 0ms;
+    --clbr-motion-duration-250: 0ms;
     --clbr-motion-duration-300: 0ms;
     --clbr-motion-duration-50: 0ms;
     --clbr-motion-duration-600: 0ms;
@@ -1965,6 +1973,7 @@
       --clbr-motion-duration-100: 0ms;
       --clbr-motion-duration-150: 0ms;
       --clbr-motion-duration-200: 0ms;
+      --clbr-motion-duration-250: 0ms;
       --clbr-motion-duration-300: 0ms;
       --clbr-motion-duration-50: 0ms;
       --clbr-motion-duration-600: 0ms;
@@ -2182,6 +2191,7 @@
       --clbr-motion-duration-100: 0ms;
       --clbr-motion-duration-150: 0ms;
       --clbr-motion-duration-200: 0ms;
+      --clbr-motion-duration-250: 0ms;
       --clbr-motion-duration-300: 0ms;
       --clbr-motion-duration-50: 0ms;
       --clbr-motion-duration-600: 0ms;

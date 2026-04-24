@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeSpecConsistency } from "../../testing/spec";
+import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_SHAPE_SPEC, renderClbrShape, type ClbrShapeProps } from "./shape";
 
 function mountShape(html: string): HTMLElement {

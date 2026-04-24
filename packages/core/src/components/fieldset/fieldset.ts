@@ -1,6 +1,6 @@
 import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrInlineSize } from "../../types";
 
 export interface ClbrFieldsetProps {

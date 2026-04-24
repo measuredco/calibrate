@@ -108,11 +108,8 @@ const FIXTURE_OVERRIDES: Record<
     extra?: (audience: Audience) => Record<string, unknown>;
   }
 > = {
-  icon: {
-    // Core rejects an icon with aria-hidden false and no title/titleId.
-    extra: () => ({ title: "x", titleId: "clbr-test-title-id" }),
-  },
   radios: {
+    // Core rejects <2 options and requires unique values across items.
     minArrayLength: { radios: 2 },
     uniqueItemFields: { radios: ["value"] },
   },

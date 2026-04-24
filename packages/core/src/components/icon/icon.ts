@@ -1,7 +1,7 @@
 import { icons } from "lucide";
 import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;
 type LucideIconNode = Array<[tag: string, attrs: LucideSvgAttrs]>;
@@ -50,7 +50,7 @@ export type ClbrIconMirrorMode = "always" | "rtl";
 export type ClbrIconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "fill";
 
 export interface ClbrIconProps {
-  /** Emits `aria-hidden="true"` when true. @default false */
+  /** Emits `aria-hidden="true"` when true. @default true */
   ariaHidden?: boolean;
   /** SVG title text. Required when `ariaHidden` is false. */
   title?: string;
@@ -111,7 +111,7 @@ function iconNodeToChildren(iconNode: LucideIconNode): ClbrNode[] {
  * @returns IR node for the Calibrate icon component.
  */
 export function buildClbrIcon({
-  ariaHidden,
+  ariaHidden = true,
   mirrored,
   name,
   size = "md",
@@ -195,8 +195,9 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
   content: { kind: "none" },
   props: {
     ariaHidden: {
-      default: false,
-      description: "Hides the icon from assistive technology.",
+      default: true,
+      description:
+        "Hides the icon from assistive technology. Decorative by default; set to false for a labelled icon (then title and titleId are required).",
       type: { kind: "boolean" },
     },
     mirrored: {
@@ -218,12 +219,12 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
     },
     title: {
       description: "Accessible title announced by assistive technology.",
-      requiredWhen: "`ariaHidden` is false or omitted",
+      requiredWhen: "`ariaHidden` is false",
       type: { kind: "string" },
     },
     titleId: {
       description: "`id` for the accessible `title` element.",
-      requiredWhen: "`ariaHidden` is false or omitted",
+      requiredWhen: "`ariaHidden` is false",
       type: { kind: "string" },
     },
   },

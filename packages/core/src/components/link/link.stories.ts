@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrIcon } from "../icon/icon";
 import { CLBR_LINK_SPEC, type ClbrLinkProps, renderClbrLink } from "./link";
 

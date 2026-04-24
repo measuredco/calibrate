@@ -37,9 +37,9 @@
       position: fixed;
       transform: translateX(-100%);
       transition:
-        transform var(--clbr-motion-duration-100)
-          var(--clbr-motion-easing-ease-in-out),
-        visibility 0s linear var(--clbr-motion-duration-100);
+        transform var(--clbr-motion-duration-150)
+          var(--clbr-motion-easing-ease-in) 0s,
+        visibility 0s linear var(--clbr-motion-duration-150);
       visibility: hidden;
       z-index: 1;
 
@@ -47,8 +47,8 @@
         box-shadow: var(--clbr-effect-shadow-default);
         transform: translateX(0);
         transition:
-          transform var(--clbr-motion-duration-100)
-            var(--clbr-motion-easing-ease-in-out),
+          transform var(--clbr-motion-duration-250)
+            var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-50),
           visibility 0s linear 0s;
         visibility: visible;
 
@@ -119,10 +119,23 @@
     }
 
     [data-part="backdrop"] {
+      visibility: hidden;
+      position: fixed;
+      inset: 0;
+      background-color: #00000092;
+      opacity: 0;
+      transition:
+        opacity var(--clbr-motion-duration-150)
+          var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-50),
+        visibility 0s linear var(--clbr-motion-duration-200);
+
       .clbr-sidebar[data-open] & {
-        background-color: #00000092;
-        inset: 0;
-        position: fixed;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity var(--clbr-motion-duration-200)
+            var(--clbr-motion-easing-ease-out) 0s,
+          visibility 0s linear 0s;
       }
 
       @media (min-width: 68em) {

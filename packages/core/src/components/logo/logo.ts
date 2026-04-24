@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrLogoTone = "default" | "neutral";
 export type ClbrLogoSize = "sm" | "md" | "lg" | "fill";

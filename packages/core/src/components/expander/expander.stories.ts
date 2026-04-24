@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import {
   CLBR_EXPANDER_SPEC,
   type ClbrExpanderProps,

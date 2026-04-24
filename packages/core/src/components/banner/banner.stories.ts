@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrStack } from "../stack/stack";
 import {
   CLBR_BANNER_SPEC,

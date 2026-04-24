@@ -1,6 +1,6 @@
 import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import { buildClbrButton, renderClbrButton } from "../button/button";
 
 export const CLBR_SIDEBAR_TAG_NAME = "clbr-sidebar";

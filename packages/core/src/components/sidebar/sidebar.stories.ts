@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrBox } from "../box/box";
 import {
   CLBR_SIDEBAR_SPEC,

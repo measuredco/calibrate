@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrDividerOrientation = "horizontal" | "vertical";
 export type ClbrDividerTone = "default" | "subtle" | "brand";

@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrAvatar } from "../avatar/avatar";
 import { renderClbrInline } from "../inline/inline";
 import { renderClbrStack } from "../stack/stack";

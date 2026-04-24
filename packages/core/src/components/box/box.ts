@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export type ClbrBoxBackground = "default" | "panel" | "transparent";

@@ -1,7 +1,7 @@
 import { getByRole, getByText } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { describeSpecConsistency } from "../../testing/spec";
+import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_SIDEBAR_SPEC,
   CLBR_SIDEBAR_TAG_NAME,

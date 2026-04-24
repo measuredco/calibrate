@@ -1,7 +1,7 @@
 import { getByRole } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { describeSpecConsistency } from "../../testing/spec";
+import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_MENU_EVENT_CHOOSE,
   CLBR_MENU_SPEC,

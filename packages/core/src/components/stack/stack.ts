@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
 export type ClbrStackAs = "div" | "ul";

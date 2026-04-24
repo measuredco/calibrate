@@ -25,11 +25,13 @@
     }
 
     .header {
+      position: relative;
+      z-index: 1;
+
       .clbr-page[data-sticky-header="always"] > &,
       .clbr-page[data-sticky-header="belowNotebook"] > & {
         inset-block-start: 0;
         position: sticky;
-        z-index: 1;
 
         &::after {
           background-color: var(--clbr-color-border-subtle);
@@ -49,6 +51,7 @@
     }
 
     &[data-center-main] .main {
+      position: relative;
       margin-block: auto;
     }
   }

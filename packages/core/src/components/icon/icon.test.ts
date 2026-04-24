@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeSpecConsistency } from "../../testing/spec";
+import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_ICON_SPEC, type ClbrIconProps, renderClbrIcon } from "./icon";
 
 function mountIcon(html: string): HTMLElement {
@@ -31,11 +31,11 @@ describe("renderClbrIcon", () => {
     });
   });
 
-  describe("named mode (ariaHidden false / omitted)", () => {
-    it("requires title and titleId by default", () => {
-      expect(() => renderClbrIcon({ name: "check" })).toThrow(
-        "title must be non-empty when ariaHidden is false.",
-      );
+  describe("named mode (ariaHidden false)", () => {
+    it("requires title and titleId when ariaHidden is false", () => {
+      expect(() =>
+        renderClbrIcon({ ariaHidden: false, name: "check" }),
+      ).toThrow("title must be non-empty when ariaHidden is false.");
     });
 
     it("renders role/img labelling and title", () => {

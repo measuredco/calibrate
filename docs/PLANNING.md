@@ -6,38 +6,7 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Framework adapter codegen (`packages/adapter`)
-
-v0 `@measured/calibrate-react` is in place (15 hand-written wrappers covering the archetype floor: pass-through, named-slots, CE+events, structured-items+events) with a real-browser playground at `apps/playground-react` exercising all four archetypes via live-region event wiring. The remaining initiative is to replace the hand-written wrappers with a build-time generator so every new core component becomes a free React wrapper, and so adding a second framework becomes a template swap rather than another per-component hand-port.
-
-Principles:
-
-- `buildClbr*` IR and custom element runtimes in `packages/core` remain the source of truth for behavior; adapters are thin typed surfaces that walk the IR and delegate to `clbr-*` custom elements where they exist.
-- Structured SPECs drive wrapper codegen: `output.element` (including `switch` for polymorphic hosts), `content` (`none | text | html | structured | slots`), `events`, and `props[k].{type, required, default}` cover every discriminator the current archetypes need. CE detection is by element prefix (`clbr-*`) or non-empty `events`.
-- React 19+ only (lowercase custom event props, DOM property pass-through, unknown attrs).
-- Per-consumer experience stays runtime-only (no consumer build step). The generator runs at adapter-package build time and emits per-component wrappers as a committed artifact; the generated wrappers are thin because they delegate rendering to the shared IR walker.
-- `@measured/calibrate-core` is a peer dep of each adapter, not a direct dep: `customElements.define()` throws on duplicate registration, so the consumer must pin a single core version (which they'd do anyway to load the shared CSS).
-- Shared tooling reuse: adapter packages extend the root ESLint config, consume `@measured/calibrate-config/browserslist`, and share cross-package deps via the pnpm workspace catalog once a dep actually becomes shared (not preemptively).
-- Behavior-preservation invariant still applies: adapters must produce the same rendered output and CE behavior as direct SSR calls. The core test suite and `describeSpecConsistency` remain the oracle; per-adapter SSR-parity suites additionally assert `renderToStaticMarkup(<Wrapper {...props} />) === renderClbr*(props)`.
-
-Package shape:
-
-- `packages/adapter` (private, `@measured/calibrate-adapter`) houses all framework codegen — one package, per-framework subdirectories (`src/react`, later `src/vue`, etc.) sharing a common SPEC walker in `src/shared`. Avoids per-framework package explosion.
-- Runs TS directly via `tsx` (no build step on the generator itself — avoids chicken-and-egg ordering against the packages it emits into).
-- Generated wrappers are committed to git; CI asserts `regen → no diff` to prevent drift between SPEC and emitted wrappers.
-- `packages/react` gains a `prebuild` that invokes the generator; publish workflow runs it via `prepublishOnly` as a belt-and-braces guarantee.
-- The current hand-maintained `ATTR_NAME_MAP` in the React walker moves into the generator: emitted wrappers already use React-canonical attribute names, and the runtime map is deleted.
-
-Sequencing:
-
-1. Scaffold `packages/adapter` with shared SPEC walker + React emitter.
-2. Spike Divider end-to-end (pass-through, no slots, no events, non-CE) to validate the generator pipeline on the simplest case.
-3. Add Button (polymorphic `switch` element), Banner (CE + events), Page (multi-slot), Menu (structured items + events). Each step extends shared templates and verifies the generated output matches the corresponding hand-written wrapper byte-for-byte (or with explained deltas).
-4. Switch `packages/react` fully onto the generator: delete hand-written wrappers + runtime `ATTR_NAME_MAP`, wire the `prebuild` hook, add root `react:gen` script.
-5. Generate the remaining core components (currently 29 unwrapped) as the first payoff — they become React-available for free.
-6. Optional second-framework spike (Vue or Svelte) via `src/vue` to validate per-framework scaling. Not a shipping target; validation only.
-
-Out of scope: generating the SSR renderer itself from the SPEC (deferred; the imperative custom element class stays hand-written regardless).
+_Nothing in flight._
 
 ## Next
 
@@ -53,19 +22,25 @@ Define the minimum scripts, workflow, and release notes needed to publish initia
 
 ### Component evolution
 
-- Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
 - Add `data-testid` and/or `id` support
-- Add `size: "lg"` to Controls (and `details`, etc.)
+- Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
 - Add `renderPosterImage` to expose subset of `image` props in `poster` API
-- Add light `Poster` story
+- Add a light theme `poster` story
 - Add `image` `sources` art direction example to Storybook
 - Show `page` sticky header border on scroll only
 
-### Component analytics
+#### Component size gaps
+
+- Missing lg: Alert, Badge, Checkbox, Input, Menu, Nav, Radios, Range, Textarea, Sidebar
+- Missing sm: Blockquote
+- No size prop: Card, Details, Fieldset, Prose
+- Button & Link with size lg are the same as size md if 1. appearance text and label visible or 2. appearance outline or solid, and label hidden.
+
+#### Component analytics
 
 Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note - Plausible implementation in Facet used classnames.
 
-### More components
+#### More components
 
 - `Control/Listbox` (JS required, selection/value semantics)
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
@@ -99,18 +74,18 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
   - stable fields for tooling/agents beyond prose descriptions
   - worked examples where intent is easy to misuse
 
+#### JSON export target
+
+Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates. Likely `packages/tokens` / `@measured/calibrate-tokens`.
+
+Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/system/scripts/pipeline/index.mjs` when implementing a second export target.
+
 #### Design model evolution
 
 - Custom inverse themes?
 - `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Consider introducing Newsreader as a serif font for prose body copy.
-
-#### JSON export target
-
-Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates. Likely `packages/tokens` / `@measured/calibrate-tokens`.
-
-Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/system/scripts/pipeline/index.mjs` when implementing a second export target.
 
 #### Export target evolution
 
@@ -162,11 +137,54 @@ Define a selective-brand distribution model across tokens, core CSS, and assets/
 
 Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows.
 
+### Second framework adapter (Vue or Svelte)
+
+Validate that the `packages/adapter` SPEC walker + emitter generalises by authoring a per-framework emitter alongside `src/react`. Scope: a small archetype floor (Button, Banner, Page, Menu — pass-through + slotted + CE + events), not a shipping target. Goal is to confirm the shared classifier and parts-based contributor pipeline aren't accidentally React-flavoured. Not planned as a permanent distribution; pure validation.
+
+Out of scope (even as a Later item): generating the SSR renderer itself from the SPEC. SPEC's rule grammar would have to grow into a full imperative DSL to cover what `buildClbr*` does today (nested structural layout, component composition, imperative validation with specific error messages, cross-prop defaults), which trades readable JS for a custom grammar that solves a drift problem the `describeSpecConsistency` probe suite already guards. Trigger to reconsider: a non-JS SSR consumer (Rust / Go / Python templating) that needs to render Calibrate from SPEC without reimplementing each renderer natively.
+
 ## Done
 
 What we've done.
 
 _This section is a historical completion record; some entries may describe decisions or intermediate states that were later refined._
+
+- `packages/adapter` framework codegen completed and `@measured/calibrate-react` is fully generator-owned:
+  - private `@measured/calibrate-adapter` package (tsx-run, no build step on the generator itself) houses per-framework emitters (`src/react` today) sharing a framework-agnostic SPEC classifier + utilities in `src/shared`
+  - `emitWrapperSource` composes wrappers from three orthogonal contributors into an `EmitParts` record, then `renderParts` assembles the TSX source:
+    - content archetype (pass-through or slotted — single-slot html and multi-slot mixed text/html unified under one emitter)
+    - custom-element registration (`defineClbr<Pascal>()` useEffect for `clbr-*` hosts)
+    - custom-event wiring (`<Pascal><Action>{Detail, Event, Handler}` types, per-event `on<Action>` prop, addEventListener useEffect, merged-ref callback)
+  - all 42 core components emit React wrappers; `packages/react/src/index.ts` barrel is itself auto-emitted so new core components become React-available on the next `pnpm react:generate`
+  - the generator runs through `prebuild` on `pnpm react:build`; emitted output is committed to git for PR visibility and as a CI diff-assertion gate (no `@generated` tag so reviewers see the downstream diff)
+  - emitted files carry a plain-prose header naming the adapter + regenerate command
+  - strict runtime invariants: `hostInterface` throws with a traceable error on any `output.element` tag not in `ELEMENT_INTERFACE`; three string-rewrite steps in `contributeEvents` all throw loudly instead of silently no-op'ing if a content contributor's output shape changes
+  - the `REACTIFY_*` import constants at the top of emit.ts are the single place where the generator's coupling to the runtime walker is expressed
+  - per-component override file was introduced (initially for Button's polymorphic `Element | Link` props) and then **deleted** after the Button/Link split made it unnecessary
+  - 16 v0 hand-written wrappers deleted; 42 generated wrappers now live in `packages/react/src/components/*/*.tsx`
+
+- React runtime walker (`packages/react/src/reactify.tsx`) stays hand-authored and minimal:
+  - 10-entry `ATTR_NAME_MAP` (HTML-canonical → React camelCase, e.g. `class → className`, `tabindex → tabIndex`, `stroke-width → strokeWidth`); consciously _not_ relocated into the generator after two failed attempts — runtime concern, validation machinery around it tripled the hand-maintained surface for no runtime benefit
+  - `<textarea>` children → `defaultValue` lift (React forbids textarea children)
+  - attempted `value`/`checked` → `defaultValue`/`defaultChecked` auto-lift for form controls then **reverted** as over-engineering: React consumers almost always want controlled inputs, so explicit `onChange` handlers are the idiomatic fix; the walker stays faithful to React's standard semantics
+
+- SPEC-parameterised test suite at `packages/react/src/test/generated.test.tsx` replaces 20 per-component hand-written test files (16 SSR-parity + 4 CE/event suites for banner, button, menu, page):
+  - single file with three suites that walk every `CLBR_*_SPEC` and derive fixtures from prop types
+  - SSR parity: `renderToStaticMarkup(<Wrapper {...fixture} />)` compared against `renderClbr*(fixture)` via `isEqualNode`, with React 19's auto-hoisted resource-preload `<link>` tags stripped
+  - CE upgrade: mount client-side, assert `customElements.get(tagName)` resolves to a constructor after mount
+  - custom events + caller ref: mount with mock `on<Action>` handlers and a callback ref, dispatch each SPEC event on the host, assert handlers fire and the caller ref captured the host (merged-ref pattern end-to-end)
+  - grows automatically with core — new SPECs get full coverage on next test run
+  - tiny per-component fixture overrides for two legitimate runtime validations the synthesiser can't derive (radios needs ≥2 items with unique values)
+
+- `apps/playground-react` real-browser harness: plain Vite + React SPA composing Root > Surface > Page with Banner + Nav + Sidebar + Menu + Buttons + footer Links + a controlled form-field column (Input/Range/Checkbox/Switch/Radios/Textarea with `useState` + explicit `onChange`) inside a Grid+GridItem layout. `useLiveAnnouncer` hook wires custom events + a Button click + Banner dismiss into an Alert acting as a status live-region. Exercises the full CE → React state → DOM path vitest can't reach.
+
+- Button/Link split (side quest): removed Button's `mode: "button" | "link"` discriminator and the `ClbrButtonLinkProps` union; Button is now a single flat type rendering `<button>`. Link gained the button-like treatment props (`appearance` with `"text"` default, `download`, `iconPlacement`, `labelVisibility`, `size: "lg"`) so "link styled as a button" use cases land there without reinventing the CSS in Button. The polymorphic-union override in the adapter was thereby eliminated; the adapter overrides file was deleted entirely.
+
+- Core folder structure cleanup: `packages/core/src/testing/` → `src/test/` (matching react package convention); `src/helpers/spec.ts` → top-level `src/spec.ts` (promoting SPEC to a first-class concern alongside `components/`); `src/helpers/` keeps `node.ts` + `string.ts` for now.
+
+- Out-of-the-box CE class declarations moved to lazy (nested inside `defineClbr*()`) for alert, banner, menu, nav, range, sidebar — lets Node tooling import core without a `globalThis.HTMLElement` stub.
+
+- `CLBR_BUTTON_SPEC` gets a new `size` prop defaulting to `"md"`; `CLBR_ALERT_SPEC` gets one too (`"sm" | "md"`); `CLBR_ICON_SPEC`'s `ariaHidden` defaults flipped to `true` (decorative-by-default matches common usage inside Button/Logo etc.) — simplified one test fixture override and removed a source of consumer papercuts.
 
 - v0 `@measured/calibrate-react` landed as hand-written wrappers over the shared IR:
   - shared IR walker in `packages/react/src/reactify.tsx` maps `kind: "element"` → `React.createElement`, `kind: "text"` → text (with slot-sentinel substitution for named text slots), `kind: "raw"` → `dangerouslySetInnerHTML`; supports html and text slot substitution for multi-slot archetypes via sentinel placeholders

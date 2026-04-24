@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { CLBR_ROOT_SPEC, ClbrRootProps, renderClbrRoot } from "./root";
 
 const baseArgTypes = specToArgTypes(CLBR_ROOT_SPEC);

@@ -169,6 +169,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -485,6 +486,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -801,6 +803,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -1117,6 +1120,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -1433,6 +1437,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -1750,6 +1755,7 @@
       --clbr-primitive-motion-duration-100: 100ms;
       --clbr-primitive-motion-duration-150: 150ms;
       --clbr-primitive-motion-duration-200: 200ms;
+      --clbr-primitive-motion-duration-250: 250ms;
       --clbr-primitive-motion-duration-300: 300ms;
       --clbr-primitive-motion-duration-50: 50ms;
       --clbr-primitive-motion-duration-600: 600ms;
@@ -2067,6 +2073,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -2383,6 +2390,7 @@
     --clbr-primitive-motion-duration-100: 100ms;
     --clbr-primitive-motion-duration-150: 150ms;
     --clbr-primitive-motion-duration-200: 200ms;
+    --clbr-primitive-motion-duration-250: 250ms;
     --clbr-primitive-motion-duration-300: 300ms;
     --clbr-primitive-motion-duration-50: 50ms;
     --clbr-primitive-motion-duration-600: 600ms;
@@ -2700,6 +2708,7 @@
       --clbr-primitive-motion-duration-100: 100ms;
       --clbr-primitive-motion-duration-150: 150ms;
       --clbr-primitive-motion-duration-200: 200ms;
+      --clbr-primitive-motion-duration-250: 250ms;
       --clbr-primitive-motion-duration-300: 300ms;
       --clbr-primitive-motion-duration-50: 50ms;
       --clbr-primitive-motion-duration-600: 600ms;
@@ -3018,6 +3027,7 @@
       --clbr-primitive-motion-duration-100: 100ms;
       --clbr-primitive-motion-duration-150: 150ms;
       --clbr-primitive-motion-duration-200: 200ms;
+      --clbr-primitive-motion-duration-250: 250ms;
       --clbr-primitive-motion-duration-300: 300ms;
       --clbr-primitive-motion-duration-50: 50ms;
       --clbr-primitive-motion-duration-600: 600ms;

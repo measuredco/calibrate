@@ -1,4 +1,4 @@
-import { specToArgTypes, specToComponentDescription } from "../../helpers/spec";
+import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { isValidHtmlId } from "../../helpers/string";
 import {
   CLBR_ICON_RECOMMENDED,
@@ -32,7 +32,7 @@ export default meta;
 
 export const Default = {
   args: {
-    ariaHidden: false,
+    ariaHidden: true,
     mirrored: undefined,
     name: "settings",
     size: "md",

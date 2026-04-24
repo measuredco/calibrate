@@ -1,6 +1,6 @@
 import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import { renderClbrExpander } from "../expander/expander";
 
 export const CLBR_NAV_TAG_NAME = "clbr-nav";

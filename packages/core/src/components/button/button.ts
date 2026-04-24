@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";

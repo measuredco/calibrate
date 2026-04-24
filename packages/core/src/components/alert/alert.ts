@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../helpers/spec";
+import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
 import { buildClbrIcon } from "../icon/icon";
@@ -10,6 +10,8 @@ export const CLBR_ALERT_EVENT_DISMISS = "clbr-alert-dismiss";
 
 const dismissibleLabelDefault = "Dismiss alert";
 
+export type ClbrAlertSize = "sm" | "md";
+
 export interface ClbrAlertProps {
   /** Whether the runtime custom element should inject a dismiss control. @default false */
   dismissible?: boolean;
@@ -19,6 +21,8 @@ export interface ClbrAlertProps {
   inlineSize?: ClbrInlineSize;
   /** Alert body text (escaped before render). */
   message: string;
+  /** Size variant. @default "md" */
+  size?: ClbrAlertSize;
   /** Semantic message intent. */
   tone?: ClbrStatusTone;
   /** Optional short heading/title text (escaped before render). */
@@ -71,6 +75,7 @@ export function buildClbrAlert({
   dismissibleLabel = dismissibleLabelDefault,
   inlineSize = "full",
   message,
+  size = "md",
   tone,
   title,
 }: ClbrAlertProps): ClbrNode {
@@ -103,6 +108,7 @@ export function buildClbrAlert({
         ? normalizedDismissibleLabel
         : undefined,
       "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+      "data-size": size,
       "data-tone": tone || undefined,
       role: getAlertRole(tone),
     },
@@ -115,7 +121,7 @@ export function buildClbrAlert({
           buildClbrIcon({
             ariaHidden: true,
             name: getAlertIconName(tone),
-            size: "md",
+            size,
           }),
         ],
       },
@@ -249,6 +255,11 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "text" },
     },
+    size: {
+      default: "md",
+      description: "Size variant.",
+      type: { kind: "enum", values: ["sm", "md"] },
+    },
     title: {
       description: "Bold text above the message.",
       type: { kind: "text" },
@@ -339,6 +350,12 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
         attribute: "data-inline-size",
         condition: { kind: "when-equals", prop: "inlineSize", to: "fit" },
         value: { kind: "literal", text: "fit" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "size" },
       },
     ],
   },

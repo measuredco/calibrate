@@ -2,7 +2,7 @@ import {
   specToArgTypes,
   specToComponentDescription,
   specToPropsTable,
-} from "../../helpers/spec";
+} from "../../spec";
 import {
   CLBR_GRID_ITEM_SPEC,
   CLBR_GRID_SPEC,
