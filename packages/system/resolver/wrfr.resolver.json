@@ -68,6 +68,7 @@
                   ]
                 },
                 "lightBrand": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "surfaceBrand",
                   "variants": [
                     {
@@ -91,6 +92,7 @@
                   ]
                 },
                 "lightBrandInverse": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "surfaceBrandInverse",
                   "variants": [
                     {
@@ -114,6 +116,7 @@
                   ]
                 },
                 "darkBrand": {
+                  "baseContext": "darkDefault",
                   "selectorRef": "surfaceBrand",
                   "media": ["(prefers-color-scheme: dark)"],
                   "variants": [
@@ -125,6 +128,7 @@
                   ]
                 },
                 "darkInverse": {
+                  "baseContext": "darkDefault",
                   "selectorRef": "surfaceInverse",
                   "media": ["(prefers-color-scheme: dark)"],
                   "variants": [
@@ -136,6 +140,7 @@
                   ]
                 },
                 "darkBrandInverse": {
+                  "baseContext": "darkDefault",
                   "selectorRef": "surfaceBrandInverse",
                   "media": ["(prefers-color-scheme: dark)"],
                   "variants": [
@@ -147,15 +152,19 @@
                   ]
                 },
                 "contentLightDefault": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "contentThemeLightSurfaceDefault"
                 },
                 "contentLightBrand": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "contentThemeLightSurfaceBrand"
                 },
                 "contentDarkDefault": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "contentThemeDarkSurfaceDefault"
                 },
                 "contentDarkBrand": {
+                  "baseContext": "lightDefault",
                   "selectorRef": "contentThemeDarkSurfaceBrand"
                 }
               }

@@ -85,21 +85,6 @@ function normalizeRef(baseFile, ref) {
 }
 
 /**
- * Appends a value only when it has not been seen before.
- *
- * @param {string[]} list
- * @param {Set<string>} seen
- * @param {unknown} value
- * @returns {void}
- */
-function pushUnique(list, seen, value) {
-  if (seen.has(value)) return;
-
-  seen.add(value);
-  list.push(value);
-}
-
-/**
  * Returns build metadata for a modifier context from resolver definitions.
  *
  * @param {Record<string, unknown>} resolverDoc
@@ -206,7 +191,6 @@ function resolveModifierContextSourceArrays({
  *  resolverPath: string,
  *  sourceArray: unknown[],
  *  output: string[],
- *  seen: Set<string>,
  *  stack: string[]
  * }} options
  * @returns {void}
@@ -216,7 +200,6 @@ function resolveSourceArray({
   resolverPath,
   sourceArray,
   output,
-  seen,
   stack,
 }) {
   for (const source of sourceArray) {
@@ -232,7 +215,11 @@ function resolveSourceArray({
       }
 
       if (!ref.startsWith("#/")) {
-        pushUnique(output, seen, normalizeRef(resolverPath, ref));
+        // Allow duplicate file refs: baseContext chains may re-apply a source
+        // the base already included (e.g. a cross-palette inverse surface
+        // overriding back to its own palette). Downstream deepMerge is
+        // last-wins and idempotent for identical data.
+        output.push(normalizeRef(resolverPath, ref));
         continue;
       }
 
@@ -258,7 +245,6 @@ function resolveSourceArray({
           resolverPath,
           sourceArray: target.sources,
           output,
-          seen,
           stack: [...stack, ref],
         });
 
@@ -298,7 +284,6 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
   }
 
   const output = [];
-  const seen = new Set();
 
   for (const item of resolverDoc.resolutionOrder) {
     if (!isObject(item) || typeof item.$ref !== "string") {
@@ -323,7 +308,6 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
         resolverPath,
         sourceArray: setObj.sources,
         output,
-        seen,
         stack: [ref],
       });
 
@@ -366,7 +350,6 @@ function resolveOrderedSources({ resolverDoc, resolverPath, contextInput }) {
         resolverPath,
         sourceArray: entry.sourceArray,
         output,
-        seen,
         stack: [
           ref,
           `#/modifiers/${modifierName}/contexts/${entry.contextName}`,

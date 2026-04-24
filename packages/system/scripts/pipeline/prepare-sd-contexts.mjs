@@ -188,14 +188,27 @@ function toCssDimensionValue(rawValue) {
 /**
  * Recursively removes tokens that are unchanged versus a comparison tree.
  *
+ * Tokens whose path root is in `forceEmitRoots` always emit regardless of
+ * base comparison, supporting arbitrary-nesting override guarantees for
+ * modifier-scoped domains (e.g. surface-variant color/effect).
+ *
  * @param {unknown} sourceNode
  * @param {unknown | undefined} baseNode
+ * @param {{ forceEmitRoots?: Set<string>, pathStack?: string[] }} [options]
  * @returns {unknown | null}
  */
-function pruneUnchanged(sourceNode, baseNode) {
+function pruneUnchanged(sourceNode, baseNode, options = {}) {
+  const { forceEmitRoots = null, pathStack = [] } = options;
+
   if (!isObject(sourceNode)) return sourceNode;
   if (isTokenObject(sourceNode)) {
+    const forced =
+      forceEmitRoots &&
+      pathStack.length > 0 &&
+      forceEmitRoots.has(pathStack[0]);
+
     if (
+      !forced &&
       isTokenObject(baseNode) &&
       deepEqual(sourceNode.$value, baseNode.$value)
     ) {
@@ -212,6 +225,7 @@ function pruneUnchanged(sourceNode, baseNode) {
     const pruned = pruneUnchanged(
       value,
       isObject(baseNode) ? baseNode[key] : undefined,
+      { forceEmitRoots, pathStack: pathStack.concat(key) },
     );
 
     if (pruned !== null) out[key] = pruned;
@@ -1071,6 +1085,47 @@ function matchesScope(selection, scope) {
 }
 
 /**
+ * Collects semantic domain roots populated by a modifier's context sources.
+ *
+ * These domains are "modifier-scoped" — tokens within them vary per context
+ * and must emit fully on every variant's selector to guarantee arbitrary
+ * nesting overrides. Domain is derived from the `semantic/<domain>/...` path
+ * segment of each `$ref` source.
+ *
+ * @param {Record<string, unknown> | undefined} modifierDoc
+ * @returns {Set<string>}
+ */
+function collectModifierScopedDomains(modifierDoc) {
+  const domains = new Set();
+  const contexts = modifierDoc?.contexts ?? {};
+
+  for (const sources of Object.values(contexts)) {
+    if (!Array.isArray(sources)) continue;
+
+    for (const entry of sources) {
+      if (typeof entry?.$ref !== "string") continue;
+
+      const parts = entry.$ref.split("/");
+      const semanticIndex = parts.indexOf("semantic");
+
+      if (semanticIndex === -1) continue;
+
+      const next = parts[semanticIndex + 1];
+
+      if (!next) continue;
+
+      const domain = next.endsWith(".tokens.json")
+        ? next.replace(/\.tokens\.json$/, "")
+        : next;
+
+      domains.add(domain);
+    }
+  }
+
+  return domains;
+}
+
+/**
  * Resolves shared media definitions from inline config or external `mediaRef`.
  *
  * @param {Record<string, unknown>} buildDefs
@@ -1161,6 +1216,7 @@ async function main() {
     );
   }
 
+  const surfaceScopedRoots = collectModifierScopedDomains(surfaceModifier);
   const surfaceContexts = Object.keys(surfaceModifier.contexts);
   const responsiveContexts = Object.keys(responsiveModifier.contexts);
   const surfaceOrder = buildSurfaceOrder(surfaceContexts, surfaceDefs);
@@ -1266,8 +1322,12 @@ async function main() {
         : {};
 
       // Overlay for this surface at this responsive context (removes inherited/base tokens).
+      // Surface-scoped domains always emit in full so nested surfaces fully
+      // override ambient surface tokens regardless of baseContext pruning.
       const currentOverlayResolved =
-        pruneUnchanged(fullDocResolved, baseDocResolved) || {};
+        pruneUnchanged(fullDocResolved, baseDocResolved, {
+          forceEmitRoots: surfaceScopedRoots,
+        }) || {};
 
       const previousOverlayResolved =
         previousOffOverlayBySurface.get(surfaceContext) || {};
