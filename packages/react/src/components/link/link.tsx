@@ -13,13 +13,30 @@ export type LinkProps = Omit<ClbrLinkProps, "icon"> & {
 } & NativeAttrsFor<HTMLAnchorElement>;
 
 export function Link(props: LinkProps): ReturnType<typeof reactify> {
-  const { href, icon, label, rel, size, target, tone, underline, ...rest } =
-    props;
+  const {
+    appearance,
+    download,
+    href,
+    icon,
+    iconPlacement,
+    label,
+    labelVisibility,
+    rel,
+    size,
+    target,
+    tone,
+    underline,
+    ...rest
+  } = props;
   const hasIcon = icon != null && icon !== false;
   const node = buildClbrLink({
+    appearance,
+    download,
     href,
     icon: hasIcon ? SLOT_LINK_ICON : undefined,
+    iconPlacement,
     label,
+    labelVisibility,
     rel,
     size,
     target,

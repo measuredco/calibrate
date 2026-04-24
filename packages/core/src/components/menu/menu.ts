@@ -117,7 +117,6 @@ export function buildClbrMenu({
             id: triggerId,
             label: triggerLabel,
             labelVisibility: triggerLabelVisibility,
-            mode: "button",
             size,
             tone: "neutral",
             type: "button",

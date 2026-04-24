@@ -1,7 +1,6 @@
 import {
   buildClbrButton,
-  type ClbrButtonElementProps,
-  type ClbrButtonLinkProps,
+  type ClbrButtonProps,
 } from "@measured/calibrate-core";
 import {
   type NativeAttrsFor,
@@ -9,11 +8,9 @@ import {
   reactify,
 } from "../../reactify";
 
-export type ButtonProps =
-  | (ClbrButtonElementProps & NativeAttrsFor<HTMLButtonElement>)
-  | (ClbrButtonLinkProps & NativeAttrsFor<HTMLAnchorElement>);
+export type ButtonProps = ClbrButtonProps & NativeAttrsFor<HTMLButtonElement>;
 
-export function Button(props: ButtonProps) {
+export function Button(props: ButtonProps): ReturnType<typeof reactify> {
   return reactify(
     buildClbrButton(props),
     pickNativeExtras(props as unknown as Record<string, unknown>),

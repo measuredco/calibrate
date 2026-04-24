@@ -66,7 +66,6 @@ export const Default = {
       {
         appearance: "solid",
         label: "Continue",
-        mode: "button",
         size: "md",
         tone: "default",
         type: "button",
@@ -74,7 +73,6 @@ export const Default = {
     )}${renderClbrButton({
       appearance: "outline",
       label: "Back",
-      mode: "button",
       size: "md",
       tone: "neutral",
       type: "button",
@@ -132,7 +130,6 @@ export const Default = {
       {
         appearance: "solid",
         label: "Continue",
-        mode: "button",
         size: "sm",
         tone: "default",
         type: "button",
@@ -140,7 +137,6 @@ export const Default = {
     )}${renderClbrButton({
       appearance: "outline",
       label: "Back",
-      mode: "button",
       size: "sm",
       tone: "neutral",
       type: "button",

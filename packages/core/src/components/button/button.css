@@ -218,6 +218,7 @@
       box-shadow: none;
       color: var(--clbr-color-interactive-default);
       padding: 0;
+      vertical-align: top;
 
       &:focus-visible {
         outline-offset: 0;

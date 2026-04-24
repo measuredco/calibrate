@@ -21,7 +21,7 @@ const meta = {
     },
     padding: "1.125rem 1rem",
   },
-  title: "Structure/Nav",
+  title: "Navigation/Nav",
 };
 
 const items: ClbrNavItem[] = [

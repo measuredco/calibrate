@@ -1,6 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import type { ClbrComponentSpec } from "../../helpers/spec";
-import type { ClbrLinkTarget } from "../link/link";
 import { type ClbrIconMirrorMode, renderClbrIcon } from "../icon/icon";
 
 export type ClbrButtonAppearance = "outline" | "solid" | "text";
@@ -9,18 +8,39 @@ export type ClbrButtonLabelVisibility =
   | "visible"
   | "hidden"
   | "hiddenBelowTablet";
-export type ClbrButtonMode = "button" | "link";
 export type ClbrButtonPlacement = "start" | "end";
 export type ClbrButtonSize = "sm" | "md" | "lg";
 export type ClbrButtonTone = "default" | "neutral";
 export type ClbrButtonType = "button" | "submit";
 
-export interface ClbrButtonCommonProps {
+export interface ClbrButtonProps {
   /**
    * Structural style.
    * @default "outline"
    */
   appearance?: ClbrButtonAppearance;
+  /**
+   * Controlled element id for disclosure-style button interactions.
+   * Ignored when `disclosure` is false or omitted.
+   */
+  controls?: string;
+  /**
+   * Disables interaction.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * Emits `aria-expanded="false"` for disclosure-style button interactions.
+   * SSR renderers are expected to update the attribute at runtime if state changes.
+   * @default false
+   */
+  disclosure?: boolean;
+  /** Optional form owner ID. */
+  form?: string;
+  /**
+   * Popup type for button interactions.
+   */
+  haspopup?: ClbrButtonHasPopup;
   /** Optional DOM id. */
   id?: string;
   /** Optional icon name (Lucide naming semantics). */
@@ -40,6 +60,8 @@ export interface ClbrButtonCommonProps {
    * @default "visible"
    */
   labelVisibility?: ClbrButtonLabelVisibility;
+  /** Optional submitted field name. */
+  name?: string;
   /**
    * Size variant.
    * @default "md"
@@ -50,73 +72,13 @@ export interface ClbrButtonCommonProps {
    * @default "default"
    */
   tone?: ClbrButtonTone;
-}
-
-/** Button-mode props. */
-export interface ClbrButtonElementProps extends ClbrButtonCommonProps {
-  /**
-   * Controlled element id for disclosure-style button interactions.
-   * Ignored when `disclosure` is false or omitted.
-   */
-  controls?: string;
-  /**
-   * Emits `aria-expanded="false"` for disclosure-style button interactions.
-   * SSR renderers are expected to update the attribute at runtime if state changes.
-   * Ignored in link mode.
-   * @default false
-   */
-  disclosure?: boolean;
-  /**
-   * Popup type for button interactions.
-   * Ignored in link mode.
-   */
-  haspopup?: ClbrButtonHasPopup;
-  /**
-   * Disables interaction in button mode.
-   * @default false
-   */
-  disabled?: boolean;
-  /** Optional form owner ID for button mode. */
-  form?: string;
-  /**
-   * Button render mode.
-   * @default "button"
-   */
-  mode?: "button";
-  /** Optional submitted field name for button mode. */
-  name?: string;
   /**
    * Native button type.
    * @default "button"
    */
   type?: ClbrButtonType;
-  /** Optional submitted field value for button mode. */
+  /** Optional submitted field value. */
   value?: string;
-}
-
-/** Link-mode props. Requires `mode: "link"` and `href`. */
-export interface ClbrButtonLinkProps extends ClbrButtonCommonProps {
-  /** Optional `download` attribute (`true` or suggested filename). */
-  download?: boolean | string;
-  /** Link destination. */
-  href: string;
-  /** Link render mode. */
-  mode: "link";
-  /** Optional explicit `rel` value for link mode. Ignored when `download` is set. */
-  rel?: string;
-  /** Optional link target for link mode. Ignored when `download` is set. */
-  target?: ClbrLinkTarget;
-}
-
-/** Props for the Calibrate button renderer. */
-export type ClbrButtonProps = ClbrButtonElementProps | ClbrButtonLinkProps;
-
-function normalizeDownload(
-  value?: boolean | string,
-): string | boolean | undefined {
-  if (!value) return undefined;
-  if (value === true) return true;
-  return value;
 }
 
 /**
@@ -128,14 +90,22 @@ function normalizeDownload(
 export function buildClbrButton(props: ClbrButtonProps): ClbrNode {
   const {
     appearance = "outline",
+    controls,
+    disabled,
+    disclosure,
+    form,
+    haspopup,
     id,
     icon,
     iconMirrored,
     iconPlacement = "start",
     label,
     labelVisibility = "visible",
+    name,
     size = "md",
     tone = "default",
+    type,
+    value,
   } = props;
 
   const normalizedIconName = icon?.trim() || undefined;
@@ -178,39 +148,6 @@ export function buildClbrButton(props: ClbrButtonProps): ClbrNode {
       : [iconNode, labelNode]
     : [labelNode];
 
-  const commonAttrs = {
-    class: "clbr-button",
-    "data-appearance": appearance,
-    "data-label-visibility":
-      labelVisibility === "visible" ? undefined : labelVisibility,
-    "data-size": size,
-    "data-tone": tone === "neutral" ? "neutral" : undefined,
-    id: id || undefined,
-  };
-
-  // Keep discriminant check on `props.mode` so TypeScript narrows the union.
-  if (props.mode === "link") {
-    const { download, href, rel, target } = props;
-    const normalizedDownload = normalizeDownload(download);
-    const normalizedRel = rel || undefined;
-    const normalizedTarget = target || undefined;
-    return {
-      kind: "element",
-      tag: "a",
-      attrs: {
-        ...commonAttrs,
-        "data-mode": "link",
-        href,
-        download: normalizedDownload,
-        rel: normalizedDownload ? undefined : normalizedRel,
-        target: normalizedDownload ? undefined : normalizedTarget,
-      },
-      children,
-    };
-  }
-
-  const { controls, disabled, disclosure, form, haspopup, name, type, value } =
-    props;
   return {
     kind: "element",
     tag: "button",
@@ -218,10 +155,15 @@ export function buildClbrButton(props: ClbrButtonProps): ClbrNode {
       "aria-controls": disclosure ? controls || undefined : undefined,
       "aria-expanded": disclosure ? "false" : undefined,
       "aria-haspopup": haspopup || undefined,
-      ...commonAttrs,
-      "data-mode": "button",
+      class: "clbr-button",
+      "data-appearance": appearance,
+      "data-label-visibility":
+        labelVisibility === "visible" ? undefined : labelVisibility,
+      "data-size": size,
+      "data-tone": tone === "neutral" ? "neutral" : undefined,
       disabled: Boolean(disabled),
       form: form || undefined,
+      id: id || undefined,
       name: name || undefined,
       type: type || "button",
       value: value || undefined,
@@ -234,13 +176,7 @@ export function buildClbrButton(props: ClbrButtonProps): ClbrNode {
  * SSR renderer for the Calibrate button component.
  *
  * @param props - Button component props.
- * @returns HTML string for either `<button>` or `<a>` mode.
- * @remarks
- * - `mode="button"` (or omitted) -> render `<button>`
- * - button mode ignores link-only `download`, `rel`, and `target`
- * - `mode="link"` -> render `<a>`
- * - link mode ignores button-only `disabled`, and `type`
- * - link mode ignores `rel` and `target` when `download` is set
+ * @returns HTML string for a `<button>` element.
  */
 export function renderClbrButton(props: ClbrButtonProps): string {
   return serializeClbrNode(buildClbrButton(props));
@@ -250,14 +186,7 @@ export function renderClbrButton(props: ClbrButtonProps): string {
 export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
   name: "button",
   description: "Use `button` to let users trigger actions.",
-  output: {
-    element: {
-      kind: "switch",
-      prop: "mode",
-      cases: { button: "button", link: "a" },
-    },
-    class: "clbr-button",
-  },
+  output: { element: "button", class: "clbr-button" },
   content: { kind: "text", prop: "label" },
   props: {
     appearance: {
@@ -267,46 +196,28 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
     },
     controls: {
       description: "`id` of the element this button controls.",
-      ignoredWhen: "`mode` is link or `disclosure` is false",
+      ignoredWhen: "`disclosure` is false",
       type: { kind: "string" },
     },
     disabled: {
       default: false,
       description: "Prevents interaction.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "boolean" },
     },
     disclosure: {
       default: false,
       description:
         "Marks the button as a disclosure toggle for another element.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "boolean" },
-    },
-    download: {
-      description:
-        "Saves the target instead of navigating. Pass a filename or `true`.",
-      ignoredWhen: "`mode` is button",
-      type: {
-        kind: "union",
-        variants: [{ kind: "boolean" }, { kind: "string" }],
-      },
     },
     form: {
       description: "`id` of the form this button belongs to.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "string" },
     },
     haspopup: {
       description:
         "Signals that activating the button opens a popup of this type.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "enum", values: ["menu"] },
-    },
-    href: {
-      description: "Link destination.",
-      requiredWhen: "`mode` is link",
-      type: { kind: "string" },
     },
     icon: {
       description: "Icon shown alongside the label.",
@@ -341,33 +252,14 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         values: ["visible", "hidden", "hiddenBelowTablet"],
       },
     },
-    mode: {
-      default: "button",
-      description: "Render as a button or as a link.",
-      type: { kind: "enum", values: ["button", "link"] },
-    },
     name: {
       description: "Name submitted with the form.",
-      ignoredWhen: "`mode` is link",
-      type: { kind: "string" },
-    },
-    rel: {
-      description: "Explicit `rel` attribute.",
-      ignoredWhen: "`mode` is button or `download` is set",
       type: { kind: "string" },
     },
     size: {
       default: "md",
       description: "Size variant.",
       type: { kind: "enum", values: ["sm", "md", "lg"] },
-    },
-    target: {
-      description: "Where to open the link.",
-      ignoredWhen: "`mode` is button or `download` is set",
-      type: {
-        kind: "enum",
-        values: ["_blank", "_parent", "_self", "_top"],
-      },
     },
     tone: {
       default: "default",
@@ -377,12 +269,10 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
     type: {
       default: "button",
       description: "Native button type.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "enum", values: ["button", "submit"] },
     },
     value: {
       description: "Value submitted with the form.",
-      ignoredWhen: "`mode` is link",
       type: { kind: "string" },
     },
   },
@@ -413,12 +303,6 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
       },
       {
         target: { on: "host" },
-        attribute: "data-mode",
-        condition: { kind: "always" },
-        value: { kind: "prop", prop: "mode" },
-      },
-      {
-        target: { on: "host" },
         attribute: "data-size",
         condition: { kind: "always" },
         value: { kind: "prop", prop: "size" },
@@ -432,30 +316,12 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
       {
         target: { on: "host" },
         attribute: "disabled",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-truthy", prop: "disabled" },
-          ],
-        },
+        condition: { kind: "when-truthy", prop: "disabled" },
       },
       {
         target: { on: "host" },
         attribute: "aria-expanded",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-truthy", prop: "disclosure" },
-          ],
-        },
+        condition: { kind: "when-truthy", prop: "disclosure" },
         value: { kind: "literal", text: "false" },
       },
       {
@@ -464,10 +330,6 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
         condition: {
           kind: "all",
           of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
             { kind: "when-truthy", prop: "disclosure" },
             { kind: "when-non-empty", prop: "controls" },
           ],
@@ -477,120 +339,31 @@ export const CLBR_BUTTON_SPEC: ClbrComponentSpec = {
       {
         target: { on: "host" },
         attribute: "aria-haspopup",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-provided", prop: "haspopup" },
-          ],
-        },
+        condition: { kind: "when-provided", prop: "haspopup" },
         value: { kind: "prop", prop: "haspopup" },
       },
       {
         target: { on: "host" },
-        attribute: "download",
-        condition: {
-          kind: "all",
-          of: [
-            { kind: "when-equals", prop: "mode", to: "link" },
-            { kind: "when-truthy", prop: "download" },
-          ],
-        },
-        value: { kind: "prop", prop: "download" },
-      },
-      {
-        target: { on: "host" },
         attribute: "form",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-non-empty", prop: "form" },
-          ],
-        },
+        condition: { kind: "when-non-empty", prop: "form" },
         value: { kind: "prop", prop: "form" },
       },
       {
         target: { on: "host" },
-        attribute: "href",
-        condition: {
-          kind: "all",
-          of: [
-            { kind: "when-equals", prop: "mode", to: "link" },
-            { kind: "when-provided", prop: "href" },
-          ],
-        },
-        value: { kind: "prop", prop: "href" },
-      },
-      {
-        target: { on: "host" },
         attribute: "name",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-non-empty", prop: "name" },
-          ],
-        },
+        condition: { kind: "when-non-empty", prop: "name" },
         value: { kind: "prop", prop: "name" },
       },
       {
         target: { on: "host" },
-        attribute: "rel",
-        condition: {
-          kind: "all",
-          of: [
-            { kind: "when-equals", prop: "mode", to: "link" },
-            { kind: "when-non-empty", prop: "rel" },
-            { kind: "not", of: { kind: "when-truthy", prop: "download" } },
-          ],
-        },
-        value: { kind: "prop", prop: "rel" },
-      },
-      {
-        target: { on: "host" },
-        attribute: "target",
-        condition: {
-          kind: "all",
-          of: [
-            { kind: "when-equals", prop: "mode", to: "link" },
-            { kind: "when-non-empty", prop: "target" },
-            { kind: "not", of: { kind: "when-truthy", prop: "download" } },
-          ],
-        },
-        value: { kind: "prop", prop: "target" },
-      },
-      {
-        target: { on: "host" },
         attribute: "type",
-        condition: {
-          kind: "not",
-          of: { kind: "when-equals", prop: "mode", to: "link" },
-        },
+        condition: { kind: "always" },
         value: { kind: "prop", prop: "type" },
       },
       {
         target: { on: "host" },
         attribute: "value",
-        condition: {
-          kind: "all",
-          of: [
-            {
-              kind: "not",
-              of: { kind: "when-equals", prop: "mode", to: "link" },
-            },
-            { kind: "when-non-empty", prop: "value" },
-          ],
-        },
+        condition: { kind: "when-non-empty", prop: "value" },
         value: { kind: "prop", prop: "value" },
       },
     ],

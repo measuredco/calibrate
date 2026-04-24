@@ -1,6 +1,5 @@
 import type { ClbrComponentSpec } from "@measured/calibrate-core";
 import { classify, pascalCase, screamingSnake } from "../shared/spec.ts";
-import { REACT_OVERRIDES } from "./overrides.ts";
 
 // -----------------------------------------------------------------------------
 // Emit pipeline.
@@ -234,33 +233,15 @@ function contributePassThrough(
 ): void {
   const pascal = pascalCase(spec.name);
   const buildFn = `buildClbr${pascal}`;
-  const override = REACT_OVERRIDES[spec.name];
+  const corePropsType = `Clbr${pascal}Props`;
+  const element = hostInterface(spec);
 
   parts.coreValueImports.add(buildFn);
-
-  if (override?.discriminatedProps) {
-    const cases = Object.values(override.discriminatedProps.cases);
-    for (const arm of cases) {
-      parts.coreTypeImports.add(`Clbr${pascal}${arm.coreSuffix}Props`);
-    }
-    const unionArms = cases.map(
-      (arm) =>
-        `  | (Clbr${pascal}${arm.coreSuffix}Props & NativeAttrsFor<${arm.element}>)`,
-    );
-    parts.exportedTypes.push(
-      `export type ${pascal}Props =\n${unionArms.join("\n")};`,
-    );
-    parts.functionSignature = `export function ${pascal}(props: ${pascal}Props)`;
-  } else {
-    const corePropsType = `Clbr${pascal}Props`;
-    const element = hostInterface(spec);
-    parts.coreTypeImports.add(corePropsType);
-    parts.exportedTypes.push(
-      `export type ${pascal}Props = ${corePropsType} & NativeAttrsFor<${element}>;`,
-    );
-    parts.functionSignature = `export function ${pascal}(props: ${pascal}Props): ReturnType<typeof reactify>`;
-  }
-
+  parts.coreTypeImports.add(corePropsType);
+  parts.exportedTypes.push(
+    `export type ${pascal}Props = ${corePropsType} & NativeAttrsFor<${element}>;`,
+  );
+  parts.functionSignature = `export function ${pascal}(props: ${pascal}Props): ReturnType<typeof reactify>`;
   parts.returnExpr = `reactify(\n    ${buildFn}(props),\n    pickNativeExtras(props as unknown as Record<string, unknown>),\n  )`;
 }
 

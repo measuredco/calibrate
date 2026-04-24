@@ -31,6 +31,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "download",
   "info",
   "layers",
+  "link",
   "menu",
   "panel-left",
   "settings",
