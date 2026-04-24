@@ -26,6 +26,9 @@ const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
   readonly: "readOnly",
   spellcheck: "spellCheck",
   srcset: "srcSet",
+  "stroke-linecap": "strokeLinecap",
+  "stroke-linejoin": "strokeLinejoin",
+  "stroke-width": "strokeWidth",
   tabindex: "tabIndex",
 };
 
@@ -86,6 +89,16 @@ function buildElementProps(
     ...toReactProps(node.attrs),
     ...extras,
   };
+  // React's `<textarea>` takes its initial content via `defaultValue` /
+  // `value`, not children. Core emits the content as a single text child,
+  // so lift that into the prop instead of passing children.
+  if (node.tag === "textarea" && node.children.length > 0) {
+    const content = node.children
+      .map((child) => (child.kind === "text" ? child.value : ""))
+      .join("");
+    if (content.length > 0) props.defaultValue = content;
+    return { props, children: null };
+  }
   const hasUnmatchedRaw = node.children.some(
     (child) => child.kind === "raw" && !(child.html in slots),
   );

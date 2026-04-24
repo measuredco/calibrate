@@ -4,9 +4,11 @@ import type {
   ClbrComponentSpecProp,
   ClbrSpecPropType,
 } from "@measured/calibrate-core";
-import { type ComponentType, createElement } from "react";
+import { type ComponentType, createElement, type Ref } from "react";
+import { act } from "react";
+import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import * as adapter from "../index";
 
 // -----------------------------------------------------------------------------
@@ -176,6 +178,126 @@ describe("generated React wrappers match core SSR DOM", () => {
         throw new Error(
           `${spec.name} DOM mismatch\n  core:  ${coreHtml}\n  react: ${reactHtml}`,
         );
+      }
+    });
+  }
+});
+
+// -----------------------------------------------------------------------------
+// Custom-element upgrade.
+//
+// For every SPEC whose host is `clbr-*`, mount the wrapper client-side and
+// assert `customElements.get(tagName)` resolves. Exercises the generator's
+// `defineClbr*()` useEffect layer.
+// -----------------------------------------------------------------------------
+
+function customElementTagOf(spec: ClbrComponentSpec): string | undefined {
+  const element = spec.output.element;
+  if (typeof element !== "string") return undefined;
+  if (!element.startsWith("clbr-")) return undefined;
+  return element;
+}
+
+async function mountWrapper<P extends Record<string, unknown>>(
+  Component: ComponentType<P>,
+  props: P,
+): Promise<{ container: HTMLElement; unmount: () => Promise<void> }> {
+  const container = document.createElement("div");
+  document.body.appendChild(container);
+  const root = createRoot(container);
+  await act(async () => {
+    root.render(<Component {...props} />);
+  });
+  return {
+    container,
+    async unmount() {
+      await act(async () => {
+        root.unmount();
+      });
+      container.remove();
+    },
+  };
+}
+
+describe("generated React wrappers register custom elements on mount", () => {
+  for (const spec of specs) {
+    const tagName = customElementTagOf(spec);
+    if (!tagName) continue;
+    const Pascal = pascal(spec.name);
+    const Wrapper = adapterRegistry[Pascal];
+
+    it(spec.name, async () => {
+      const { unmount } = await mountWrapper(
+        Wrapper,
+        fixtureFor(spec, "react"),
+      );
+      try {
+        expect(customElements.get(tagName)).toBeTypeOf("function");
+      } finally {
+        await unmount();
+      }
+    });
+  }
+});
+
+// -----------------------------------------------------------------------------
+// Custom events + ref merge.
+//
+// For every SPEC with events, mount the wrapper with an `on<Action>` mock
+// handler per event + a caller-provided callback ref. Dispatch each event
+// on the host and assert the handler received it; assert the caller ref
+// received the host element (the generator's merged-ref pattern).
+// -----------------------------------------------------------------------------
+
+describe("generated React wrappers wire custom events + caller refs", () => {
+  for (const spec of specs) {
+    const tagName = customElementTagOf(spec);
+    if (!tagName) continue;
+    const events = Object.entries(spec.events);
+    if (events.length === 0) continue;
+    const Pascal = pascal(spec.name);
+    const Wrapper = adapterRegistry[Pascal];
+
+    it(spec.name, async () => {
+      const handlers = new Map<string, ReturnType<typeof vi.fn>>();
+      const handlerProps: Record<string, unknown> = {};
+      for (const [eventName] of events) {
+        const action = eventName.slice(`clbr-${spec.name}-`.length);
+        const handlerProp = `on${pascal(action)}`;
+        const mock = vi.fn();
+        handlers.set(eventName, mock);
+        handlerProps[handlerProp] = mock;
+      }
+      let capturedRef: Element | null = null;
+      handlerProps.ref = ((node: Element | null) => {
+        capturedRef = node;
+      }) as Ref<Element>;
+
+      const { container, unmount } = await mountWrapper(Wrapper, {
+        ...fixtureFor(spec, "react"),
+        ...handlerProps,
+      });
+      try {
+        const host = container.querySelector(tagName);
+        if (!(host instanceof HTMLElement)) {
+          throw new Error(`${spec.name}: host <${tagName}> not found`);
+        }
+        expect(capturedRef).toBe(host);
+
+        for (const [eventName, mock] of handlers) {
+          await act(async () => {
+            host.dispatchEvent(
+              new CustomEvent(eventName, {
+                bubbles: true,
+                cancelable: true,
+                detail: {},
+              }),
+            );
+          });
+          expect(mock, `handler for ${eventName}`).toHaveBeenCalledOnce();
+        }
+      } finally {
+        await unmount();
       }
     });
   }
