@@ -4,21 +4,18 @@ import type {
   ClbrComponentSpecProp,
   ClbrSpecPropType,
 } from "@measured/calibrate-core";
-import { type ComponentType, createElement, type Ref } from "react";
-import { act } from "react";
+import { act, type ComponentType, createElement, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import * as adapter from "../index";
 
 // -----------------------------------------------------------------------------
-// SSR-parity sweep across every CLBR_*_SPEC.
+// SSR-parity sweep.
 //
-// Renders each generated React wrapper with a SPEC-synthesized prop set and
-// asserts the DOM matches the corresponding `renderClbr*` output. Catches
-// regressions in the hand-written `reactify` walker and any drift between
-// core's SSR serializer and the adapter's React rendering. Grows with core
-// automatically — new SPECs are picked up on the next test run.
+// For every CLBR_*_SPEC, render the generated React wrapper with a
+// SPEC-synthesized fixture and assert the DOM matches `renderClbr*`.
+// Catches walker regressions and SSR drift; grows with core automatically.
 // -----------------------------------------------------------------------------
 
 function pascal(name: string): string {
@@ -186,9 +183,9 @@ describe("generated React wrappers match core SSR DOM", () => {
 // -----------------------------------------------------------------------------
 // Custom-element upgrade.
 //
-// For every SPEC whose host is `clbr-*`, mount the wrapper client-side and
-// assert `customElements.get(tagName)` resolves. Exercises the generator's
-// `defineClbr*()` useEffect layer.
+// For every `clbr-*` host, mount the wrapper client-side and assert
+// `customElements.get(tagName)` resolves — exercises the `defineClbr*()`
+// useEffect layer.
 // -----------------------------------------------------------------------------
 
 function customElementTagOf(spec: ClbrComponentSpec): string | undefined {
@@ -243,10 +240,9 @@ describe("generated React wrappers register custom elements on mount", () => {
 // -----------------------------------------------------------------------------
 // Custom events + ref merge.
 //
-// For every SPEC with events, mount the wrapper with an `on<Action>` mock
-// handler per event + a caller-provided callback ref. Dispatch each event
-// on the host and assert the handler received it; assert the caller ref
-// received the host element (the generator's merged-ref pattern).
+// For every SPEC with events, mount with mock `on<Action>` handlers and a
+// caller callback ref. Dispatch each event on the host, assert the handler
+// fired; assert the caller ref received the host (merged-ref pattern).
 // -----------------------------------------------------------------------------
 
 describe("generated React wrappers wire custom events + caller refs", () => {

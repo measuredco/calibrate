@@ -1,17 +1,12 @@
 import type { ClbrComponentSpec } from "@measured/calibrate-core";
-import {
-  classify,
-  hostInterface,
-  pascalCase,
-  screamingSnake,
-} from "../shared/spec.ts";
+import { classify, pascalCase, screamingSnake } from "../shared/spec.ts";
 import { REACT_OVERRIDES } from "./overrides.ts";
 
 // -----------------------------------------------------------------------------
 // Emit pipeline.
 //
 // Every wrapper is composed from a small number of orthogonal concerns:
-//   - content archetype (pass-through, slotted, structured-items)
+//   - content archetype (pass-through or slotted)
 //   - custom-element registration (defineClbr* useEffect)
 //   - custom-event wiring (onEvent props, addEventListener useEffects, ref
 //     merge)
@@ -169,6 +164,45 @@ function hasEvents(spec: ClbrComponentSpec): boolean {
   return Object.keys(spec.events).length > 0;
 }
 
+/**
+ * HTML tag → DOM interface used in emitted `NativeAttrsFor<T>` type
+ * expressions. Covers every tag currently referenced in core's
+ * `output.element` strings; unmapped tags fall back to `HTMLElement`.
+ */
+const ELEMENT_INTERFACE: Record<string, string> = {
+  a: "HTMLAnchorElement",
+  article: "HTMLElement",
+  aside: "HTMLElement",
+  button: "HTMLButtonElement",
+  div: "HTMLDivElement",
+  figure: "HTMLElement",
+  footer: "HTMLElement",
+  header: "HTMLElement",
+  hr: "HTMLHRElement",
+  input: "HTMLInputElement",
+  label: "HTMLLabelElement",
+  li: "HTMLLIElement",
+  main: "HTMLElement",
+  nav: "HTMLElement",
+  ol: "HTMLOListElement",
+  p: "HTMLParagraphElement",
+  section: "HTMLElement",
+  span: "HTMLSpanElement",
+  textarea: "HTMLTextAreaElement",
+  ul: "HTMLUListElement",
+};
+
+/**
+ * DOM interface to use for this SPEC's host. Polymorphic (`switch`) hosts
+ * take `HTMLElement` as the lowest common ancestor.
+ */
+function hostInterface(spec: ClbrComponentSpec): string {
+  const element = spec.output.element;
+  if (typeof element !== "string") return "HTMLElement";
+  if (element.startsWith("clbr-")) return "HTMLElement";
+  return ELEMENT_INTERFACE[element] ?? "HTMLElement";
+}
+
 // -----------------------------------------------------------------------------
 // Content contributors.
 //
@@ -182,14 +216,15 @@ function contributeContent(parts: EmitParts, spec: ClbrComponentSpec): void {
     case "pass-through":
       contributePassThrough(parts, spec);
       return;
-    case "slotted-html":
-    case "slotted-multi":
+    case "slotted":
       contributeSlotted(parts, spec);
       return;
-    default:
+    default: {
+      const exhaustive: never = archetype;
       throw new Error(
-        `contributeContent: archetype "${archetype}" not yet supported for "${spec.name}"`,
+        `contributeContent: unhandled archetype for "${spec.name}": ${JSON.stringify(exhaustive)}`,
       );
+    }
   }
 }
 
@@ -335,9 +370,7 @@ function contributeSlotted(parts: EmitParts, spec: ClbrComponentSpec): void {
 // -----------------------------------------------------------------------------
 // Custom-element contributor.
 //
-// If the host element is a `clbr-*` custom element, the wrapper registers
-// the runtime via `defineClbr<Pascal>()` inside a mount-time useEffect so
-// SSR output works even before the runtime loads.
+// `clbr-*` hosts call `defineClbr<Pascal>()` from a mount-time useEffect.
 // -----------------------------------------------------------------------------
 
 function contributeCustomElement(
@@ -356,16 +389,11 @@ function contributeCustomElement(
 // -----------------------------------------------------------------------------
 // Event contributor.
 //
-// Each entry in spec.events becomes:
-//   - an exported `<Pascal><Action>Handler` type (typed via `CustomEvent<T>`
-//     when the SPEC event carries a `detail`, else plain `Event`)
-//   - an optional `on<Action>` handler prop on `<Pascal>Props`
-//   - a per-event useEffect that attaches/detaches via the core-exported
-//     event-name constant
-//
-// Events require a host ref so addEventListener has somewhere to land. The
-// adapter uses a callback ref that merges the internal ref with any
-// caller-provided ref, threaded through `pickNativeExtras`.
+// Each spec.events entry becomes a typed `<Pascal><Action>Handler`, an
+// optional `on<Action>` prop, and a useEffect that
+// addEventListener/removeEventListener via core's event-name constant.
+// A callback ref merges the internal host ref with any caller-provided
+// ref so both coexist.
 // -----------------------------------------------------------------------------
 
 function contributeEvents(parts: EmitParts, spec: ClbrComponentSpec): void {
@@ -437,6 +465,14 @@ function contributeEvents(parts: EmitParts, spec: ClbrComponentSpec): void {
     );
   }
 
+  // Inject handler fields into the Props type via regex rewrite of what
+  // the content contributor already pushed. This is fragile — the pattern
+  // assumes the Props type ends in ` & NativeAttrsFor<X>;` (optionally
+  // preceded by a `}` from a slot-overlay block). If the content
+  // contributor ever emits a different Props shape this regex will
+  // silently fall through to the no-op branch and the injected
+  // `handlerBlock` will be lost. Consider refactoring to a structured
+  // "Props-type parts" accumulator if the shapes diverge further.
   const handlerBlock = `{\n${parts.propsTypeLines.join("\n")}\n}`;
   const injected = propsType.replace(
     /\n\} & NativeAttrsFor<([^>]+)>;$/,

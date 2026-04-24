@@ -8,16 +8,9 @@ import {
 } from "react";
 
 /**
- * HTML-canonical attribute names that React exposes under camelCase prop
- * names. `aria-*` and `data-*` stay kebab-case in React and are handled
- * generically, so they're not listed here.
- *
- * Small, stable, hand-maintained. React's rename set is narrow
- * (reserved-word renames + a handful of camelCased exceptions), and
- * React 19 passes unknown kebab-case attrs through without warning,
- * so additions are rare. The SSR-parity suite catches functional drift
- * for any wrapped component; for attrs that need renaming but pass
- * undetected, React's dev-time warnings surface the miss.
+ * HTML-canonical attribute names React renames. `aria-*` / `data-*` are
+ * pass-through. Small, hand-maintained; add entries when SSR-parity tests
+ * or React dev warnings surface a miss.
  */
 const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
   autocomplete: "autoComplete",
@@ -33,18 +26,11 @@ const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
 };
 
 /**
- * Native attrs a Calibrate React wrapper forwards to the root element.
- *
- * Restricted to the React `DOMAttributes` surface (event handlers, minus
- * `children` and `dangerouslySetInnerHTML`) plus `ref` and `autoFocus`.
- * Calibrate owns structural attrs (class, data-*, aria-*, id, href,
- * disabled, …) via its SPEC, so the adapter exposes only the interaction
- * surface consumers can't reach through component props.
- *
- * Fully general across element types — any `Element` subtype works without
- * adapter changes. Event handlers are element-specialized via the generic
- * (e.g. `onClick` on `HTMLAnchorElement` is typed as
- * `MouseEventHandler<HTMLAnchorElement>`).
+ * Native attrs a Calibrate React wrapper forwards to the root element:
+ * React's `DOMAttributes` surface (event handlers, minus `children` and
+ * `dangerouslySetInnerHTML`) plus `ref` and `autoFocus`. Everything else
+ * (class, data-*, aria-*, id, href, disabled, …) is owned by core's SPEC.
+ * The generic element-specialises event handler types.
  */
 export type NativeAttrsFor<E extends Element> = Omit<
   DOMAttributes<E>,
@@ -55,18 +41,11 @@ export type NativeAttrsFor<E extends Element> = Omit<
 };
 
 /**
- * Converts a Calibrate IR attr record into React props.
- *
- * - Attribute names are remapped via `ATTR_NAME_MAP` (e.g. `class` ->
- *   `className`, `tabindex` -> `tabIndex`).
- * - `false` / `undefined` attrs are dropped.
- * - `true` on a native boolean attr (e.g. `disabled`) stays as `true` so
- *   React emits the valueless form; `true` on a `data-*` attr becomes
- *   `""` to match core SSR's valueless output (React would otherwise
- *   stringify custom boolean props to `"true"`). `aria-*` booleans pass
- *   through so React emits the correct `"true"` / `"false"` strings the
- *   spec requires (e.g. `aria-expanded`).
- * - string-valued attrs pass through as strings.
+ * Convert a Calibrate IR attr record into React props. Renames via
+ * `ATTR_NAME_MAP`; drops `false` / `undefined`; maps `true` on `data-*`
+ * to `""` (matches core SSR's valueless output — React otherwise
+ * stringifies to `"true"`). Native bool attrs and `aria-*` booleans pass
+ * through for React's spec-correct rendering.
  */
 function toReactProps(
   attrs: Record<string, string | boolean | undefined>,
@@ -151,13 +130,11 @@ function renderNode(
 }
 
 /**
- * Renders a Calibrate IR tree as React elements, merging `rootExtras`
- * (event handlers, `ref`, `autoFocus`) into the root element's props.
- * Slot sentinels passed via `slots` substitute raw IR children with the
- * corresponding React node, enabling named-slot wrappers (e.g. `Page`).
- *
- * Non-element roots are wrapped in a fragment; `rootExtras` is ignored
- * in that case since there's no host element to attach handlers to.
+ * Render a Calibrate IR tree as React elements. `rootExtras` merges into
+ * the root element's props (event handlers, `ref`, `autoFocus`). `slots`
+ * substitutes named sentinel children with ReactNodes (for wrappers like
+ * `Page`). Non-element roots wrap in a fragment; `rootExtras` is ignored
+ * there (no host to attach handlers to).
  */
 export function reactify(
   node: ClbrNode,
