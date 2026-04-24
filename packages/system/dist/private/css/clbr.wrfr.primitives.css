@@ -182,7 +182,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -191,6 +191,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -389,7 +391,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -398,6 +400,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -596,7 +600,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -605,6 +609,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -803,7 +809,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -812,6 +818,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -1010,7 +1018,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -1019,6 +1027,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -1218,7 +1228,7 @@
       --clbr-primitive-typography-measure-default: 35.25;
       --clbr-primitive-typography-measure-sm: 31.75;
       --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-      --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+      --clbr-primitive-typography-type-step-100-line-height: 1.285714;
       --clbr-primitive-typography-type-step-1000-font-size: 3rem;
       --clbr-primitive-typography-type-step-1000-line-height: 1.25;
       --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -1227,6 +1237,8 @@
       --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
       --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
       --clbr-primitive-typography-type-step-1300-line-height: 1;
+      --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+      --clbr-primitive-typography-type-step-150-line-height: 1.714286;
       --clbr-primitive-typography-type-step-200-font-size: 1rem;
       --clbr-primitive-typography-type-step-200-line-height: 1.5;
       --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -1426,7 +1438,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -1435,6 +1447,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -1633,7 +1647,7 @@
     --clbr-primitive-typography-measure-default: 35.25;
     --clbr-primitive-typography-measure-sm: 31.75;
     --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-    --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+    --clbr-primitive-typography-type-step-100-line-height: 1.285714;
     --clbr-primitive-typography-type-step-1000-font-size: 3rem;
     --clbr-primitive-typography-type-step-1000-line-height: 1.25;
     --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -1642,6 +1656,8 @@
     --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
     --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
     --clbr-primitive-typography-type-step-1300-line-height: 1;
+    --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+    --clbr-primitive-typography-type-step-150-line-height: 1.714286;
     --clbr-primitive-typography-type-step-200-font-size: 1rem;
     --clbr-primitive-typography-type-step-200-line-height: 1.5;
     --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -1841,7 +1857,7 @@
       --clbr-primitive-typography-measure-default: 35.25;
       --clbr-primitive-typography-measure-sm: 31.75;
       --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-      --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+      --clbr-primitive-typography-type-step-100-line-height: 1.285714;
       --clbr-primitive-typography-type-step-1000-font-size: 3rem;
       --clbr-primitive-typography-type-step-1000-line-height: 1.25;
       --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -1850,6 +1866,8 @@
       --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
       --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
       --clbr-primitive-typography-type-step-1300-line-height: 1;
+      --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+      --clbr-primitive-typography-type-step-150-line-height: 1.714286;
       --clbr-primitive-typography-type-step-200-font-size: 1rem;
       --clbr-primitive-typography-type-step-200-line-height: 1.5;
       --clbr-primitive-typography-type-step-300-font-size: 1.125rem;
@@ -2050,7 +2068,7 @@
       --clbr-primitive-typography-measure-default: 35.25;
       --clbr-primitive-typography-measure-sm: 31.75;
       --clbr-primitive-typography-type-step-100-font-size: 0.875rem;
-      --clbr-primitive-typography-type-step-100-line-height: 1.714286;
+      --clbr-primitive-typography-type-step-100-line-height: 1.285714;
       --clbr-primitive-typography-type-step-1000-font-size: 3rem;
       --clbr-primitive-typography-type-step-1000-line-height: 1.25;
       --clbr-primitive-typography-type-step-1100-font-size: 3.875rem;
@@ -2059,6 +2077,8 @@
       --clbr-primitive-typography-type-step-1200-line-height: 1.142857;
       --clbr-primitive-typography-type-step-1300-font-size: 7.5rem;
       --clbr-primitive-typography-type-step-1300-line-height: 1;
+      --clbr-primitive-typography-type-step-150-font-size: 0.875rem;
+      --clbr-primitive-typography-type-step-150-line-height: 1.714286;
       --clbr-primitive-typography-type-step-200-font-size: 1rem;
       --clbr-primitive-typography-type-step-200-line-height: 1.5;
       --clbr-primitive-typography-type-step-300-font-size: 1.125rem;

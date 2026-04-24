@@ -193,7 +193,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -202,6 +202,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -409,7 +411,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -418,6 +420,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -629,7 +633,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -638,6 +642,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -845,7 +851,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -854,6 +860,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -1134,7 +1142,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -1143,6 +1151,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -1426,7 +1436,7 @@
       --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-type-step-100-font-size: 0.875rem;
-      --clbr-typography-type-step-100-line-height: 1.714286;
+      --clbr-typography-type-step-100-line-height: 1.285714;
       --clbr-typography-type-step-1000-font-size: 3rem;
       --clbr-typography-type-step-1000-line-height: 1.25;
       --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -1435,6 +1445,8 @@
       --clbr-typography-type-step-1200-line-height: 1.142857;
       --clbr-typography-type-step-1300-font-size: 7.5rem;
       --clbr-typography-type-step-1300-line-height: 1;
+      --clbr-typography-type-step-150-font-size: 0.875rem;
+      --clbr-typography-type-step-150-line-height: 1.714286;
       --clbr-typography-type-step-200-font-size: 1rem;
       --clbr-typography-type-step-200-line-height: 1.5;
       --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -1643,7 +1655,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -1652,6 +1664,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -1859,7 +1873,7 @@
     --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
     --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
     --clbr-typography-type-step-100-font-size: 0.875rem;
-    --clbr-typography-type-step-100-line-height: 1.714286;
+    --clbr-typography-type-step-100-line-height: 1.285714;
     --clbr-typography-type-step-1000-font-size: 3rem;
     --clbr-typography-type-step-1000-line-height: 1.25;
     --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -1868,6 +1882,8 @@
     --clbr-typography-type-step-1200-line-height: 1.142857;
     --clbr-typography-type-step-1300-font-size: 7.5rem;
     --clbr-typography-type-step-1300-line-height: 1;
+    --clbr-typography-type-step-150-font-size: 0.875rem;
+    --clbr-typography-type-step-150-line-height: 1.714286;
     --clbr-typography-type-step-200-font-size: 1rem;
     --clbr-typography-type-step-200-line-height: 1.5;
     --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -2080,7 +2096,7 @@
       --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-type-step-100-font-size: 0.875rem;
-      --clbr-typography-type-step-100-line-height: 1.714286;
+      --clbr-typography-type-step-100-line-height: 1.285714;
       --clbr-typography-type-step-1000-font-size: 3rem;
       --clbr-typography-type-step-1000-line-height: 1.25;
       --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -2089,6 +2105,8 @@
       --clbr-typography-type-step-1200-line-height: 1.142857;
       --clbr-typography-type-step-1300-font-size: 7.5rem;
       --clbr-typography-type-step-1300-line-height: 1;
+      --clbr-typography-type-step-150-font-size: 0.875rem;
+      --clbr-typography-type-step-150-line-height: 1.714286;
       --clbr-typography-type-step-200-font-size: 1rem;
       --clbr-typography-type-step-200-line-height: 1.5;
       --clbr-typography-type-step-300-font-size: 1.125rem;
@@ -2298,7 +2316,7 @@
       --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif;
       --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif;
       --clbr-typography-type-step-100-font-size: 0.875rem;
-      --clbr-typography-type-step-100-line-height: 1.714286;
+      --clbr-typography-type-step-100-line-height: 1.285714;
       --clbr-typography-type-step-1000-font-size: 3rem;
       --clbr-typography-type-step-1000-line-height: 1.25;
       --clbr-typography-type-step-1100-font-size: 3.875rem;
@@ -2307,6 +2325,8 @@
       --clbr-typography-type-step-1200-line-height: 1.142857;
       --clbr-typography-type-step-1300-font-size: 7.5rem;
       --clbr-typography-type-step-1300-line-height: 1;
+      --clbr-typography-type-step-150-font-size: 0.875rem;
+      --clbr-typography-type-step-150-line-height: 1.714286;
       --clbr-typography-type-step-200-font-size: 1rem;
       --clbr-typography-type-step-200-line-height: 1.5;
       --clbr-typography-type-step-300-font-size: 1.125rem;

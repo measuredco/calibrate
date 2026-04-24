@@ -4,8 +4,8 @@
     --clbr-checkbox-inset: var(--clbr-spacing-vertical-200);
     --clbr-checkbox-size: var(--clbr-layout-icon-size-sm);
 
-    font-size: var(--clbr-typography-type-step-100-font-size);
-    line-height: var(--clbr-typography-type-step-100-line-height);
+    font-size: var(--clbr-typography-type-step-150-font-size);
+    line-height: var(--clbr-typography-type-step-150-line-height);
 
     &[data-size="sm"] {
       --clbr-checkbox-size: var(--clbr-layout-icon-size-xs);

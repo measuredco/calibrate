@@ -2,8 +2,8 @@
   :where(.clbr) .clbr-badge {
     --clbr-badge-color-background: var(--clbr-color-background-subtle);
     --clbr-badge-color-border: var(--clbr-color-foreground-prose);
-    --clbr-badge-font-size: var(--clbr-typography-type-step-100-font-size);
-    --clbr-badge-line-height: var(--clbr-typography-type-step-100-line-height);
+    --clbr-badge-font-size: var(--clbr-typography-type-step-150-font-size);
+    --clbr-badge-line-height: var(--clbr-typography-type-step-150-line-height);
     --clbr-badge-padding-inline: 0.57em;
 
     align-items: center;

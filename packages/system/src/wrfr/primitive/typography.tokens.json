@@ -300,6 +300,16 @@
       },
       "lineHeight": {
         "$type": "number",
+        "$value": "{primitive.typography.lineHeight.500}"
+      }
+    },
+    "150": {
+      "fontSize": {
+        "$type": "dimension",
+        "$value": "{primitive.typography.fontSize.100}"
+      },
+      "lineHeight": {
+        "$type": "number",
         "$value": "{primitive.typography.lineHeight.900}"
       }
     },

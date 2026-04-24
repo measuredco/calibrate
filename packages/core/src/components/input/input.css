@@ -21,8 +21,8 @@
     .label {
       color: var(--clbr-color-interactive-neutral-default);
       cursor: pointer;
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
       margin-inline-start: var(--clbr-spacing-horizontal-400);
     }
 
@@ -83,8 +83,8 @@
 
     .description {
       color: var(--clbr-color-foreground-muted-text);
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
       margin-block: 0;
       margin-inline: var(--clbr-spacing-horizontal-400);
       max-width: var(--clbr-typography-measure-default);

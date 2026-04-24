@@ -55,8 +55,8 @@
 
     &[data-size="sm"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-775);
-      font-size: var(--clbr-typography-type-step-100-font-size);
-      line-height: var(--clbr-typography-type-step-100-line-height);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
       padding-block: calc(
         var(--clbr-spacing-vertical-250) -
           var(--clbr-layout-border-width-default)

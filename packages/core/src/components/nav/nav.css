@@ -136,10 +136,10 @@
       padding-inline-start: 0;
 
       .clbr-nav[data-size="sm"] & {
-        font-size: var(--clbr-typography-type-step-100-font-size);
+        font-size: var(--clbr-typography-type-step-150-font-size);
         gap: var(--clbr-spacing-horizontal-500);
         margin-block: var(--clbr-spacing-vertical-250);
-        line-height: var(--clbr-typography-type-step-100-line-height);
+        line-height: var(--clbr-typography-type-step-150-line-height);
       }
 
       .clbr-nav[data-collapsible="always"]:has(
