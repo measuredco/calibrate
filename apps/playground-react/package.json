@@ -20,7 +20,7 @@
     "@measured/calibrate-config": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@vitejs/plugin-react": "^5.2.0",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

@@ -19,6 +19,6 @@
     "verify": "node scripts/verify.mjs"
   },
   "devDependencies": {
-    "style-dictionary": "^5.3.3"
+    "style-dictionary": "^5.4.0"
   }
 }

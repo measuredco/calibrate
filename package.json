@@ -42,14 +42,14 @@
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
-    "@eslint/json": "^1.0.1",
+    "@eslint/json": "^1.2.0",
     "@measured/calibrate-config": "workspace:*",
-    "eslint": "^10.0.2",
+    "eslint": "^10.2.1",
     "eslint-plugin-storybook": "10.2.16",
-    "globals": "^17.4.0",
+    "globals": "^17.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
-    "typescript-eslint": "^8.43.0"
+    "typescript-eslint": "^8.59.0"
   }
 }
