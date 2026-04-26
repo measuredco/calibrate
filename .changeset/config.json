@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@measured/calibrate-adapter",
+      "@measured/calibrate-assets",
+      "@measured/calibrate-config",
+      "@measured/calibrate-core",
+      "@measured/calibrate-playground-react",
+      "@measured/calibrate-react",
+      "@measured/calibrate-storybook",
+      "@measured/calibrate-system"
+    ]
+  ],
+  "ignore": [],
+  "linked": [],
+  "updateInternalDependencies": "patch"
+}

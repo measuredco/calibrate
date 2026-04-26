@@ -6,19 +6,266 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-_Nothing in flight._
+### Commit & Release Conventions (Monorepo, Lockstep Versioning)
+
+#### Overview
+
+Releases are driven by **changesets** (the de-facto pnpm-workspace tool) with **lockstep versioning** across the package suite. **Conventional Commits** stay as dev-hygiene scaffolding — useful for log readability, filtering, and PR review — but they don't drive versioning or changelog generation.
+
+The system is designed to:
+
+- Keep versioning simple and consistent across all packages
+- Produce changelogs that are explicit and consumer-focused (hand-written per change, not parsed from commit messages)
+- Ensure releases are meaningful to external consumers
+- Avoid noise from internal-only changes (no changeset → no bump → no release entry)
+
+**Implementation is phased**: this Now section covers **Phase 1 — plumbing only**. Get the full workflow (changesets queue, Version Packages PR, lockstep version bumps, changelog assembly) running end-to-end with **no actual npm publish**. Versions advance internally on `main`; nothing ships to a registry. **Phase 2 — enable publish** lives under [Next → Minimal viable publish](#minimal-viable-publish) and flips on the actual npm push once the plumbing is validated.
+
+---
+
+#### Tooling
+
+- **`@changesets/cli`** — release pipeline source of truth: bump declaration, version application, changelog assembly, publish orchestration
+- **`commitlint`** + **Husky** — Conventional Commit enforcement on commit messages (dev hygiene)
+- **CI checks** — fail PRs that touch publishable package sources without including a changeset
+
+---
+
+#### Commit Convention
+
+##### Format
+
+```text
+type(scope): short description
+```
+
+##### Enforcement
+
+- `commitlint` with `@commitlint/config-conventional`
+- `commit-msg` hook (e.g. via Husky)
+- CI validation (source of truth for commit message shape)
+
+##### Scope (Required)
+
+All commits must include a scope:
+
+```text
+'scope-empty': [2, 'never'],
+'scope-enum': [2, 'always', [<package names>, 'repo']],
+```
+
+Scope represents:
+
+- A package (`adapter`, `assets`, `core`, `config`, `react`, `system`)
+- Or `repo` for everything else — apps (`apps/storybook`, `apps/playground-react`), root config, CI, docs, tooling
+
+Scopes use short stable package identifiers rather than full npm names (e.g. `react` → `@measured/calibrate-react`). The enum is enforced via `commitlint` and updated whenever a new package is added (one-line config touch).
+
+Examples:
+
+```text
+fix(react): prevent typescript error
+feat(core): add date picker
+chore(repo): update release tooling
+docs(repo): rewrite playground readme
+```
+
+##### Role in releases
+
+Commits provide:
+
+- Readable git history grouped by package and intent
+- Useful filtering during code review and debugging
+- Indirect signal for reviewers about whether a changeset should accompany a PR
+
+Commits do **not** drive:
+
+- Version bumps (the changeset author declares the bump)
+- Changelog content (assembled from changeset files)
+
+---
+
+#### Bump Declaration
+
+Bumps are declared per-PR in changeset files, not inferred from commit types.
+
+Workflow per change:
+
+1. Make the change
+2. Run `pnpm changeset` — interactive prompt writes a markdown file under `.changeset/`
+3. The file declares: which packages are affected, the bump for each (`patch | minor | major`), and a short consumer-facing description (becomes the changelog entry)
+
+With **lockstep / fixed-mode** configured, declaring any bump on one package in the fixed group promotes the same bump to every other package in the group. The highest bump across all queued changesets wins at release time.
+
+Example changeset file:
+
+```markdown
+---
+"@measured/calibrate-core": minor
+---
+
+Add date picker component.
+```
+
+A PR may add multiple changesets when it covers distinct user-visible changes that deserve separate changelog entries. PRs that don't need a release entry (chore/docs/internal refactor) skip this step entirely.
+
+---
+
+#### Versioning Strategy
+
+- **Lockstep versioning** across every workspace package — both `packages/*` and `apps/*`. Apps are workspace packages too (each has a `package.json` and is consumed by `pnpm`); treating them as private packages keeps the whole repo at one coherent version per release tag.
+- Private packages (every `apps/*` plus `@measured/calibrate-system` and `@measured/calibrate-adapter`) version-bump in lockstep but are skipped at publish time
+- Every release updates all in-group package versions
+
+`.changeset/config.json` sketch:
+
+```json
+{
+  "$schema": "https://unpkg.com/@changesets/config@<v>/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@measured/calibrate-adapter",
+      "@measured/calibrate-assets",
+      "@measured/calibrate-config",
+      "@measured/calibrate-core",
+      "@measured/calibrate-playground-react",
+      "@measured/calibrate-react",
+      "@measured/calibrate-storybook",
+      "@measured/calibrate-system"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main"
+}
+```
+
+Rationale:
+
+- Simplifies dependency management (no version drift)
+- Single coherent release across the suite
+- Private packages stay version-tracked for traceability
+
+Implication:
+
+- Not every package is meaningfully affected by every release — scope and changeset entries communicate impact
+
+---
+
+#### Private vs Public Packages
+
+Packages may be:
+
+- **Public** (published to a registry)
+- **Private** (`"private": true`, not published)
+
+Rules:
+
+- All packages are versioned together (in the fixed group)
+- Only public packages are published
+- Private packages are skipped during publish
+
+Example:
+
+```json
+{
+  "name": "@measured/calibrate-system",
+  "version": "0.1.0",
+  "private": true
+}
+```
+
+---
+
+#### Bootstrap
+
+Before adopting these conventions, squash the existing git history into a single initial commit so the Conventional Commit log starts clean from day one.
+
+- Initial version: `0.1.0`
+- All prior work folded into one root commit (no enforcement applied retroactively)
+- Changesets + commitlint + Husky installed against the squashed baseline before the first release
+
+---
+
+#### Release Process
+
+PR-gated. Nothing publishes from a non-`main` push.
+
+Per-PR contributor flow:
+
+1. Make the change
+2. Run `pnpm changeset` if the change is user-visible; skip otherwise
+3. Open the PR — CI fails if a changeset is missing on PRs that touch publishable package sources
+
+Release flow (via the `changesets/action` GitHub Action, triggered on every push to `main`):
+
+1. **If unconsumed `.changeset/*.md` files exist on `main`**: the action force-pushes a regenerated `changeset-release/main` branch containing version bumps (applied lockstep across the fixed group) and assembled changelog entries, then opens or updates a single persistent **"Version Packages"** PR from that branch into `main`. The PR is the same one across releases — it's force-updated as more changesets accumulate.
+2. **If no unconsumed changesets exist** (the Version Packages PR was just merged): in Phase 2, the action publishes public packages and creates git tags. **In Phase 1, this branch is a no-op** — the workflow is configured without a `publish:` script, so merging the Version Packages PR just lands the bumped versions and changelog on `main` without shipping to a registry.
+
+Maintainers review the Version Packages PR, may hand-edit the changelog on the branch to polish wording, and merge when ready to ship. The merge is the release trigger — everything downstream is automated.
+
+---
+
+#### Changelog
+
+##### Location
+
+```text
+/CHANGELOG.md
+```
+
+##### Generation
+
+- Assembled by changesets from the queued `.changeset/*.md` files at release time
+- Grouped by bump type (`major | minor | patch`)
+- Consumer-focused descriptions authored per change (not auto-derived from commits)
+
+##### Content Policy
+
+The public changelog includes only **consumer-relevant changes** — every changeset author intentionally writes for that audience, so the file curates itself.
+
+Included:
+
+- Any change with a changeset (by definition, considered consumer-relevant)
+- Bug fixes, features, breaking changes, user-visible documentation updates
+
+Excluded:
+
+- Internal-only changes that don't carry a changeset
+- Private-package-only churn (still version-bumped via lockstep, but no changelog entry unless the author chose to write one)
+
+---
+
+#### Summary of Decisions
+
+- **Changesets** drives versioning, changelogs, and publish orchestration
+- **Conventional Commits** enforced as dev hygiene (not release source-of-truth)
+- **Scope is mandatory** with a `scope-enum` covering all packages + `repo`
+- **Lockstep** versioning across the fixed group; private packages version-bumped, skipped at publish
+- **PR-gated** release via the "Version Packages" PR; maintainer changelog hand-edit window built in
+- Single root `/CHANGELOG.md`, focused on external impact
+- Bootstrap with a squashed initial commit at version `0.1.0`
 
 ## Next
 
 What we could be working on next.
 
-## Later
-
-Everything we could attempt given sufficient time and resources.
-
 ### Minimal viable publish
 
-Define the minimum scripts, workflow, and release notes needed to publish initial alpha packages and unblock downstream adoption tasks.
+**Phase 2 of the commit & release rollout** — flip on actual npm publishing once the Phase 1 plumbing (Now section) is validated. By the time this lands, the workflow is already producing Version Packages PRs and merging them advances versions on `main`; this work just turns those merges into npm pushes.
+
+Tasks:
+
+- **npm scope ownership** — claim / verify the `@measured` scope on npm and add the publishing identity as a member with publish rights
+- **`NPM_TOKEN` secret** — generate an npm **automation** token (not a personal publish token; automation tokens are 2FA-exempt, required for unattended CI publish) and add it to GitHub Actions repo secrets
+- **Workflow `permissions:`** — extend the release workflow YAML to grant `id-token: write` (in addition to the existing `contents: write` and `pull-requests: write`) so the action can mint OIDC tokens for provenance
+- **Provenance** — publish with `--provenance` so consumers can verify packages were built from this repo via GitHub Actions (requires npm CLI ≥ 9.5)
+- **Workflow `publish:` script** — wire `pnpm changeset publish` (or equivalent) into the `changesets/action` invocation, ending the Phase 1 no-op behavior
+- **Smoke release** — cut a `0.1.x` release as the first real publish; verify packages appear on npm, provenance attestation resolves, and downstream `pnpm install @measured/calibrate-core` works
+- **Confirm `"access": "public"`** is honored in `.changeset/config.json` so scoped packages don't default to restricted
+- **Release notes for first publish** — short README/announcement covering install, package layout, and stability expectations
 
 ### Component evolution
 
@@ -623,3 +870,7 @@ _This section is a historical completion record; some entries may describe decis
   - Storybook Vitest addon wired for automated accessibility testing (WCAG 2.2 AA, no exclusions)
   - Storybook CI job now executes Storybook a11y tests as a dedicated gate
   - local reproducible scripts added for a11y runs
+
+```
+
+```

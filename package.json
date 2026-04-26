@@ -24,7 +24,8 @@
     "storybook:test": "pnpm --filter @measured/calibrate-storybook run storybook:test",
     "system:build": "pnpm --filter @measured/calibrate-system run build",
     "system:validate": "pnpm --filter @measured/calibrate-system run validate",
-    "system:verify": "pnpm --filter @measured/calibrate-system run verify"
+    "system:verify": "pnpm --filter @measured/calibrate-system run verify",
+    "prepare": "husky"
   },
   "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
   "engines": {
@@ -34,12 +35,16 @@
     "baseline widely available"
   ],
   "devDependencies": {
-    "@measured/calibrate-config": "workspace:*",
+    "@changesets/cli": "^2.31.0",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
+    "@measured/calibrate-config": "workspace:*",
     "eslint": "^10.0.2",
     "eslint-plugin-storybook": "10.2.16",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
     "prettier": "catalog:",
     "typescript-eslint": "^8.43.0"
   }
