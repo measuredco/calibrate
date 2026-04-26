@@ -6,3 +6,12 @@ apps/playground-react/dist
 packages/core/dist
 packages/react/dist
 storybook-static
+
+# Secrets / local-only — defense in depth even if none currently exist.
+.env
+.env.*
+*.local
+.npmrc
+*.pem
+*.key
+*.p12
