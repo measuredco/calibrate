@@ -43,5 +43,10 @@ jobs:
         uses: changesets/action@v1
         with:
           version: pnpm exec changeset version
+          # Conventional-Commits-compliant message + title so the husky
+          # commit-msg hook + PR-time commitlint job both accept the bot's
+          # automated commits/PR (the action's defaults are non-conventional).
+          commit: "chore(repo): version packages"
+          title: "chore(repo): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
