@@ -11,5 +11,5 @@
     "@measured/calibrate-react": "0.1.0",
     "@measured/calibrate-system": "0.1.0"
   },
-  "changesets": ["initial-alpha-release"]
+  "changesets": ["initial-alpha-release", "validate-trusted-publishing"]
 }
