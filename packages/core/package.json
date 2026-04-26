@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@measured/calibrate-system": "workspace:*",
-    "lucide": "0.577.0"
+    "lucide": "1.11.0"
   },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
