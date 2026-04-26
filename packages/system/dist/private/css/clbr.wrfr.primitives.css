@@ -53,9 +53,9 @@
     --clbr-primitive-effect-shadow-blur-100: 0.25rem;
     --clbr-primitive-effect-shadow-offset-x-100: 0.125rem;
     --clbr-primitive-effect-shadow-offset-y-100: 0.125rem;
-    --clbr-primitive-effect-shadow-spread-0: 0rem;
+    --clbr-primitive-effect-shadow-spread-0: 0;
     --clbr-primitive-effect-stroke-inset: -0.0625rem;
-    --clbr-primitive-effect-stroke-outset: 0rem;
+    --clbr-primitive-effect-stroke-outset: 0;
     --clbr-primitive-motion-duration-100: 0ms;
     --clbr-primitive-motion-duration-150: 0ms;
     --clbr-primitive-motion-duration-200: 0ms;
@@ -67,11 +67,11 @@
     --clbr-primitive-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
     --clbr-primitive-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-    --clbr-primitive-radius-100: 0rem;
-    --clbr-primitive-radius-200: 0rem;
-    --clbr-primitive-radius-300: 0rem;
-    --clbr-primitive-radius-400: 0rem;
-    --clbr-primitive-radius-500: 0rem;
+    --clbr-primitive-radius-100: 0;
+    --clbr-primitive-radius-200: 0;
+    --clbr-primitive-radius-300: 0;
+    --clbr-primitive-radius-400: 0;
+    --clbr-primitive-radius-500: 0;
     --clbr-primitive-radius-ratio-default: 0;
     --clbr-primitive-radius-ratio-lg: 0;
     --clbr-primitive-shape-circle-lg-path: M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0;
@@ -168,7 +168,7 @@
     --clbr-primitive-typography-leading-500: 4.5rem;
     --clbr-primitive-typography-leading-600: 6rem;
     --clbr-primitive-typography-leading-700: 7.5rem;
-    --clbr-primitive-typography-letter-spacing-0: 0rem;
+    --clbr-primitive-typography-letter-spacing-0: 0;
     --clbr-primitive-typography-line-height-100: 1;
     --clbr-primitive-typography-line-height-1000: 1.8;
     --clbr-primitive-typography-line-height-200: 1.142857;
