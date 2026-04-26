@@ -39,9 +39,24 @@ Common scripts (root, delegating via workspace filters):
 
 ## Contribution conventions
 
-- **Conventional Commits** enforced via `commitlint` and a `commit-msg` Husky hook (`commitlint.config.cjs`).
+- **Conventional Commits** enforced on PR titles via [`.github/workflows/pr-title.yml`](.github/workflows/pr-title.yml). Squash-merge means the PR title becomes the commit subject on `main`, so this is the canonical validation surface.
 - **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `react`, `system`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
-- **Releases** are driven by [changesets](https://github.com/changesets/changesets) with `fixed` lockstep across all workspace packages. Run `pnpm changeset` on any PR with consumer-visible changes; CI requires a changeset when `packages/{core,react,config,assets}/src/**` changes.
+- **Pre-commit auto-formatting** via Husky + `lint-staged`: prettier runs on staged files before each commit, no opt-in.
+- **Changesets required** when a PR touches `packages/{core,react,config,assets}/src/**`. Run `pnpm changeset` per consumer-visible change.
+
+## Releasing
+
+Releases are driven by [changesets](https://github.com/changesets/changesets) with `fixed` lockstep across all workspace packages. Authors add changeset files via `pnpm changeset` per PR. The bot accumulates them on `main` and opens a persistent **"Version Packages"** PR aggregating queued changesets. Merging that PR triggers npm publish via [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC + provenance, no long-lived token in the repo).
+
+### Known gotcha — Version Packages PR CI
+
+The bot-opened Version Packages PR hits GitHub Actions' infinite-loop suppression: PRs created using the default `GITHUB_TOKEN` don't trigger downstream workflows, so required status checks sit at "Expected — Waiting for status to be reported" indefinitely. Unblock with a close + reopen from your account:
+
+```sh
+gh pr close <number> && gh pr reopen <number>
+```
+
+That re-emits the `pull_request` events as you (not the bot), and CI fires normally. Merge once green.
 
 ## Roadmap
 
