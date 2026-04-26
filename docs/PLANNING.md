@@ -18,20 +18,23 @@ Tasks:
 - **Trusted Publishing setup** — npm supports token-free OIDC publishing from GitHub Actions: workflow + ref are verified by npm at publish time, eliminating long-lived bearer secrets in steady state. Configure via `npm trust github <package> --file release.yml --repo measuredco/calibrate` for each package, or via the npmjs.com web UI on each package's settings page. One-time setup per package.
 - **Bootstrap dance for first-time packages** — npm explicitly requires a package to exist on the registry before `npm trust github` can configure trust ([docs](https://docs.npmjs.com/cli/v11/commands/npm-trust)). Since all 4 packages are unpublished today, the first publish must use a temporary npm automation token:
   1. Generate npm automation token (`@measured` scope), add as `NPM_TOKEN` repo secret
-  2. Land workflow with temporary `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}` env in the publish step (clearly commented as temp)
+  2. Land workflow with temporary `NPM_TOKEN: ${{ secrets.NPM_TOKEN }}` env in the publish step (clearly commented as temp)
   3. Cut first publish (smoke release; prerelease alpha)
   4. Run `npm trust github` for each of the 4 now-published packages
-  5. Open follow-up PR removing the temp `NODE_AUTH_TOKEN` line; delete `NPM_TOKEN` secret
+  5. Open follow-up PR removing the temp `NPM_TOKEN` env line; delete `NPM_TOKEN` repo secret
   6. All subsequent publishes via OIDC + provenance only
 - **Job-scoped workflow permissions** — move `contents: write`, `pull-requests: write` from workflow level to the `release:` job specifically, and add `id-token: write` (also job-scoped) for OIDC. Both Trusted Publishing and provenance attestation use the same `id-token: write` permission.
 - **Runtime versions** — Trusted Publishing requires npm ≥ 11.5.1 and Node ≥ 22.14.0; `npm trust github` needs npm ≥ 11.10.0. Pin via `setup-node` + `npm install -g npm@^11.10.0` in the publish job; GitHub-hosted runners only (provenance attestation requires this). Project's existing `engines: { node: 24.14.0 }` already clears the Node floor.
-- **Job-scoped workflow permissions** — move `contents: write`, `pull-requests: write` from workflow level to the `release:` job specifically, and add `id-token: write` (also job-scoped) for OIDC. Both Trusted Publishing and provenance attestation use the same `id-token: write` permission.
-- **Runtime versions** — Trusted Publishing requires npm ≥ 11.5.1 and Node ≥ 22.14.0; bulk trusted-publishing setup needs npm ≥ 11.10.0. Pin via `setup-node` in the publish job; GitHub-hosted runners only (provenance attestation requires this). Project's existing `engines: { node: 24.14.0 }` already clears the Node floor.
 - **Provenance** — publish with `--provenance` so consumers can verify packages were built from this repo via GitHub Actions.
 - **Optional: protected GitHub environment** (e.g. `npm-publish`) with required reviewer for the publish step. Adds a manual gate before any package leaves CI; useful insurance even for solo dev.
 - **Workflow `publish:` script** — wire `pnpm changeset publish` (or equivalent) into the `changesets/action` invocation, ending the Phase 1 no-op behavior. Trigger remains restricted to `push: main`.
 - **Confirm `"access": "public"`** is honored in `.changeset/config.json` so scoped packages don't default to restricted (already set; verify before first publish).
 - **Smoke release** — first publish as a prerelease via changesets `pre` mode (`0.1.0-alpha.0` to the `next` dist-tag), verify packages appear on npm and provenance attestation resolves, then exit `pre` mode and cut `0.1.0` to `latest`. Avoids committing to a stable version on the very first publish.
+- **Decide VP PR CI re-trigger approach** — when `changesets/action` opens or updates the Version Packages PR using the default `GITHUB_TOKEN`, GitHub's infinite-loop prevention suppresses workflow triggers on that PR. Required status checks then sit at "Expected — Waiting for status to be reported" forever. Three options:
+  1. **Manual close+reopen** of each VP PR before merging (`gh pr close <n> && gh pr reopen <n>`). Zero setup cost; small ritual every release.
+  2. **PAT** scoped for `pull-requests: write` + `contents: write`, passed to `changesets/action` instead of `GITHUB_TOKEN`. Re-introduces a long-lived secret in repo (the thing we eliminated for publish auth).
+  3. **GitHub App** with the same permissions, mint installation tokens at workflow time. Cleaner identity, shorter-lived tokens, but more setup; minting typically uses third-party action which we've avoided.
+     Pick before declaring Phase 2 done. Solo / low-cadence justifies (1).
 - **Light release notes** — minimal install + "this is alpha, please kick tires" messaging in the README. Polished launch comms come later.
 
 ## Next
