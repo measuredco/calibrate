@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "@measured/calibrate-assets": "workspace:*",
-    "@storybook/addon-a11y": "10.2.16",
-    "@storybook/addon-docs": "10.2.16",
-    "@storybook/addon-vitest": "10.2.16",
-    "@storybook/web-components": "10.2.16",
-    "@storybook/web-components-vite": "10.2.16",
+    "@storybook/addon-a11y": "10.3.5",
+    "@storybook/addon-docs": "10.3.5",
+    "@storybook/addon-vitest": "10.3.5",
+    "@storybook/web-components": "10.3.5",
+    "@storybook/web-components-vite": "10.3.5",
     "@types/react": "catalog:",
     "@vitest/browser": "^4.1.5",
     "@vitest/browser-playwright": "^4.1.5",
@@ -22,7 +22,7 @@
     "prettier": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "storybook": "10.2.16",
+    "storybook": "10.3.5",
     "vitest": "catalog:"
   }
 }

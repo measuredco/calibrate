@@ -34,7 +34,7 @@
     "@types/node": "catalog:",
     "autoprefixer": "^10.5.0",
     "jsdom": "catalog:",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.11",
     "prettier": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
