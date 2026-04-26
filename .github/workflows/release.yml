@@ -52,10 +52,3 @@ jobs:
           # Generate npm provenance attestations on publish (uses the
           # job-scoped id-token: write permission above).
           NPM_CONFIG_PROVENANCE: "true"
-          # TEMP — bootstrap only. npm requires a package to exist on the
-          # registry before `npm trust github` can configure OIDC. After the
-          # first publish lands all 4 packages, run `npm trust github` for
-          # each, then remove this env line and delete the NPM_TOKEN repo
-          # secret. Subsequent publishes use the id-token: write OIDC path
-          # exclusively.
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
