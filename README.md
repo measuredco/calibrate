@@ -40,7 +40,7 @@ Common scripts (root, delegating via workspace filters):
 ## Contribution conventions
 
 - **Conventional Commits** enforced via `commitlint` and a `commit-msg` Husky hook (`commitlint.config.cjs`).
-- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `react`, `system`, `repo` (apps and root config use `repo`).
+- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `react`, `system`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
 - **Releases** are driven by [changesets](https://github.com/changesets/changesets) with `fixed` lockstep across all workspace packages. Run `pnpm changeset` on any PR with consumer-visible changes; CI requires a changeset when `packages/{core,react,config,assets}/src/**` changes.
 
 ## Roadmap
