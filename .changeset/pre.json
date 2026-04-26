@@ -1,0 +1,15 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@measured/calibrate-playground-react": "0.1.0",
+    "@measured/calibrate-storybook": "0.1.0",
+    "@measured/calibrate-adapter": "0.1.0",
+    "@measured/calibrate-assets": "0.1.0",
+    "@measured/calibrate-config": "0.1.0",
+    "@measured/calibrate-core": "0.1.0",
+    "@measured/calibrate-react": "0.1.0",
+    "@measured/calibrate-system": "0.1.0"
+  },
+  "changesets": []
+}
