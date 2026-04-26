@@ -22,10 +22,12 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@measured/calibrate-core": "workspace:*"
+  },
   "devDependencies": {
     "@measured/calibrate-adapter": "workspace:*",
     "@measured/calibrate-config": "workspace:*",
-    "@measured/calibrate-core": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -37,7 +39,6 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@measured/calibrate-core": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:"
   }
