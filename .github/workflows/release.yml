@@ -8,13 +8,14 @@ on:
 concurrency:
   group: release-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # OIDC token for npm Trusted Publishing + provenance attestation.
+      id-token: write
 
     steps:
       - name: Checkout
@@ -31,22 +32,23 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      # Trusted Publishing requires npm >= 11.5.1; bulk publisher setup needs
+      # >= 11.10.0. Node 24's bundled npm may lag — pin explicitly.
+      - name: Pin npm
+        run: npm install -g npm@^11.10.0
+
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Phase 1 — plumbing only. `publish:` is intentionally omitted, so this
-      # action only manages the persistent "Version Packages" PR. Merging that
-      # PR lands version bumps and CHANGELOG entries on `main` without
-      # publishing to npm. Phase 2 (Next > Minimal viable publish) wires in
-      # the publish step.
-      - name: Create Version Packages PR
+      - name: Version PR or publish
         uses: changesets/action@v1
         with:
           version: pnpm exec changeset version
-          # Conventional-Commits-compliant message + title so the husky
-          # commit-msg hook + PR-time commitlint job both accept the bot's
-          # automated commits/PR (the action's defaults are non-conventional).
+          publish: pnpm exec changeset publish
           commit: "chore(repo): version packages"
           title: "chore(repo): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Generate npm provenance attestations on publish (uses the
+          # job-scoped id-token: write permission above).
+          NPM_CONFIG_PROVENANCE: "true"
