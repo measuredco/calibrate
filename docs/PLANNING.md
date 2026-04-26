@@ -212,9 +212,9 @@ Maintainers review the Version Packages PR, may hand-edit the changelog on the b
 
 ##### Location
 
-```text
-/CHANGELOG.md
-```
+Per-package: `packages/<name>/CHANGELOG.md` and `apps/<name>/CHANGELOG.md`.
+
+This is the changesets default with our `"changelog": "@changesets/cli/changelog"` config. Under lockstep, every package gets an entry at every release, so per-package files end up redundant in version cadence but useful for per-package traceability. Consolidation (a single root `/CHANGELOG.md`) would require a custom changelog plugin and is currently out of scope; downstream docs/site can aggregate if needed.
 
 ##### Generation
 
@@ -224,7 +224,7 @@ Maintainers review the Version Packages PR, may hand-edit the changelog on the b
 
 ##### Content Policy
 
-The public changelog includes only **consumer-relevant changes** — every changeset author intentionally writes for that audience, so the file curates itself.
+The changelogs include only **consumer-relevant changes** — every changeset author intentionally writes for that audience, so they curate themselves.
 
 Included:
 
@@ -245,7 +245,7 @@ Excluded:
 - **Scope is mandatory** with a `scope-enum` covering all packages + `repo`
 - **Lockstep** versioning across the fixed group; private packages version-bumped, skipped at publish
 - **PR-gated** release via the "Version Packages" PR; maintainer changelog hand-edit window built in
-- Single root `/CHANGELOG.md`, focused on external impact
+- Per-package `CHANGELOG.md` (changesets default), consumer-focused via the changeset author's description
 - Bootstrap with a squashed initial commit at version `0.1.0`
 
 ## Next
