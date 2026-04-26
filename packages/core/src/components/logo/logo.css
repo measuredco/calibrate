@@ -1,0 +1,82 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-logo {
+    --clbr-logo-aspect-ratio: var(--clbr-shape-logo-primary-aspect-ratio);
+    --clbr-logo-block-size: calc(
+      var(--clbr-spacing-vertical-775) + var(--clbr-spacing-vertical-600) +
+        var(--clbr-spacing-vertical-300)
+    );
+    --clbr-logo-mask: var(--clbr-shape-logo-primary-image);
+    --clbr-logo-tone: var(--clbr-color-logo-default);
+
+    aspect-ratio: var(--clbr-logo-aspect-ratio);
+    background-color: var(--clbr-logo-tone);
+    block-size: var(--clbr-logo-block-size);
+    mask-image: var(--clbr-logo-mask);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+
+    &[data-tone="neutral"] {
+      --clbr-logo-tone: var(--clbr-color-logo-neutral);
+    }
+
+    &[data-size="sm"] {
+      --clbr-logo-block-size: calc(
+        var(--clbr-spacing-vertical-700) + var(--clbr-spacing-vertical-600)
+      );
+    }
+
+    &[data-size="lg"] {
+      --clbr-logo-block-size: calc(
+        var(--clbr-spacing-vertical-800) + var(--clbr-spacing-vertical-700) +
+          var(--clbr-spacing-vertical-200)
+      );
+    }
+
+    &[data-size="fill"] {
+      block-size: 100%;
+    }
+
+    &[data-variant="secondary"] {
+      --clbr-logo-aspect-ratio: var(--clbr-shape-logo-secondary-aspect-ratio);
+      --clbr-logo-block-size: var(--clbr-spacing-vertical-775);
+      --clbr-logo-mask: var(--clbr-shape-logo-secondary-image);
+
+      &[data-size="sm"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-700);
+      }
+
+      &[data-size="lg"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-800);
+      }
+    }
+
+    &[data-variant="typographic"] {
+      --clbr-logo-aspect-ratio: var(--clbr-shape-logo-typographic-aspect-ratio);
+      --clbr-logo-block-size: var(--clbr-spacing-vertical-700);
+      --clbr-logo-mask: var(--clbr-shape-logo-typographic-image);
+
+      &[data-size="sm"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-600);
+      }
+
+      &[data-size="lg"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-775);
+      }
+    }
+
+    &[data-variant="graphic"] {
+      --clbr-logo-aspect-ratio: var(--clbr-shape-logo-graphic-aspect-ratio);
+      --clbr-logo-block-size: var(--clbr-spacing-vertical-775);
+      --clbr-logo-mask: var(--clbr-shape-logo-graphic-image);
+
+      &[data-size="sm"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-700);
+      }
+
+      &[data-size="lg"] {
+        --clbr-logo-block-size: var(--clbr-spacing-vertical-800);
+      }
+    }
+  }
+}

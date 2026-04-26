@@ -1,0 +1,112 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-image {
+    filter: grayscale(var(--clbr-effect-filter-image));
+    inline-size: fit-content;
+    overflow: hidden;
+
+    &[data-shadow] {
+      box-shadow: var(--clbr-effect-shadow-default);
+    }
+
+    &[data-radius="xs"] {
+      border-radius: var(--clbr-radius-xs);
+    }
+
+    &[data-radius="ratio"] {
+      --clbr-image-size: min(
+        var(--clbr-image-block-size),
+        var(--clbr-image-inline-size)
+      );
+      --clbr-image-radius-ratio: calc(
+        var(--clbr-image-size) * var(--clbr-radius-ratio-default)
+      );
+
+      &[data-object-fit="cover"] {
+        &[data-aspect-ratio="1:1"] {
+          --clbr-image-size: var(
+            --clbr-image-inline-size,
+            var(--clbr-image-block-size)
+          );
+        }
+
+        &[data-aspect-ratio="4:5"] {
+          --clbr-image-size: var(--clbr-image-inline-size);
+        }
+
+        &[data-aspect-ratio="3:2"],
+        &[data-aspect-ratio="16:9"],
+        &[data-aspect-ratio="21:9"] {
+          --clbr-image-size: var(--clbr-image-block-size);
+        }
+      }
+
+      border-radius: var(--clbr-image-radius-ratio, var(--clbr-radius-xs));
+    }
+
+    &[data-object-fit="cover"] {
+      block-size: var(--clbr-image-block-size, 100%);
+      inline-size: var(--clbr-image-inline-size, 100%);
+      max-inline-size: 100%;
+
+      &[data-aspect-ratio="1:1"] {
+        aspect-ratio: 1 / 1;
+      }
+
+      &[data-aspect-ratio="4:5"] {
+        aspect-ratio: 4 / 5;
+      }
+
+      &[data-aspect-ratio="3:2"] {
+        aspect-ratio: 3 / 2;
+      }
+
+      &[data-aspect-ratio="16:9"] {
+        aspect-ratio: 16 / 9;
+      }
+
+      &[data-aspect-ratio="21:9"] {
+        aspect-ratio: 21 / 9;
+      }
+    }
+
+    .img {
+      .clbr-image[data-object-fit="cover"] & {
+        block-size: 100%;
+        inline-size: 100%;
+        object-fit: cover;
+      }
+
+      .clbr-image[data-gravity="N"] & {
+        object-position: center top;
+      }
+
+      .clbr-image[data-gravity="NE"] & {
+        object-position: right top;
+      }
+
+      .clbr-image[data-gravity="E"] & {
+        object-position: right center;
+      }
+
+      .clbr-image[data-gravity="SE"] & {
+        object-position: right bottom;
+      }
+
+      .clbr-image[data-gravity="S"] & {
+        object-position: center bottom;
+      }
+
+      .clbr-image[data-gravity="SW"] & {
+        object-position: left bottom;
+      }
+
+      .clbr-image[data-gravity="W"] & {
+        object-position: left center;
+      }
+
+      .clbr-image[data-gravity="NW"] & {
+        object-position: left top;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-panel {
+    --clbr-panel-padding-block: var(--clbr-spacing-vertical-700);
+    --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-700);
+
+    background-color: var(--clbr-color-background-panel);
+    border: var(--clbr-layout-border-width-default) solid
+      var(--clbr-color-border-default);
+    border-radius: var(--clbr-radius-lg);
+    box-shadow: var(--clbr-effect-shadow-default);
+    color: var(--clbr-color-foreground-default);
+    padding-block: var(--clbr-panel-padding-block);
+    padding-inline: var(--clbr-panel-padding-inline);
+
+    &[data-padding="xs"] {
+      --clbr-panel-padding-block: var(--clbr-spacing-vertical-500);
+      --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-500);
+    }
+
+    &[data-padding="sm"] {
+      --clbr-panel-padding-block: var(--clbr-spacing-vertical-600);
+      --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-600);
+    }
+
+    &[data-padding="lg"] {
+      --clbr-panel-padding-block: var(--clbr-spacing-vertical-800);
+      --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-800);
+    }
+
+    &[data-padding="xl"] {
+      --clbr-panel-padding-block: var(--clbr-spacing-vertical-900);
+      --clbr-panel-padding-inline: var(--clbr-spacing-horizontal-900);
+    }
+  }
+}

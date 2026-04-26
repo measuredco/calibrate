@@ -1,0 +1,26 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-container {
+    block-size: 100%;
+    container-type: inline-size;
+    inline-size: 100%;
+    margin-inline: auto;
+    max-inline-size: var(--clbr-layout-container-max-width-default);
+    padding-inline: var(--clbr-layout-container-gutter-default);
+
+    &[data-max-inline-size="wide"] {
+      max-inline-size: var(--clbr-layout-container-max-width-wide);
+    }
+
+    &[data-max-inline-size="none"] {
+      max-inline-size: none;
+    }
+
+    &[data-gutter="none"] {
+      padding-inline: 0;
+    }
+
+    &[data-gutter="narrow"] {
+      padding-inline: var(--clbr-layout-container-gutter-narrow);
+    }
+  }
+}

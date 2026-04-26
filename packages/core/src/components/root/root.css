@@ -1,0 +1,179 @@
+@layer clbr.root {
+  /*
+   * Environment hooks
+   */
+
+  /* Set RTL when Google Translate wraps Calibrate. */
+  :where(.translated-rtl .clbr) {
+    direction: rtl;
+  }
+
+  /* Allow Calibrate to control page overscroll. */
+  :where(:root:has(.clbr[data-app-overscroll-behavior="none"])) {
+    overscroll-behavior: none;
+  }
+
+  /* Allow Calibrate to lock page scroll */
+  :where(:root[data-clbr-scroll-locked], :root[data-clbr-scroll-locked] body) {
+    overflow: hidden;
+  }
+
+  /* Remove default page margin when Calibrate owns the page. */
+  :where(body:has(.clbr[data-app-root])) {
+    margin: 0;
+  }
+
+  /*
+   * Calibrate root
+   */
+
+  .clbr {
+    /* Establish system defaults. */
+    accent-color: var(--clbr-color-interactive-default);
+    /* Establish an isolated styling boundary. */
+    all: initial;
+    background-color: var(--clbr-color-background-default);
+    box-sizing: border-box;
+    color: var(--clbr-color-foreground-default);
+    display: block;
+    font-family: var(--clbr-typography-font-family-default);
+    font-feature-settings: "ss03" 1;
+    font-optical-sizing: none;
+    font-size: var(--clbr-typography-type-step-200-font-size);
+    -webkit-font-smoothing: antialiased;
+    font-synthesis: none;
+    font-weight: var(--clbr-typography-font-weight-regular);
+    line-height: var(--clbr-typography-type-step-200-line-height);
+
+    /* Preserve document writing semantics. */
+    quotes: inherit;
+    -webkit-tap-highlight-color: color-mix(
+      in srgb,
+      var(--clbr-color-brand-primary) 20%,
+      transparent
+    );
+    text-combine-upright: inherit;
+    text-orientation: inherit;
+    writing-mode: inherit;
+
+    /* Revert descendants and pseudo-elements to browser defaults. */
+    :where(:not(svg, svg *)) {
+      all: revert;
+    }
+
+    *::after,
+    *::before,
+    *::marker {
+      all: revert;
+    }
+
+    /* Apply opinionated baseline defaults. */
+    *,
+    *::after,
+    *::before {
+      background-repeat: no-repeat;
+      box-sizing: border-box;
+    }
+
+    :where(:focus) {
+      outline: none;
+    }
+
+    :where(:focus-visible) {
+      border-radius: var(--clbr-radius-2xs);
+      outline: var(--clbr-layout-focus-ring-width) solid
+        var(--clbr-color-interactive-focus);
+      outline-offset: var(--clbr-layout-focus-ring-offset-default);
+    }
+
+    :where(a) {
+      color: var(--clbr-color-interactive-default);
+      text-decoration: none;
+    }
+
+    :where(a:visited) {
+      color: var(--clbr-color-interactive-visited);
+    }
+
+    :where(a:hover) {
+      color: var(--clbr-color-interactive-hover);
+    }
+
+    :where(a:active) {
+      color: var(--clbr-color-interactive-active);
+    }
+
+    :where(b, strong) {
+      font-weight: var(--clbr-typography-font-weight-bold);
+    }
+
+    :where(button, input, select, textarea) {
+      font: inherit;
+    }
+
+    :where(canvas, img, picture, svg, video) {
+      block-size: auto;
+      display: block;
+      max-inline-size: 100%;
+    }
+
+    :where(code) {
+      font-family: var(--clbr-typography-font-family-mono);
+    }
+
+    :where(h1, h2, h3, h4, h5, h6) {
+      text-wrap: balance;
+    }
+
+    :where([hidden]) {
+      display: none;
+    }
+
+    :where(p) {
+      text-wrap: pretty;
+    }
+
+    :where(sup, sub) {
+      line-height: 0;
+    }
+
+    :where(table) {
+      border-collapse: collapse;
+      font-variant-numeric: slashed-zero tabular-nums;
+    }
+
+    :where(time) {
+      font-variant-numeric: slashed-zero tabular-nums;
+    }
+
+    :where(textarea) {
+      resize: vertical;
+    }
+
+    /* Define utility classes. */
+    :where(.visually-hidden, .sr-only) {
+      block-size: 1px;
+      border: none;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    :where(.example-content, .example-content-item) {
+      background: #ff69b450;
+      min-block-size: 6rem;
+      min-inline-size: 15rem;
+      outline: 0.0625rem solid #ff69b4;
+      outline-offset: -0.0625rem;
+    }
+
+    :where(.example-content-item) {
+      min-block-size: 3rem;
+      min-inline-size: 3.8125rem;
+    }
+  }
+}

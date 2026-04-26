@@ -1,0 +1,43 @@
+{
+  "name": "@measured/calibrate-core",
+  "version": "0.1.0",
+  "type": "module",
+  "style": "./dist/core.css",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/core.css"
+  },
+  "scripts": {
+    "build": "vite build && pnpm run build:types",
+    "build:types": "tsc -p tsconfig.build.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@measured/calibrate-system": "workspace:*",
+    "lucide": "0.577.0"
+  },
+  "devDependencies": {
+    "@measured/calibrate-config": "workspace:*",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "catalog:",
+    "autoprefixer": "^10.5.0",
+    "jsdom": "catalog:",
+    "postcss": "^8.5.10",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

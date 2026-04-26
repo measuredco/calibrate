@@ -1,0 +1,113 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-textarea {
+    --clbr-textarea-leading: var(--clbr-spacing-vertical-700);
+    --clbr-textarea-min-block-size: calc(
+      var(--clbr-spacing-vertical-800) + var(--clbr-textarea-leading)
+    );
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--clbr-spacing-vertical-250);
+
+    &[data-size="sm"] {
+      --clbr-textarea-min-block-size: calc(
+        var(--clbr-spacing-vertical-775) + var(--clbr-textarea-leading)
+      );
+    }
+
+    &[data-inline-size="fit"] {
+      inline-size: fit-content;
+
+      .textarea {
+        inline-size: auto;
+      }
+    }
+
+    .label {
+      color: var(--clbr-color-interactive-neutral-default);
+      cursor: pointer;
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
+      margin-inline-start: var(--clbr-spacing-horizontal-400);
+    }
+
+    .textarea {
+      appearance: none;
+      background-color: var(--clbr-color-background-panel);
+      border: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-interactive-neutral-default);
+      border-radius: calc(
+        (var(--clbr-textarea-min-block-size) - var(--clbr-textarea-leading)) *
+          var(--clbr-radius-ratio-default)
+      );
+      box-shadow: var(--clbr-effect-shadow-default);
+      color: var(--clbr-color-foreground-default);
+      font: inherit;
+      min-block-size: var(--clbr-textarea-min-block-size);
+      padding-block: calc(
+        var(--clbr-spacing-vertical-400) -
+          var(--clbr-layout-border-width-default)
+      );
+      padding-inline: calc(
+        var(--clbr-spacing-horizontal-400) -
+          var(--clbr-layout-border-width-default)
+      );
+      resize: vertical;
+      inline-size: 100%;
+
+      &:focus-visible {
+        border-radius: calc(
+          (
+              (
+                  var(--clbr-textarea-min-block-size) -
+                    var(--clbr-textarea-leading)
+                ) +
+                var(--clbr-layout-focus-ring-outset)
+            ) *
+            var(--clbr-radius-ratio-default)
+        );
+      }
+
+      &[aria-invalid="true"] {
+        background-color: var(--clbr-color-status-error-subtle);
+        border-color: var(--clbr-color-status-error-default);
+      }
+
+      &[readonly] {
+        background-color: var(--clbr-color-background-panel);
+        border-color: var(--clbr-color-background-subtle);
+        box-shadow: none;
+        cursor: default;
+      }
+
+      &[disabled] {
+        background-color: var(--clbr-color-background-subtle);
+        border-color: var(--clbr-color-border-subtle);
+        box-shadow: none;
+        color: var(--clbr-color-foreground-muted-text);
+        cursor: not-allowed;
+      }
+
+      [data-resize="none"] & {
+        resize: none;
+      }
+
+      [data-size="sm"] & {
+        padding-block: var(--clbr-spacing-vertical-200);
+      }
+    }
+
+    .description {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
+      margin-block: 0;
+      margin-inline: var(--clbr-spacing-horizontal-400);
+      max-width: var(--clbr-typography-measure-default);
+
+      .textarea[aria-invalid="true"] + & {
+        color: var(--clbr-color-status-error-default);
+      }
+    }
+  }
+}

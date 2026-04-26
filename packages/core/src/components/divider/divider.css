@@ -1,0 +1,30 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-divider {
+    border: none;
+    border-block-start: var(--clbr-layout-border-width-default) solid
+      var(--clbr-color-border-default);
+    margin: 0;
+
+    &[aria-orientation="vertical"] {
+      align-self: stretch;
+      border-block-start: none;
+      border-inline-start: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-default);
+    }
+
+    &[data-tone="subtle"] {
+      border-color: var(--clbr-color-border-subtle);
+    }
+
+    &[data-tone="brand"] {
+      border-color: var(--clbr-color-border-brand);
+      border-width: var(--clbr-layout-divider-brand-thickness);
+      max-inline-size: var(--clbr-layout-divider-brand-size);
+
+      &[aria-orientation="vertical"] {
+        max-block-size: var(--clbr-layout-divider-brand-size);
+        inline-size: auto;
+      }
+    }
+  }
+}

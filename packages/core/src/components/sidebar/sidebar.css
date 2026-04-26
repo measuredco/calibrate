@@ -1,0 +1,149 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-sidebar {
+    display: flex;
+
+    @media (min-width: 68em) {
+      &[data-above-notebook="persistent"] {
+        display: contents;
+      }
+    }
+
+    [data-part="trigger"] {
+      display: inline-flex;
+      margin-inline: calc(0rem - var(--clbr-spacing-vertical-300));
+
+      .clbr-sidebar[data-size="sm"] & {
+        margin-inline: calc(0rem - var(--clbr-spacing-vertical-250));
+      }
+
+      @media (min-width: 68em) {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
+          display: none;
+        }
+      }
+    }
+
+    .sidebar {
+      background-color: var(--clbr-color-background-panel);
+      color: var(--clbr-color-foreground-default);
+      display: flex;
+      flex-direction: column;
+      inline-size: var(--clbr-breakpoint-baseline);
+      inset-block: 0;
+      inset-inline-start: 0;
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      position: fixed;
+      transform: translateX(-100%);
+      transition:
+        transform var(--clbr-motion-duration-150)
+          var(--clbr-motion-easing-ease-in) 0s,
+        visibility 0s linear var(--clbr-motion-duration-150);
+      visibility: hidden;
+      z-index: 1;
+
+      .clbr-sidebar[data-open] & {
+        box-shadow: var(--clbr-effect-shadow-default);
+        transform: translateX(0);
+        transition:
+          transform var(--clbr-motion-duration-250)
+            var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-50),
+          visibility 0s linear 0s;
+        visibility: visible;
+
+        @media (min-width: 68em) {
+          box-shadow: none;
+        }
+      }
+
+      .clbr-sidebar[data-collapsed] & {
+        inline-size: var(--clbr-spacing-horizontal-900);
+      }
+
+      > .header {
+        align-items: center;
+        border-block-end: var(--clbr-layout-border-width-default) solid
+          var(--clbr-color-border-subtle);
+        display: flex;
+        min-block-size: var(--clbr-spacing-vertical-1000);
+        padding-block-end: calc(
+          var(--clbr-layout-spacing-vertical-600) -
+            var(--clbr-layout-border-width-default)
+        );
+        padding-block-start: var(--clbr-layout-spacing-vertical-600);
+
+        .clbr-sidebar[data-size="sm"] .sidebar > & {
+          min-block-size: var(--clbr-spacing-vertical-950);
+          padding-block-end: calc(
+            var(--clbr-spacing-vertical-500) -
+              var(--clbr-layout-border-width-default)
+          );
+          padding-block-start: var(--clbr-spacing-vertical-500);
+        }
+
+        .clbr-sidebar[data-collapsed] & {
+          justify-content: center;
+
+          > :not([data-part="close"]) {
+            display: none;
+          }
+        }
+
+        [data-part="close"] {
+          flex: none;
+          margin-inline-end: var(--clbr-spacing-horizontal-400);
+          margin-inline-start: auto;
+
+          .clbr-sidebar[data-collapsed] & {
+            margin-inline: 0;
+          }
+        }
+      }
+
+      > .content {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      > .footer {
+        border-block-start: var(--clbr-layout-border-width-default) solid
+          var(--clbr-color-border-subtle);
+        margin-block-start: auto;
+        padding-block-end: var(--clbr-spacing-vertical-500);
+        padding-block-start: calc(
+          var(--clbr-spacing-vertical-500) -
+            var(--clbr-layout-border-width-default)
+        );
+      }
+    }
+
+    [data-part="backdrop"] {
+      visibility: hidden;
+      position: fixed;
+      inset: 0;
+      background-color: #00000092;
+      opacity: 0;
+      transition:
+        opacity var(--clbr-motion-duration-150)
+          var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-50),
+        visibility 0s linear var(--clbr-motion-duration-200);
+
+      .clbr-sidebar[data-open] & {
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity var(--clbr-motion-duration-200)
+            var(--clbr-motion-easing-ease-out) 0s,
+          visibility 0s linear 0s;
+      }
+
+      @media (min-width: 68em) {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
+          display: none;
+        }
+      }
+    }
+  }
+}

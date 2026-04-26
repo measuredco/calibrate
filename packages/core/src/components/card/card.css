@@ -1,0 +1,248 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-card {
+    background-color: var(--clbr-color-background-panel);
+    block-size: 100%;
+    border-radius: var(--clbr-radius-lg);
+    box-shadow: var(--clbr-effect-shadow-default);
+    color: var(--clbr-color-foreground-default);
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    position: relative;
+    padding-block: var(--clbr-spacing-vertical-800);
+    padding-inline: var(--clbr-spacing-horizontal-800);
+
+    &::after {
+      border: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-default);
+      border-radius: var(--clbr-radius-lg);
+      content: "";
+      inset-block-end: var(--clbr-effect-stroke-inset);
+      inset-block-start: var(--clbr-effect-stroke-outset);
+      inset-inline-end: var(--clbr-effect-stroke-inset);
+      inset-inline-start: var(--clbr-effect-stroke-outset);
+      pointer-events: none;
+      position: absolute;
+      transition: var(--clbr-motion-duration-50)
+        var(--clbr-motion-easing-ease-in-out);
+    }
+
+    & a {
+      color: var(--clbr-color-interactive-default);
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    &:has(.title a) {
+      cursor: pointer;
+    }
+
+    &:has(.title a)::after {
+      border-color: var(--clbr-color-border-brand);
+    }
+
+    &:has(.title a:focus-visible) {
+      outline: var(--clbr-layout-focus-ring-width) solid
+        var(--clbr-color-interactive-focus);
+      outline-offset: var(--clbr-layout-focus-ring-offset-lg);
+
+      &::after {
+        inset: 0;
+        transition: none;
+      }
+    }
+
+    @media (any-hover: hover) {
+      &:has(.title a):hover::after {
+        inset: 0;
+        transition: var(--clbr-motion-duration-100)
+          var(--clbr-motion-easing-ease-in-out);
+
+        @media (prefers-reduced-motion) {
+          inset-block-end: var(--clbr-effect-stroke-inset);
+          inset-block-start: var(--clbr-effect-stroke-outset);
+          inset-inline-end: var(--clbr-effect-stroke-inset);
+          inset-inline-start: var(--clbr-effect-stroke-outset);
+        }
+      }
+    }
+
+    &:has(.title a):active::after {
+      inset-block-end: calc(var(--clbr-effect-stroke-outset) / 2);
+      inset-block-start: calc(var(--clbr-effect-stroke-inset) / 2);
+      inset-inline-end: calc(var(--clbr-effect-stroke-outset) / 2);
+      inset-inline-start: calc(var(--clbr-effect-stroke-inset) / 2);
+
+      @media (prefers-reduced-motion) {
+        inset-block-end: var(--clbr-effect-stroke-inset);
+        inset-block-start: var(--clbr-effect-stroke-outset);
+        inset-inline-end: var(--clbr-effect-stroke-inset);
+        inset-inline-start: var(--clbr-effect-stroke-outset);
+      }
+    }
+
+    .title {
+      margin-block: 0;
+      font: var(--clbr-typography-text-heading-lg);
+      font-feature-settings: "ss03" 1;
+      font-optical-sizing: none;
+      text-wrap: balance;
+
+      & a {
+        color: inherit;
+        position: static;
+        outline: none;
+
+        &::after {
+          content: "";
+          inset: 0;
+          position: absolute;
+        }
+
+        @media (forced-colors: active) {
+          color: CanvasText;
+        }
+      }
+    }
+
+    .description {
+      color: var(--clbr-color-foreground-prose);
+      margin-block-end: 0;
+      margin-block-start: var(--clbr-spacing-vertical-500);
+      position: relative;
+
+      &:has(+ .note) {
+        margin-block-end: var(--clbr-spacing-vertical-500);
+      }
+    }
+
+    .note {
+      align-items: center;
+      color: var(--clbr-color-foreground-muted-text);
+      display: inline-flex;
+      margin-block-end: 0;
+      margin-block-start: auto;
+
+      .icon-wrapper {
+        block-size: var(--clbr-layout-icon-size-xs);
+        display: flex;
+        margin-inline: calc(
+          var(--clbr-layout-icon-size-xs) *
+            var(--clbr-layout-icon-viewbox-outset-ratio)
+        );
+      }
+
+      .clbr-card:has(.title a) & {
+        color: var(--clbr-color-interactive-default);
+        font-weight: var(--clbr-typography-font-weight-regular-plus);
+        font-family: var(--clbr-typography-font-family-mono);
+
+        @media (forced-colors: active) {
+          color: LinkText;
+        }
+
+        .icon-wrapper {
+          inset-inline-start: 0;
+          position: relative;
+          opacity: 0;
+        }
+      }
+
+      @media (hover: hover) {
+        .clbr-card:has(.title a):hover & .icon-wrapper {
+          inset-inline-start: var(--clbr-spacing-horizontal-400);
+          opacity: 1;
+          transition:
+            opacity var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-in-out),
+            inset-inline-start var(--clbr-motion-duration-200)
+              var(--clbr-motion-easing-ease-in-out);
+
+          @media (prefers-reduced-motion) {
+            transition:
+              opacity var(--clbr-motion-duration-100)
+                var(--clbr-motion-easing-ease-in-out),
+              inset-inline-start 0 var(--clbr-motion-easing-ease-in-out);
+          }
+        }
+      }
+    }
+
+    .dots {
+      align-items: center;
+      block-size: var(--clbr-spacing-horizontal-400);
+      display: flex;
+      inline-size: var(--clbr-spacing-horizontal-800);
+      inset-block-start: var(--clbr-spacing-horizontal-600);
+      inset-inline-start: var(--clbr-spacing-horizontal-600);
+      justify-content: space-between;
+      position: absolute;
+
+      &::before,
+      &::after,
+      & span {
+        background-color: var(--clbr-color-border-subtle);
+        block-size: var(--clbr-spacing-horizontal-400);
+        border-radius: 50%;
+        content: "";
+        inline-size: var(--clbr-spacing-horizontal-400);
+
+        @media (forced-colors: active) {
+          background-color: ButtonBorder;
+        }
+      }
+
+      &::before {
+        inset-inline-start: 0;
+        position: absolute;
+      }
+
+      & span {
+        margin: auto;
+        position: relative;
+      }
+
+      &::after {
+        inset-inline-end: 0;
+        position: absolute;
+      }
+
+      @media (any-hover: hover) {
+        .clbr-card:has(.title a):hover &::before,
+        .clbr-card:has(.title a):hover & span,
+        .clbr-card:has(.title a):hover &::after {
+          background-color: var(--clbr-color-brand-support);
+
+          @media (forced-colors: active) {
+            background-color: ButtonBorder;
+          }
+        }
+
+        .clbr-card:has(.title a):hover &::before {
+          transition: background-color var(--clbr-motion-duration-100)
+            var(--clbr-motion-easing-ease-in-out);
+        }
+
+        .clbr-card:has(.title a):hover & span {
+          transition: background-color var(--clbr-motion-duration-200)
+            var(--clbr-motion-easing-ease-in-out);
+
+          @media (prefers-reduced-motion) {
+            transition: background-color var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-in-out);
+          }
+        }
+
+        .clbr-card:has(.title a):hover &::after {
+          transition: background-color var(--clbr-motion-duration-300)
+            var(--clbr-motion-easing-ease-in-out);
+
+          @media (prefers-reduced-motion) {
+            transition: background-color var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-in-out);
+          }
+        }
+      }
+    }
+  }
+}

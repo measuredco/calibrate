@@ -1,0 +1,115 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ * Source: resolver/base.resolver.json + context manifest.
+ */
+
+@layer clbr, clbr.brand;
+
+@layer clbr {
+  /* default | baseline | default-states */
+  :where(.clbr) {
+    --clbr-breakpoint-baseline: 20rem;
+    --clbr-breakpoint-desktop: 90rem;
+    --clbr-breakpoint-laptop: 80rem;
+    --clbr-breakpoint-mobile: 24rem;
+    --clbr-breakpoint-notebook: 64rem;
+    --clbr-breakpoint-tablet: 48rem;
+    --clbr-breakpoint-widescreen: 96rem;
+    --clbr-layout-border-width-default: 0.0625rem;
+    --clbr-layout-border-width-thick: 0.125rem;
+    --clbr-layout-container-gutter-default: 1rem;
+    --clbr-layout-container-gutter-narrow: 1rem;
+    --clbr-layout-container-max-width-default: 80rem;
+    --clbr-layout-container-max-width-wide: 90rem;
+    --clbr-layout-focus-ring-offset-default: 0.125rem;
+    --clbr-layout-focus-ring-offset-inset: -0.25rem;
+    --clbr-layout-focus-ring-offset-lg: 0.25rem;
+    --clbr-layout-focus-ring-outset: 0.5rem;
+    --clbr-layout-focus-ring-width: 0.125rem;
+    --clbr-layout-grid-columns: 12;
+    --clbr-layout-grid-gap-lg: 2rem;
+    --clbr-layout-grid-gap-md: 1.5rem;
+    --clbr-layout-grid-gap-sm: 1rem;
+    --clbr-layout-grid-item-min-width: 18rem;
+    --clbr-layout-icon-size-2xs: 1rem;
+    --clbr-layout-icon-size-default: 1.5rem;
+    --clbr-layout-icon-size-lg: 1.75rem;
+    --clbr-layout-icon-size-md: 1.5rem;
+    --clbr-layout-icon-size-sm: 1.25rem;
+    --clbr-layout-icon-size-xs: 1.125rem;
+    --clbr-layout-icon-viewbox-inset-ratio: 0.0833333333;
+    --clbr-layout-icon-viewbox-outset-ratio: -0.0833333333;
+    --clbr-layout-spacing-vertical-1000: 4.5rem;
+    --clbr-layout-spacing-vertical-1100: 5.25rem;
+    --clbr-layout-spacing-vertical-1200: 6rem;
+    --clbr-layout-spacing-vertical-250: 0.1875rem;
+    --clbr-layout-spacing-vertical-400: 0.375rem;
+    --clbr-layout-spacing-vertical-500: 0.75rem;
+    --clbr-layout-spacing-vertical-600: 1.125rem;
+    --clbr-layout-spacing-vertical-700: 1.5rem;
+    --clbr-layout-spacing-vertical-800: 2.25rem;
+    --clbr-layout-spacing-vertical-900: 3rem;
+    --clbr-layout-spacing-vertical-950: 3.75rem;
+    --clbr-spacing-horizontal-100: 0.0625rem;
+    --clbr-spacing-horizontal-1000: 4.5rem;
+    --clbr-spacing-horizontal-1100: 5.25rem;
+    --clbr-spacing-horizontal-1200: 6rem;
+    --clbr-spacing-horizontal-1300: 7.5rem;
+    --clbr-spacing-horizontal-1400: 9rem;
+    --clbr-spacing-horizontal-1500: 10.5rem;
+    --clbr-spacing-horizontal-1600: 12rem;
+    --clbr-spacing-horizontal-200: 0.125rem;
+    --clbr-spacing-horizontal-300: 0.25rem;
+    --clbr-spacing-horizontal-400: 0.5rem;
+    --clbr-spacing-horizontal-500: 0.75rem;
+    --clbr-spacing-horizontal-600: 1rem;
+    --clbr-spacing-horizontal-700: 1.5rem;
+    --clbr-spacing-horizontal-800: 2rem;
+    --clbr-spacing-horizontal-900: 3rem;
+    --clbr-spacing-vertical-100: 0.0625rem;
+    --clbr-spacing-vertical-1000: 4.5rem;
+    --clbr-spacing-vertical-1100: 5.25rem;
+    --clbr-spacing-vertical-1200: 6rem;
+    --clbr-spacing-vertical-1250: 6.75rem;
+    --clbr-spacing-vertical-1300: 7.5rem;
+    --clbr-spacing-vertical-1400: 9rem;
+    --clbr-spacing-vertical-1500: 10.5rem;
+    --clbr-spacing-vertical-1600: 12rem;
+    --clbr-spacing-vertical-200: 0.125rem;
+    --clbr-spacing-vertical-250: 0.1875rem;
+    --clbr-spacing-vertical-300: 0.25rem;
+    --clbr-spacing-vertical-400: 0.375rem;
+    --clbr-spacing-vertical-500: 0.75rem;
+    --clbr-spacing-vertical-600: 1.125rem;
+    --clbr-spacing-vertical-700: 1.5rem;
+    --clbr-spacing-vertical-775: 1.875rem;
+    --clbr-spacing-vertical-800: 2.25rem;
+    --clbr-spacing-vertical-900: 3rem;
+    --clbr-spacing-vertical-950: 3.75rem;
+  }
+
+  /* default | tablet | default-states */
+  @media (min-width: 48em) {
+    :where(.clbr) {
+      --clbr-layout-container-gutter-default: 2rem;
+      --clbr-layout-container-gutter-narrow: 1.5rem;
+    }
+  }
+
+  /* default | notebook | default-states */
+  @media (min-width: 64em) {
+    :where(.clbr) {
+      --clbr-layout-spacing-vertical-1000: 6.75rem;
+      --clbr-layout-spacing-vertical-1100: 7.5rem;
+      --clbr-layout-spacing-vertical-1200: 9rem;
+      --clbr-layout-spacing-vertical-250: 0.375rem;
+      --clbr-layout-spacing-vertical-400: 0.75rem;
+      --clbr-layout-spacing-vertical-500: 1.125rem;
+      --clbr-layout-spacing-vertical-600: 1.5rem;
+      --clbr-layout-spacing-vertical-700: 2.25rem;
+      --clbr-layout-spacing-vertical-800: 3rem;
+      --clbr-layout-spacing-vertical-900: 4.5rem;
+      --clbr-layout-spacing-vertical-950: 6rem;
+    }
+  }
+}

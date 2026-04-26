@@ -1,0 +1,27 @@
+{
+  "name": "@measured/calibrate-playground-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@measured/calibrate-assets": "workspace:*",
+    "@measured/calibrate-core": "workspace:*",
+    "@measured/calibrate-react": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@measured/calibrate-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

@@ -1,0 +1,71 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-range {
+    display: flex;
+    flex-direction: column;
+
+    &[data-inline-size="fit"] {
+      inline-size: fit-content;
+    }
+
+    .label-wrapper {
+      align-items: baseline;
+      display: flex;
+      gap: var(--clbr-spacing-horizontal-300);
+      justify-content: space-between;
+      margin-inline: var(--clbr-spacing-horizontal-200);
+    }
+
+    .label {
+      color: var(--clbr-color-interactive-neutral-default);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
+    }
+
+    .output {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      font-variant-numeric: tabular-nums;
+      line-height: var(--clbr-typography-type-step-150-line-height);
+
+      .clbr-range:has(:disabled) & {
+        color: var(--clbr-color-foreground-muted-non-text);
+      }
+
+      .clbr-range[data-size="sm"] & {
+        font-size: var(--clbr-typography-type-step-50-font-size);
+        line-height: var(--clbr-typography-type-step-50-line-height);
+      }
+    }
+
+    .range {
+      accent-color: var(--clbr-color-interactive-default);
+      inline-size: 100%;
+      margin: 0;
+      padding: 0;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: var(--clbr-effect-opacity-disabled);
+      }
+
+      &::-webkit-slider-thumb {
+        background-color: var(--clbr-color-interactive-default);
+      }
+    }
+
+    .description {
+      color: var(--clbr-color-foreground-muted-text);
+      font-size: var(--clbr-typography-type-step-150-font-size);
+      line-height: var(--clbr-typography-type-step-150-line-height);
+      margin-block: 0;
+      margin-inline: var(--clbr-spacing-horizontal-200);
+      max-inline-size: var(--clbr-typography-measure-default);
+
+      .clbr-range[data-size="sm"] & {
+        margin-block-start: var(--clbr-spacing-vertical-250);
+        font-size: var(--clbr-typography-type-step-50-font-size);
+        line-height: var(--clbr-typography-type-step-50-line-height);
+      }
+    }
+  }
+}

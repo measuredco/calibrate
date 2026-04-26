@@ -1,0 +1,401 @@
+{
+  "$schema": "../schemas/2025.10/schema/resolver.json",
+  "name": "MSRD resolver",
+  "version": "2025.10",
+  "description": "Resolver contexts for msrd tokens (theme, surface, size, forced-colors).",
+  "$defs": {
+    "build": {
+      "brand": "msrd",
+      "namespace": "clbr",
+      "shared": {
+        "mediaRef": "./shared/media.json#/size"
+      },
+      "tokenLayers": {
+        "private": ["primitive"],
+        "public": ["semantic"]
+      },
+      "targets": {
+        "css": {
+          "layer": "clbr.brand",
+          "layerOrder": ["clbr", "clbr.brand"],
+          "selectors": {
+            "root": ":where(.{namespace}[data-clbr-brand=\"{brand}\"], .{namespace}[data-clbr-brand=\"{brand}\"] [data-clbr-surface=\"default\"])",
+            "surfaceBrand": ":where(.{namespace}[data-clbr-brand=\"{brand}\"] [data-clbr-surface=\"brand\"])",
+            "surfaceInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"] [data-clbr-surface=\"inverse\"])",
+            "surfaceBrandInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"] [data-clbr-surface=\"brand-inverse\"])",
+            "themeDark": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"dark\"], .{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"dark\"] [data-clbr-surface=\"default\"])",
+            "themeLight": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"light\"], .{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"light\"] [data-clbr-surface=\"default\"])",
+            "themeDarkSurfaceBrand": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"dark\"] [data-clbr-surface=\"brand\"])",
+            "themeLightSurfaceBrand": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"light\"] [data-clbr-surface=\"brand\"])",
+            "themeDarkSurfaceInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"dark\"] [data-clbr-surface=\"inverse\"])",
+            "themeLightSurfaceInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"light\"] [data-clbr-surface=\"inverse\"])",
+            "themeDarkSurfaceBrandInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"dark\"] [data-clbr-surface=\"brand-inverse\"])",
+            "themeLightSurfaceBrandInverse": ":where(.{namespace}[data-clbr-brand=\"{brand}\"][data-clbr-theme=\"light\"] [data-clbr-surface=\"brand-inverse\"])",
+            "contentThemeLightSurfaceDefault": ":where(.{namespace}[data-clbr-brand=\"{brand}\"]) [data-clbr-content-theme=\"light\"][data-clbr-surface=\"default\"]",
+            "contentThemeDarkSurfaceDefault": ":where(.{namespace}[data-clbr-brand=\"{brand}\"]) [data-clbr-content-theme=\"dark\"][data-clbr-surface=\"default\"]",
+            "contentThemeLightSurfaceBrand": ":where(.{namespace}[data-clbr-brand=\"{brand}\"]) [data-clbr-content-theme=\"light\"][data-clbr-surface=\"brand\"]",
+            "contentThemeDarkSurfaceBrand": ":where(.{namespace}[data-clbr-brand=\"{brand}\"]) [data-clbr-content-theme=\"dark\"][data-clbr-surface=\"brand\"]"
+          },
+          "modifiers": {
+            "size": {
+              "contexts": {
+                "baseline": {},
+                "tablet": {
+                  "baseContext": "baseline",
+                  "media": [{ "mediaRef": "tablet" }]
+                },
+                "notebook": {
+                  "baseContext": "tablet",
+                  "media": [{ "mediaRef": "notebook" }]
+                },
+                "laptop": {
+                  "baseContext": "notebook",
+                  "media": [{ "mediaRef": "laptop" }]
+                }
+              }
+            },
+            "theme": {
+              "contexts": {
+                "lightDefault": {
+                  "selectorRef": "root",
+                  "variants": [
+                    {
+                      "name": "forcedLight",
+                      "deltaFromContext": "darkDefault",
+                      "media": ["(prefers-color-scheme: dark)"],
+                      "selectorRef": "themeLight"
+                    }
+                  ]
+                },
+                "lightBrand": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "surfaceBrand",
+                  "variants": [
+                    {
+                      "name": "forcedLight",
+                      "deltaFromContext": "darkBrand",
+                      "media": ["(prefers-color-scheme: dark)"],
+                      "selectorRef": "themeLightSurfaceBrand"
+                    }
+                  ]
+                },
+                "lightInverse": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "surfaceInverse",
+                  "variants": [
+                    {
+                      "name": "forcedLight",
+                      "deltaFromContext": "darkInverse",
+                      "media": ["(prefers-color-scheme: dark)"],
+                      "selectorRef": "themeLightSurfaceInverse"
+                    }
+                  ]
+                },
+                "lightBrandInverse": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "surfaceBrandInverse",
+                  "variants": [
+                    {
+                      "name": "forcedLight",
+                      "deltaFromContext": "darkBrandInverse",
+                      "media": ["(prefers-color-scheme: dark)"],
+                      "selectorRef": "themeLightSurfaceBrandInverse"
+                    }
+                  ]
+                },
+                "darkDefault": {
+                  "selectorRef": "root",
+                  "baseContext": "lightDefault",
+                  "media": ["(prefers-color-scheme: dark)"],
+                  "variants": [
+                    {
+                      "name": "forcedDark",
+                      "deltaFromContext": "lightDefault",
+                      "selectorRef": "themeDark"
+                    }
+                  ]
+                },
+                "darkBrand": {
+                  "baseContext": "darkDefault",
+                  "selectorRef": "surfaceBrand",
+                  "media": ["(prefers-color-scheme: dark)"],
+                  "variants": [
+                    {
+                      "name": "forcedDark",
+                      "deltaFromContext": "lightBrand",
+                      "selectorRef": "themeDarkSurfaceBrand"
+                    }
+                  ]
+                },
+                "darkInverse": {
+                  "baseContext": "darkDefault",
+                  "selectorRef": "surfaceInverse",
+                  "media": ["(prefers-color-scheme: dark)"],
+                  "variants": [
+                    {
+                      "name": "forcedDark",
+                      "deltaFromContext": "lightInverse",
+                      "selectorRef": "themeDarkSurfaceInverse"
+                    }
+                  ]
+                },
+                "darkBrandInverse": {
+                  "baseContext": "darkDefault",
+                  "selectorRef": "surfaceBrandInverse",
+                  "media": ["(prefers-color-scheme: dark)"],
+                  "variants": [
+                    {
+                      "name": "forcedDark",
+                      "deltaFromContext": "lightBrandInverse",
+                      "selectorRef": "themeDarkSurfaceBrandInverse"
+                    }
+                  ]
+                },
+                "contentLightDefault": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "contentThemeLightSurfaceDefault"
+                },
+                "contentLightBrand": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "contentThemeLightSurfaceBrand"
+                },
+                "contentDarkDefault": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "contentThemeDarkSurfaceDefault"
+                },
+                "contentDarkBrand": {
+                  "baseContext": "lightDefault",
+                  "selectorRef": "contentThemeDarkSurfaceBrand"
+                }
+              }
+            },
+            "forcedColors": {
+              "contexts": { "on": { "media": ["(forced-colors: active)"] } },
+              "scope": {
+                "size": ["baseline"],
+                "theme": ["lightDefault", "lightBrand"]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/size"
+    },
+    {
+      "$ref": "#/modifiers/theme"
+    },
+    {
+      "$ref": "#/modifiers/forcedColors"
+    }
+  ],
+  "sets": {
+    "base": {
+      "description": "MSRD non-context token sources.",
+      "sources": [
+        {
+          "$ref": "../src/base/primitive/spacing.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/color.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/effect.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/motion.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/radius.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/shape.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/primitive/typography.tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/motion/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/layout/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/radius/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/shape/tokens.json"
+        },
+        {
+          "$ref": "../src/msrd/semantic/typography/tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "size": {
+      "description": "Responsive size contexts.",
+      "default": "baseline",
+      "contexts": {
+        "baseline": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          }
+        ],
+        "tablet": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ],
+        "notebook": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ],
+        "laptop": [
+          {
+            "$ref": "#/sets/base"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/baseline.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/typography/size/tablet.tokens.json"
+          }
+        ]
+      }
+    },
+    "theme": {
+      "description": "Theme and surface contexts, plus absolute content-theme overrides for poster-like content on non-themeable media.",
+      "default": "lightDefault",
+      "contexts": {
+        "lightDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/default.tokens.json"
+          }
+        ],
+        "lightBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/brand.tokens.json"
+          }
+        ],
+        "contentLightDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/default.tokens.json"
+          }
+        ],
+        "contentLightBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/brand.tokens.json"
+          }
+        ],
+        "lightInverse": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/default.tokens.json"
+          }
+        ],
+        "lightBrandInverse": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/brand.tokens.json"
+          }
+        ],
+        "darkDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/default.tokens.json"
+          }
+        ],
+        "darkBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/brand.tokens.json"
+          }
+        ],
+        "contentDarkDefault": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/default.tokens.json"
+          }
+        ],
+        "contentDarkBrand": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/dark/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/dark/brand.tokens.json"
+          }
+        ],
+        "darkInverse": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/default.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/default.tokens.json"
+          }
+        ],
+        "darkBrandInverse": [
+          {
+            "$ref": "../src/msrd/semantic/effect/theme/light/brand.tokens.json"
+          },
+          {
+            "$ref": "../src/msrd/semantic/color/theme/light/brand.tokens.json"
+          }
+        ]
+      }
+    },
+    "forcedColors": {
+      "description": "forced-colors accessibility mode.",
+      "default": "off",
+      "contexts": {
+        "off": [],
+        "on": [
+          {
+            "$ref": "../src/msrd/semantic/color/forced-colors/on.tokens.json"
+          }
+        ]
+      }
+    }
+  }
+}

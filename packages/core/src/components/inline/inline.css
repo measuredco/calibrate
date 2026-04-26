@@ -1,0 +1,53 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-inline {
+    --clbr-inline-gap: var(--clbr-spacing-horizontal-700);
+
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--clbr-inline-gap);
+    list-style: none;
+    margin-block: 0;
+    padding-inline-start: 0;
+
+    &[data-align="start"] {
+      align-items: start;
+    }
+
+    &[data-align="end"] {
+      align-items: end;
+    }
+
+    &[data-justify="center"] {
+      justify-content: center;
+    }
+
+    &[data-justify="end"] {
+      justify-content: end;
+    }
+
+    &[data-justify="between"] {
+      justify-content: space-between;
+    }
+
+    &[data-gap="2xs"] {
+      --clbr-inline-gap: var(--clbr-spacing-horizontal-300);
+    }
+
+    &[data-gap="xs"] {
+      --clbr-inline-gap: var(--clbr-spacing-horizontal-400);
+    }
+
+    &[data-gap="sm"] {
+      --clbr-inline-gap: var(--clbr-spacing-horizontal-600);
+    }
+
+    &[data-gap="lg"] {
+      --clbr-inline-gap: var(--clbr-spacing-horizontal-800);
+    }
+
+    &[data-nowrap] {
+      flex-wrap: nowrap;
+    }
+  }
+}

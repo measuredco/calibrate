@@ -1,0 +1,168 @@
+@layer clbr.components {
+  :where(.clbr) .clbr-expander {
+    --clbr-expander-icon-size: var(--clbr-layout-icon-size-md);
+    --clbr-expander-padding-size: var(--clbr-spacing-vertical-250);
+    --clbr-expander-button-size: calc(
+      var(--clbr-expander-icon-size) + (var(--clbr-expander-padding-size) * 2)
+    );
+
+    &[data-size="sm"] {
+      --clbr-expander-icon-size: var(--clbr-layout-icon-size-sm);
+      --clbr-expander-padding-size: var(--clbr-spacing-vertical-200);
+    }
+
+    &[data-size="lg"] {
+      --clbr-expander-icon-size: var(--clbr-layout-icon-size-lg);
+      --clbr-expander-padding-size: var(--clbr-spacing-vertical-300);
+    }
+
+    background: transparent;
+    border: none;
+    border-radius: calc(
+      var(--clbr-expander-button-size) * var(--clbr-radius-ratio-default)
+    );
+    color: var(--clbr-color-interactive-neutral-default);
+    cursor: pointer;
+    display: inline-flex;
+    margin-inline: calc(
+      var(--clbr-expander-icon-size) *
+        var(--clbr-layout-icon-viewbox-outset-ratio)
+    );
+    padding: var(--clbr-expander-padding-size);
+    position: relative;
+
+    &:focus-visible {
+      outline-offset: 0;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--clbr-color-interactive-neutral-hover);
+      }
+    }
+
+    &:active {
+      color: var(--clbr-color-interactive-neutral-active);
+    }
+
+    .expander-box {
+      block-size: var(--clbr-expander-icon-size);
+      display: block;
+      inline-size: var(--clbr-expander-icon-size);
+      position: relative;
+    }
+
+    .expander-inner {
+      background-color: currentColor;
+      block-size: round(
+        nearest,
+        calc(var(--clbr-expander-icon-size) / 12),
+        calc(0.5rem / 16)
+      );
+      border-radius: round(
+        nearest,
+        calc(var(--clbr-expander-icon-size) / 24),
+        calc(0.5rem / 16)
+      );
+      display: block;
+      inline-size: calc(var(--clbr-expander-icon-size) * 3 / 4);
+      inset-block-start: calc(50% - calc(1rem / 16));
+      inset-inline-start: calc(var(--clbr-expander-icon-size) / 8);
+      position: absolute;
+      transition: transform var(--clbr-motion-duration-200)
+        var(--clbr-motion-easing-emphasized);
+
+      @media (prefers-reduced-motion) {
+        transition: none;
+      }
+
+      @media (forced-colors: active) {
+        background-color: ButtonText;
+      }
+
+      &::before,
+      &::after {
+        background-color: currentColor;
+        block-size: round(
+          nearest,
+          calc(var(--clbr-expander-icon-size) / 12),
+          calc(0.5rem / 16)
+        );
+        border-radius: round(
+          nearest,
+          calc(var(--clbr-expander-icon-size) / 24),
+          calc(0.5rem / 16)
+        );
+        content: "";
+        display: block;
+        inline-size: calc(var(--clbr-expander-icon-size) * 3 / 4);
+        position: absolute;
+
+        @media (forced-colors: active) {
+          background-color: ButtonText;
+        }
+      }
+
+      &::before {
+        inset-block-start: calc(var(--clbr-expander-icon-size) * -7 / 24);
+        transition:
+          inset-block-start var(--clbr-motion-duration-100)
+            var(--clbr-motion-duration-200) var(--clbr-motion-easing-ease-in),
+          opacity var(--clbr-motion-duration-100)
+            var(--clbr-motion-easing-ease-in);
+
+        @media (prefers-reduced-motion) {
+          transition: none;
+        }
+      }
+
+      &::after {
+        inset-block-end: calc(var(--clbr-expander-icon-size) * -7 / 24);
+        transition:
+          inset-block-end var(--clbr-motion-duration-100)
+            var(--clbr-motion-duration-200) var(--clbr-motion-easing-ease-in),
+          transform var(--clbr-motion-duration-200)
+            var(--clbr-motion-easing-ease-in-out);
+
+        @media (prefers-reduced-motion) {
+          transition: none;
+        }
+      }
+
+      .clbr-expander[aria-expanded="true"] & {
+        transform: rotate(225deg);
+        transition-delay: var(--clbr-motion-duration-100);
+        transition-timing-function: var(--clbr-motion-easing-ease-in-out);
+
+        &::before {
+          inset-block-start: 0;
+          opacity: 0;
+          transition:
+            inset-block-start var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-out),
+            opacity var(--clbr-motion-duration-100)
+              var(--clbr-motion-duration-100) var(--clbr-motion-easing-ease-out);
+
+          @media (prefers-reduced-motion) {
+            transition: none;
+          }
+        }
+
+        &::after {
+          inset-block-end: 0;
+          transform: rotate(-90deg);
+          transition:
+            inset-block-end var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-out),
+            transform var(--clbr-motion-duration-200)
+              var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-in-out);
+
+          @media (prefers-reduced-motion) {
+            transition: none;
+          }
+        }
+      }
+    }
+  }
+}

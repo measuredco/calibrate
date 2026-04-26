@@ -1,0 +1,26 @@
+{
+  "name": "@measured/calibrate-config",
+  "version": "0.1.0",
+  "type": "module",
+  "files": [
+    "index.mjs",
+    "index.d.ts",
+    "esbuild.mjs",
+    "esbuild.d.ts",
+    "README.md"
+  ],
+  "types": "./index.d.ts",
+  "exports": {
+    "./browserslist": {
+      "types": "./index.d.ts",
+      "default": "./index.mjs"
+    },
+    "./browserslist/esbuild": {
+      "types": "./esbuild.d.ts",
+      "default": "./esbuild.mjs"
+    }
+  },
+  "browserslist": [
+    "baseline widely available"
+  ]
+}
