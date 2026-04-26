@@ -80,7 +80,7 @@
     --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
     --clbr-layout-divider-brand-size: 12rem;
     --clbr-layout-divider-brand-thickness: 0.0625rem;
     --clbr-motion-duration-100: 0ms;
@@ -94,13 +94,13 @@
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94);
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94);
     --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96);
-    --clbr-radius-2xs: 0rem;
-    --clbr-radius-lg: 0rem;
-    --clbr-radius-md: 0rem;
+    --clbr-radius-2xs: 0;
+    --clbr-radius-lg: 0;
+    --clbr-radius-md: 0;
     --clbr-radius-ratio-default: 0;
     --clbr-radius-ratio-lg: 0;
-    --clbr-radius-sm: 0rem;
-    --clbr-radius-xs: 0rem;
+    --clbr-radius-sm: 0;
+    --clbr-radius-xs: 0;
     --clbr-shape-circle-lg-aspect-ratio: 448 / 448;
     --clbr-shape-circle-lg-block-size: 28rem;
     --clbr-shape-circle-lg-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20448%20448%22%3E%3Cpath%20d%3D%22M224%200C100.3%200%200%20100.3%200%20224s100.3%20224%20224%20224%20224-100.3%20224-224S347.7%200%20224%200%22%20fill%3D%22currentColor%22%2F%3E%3C%2Fsvg%3E");
@@ -302,7 +302,7 @@
     --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* contentLightDefault | baseline | default-states */
@@ -379,7 +379,7 @@
     --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* contentLightBrand | baseline | default-states */
@@ -456,7 +456,7 @@
     --clbr-effect-opacity-disabled: 0.4;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* lightInverse | baseline | default-states */
@@ -533,7 +533,7 @@
     --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* lightBrandInverse | baseline | default-states */
@@ -610,7 +610,7 @@
     --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* darkDefault | baseline | default-states */
@@ -688,7 +688,7 @@
       --clbr-effect-opacity-disabled: 0.08;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
       --clbr-effect-stroke-inset: -0.0625rem;
-      --clbr-effect-stroke-outset: 0rem;
+      --clbr-effect-stroke-outset: 0;
     }
   }
 
@@ -767,7 +767,7 @@
       --clbr-effect-opacity-disabled: 0.08;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-effect-stroke-inset: -0.0625rem;
-      --clbr-effect-stroke-outset: 0rem;
+      --clbr-effect-stroke-outset: 0;
     }
   }
 
@@ -845,7 +845,7 @@
     --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.92);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* contentDarkBrand | baseline | default-states */
@@ -922,7 +922,7 @@
     --clbr-effect-opacity-disabled: 0.08;
     --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
     --clbr-effect-stroke-inset: -0.0625rem;
-    --clbr-effect-stroke-outset: 0rem;
+    --clbr-effect-stroke-outset: 0;
   }
 
   /* darkInverse | baseline | default-states */
@@ -1000,7 +1000,7 @@
       --clbr-effect-opacity-disabled: 0.4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-effect-stroke-inset: -0.0625rem;
-      --clbr-effect-stroke-outset: 0rem;
+      --clbr-effect-stroke-outset: 0;
     }
   }
 
@@ -1079,7 +1079,7 @@
       --clbr-effect-opacity-disabled: 0.4;
       --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08);
       --clbr-effect-stroke-inset: -0.0625rem;
-      --clbr-effect-stroke-outset: 0rem;
+      --clbr-effect-stroke-outset: 0;
     }
   }
 
