@@ -1,6 +1,11 @@
 {
   "name": "@measured/calibrate-storybook",
   "version": "0.1.1-alpha.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "apps/storybook"
+  },
   "private": true,
   "type": "module",
   "scripts": {

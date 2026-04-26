@@ -1,6 +1,11 @@
 {
   "name": "@measured/calibrate-adapter",
   "version": "0.1.1-alpha.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "packages/adapter"
+  },
   "private": true,
   "type": "module",
   "scripts": {

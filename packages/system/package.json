@@ -1,6 +1,11 @@
 {
   "name": "@measured/calibrate-system",
   "version": "0.1.1-alpha.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "packages/system"
+  },
   "private": true,
   "files": [
     "dist/css",

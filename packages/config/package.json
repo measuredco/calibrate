@@ -1,6 +1,11 @@
 {
   "name": "@measured/calibrate-config",
   "version": "0.1.1-alpha.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "packages/config"
+  },
   "type": "module",
   "files": [
     "index.mjs",
