@@ -32,6 +32,55 @@ jobs:
       - name: Format check
         run: pnpm run format:check
 
+  commitlint:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate PR commit messages
+        run: pnpm exec commitlint --from origin/${{ github.base_ref }} --to HEAD --verbose
+
+  changeset:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require changeset for public package changes
+        run: |
+          BASE="origin/${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "$BASE"...HEAD)
+          PUBLIC=$(echo "$CHANGED" | grep -E '^packages/(core|react|config|assets)/src/' || true)
+          CHANGESET=$(echo "$CHANGED" | grep -E '^\.changeset/[^/]+\.md$' | grep -v '^\.changeset/README\.md$' || true)
+          if [ -n "$PUBLIC" ] && [ -z "$CHANGESET" ]; then
+            echo "::error::Public package source changed without a changeset. Run \`pnpm changeset\` and commit the result."
+            echo "Changed publishable sources:"
+            echo "$PUBLIC"
+            exit 1
+          fi
+          echo "Changeset check: OK"
+
   system:
     runs-on: ubuntu-latest
     needs: repo

@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Phase 1 — plumbing only. `publish:` is intentionally omitted, so this
+      # action only manages the persistent "Version Packages" PR. Merging that
+      # PR lands version bumps and CHANGELOG entries on `main` without
+      # publishing to npm. Phase 2 (Next > Minimal viable publish) wires in
+      # the publish step.
+      - name: Create Version Packages PR
+        uses: changesets/action@v1
+        with:
+          version: pnpm exec changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
