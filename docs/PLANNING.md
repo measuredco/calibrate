@@ -6,24 +6,28 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-## Next
-
-What we could be working on next.
-
 ### Minimal viable publish
 
 **Phase 2 of the commit & release rollout** — flip on actual npm publishing. The Phase 1 plumbing is in place: the workflow already produces Version Packages PRs and merging them advances versions on `main`; this work just turns those merges into npm pushes.
 
+Goal of this publish is end-to-end process validation and colleague tire-kicking — not a polished consumer-facing launch.
+
 Tasks:
 
-- **npm scope ownership** — claim / verify the `@measured` scope on npm and add the publishing identity as a member with publish rights
-- **`NPM_TOKEN` secret** — generate an npm **automation** token (not a personal publish token; automation tokens are 2FA-exempt, required for unattended CI publish) and add it to GitHub Actions repo secrets
-- **Workflow `permissions:`** — extend the release workflow YAML to grant `id-token: write` (in addition to the existing `contents: write` and `pull-requests: write`) so the action can mint OIDC tokens for provenance
-- **Provenance** — publish with `--provenance` so consumers can verify packages were built from this repo via GitHub Actions (requires npm CLI ≥ 9.5)
-- **Workflow `publish:` script** — wire `pnpm changeset publish` (or equivalent) into the `changesets/action` invocation, ending the Phase 1 no-op behavior
-- **Smoke release** — cut a `0.1.x` release as the first real publish; verify packages appear on npm, provenance attestation resolves, and downstream `pnpm install @measured/calibrate-core` works
-- **Confirm `"access": "public"`** is honored in `.changeset/config.json` so scoped packages don't default to restricted
-- **Release notes for first publish** — short README/announcement covering install, package layout, and stability expectations
+- **npm scope ownership** — verify the `@measured` scope on npm and add the publishing identity as a member with publish rights
+- **Trusted Publishing setup** — npm supports token-free OIDC publishing from GitHub Actions. Configure trusted publisher on npmjs.com for each public package (`@measured/calibrate-core`, `-react`, `-config`, `-assets`); one-time setup per package. For first-time packages (all 4 are unpublished today), use npm CLI's bulk trusted-publishing configuration (npm ≥ 11.10.0) to preconfigure the names before the first publish. Workflow + ref are verified by npm at publish time, eliminating long-lived bearer secrets entirely. No `NPM_TOKEN` in repo secrets.
+- **Job-scoped workflow permissions** — move `contents: write`, `pull-requests: write` from workflow level to the `release:` job specifically, and add `id-token: write` (also job-scoped) for OIDC. Both Trusted Publishing and provenance attestation use the same `id-token: write` permission.
+- **Runtime versions** — Trusted Publishing requires npm ≥ 11.5.1 and Node ≥ 22.14.0; bulk trusted-publishing setup needs npm ≥ 11.10.0. Pin via `setup-node` in the publish job; GitHub-hosted runners only (provenance attestation requires this). Project's existing `engines: { node: 24.14.0 }` already clears the Node floor.
+- **Provenance** — publish with `--provenance` so consumers can verify packages were built from this repo via GitHub Actions.
+- **Optional: protected GitHub environment** (e.g. `npm-publish`) with required reviewer for the publish step. Adds a manual gate before any package leaves CI; useful insurance even for solo dev.
+- **Workflow `publish:` script** — wire `pnpm changeset publish` (or equivalent) into the `changesets/action` invocation, ending the Phase 1 no-op behavior. Trigger remains restricted to `push: main`.
+- **Confirm `"access": "public"`** is honored in `.changeset/config.json` so scoped packages don't default to restricted (already set; verify before first publish).
+- **Smoke release** — first publish as a prerelease via changesets `pre` mode (`0.1.0-alpha.0` to the `next` dist-tag), verify packages appear on npm and provenance attestation resolves, then exit `pre` mode and cut `0.1.0` to `latest`. Avoids committing to a stable version on the very first publish.
+- **Light release notes** — minimal install + "this is alpha, please kick tires" messaging in the README. Polished launch comms come later.
+
+## Next
+
+What we could be working on next.
 
 ## Later
 
