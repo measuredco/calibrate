@@ -6,8 +6,9 @@ apps/playground-react/dist
 packages/core/dist
 packages/react/dist
 storybook-static
+.claude/settings.local.json
 
-# Secrets / local-only — defense in depth even if none currently exist.
+# Secrets
 .env
 .env.*
 *.local
