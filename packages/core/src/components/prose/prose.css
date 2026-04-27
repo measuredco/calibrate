@@ -455,7 +455,7 @@
       }
 
       .clbr-prose[data-hanging-punctuation="always"] > & {
-        margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
+        margin-inline-start: calc(-1 * var(--clbr-prose-marker-gutter));
 
         [data-align="center"] & {
           margin-inline-start: 0;
@@ -464,7 +464,7 @@
 
       @media (width >= 64em) {
         .clbr-prose[data-hanging-punctuation="notebook"] > & {
-          margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
+          margin-inline-start: calc(-1 * var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
             margin-inline-start: 0;
@@ -474,7 +474,7 @@
 
       ol li:has(> h2:first-child) > &,
       ol li:has(> h3:first-child) > & {
-        margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
+        margin-inline-start: calc(-1 * var(--clbr-prose-marker-gutter));
 
         .clbr-prose[data-align="center"] & {
           margin-inline-start: 0;
@@ -681,7 +681,7 @@
       padding-block-start: var(--clbr-spacing-vertical-500);
 
       [data-hanging-punctuation="always"] & {
-        margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
+        margin-inline-start: calc(-1 * var(--clbr-prose-marker-gutter));
 
         [data-align="center"] & {
           margin-inline-start: 0;
@@ -690,7 +690,7 @@
 
       @media (width >= 64em) {
         .clbr-prose[data-hanging-punctuation="notebook"] & {
-          margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
+          margin-inline-start: calc(-1 * var(--clbr-prose-marker-gutter));
 
           [data-align="center"] & {
             margin-inline-start: 0;

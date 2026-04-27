@@ -1,10 +1,10 @@
 @layer clbr.components {
   :where(.clbr) .clbr-nav {
-    --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-300));
+    --clbr-nav-expander-offset: calc(-1 * var(--clbr-spacing-vertical-300));
     --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-lg);
 
     &[data-size="sm"] {
-      --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-250));
+      --clbr-nav-expander-offset: calc(-1 * var(--clbr-spacing-vertical-250));
       --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-md);
     }
 

@@ -89,7 +89,7 @@
 
       &::after {
         content: "";
-        inset: calc(0rem - var(--clbr-radio-inset));
+        inset: calc(-1 * var(--clbr-radio-inset));
         position: absolute;
       }
 

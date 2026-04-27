@@ -10,10 +10,10 @@
 
     [data-part="trigger"] {
       display: inline-flex;
-      margin-inline: calc(0rem - var(--clbr-spacing-vertical-300));
+      margin-inline: calc(-1 * var(--clbr-spacing-vertical-300));
 
       .clbr-sidebar[data-size="sm"] & {
-        margin-inline: calc(0rem - var(--clbr-spacing-vertical-250));
+        margin-inline: calc(-1 * var(--clbr-spacing-vertical-250));
       }
 
       @media (width >= 68em) {
@@ -117,6 +117,7 @@
     }
 
     [data-part="backdrop"] {
+      /* stylelint-disable-next-line declaration-property-value-allowed-list -- TODO: replace with overlay/scrim token once added to the system */
       background-color: #00000092;
       inset: 0;
       opacity: 0;
