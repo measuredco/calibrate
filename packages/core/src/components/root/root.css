@@ -149,7 +149,7 @@
     }
 
     :where(textarea) {
-      resize: block;
+      resize: vertical;
     }
 
     /* Define utility classes. */

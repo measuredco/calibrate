@@ -53,7 +53,7 @@
         var(--clbr-spacing-horizontal-400) -
           var(--clbr-layout-border-width-default)
       );
-      resize: block;
+      resize: vertical;
 
       &:focus-visible {
         border-radius: calc(
