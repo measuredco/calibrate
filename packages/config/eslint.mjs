@@ -6,14 +6,6 @@ import tseslint from "typescript-eslint";
 
 const eslintConfig = [
   {
-    ignores: [
-      "node_modules/**",
-      "**/build/**",
-      "**/dist/**",
-      "**/storybook-static/**",
-    ],
-  },
-  {
     files: ["**/*.json"],
     ...json.configs.recommended,
     language: "json/json",

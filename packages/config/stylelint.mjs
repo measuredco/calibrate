@@ -9,12 +9,6 @@ const stylelintConfig = {
     "order/properties-alphabetical-order": true,
     "no-descending-specificity": null,
   },
-  ignoreFiles: [
-    "**/node_modules/**",
-    "**/build/**",
-    "**/dist/**",
-    "**/storybook-static/**",
-  ],
 };
 
 export default stylelintConfig;

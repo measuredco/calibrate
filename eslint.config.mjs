@@ -9,7 +9,12 @@ const nodeGlobalsOff = Object.fromEntries(
 export default [
   ...calibrateEslint,
   {
-    ignores: ["packages/system/schemas/**"],
+    ignores: [
+      "**/build/**",
+      "**/dist/**",
+      "**/storybook-static/**",
+      "packages/system/schemas/**",
+    ],
   },
   {
     files: ["packages/core/src/**/*.ts", "packages/react/src/**/*.{ts,tsx}"],
