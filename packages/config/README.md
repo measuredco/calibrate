@@ -21,24 +21,29 @@ export default [
 
 ## Stylelint
 
-Stylelint config — alphabetical property order via `stylelint-order`, `stylelint-config-standard` baseline.
+Drop-in shareable config — extends `stylelint-config-standard` and adds alphabetical property ordering via `stylelint-order`.
 
 ```js
 // .stylelintrc.mjs
-import calibrateStylelint from "@measured/calibrate-config/stylelint";
-
-export default calibrateStylelint;
+export default {
+  extends: ["@measured/calibrate-config/stylelint"],
+};
 ```
 
-Or extend it and override per project:
+Or as JSON:
+
+```json
+{
+  "extends": ["@measured/calibrate-config/stylelint"]
+}
+```
+
+Add your own overrides alongside as you'd expect from any Stylelint config:
 
 ```js
-import calibrateStylelint from "@measured/calibrate-config/stylelint";
-
 export default {
-  ...calibrateStylelint,
+  extends: ["@measured/calibrate-config/stylelint"],
   rules: {
-    ...calibrateStylelint.rules,
     // your overrides
   },
 };
