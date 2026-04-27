@@ -50,6 +50,12 @@ importers:
       '@changesets/cli':
         specifier: ^2.31.0
         version: 2.31.0(@types/node@25.6.0)
+      '@eslint/js':
+        specifier: ^10.0.1
+        version: 10.0.1(eslint@10.2.1(jiti@2.6.1))
+      '@eslint/json':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@measured/calibrate-config':
         specifier: workspace:*
         version: link:packages/config
@@ -74,6 +80,9 @@ importers:
       stylelint:
         specifier: 'catalog:'
         version: 17.9.0(typescript@5.9.3)
+      typescript-eslint:
+        specifier: ^8.59.0
+        version: 8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3)
 
   apps/playground-react:
     dependencies:
@@ -186,21 +195,12 @@ importers:
 
   packages/config:
     dependencies:
-      '@eslint/js':
-        specifier: ^10.0.1
-        version: 10.0.1(eslint@10.2.1(jiti@2.6.1))
-      '@eslint/json':
-        specifier: ^1.2.0
-        version: 1.2.0
       eslint:
         specifier: ^10.0.0
         version: 10.2.1(jiti@2.6.1)
       eslint-plugin-simple-import-sort:
         specifier: ^13.0.0
         version: 13.0.0(eslint@10.2.1(jiti@2.6.1))
-      globals:
-        specifier: ^17.5.0
-        version: 17.5.0
       stylelint:
         specifier: ^17.0.0
         version: 17.9.0(typescript@5.9.3)
@@ -210,9 +210,6 @@ importers:
       stylelint-order:
         specifier: ^8.1.1
         version: 8.1.1(stylelint@17.9.0(typescript@5.9.3))
-      typescript-eslint:
-        specifier: ^8.59.0
-        version: 8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3)
 
   packages/core:
     dependencies:

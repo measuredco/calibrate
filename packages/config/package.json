@@ -41,13 +41,9 @@
     "baseline widely available"
   ],
   "dependencies": {
-    "@eslint/js": "^10.0.1",
-    "@eslint/json": "^1.2.0",
     "eslint-plugin-simple-import-sort": "^13.0.0",
-    "globals": "^17.5.0",
     "stylelint-config-standard": "^40.0.0",
-    "stylelint-order": "^8.1.1",
-    "typescript-eslint": "^8.59.0"
+    "stylelint-order": "^8.1.1"
   },
   "peerDependencies": {
     "eslint": "^10.0.0",

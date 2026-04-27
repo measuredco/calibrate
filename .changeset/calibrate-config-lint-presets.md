@@ -4,7 +4,7 @@
 
 Add `@measured/calibrate-config/eslint` and `@measured/calibrate-config/stylelint` subpath presets.
 
-The ESLint preset is a flat-config array covering `.mjs`/`.ts`/`.tsx` with alphabetical import/export sort (`simple-import-sort`), TypeScript recommended, and `js.configs.recommended` for `.mjs`. JSON files are linted via `@eslint/json`. Spread the array into your local config and add overrides as needed.
+The ESLint preset is a focused flat-config block that adds Calibrate's import/export sort convention (`simple-import-sort`) for `.mjs` / `.ts` / `.tsx`. Layer it onto your own ESLint baseline — bring your own TypeScript / JSON / JS recommended.
 
 The Stylelint preset extends `stylelint-config-standard` and adds alphabetical property ordering via `stylelint-order`. Import the default export from `.stylelintrc.mjs`.
 

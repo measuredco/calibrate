@@ -4,13 +4,14 @@ Shared quality/tooling config for Calibrate. Subpath presets for ESLint, Styleli
 
 ## ESLint
 
-Flat-config preset (mjs/ts/tsx) — alphabetical import/export sort, TypeScript recommended, JSON, `js.configs.recommended` for `.mjs`.
+Flat-config preset that adds Calibrate's import/export sort convention (`simple-import-sort`) for `.mjs` / `.ts` / `.tsx`. Layer it onto your own ESLint baseline — bring your own TypeScript / JSON / JS recommended.
 
 ```js
 // eslint.config.mjs
 import calibrateEslint from "@measured/calibrate-config/eslint";
 
 export default [
+  // your TypeScript / JSON / JS configs here
   ...calibrateEslint,
   // your local rules / overrides
 ];
