@@ -70,9 +70,8 @@
     }
 
     & blockquote {
+      margin-block: 0 var(--clbr-spacing-vertical-500);
       margin-inline: 0;
-      margin-block-end: var(--clbr-spacing-vertical-500);
-      margin-block-start: 0;
 
       & p {
         margin-block: 0;
@@ -101,10 +100,10 @@
       }
 
       & + p {
-        margin-block-end: var(--clbr-spacing-vertical-700);
         font: var(--clbr-prose-font-sm);
         font-feature-settings: "ss03" 1;
         font-optical-sizing: none;
+        margin-block-end: var(--clbr-spacing-vertical-700);
         text-align: end;
 
         &::before {
@@ -133,7 +132,7 @@
       padding-block-end: var(--clbr-code-padding-block-end);
       padding-inline: var(--clbr-typography-prose-code-padding-inline-default);
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         [data-responsive] p & {
           --clbr-code-padding-block-end: var(
             --clbr-typography-prose-code-padding-block-lg
@@ -161,8 +160,8 @@
 
     & pre {
       border-radius: var(--clbr-radius-md);
-      position: relative;
       max-inline-size: var(--clbr-typography-measure-default);
+      position: relative;
 
       .clbr-prose[data-align="end"] & {
         margin-inline-start: auto;
@@ -177,10 +176,10 @@
           var(--clbr-color-border-brand);
         border-radius: var(--clbr-radius-md);
         content: "";
-        inset-block-end: var(--clbr-effect-stroke-inset);
-        inset-block-start: var(--clbr-effect-stroke-outset);
-        inset-inline-end: var(--clbr-effect-stroke-inset);
-        inset-inline-start: var(--clbr-effect-stroke-outset);
+        inset-block: var(--clbr-effect-stroke-outset)
+          var(--clbr-effect-stroke-inset);
+        inset-inline: var(--clbr-effect-stroke-outset)
+          var(--clbr-effect-stroke-inset);
         pointer-events: none;
         position: absolute;
       }
@@ -210,7 +209,8 @@
           color: var(--clbr-color-base16-05);
         }
 
-        /* highlight.js */
+        /* highlight.js — class names are vendor-defined (e.g. .class_, .hljs-built_in) */
+        /* stylelint-disable selector-class-pattern */
 
         & .hljs-comment {
           color: var(--clbr-color-base16-03);
@@ -305,6 +305,8 @@
         & .hljs-meta-keyword {
           font-weight: var(--clbr-typography-font-weight-bold);
         }
+
+        /* stylelint-enable selector-class-pattern */
       }
     }
 
@@ -326,13 +328,13 @@
       font: var(--clbr-prose-heading-font);
       font-feature-settings: "ss03" 1;
       font-optical-sizing: none;
-      margin-block-end: var(--clbr-spacing-vertical-500);
-      margin-block-start: var(--clbr-spacing-vertical-700);
+      margin-block: var(--clbr-spacing-vertical-700)
+        var(--clbr-spacing-vertical-500);
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         :where(.clbr-prose[data-responsive]) & {
-          margin-block-end: var(--clbr-spacing-vertical-700);
-          margin-block-start: var(--clbr-spacing-vertical-800);
+          margin-block: var(--clbr-spacing-vertical-800)
+            var(--clbr-spacing-vertical-700);
         }
       }
     }
@@ -411,8 +413,7 @@
         var(--clbr-color-border-brand);
       border-inline: none;
       inline-size: var(--clbr-layout-divider-brand-size);
-      margin-block-end: var(--clbr-spacing-vertical-700);
-      margin-block-start: 0;
+      margin-block: 0 var(--clbr-spacing-vertical-700);
       margin-inline: 0;
       padding: 0;
 
@@ -443,12 +444,11 @@
       --clbr-prose-marker-gutter: calc(36rem / 16);
 
       list-style: none;
-      margin-block-end: var(--clbr-spacing-vertical-700);
-      margin-block-start: 0;
+      margin-block: 0 var(--clbr-spacing-vertical-700);
       margin-inline-start: 0;
       padding-inline-start: 0;
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive] > & {
           --clbr-prose-marker-gutter: calc(40rem / 16);
         }
@@ -462,7 +462,7 @@
         }
       }
 
-      @media (min-width: 64em) {
+      @media (width >= 64em) {
         .clbr-prose[data-hanging-punctuation="notebook"] > & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
@@ -538,14 +538,14 @@
         line-height: var(--clbr-typography-type-step-700-line-height);
       }
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive] ol > &:has(> h2)::before {
           font-size: var(--clbr-typography-type-step-800-font-size);
           line-height: var(--clbr-typography-type-step-800-line-height);
         }
       }
 
-      ol > &:has(> h2:first-child):nth-child(n + 10):before {
+      ol > &:has(> h2:first-child):nth-child(n + 10)::before {
         font-size: var(--clbr-typography-type-step-200-font-size);
         line-height: calc(
           var(--clbr-typography-leading-850) /
@@ -553,10 +553,10 @@
         );
       }
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive]
           ol
-          > &:has(> h2:first-child):nth-child(n + 10):before {
+          > &:has(> h2:first-child):nth-child(n + 10)::before {
           font-size: var(--clbr-typography-type-step-400-font-size);
           line-height: calc(
             var(--clbr-typography-leading-900) /
@@ -571,14 +571,14 @@
         line-height: var(--clbr-typography-type-step-500-line-height);
       }
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive] ol > &:has(> h3:first-child)::before {
           font-size: var(--clbr-typography-type-step-600-font-size);
           line-height: var(--clbr-typography-type-step-600-line-height);
         }
       }
 
-      ol > &:has(> h3:first-child):nth-child(n + 10):before {
+      ol > &:has(> h3:first-child):nth-child(n + 10)::before {
         font-size: var(--clbr-typography-type-step-200-font-size);
         line-height: calc(
           var(--clbr-typography-leading-800) /
@@ -586,10 +586,10 @@
         );
       }
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive]
           ol
-          > &:has(> h3:first-child):nth-child(n + 10):before {
+          > &:has(> h3:first-child):nth-child(n + 10)::before {
           font-size: var(--clbr-typography-type-step-400-font-size);
           line-height: calc(
             var(--clbr-typography-leading-850) /
@@ -600,8 +600,7 @@
     }
 
     & p {
-      margin-block-end: var(--clbr-spacing-vertical-700);
-      margin-block-start: 0;
+      margin-block: 0 var(--clbr-spacing-vertical-700);
       overflow-wrap: break-word;
       text-wrap: pretty;
     }
@@ -645,7 +644,7 @@
       );
       vertical-align: middle;
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         .clbr-prose[data-responsive] & {
           padding-block: calc(
             var(--clbr-spacing-vertical-500) -
@@ -689,7 +688,7 @@
         }
       }
 
-      @media (min-width: 64em) {
+      @media (width >= 64em) {
         .clbr-prose[data-hanging-punctuation="notebook"] & {
           margin-inline-start: calc(0rem - var(--clbr-prose-marker-gutter));
 
@@ -713,7 +712,7 @@
         inset-inline-start: var(--clbr-prose-marker-gutter);
       }
 
-      @media (min-width: 64em) {
+      @media (width >= 64em) {
         .clbr-prose[data-hanging-punctuation="notebook"] &::before {
           inset-inline-start: var(--clbr-prose-marker-gutter);
         }

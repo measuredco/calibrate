@@ -1,7 +1,7 @@
 @layer clbr.components {
   :where(.clbr) .clbr-grid {
-    container-type: inline-size;
     block-size: 100%;
+    container-type: inline-size;
     inline-size: 100%;
 
     .grid {
@@ -17,7 +17,7 @@
         );
       }
 
-      @media (min-width: 48em) {
+      @media (width >= 48em) {
         gap: var(--clbr-layout-grid-gap-md);
       }
 
@@ -259,8 +259,7 @@
 
       /* (--clbr-layout-grid-item-min-width * 3) + (--clbr-layout-grid-gap-md * 2)  */
       @container (min-inline-size: 57em) {
-        grid-column-end: auto;
-        grid-column-start: auto;
+        grid-column: auto / auto;
 
         &[data-col-span="1"] {
           grid-column-end: span 1;

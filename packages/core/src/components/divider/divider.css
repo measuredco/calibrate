@@ -22,8 +22,8 @@
       max-inline-size: var(--clbr-layout-divider-brand-size);
 
       &[aria-orientation="vertical"] {
-        max-block-size: var(--clbr-layout-divider-brand-size);
         inline-size: auto;
+        max-block-size: var(--clbr-layout-divider-brand-size);
       }
     }
   }

@@ -30,6 +30,7 @@
   .clbr {
     /* Establish system defaults. */
     accent-color: var(--clbr-color-interactive-default);
+
     /* Establish an isolated styling boundary. */
     all: initial;
     background-color: var(--clbr-color-background-default);

@@ -14,8 +14,8 @@
     font-family: var(--clbr-typography-font-family-mono);
     font-size: var(--clbr-badge-font-size);
     font-weight: var(--clbr-typography-font-weight-regular-plus);
-    line-height: var(--clbr-badge-line-height);
     inline-size: fit-content;
+    line-height: var(--clbr-badge-line-height);
     outline: var(--clbr-layout-border-width-default) solid
       var(--clbr-badge-color-border);
     outline-offset: calc(0rem - var(--clbr-layout-border-width-default));

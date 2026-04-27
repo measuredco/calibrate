@@ -9,8 +9,8 @@
     }
 
     &[data-orientation="horizontal"] {
-      display: flex;
       column-gap: var(--clbr-spacing-horizontal-600);
+      display: flex;
       flex-wrap: wrap;
     }
 
@@ -89,8 +89,8 @@
 
       &::after {
         content: "";
-        position: absolute;
         inset: calc(0rem - var(--clbr-radio-inset));
+        position: absolute;
       }
 
       &:disabled {

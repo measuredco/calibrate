@@ -2,7 +2,7 @@
   :where(.clbr) .clbr-sidebar {
     display: flex;
 
-    @media (min-width: 68em) {
+    @media (width >= 68em) {
       &[data-above-notebook="persistent"] {
         display: contents;
       }
@@ -16,7 +16,7 @@
         margin-inline: calc(0rem - var(--clbr-spacing-vertical-250));
       }
 
-      @media (min-width: 68em) {
+      @media (width >= 68em) {
         .clbr-sidebar[data-above-notebook="collapsible"] &,
         .clbr-sidebar[data-above-notebook="persistent"] & {
           display: none;
@@ -52,7 +52,7 @@
           visibility 0s linear 0s;
         visibility: visible;
 
-        @media (min-width: 68em) {
+        @media (width >= 68em) {
           box-shadow: none;
         }
       }
@@ -67,19 +67,19 @@
           var(--clbr-color-border-subtle);
         display: flex;
         min-block-size: var(--clbr-spacing-vertical-1000);
-        padding-block-end: calc(
-          var(--clbr-layout-spacing-vertical-600) -
-            var(--clbr-layout-border-width-default)
-        );
-        padding-block-start: var(--clbr-layout-spacing-vertical-600);
+        padding-block: var(--clbr-layout-spacing-vertical-600)
+          calc(
+            var(--clbr-layout-spacing-vertical-600) -
+              var(--clbr-layout-border-width-default)
+          );
 
         .clbr-sidebar[data-size="sm"] .sidebar > & {
           min-block-size: var(--clbr-spacing-vertical-950);
-          padding-block-end: calc(
-            var(--clbr-spacing-vertical-500) -
-              var(--clbr-layout-border-width-default)
-          );
-          padding-block-start: var(--clbr-spacing-vertical-500);
+          padding-block: var(--clbr-spacing-vertical-500)
+            calc(
+              var(--clbr-spacing-vertical-500) -
+                var(--clbr-layout-border-width-default)
+            );
         }
 
         .clbr-sidebar[data-collapsed] & {
@@ -92,8 +92,7 @@
 
         [data-part="close"] {
           flex: none;
-          margin-inline-end: var(--clbr-spacing-horizontal-400);
-          margin-inline-start: auto;
+          margin-inline: auto var(--clbr-spacing-horizontal-400);
 
           .clbr-sidebar[data-collapsed] & {
             margin-inline: 0;
@@ -102,43 +101,42 @@
       }
 
       > .content {
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden auto;
       }
 
       > .footer {
         border-block-start: var(--clbr-layout-border-width-default) solid
           var(--clbr-color-border-subtle);
         margin-block-start: auto;
-        padding-block-end: var(--clbr-spacing-vertical-500);
-        padding-block-start: calc(
-          var(--clbr-spacing-vertical-500) -
-            var(--clbr-layout-border-width-default)
-        );
+        padding-block: calc(
+            var(--clbr-spacing-vertical-500) -
+              var(--clbr-layout-border-width-default)
+          )
+          var(--clbr-spacing-vertical-500);
       }
     }
 
     [data-part="backdrop"] {
-      visibility: hidden;
-      position: fixed;
-      inset: 0;
       background-color: #00000092;
+      inset: 0;
       opacity: 0;
+      position: fixed;
       transition:
         opacity var(--clbr-motion-duration-150)
           var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-50),
         visibility 0s linear var(--clbr-motion-duration-200);
+      visibility: hidden;
 
       .clbr-sidebar[data-open] & {
         opacity: 1;
-        visibility: visible;
         transition:
           opacity var(--clbr-motion-duration-200)
             var(--clbr-motion-easing-ease-out) 0s,
           visibility 0s linear 0s;
+        visibility: visible;
       }
 
-      @media (min-width: 68em) {
+      @media (width >= 68em) {
         .clbr-sidebar[data-above-notebook="collapsible"] &,
         .clbr-sidebar[data-above-notebook="persistent"] & {
           display: none;

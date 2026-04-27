@@ -6,6 +6,20 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Deterministic sorting (linting)
+
+Lint-enforced sorting where off-the-shelf tooling can do the job without custom rules. Conventions in docs decay; auto-fixable lint rules don't, and both humans and agents work well against tools.
+
+**Phase A: stylelint** — add stylelint at the repo root (mirroring ESLint's setup) with `stylelint-config-standard` plus `stylelint-order` configured for alphabetical-only property sorting within declaration blocks (no grouping). Wire into the existing lint-staged pre-commit hook so staged CSS is auto-formatted alongside prettier. Also gate as a CI check.
+
+**Phase B: simple-import-sort** — add `eslint-plugin-simple-import-sort` with defaults. ESLint stays check-only (CI gate); auto-fix via `pnpm lint:fix` or editor-on-save. Keeping prettier as the sole tool that rewrites code on commit avoids silent ESLint-driven changes beyond pure formatting.
+
+**Lint script consolidation** — remove the redundant `core:lint` / `react:lint` scripts from root `package.json` and the per-package `lint` scripts from `packages/core/package.json` and `packages/react/package.json`. Root `pnpm lint` already covers the whole monorepo via the root ESLint config; per-package shortcuts duplicate the surface and aren't gated by CI. Bundle into Phase B since both touch ESLint config / lint plumbing.
+
+**Drop the system token "default first" rule** — currently documented in `packages/system/README.md` ("when a group includes a `default` token, place `default` at the top") but not lint-enforced. The pattern is too custom for off-the-shelf enforcement, and unenforced rules drift — already violated once and caught reactively. Remove from README; if a specific case becomes painful later, build a small validator into `packages/system/scripts/validate.mjs`.
+
+**Out of scope** — JS object destructure / type member / object key alphabetical sorting. Captured as a possible future agent skill / shared config rather than maintaining custom ESLint rules now.
+
 ## Next
 
 What we could be working on next.
@@ -86,12 +100,6 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 1. VS Code token lookup artifact
 1. iOS
 1. Android
-
-### Deterministic sorting (linting)
-
-- JS import/export ordering via ESLint autofix
-- JSON key-order enforcement for selected token paths (including top-key conventions like `$schema` / `$type` / `$description` / `default`)
-- Alphabetical sorting
 
 ### Shared config package evolution
 

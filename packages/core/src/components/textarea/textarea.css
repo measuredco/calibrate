@@ -43,6 +43,7 @@
       box-shadow: var(--clbr-effect-shadow-default);
       color: var(--clbr-color-foreground-default);
       font: inherit;
+      inline-size: 100%;
       min-block-size: var(--clbr-textarea-min-block-size);
       padding-block: calc(
         var(--clbr-spacing-vertical-400) -
@@ -53,7 +54,6 @@
           var(--clbr-layout-border-width-default)
       );
       resize: vertical;
-      inline-size: 100%;
 
       &:focus-visible {
         border-radius: calc(

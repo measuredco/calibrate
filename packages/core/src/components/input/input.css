@@ -36,6 +36,7 @@
       );
       box-shadow: var(--clbr-effect-shadow-default);
       color: var(--clbr-color-foreground-default);
+      inline-size: 100%;
       padding-block: calc(
         var(--clbr-spacing-vertical-400) -
           var(--clbr-layout-border-width-default)
@@ -44,7 +45,6 @@
         var(--clbr-spacing-horizontal-400) -
           var(--clbr-layout-border-width-default)
       );
-      inline-size: 100%;
 
       &:focus-visible {
         border-radius: calc(

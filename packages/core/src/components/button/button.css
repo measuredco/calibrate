@@ -55,6 +55,7 @@
 
     &[data-size="sm"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-775);
+
       font-size: var(--clbr-typography-type-step-150-font-size);
       line-height: var(--clbr-typography-type-step-150-line-height);
       padding-block: calc(
@@ -77,6 +78,7 @@
 
     &[data-size="lg"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-900);
+
       padding-block: calc(
         var(--clbr-spacing-vertical-500) -
           var(--clbr-layout-border-width-default)
@@ -213,6 +215,7 @@
 
     &[data-appearance="text"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+
       background-color: transparent;
       border: none;
       box-shadow: none;
@@ -248,11 +251,11 @@
 
       &[data-label-visibility="hidden"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-775);
+
         margin-inline: calc(
           var(--clbr-layout-icon-size-md) *
             var(--clbr-layout-icon-viewbox-outset-ratio)
         );
-
         padding: var(--clbr-spacing-vertical-250);
 
         & .icon-wrapper {
@@ -263,11 +266,11 @@
 
       &[data-label-visibility="hidden"][data-size="sm"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+
         margin-inline: calc(
           var(--clbr-layout-icon-size-sm) *
             var(--clbr-layout-icon-viewbox-outset-ratio)
         );
-
         padding: var(--clbr-spacing-vertical-200);
 
         & .icon-wrapper {
@@ -277,11 +280,11 @@
 
       &[data-label-visibility="hidden"][data-size="lg"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+
         margin-inline: calc(
           var(--clbr-layout-icon-size-lg) *
             var(--clbr-layout-icon-viewbox-outset-ratio)
         );
-
         padding: var(--clbr-spacing-vertical-300);
 
         & .icon-wrapper {
@@ -308,11 +311,11 @@
 
         &[data-label-visibility="hiddenBelowTablet"][data-size="sm"] {
           --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+
           margin-inline: calc(
             var(--clbr-layout-icon-size-sm) *
               var(--clbr-layout-icon-viewbox-outset-ratio)
           );
-
           padding: var(--clbr-spacing-vertical-200);
 
           & .icon-wrapper {
@@ -322,11 +325,11 @@
 
         &[data-label-visibility="hidden"][data-size="lg"] {
           --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+
           margin-inline: calc(
             var(--clbr-layout-icon-size-lg) *
               var(--clbr-layout-icon-viewbox-outset-ratio)
           );
-
           padding: var(--clbr-spacing-vertical-300);
 
           & .icon-wrapper {
