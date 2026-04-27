@@ -13,7 +13,7 @@
       grid-template-rows: max-content auto 1fr auto;
     }
 
-    @media (min-width: 68em) {
+    @media (width >= 68em) {
       &:has(> .header clbr-sidebar[data-above-notebook="persistent"]),
       &:has(> .header clbr-sidebar[data-above-notebook="collapsible"]) {
         margin-inline-start: var(--clbr-breakpoint-baseline);
@@ -44,15 +44,15 @@
       }
 
       .clbr-page[data-sticky-header="belowNotebook"] > & {
-        @media (min-width: 64em) {
+        @media (width >= 64em) {
           position: relative;
         }
       }
     }
 
     &[data-center-main] .main {
-      position: relative;
       margin-block: auto;
+      position: relative;
     }
   }
 }

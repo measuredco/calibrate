@@ -5,8 +5,8 @@
     background-color: var(--clbr-banner-color-background);
     color: var(--clbr-color-foreground-default);
     display: block;
-    padding-block-end: var(--clbr-spacing-vertical-400);
-    padding-block-start: var(--clbr-spacing-vertical-400);
+    padding-block: var(--clbr-spacing-vertical-400)
+      var(--clbr-spacing-vertical-400);
     padding-inline: var(--clbr-spacing-horizontal-500);
     position: relative;
 
@@ -47,9 +47,9 @@
     }
 
     [data-part="close"] {
-      position: absolute;
       inset-block: var(--clbr-spacing-vertical-400);
       inset-inline-end: var(--clbr-spacing-horizontal-400);
+      position: absolute;
     }
   }
 }

@@ -93,8 +93,8 @@
 
       &::after {
         content: "";
-        position: absolute;
         inset: calc(0rem - var(--clbr-checkbox-inset));
+        position: absolute;
       }
 
       &[aria-invalid="true"] {

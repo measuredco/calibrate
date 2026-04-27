@@ -16,8 +16,7 @@
 
     [data-part="expander"] {
       display: none;
-      margin-inline-end: auto;
-      margin-inline-start: var(--clbr-nav-expander-offset);
+      margin-inline: var(--clbr-nav-expander-offset) auto;
       position: relative;
       z-index: 2;
 
@@ -25,15 +24,14 @@
         display: inline-flex;
       }
 
-      @media (min-width: 48rem) {
+      @media (width >= 48rem) {
         .clbr-nav[data-collapsible="belowTablet"] & {
           display: none;
         }
       }
 
       .clbr-nav[data-expander-position="end"] & {
-        margin-inline-end: var(--clbr-nav-expander-offset);
-        margin-inline-start: auto;
+        margin-inline: auto var(--clbr-nav-expander-offset);
       }
 
       .clbr-banner
@@ -81,18 +79,18 @@
         inset: 0;
         overflow-y: auto;
         overscroll-behavior-y: none;
-        padding-block-end: var(--clbr-spacing-vertical-700);
-        padding-block-start: calc(
-          var(--clbr-layout-spacing-vertical-600) +
-            var(--clbr-nav-expander-icon-size)
-        );
-        padding-inline-end: var(--clbr-spacing-horizontal-700);
-        padding-inline-start: var(--clbr-spacing-horizontal-900);
+        padding-block: calc(
+            var(--clbr-layout-spacing-vertical-600) +
+              var(--clbr-nav-expander-icon-size)
+          )
+          var(--clbr-spacing-vertical-700);
+        padding-inline: var(--clbr-spacing-horizontal-900)
+          var(--clbr-spacing-horizontal-700);
         position: fixed;
 
         .clbr-nav[data-expander-position="end"] & {
-          padding-inline-end: var(--clbr-spacing-horizontal-900);
-          padding-inline-start: var(--clbr-spacing-horizontal-700);
+          padding-inline: var(--clbr-spacing-horizontal-700)
+            var(--clbr-spacing-horizontal-900);
         }
       }
 
@@ -110,18 +108,18 @@
           inset: 0;
           overflow-y: auto;
           overscroll-behavior-y: none;
-          padding-block-end: var(--clbr-spacing-vertical-700);
-          padding-block-start: calc(
-            var(--clbr-layout-spacing-vertical-600) +
-              var(--clbr-nav-expander-icon-size)
-          );
-          padding-inline-end: var(--clbr-spacing-horizontal-700);
-          padding-inline-start: var(--clbr-spacing-horizontal-900);
+          padding-block: calc(
+              var(--clbr-layout-spacing-vertical-600) +
+                var(--clbr-nav-expander-icon-size)
+            )
+            var(--clbr-spacing-vertical-700);
+          padding-inline: var(--clbr-spacing-horizontal-900)
+            var(--clbr-spacing-horizontal-700);
           position: fixed;
 
           .clbr-nav[data-expander-position="end"] & {
-            padding-inline-end: var(--clbr-spacing-horizontal-900);
-            padding-inline-start: var(--clbr-spacing-horizontal-700);
+            padding-inline: var(--clbr-spacing-horizontal-700)
+              var(--clbr-spacing-horizontal-900);
           }
         }
       }
@@ -138,8 +136,8 @@
       .clbr-nav[data-size="sm"] & {
         font-size: var(--clbr-typography-type-step-150-font-size);
         gap: var(--clbr-spacing-horizontal-500);
-        margin-block: var(--clbr-spacing-vertical-250);
         line-height: var(--clbr-typography-type-step-150-line-height);
+        margin-block: var(--clbr-spacing-vertical-250);
       }
 
       .clbr-nav[data-collapsible="always"]:has(

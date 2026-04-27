@@ -12,9 +12,8 @@
     }
 
     .quote {
+      margin-block: 0 var(--clbr-spacing-vertical-500);
       margin-inline: 0;
-      margin-block-end: var(--clbr-spacing-vertical-500);
-      margin-block-start: 0;
 
       &:has([data-size="lg"]) {
         margin-block-end: var(--clbr-spacing-vertical-600);
@@ -52,10 +51,10 @@
     }
 
     .attribution {
-      margin-block: 0;
       font: var(--clbr-prose-font-sm);
       font-feature-settings: "ss03" 1;
       font-optical-sizing: none;
+      margin-block: 0;
       text-align: end;
 
       &::before {

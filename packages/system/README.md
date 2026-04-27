@@ -81,8 +81,6 @@ This is the contract that token output enforces — consumers integrating via `@
 - External `$ref` path rule:
   - relative `$ref` file paths must resolve from the authoring file location
   - update paths when folders move
-- Group ordering rule:
-  - when a group includes a `default` token, place `default` at the top of that group (after any `$*` metadata keys)
 - Cross-layer alias rule:
   - brand primitive tokens may alias base primitive tokens when values are intentionally shared
   - keep explicit literals where design intent intentionally diverges

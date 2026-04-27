@@ -53,7 +53,7 @@
     }
 
     .expander-inner {
-      background-color: currentColor;
+      background-color: currentcolor;
       block-size: round(
         nearest,
         calc(var(--clbr-expander-icon-size) / 12),
@@ -82,7 +82,7 @@
 
       &::before,
       &::after {
-        background-color: currentColor;
+        background-color: currentcolor;
         block-size: round(
           nearest,
           calc(var(--clbr-expander-icon-size) / 12),

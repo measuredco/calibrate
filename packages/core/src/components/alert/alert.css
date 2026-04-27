@@ -7,16 +7,15 @@
     border-radius: var(--clbr-radius-md);
     box-shadow: var(--clbr-effect-shadow-default);
     color: var(--clbr-color-foreground-prose);
-    column-gap: var(--clbr-spacing-horizontal-400);
     display: grid;
+    gap: var(--clbr-spacing-vertical-400) var(--clbr-spacing-horizontal-400);
     grid-template-columns: max-content minmax(0, 1fr);
     outline: var(--clbr-layout-border-width-default) solid
       var(--clbr-alert-color-border);
     outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
     padding-block: var(--clbr-spacing-vertical-500);
-    padding-inline-end: var(--clbr-spacing-horizontal-700);
-    padding-inline-start: var(--clbr-spacing-horizontal-600);
-    row-gap: var(--clbr-spacing-vertical-400);
+    padding-inline: var(--clbr-spacing-horizontal-600)
+      var(--clbr-spacing-horizontal-700);
 
     &:has(.title) {
       padding-block-end: var(--clbr-spacing-vertical-600);
@@ -38,8 +37,8 @@
       font-size: var(--clbr-typography-type-step-150-font-size);
       line-height: var(--clbr-typography-type-step-150-line-height);
       padding-block: var(--clbr-spacing-vertical-400);
-      padding-inline-end: var(--clbr-spacing-horizontal-600);
-      padding-inline-start: var(--clbr-spacing-horizontal-500);
+      padding-inline: var(--clbr-spacing-horizontal-500)
+        var(--clbr-spacing-horizontal-600);
 
       &:has(.title) {
         padding-block-end: var(--clbr-spacing-vertical-500);
@@ -91,19 +90,17 @@
       font: var(--clbr-alert-title-font);
       font-feature-settings: "ss03" 1;
       font-optical-sizing: none;
-      margin-block-end: var(--clbr-spacing-vertical-250);
-      margin-block-start: 0;
+      margin-block: 0 var(--clbr-spacing-vertical-250);
 
       .clbr-alert[data-size="sm"] & {
-        margin-block-end: 0;
-        margin-block-start: var(--clbr-spacing-vertical-200);
+        margin-block: var(--clbr-spacing-vertical-200) 0;
+
         --clbr-alert-title-font: var(--clbr-typography-text-heading-xs);
       }
     }
 
     .message {
-      margin-block-end: 0;
-      margin-block-start: var(--clbr-spacing-vertical-100);
+      margin-block: var(--clbr-spacing-vertical-100) 0;
     }
 
     [data-part="close"] {

@@ -95,7 +95,6 @@
         var(--clbr-layout-icon-size-md) *
           var(--clbr-layout-icon-viewbox-outset-ratio)
       );
-
       padding: var(--clbr-spacing-vertical-250);
 
       & .icon-wrapper {
@@ -118,11 +117,11 @@
 
     &[data-label-visibility="hidden"][data-size="sm"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+
       margin-inline: calc(
         var(--clbr-layout-icon-size-sm) *
           var(--clbr-layout-icon-viewbox-outset-ratio)
       );
-
       padding: var(--clbr-spacing-vertical-200);
 
       & .icon-wrapper {
@@ -132,11 +131,11 @@
 
     &[data-label-visibility="hidden"][data-size="lg"] {
       --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+
       margin-inline: calc(
         var(--clbr-layout-icon-size-lg) *
           var(--clbr-layout-icon-viewbox-outset-ratio)
       );
-
       padding: var(--clbr-spacing-vertical-300);
 
       & .icon-wrapper {
@@ -175,11 +174,11 @@
 
       &[data-label-visibility="hiddenBelowTablet"][data-size="sm"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-700);
+
         margin-inline: calc(
           var(--clbr-layout-icon-size-sm) *
             var(--clbr-layout-icon-viewbox-outset-ratio)
         );
-
         padding: var(--clbr-spacing-vertical-200);
 
         & .icon-wrapper {
@@ -189,11 +188,11 @@
 
       &[data-label-visibility="hidden"][data-size="lg"] {
         --clbr-button-block-size: var(--clbr-spacing-vertical-800);
+
         margin-inline: calc(
           var(--clbr-layout-icon-size-lg) *
             var(--clbr-layout-icon-viewbox-outset-ratio)
         );
-
         padding: var(--clbr-spacing-vertical-300);
 
         & .icon-wrapper {
@@ -212,7 +211,6 @@
       border-style: solid;
       border-width: var(--clbr-layout-border-width-default);
       box-shadow: var(--clbr-effect-shadow-default);
-
       padding-block: calc(
         var(--clbr-spacing-vertical-400) -
           var(--clbr-layout-border-width-default)

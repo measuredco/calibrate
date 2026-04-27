@@ -11,6 +11,8 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "stylelint": "stylelint \"**/*.css\"",
+    "stylelint:fix": "stylelint \"**/*.css\" --fix",
     "playground:react": "pnpm --filter @measured/calibrate-playground-react run dev",
     "playground:react:build": "pnpm --filter @measured/calibrate-playground-react run build",
     "playground:react:typecheck": "pnpm --filter @measured/calibrate-playground-react run typecheck",
@@ -35,7 +37,8 @@
     "baseline widely available"
   ],
   "lint-staged": {
-    "*": "prettier --ignore-unknown --write"
+    "*": "prettier --ignore-unknown --write",
+    "*.css": "stylelint --fix"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
@@ -48,6 +51,9 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
+    "stylelint": "^17.9.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
     "typescript-eslint": "^8.59.0"
   }
 }

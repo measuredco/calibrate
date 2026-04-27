@@ -8,19 +8,19 @@
     display: flex;
     flex-direction: column;
     inline-size: 100%;
-    position: relative;
     padding-block: var(--clbr-spacing-vertical-800);
     padding-inline: var(--clbr-spacing-horizontal-800);
+    position: relative;
 
     &::after {
       border: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       border-radius: var(--clbr-radius-lg);
       content: "";
-      inset-block-end: var(--clbr-effect-stroke-inset);
-      inset-block-start: var(--clbr-effect-stroke-outset);
-      inset-inline-end: var(--clbr-effect-stroke-inset);
-      inset-inline-start: var(--clbr-effect-stroke-outset);
+      inset-block: var(--clbr-effect-stroke-outset)
+        var(--clbr-effect-stroke-inset);
+      inset-inline: var(--clbr-effect-stroke-outset)
+        var(--clbr-effect-stroke-inset);
       pointer-events: none;
       position: absolute;
       transition: var(--clbr-motion-duration-50)
@@ -59,39 +59,39 @@
           var(--clbr-motion-easing-ease-in-out);
 
         @media (prefers-reduced-motion) {
-          inset-block-end: var(--clbr-effect-stroke-inset);
-          inset-block-start: var(--clbr-effect-stroke-outset);
-          inset-inline-end: var(--clbr-effect-stroke-inset);
-          inset-inline-start: var(--clbr-effect-stroke-outset);
+          inset-block: var(--clbr-effect-stroke-outset)
+            var(--clbr-effect-stroke-inset);
+          inset-inline: var(--clbr-effect-stroke-outset)
+            var(--clbr-effect-stroke-inset);
         }
       }
     }
 
     &:has(.title a):active::after {
-      inset-block-end: calc(var(--clbr-effect-stroke-outset) / 2);
-      inset-block-start: calc(var(--clbr-effect-stroke-inset) / 2);
-      inset-inline-end: calc(var(--clbr-effect-stroke-outset) / 2);
-      inset-inline-start: calc(var(--clbr-effect-stroke-inset) / 2);
+      inset-block: calc(var(--clbr-effect-stroke-inset) / 2)
+        calc(var(--clbr-effect-stroke-outset) / 2);
+      inset-inline: calc(var(--clbr-effect-stroke-inset) / 2)
+        calc(var(--clbr-effect-stroke-outset) / 2);
 
       @media (prefers-reduced-motion) {
-        inset-block-end: var(--clbr-effect-stroke-inset);
-        inset-block-start: var(--clbr-effect-stroke-outset);
-        inset-inline-end: var(--clbr-effect-stroke-inset);
-        inset-inline-start: var(--clbr-effect-stroke-outset);
+        inset-block: var(--clbr-effect-stroke-outset)
+          var(--clbr-effect-stroke-inset);
+        inset-inline: var(--clbr-effect-stroke-outset)
+          var(--clbr-effect-stroke-inset);
       }
     }
 
     .title {
-      margin-block: 0;
       font: var(--clbr-typography-text-heading-lg);
       font-feature-settings: "ss03" 1;
       font-optical-sizing: none;
+      margin-block: 0;
       text-wrap: balance;
 
       & a {
         color: inherit;
-        position: static;
         outline: none;
+        position: static;
 
         &::after {
           content: "";
@@ -107,8 +107,7 @@
 
     .description {
       color: var(--clbr-color-foreground-prose);
-      margin-block-end: 0;
-      margin-block-start: var(--clbr-spacing-vertical-500);
+      margin-block: var(--clbr-spacing-vertical-500) 0;
       position: relative;
 
       &:has(+ .note) {
@@ -120,8 +119,7 @@
       align-items: center;
       color: var(--clbr-color-foreground-muted-text);
       display: inline-flex;
-      margin-block-end: 0;
-      margin-block-start: auto;
+      margin-block: auto 0;
 
       .icon-wrapper {
         block-size: var(--clbr-layout-icon-size-xs);
@@ -134,8 +132,8 @@
 
       .clbr-card:has(.title a) & {
         color: var(--clbr-color-interactive-default);
-        font-weight: var(--clbr-typography-font-weight-regular-plus);
         font-family: var(--clbr-typography-font-family-mono);
+        font-weight: var(--clbr-typography-font-weight-regular-plus);
 
         @media (forced-colors: active) {
           color: LinkText;
@@ -143,8 +141,8 @@
 
         .icon-wrapper {
           inset-inline-start: 0;
-          position: relative;
           opacity: 0;
+          position: relative;
         }
       }
 
