@@ -76,8 +76,6 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 
 #### Design model evolution
 
-- Custom inverse themes?
-- `density` context (class-based in CSS); current size context grid/spacing is broadly editorial/comfortable in nature, this may be fine, but may want to add a ui/compact mode
 - Border and Transition DTCG Composites
 - Consider introducing Newsreader as a serif font for prose body copy.
 
@@ -98,10 +96,6 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 ### Shared config package evolution
 
 Expand `@measured/calibrate-config` beyond the current browserslist/esbuild baseline to include additional consumer-installable subpath presets (for example ESLint, Stylelint, axe; token-name lint rules, raw hex/px guards), plus optional starter assets for contribution workflows (for example PR template/checklist files).
-
-### Assets package evolution
-
-Expand `@measured/calibrate-assets` beyond v1 fonts scope (for example favicons/images) and define stable vs implementation-detail asset APIs.
 
 ### Documentation website (`apps/documentation`)
 
