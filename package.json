@@ -43,16 +43,13 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.2.0",
     "@measured/calibrate-config": "workspace:*",
-    "eslint": "^10.2.1",
-    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "eslint": "catalog:",
     "eslint-plugin-storybook": "10.2.16",
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
-    "stylelint": "^17.9.0",
-    "stylelint-config-standard": "^40.0.0",
-    "stylelint-order": "^8.1.1",
+    "stylelint": "catalog:",
     "typescript-eslint": "^8.59.0"
   }
 }

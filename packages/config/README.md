@@ -1,12 +1,57 @@
 # @measured/calibrate-config
 
-Shared quality/tooling config package for Calibrate.
+Shared quality/tooling config for Calibrate. Subpath presets for ESLint, Stylelint, and Browserslist/esbuild — install once, plug in via subpath imports.
 
-Current scope: Browserslist baseline + Vite/esbuild target helper.
+## ESLint
+
+Flat-config preset that adds Calibrate's import/export sort convention (`simple-import-sort`) for `.mjs` / `.ts` / `.tsx`. Layer it onto your own ESLint baseline — bring your own TypeScript / JSON / JS recommended.
+
+```js
+// eslint.config.mjs
+import calibrateEslint from "@measured/calibrate-config/eslint";
+
+export default [
+  // your TypeScript / JSON / JS configs here
+  ...calibrateEslint,
+  // your local rules / overrides
+];
+```
+
+`eslint` itself is a peer dependency — install it alongside.
+
+## Stylelint
+
+Drop-in shareable config — extends `stylelint-config-standard` and adds alphabetical property ordering via `stylelint-order`.
+
+```js
+// .stylelintrc.mjs
+export default {
+  extends: ["@measured/calibrate-config/stylelint"],
+};
+```
+
+Or as JSON:
+
+```json
+{
+  "extends": ["@measured/calibrate-config/stylelint"]
+}
+```
+
+Add your own overrides alongside as you'd expect from any Stylelint config:
+
+```js
+export default {
+  extends: ["@measured/calibrate-config/stylelint"],
+  rules: {
+    // your overrides
+  },
+};
+```
+
+`stylelint` itself is a peer dependency — install it alongside.
 
 ## Browserslist query
-
-This package exports the shared query list:
 
 ```ts
 import browserslist from "@measured/calibrate-config/browserslist";
