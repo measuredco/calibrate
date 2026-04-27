@@ -55,74 +55,22 @@ const colorAllowedList = Object.fromEntries(
   COLOR_PROPS.map((p) => [p, [COLOR_TOKEN_REF, COLOR_KEYWORDS, SYSTEM_COLORS]]),
 );
 
-const DIMENSION_PROPS = [
-  "block-size",
-  "border-end-end-radius",
-  "border-end-start-radius",
-  "border-radius",
-  "border-start-end-radius",
-  "border-start-start-radius",
-  "column-gap",
-  "font-size",
-  "gap",
-  "height",
-  "inline-size",
-  "line-height",
-  "margin",
-  "margin-block",
-  "margin-block-end",
-  "margin-block-start",
-  "margin-bottom",
-  "margin-inline",
-  "margin-inline-end",
-  "margin-inline-start",
-  "margin-left",
-  "margin-right",
-  "margin-top",
-  "max-block-size",
-  "max-height",
-  "max-inline-size",
-  "max-width",
-  "min-block-size",
-  "min-height",
-  "min-inline-size",
-  "min-width",
-  "outline-offset",
-  "padding",
-  "padding-block",
-  "padding-block-end",
-  "padding-block-start",
-  "padding-bottom",
-  "padding-inline",
-  "padding-inline-end",
-  "padding-inline-start",
-  "padding-left",
-  "padding-right",
-  "padding-top",
-  "row-gap",
-  "width",
-];
-
-// Disallow absolute lengths (px, pt, pc, in, cm, mm, Q) and root-relative
-// units (rem, rlh) — both bypass the design system's spacing scale. Everything
-// else is allowed: typography-relative (em, ch, lh), percent, viewport units
-// (vw/vh/vi/vb plus s*/l*/d* variants), container-query units, and any future
-// CSS unit. var() and calc() pass through; unitless 0 is always allowed.
-const DIMENSION_UNITS_DISALLOWED = [
-  "px",
-  "pt",
-  "pc",
-  "in",
-  "cm",
-  "mm",
-  "Q",
-  "rem",
-  "rlh",
-];
-
-const dimensionUnitsDisallowed = Object.fromEntries(
-  DIMENSION_PROPS.map((p) => [p, DIMENSION_UNITS_DISALLOWED]),
-);
+// Disallow absolute lengths repo-wide. These don't scale with user font-size
+// preference and bypass the design system's spacing scale entirely. Applied
+// globally rather than per-property: there's no property where a raw absolute
+// length is the right answer; properties that don't take lengths (color,
+// content, etc.) are unaffected because the rule scans unit suffixes on
+// numeric literals.
+//
+// rem and rlh are intentionally NOT disallowed — they're root-relative and
+// accessibility-aware, useful as a tokenization escape hatch for ad-hoc
+// dimensions the system doesn't tokenize. They're also the right unit for
+// container query breakpoints (em in @container is relative to the container's
+// font-size, which is unpredictable; rem stays anchored to root). Reach for
+// tokens first; rem is the documented out.
+//
+// var() and calc() pass through; unitless 0 is always allowed.
+const UNITS_DISALLOWED = ["px", "pt", "pc", "in", "cm", "mm", "Q"];
 
 const stylelintConfig = {
   extends: [require.resolve("stylelint-config-standard")],
@@ -131,7 +79,7 @@ const stylelintConfig = {
     "order/properties-alphabetical-order": true,
     "no-descending-specificity": null,
     "declaration-property-value-allowed-list": colorAllowedList,
-    "declaration-property-unit-disallowed-list": dimensionUnitsDisallowed,
+    "unit-disallowed-list": UNITS_DISALLOWED,
   },
 };
 

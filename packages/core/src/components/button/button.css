@@ -161,7 +161,7 @@
         --clbr-button-block-size: var(--clbr-spacing-vertical-800);
       }
 
-      /* stylelint-disable declaration-property-unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
+      /* stylelint-disable unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
       .label {
         block-size: 1px;
         border: none;
@@ -173,11 +173,11 @@
         position: absolute;
         white-space: nowrap;
       }
-      /* stylelint-enable declaration-property-unit-disallowed-list */
+      /* stylelint-enable unit-disallowed-list */
     }
 
     &[data-label-visibility="hiddenBelowTablet"] {
-      @media (width < 48rem) {
+      @media (width < 48em) {
         padding: calc(
           var(--clbr-spacing-vertical-400) -
             var(--clbr-layout-border-width-default)
@@ -201,7 +201,7 @@
           --clbr-button-block-size: var(--clbr-spacing-vertical-800);
         }
 
-        /* stylelint-disable declaration-property-unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
+        /* stylelint-disable unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
         .label {
           block-size: 1px;
           border: none;
@@ -213,7 +213,7 @@
           position: absolute;
           white-space: nowrap;
         }
-        /* stylelint-enable declaration-property-unit-disallowed-list */
+        /* stylelint-enable unit-disallowed-list */
       }
     }
 

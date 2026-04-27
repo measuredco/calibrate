@@ -55,6 +55,7 @@
     .circle-sm {
       animation: clbr-animation-name-spin var(--clbr-motion-duration-600) linear
         infinite;
+      /* stylelint-disable-next-line unit-disallowed-list -- SVG coordinate space; 272 is intrinsic to the spinner's viewBox geometry, not a design-system dimension */
       transform-origin: 272px;
       will-change: transform;
 
