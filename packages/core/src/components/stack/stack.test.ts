@@ -1,7 +1,8 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
-import { CLBR_STACK_SPEC, renderClbrStack, type ClbrStackProps } from "./stack";
+import { CLBR_STACK_SPEC, type ClbrStackProps, renderClbrStack } from "./stack";
 
 function mountStack(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;

@@ -2,9 +2,9 @@ import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { renderClbrBox } from "../box/box";
 import {
   CLBR_SIDEBAR_SPEC,
+  type ClbrSidebarProps,
   defineClbrSidebar,
   renderClbrSidebar,
-  type ClbrSidebarProps,
 } from "./sidebar";
 
 defineClbrSidebar();

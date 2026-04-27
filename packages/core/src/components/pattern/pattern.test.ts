@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_PATTERN_SPEC,
-  renderClbrPattern,
   type ClbrPatternProps,
+  renderClbrPattern,
 } from "./pattern";
 
 function mountPattern(html: string): HTMLElement {

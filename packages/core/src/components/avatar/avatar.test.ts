@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_AVATAR_SPEC,
-  renderClbrAvatar,
   type ClbrAvatarProps,
+  renderClbrAvatar,
 } from "./avatar";
 
 function mountAvatar(html: string): HTMLElement {

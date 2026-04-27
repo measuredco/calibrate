@@ -22,64 +22,27 @@ export function defineClbrComponents(): void {
   defineClbrSidebar();
 }
 
-export type {
-  ClbrAlign,
-  ClbrControlSize,
-  ClbrHeadingLevel,
-  ClbrInlineSize,
-  ClbrStatusTone,
-} from "./types";
-
-export { type ClbrNode, serializeClbrNode } from "./helpers/node";
-
-export type {
-  ClbrComponentSpec,
-  ClbrComponentSpecEvent,
-  ClbrComponentSpecProp,
-  ClbrSpecAttributeRule,
-  ClbrSpecCondition,
-  ClbrSpecContent,
-  ClbrSpecElement,
-  ClbrSpecOutput,
-  ClbrSpecPropType,
-  ClbrSpecTarget,
-  ClbrSpecValue,
-} from "./spec";
-
 export {
   buildClbrAlert,
   CLBR_ALERT_EVENT_BEFORE_DISMISS,
   CLBR_ALERT_EVENT_DISMISS,
   CLBR_ALERT_SPEC,
   CLBR_ALERT_TAG_NAME,
-  defineClbrAlert,
   type ClbrAlertProps,
   type ClbrAlertSize,
+  defineClbrAlert,
   renderClbrAlert,
 } from "./components/alert/alert";
-
-export {
-  buildClbrBanner,
-  CLBR_BANNER_EVENT_BEFORE_DISMISS,
-  CLBR_BANNER_EVENT_DISMISS,
-  CLBR_BANNER_SPEC,
-  CLBR_BANNER_TAG_NAME,
-  defineClbrBanner,
-  type ClbrBannerProps,
-  renderClbrBanner,
-} from "./components/banner/banner";
-
 export {
   buildClbrAvatar,
   CLBR_AVATAR_SPEC,
-  getClbrInitials,
   type ClbrAvatarColor,
   type ClbrAvatarEntity,
   type ClbrAvatarProps,
   type ClbrAvatarSize,
+  getClbrInitials,
   renderClbrAvatar,
 } from "./components/avatar/avatar";
-
 export {
   buildClbrBadge,
   CLBR_BADGE_SPEC,
@@ -87,7 +50,16 @@ export {
   type ClbrBadgeSize,
   renderClbrBadge,
 } from "./components/badge/badge";
-
+export {
+  buildClbrBanner,
+  CLBR_BANNER_EVENT_BEFORE_DISMISS,
+  CLBR_BANNER_EVENT_DISMISS,
+  CLBR_BANNER_SPEC,
+  CLBR_BANNER_TAG_NAME,
+  type ClbrBannerProps,
+  defineClbrBanner,
+  renderClbrBanner,
+} from "./components/banner/banner";
 export {
   buildClbrBlockquote,
   CLBR_BLOCKQUOTE_SPEC,
@@ -95,7 +67,6 @@ export {
   type ClbrBlockquoteSize,
   renderClbrBlockquote,
 } from "./components/blockquote/blockquote";
-
 export {
   buildClbrBox,
   CLBR_BOX_SPEC,
@@ -105,7 +76,6 @@ export {
   type ClbrBoxRadius,
   renderClbrBox,
 } from "./components/box/box";
-
 export {
   buildClbrButton,
   CLBR_BUTTON_SPEC,
@@ -119,21 +89,18 @@ export {
   type ClbrButtonType,
   renderClbrButton,
 } from "./components/button/button";
-
 export {
   buildClbrCard,
   CLBR_CARD_SPEC,
   type ClbrCardProps,
   renderClbrCard,
 } from "./components/card/card";
-
 export {
   buildClbrCheckbox,
   CLBR_CHECKBOX_SPEC,
   type ClbrCheckboxProps,
   renderClbrCheckbox,
 } from "./components/checkbox/checkbox";
-
 export {
   buildClbrContainer,
   CLBR_CONTAINER_SPEC,
@@ -142,23 +109,20 @@ export {
   type ClbrContainerProps,
   renderClbrContainer,
 } from "./components/container/container";
-
 export {
   buildClbrDetails,
   CLBR_DETAILS_SPEC,
   type ClbrDetailsProps,
   renderClbrDetails,
 } from "./components/details/details";
-
 export {
   buildClbrDivider,
   CLBR_DIVIDER_SPEC,
   type ClbrDividerOrientation,
-  type ClbrDividerTone,
   type ClbrDividerProps,
+  type ClbrDividerTone,
   renderClbrDivider,
 } from "./components/divider/divider";
-
 export {
   buildClbrExpander,
   CLBR_EXPANDER_SPEC,
@@ -166,21 +130,18 @@ export {
   type ClbrExpanderSize,
   renderClbrExpander,
 } from "./components/expander/expander";
-
 export {
   buildClbrFieldset,
   CLBR_FIELDSET_SPEC,
   type ClbrFieldsetProps,
   renderClbrFieldset,
 } from "./components/fieldset/fieldset";
-
 export {
   buildClbrFigure,
   CLBR_FIGURE_SPEC,
   type ClbrFigureProps,
   renderClbrFigure,
 } from "./components/figure/figure";
-
 export {
   buildClbrGrid,
   buildClbrGridItem,
@@ -193,7 +154,6 @@ export {
   renderClbrGrid,
   renderClbrGridItem,
 } from "./components/grid/grid";
-
 export {
   buildClbrHeading,
   CLBR_HEADING_SPEC,
@@ -201,7 +161,6 @@ export {
   type ClbrHeadingSize,
   renderClbrHeading,
 } from "./components/heading/heading";
-
 export {
   buildClbrIcon,
   CLBR_ICON_RECOMMENDED,
@@ -211,7 +170,6 @@ export {
   type ClbrIconSize,
   renderClbrIcon,
 } from "./components/icon/icon";
-
 export {
   buildClbrImage,
   CLBR_IMAGE_SPEC,
@@ -222,7 +180,6 @@ export {
   type ClbrImageSource,
   renderClbrImage,
 } from "./components/image/image";
-
 export {
   buildClbrInline,
   CLBR_INLINE_SPEC,
@@ -231,7 +188,6 @@ export {
   type ClbrInlineProps,
   renderClbrInline,
 } from "./components/inline/inline";
-
 export {
   buildClbrInput,
   CLBR_INPUT_SPEC,
@@ -239,17 +195,6 @@ export {
   type ClbrInputType,
   renderClbrInput,
 } from "./components/input/input";
-
-export {
-  buildClbrLogo,
-  CLBR_LOGO_SPEC,
-  type ClbrLogoProps,
-  type ClbrLogoSize,
-  type ClbrLogoTone,
-  type ClbrLogoVariant,
-  renderClbrLogo,
-} from "./components/logo/logo";
-
 export {
   buildClbrLink,
   CLBR_LINK_SPEC,
@@ -262,36 +207,34 @@ export {
   type ClbrLinkTone,
   renderClbrLink,
 } from "./components/link/link";
-
+export {
+  buildClbrLogo,
+  CLBR_LOGO_SPEC,
+  type ClbrLogoProps,
+  type ClbrLogoSize,
+  type ClbrLogoTone,
+  type ClbrLogoVariant,
+  renderClbrLogo,
+} from "./components/logo/logo";
 export {
   buildClbrMenu,
   CLBR_MENU_EVENT_CHOOSE,
   CLBR_MENU_SPEC,
   CLBR_MENU_TAG_NAME,
-  defineClbrMenu,
   type ClbrMenuItem,
   type ClbrMenuProps,
+  defineClbrMenu,
   renderClbrMenu,
 } from "./components/menu/menu";
-
 export {
   buildClbrNav,
-  CLBR_NAV_TAG_NAME,
   CLBR_NAV_SPEC,
-  defineClbrNav,
+  CLBR_NAV_TAG_NAME,
   type ClbrNavItem,
   type ClbrNavProps,
+  defineClbrNav,
   renderClbrNav,
 } from "./components/nav/nav";
-
-export {
-  buildClbrPanel,
-  CLBR_PANEL_SPEC,
-  type ClbrPanelPadding,
-  type ClbrPanelProps,
-  renderClbrPanel,
-} from "./components/panel/panel";
-
 export {
   buildClbrPage,
   CLBR_PAGE_SPEC,
@@ -299,7 +242,13 @@ export {
   type ClbrPageStickyHeader,
   renderClbrPage,
 } from "./components/page/page";
-
+export {
+  buildClbrPanel,
+  CLBR_PANEL_SPEC,
+  type ClbrPanelPadding,
+  type ClbrPanelProps,
+  renderClbrPanel,
+} from "./components/panel/panel";
 export {
   buildClbrPattern,
   CLBR_PATTERN_SPEC,
@@ -309,7 +258,6 @@ export {
   type ClbrPatternVariant,
   renderClbrPattern,
 } from "./components/pattern/pattern";
-
 export {
   buildClbrPoster,
   CLBR_POSTER_SPEC,
@@ -317,7 +265,6 @@ export {
   type ClbrPosterSurface,
   renderClbrPoster,
 } from "./components/poster/poster";
-
 export {
   buildClbrProse,
   CLBR_PROSE_SPEC,
@@ -325,7 +272,6 @@ export {
   type ClbrProseProps,
   renderClbrProse,
 } from "./components/prose/prose";
-
 export {
   buildClbrRadios,
   CLBR_RADIOS_SPEC,
@@ -334,16 +280,14 @@ export {
   type ClbrRadiosProps,
   renderClbrRadios,
 } from "./components/radios/radios";
-
 export {
   buildClbrRange,
   CLBR_RANGE_SPEC,
   CLBR_RANGE_TAG_NAME,
-  defineClbrRange,
   type ClbrRangeProps,
+  defineClbrRange,
   renderClbrRange,
 } from "./components/range/range";
-
 export {
   buildClbrRoot,
   CLBR_ROOT_SPEC,
@@ -354,27 +298,6 @@ export {
   type ClbrTheme,
   renderClbrRoot,
 } from "./components/root/root";
-
-export {
-  buildClbrSidebar,
-  CLBR_SIDEBAR_SPEC,
-  CLBR_SIDEBAR_TAG_NAME,
-  defineClbrSidebar,
-  type ClbrSidebarAboveNotebook,
-  type ClbrSidebarProps,
-  type ClbrSidebarSize,
-  renderClbrSidebar,
-} from "./components/sidebar/sidebar";
-
-export {
-  buildClbrStack,
-  CLBR_STACK_SPEC,
-  type ClbrStackAlign,
-  type ClbrStackGap,
-  type ClbrStackProps,
-  renderClbrStack,
-} from "./components/stack/stack";
-
 export {
   buildClbrShape,
   CLBR_SHAPE_SPEC,
@@ -384,7 +307,16 @@ export {
   type ClbrShapeVariant,
   renderClbrShape,
 } from "./components/shape/shape";
-
+export {
+  buildClbrSidebar,
+  CLBR_SIDEBAR_SPEC,
+  CLBR_SIDEBAR_TAG_NAME,
+  type ClbrSidebarAboveNotebook,
+  type ClbrSidebarProps,
+  type ClbrSidebarSize,
+  defineClbrSidebar,
+  renderClbrSidebar,
+} from "./components/sidebar/sidebar";
 export {
   buildClbrSpinner,
   CLBR_SPINNER_SPEC,
@@ -393,7 +325,14 @@ export {
   type ClbrSpinnerTone,
   renderClbrSpinner,
 } from "./components/spinner/spinner";
-
+export {
+  buildClbrStack,
+  CLBR_STACK_SPEC,
+  type ClbrStackAlign,
+  type ClbrStackGap,
+  type ClbrStackProps,
+  renderClbrStack,
+} from "./components/stack/stack";
 export {
   buildClbrSurface,
   CLBR_SURFACE_SPEC,
@@ -401,22 +340,12 @@ export {
   type ClbrSurfaceVariant,
   renderClbrSurface,
 } from "./components/surface/surface";
-
 export {
   buildClbrSwitch,
   CLBR_SWITCH_SPEC,
   type ClbrSwitchProps,
   renderClbrSwitch,
 } from "./components/switch/switch";
-
-export {
-  buildClbrTextarea,
-  CLBR_TEXTAREA_SPEC,
-  type ClbrTextareaProps,
-  type ClbrTextareaResize,
-  renderClbrTextarea,
-} from "./components/textarea/textarea";
-
 export {
   buildClbrText,
   CLBR_TEXT_SPEC,
@@ -426,3 +355,31 @@ export {
   type ClbrTextTone,
   renderClbrText,
 } from "./components/text/text";
+export {
+  buildClbrTextarea,
+  CLBR_TEXTAREA_SPEC,
+  type ClbrTextareaProps,
+  type ClbrTextareaResize,
+  renderClbrTextarea,
+} from "./components/textarea/textarea";
+export { type ClbrNode, serializeClbrNode } from "./helpers/node";
+export type {
+  ClbrComponentSpec,
+  ClbrComponentSpecEvent,
+  ClbrComponentSpecProp,
+  ClbrSpecAttributeRule,
+  ClbrSpecCondition,
+  ClbrSpecContent,
+  ClbrSpecElement,
+  ClbrSpecOutput,
+  ClbrSpecPropType,
+  ClbrSpecTarget,
+  ClbrSpecValue,
+} from "./spec";
+export type {
+  ClbrAlign,
+  ClbrControlSize,
+  ClbrHeadingLevel,
+  ClbrInlineSize,
+  ClbrStatusTone,
+} from "./types";

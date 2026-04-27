@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
-import { CLBR_SHAPE_SPEC, renderClbrShape, type ClbrShapeProps } from "./shape";
+import { CLBR_SHAPE_SPEC, type ClbrShapeProps, renderClbrShape } from "./shape";
 
 function mountShape(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_BOX_SPEC, type ClbrBoxProps, renderClbrBox } from "./box";
 

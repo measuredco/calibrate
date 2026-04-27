@@ -1,10 +1,11 @@
 import { getByLabelText, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_TEXTAREA_SPEC,
-  renderClbrTextarea,
   type ClbrTextareaProps,
+  renderClbrTextarea,
 } from "./textarea";
 
 function mountTextarea(html: string): HTMLElement {

@@ -1,13 +1,14 @@
-import * as core from "@measured/calibrate-core";
 import type {
   ClbrComponentSpec,
   ClbrComponentSpecProp,
   ClbrSpecPropType,
 } from "@measured/calibrate-core";
+import * as core from "@measured/calibrate-core";
 import { act, type ComponentType, createElement, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
+
 import * as adapter from "../index";
 
 // -----------------------------------------------------------------------------

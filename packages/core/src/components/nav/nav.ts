@@ -1,5 +1,5 @@
-import { isValidHtmlId } from "../../helpers/string";
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { isValidHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import { renderClbrExpander } from "../expander/expander";
 

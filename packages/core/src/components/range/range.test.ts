@@ -1,12 +1,13 @@
 import { fireEvent, getByLabelText, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_RANGE_SPEC,
   CLBR_RANGE_TAG_NAME,
+  type ClbrRangeProps,
   defineClbrRange,
   renderClbrRange,
-  type ClbrRangeProps,
 } from "./range";
 
 function mountRange(html: string): HTMLElement {

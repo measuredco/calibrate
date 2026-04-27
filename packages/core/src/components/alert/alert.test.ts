@@ -1,15 +1,16 @@
 import { getByRole, queryByRole } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_ALERT_EVENT_BEFORE_DISMISS,
   CLBR_ALERT_EVENT_DISMISS,
   CLBR_ALERT_SPEC,
   CLBR_ALERT_TAG_NAME,
+  type ClbrAlertProps,
   defineClbrAlert,
   renderClbrAlert,
-  type ClbrAlertProps,
 } from "./alert";
 
 function mountAlert(html: string): HTMLElement {

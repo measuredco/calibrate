@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_CARD_SPEC, type ClbrCardProps, renderClbrCard } from "./card";
 

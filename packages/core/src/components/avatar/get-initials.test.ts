@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { getClbrInitials } from "./get-initials";
 
 describe("getClbrInitials", () => {

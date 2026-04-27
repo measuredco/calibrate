@@ -1,8 +1,8 @@
 import { specToArgTypes, specToComponentDescription } from "../../spec";
 import {
   CLBR_RANGE_SPEC,
-  defineClbrRange,
   type ClbrRangeProps,
+  defineClbrRange,
   renderClbrRange,
 } from "./range";
 

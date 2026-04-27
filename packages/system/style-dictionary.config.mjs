@@ -1,4 +1,5 @@
 import fs from "node:fs";
+
 import StyleDictionary from "style-dictionary";
 
 const contextsFile = process.env.TOKENS_CONTEXTS_FILE;

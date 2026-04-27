@@ -1,5 +1,6 @@
 import { getByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_LINK_SPEC, type ClbrLinkProps, renderClbrLink } from "./link";
 
