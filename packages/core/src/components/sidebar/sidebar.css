@@ -38,8 +38,9 @@
       transform: translateX(-100%);
       transition:
         transform var(--clbr-motion-duration-150)
-          var(--clbr-motion-easing-ease-in) 0s,
-        visibility 0s linear var(--clbr-motion-duration-150);
+          var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-0),
+        visibility var(--clbr-motion-duration-0) linear
+          var(--clbr-motion-duration-150);
       visibility: hidden;
       z-index: 1;
 
@@ -49,7 +50,8 @@
         transition:
           transform var(--clbr-motion-duration-250)
             var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-50),
-          visibility 0s linear 0s;
+          visibility var(--clbr-motion-duration-0) linear
+            var(--clbr-motion-duration-0);
         visibility: visible;
 
         @media (width >= 68em) {
@@ -125,15 +127,17 @@
       transition:
         opacity var(--clbr-motion-duration-150)
           var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-50),
-        visibility 0s linear var(--clbr-motion-duration-200);
+        visibility var(--clbr-motion-duration-0) linear
+          var(--clbr-motion-duration-200);
       visibility: hidden;
 
       .clbr-sidebar[data-open] & {
         opacity: 1;
         transition:
           opacity var(--clbr-motion-duration-200)
-            var(--clbr-motion-easing-ease-out) 0s,
-          visibility 0s linear 0s;
+            var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-0),
+          visibility var(--clbr-motion-duration-0) linear
+            var(--clbr-motion-duration-0);
         visibility: visible;
       }
 
