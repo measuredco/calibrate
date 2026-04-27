@@ -137,8 +137,6 @@ const preview: Preview = {
   parameters: {
     a11y: {
       options: {
-        // `region` expects page-level landmark structure that isolated
-        // component stories don't have. Other best-practice rules stay on.
         rules: { region: { enabled: false } },
         runOnly: {
           type: "tag",
