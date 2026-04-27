@@ -16,12 +16,11 @@ Expand `@measured/calibrate-config` from the current browserslist/esbuild baseli
 
 **Phase 1 — initial subpath presets (shipped).** `@measured/calibrate-config/eslint` and `@measured/calibrate-config/stylelint` exposed as subpath presets, monorepo root configs consume them, two presets land with deliberately different stances (see _Shape decisions_).
 
-**Phase 2 — Stylelint token guards (shipped).** Built-in rules surface raw color values, absolute lengths, raw time units, and `!important` repo-wide. Composite shorthand properties (`transition`, `box-shadow`, `border`, etc.) intentionally deferred — `allowed-list`-style rules are regex against the full value string and become unwieldy on multi-part values.
+**Phase 2 — Stylelint token guards (shipped).** Global disallow-list rules surface raw color values, absolute lengths, raw time units, and `!important` repo-wide. Coverage is value-token based, so composite shorthand properties (`transition`, `box-shadow`, `border`, `background`, etc.) are caught naturally — the rules scan unit suffixes / hex literals / function names / named colours wherever they appear.
 
 **Still ahead.**
 
-- **Custom rule for composite values.** `transition`, `box-shadow`, `border` / `outline` / `font` / `background` shorthand. Need a small custom plugin; built-in `*-allowed-list` rules can't reason about multi-part value structure.
-- **`var(--clbr-*)` namespace enforcement.** No built-in rule for "var() reference must match a regex." Same custom-plugin path as above; could share infrastructure.
+- **`must use a token` enforcement.** Today's rules ban raw values; they don't _require_ a `var(--clbr-*)` reference where one would be appropriate. `border: 1px solid` (no colour) passes silently, as does `var(--non-clbr-foo)`. Both want a small custom Stylelint plugin.
 - **JSX token-discipline rule for ESLint.** Equivalent of the Stylelint colour/length guards but for `style={{ color: "#fff" }}` patterns. Off-the-shelf options don't exist; custom rule.
 - **`no-restricted-imports` for Calibrate internals.** Stop consumers depending on `@measured/calibrate-core/dist/internal/*`-style paths once we have a public/internal split.
 
