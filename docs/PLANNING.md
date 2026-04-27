@@ -10,6 +10,29 @@ What we're working on now.
 
 What we could be working on next.
 
+### Shared config package evolution
+
+Expand `@measured/calibrate-config` from the current browserslist/esbuild baseline into a real consumer-installable enforcement surface, so apps and sites built on Calibrate share the same hygiene and token discipline by default.
+
+**Phase 1 — mirror.** Ship `@measured/calibrate-config/eslint` and `@measured/calibrate-config/stylelint` as subpath presets that exactly mirror the monorepo's current configs (alphabetical CSS via stylelint-order, simple-import-sort, baseline TS/JS). Zero new rules. Pure hygiene win, validates the subpath-preset packaging shape with no semantic risk. Migrate the monorepo's root configs to consume these presets so we dogfood the shape from day one (drift between "what we ship" and "what we use" rots fast).
+
+**Phase 2 — token guards.** Add the strict CSS rules around tokenized values: warn or error on raw hex in `color`/`background-color`, raw px in `padding`/`margin`/`gap`/`font-size`, arbitrary `var(--*)` outside the `--clbr-*` namespace. Build with stylelint built-ins where possible (`declaration-property-value-allowed-list`, `declaration-property-value-disallowed-list`, regex on `var(--…)`) before reaching for custom plugins. Apply in monorepo too, with narrow `ignoreFiles` for `**/*.tokens.json` and bridge code that legitimately emits raw values.
+
+**Shape decisions.**
+
+- One canonical opinionated preset per tool (no `recommended` vs `strict` tiers — every config knob is a place for drift).
+- Subpath exports (`@measured/calibrate-config/eslint`, `@measured/calibrate-config/stylelint`) so consumers cherry-pick what they need.
+- Treat as a "drop-in baseline" stance rather than a "composable layer" — consumers `extends:` ours and override locally if they must, rather than us trying to merge cleanly with arbitrary upstream configs.
+- `eslint` and `stylelint` declared as `peerDependencies` of `@measured/calibrate-config` with generous ranges; document tested versions explicitly. Since the monorepo also keeps them as root devDeps, move both to the pnpm catalog so the version is single-sourced. Plugin packages (`stylelint-order`, `eslint-plugin-simple-import-sort`, etc.) stay as regular `dependencies` of the config package — they're implementation details of the preset, not consumer-controlled.
+
+**Versioning posture.** During alpha (zero consumers) we don't owe anyone a major bump for breaking lint changes — flag in the changelog and move on. Post-alpha: every rule addition that errors on previously-clean consumer code is a major bump. Set the expectation early so it's not surprising once we have real consumers.
+
+**Out of scope for this workstream.**
+
+- Axe / accessibility lint — better delivered as runtime / Storybook checks (we already have the latter); component-composition rules ("`<Button>` without label") are a narrow custom-rule problem worth a separate scoping pass.
+- Starter assets (PR templates, checklist files) — defer to a later iteration once the lint preset shape stabilises.
+- Token-name lint rules and raw-value guards beyond the obvious hex/px cases — extend Phase 2 incrementally as patterns emerge.
+
 ## Later
 
 Everything we could attempt given sufficient time and resources.
@@ -86,10 +109,6 @@ Note: pipeline is currently hard-coded to CSS; probably add optional `--formats`
 1. VS Code token lookup artifact
 1. iOS
 1. Android
-
-### Shared config package evolution
-
-Expand `@measured/calibrate-config` beyond the current browserslist/esbuild baseline to include additional consumer-installable subpath presets (for example ESLint, Stylelint, axe; token-name lint rules, raw hex/px guards), plus optional starter assets for contribution workflows (for example PR template/checklist files).
 
 ### Documentation website (`apps/documentation`)
 

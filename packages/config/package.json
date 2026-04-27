@@ -12,6 +12,10 @@
     "index.d.ts",
     "esbuild.mjs",
     "esbuild.d.ts",
+    "eslint.mjs",
+    "eslint.d.ts",
+    "stylelint.mjs",
+    "stylelint.d.ts",
     "README.md"
   ],
   "types": "./index.d.ts",
@@ -23,9 +27,30 @@
     "./browserslist/esbuild": {
       "types": "./esbuild.d.ts",
       "default": "./esbuild.mjs"
+    },
+    "./eslint": {
+      "types": "./eslint.d.ts",
+      "default": "./eslint.mjs"
+    },
+    "./stylelint": {
+      "types": "./stylelint.d.ts",
+      "default": "./stylelint.mjs"
     }
   },
   "browserslist": [
     "baseline widely available"
-  ]
+  ],
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.2.0",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "globals": "^17.5.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
+    "typescript-eslint": "^8.59.0"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "stylelint": "^17.0.0"
+  }
 }
