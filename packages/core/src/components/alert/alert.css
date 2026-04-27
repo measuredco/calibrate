@@ -12,7 +12,7 @@
     grid-template-columns: max-content minmax(0, 1fr);
     outline: var(--clbr-layout-border-width-default) solid
       var(--clbr-alert-color-border);
-    outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
+    outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
     padding-block: var(--clbr-spacing-vertical-500);
     padding-inline: var(--clbr-spacing-horizontal-600)
       var(--clbr-spacing-horizontal-700);
@@ -105,7 +105,7 @@
 
     [data-part="close"] {
       align-self: start;
-      margin-inline-end: calc(0rem - var(--clbr-spacing-horizontal-300));
+      margin-inline-end: calc(-1 * var(--clbr-spacing-horizontal-300));
     }
   }
 }

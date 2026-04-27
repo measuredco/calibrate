@@ -18,7 +18,7 @@
     line-height: var(--clbr-badge-line-height);
     outline: var(--clbr-layout-border-width-default) solid
       var(--clbr-badge-color-border);
-    outline-offset: calc(0rem - var(--clbr-layout-border-width-default));
+    outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
     padding-inline: var(--clbr-badge-padding-inline);
 
     :focus-visible > & {

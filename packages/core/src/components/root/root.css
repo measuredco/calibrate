@@ -48,6 +48,7 @@
 
     /* Preserve document writing semantics. */
     quotes: inherit;
+    /* stylelint-disable-next-line function-disallowed-list -- TODO: replace with a tap-highlight token once added to the system; ad-hoc color-mix can produce off-brand results and should be system-mediated */
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
@@ -152,6 +153,7 @@
     }
 
     /* Define utility classes. */
+    /* stylelint-disable unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
     :where(.visually-hidden, .sr-only) {
       block-size: 1px;
       border: none;
@@ -163,18 +165,6 @@
       position: absolute;
       white-space: nowrap;
     }
-
-    :where(.example-content, .example-content-item) {
-      background: #ff69b450;
-      min-block-size: 6rem;
-      min-inline-size: 15rem;
-      outline: 0.0625rem solid #ff69b4;
-      outline-offset: -0.0625rem;
-    }
-
-    :where(.example-content-item) {
-      min-block-size: 3rem;
-      min-inline-size: 3.8125rem;
-    }
+    /* stylelint-enable unit-disallowed-list */
   }
 }

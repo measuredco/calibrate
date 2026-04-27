@@ -102,6 +102,7 @@
         margin-inline: 0;
       }
 
+      /* stylelint-disable unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
       & .label {
         block-size: 1px;
         border: none;
@@ -113,6 +114,7 @@
         position: absolute;
         white-space: nowrap;
       }
+      /* stylelint-enable unit-disallowed-list */
     }
 
     &[data-label-visibility="hidden"][data-size="sm"] {
@@ -159,6 +161,7 @@
           margin-inline: 0;
         }
 
+        /* stylelint-disable unit-disallowed-list -- visually-hidden sr-only pattern; 1px / -1px values are hack values, not design values */
         & .label {
           block-size: 1px;
           border: none;
@@ -170,6 +173,7 @@
           position: absolute;
           white-space: nowrap;
         }
+        /* stylelint-enable unit-disallowed-list */
       }
 
       &[data-label-visibility="hiddenBelowTablet"][data-size="sm"] {
@@ -298,7 +302,7 @@
       }
 
       &[data-label-visibility="hiddenBelowTablet"] {
-        @media (width < 48rem) {
+        @media (width < 48em) {
           margin-inline: 0;
           padding: calc(
             var(--clbr-spacing-vertical-400) -

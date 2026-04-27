@@ -31,7 +31,7 @@
       inline-size: auto;
       inset-block-start: 100%;
       inset-inline-start: 0;
-      margin-block-start: calc(0rem - var(--clbr-spacing-vertical-100));
+      margin-block-start: calc(-1 * var(--clbr-spacing-vertical-100));
       padding-block: var(--clbr-spacing-vertical-400)
         calc(
           var(--clbr-spacing-vertical-400) -

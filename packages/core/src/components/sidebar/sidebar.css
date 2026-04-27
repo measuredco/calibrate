@@ -10,10 +10,10 @@
 
     [data-part="trigger"] {
       display: inline-flex;
-      margin-inline: calc(0rem - var(--clbr-spacing-vertical-300));
+      margin-inline: calc(-1 * var(--clbr-spacing-vertical-300));
 
       .clbr-sidebar[data-size="sm"] & {
-        margin-inline: calc(0rem - var(--clbr-spacing-vertical-250));
+        margin-inline: calc(-1 * var(--clbr-spacing-vertical-250));
       }
 
       @media (width >= 68em) {
@@ -38,8 +38,9 @@
       transform: translateX(-100%);
       transition:
         transform var(--clbr-motion-duration-150)
-          var(--clbr-motion-easing-ease-in) 0s,
-        visibility 0s linear var(--clbr-motion-duration-150);
+          var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-0),
+        visibility var(--clbr-motion-duration-0) linear
+          var(--clbr-motion-duration-150);
       visibility: hidden;
       z-index: 1;
 
@@ -49,7 +50,8 @@
         transition:
           transform var(--clbr-motion-duration-250)
             var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-50),
-          visibility 0s linear 0s;
+          visibility var(--clbr-motion-duration-0) linear
+            var(--clbr-motion-duration-0);
         visibility: visible;
 
         @media (width >= 68em) {
@@ -117,22 +119,24 @@
     }
 
     [data-part="backdrop"] {
-      background-color: #00000092;
+      background-color: var(--clbr-color-background-scrim);
       inset: 0;
       opacity: 0;
       position: fixed;
       transition:
         opacity var(--clbr-motion-duration-150)
           var(--clbr-motion-easing-ease-in) var(--clbr-motion-duration-50),
-        visibility 0s linear var(--clbr-motion-duration-200);
+        visibility var(--clbr-motion-duration-0) linear
+          var(--clbr-motion-duration-200);
       visibility: hidden;
 
       .clbr-sidebar[data-open] & {
         opacity: 1;
         transition:
           opacity var(--clbr-motion-duration-200)
-            var(--clbr-motion-easing-ease-out) 0s,
-          visibility 0s linear 0s;
+            var(--clbr-motion-easing-ease-out) var(--clbr-motion-duration-0),
+          visibility var(--clbr-motion-duration-0) linear
+            var(--clbr-motion-duration-0);
         visibility: visible;
       }
 

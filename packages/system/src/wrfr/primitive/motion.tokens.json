@@ -1,6 +1,12 @@
 {
   "$schema": "../../../schemas/2025.10/schema/format.json",
   "duration": {
+    "0": {
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      }
+    },
     "50": {
       "$value": {
         "value": 0,

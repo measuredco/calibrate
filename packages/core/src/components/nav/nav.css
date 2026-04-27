@@ -1,10 +1,10 @@
 @layer clbr.components {
   :where(.clbr) .clbr-nav {
-    --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-300));
+    --clbr-nav-expander-offset: calc(-1 * var(--clbr-spacing-vertical-300));
     --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-lg);
 
     &[data-size="sm"] {
-      --clbr-nav-expander-offset: calc(0rem - var(--clbr-spacing-vertical-250));
+      --clbr-nav-expander-offset: calc(-1 * var(--clbr-spacing-vertical-250));
       --clbr-nav-expander-icon-size: var(--clbr-layout-icon-size-md);
     }
 
@@ -24,7 +24,7 @@
         display: inline-flex;
       }
 
-      @media (width >= 48rem) {
+      @media (width >= 48em) {
         .clbr-nav[data-collapsible="belowTablet"] & {
           display: none;
         }
@@ -48,7 +48,7 @@
         }
       }
 
-      @media (width < 48rem) {
+      @media (width < 48em) {
         .clbr-banner
           + .header
           .clbr-nav[data-collapsible="belowTablet"]
@@ -94,7 +94,7 @@
         }
       }
 
-      @media (width < 48rem) {
+      @media (width < 48em) {
         .clbr-nav[data-collapsible="belowTablet"] & {
           display: none;
         }
@@ -153,7 +153,7 @@
         margin-block: 0;
       }
 
-      @media (width < 48rem) {
+      @media (width < 48em) {
         .clbr-nav[data-collapsible="belowTablet"]:has(
             .nav > [data-part="expander"] [aria-expanded="true"]
           )
@@ -206,7 +206,7 @@
         }
       }
 
-      @media (width < 48rem) {
+      @media (width < 48em) {
         .clbr-nav[data-collapsible="belowTablet"]:has(
             .nav > [data-part="expander"] [aria-expanded="true"]
           )
@@ -262,7 +262,7 @@
           }
         }
 
-        @media (width < 48rem) {
+        @media (width < 48em) {
           .clbr-nav[data-collapsible="belowTablet"]:has(
               .nav > [data-part="expander"] [aria-expanded="true"]
             )

@@ -30,6 +30,9 @@
     },
     "inverse": {
       "$value": "{primitive.color.azure.100}"
+    },
+    "scrim": {
+      "$value": "{primitive.color.alpha.black.56}"
     }
   },
   "foreground": {
