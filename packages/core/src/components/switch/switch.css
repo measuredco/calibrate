@@ -132,7 +132,7 @@
       margin-inline-start: calc(
         var(--clbr-switch-inline-size) + var(--clbr-switch-gap)
       );
-      max-width: var(--clbr-typography-measure-default);
+      max-inline-size: var(--clbr-typography-measure-default);
     }
   }
 }

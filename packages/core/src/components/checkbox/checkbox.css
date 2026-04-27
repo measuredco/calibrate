@@ -129,7 +129,7 @@
       margin-inline-start: calc(
         var(--clbr-checkbox-size) + var(--clbr-checkbox-gap)
       );
-      max-width: var(--clbr-typography-measure-default);
+      max-inline-size: var(--clbr-typography-measure-default);
 
       :where(.label:has([aria-invalid="true"])) + & {
         color: var(--clbr-color-status-error-default);

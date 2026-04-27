@@ -196,8 +196,8 @@
         line-height: var(--clbr-typography-type-step-200-line-height);
         margin-block-end: var(--clbr-spacing-vertical-700);
         outline: none;
-        overflow-x: auto;
-        overscroll-behavior-x: none;
+        overflow-inline: auto;
+        overscroll-behavior-inline: none;
         padding-block: var(--clbr-spacing-vertical-700);
         padding-inline: var(--clbr-spacing-horizontal-700);
         position: relative;
@@ -699,7 +699,7 @@
       }
 
       &::before {
-        border-top: var(--clbr-layout-divider-brand-thickness) solid
+        border-block-start: var(--clbr-layout-divider-brand-thickness) solid
           var(--clbr-color-border-brand);
         content: "";
         display: block;

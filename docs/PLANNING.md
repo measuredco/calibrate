@@ -18,18 +18,17 @@ Expand `@measured/calibrate-config` from the current browserslist/esbuild baseli
 
 **Phase 2 — Stylelint token guards (shipped).** Global disallow-list rules surface raw color values, absolute lengths, raw time units, and `!important` repo-wide. Coverage is value-token based, so composite shorthand properties (`transition`, `box-shadow`, `border`, `background`, etc.) are caught naturally — the rules scan unit suffixes / hex literals / function names / named colours wherever they appear.
 
-**Still ahead.**
+**Phase 3 — additional discipline plugins (in progress).**
 
-- **`must use a token` enforcement.** Today's rules ban raw values; they don't _require_ a `var(--clbr-*)` reference where one would be appropriate. `border: 1px solid` (no colour) passes silently, as does `var(--non-clbr-foo)`. Both want a small custom Stylelint plugin.
-- **JSX token-discipline rule for ESLint.** Equivalent of the Stylelint colour/length guards but for `style={{ color: "#fff" }}` patterns. Off-the-shelf options don't exist; custom rule.
-- **`no-restricted-imports` for Calibrate internals.** Stop consumers depending on `@measured/calibrate-core/dist/internal/*`-style paths once we have a public/internal split.
+- **Logical CSS (`stylelint-plugin-logical-css`).** Enforce logical properties / values (`inset-block-*`, `margin-inline-*`, `text-align: start`, etc.) over physical equivalents so consumer code retains LTR/RTL portability for free. The codebase already favours logical properties; this locks it in. Off-the-shelf, no-brainer.
+- **Browser-features check (`stylelint-no-unsupported-browser-features`).** Surface CSS features outside our browserslist baseline at lint time, complementing autoprefixer's runtime work. Needs evaluation against the existing codebase first — container queries, `round()`, modern logical units may or may not pass depending on data freshness — before deciding whether to ship as part of the preset or recommend separately.
 
 **Shape decisions.**
 
 - One canonical preset per tool (no `recommended` vs `strict` tiers — every config knob is a place for drift).
 - Subpath exports (`@measured/calibrate-config/eslint`, `@measured/calibrate-config/stylelint`) so consumers cherry-pick what they need.
 - **Stylelint = drop-in baseline.** Extends `stylelint-config-standard` and adds `stylelint-order` plus token-discipline rules (no raw colors, no absolute lengths, no raw time, no `!important`). Adopted via `extends: ["@measured/calibrate-config/stylelint"]` — the canonical Stylelint shareable-config pattern. Future rules layer additively without changing the adoption shape.
-- **ESLint = Calibrate-domain placeholder.** Ships only Calibrate-flavored opinions (currently just `simple-import-sort`); consumers compose with their own TS / JSON / JS baseline. Bundling commodity rules (`tseslint.recommended`, `@eslint/json`, etc.) would lock consumers into specific choices that aren't really Calibrate's, and ESLint's multi-language surface makes a true drop-in impractical anyway. The preset will grow as genuine JS/TS-domain rules emerge (see _Still ahead_). The minimal current shape is the point, not a temporary stage.
+- **ESLint = Calibrate-domain placeholder.** Ships only Calibrate-flavored opinions (currently just `simple-import-sort`); consumers compose with their own TS / JSON / JS baseline. Bundling commodity rules (`tseslint.recommended`, `@eslint/json`, etc.) would lock consumers into specific choices that aren't really Calibrate's, and ESLint's multi-language surface makes a true drop-in impractical anyway. The preset will grow only when genuine JS/TS-domain rules emerge from real consumer signal — the minimal current shape is the point, not a temporary stage.
 - The asymmetry between the two presets is deliberate and reflects a real tool difference (Stylelint is narrow / CSS-only; ESLint is broad / multi-language). It is not a tier system — neither preset has a `recommended` vs `strict` variant.
 - `eslint` and `stylelint` declared as `peerDependencies` of `@measured/calibrate-config` with generous ranges; document tested versions explicitly. Since the monorepo also keeps them as root devDeps, move both to the pnpm catalog so the version is single-sourced. Plugin packages that are genuine implementation details of a preset (`stylelint-order`, `stylelint-config-standard`, `eslint-plugin-simple-import-sort`) ship as regular `dependencies` of the config package; commodity packages used only at the monorepo root (`@eslint/js`, `@eslint/json`, `typescript-eslint`, `globals`) stay at root devDeps.
 - File/path scoping is consumer territory, not preset territory. The presets ship no `ignores`/`ignoreFiles` and no `files` globs except where the rule is genuinely scope-bound to specific languages (e.g. `simple-import-sort` to ESTree-parseable files).
@@ -147,9 +146,13 @@ Evaluate whether an MCP/API distribution path adds clear value beyond package an
 
 Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract.
 
+### Strict token enforcement
+
+Once consumers exist and we have signal about which raw-value escapes actually cause problems, evaluate ratcheting up from "ban obvious raw values" (the current Phase 2 disallow rules) to "must reference a Calibrate token where applicable." Off-the-shelf path: [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value) — per-property "value must be a variable / function / specific keyword" with regex-based exceptions. Maximalist path: a fully custom Calibrate stylelint config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config), encoding the system's full opinion. Either approach loads pressure onto the system to provide every conceivable value (the looseness-at-the-edges tension); the trigger to pursue is real consumer signal, not theoretical reach.
+
 ### Optional core private discovery bundle
 
-Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows.
+Revisit whether `@measured/calibrate-core` should emit a non-exported private CSS artifact that composes `packages/system/dist/private/css/*` for discovery/debug workflows. If shipped, pair with a `no-restricted-imports` rule in `@measured/calibrate-config/eslint` so consumers can still reach for the private surface but only via a deliberate lint disable, making the intent explicit at the call site.
 
 ### Second framework adapter (Vue or Svelte)
 

@@ -22,7 +22,10 @@ const COLOR_FUNCTIONS_DISALLOWED = [
 ];
 
 const stylelintConfig = {
-  extends: [require.resolve("stylelint-config-standard")],
+  extends: [
+    require.resolve("stylelint-config-standard"),
+    require.resolve("stylelint-plugin-logical-css/configs/recommended"),
+  ],
   plugins: [require.resolve("stylelint-order")],
   rules: {
     "order/properties-alphabetical-order": true,

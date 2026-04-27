@@ -210,6 +210,9 @@ importers:
       stylelint-order:
         specifier: ^8.1.1
         version: 8.1.1(stylelint@17.9.0(typescript@5.9.3))
+      stylelint-plugin-logical-css:
+        specifier: ^2.1.0
+        version: 2.1.0(stylelint@17.9.0(typescript@5.9.3))
 
   packages/core:
     dependencies:
@@ -2810,6 +2813,11 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.18.0 || ^17.0.0
+
+  stylelint-plugin-logical-css@2.1.0:
+    resolution: {integrity: sha512-625OT+p5y2kkGBaRV7uTYscuH0m1UueMXh0WcidrXgwF2DOnKov+un9tvuyNG+SUC07W0ibcn+fZvQs/keskww==}
+    peerDependencies:
+      stylelint: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
   stylelint@17.9.0:
     resolution: {integrity: sha512-xO0jeY6z1/urFL5L/BZLmB1yYlbRiRMQnYH6ArZIDWJ+SZXGssOY7XoYb1JIv/L220+EBnwwJXJS4Mt/F96SvA==}
@@ -5744,6 +5752,10 @@ snapshots:
     dependencies:
       postcss: 8.5.10
       postcss-sorting: 10.0.0(postcss@8.5.10)
+      stylelint: 17.9.0(typescript@5.9.3)
+
+  stylelint-plugin-logical-css@2.1.0(stylelint@17.9.0(typescript@5.9.3)):
+    dependencies:
       stylelint: 17.9.0(typescript@5.9.3)
 
   stylelint@17.9.0(typescript@5.9.3):
