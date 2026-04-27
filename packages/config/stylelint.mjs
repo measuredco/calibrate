@@ -1,5 +1,8 @@
 import { createRequire } from "node:module";
 
+// Stylelint resolves `extends`/`plugins` strings from the consumer's config
+// directory, not from the package that declared them. Resolve to absolute
+// paths here so consumers don't need to install our internals themselves.
 const require = createRequire(import.meta.url);
 
 const stylelintConfig = {
