@@ -14,16 +14,23 @@ What we could be working on next.
 
 Expand `@measured/calibrate-config` from the current browserslist/esbuild baseline into a real consumer-installable enforcement surface, so apps and sites built on Calibrate share the same hygiene and token discipline by default.
 
-**Phase 1 — initial subpath presets (shipped).** `@measured/calibrate-config/eslint` and `@measured/calibrate-config/stylelint` are exposed as subpath presets and the monorepo's root configs consume them, so drift between "what we ship" and "what we use" is impossible. The two presets land with deliberately different stances (see _Shape decisions_ below).
+**Phase 1 — initial subpath presets (shipped).** `@measured/calibrate-config/eslint` and `@measured/calibrate-config/stylelint` exposed as subpath presets, monorepo root configs consume them, two presets land with deliberately different stances (see _Shape decisions_).
 
-**Phase 2 — token guards.** Add the strict CSS rules around tokenized values: warn or error on raw hex in `color`/`background-color`, raw px in `padding`/`margin`/`gap`/`font-size`, arbitrary `var(--*)` outside the `--clbr-*` namespace. Build with stylelint built-ins where possible (`declaration-property-value-allowed-list`, `declaration-property-value-disallowed-list`, regex on `var(--…)`) before reaching for custom plugins. Apply in monorepo too, with narrow `ignoreFiles` for `**/*.tokens.json` and bridge code that legitimately emits raw values. The JSX equivalent (`style={{ color: "#fff" }}`) is the natural ESLint companion — likely a custom rule, since off-the-shelf options for "no raw values in JSX style props" don't exist.
+**Phase 2 — Stylelint token guards (shipped).** Built-in rules surface raw color values, absolute lengths, raw time units, and `!important` repo-wide. Composite shorthand properties (`transition`, `box-shadow`, `border`, etc.) intentionally deferred — `allowed-list`-style rules are regex against the full value string and become unwieldy on multi-part values.
+
+**Still ahead.**
+
+- **Custom rule for composite values.** `transition`, `box-shadow`, `border` / `outline` / `font` / `background` shorthand. Need a small custom plugin; built-in `*-allowed-list` rules can't reason about multi-part value structure.
+- **`var(--clbr-*)` namespace enforcement.** No built-in rule for "var() reference must match a regex." Same custom-plugin path as above; could share infrastructure.
+- **JSX token-discipline rule for ESLint.** Equivalent of the Stylelint colour/length guards but for `style={{ color: "#fff" }}` patterns. Off-the-shelf options don't exist; custom rule.
+- **`no-restricted-imports` for Calibrate internals.** Stop consumers depending on `@measured/calibrate-core/dist/internal/*`-style paths once we have a public/internal split.
 
 **Shape decisions.**
 
 - One canonical preset per tool (no `recommended` vs `strict` tiers — every config knob is a place for drift).
 - Subpath exports (`@measured/calibrate-config/eslint`, `@measured/calibrate-config/stylelint`) so consumers cherry-pick what they need.
-- **Stylelint = drop-in baseline.** Extends `stylelint-config-standard` and adds `stylelint-order` for alphabetical property ordering. Adopted via `extends: ["@measured/calibrate-config/stylelint"]` — the canonical Stylelint shareable-config pattern. Phase 2 token guards layer additively without changing the adoption shape.
-- **ESLint = Calibrate-domain placeholder.** Ships only Calibrate-flavored opinions (currently just `simple-import-sort`); consumers compose with their own TS / JSON / JS baseline. Bundling commodity rules (`tseslint.recommended`, `@eslint/json`, etc.) would lock consumers into specific choices that aren't really Calibrate's, and ESLint's multi-language surface makes a true drop-in impractical anyway. The preset will grow as genuine JS/TS-domain rules emerge — likely candidates: `no-restricted-imports` for internal Calibrate paths once we have a public/internal split, plus the Phase 2 JSX token-discipline rule. The minimal current shape is the point, not a temporary stage.
+- **Stylelint = drop-in baseline.** Extends `stylelint-config-standard` and adds `stylelint-order` plus token-discipline rules (no raw colors, no absolute lengths, no raw time, no `!important`). Adopted via `extends: ["@measured/calibrate-config/stylelint"]` — the canonical Stylelint shareable-config pattern. Future rules layer additively without changing the adoption shape.
+- **ESLint = Calibrate-domain placeholder.** Ships only Calibrate-flavored opinions (currently just `simple-import-sort`); consumers compose with their own TS / JSON / JS baseline. Bundling commodity rules (`tseslint.recommended`, `@eslint/json`, etc.) would lock consumers into specific choices that aren't really Calibrate's, and ESLint's multi-language surface makes a true drop-in impractical anyway. The preset will grow as genuine JS/TS-domain rules emerge (see _Still ahead_). The minimal current shape is the point, not a temporary stage.
 - The asymmetry between the two presets is deliberate and reflects a real tool difference (Stylelint is narrow / CSS-only; ESLint is broad / multi-language). It is not a tier system — neither preset has a `recommended` vs `strict` variant.
 - `eslint` and `stylelint` declared as `peerDependencies` of `@measured/calibrate-config` with generous ranges; document tested versions explicitly. Since the monorepo also keeps them as root devDeps, move both to the pnpm catalog so the version is single-sourced. Plugin packages that are genuine implementation details of a preset (`stylelint-order`, `stylelint-config-standard`, `eslint-plugin-simple-import-sort`) ship as regular `dependencies` of the config package; commodity packages used only at the monorepo root (`@eslint/js`, `@eslint/json`, `typescript-eslint`, `globals`) stay at root devDeps.
 - File/path scoping is consumer territory, not preset territory. The presets ship no `ignores`/`ignoreFiles` and no `files` globs except where the rule is genuinely scope-bound to specific languages (e.g. `simple-import-sort` to ESTree-parseable files).
@@ -35,7 +42,6 @@ Expand `@measured/calibrate-config` from the current browserslist/esbuild baseli
 
 - Axe / accessibility lint — better delivered as runtime / Storybook checks (we already have the latter); component-composition rules ("`<Button>` without label") are a narrow custom-rule problem worth a separate scoping pass.
 - Starter assets (PR templates, checklist files) — defer to a later iteration once the lint preset shape stabilises.
-- Token-name lint rules and raw-value guards beyond the obvious hex/px cases — extend Phase 2 incrementally as patterns emerge.
 
 ## Later
 
