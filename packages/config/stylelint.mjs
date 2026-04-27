@@ -103,44 +103,25 @@ const DIMENSION_PROPS = [
   "width",
 ];
 
-// Typography-relative + percent + viewport-relative units. Viewport units are
-// allowed because they represent the viewport itself (a context value, not a
-// design value) — useful for full-viewport sizing patterns that can't be
-// tokenized. Raw absolute units (px, pt, cm, in) and root-relative `rem` are
-// excluded so authors reach for tokens.
-const DIMENSION_UNITS_ALLOWED = [
-  "em",
-  "ch",
-  "lh",
-  "%",
-  "vw",
-  "vh",
-  "vi",
-  "vb",
-  "vmin",
-  "vmax",
-  "svw",
-  "svh",
-  "svi",
-  "svb",
-  "svmin",
-  "svmax",
-  "lvw",
-  "lvh",
-  "lvi",
-  "lvb",
-  "lvmin",
-  "lvmax",
-  "dvw",
-  "dvh",
-  "dvi",
-  "dvb",
-  "dvmin",
-  "dvmax",
+// Disallow absolute lengths (px, pt, pc, in, cm, mm, Q) and root-relative
+// units (rem, rlh) — both bypass the design system's spacing scale. Everything
+// else is allowed: typography-relative (em, ch, lh), percent, viewport units
+// (vw/vh/vi/vb plus s*/l*/d* variants), container-query units, and any future
+// CSS unit. var() and calc() pass through; unitless 0 is always allowed.
+const DIMENSION_UNITS_DISALLOWED = [
+  "px",
+  "pt",
+  "pc",
+  "in",
+  "cm",
+  "mm",
+  "Q",
+  "rem",
+  "rlh",
 ];
 
-const dimensionUnitsAllowed = Object.fromEntries(
-  DIMENSION_PROPS.map((p) => [p, DIMENSION_UNITS_ALLOWED]),
+const dimensionUnitsDisallowed = Object.fromEntries(
+  DIMENSION_PROPS.map((p) => [p, DIMENSION_UNITS_DISALLOWED]),
 );
 
 const stylelintConfig = {
@@ -150,7 +131,7 @@ const stylelintConfig = {
     "order/properties-alphabetical-order": true,
     "no-descending-specificity": null,
     "declaration-property-value-allowed-list": colorAllowedList,
-    "declaration-property-unit-allowed-list": dimensionUnitsAllowed,
+    "declaration-property-unit-disallowed-list": dimensionUnitsDisallowed,
   },
 };
 
