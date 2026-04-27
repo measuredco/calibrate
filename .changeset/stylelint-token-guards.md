@@ -11,5 +11,5 @@ Add token-discipline rules to the Stylelint preset (`@measured/calibrate-config/
 
 Two new tokens land alongside the rule additions:
 
-- `--clbr-color-background-scrim` — the translucent occluding layer used behind modals, drawers, and other overlay UI. Resolves to `primitive.color.alpha.black.92` across all four `{light,dark} × {default,brand}` surfaces in both brands.
+- `--clbr-color-background-scrim` — the translucent occluding layer used behind modals, drawers, and other overlay UI. Resolves to a new `primitive.color.alpha.black.56` (added to both brands) across all four `{light,dark} × {default,brand}` surfaces.
 - `--clbr-motion-duration-0` — for explicit zero-duration legs in `transition` shorthands without falling back to a raw `0s` literal.

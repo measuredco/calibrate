@@ -9,6 +9,7 @@
   /* lightDefault | baseline | default-states */
   :where(.clbr[data-clbr-brand="wrfr"], .clbr[data-clbr-brand="wrfr"] [data-clbr-surface="default"]) {
     --clbr-primitive-color-alpha-black-08: rgba(0, 0, 0, 0.08);
+    --clbr-primitive-color-alpha-black-56: rgba(0, 0, 0, 0.56);
     --clbr-primitive-color-alpha-black-92: rgba(0, 0, 0, 0.92);
     --clbr-primitive-color-alpha-white-08: rgba(255, 255, 255, 0.08);
     --clbr-primitive-color-alpha-white-16: rgba(255, 255, 255, 0.16);

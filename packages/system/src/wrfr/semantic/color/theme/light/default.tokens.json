@@ -32,7 +32,7 @@
       "$value": "{primitive.color.neutral.1200}"
     },
     "scrim": {
-      "$value": "{primitive.color.alpha.black.92}"
+      "$value": "{primitive.color.alpha.black.56}"
     }
   },
   "foreground": {
