@@ -5,9 +5,6 @@ import { createRequire } from "node:module";
 // paths here so consumers don't need to install our internals themselves.
 const require = createRequire(import.meta.url);
 
-// rem and rlh are deliberately allowed: documented escape hatch for ad-hoc
-// dimensions, and the right unit for @container breakpoints (em in @container
-// is relative to the container's font-size).
 const UNITS_DISALLOWED = ["px", "pt", "pc", "in", "cm", "mm", "Q", "s", "ms"];
 
 const COLOR_FUNCTIONS_DISALLOWED = [
