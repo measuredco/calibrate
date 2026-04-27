@@ -10,9 +10,15 @@
   "style": "./src/fonts.css",
   "files": [
     "src/fonts.css",
-    "src/fonts"
+    "src/fonts",
+    "src/favicons"
   ],
   "exports": {
-    "./fonts.css": "./src/fonts.css"
+    "./fonts.css": "./src/fonts.css",
+    "./favicons/favicon.ico": "./src/favicons/favicon.ico",
+    "./favicons/favicon.svg": "./src/favicons/favicon.svg",
+    "./favicons/apple-touch-icon.png": "./src/favicons/apple-touch-icon.png",
+    "./favicons/maskable-icon-192.png": "./src/favicons/maskable-icon-192.png",
+    "./favicons/maskable-icon-512.png": "./src/favicons/maskable-icon-512.png"
   }
 }
