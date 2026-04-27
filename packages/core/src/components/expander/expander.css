@@ -54,12 +54,12 @@
 
     .expander-inner {
       background-color: currentcolor;
+      /* stylelint-disable declaration-property-unit-allowed-list -- TODO: replace 0.5rem/16 (~1px sub-pixel snap) with a small-rounding-precision token once defined */
       block-size: round(
         nearest,
         calc(var(--clbr-expander-icon-size) / 12),
         calc(0.5rem / 16)
       );
-      /* stylelint-disable declaration-property-unit-allowed-list -- TODO: replace 0.5rem/16 (~1px sub-pixel snap) with a small-rounding-precision token once defined */
       border-radius: round(
         nearest,
         calc(var(--clbr-expander-icon-size) / 24),
@@ -85,12 +85,12 @@
       &::before,
       &::after {
         background-color: currentcolor;
+        /* stylelint-disable declaration-property-unit-allowed-list -- TODO: replace 0.5rem/16 (~1px sub-pixel snap) with a small-rounding-precision token once defined */
         block-size: round(
           nearest,
           calc(var(--clbr-expander-icon-size) / 12),
           calc(0.5rem / 16)
         );
-        /* stylelint-disable declaration-property-unit-allowed-list -- TODO: replace 0.5rem/16 (~1px sub-pixel snap) with a small-rounding-precision token once defined */
         border-radius: round(
           nearest,
           calc(var(--clbr-expander-icon-size) / 24),
