@@ -5,8 +5,6 @@ import { createRequire } from "node:module";
 // paths here so consumers don't need to install our internals themselves.
 const require = createRequire(import.meta.url);
 
-const UNITS_DISALLOWED = ["cm", "in", "mm", "ms", "pc", "pt", "px", "Q", "s"];
-
 const COLOR_FUNCTIONS_DISALLOWED = [
   "color-mix",
   "color",
@@ -21,16 +19,28 @@ const COLOR_FUNCTIONS_DISALLOWED = [
   "rgba",
 ];
 
+const UNITS_DISALLOWED = ["cm", "in", "mm", "ms", "pc", "pt", "px", "Q", "s"];
+
 const stylelintConfig = {
-  extends: [require.resolve("stylelint-config-standard")],
+  extends: [
+    require.resolve("stylelint-config-standard"),
+    require.resolve("stylelint-plugin-logical-css/configs/recommended"),
+  ],
   plugins: [require.resolve("stylelint-order")],
   rules: {
-    "order/properties-alphabetical-order": true,
     "color-named": "never",
     "color-no-hex": true,
     "declaration-no-important": true,
     "function-disallowed-list": COLOR_FUNCTIONS_DISALLOWED,
+    "logical-css/require-logical-keywords": [
+      true,
+      {
+        ignore: ["caption-side", "offset-anchor", "offset-position", "resize"],
+        severity: "error",
+      },
+    ],
     "no-descending-specificity": null,
+    "order/properties-alphabetical-order": true,
     "unit-disallowed-list": UNITS_DISALLOWED,
   },
 };

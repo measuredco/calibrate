@@ -21,7 +21,7 @@ export default [
 
 ## Stylelint
 
-Drop-in shareable config — extends `stylelint-config-standard` and adds alphabetical property ordering via `stylelint-order`.
+Drop-in shareable config — extends `stylelint-config-standard` and layers on Calibrate's CSS authoring discipline: alphabetical property ordering (`stylelint-order`), token-discipline rules (no raw colors, no absolute lengths, no raw time, no `!important`), and logical-CSS enforcement (`stylelint-plugin-logical-css`) so component CSS stays portable across writing modes.
 
 ```js
 // .stylelintrc.mjs

@@ -18,7 +18,7 @@
       font-size: var(--clbr-typography-type-step-50-font-size);
       line-height: var(--clbr-typography-type-step-50-line-height);
       margin-block: 0;
-      max-width: var(--clbr-typography-measure-default);
+      max-inline-size: var(--clbr-typography-measure-default);
       padding-block-end: var(--clbr-spacing-vertical-100);
 
       .clbr-fieldset[aria-invalid="true"] & {

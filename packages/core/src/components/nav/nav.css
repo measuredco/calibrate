@@ -77,8 +77,8 @@
         background-color: var(--clbr-color-background-default);
         display: block;
         inset: 0;
-        overflow-y: auto;
-        overscroll-behavior-y: none;
+        overflow-block: auto;
+        overscroll-behavior-block: none;
         padding-block: calc(
             var(--clbr-layout-spacing-vertical-600) +
               var(--clbr-nav-expander-icon-size)
@@ -106,8 +106,8 @@
           background-color: var(--clbr-color-background-default);
           display: block;
           inset: 0;
-          overflow-y: auto;
-          overscroll-behavior-y: none;
+          overflow-block: auto;
+          overscroll-behavior-block: none;
           padding-block: calc(
               var(--clbr-layout-spacing-vertical-600) +
                 var(--clbr-nav-expander-icon-size)
