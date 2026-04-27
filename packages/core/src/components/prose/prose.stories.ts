@@ -199,8 +199,15 @@ doc</a>. Here’s a footnote <sup><a href="#user-content-fn-1" id="user-content-
 </section>`,
   } satisfies ClbrProseProps,
   parameters: {
-    // GFM task-list checkboxes have no programmatic label
-    a11y: { options: { rules: { label: { enabled: false } } } },
+    // Structural to GFM-to-HTML output: missing labels and keyboard scroll access.
+    a11y: {
+      options: {
+        rules: {
+          label: { enabled: false },
+          "scrollable-region-focusable": { enabled: false },
+        },
+      },
+    },
   },
   render: (args: ClbrProseProps) => renderClbrProse({ ...args }),
 };
