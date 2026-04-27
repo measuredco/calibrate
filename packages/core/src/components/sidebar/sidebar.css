@@ -117,7 +117,7 @@
     }
 
     [data-part="backdrop"] {
-      /* stylelint-disable-next-line declaration-property-value-allowed-list -- TODO: replace with overlay/scrim token once added to the system */
+      /* stylelint-disable-next-line color-no-hex -- TODO: replace with overlay/scrim token once added to the system */
       background-color: #00000092;
       inset: 0;
       opacity: 0;

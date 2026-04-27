@@ -48,6 +48,7 @@
 
     /* Preserve document writing semantics. */
     quotes: inherit;
+    /* stylelint-disable-next-line function-disallowed-list -- TODO: replace with a tap-highlight token once added to the system; ad-hoc color-mix can produce off-brand results and should be system-mediated */
     -webkit-tap-highlight-color: color-mix(
       in srgb,
       var(--clbr-color-brand-primary) 20%,
