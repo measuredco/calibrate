@@ -5,22 +5,6 @@ import { createRequire } from "node:module";
 // paths here so consumers don't need to install our internals themselves.
 const require = createRequire(import.meta.url);
 
-// -----------------------------------------------------------------------------
-// Two cooperating rules:
-//   - `declaration-property-value-allowed-list` for color properties: the value
-//     must be a `var(--clbr-...)` token, a small set of CSS keywords, or a
-//     standardized system color (forced-colors mode).
-//   - `declaration-property-unit-allowed-list` for dimension/spacing/font-size
-//     properties: numeric literals may only carry typography-relative units.
-//     `var()` and `calc()` pass through (no raw unit at this layer); unitless
-//     `0` is always allowed by stylelint.
-//
-// Composite-value properties (transition, box-shadow, border/font shorthand,
-// background, outline) are intentionally excluded — `allowed-list` is regex
-// against the full value string, which becomes unwieldy on multi-part values.
-// Revisit with a custom rule once a clean shape emerges.
-// -----------------------------------------------------------------------------
-
 const COLOR_PROPS = [
   "accent-color",
   "background-color",
@@ -44,7 +28,6 @@ const COLOR_PROPS = [
   "text-decoration-color",
 ];
 
-// Allow whitespace inside the var() call
 const COLOR_TOKEN_REF = /^var\(\s*--clbr-/;
 const COLOR_KEYWORDS =
   /^(transparent|currentcolor|inherit|initial|unset|revert|revert-layer|none)$/;
@@ -55,21 +38,9 @@ const colorAllowedList = Object.fromEntries(
   COLOR_PROPS.map((p) => [p, [COLOR_TOKEN_REF, COLOR_KEYWORDS, SYSTEM_COLORS]]),
 );
 
-// Disallow absolute lengths repo-wide. These don't scale with user font-size
-// preference and bypass the design system's spacing scale entirely. Applied
-// globally rather than per-property: there's no property where a raw absolute
-// length is the right answer; properties that don't take lengths (color,
-// content, etc.) are unaffected because the rule scans unit suffixes on
-// numeric literals.
-//
-// rem and rlh are intentionally NOT disallowed — they're root-relative and
-// accessibility-aware, useful as a tokenization escape hatch for ad-hoc
-// dimensions the system doesn't tokenize. They're also the right unit for
-// container query breakpoints (em in @container is relative to the container's
-// font-size, which is unpredictable; rem stays anchored to root). Reach for
-// tokens first; rem is the documented out.
-//
-// var() and calc() pass through; unitless 0 is always allowed.
+// rem and rlh are deliberately allowed: documented escape hatch for ad-hoc
+// dimensions, and the right unit for @container breakpoints (em in @container
+// is relative to the container's font-size).
 const UNITS_DISALLOWED = ["px", "pt", "pc", "in", "cm", "mm", "Q"];
 
 const stylelintConfig = {
