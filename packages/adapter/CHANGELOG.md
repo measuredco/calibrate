@@ -1,5 +1,11 @@
 # @measured/calibrate-adapter
 
+## 0.2.0-alpha.2
+
+### Patch Changes
+
+- @measured/calibrate-core@0.2.0-alpha.2
+
 ## 0.1.1-alpha.1
 
 ### Patch Changes
