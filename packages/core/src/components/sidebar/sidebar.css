@@ -119,8 +119,7 @@
     }
 
     [data-part="backdrop"] {
-      /* stylelint-disable-next-line color-no-hex -- TODO: replace with overlay/scrim token once added to the system */
-      background-color: #00000092;
+      background-color: var(--clbr-color-background-scrim);
       inset: 0;
       opacity: 0;
       position: fixed;

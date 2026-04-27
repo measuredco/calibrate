@@ -21,6 +21,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #fef4e8;
     --clbr-color-base16-01: #ffe9d4;
@@ -244,6 +245,7 @@
     --clbr-color-background-default: #eef7fe;
     --clbr-color-background-inverse: #031f60;
     --clbr-color-background-panel: #e9f4fe;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #e4f1fe;
     --clbr-color-base16-00: #fef4e8;
     --clbr-color-base16-01: #ffe9d4;
@@ -321,6 +323,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #fef4e8;
     --clbr-color-base16-01: #ffe9d4;
@@ -398,6 +401,7 @@
     --clbr-color-background-default: #eef7fe;
     --clbr-color-background-inverse: #031f60;
     --clbr-color-background-panel: #e9f4fe;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #e4f1fe;
     --clbr-color-base16-00: #fef4e8;
     --clbr-color-base16-01: #ffe9d4;
@@ -475,6 +479,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #00161a;
     --clbr-color-base16-01: #04242a;
@@ -552,6 +557,7 @@
     --clbr-color-background-default: #031f60;
     --clbr-color-background-inverse: #eef7fe;
     --clbr-color-background-panel: #042467;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
     --clbr-color-base16-00: #00161a;
     --clbr-color-base16-01: #04242a;
@@ -630,6 +636,7 @@
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #191a1a;
       --clbr-color-base16-00: #00161a;
       --clbr-color-base16-01: #04242a;
@@ -709,6 +716,7 @@
       --clbr-color-background-default: #031f60;
       --clbr-color-background-inverse: #eef7fe;
       --clbr-color-background-panel: #042467;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
       --clbr-color-base16-00: #00161a;
       --clbr-color-base16-01: #04242a;
@@ -787,6 +795,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #00161a;
     --clbr-color-base16-01: #04242a;
@@ -864,6 +873,7 @@
     --clbr-color-background-default: #031f60;
     --clbr-color-background-inverse: #eef7fe;
     --clbr-color-background-panel: #042467;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: rgba(255, 255, 255, 0.08);
     --clbr-color-base16-00: #00161a;
     --clbr-color-base16-01: #04242a;
@@ -942,6 +952,7 @@
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #f2f3f4;
       --clbr-color-base16-00: #fef4e8;
       --clbr-color-base16-01: #ffe9d4;
@@ -1021,6 +1032,7 @@
       --clbr-color-background-default: #eef7fe;
       --clbr-color-background-inverse: #031f60;
       --clbr-color-background-panel: #e9f4fe;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #e4f1fe;
       --clbr-color-base16-00: #fef4e8;
       --clbr-color-base16-01: #ffe9d4;

@@ -5,11 +5,11 @@ import { createRequire } from "node:module";
 // paths here so consumers don't need to install our internals themselves.
 const require = createRequire(import.meta.url);
 
-const UNITS_DISALLOWED = ["px", "pt", "pc", "in", "cm", "mm", "Q", "s", "ms"];
+const UNITS_DISALLOWED = ["cm", "in", "mm", "ms", "pc", "pt", "px", "Q", "s"];
 
 const COLOR_FUNCTIONS_DISALLOWED = [
-  "rgb",
-  "rgba",
+  "color-mix",
+  "color",
   "hsl",
   "hsla",
   "hwb",
@@ -17,8 +17,8 @@ const COLOR_FUNCTIONS_DISALLOWED = [
   "lch",
   "oklab",
   "oklch",
-  "color",
-  "color-mix",
+  "rgb",
+  "rgba",
 ];
 
 const stylelintConfig = {
@@ -26,11 +26,11 @@ const stylelintConfig = {
   plugins: [require.resolve("stylelint-order")],
   rules: {
     "order/properties-alphabetical-order": true,
-    "no-descending-specificity": null,
-    "color-no-hex": true,
     "color-named": "never",
+    "color-no-hex": true,
     "declaration-no-important": true,
     "function-disallowed-list": COLOR_FUNCTIONS_DISALLOWED,
+    "no-descending-specificity": null,
     "unit-disallowed-list": UNITS_DISALLOWED,
   },
 };

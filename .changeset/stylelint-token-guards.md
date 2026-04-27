@@ -9,4 +9,7 @@ Add token-discipline rules to the Stylelint preset (`@measured/calibrate-config/
 - Absolute lengths (`px`, `pt`, `pc`, `in`, `cm`, `mm`, `Q`) and raw time units (`s`, `ms`) are disallowed. Use design tokens. `rem` and `rlh` remain available as a documented escape hatch and as the right unit for `@container` breakpoints.
 - `!important` is disallowed.
 
-A new `--clbr-motion-duration-0` token lets you write explicit zero-duration legs in `transition` shorthands without falling back to a raw `0s` literal.
+Two new tokens land alongside the rule additions:
+
+- `--clbr-color-background-scrim` — the translucent occluding layer used behind modals, drawers, and other overlay UI. Resolves to `primitive.color.alpha.black.92` across all four `{light,dark} × {default,brand}` surfaces in both brands.
+- `--clbr-motion-duration-0` — for explicit zero-duration legs in `transition` shorthands without falling back to a raw `0s` literal.

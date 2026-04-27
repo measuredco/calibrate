@@ -21,6 +21,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;
     --clbr-color-base16-01: #f2f3f4;
@@ -244,6 +245,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;
     --clbr-color-base16-01: #f2f3f4;
@@ -321,6 +323,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;
     --clbr-color-base16-01: #f2f3f4;
@@ -398,6 +401,7 @@
     --clbr-color-background-default: #f9fafb;
     --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;
     --clbr-color-base16-01: #f2f3f4;
@@ -475,6 +479,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
     --clbr-color-base16-01: #0e0f10;
@@ -552,6 +557,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
     --clbr-color-base16-01: #0e0f10;
@@ -630,6 +636,7 @@
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #191a1a;
       --clbr-color-base16-00: #0b0c0d;
       --clbr-color-base16-01: #0e0f10;
@@ -709,6 +716,7 @@
       --clbr-color-background-default: #0e0f10;
       --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #191a1a;
       --clbr-color-base16-00: #0b0c0d;
       --clbr-color-base16-01: #0e0f10;
@@ -787,6 +795,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
     --clbr-color-base16-01: #0e0f10;
@@ -864,6 +873,7 @@
     --clbr-color-background-default: #0e0f10;
     --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
+    --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
     --clbr-color-base16-01: #0e0f10;
@@ -942,6 +952,7 @@
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #f2f3f4;
       --clbr-color-base16-00: #f9fafb;
       --clbr-color-base16-01: #f2f3f4;
@@ -1021,6 +1032,7 @@
       --clbr-color-background-default: #f9fafb;
       --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
+      --clbr-color-background-scrim: rgba(0, 0, 0, 0.92);
       --clbr-color-background-subtle: #f2f3f4;
       --clbr-color-base16-00: #f9fafb;
       --clbr-color-base16-01: #f2f3f4;
