@@ -198,5 +198,16 @@ doc</a>. Here’s a footnote <sup><a href="#user-content-fn-1" id="user-content-
 </ol>
 </section>`,
   } satisfies ClbrProseProps,
+  parameters: {
+    // Structural to GFM-to-HTML output: missing labels and keyboard scroll access.
+    a11y: {
+      options: {
+        rules: {
+          label: { enabled: false },
+          "scrollable-region-focusable": { enabled: false },
+        },
+      },
+    },
+  },
   render: (args: ClbrProseProps) => renderClbrProse({ ...args }),
 };

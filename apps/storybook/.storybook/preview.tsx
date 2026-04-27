@@ -137,9 +137,17 @@ const preview: Preview = {
   parameters: {
     a11y: {
       options: {
+        rules: { region: { enabled: false } },
         runOnly: {
           type: "tag",
-          values: ["wcag22aa"],
+          values: [
+            "wcag2a",
+            "wcag2aa",
+            "wcag21a",
+            "wcag21aa",
+            "wcag22aa",
+            "best-practice",
+          ],
         },
       },
       test: "error",
