@@ -137,9 +137,19 @@ const preview: Preview = {
   parameters: {
     a11y: {
       options: {
+        // `region` expects page-level landmark structure that isolated
+        // component stories don't have. Other best-practice rules stay on.
+        rules: { region: { enabled: false } },
         runOnly: {
           type: "tag",
-          values: ["wcag22aa"],
+          values: [
+            "wcag2a",
+            "wcag2aa",
+            "wcag21a",
+            "wcag21aa",
+            "wcag22aa",
+            "best-practice",
+          ],
         },
       },
       test: "error",

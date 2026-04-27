@@ -198,5 +198,9 @@ doc</a>. Here’s a footnote <sup><a href="#user-content-fn-1" id="user-content-
 </ol>
 </section>`,
   } satisfies ClbrProseProps,
+  parameters: {
+    // GFM task-list checkboxes have no programmatic label
+    a11y: { options: { rules: { label: { enabled: false } } } },
+  },
   render: (args: ClbrProseProps) => renderClbrProse({ ...args }),
 };
