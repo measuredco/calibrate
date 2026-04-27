@@ -51,6 +51,8 @@ export default {
 import browserslist from "@measured/calibrate-config/browserslist";
 ```
 
+Use the query directly in tools that accept query arrays (for example Autoprefixer `overrideBrowserslist`).
+
 For plain `package.json` `browserslist` fields, use the equivalent query:
 
 ```json
