@@ -1,7 +1,8 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
-import { CLBR_TEXT_SPEC, renderClbrText, type ClbrTextProps } from "./text";
+import { CLBR_TEXT_SPEC, type ClbrTextProps, renderClbrText } from "./text";
 
 function mountText(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;

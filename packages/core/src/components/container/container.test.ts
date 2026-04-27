@@ -1,10 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_CONTAINER_SPEC,
-  renderClbrContainer,
   type ClbrContainerProps,
+  renderClbrContainer,
 } from "./container";
 
 function mountContainer(html: string): HTMLElement {

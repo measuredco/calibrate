@@ -1,6 +1,6 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import type { ClbrComponentSpec } from "../../spec";
 import { collapseWhitespace } from "../../helpers/string";
+import type { ClbrComponentSpec } from "../../spec";
 import { buildClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
 

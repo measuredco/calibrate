@@ -1,10 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_FIELDSET_SPEC,
-  renderClbrFieldset,
   type ClbrFieldsetProps,
+  renderClbrFieldset,
 } from "./fieldset";
 
 function mountFieldset(html: string): HTMLElement {

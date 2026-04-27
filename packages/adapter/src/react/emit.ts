@@ -1,4 +1,5 @@
 import type { ClbrComponentSpec } from "@measured/calibrate-core";
+
 import { classify, pascalCase, screamingSnake } from "../shared/spec.ts";
 
 // -----------------------------------------------------------------------------
@@ -83,9 +84,10 @@ function newParts(): EmitParts {
 }
 
 function renderParts(parts: EmitParts): string {
-  const imports: string[] = [];
+  const externalImports: string[] = [];
+  const relativeImports: string[] = [];
 
-  imports.push(
+  externalImports.push(
     renderImport(
       "@measured/calibrate-core",
       [...parts.coreValueImports],
@@ -96,10 +98,10 @@ function renderParts(parts: EmitParts): string {
   const reactValues = [...parts.reactValueImports];
   const reactTypes = [...parts.reactTypeImports];
   if (reactValues.length > 0 || reactTypes.length > 0) {
-    imports.push(renderImport("react", reactValues, reactTypes));
+    externalImports.push(renderImport("react", reactValues, reactTypes));
   }
 
-  imports.push(
+  relativeImports.push(
     renderImport(
       REACTIFY_IMPORT_PATH,
       REACTIFY_VALUE_IMPORTS,
@@ -107,7 +109,12 @@ function renderParts(parts: EmitParts): string {
     ),
   );
 
-  const sections: string[] = [imports.join("\n")];
+  const importBlock = [
+    externalImports.join("\n"),
+    relativeImports.join("\n"),
+  ].join("\n\n");
+
+  const sections: string[] = [importBlock];
   if (parts.constants.length > 0) sections.push(parts.constants.join("\n"));
   if (parts.helpers.length > 0) sections.push(parts.helpers.join("\n\n"));
   if (parts.exportedTypes.length > 0) {
@@ -163,9 +170,7 @@ export function emitIndexSource(
   specs: ReadonlyArray<ClbrComponentSpec>,
 ): string {
   const sorted = [...specs].sort((a, b) => a.name.localeCompare(b.name));
-  const blocks: string[] = [
-    `export { defineClbrComponents as defineClbrAll } from "@measured/calibrate-core";`,
-  ];
+  const blocks: string[] = [];
   for (const spec of sorted) {
     const pascal = pascalCase(spec.name);
     const names: string[] = [pascal];
@@ -187,7 +192,10 @@ export function emitIndexSource(
       `export {\n${names.map((n) => `  ${n},`).join("\n")}\n} from "./components/${spec.name}/${spec.name}";`,
     );
   }
-  return GENERATED_HEADER + blocks.join("\n\n") + "\n";
+  blocks.push(
+    `export { defineClbrComponents as defineClbrAll } from "@measured/calibrate-core";`,
+  );
+  return GENERATED_HEADER + blocks.join("\n") + "\n";
 }
 
 function isCustomElement(spec: ClbrComponentSpec): boolean {

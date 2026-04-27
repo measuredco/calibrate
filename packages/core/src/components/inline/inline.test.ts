@@ -1,10 +1,11 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_INLINE_SPEC,
-  renderClbrInline,
   type ClbrInlineProps,
+  renderClbrInline,
 } from "./inline";
 
 function mountInline(html: string): HTMLElement {

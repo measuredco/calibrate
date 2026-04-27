@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
+
 import {
-  collectConditionProps,
-  collectValueProps,
-  evaluateSpecCondition,
-  resolveSpecValue,
   type ClbrComponentSpec,
   type ClbrComponentSpecProp,
   type ClbrSpecAttributeRule,
   type ClbrSpecPropType,
+  collectConditionProps,
+  collectValueProps,
+  evaluateSpecCondition,
+  resolveSpecValue,
 } from "../spec";
 
 export interface SpecConsistencyConfig<Props> {

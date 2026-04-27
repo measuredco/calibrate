@@ -1,10 +1,11 @@
 import { getByRole, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_RADIOS_SPEC,
-  renderClbrRadios,
   type ClbrRadiosProps,
+  renderClbrRadios,
 } from "./radios";
 
 function mountRadios(html: string): HTMLElement {

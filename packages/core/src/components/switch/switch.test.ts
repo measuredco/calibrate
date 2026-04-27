@@ -1,10 +1,11 @@
 import { getByRole, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_SWITCH_SPEC,
-  renderClbrSwitch,
   type ClbrSwitchProps,
+  renderClbrSwitch,
 } from "./switch";
 
 function mountSwitch(html: string): HTMLElement {

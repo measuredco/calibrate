@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import { CLBR_ICON_SPEC, type ClbrIconProps, renderClbrIcon } from "./icon";
 

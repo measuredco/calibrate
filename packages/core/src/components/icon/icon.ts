@@ -1,6 +1,7 @@
 import { icons } from "lucide";
-import { isValidHtmlId } from "../../helpers/string";
+
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { isValidHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;

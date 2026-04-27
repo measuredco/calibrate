@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
-import { CLBR_LOGO_SPEC, renderClbrLogo, type ClbrLogoProps } from "./logo";
+import { CLBR_LOGO_SPEC, type ClbrLogoProps, renderClbrLogo } from "./logo";
 
 function mountLogo(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;

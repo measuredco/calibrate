@@ -1,7 +1,8 @@
 import { getByLabelText, getByText, queryByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
-import { CLBR_INPUT_SPEC, renderClbrInput, type ClbrInputProps } from "./input";
+import { CLBR_INPUT_SPEC, type ClbrInputProps, renderClbrInput } from "./input";
 
 function mountInput(html: string): HTMLElement {
   document.body.innerHTML = `<div class="clbr">${html}</div>`;

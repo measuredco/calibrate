@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import json from "@eslint/json";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import storybook from "eslint-plugin-storybook";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -24,20 +25,28 @@ export default [
     language: "json/json",
   },
   {
+    files: ["**/*.mjs", "**/*.ts", "**/*.tsx"],
+    plugins: { "simple-import-sort": simpleImportSort },
+    rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+    },
+  },
+  {
     files: ["**/*.mjs"],
     ...js.configs.recommended,
     languageOptions: { globals: { ...globals.node } },
   },
   ...tseslint.configs.recommended.map((config) => ({
     ...config,
-    files: ["**/*.ts"],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
       ...(config.languageOptions ?? {}),
       globals: { ...globals.node },
     },
   })),
   {
-    files: ["packages/core/src/**/*.ts"],
+    files: ["packages/core/src/**/*.ts", "packages/react/src/**/*.{ts,tsx}"],
     languageOptions: { globals: { ...nodeGlobalsOff, ...globals.browser } },
   },
   ...storybook.configs["flat/recommended"].map((config) => ({

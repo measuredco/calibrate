@@ -1,9 +1,11 @@
-import * as core from "@measured/calibrate-core";
-import type { ClbrComponentSpec } from "@measured/calibrate-core";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import type { ClbrComponentSpec } from "@measured/calibrate-core";
+import * as core from "@measured/calibrate-core";
 import prettier from "prettier";
+
 import { emitIndexSource, emitWrapperSource } from "./emit.ts";
 
 const __filename = fileURLToPath(import.meta.url);

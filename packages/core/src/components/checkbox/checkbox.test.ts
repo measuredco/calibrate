@@ -1,10 +1,11 @@
 import { getByRole, getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_CHECKBOX_SPEC,
-  renderClbrCheckbox,
   type ClbrCheckboxProps,
+  renderClbrCheckbox,
 } from "./checkbox";
 
 function mountCheckbox(html: string): HTMLElement {

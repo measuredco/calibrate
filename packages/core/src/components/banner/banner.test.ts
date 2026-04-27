@@ -1,15 +1,16 @@
 import { getByRole, queryByRole } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_BANNER_EVENT_BEFORE_DISMISS,
   CLBR_BANNER_EVENT_DISMISS,
   CLBR_BANNER_SPEC,
   CLBR_BANNER_TAG_NAME,
+  type ClbrBannerProps,
   defineClbrBanner,
   renderClbrBanner,
-  type ClbrBannerProps,
 } from "./banner";
 
 function mountBanner(html: string): HTMLElement {

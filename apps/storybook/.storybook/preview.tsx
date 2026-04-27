@@ -1,3 +1,6 @@
+import "@measured/calibrate-assets/fonts.css";
+import "../../../packages/core/src/styles.css";
+
 import {
   Controls,
   Description,
@@ -8,11 +11,9 @@ import {
 } from "@storybook/addon-docs/blocks";
 import type { Preview } from "@storybook/web-components-vite";
 import { themes } from "storybook/theming";
+
 import { renderClbrRoot } from "../../../packages/core/src/components/root/root";
 import { renderClbrSurface } from "../../../packages/core/src/components/surface/surface";
-
-import "@measured/calibrate-assets/fonts.css";
-import "../../../packages/core/src/styles.css";
 
 const decodeHtmlEntities = (source: string): string =>
   source

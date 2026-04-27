@@ -1,10 +1,11 @@
 import { getByRole, getByText, queryByRole } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_HEADING_SPEC,
-  renderClbrHeading,
   type ClbrHeadingProps,
+  renderClbrHeading,
 } from "./heading";
 
 function mountHeading(html: string): HTMLElement {

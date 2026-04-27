@@ -2,6 +2,7 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import { isObject, parseJsonPointer } from "./helpers/json.mjs";
 
 /**

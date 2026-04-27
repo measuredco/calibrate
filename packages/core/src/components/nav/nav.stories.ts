@@ -1,10 +1,10 @@
 import { specToArgTypes, specToComponentDescription } from "../../spec";
 import {
   CLBR_NAV_SPEC,
-  defineClbrNav,
-  renderClbrNav,
   type ClbrNavItem,
   type ClbrNavProps,
+  defineClbrNav,
+  renderClbrNav,
 } from "./nav";
 
 defineClbrNav();

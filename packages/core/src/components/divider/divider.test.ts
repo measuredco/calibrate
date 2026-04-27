@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_DIVIDER_SPEC,
-  renderClbrDivider,
   type ClbrDividerProps,
+  renderClbrDivider,
 } from "./divider";
 
 function mountDivider(html: string): HTMLElement {

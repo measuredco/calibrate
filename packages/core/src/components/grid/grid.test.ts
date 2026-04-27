@@ -1,13 +1,14 @@
 import { getByText } from "@testing-library/dom";
 import { describe, expect, it } from "vitest";
+
 import { describeSpecConsistency } from "../../test/spec";
 import {
   CLBR_GRID_ITEM_SPEC,
   CLBR_GRID_SPEC,
-  renderClbrGrid,
-  renderClbrGridItem,
   type ClbrGridItemProps,
   type ClbrGridProps,
+  renderClbrGrid,
+  renderClbrGridItem,
 } from "./grid";
 
 function mountGrid(html: string): HTMLElement {
