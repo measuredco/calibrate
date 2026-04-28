@@ -15,16 +15,16 @@ export type ClbrHeadingSize =
 export interface ClbrHeadingProps {
   /** Text alignment. @default "start" */
   align?: ClbrAlign;
-  /** Heading text content (escaped before render). */
-  children: string;
   /** Semantic heading level; omit to render a `span`. */
   level?: ClbrHeadingLevel;
-  /** Enables optical inline alignment for left sidebearing-heavy glyphs. @default false */
-  opticalInline?: boolean;
+  /** Enables optical alignment for left sidebearing-heavy glyphs. @default false */
+  opticalAlign?: boolean;
   /** Enables breakpoint-responsive heading scale. @default false */
   responsive?: boolean;
   /** Heading size. @default "md" */
   size?: ClbrHeadingSize;
+  /** Heading text content (escaped before render). */
+  text: string;
 }
 
 /**
@@ -35,11 +35,11 @@ export interface ClbrHeadingProps {
  */
 export function buildClbrHeading({
   align = "start",
-  children,
   level,
-  opticalInline,
+  opticalAlign,
   responsive,
   size = "md",
+  text,
 }: ClbrHeadingProps): ClbrNode {
   const tag = level ? (`h${level}` as const) : "span";
   return {
@@ -48,11 +48,11 @@ export function buildClbrHeading({
     attrs: {
       class: "clbr-heading",
       "data-align": align === "start" ? undefined : align,
-      "data-optical-inline": opticalInline,
+      "data-optical-align": opticalAlign,
       "data-responsive": responsive,
       "data-size": size,
     },
-    children: [{ kind: "text", value: children }],
+    children: [{ kind: "text", value: text }],
   };
 }
 
@@ -85,23 +85,18 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
     },
     class: "clbr-heading",
   },
-  content: { kind: "text", prop: "children" },
+  content: { kind: "text", prop: "text" },
   props: {
     align: {
       default: "start",
       description: "Text alignment.",
       type: { kind: "enum", values: ["start", "center", "end"] },
     },
-    children: {
-      description: "Heading text.",
-      required: true,
-      type: { kind: "text" },
-    },
     level: {
       description: "Semantic heading level. Renders a `<span>` when omitted.",
       type: { kind: "enum", values: [1, 2, 3, 4, 5, 6] },
     },
-    opticalInline: {
+    opticalAlign: {
       default: false,
       description: "Optically aligns the first glyph to the inline edge.",
       type: { kind: "boolean" },
@@ -119,6 +114,11 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
         values: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
       },
     },
+    text: {
+      description: "Heading text.",
+      required: true,
+      type: { kind: "text" },
+    },
   },
   events: {},
   rules: {
@@ -135,8 +135,8 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
       },
       {
         target: { on: "host" },
-        attribute: "data-optical-inline",
-        condition: { kind: "when-truthy", prop: "opticalInline" },
+        attribute: "data-optical-align",
+        condition: { kind: "when-truthy", prop: "opticalAlign" },
       },
       {
         target: { on: "host" },

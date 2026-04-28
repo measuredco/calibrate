@@ -50,10 +50,10 @@ export const Default = {
               align: "start",
               children: `${renderClbrHeading({
                 level: 1,
-                opticalInline: true,
+                opticalAlign: true,
                 responsive: true,
                 size: "5xl",
-                children: "Heading",
+                text: "Heading",
               })}${renderClbrText({
                 as: "p",
                 children:

@@ -77,6 +77,14 @@ export const Code = {
 </code></pre>`,
     }),
   } satisfies ClbrFigureProps,
+  parameters: {
+    // Structural to GFM-to-HTML output: long highlighted code overflows without keyboard scroll access.
+    a11y: {
+      options: {
+        rules: { "scrollable-region-focusable": { enabled: false } },
+      },
+    },
+  },
   render: (args: ClbrFigureProps) => renderClbrFigure(args),
 };
 

@@ -207,8 +207,8 @@ export const Alt = {
                   }),
                 }),
                 `<a href="#">${renderClbrHeading({
-                  children: "Facet.",
                   size: "lg",
+                  text: "Facet.",
                 })}</a>`,
               ].join(""),
             }),

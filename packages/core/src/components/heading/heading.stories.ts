@@ -24,11 +24,11 @@ export default meta;
 export const Default = {
   args: {
     align: "start",
-    children: "Heading",
     level: undefined,
-    opticalInline: false,
+    opticalAlign: false,
     responsive: false,
     size: "md",
+    text: "Heading",
   } satisfies ClbrHeadingProps,
   render: (args: ClbrHeadingProps) => renderClbrHeading({ ...args }),
 };

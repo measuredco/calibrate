@@ -10,7 +10,7 @@
     margin: 0;
     text-wrap: balance;
 
-    &[data-optical-inline] {
+    &[data-optical-align] {
       margin-inline: -0.1em;
     }
 
