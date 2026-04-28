@@ -1,0 +1,1377 @@
+{
+  "$schemaVersion": "1",
+  "namespace": "clbr",
+  "brand": null,
+  "modifierOrder": [
+    "size",
+    "root"
+  ],
+  "defaultContext": "baseline-default",
+  "tokens": {
+    "breakpoint.baseline": {
+      "path": [
+        "breakpoint",
+        "baseline"
+      ],
+      "$layer": "semantic",
+      "$value": "320px"
+    },
+    "breakpoint.desktop": {
+      "path": [
+        "breakpoint",
+        "desktop"
+      ],
+      "$layer": "semantic",
+      "$value": "1440px"
+    },
+    "breakpoint.laptop": {
+      "path": [
+        "breakpoint",
+        "laptop"
+      ],
+      "$layer": "semantic",
+      "$value": "1280px"
+    },
+    "breakpoint.mobile": {
+      "path": [
+        "breakpoint",
+        "mobile"
+      ],
+      "$layer": "semantic",
+      "$value": "384px"
+    },
+    "breakpoint.notebook": {
+      "path": [
+        "breakpoint",
+        "notebook"
+      ],
+      "$layer": "semantic",
+      "$value": "1024px"
+    },
+    "breakpoint.tablet": {
+      "path": [
+        "breakpoint",
+        "tablet"
+      ],
+      "$layer": "semantic",
+      "$value": "768px"
+    },
+    "breakpoint.widescreen": {
+      "path": [
+        "breakpoint",
+        "widescreen"
+      ],
+      "$layer": "semantic",
+      "$value": "1536px"
+    },
+    "layout.border.width.default": {
+      "path": [
+        "layout",
+        "border",
+        "width",
+        "default"
+      ],
+      "$layer": "semantic",
+      "$value": "1px"
+    },
+    "layout.border.width.thick": {
+      "path": [
+        "layout",
+        "border",
+        "width",
+        "thick"
+      ],
+      "$layer": "semantic",
+      "$value": "2px"
+    },
+    "layout.container.gutter.default": {
+      "path": [
+        "layout",
+        "container",
+        "gutter",
+        "default"
+      ],
+      "$layer": "semantic",
+      "$value": "16px",
+      "contextOverrides": {
+        "tablet-default": {
+          "$value": "32px"
+        },
+        "tablet-scoped": {
+          "$value": "32px"
+        },
+        "notebook-default": {
+          "$value": "32px"
+        },
+        "notebook-scoped": {
+          "$value": "32px"
+        },
+        "laptop-default": {
+          "$value": "32px"
+        },
+        "laptop-scoped": {
+          "$value": "32px"
+        }
+      }
+    },
+    "layout.container.gutter.narrow": {
+      "path": [
+        "layout",
+        "container",
+        "gutter",
+        "narrow"
+      ],
+      "$layer": "semantic",
+      "$value": "16px",
+      "contextOverrides": {
+        "tablet-default": {
+          "$value": "24px"
+        },
+        "tablet-scoped": {
+          "$value": "24px"
+        },
+        "notebook-default": {
+          "$value": "24px"
+        },
+        "notebook-scoped": {
+          "$value": "24px"
+        },
+        "laptop-default": {
+          "$value": "24px"
+        },
+        "laptop-scoped": {
+          "$value": "24px"
+        }
+      }
+    },
+    "layout.container.maxWidth.default": {
+      "path": [
+        "layout",
+        "container",
+        "maxWidth",
+        "default"
+      ],
+      "$layer": "semantic",
+      "$value": "1280px"
+    },
+    "layout.container.maxWidth.wide": {
+      "path": [
+        "layout",
+        "container",
+        "maxWidth",
+        "wide"
+      ],
+      "$layer": "semantic",
+      "$value": "1440px"
+    },
+    "layout.focusRing.offset.default": {
+      "path": [
+        "layout",
+        "focusRing",
+        "offset",
+        "default"
+      ],
+      "$layer": "semantic",
+      "$value": "2px"
+    },
+    "layout.focusRing.offset.inset": {
+      "path": [
+        "layout",
+        "focusRing",
+        "offset",
+        "inset"
+      ],
+      "$layer": "semantic",
+      "$value": "-4px"
+    },
+    "layout.focusRing.offset.lg": {
+      "path": [
+        "layout",
+        "focusRing",
+        "offset",
+        "lg"
+      ],
+      "$layer": "semantic",
+      "$value": "4px"
+    },
+    "layout.focusRing.outset": {
+      "path": [
+        "layout",
+        "focusRing",
+        "outset"
+      ],
+      "$layer": "semantic",
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "layout.focusRing.width": {
+      "path": [
+        "layout",
+        "focusRing",
+        "width"
+      ],
+      "$layer": "semantic",
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "layout.grid.columns": {
+      "path": [
+        "layout",
+        "grid",
+        "columns"
+      ],
+      "$layer": "semantic",
+      "$type": "number",
+      "$value": 12
+    },
+    "layout.grid.gap.lg": {
+      "path": [
+        "layout",
+        "grid",
+        "gap",
+        "lg"
+      ],
+      "$layer": "semantic",
+      "$value": "32px"
+    },
+    "layout.grid.gap.md": {
+      "path": [
+        "layout",
+        "grid",
+        "gap",
+        "md"
+      ],
+      "$layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.grid.gap.sm": {
+      "path": [
+        "layout",
+        "grid",
+        "gap",
+        "sm"
+      ],
+      "$layer": "semantic",
+      "$value": "16px"
+    },
+    "layout.grid.item.minWidth": {
+      "path": [
+        "layout",
+        "grid",
+        "item",
+        "minWidth"
+      ],
+      "$layer": "semantic",
+      "$type": "dimension",
+      "$value": "288px"
+    },
+    "layout.icon.size.2xs": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "2xs"
+      ],
+      "$layer": "semantic",
+      "$value": "16px"
+    },
+    "layout.icon.size.default": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "default"
+      ],
+      "$layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.icon.size.lg": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "lg"
+      ],
+      "$layer": "semantic",
+      "$value": "28px"
+    },
+    "layout.icon.size.md": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "md"
+      ],
+      "$layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.icon.size.sm": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "sm"
+      ],
+      "$layer": "semantic",
+      "$value": "20px"
+    },
+    "layout.icon.size.xs": {
+      "path": [
+        "layout",
+        "icon",
+        "size",
+        "xs"
+      ],
+      "$layer": "semantic",
+      "$value": "18px"
+    },
+    "layout.icon.viewbox.insetRatio": {
+      "path": [
+        "layout",
+        "icon",
+        "viewbox",
+        "insetRatio"
+      ],
+      "$layer": "semantic",
+      "$type": "number",
+      "$value": 0.0833333333
+    },
+    "layout.icon.viewbox.outsetRatio": {
+      "path": [
+        "layout",
+        "icon",
+        "viewbox",
+        "outsetRatio"
+      ],
+      "$layer": "semantic",
+      "$type": "number",
+      "$value": -0.0833333333
+    },
+    "layout.spacing.vertical.1000": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "1000"
+      ],
+      "$layer": "semantic",
+      "$value": "72px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "108px"
+        },
+        "notebook-scoped": {
+          "$value": "108px"
+        },
+        "laptop-default": {
+          "$value": "108px"
+        },
+        "laptop-scoped": {
+          "$value": "108px"
+        }
+      }
+    },
+    "layout.spacing.vertical.1100": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "1100"
+      ],
+      "$layer": "semantic",
+      "$value": "84px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "120px"
+        },
+        "notebook-scoped": {
+          "$value": "120px"
+        },
+        "laptop-default": {
+          "$value": "120px"
+        },
+        "laptop-scoped": {
+          "$value": "120px"
+        }
+      }
+    },
+    "layout.spacing.vertical.1200": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "1200"
+      ],
+      "$layer": "semantic",
+      "$value": "96px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "144px"
+        },
+        "notebook-scoped": {
+          "$value": "144px"
+        },
+        "laptop-default": {
+          "$value": "144px"
+        },
+        "laptop-scoped": {
+          "$value": "144px"
+        }
+      }
+    },
+    "layout.spacing.vertical.250": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "250"
+      ],
+      "$layer": "semantic",
+      "$value": "3px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "6px"
+        },
+        "notebook-scoped": {
+          "$value": "6px"
+        },
+        "laptop-default": {
+          "$value": "6px"
+        },
+        "laptop-scoped": {
+          "$value": "6px"
+        }
+      }
+    },
+    "layout.spacing.vertical.400": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "400"
+      ],
+      "$layer": "semantic",
+      "$value": "6px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "12px"
+        },
+        "notebook-scoped": {
+          "$value": "12px"
+        },
+        "laptop-default": {
+          "$value": "12px"
+        },
+        "laptop-scoped": {
+          "$value": "12px"
+        }
+      }
+    },
+    "layout.spacing.vertical.500": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "500"
+      ],
+      "$layer": "semantic",
+      "$value": "12px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "18px"
+        },
+        "notebook-scoped": {
+          "$value": "18px"
+        },
+        "laptop-default": {
+          "$value": "18px"
+        },
+        "laptop-scoped": {
+          "$value": "18px"
+        }
+      }
+    },
+    "layout.spacing.vertical.600": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "600"
+      ],
+      "$layer": "semantic",
+      "$value": "18px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "24px"
+        },
+        "notebook-scoped": {
+          "$value": "24px"
+        },
+        "laptop-default": {
+          "$value": "24px"
+        },
+        "laptop-scoped": {
+          "$value": "24px"
+        }
+      }
+    },
+    "layout.spacing.vertical.700": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "700"
+      ],
+      "$layer": "semantic",
+      "$value": "24px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "36px"
+        },
+        "notebook-scoped": {
+          "$value": "36px"
+        },
+        "laptop-default": {
+          "$value": "36px"
+        },
+        "laptop-scoped": {
+          "$value": "36px"
+        }
+      }
+    },
+    "layout.spacing.vertical.800": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "800"
+      ],
+      "$layer": "semantic",
+      "$value": "36px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "48px"
+        },
+        "notebook-scoped": {
+          "$value": "48px"
+        },
+        "laptop-default": {
+          "$value": "48px"
+        },
+        "laptop-scoped": {
+          "$value": "48px"
+        }
+      }
+    },
+    "layout.spacing.vertical.900": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "900"
+      ],
+      "$layer": "semantic",
+      "$value": "48px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "72px"
+        },
+        "notebook-scoped": {
+          "$value": "72px"
+        },
+        "laptop-default": {
+          "$value": "72px"
+        },
+        "laptop-scoped": {
+          "$value": "72px"
+        }
+      }
+    },
+    "layout.spacing.vertical.950": {
+      "path": [
+        "layout",
+        "spacing",
+        "vertical",
+        "950"
+      ],
+      "$layer": "semantic",
+      "$value": "60px",
+      "contextOverrides": {
+        "notebook-default": {
+          "$value": "96px"
+        },
+        "notebook-scoped": {
+          "$value": "96px"
+        },
+        "laptop-default": {
+          "$value": "96px"
+        },
+        "laptop-scoped": {
+          "$value": "96px"
+        }
+      }
+    },
+    "primitive.breakpoint.2xl": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "2xl"
+      ],
+      "$layer": "primitive",
+      "$value": "1536px"
+    },
+    "primitive.breakpoint.2xs": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "2xs"
+      ],
+      "$layer": "primitive",
+      "$value": "320px"
+    },
+    "primitive.breakpoint.lg": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "lg"
+      ],
+      "$layer": "primitive",
+      "$value": "1280px"
+    },
+    "primitive.breakpoint.md": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "md"
+      ],
+      "$layer": "primitive",
+      "$value": "1024px"
+    },
+    "primitive.breakpoint.sm": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "sm"
+      ],
+      "$layer": "primitive",
+      "$value": "768px"
+    },
+    "primitive.breakpoint.xl": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "xl"
+      ],
+      "$layer": "primitive",
+      "$value": "1440px"
+    },
+    "primitive.breakpoint.xs": {
+      "path": [
+        "primitive",
+        "breakpoint",
+        "xs"
+      ],
+      "$layer": "primitive",
+      "$value": "384px"
+    },
+    "primitive.layout.container.maxWidth.lg": {
+      "path": [
+        "primitive",
+        "layout",
+        "container",
+        "maxWidth",
+        "lg"
+      ],
+      "$layer": "primitive",
+      "$value": "1280px"
+    },
+    "primitive.layout.container.maxWidth.xl": {
+      "path": [
+        "primitive",
+        "layout",
+        "container",
+        "maxWidth",
+        "xl"
+      ],
+      "$layer": "primitive",
+      "$value": "1440px"
+    },
+    "primitive.layout.focusRing.offset.default": {
+      "path": [
+        "primitive",
+        "layout",
+        "focusRing",
+        "offset",
+        "default"
+      ],
+      "$layer": "primitive",
+      "$value": "2px"
+    },
+    "primitive.layout.focusRing.offset.inset": {
+      "path": [
+        "primitive",
+        "layout",
+        "focusRing",
+        "offset",
+        "inset"
+      ],
+      "$layer": "primitive",
+      "$value": "-4px"
+    },
+    "primitive.layout.focusRing.offset.lg": {
+      "path": [
+        "primitive",
+        "layout",
+        "focusRing",
+        "offset",
+        "lg"
+      ],
+      "$layer": "primitive",
+      "$value": "4px"
+    },
+    "primitive.layout.focusRing.outset": {
+      "path": [
+        "primitive",
+        "layout",
+        "focusRing",
+        "outset"
+      ],
+      "$layer": "primitive",
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "primitive.layout.grid.columns": {
+      "path": [
+        "primitive",
+        "layout",
+        "grid",
+        "columns"
+      ],
+      "$layer": "primitive",
+      "$type": "number",
+      "$value": 12
+    },
+    "primitive.layout.grid.item.minWidth": {
+      "path": [
+        "primitive",
+        "layout",
+        "grid",
+        "item",
+        "minWidth"
+      ],
+      "$layer": "primitive",
+      "$type": "dimension",
+      "$value": "288px"
+    },
+    "primitive.layout.icon.size.2xs": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "size",
+        "2xs"
+      ],
+      "$layer": "primitive",
+      "$value": "16px"
+    },
+    "primitive.layout.icon.size.lg": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "size",
+        "lg"
+      ],
+      "$layer": "primitive",
+      "$value": "28px"
+    },
+    "primitive.layout.icon.size.md": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "size",
+        "md"
+      ],
+      "$layer": "primitive",
+      "$value": "24px"
+    },
+    "primitive.layout.icon.size.sm": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "size",
+        "sm"
+      ],
+      "$layer": "primitive",
+      "$value": "20px"
+    },
+    "primitive.layout.icon.size.xs": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "size",
+        "xs"
+      ],
+      "$layer": "primitive",
+      "$value": "18px"
+    },
+    "primitive.layout.icon.viewbox.insetRatio": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "viewbox",
+        "insetRatio"
+      ],
+      "$layer": "primitive",
+      "$type": "number",
+      "$value": 0.0833333333
+    },
+    "primitive.layout.icon.viewbox.outsetRatio": {
+      "path": [
+        "primitive",
+        "layout",
+        "icon",
+        "viewbox",
+        "outsetRatio"
+      ],
+      "$layer": "primitive",
+      "$type": "number",
+      "$value": -0.0833333333
+    },
+    "primitive.spacing.100": {
+      "path": [
+        "primitive",
+        "spacing",
+        "100"
+      ],
+      "$layer": "primitive",
+      "$value": "1px"
+    },
+    "primitive.spacing.1000": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1000"
+      ],
+      "$layer": "primitive",
+      "$value": "32px"
+    },
+    "primitive.spacing.1100": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1100"
+      ],
+      "$layer": "primitive",
+      "$value": "36px"
+    },
+    "primitive.spacing.1200": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1200"
+      ],
+      "$layer": "primitive",
+      "$value": "48px"
+    },
+    "primitive.spacing.1300": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1300"
+      ],
+      "$layer": "primitive",
+      "$value": "60px"
+    },
+    "primitive.spacing.1400": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1400"
+      ],
+      "$layer": "primitive",
+      "$value": "72px"
+    },
+    "primitive.spacing.1500": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1500"
+      ],
+      "$layer": "primitive",
+      "$value": "84px"
+    },
+    "primitive.spacing.1600": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1600"
+      ],
+      "$layer": "primitive",
+      "$value": "96px"
+    },
+    "primitive.spacing.1700": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1700"
+      ],
+      "$layer": "primitive",
+      "$value": "108px"
+    },
+    "primitive.spacing.1800": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1800"
+      ],
+      "$layer": "primitive",
+      "$value": "120px"
+    },
+    "primitive.spacing.1900": {
+      "path": [
+        "primitive",
+        "spacing",
+        "1900"
+      ],
+      "$layer": "primitive",
+      "$value": "144px"
+    },
+    "primitive.spacing.200": {
+      "path": [
+        "primitive",
+        "spacing",
+        "200"
+      ],
+      "$layer": "primitive",
+      "$value": "2px"
+    },
+    "primitive.spacing.2000": {
+      "path": [
+        "primitive",
+        "spacing",
+        "2000"
+      ],
+      "$layer": "primitive",
+      "$value": "168px"
+    },
+    "primitive.spacing.2100": {
+      "path": [
+        "primitive",
+        "spacing",
+        "2100"
+      ],
+      "$layer": "primitive",
+      "$value": "192px"
+    },
+    "primitive.spacing.250": {
+      "path": [
+        "primitive",
+        "spacing",
+        "250"
+      ],
+      "$layer": "primitive",
+      "$value": "3px"
+    },
+    "primitive.spacing.300": {
+      "path": [
+        "primitive",
+        "spacing",
+        "300"
+      ],
+      "$layer": "primitive",
+      "$value": "4px"
+    },
+    "primitive.spacing.400": {
+      "path": [
+        "primitive",
+        "spacing",
+        "400"
+      ],
+      "$layer": "primitive",
+      "$value": "6px"
+    },
+    "primitive.spacing.500": {
+      "path": [
+        "primitive",
+        "spacing",
+        "500"
+      ],
+      "$layer": "primitive",
+      "$value": "8px"
+    },
+    "primitive.spacing.600": {
+      "path": [
+        "primitive",
+        "spacing",
+        "600"
+      ],
+      "$layer": "primitive",
+      "$value": "12px"
+    },
+    "primitive.spacing.700": {
+      "path": [
+        "primitive",
+        "spacing",
+        "700"
+      ],
+      "$layer": "primitive",
+      "$value": "16px"
+    },
+    "primitive.spacing.800": {
+      "path": [
+        "primitive",
+        "spacing",
+        "800"
+      ],
+      "$layer": "primitive",
+      "$value": "18px"
+    },
+    "primitive.spacing.900": {
+      "path": [
+        "primitive",
+        "spacing",
+        "900"
+      ],
+      "$layer": "primitive",
+      "$value": "24px"
+    },
+    "primitive.spacing.966": {
+      "path": [
+        "primitive",
+        "spacing",
+        "966"
+      ],
+      "$layer": "primitive",
+      "$value": "30px"
+    },
+    "spacing.horizontal.100": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "100"
+      ],
+      "$layer": "semantic",
+      "$value": "1px"
+    },
+    "spacing.horizontal.1000": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1000"
+      ],
+      "$layer": "semantic",
+      "$value": "72px"
+    },
+    "spacing.horizontal.1100": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1100"
+      ],
+      "$layer": "semantic",
+      "$value": "84px"
+    },
+    "spacing.horizontal.1200": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1200"
+      ],
+      "$layer": "semantic",
+      "$value": "96px"
+    },
+    "spacing.horizontal.1300": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1300"
+      ],
+      "$layer": "semantic",
+      "$value": "120px"
+    },
+    "spacing.horizontal.1400": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1400"
+      ],
+      "$layer": "semantic",
+      "$value": "144px"
+    },
+    "spacing.horizontal.1500": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1500"
+      ],
+      "$layer": "semantic",
+      "$value": "168px"
+    },
+    "spacing.horizontal.1600": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "1600"
+      ],
+      "$layer": "semantic",
+      "$value": "192px"
+    },
+    "spacing.horizontal.200": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "200"
+      ],
+      "$layer": "semantic",
+      "$value": "2px"
+    },
+    "spacing.horizontal.300": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "300"
+      ],
+      "$layer": "semantic",
+      "$value": "4px"
+    },
+    "spacing.horizontal.400": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "400"
+      ],
+      "$layer": "semantic",
+      "$value": "8px"
+    },
+    "spacing.horizontal.500": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "500"
+      ],
+      "$layer": "semantic",
+      "$value": "12px"
+    },
+    "spacing.horizontal.600": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "600"
+      ],
+      "$layer": "semantic",
+      "$value": "16px"
+    },
+    "spacing.horizontal.700": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "700"
+      ],
+      "$layer": "semantic",
+      "$value": "24px"
+    },
+    "spacing.horizontal.800": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "800"
+      ],
+      "$layer": "semantic",
+      "$value": "32px"
+    },
+    "spacing.horizontal.900": {
+      "path": [
+        "spacing",
+        "horizontal",
+        "900"
+      ],
+      "$layer": "semantic",
+      "$value": "48px"
+    },
+    "spacing.vertical.100": {
+      "path": [
+        "spacing",
+        "vertical",
+        "100"
+      ],
+      "$layer": "semantic",
+      "$value": "1px"
+    },
+    "spacing.vertical.1000": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1000"
+      ],
+      "$layer": "semantic",
+      "$value": "72px"
+    },
+    "spacing.vertical.1100": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1100"
+      ],
+      "$layer": "semantic",
+      "$value": "84px"
+    },
+    "spacing.vertical.1200": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1200"
+      ],
+      "$layer": "semantic",
+      "$value": "96px"
+    },
+    "spacing.vertical.1250": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1250"
+      ],
+      "$layer": "semantic",
+      "$value": "108px"
+    },
+    "spacing.vertical.1300": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1300"
+      ],
+      "$layer": "semantic",
+      "$value": "120px"
+    },
+    "spacing.vertical.1400": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1400"
+      ],
+      "$layer": "semantic",
+      "$value": "144px"
+    },
+    "spacing.vertical.1500": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1500"
+      ],
+      "$layer": "semantic",
+      "$value": "168px"
+    },
+    "spacing.vertical.1600": {
+      "path": [
+        "spacing",
+        "vertical",
+        "1600"
+      ],
+      "$layer": "semantic",
+      "$value": "192px"
+    },
+    "spacing.vertical.200": {
+      "path": [
+        "spacing",
+        "vertical",
+        "200"
+      ],
+      "$layer": "semantic",
+      "$value": "2px"
+    },
+    "spacing.vertical.250": {
+      "path": [
+        "spacing",
+        "vertical",
+        "250"
+      ],
+      "$layer": "semantic",
+      "$value": "3px"
+    },
+    "spacing.vertical.300": {
+      "path": [
+        "spacing",
+        "vertical",
+        "300"
+      ],
+      "$layer": "semantic",
+      "$value": "4px"
+    },
+    "spacing.vertical.400": {
+      "path": [
+        "spacing",
+        "vertical",
+        "400"
+      ],
+      "$layer": "semantic",
+      "$value": "6px"
+    },
+    "spacing.vertical.500": {
+      "path": [
+        "spacing",
+        "vertical",
+        "500"
+      ],
+      "$layer": "semantic",
+      "$value": "12px"
+    },
+    "spacing.vertical.600": {
+      "path": [
+        "spacing",
+        "vertical",
+        "600"
+      ],
+      "$layer": "semantic",
+      "$value": "18px"
+    },
+    "spacing.vertical.700": {
+      "path": [
+        "spacing",
+        "vertical",
+        "700"
+      ],
+      "$layer": "semantic",
+      "$value": "24px"
+    },
+    "spacing.vertical.775": {
+      "path": [
+        "spacing",
+        "vertical",
+        "775"
+      ],
+      "$layer": "semantic",
+      "$value": "30px"
+    },
+    "spacing.vertical.800": {
+      "path": [
+        "spacing",
+        "vertical",
+        "800"
+      ],
+      "$layer": "semantic",
+      "$value": "36px"
+    },
+    "spacing.vertical.900": {
+      "path": [
+        "spacing",
+        "vertical",
+        "900"
+      ],
+      "$layer": "semantic",
+      "$value": "48px"
+    },
+    "spacing.vertical.950": {
+      "path": [
+        "spacing",
+        "vertical",
+        "950"
+      ],
+      "$layer": "semantic",
+      "$value": "60px"
+    }
+  }
+}
