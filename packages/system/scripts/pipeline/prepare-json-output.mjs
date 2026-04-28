@@ -29,11 +29,15 @@ import {
  * `by<Axis>` / `byContext` carry only the contexts that actually differ):
  *
  * - Constant tokens: `$value` only.
- * - Single-axis variation: `$value` (default) + `$varyingModifiers: [axis]`
+ * - Single-axis variation: `$value` (default) + `varyingModifiers: [axis]`
  *   + `by<Axis>: { <axisValue>: { $value, ... } }`.
- * - Multi-axis variation: `$value` (default) + `$varyingModifiers: [a, b]`
+ * - Multi-axis variation: `$value` (default) + `varyingModifiers: [a, b]`
  *   + `byContext: { "a=v1,b=v2": { $value, ... } }`. Only varying modifier
  *   axes appear in the partial-tuple key.
+ *
+ * Calibrate-defined fields are bare-named (no `$`) to avoid squatting on
+ * DTCG's reserved `$` prefix; DTCG-defined fields (`$value`, `$type`,
+ * `$description`, `$extensions`) keep their `$` prefix as the spec requires.
  */
 
 const cwd = process.cwd();
@@ -263,12 +267,12 @@ function capitalize(s) {
 /**
  * Walks a resolved token tree and accumulates token entries in a flat map
  * keyed by dotted path. Each token entry collects per-context values plus
- * stable metadata (`$type`, `$description`, `$layer`).
+ * stable metadata (`$type`, `$description`, `layer`).
  *
- * `$layer` reflects the tokenLayer the token belongs to (e.g. `primitive`,
+ * `layer` reflects the tokenLayer the token belongs to (e.g. `primitive`,
  * `semantic`). Private-layer tokens (per resolver `tokenLayers.private`) are
  * wrapped under their layer name in the resolved tree (`primitive.color.…`),
- * so `path[0]` identifies them directly. Public-layer tokens (per
+ * so `pathStack[0]` identifies them directly. Public-layer tokens (per
  * `tokenLayers.public`) are not wrapped — they sit at the top level by
  * domain — so they default to the public layer name.
  *
@@ -286,14 +290,13 @@ function walkTokens(node, ctxKey, accumulator, layerConfig, pathStack = []) {
 
   if (isTokenObject(node)) {
     const dottedPath = pathStack.join(".");
-    const $layer = layerConfig.privateLayers.has(pathStack[0])
+    const layer = layerConfig.privateLayers.has(pathStack[0])
       ? pathStack[0]
       : layerConfig.publicLayer;
 
     if (!accumulator.has(dottedPath)) {
       accumulator.set(dottedPath, {
-        path: [...pathStack],
-        $layer,
+        layer,
         contexts: {},
       });
     }
@@ -392,7 +395,7 @@ async function main() {
 
   for (const key of sortedKeys) {
     const entry = accumulator.get(key);
-    const tokenOut = { path: entry.path, $layer: entry.$layer };
+    const tokenOut = { layer: entry.layer };
 
     if (entry.$type !== undefined) tokenOut.$type = entry.$type;
     if (entry.$description !== undefined) {
@@ -430,7 +433,7 @@ async function main() {
         byMap[av] = ctxValue;
       }
 
-      tokenOut.$varyingModifiers = varying;
+      tokenOut.varyingModifiers = varying;
       tokenOut[byKey] = byMap;
     } else if (varying.length > 1) {
       const byContext = {};
@@ -448,7 +451,7 @@ async function main() {
         byContext[partialKey] = ctxValue;
       }
 
-      tokenOut.$varyingModifiers = varying;
+      tokenOut.varyingModifiers = varying;
       tokenOut.byContext = Object.fromEntries(
         Object.entries(byContext).sort(([a], [b]) => a.localeCompare(b)),
       );
