@@ -15,7 +15,7 @@ function mountHeading(html: string): HTMLElement {
 
 describe("renderClbrHeading", () => {
   it("renders span by default with md size and no responsive attr", () => {
-    const root = mountHeading(renderClbrHeading({ children: "Title" }));
+    const root = mountHeading(renderClbrHeading({ text: "Title" }));
     const text = getByText(root, "Title");
 
     expect(queryByRole(root, "heading")).toBeNull();
@@ -26,9 +26,7 @@ describe("renderClbrHeading", () => {
   });
 
   it("renders semantic heading role and level when level is provided", () => {
-    const root = mountHeading(
-      renderClbrHeading({ children: "Title", level: 3 }),
-    );
+    const root = mountHeading(renderClbrHeading({ text: "Title", level: 3 }));
     const heading = getByRole(root, "heading", { level: 3, name: "Title" });
 
     expect(heading).toBeTruthy();
@@ -36,7 +34,7 @@ describe("renderClbrHeading", () => {
 
   it("omits data-align for default start align", () => {
     const root = mountHeading(
-      renderClbrHeading({ align: "start", children: "Title", level: 2 }),
+      renderClbrHeading({ align: "start", text: "Title", level: 2 }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
@@ -45,7 +43,7 @@ describe("renderClbrHeading", () => {
 
   it("emits data-align for non-default align", () => {
     const root = mountHeading(
-      renderClbrHeading({ align: "end", children: "Title", level: 2 }),
+      renderClbrHeading({ align: "end", text: "Title", level: 2 }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
@@ -54,7 +52,7 @@ describe("renderClbrHeading", () => {
 
   it("emits data-size variant when provided", () => {
     const root = mountHeading(
-      renderClbrHeading({ children: "Title", level: 2, size: "2xl" }),
+      renderClbrHeading({ text: "Title", level: 2, size: "2xl" }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
@@ -63,26 +61,26 @@ describe("renderClbrHeading", () => {
 
   it("emits data-responsive when responsive is true", () => {
     const root = mountHeading(
-      renderClbrHeading({ children: "Title", level: 2, responsive: true }),
+      renderClbrHeading({ text: "Title", level: 2, responsive: true }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
     expect(heading.hasAttribute("data-responsive")).toBe(true);
   });
 
-  it("emits data-optical-inline when opticalInline is true", () => {
+  it("emits data-optical-align when opticalAlign is true", () => {
     const root = mountHeading(
-      renderClbrHeading({ children: "Title", level: 2, opticalInline: true }),
+      renderClbrHeading({ text: "Title", level: 2, opticalAlign: true }),
     );
     const heading = getByRole(root, "heading", { level: 2, name: "Title" });
 
-    expect(heading.hasAttribute("data-optical-inline")).toBe(true);
+    expect(heading.hasAttribute("data-optical-align")).toBe(true);
   });
 
   it("escapes heading text", () => {
     const root = mountHeading(
       renderClbrHeading({
-        children: `<script>alert("xss")</script>`,
+        text: `<script>alert("xss")</script>`,
         level: 2,
       }),
     );
@@ -98,7 +96,7 @@ describe("renderClbrHeading", () => {
   it("does not expose heading role in span mode", () => {
     const root = mountHeading(
       renderClbrHeading({
-        children: "Title",
+        text: "Title",
       }),
     );
 
@@ -107,7 +105,7 @@ describe("renderClbrHeading", () => {
 });
 
 describeSpecConsistency<ClbrHeadingProps>({
-  baseProps: { children: "Heading" },
+  baseProps: { text: "Heading" },
   renderer: renderClbrHeading,
   spec: CLBR_HEADING_SPEC,
 });
