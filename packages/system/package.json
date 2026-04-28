@@ -9,14 +9,20 @@
   "private": true,
   "files": [
     "dist/css",
+    "dist/json",
     "dist/private/css",
+    "schemas/output",
     "README.md"
   ],
   "style": "./dist/css/clbr.base.tokens.css",
   "exports": {
     "./css/base": "./dist/css/clbr.base.tokens.css",
     "./css/msrd": "./dist/css/clbr.msrd.tokens.css",
-    "./css/wrfr": "./dist/css/clbr.wrfr.tokens.css"
+    "./css/wrfr": "./dist/css/clbr.wrfr.tokens.css",
+    "./json/base": "./dist/json/clbr.base.tokens.json",
+    "./json/msrd": "./dist/json/clbr.msrd.tokens.json",
+    "./json/wrfr": "./dist/json/clbr.wrfr.tokens.json",
+    "./schemas/tokens.v1": "./schemas/output/tokens.v1.json"
   },
   "scripts": {
     "build": "node scripts/pipeline/index.mjs",

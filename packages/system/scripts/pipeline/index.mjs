@@ -64,6 +64,7 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
     ),
     contexts: normalizePath("build", "sd", `${fileBase}.contexts.json`),
     manifest: normalizePath("build", "sd", `${fileBase}.css-manifest.json`),
+    json: normalizePath("dist", "json", `${fileBase}.tokens.json`),
   };
 }
 
@@ -169,6 +170,14 @@ async function main() {
       },
     );
 
+    run("node", [
+      "scripts/pipeline/prepare-json-output.mjs",
+      "--resolver",
+      cfg.resolver,
+      "--out",
+      cfg.json,
+    ]);
+
     outputs.push(cfg);
   }
 
@@ -176,7 +185,7 @@ async function main() {
     `Built token artifacts:\n${outputs
       .map(
         (cfg) =>
-          `- CSS: ${cfg.out}\n  Private primitive CSS: ${cfg.outPrivate}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
+          `- CSS: ${cfg.out}\n  Private primitive CSS: ${cfg.outPrivate}\n  Consumer JSON: ${cfg.json}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
       )
       .join("\n")}`,
   );

@@ -1,0 +1,667 @@
+{
+  "$schema": "../../schemas/output/tokens.v1.json",
+  "namespace": "clbr",
+  "brand": null,
+  "modifierOrder": [
+    "size",
+    "root"
+  ],
+  "defaultContext": {
+    "size": "baseline",
+    "root": "default"
+  },
+  "tokens": {
+    "breakpoint.baseline": {
+      "layer": "semantic",
+      "$value": "320px"
+    },
+    "breakpoint.desktop": {
+      "layer": "semantic",
+      "$value": "1440px"
+    },
+    "breakpoint.laptop": {
+      "layer": "semantic",
+      "$value": "1280px"
+    },
+    "breakpoint.mobile": {
+      "layer": "semantic",
+      "$value": "384px"
+    },
+    "breakpoint.notebook": {
+      "layer": "semantic",
+      "$value": "1024px"
+    },
+    "breakpoint.tablet": {
+      "layer": "semantic",
+      "$value": "768px"
+    },
+    "breakpoint.widescreen": {
+      "layer": "semantic",
+      "$value": "1536px"
+    },
+    "layout.border.width.default": {
+      "layer": "semantic",
+      "$value": "1px"
+    },
+    "layout.border.width.thick": {
+      "layer": "semantic",
+      "$value": "2px"
+    },
+    "layout.container.gutter.default": {
+      "layer": "semantic",
+      "$value": "16px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "32px"
+        },
+        "notebook": {
+          "$value": "32px"
+        },
+        "tablet": {
+          "$value": "32px"
+        }
+      }
+    },
+    "layout.container.gutter.narrow": {
+      "layer": "semantic",
+      "$value": "16px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "24px"
+        },
+        "notebook": {
+          "$value": "24px"
+        },
+        "tablet": {
+          "$value": "24px"
+        }
+      }
+    },
+    "layout.container.maxWidth.default": {
+      "layer": "semantic",
+      "$value": "1280px"
+    },
+    "layout.container.maxWidth.wide": {
+      "layer": "semantic",
+      "$value": "1440px"
+    },
+    "layout.focusRing.offset.default": {
+      "layer": "semantic",
+      "$value": "2px"
+    },
+    "layout.focusRing.offset.inset": {
+      "layer": "semantic",
+      "$value": "-4px"
+    },
+    "layout.focusRing.offset.lg": {
+      "layer": "semantic",
+      "$value": "4px"
+    },
+    "layout.focusRing.outset": {
+      "layer": "semantic",
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "layout.focusRing.width": {
+      "layer": "semantic",
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "layout.grid.columns": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 12
+    },
+    "layout.grid.gap.lg": {
+      "layer": "semantic",
+      "$value": "32px"
+    },
+    "layout.grid.gap.md": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.grid.gap.sm": {
+      "layer": "semantic",
+      "$value": "16px"
+    },
+    "layout.grid.item.minWidth": {
+      "layer": "semantic",
+      "$type": "dimension",
+      "$value": "288px"
+    },
+    "layout.icon.size.2xs": {
+      "layer": "semantic",
+      "$value": "16px"
+    },
+    "layout.icon.size.default": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.icon.size.lg": {
+      "layer": "semantic",
+      "$value": "28px"
+    },
+    "layout.icon.size.md": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "layout.icon.size.sm": {
+      "layer": "semantic",
+      "$value": "20px"
+    },
+    "layout.icon.size.xs": {
+      "layer": "semantic",
+      "$value": "18px"
+    },
+    "layout.icon.viewbox.insetRatio": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.0833333333
+    },
+    "layout.icon.viewbox.outsetRatio": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": -0.0833333333
+    },
+    "layout.spacing.vertical.1000": {
+      "layer": "semantic",
+      "$value": "72px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "108px"
+        },
+        "notebook": {
+          "$value": "108px"
+        }
+      }
+    },
+    "layout.spacing.vertical.1100": {
+      "layer": "semantic",
+      "$value": "84px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "120px"
+        },
+        "notebook": {
+          "$value": "120px"
+        }
+      }
+    },
+    "layout.spacing.vertical.1200": {
+      "layer": "semantic",
+      "$value": "96px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "144px"
+        },
+        "notebook": {
+          "$value": "144px"
+        }
+      }
+    },
+    "layout.spacing.vertical.250": {
+      "layer": "semantic",
+      "$value": "3px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "6px"
+        },
+        "notebook": {
+          "$value": "6px"
+        }
+      }
+    },
+    "layout.spacing.vertical.400": {
+      "layer": "semantic",
+      "$value": "6px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "12px"
+        },
+        "notebook": {
+          "$value": "12px"
+        }
+      }
+    },
+    "layout.spacing.vertical.500": {
+      "layer": "semantic",
+      "$value": "12px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "18px"
+        },
+        "notebook": {
+          "$value": "18px"
+        }
+      }
+    },
+    "layout.spacing.vertical.600": {
+      "layer": "semantic",
+      "$value": "18px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "24px"
+        },
+        "notebook": {
+          "$value": "24px"
+        }
+      }
+    },
+    "layout.spacing.vertical.700": {
+      "layer": "semantic",
+      "$value": "24px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "36px"
+        },
+        "notebook": {
+          "$value": "36px"
+        }
+      }
+    },
+    "layout.spacing.vertical.800": {
+      "layer": "semantic",
+      "$value": "36px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "48px"
+        },
+        "notebook": {
+          "$value": "48px"
+        }
+      }
+    },
+    "layout.spacing.vertical.900": {
+      "layer": "semantic",
+      "$value": "48px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "72px"
+        },
+        "notebook": {
+          "$value": "72px"
+        }
+      }
+    },
+    "layout.spacing.vertical.950": {
+      "layer": "semantic",
+      "$value": "60px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "96px"
+        },
+        "notebook": {
+          "$value": "96px"
+        }
+      }
+    },
+    "primitive.breakpoint.2xl": {
+      "layer": "primitive",
+      "$value": "1536px"
+    },
+    "primitive.breakpoint.2xs": {
+      "layer": "primitive",
+      "$value": "320px"
+    },
+    "primitive.breakpoint.lg": {
+      "layer": "primitive",
+      "$value": "1280px"
+    },
+    "primitive.breakpoint.md": {
+      "layer": "primitive",
+      "$value": "1024px"
+    },
+    "primitive.breakpoint.sm": {
+      "layer": "primitive",
+      "$value": "768px"
+    },
+    "primitive.breakpoint.xl": {
+      "layer": "primitive",
+      "$value": "1440px"
+    },
+    "primitive.breakpoint.xs": {
+      "layer": "primitive",
+      "$value": "384px"
+    },
+    "primitive.layout.container.maxWidth.lg": {
+      "layer": "primitive",
+      "$value": "1280px"
+    },
+    "primitive.layout.container.maxWidth.xl": {
+      "layer": "primitive",
+      "$value": "1440px"
+    },
+    "primitive.layout.focusRing.offset.default": {
+      "layer": "primitive",
+      "$value": "2px"
+    },
+    "primitive.layout.focusRing.offset.inset": {
+      "layer": "primitive",
+      "$value": "-4px"
+    },
+    "primitive.layout.focusRing.offset.lg": {
+      "layer": "primitive",
+      "$value": "4px"
+    },
+    "primitive.layout.focusRing.outset": {
+      "layer": "primitive",
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "primitive.layout.grid.columns": {
+      "layer": "primitive",
+      "$type": "number",
+      "$value": 12
+    },
+    "primitive.layout.grid.item.minWidth": {
+      "layer": "primitive",
+      "$type": "dimension",
+      "$value": "288px"
+    },
+    "primitive.layout.icon.size.2xs": {
+      "layer": "primitive",
+      "$value": "16px"
+    },
+    "primitive.layout.icon.size.lg": {
+      "layer": "primitive",
+      "$value": "28px"
+    },
+    "primitive.layout.icon.size.md": {
+      "layer": "primitive",
+      "$value": "24px"
+    },
+    "primitive.layout.icon.size.sm": {
+      "layer": "primitive",
+      "$value": "20px"
+    },
+    "primitive.layout.icon.size.xs": {
+      "layer": "primitive",
+      "$value": "18px"
+    },
+    "primitive.layout.icon.viewbox.insetRatio": {
+      "layer": "primitive",
+      "$type": "number",
+      "$value": 0.0833333333
+    },
+    "primitive.layout.icon.viewbox.outsetRatio": {
+      "layer": "primitive",
+      "$type": "number",
+      "$value": -0.0833333333
+    },
+    "primitive.spacing.100": {
+      "layer": "primitive",
+      "$value": "1px"
+    },
+    "primitive.spacing.1000": {
+      "layer": "primitive",
+      "$value": "32px"
+    },
+    "primitive.spacing.1100": {
+      "layer": "primitive",
+      "$value": "36px"
+    },
+    "primitive.spacing.1200": {
+      "layer": "primitive",
+      "$value": "48px"
+    },
+    "primitive.spacing.1300": {
+      "layer": "primitive",
+      "$value": "60px"
+    },
+    "primitive.spacing.1400": {
+      "layer": "primitive",
+      "$value": "72px"
+    },
+    "primitive.spacing.1500": {
+      "layer": "primitive",
+      "$value": "84px"
+    },
+    "primitive.spacing.1600": {
+      "layer": "primitive",
+      "$value": "96px"
+    },
+    "primitive.spacing.1700": {
+      "layer": "primitive",
+      "$value": "108px"
+    },
+    "primitive.spacing.1800": {
+      "layer": "primitive",
+      "$value": "120px"
+    },
+    "primitive.spacing.1900": {
+      "layer": "primitive",
+      "$value": "144px"
+    },
+    "primitive.spacing.200": {
+      "layer": "primitive",
+      "$value": "2px"
+    },
+    "primitive.spacing.2000": {
+      "layer": "primitive",
+      "$value": "168px"
+    },
+    "primitive.spacing.2100": {
+      "layer": "primitive",
+      "$value": "192px"
+    },
+    "primitive.spacing.250": {
+      "layer": "primitive",
+      "$value": "3px"
+    },
+    "primitive.spacing.300": {
+      "layer": "primitive",
+      "$value": "4px"
+    },
+    "primitive.spacing.400": {
+      "layer": "primitive",
+      "$value": "6px"
+    },
+    "primitive.spacing.500": {
+      "layer": "primitive",
+      "$value": "8px"
+    },
+    "primitive.spacing.600": {
+      "layer": "primitive",
+      "$value": "12px"
+    },
+    "primitive.spacing.700": {
+      "layer": "primitive",
+      "$value": "16px"
+    },
+    "primitive.spacing.800": {
+      "layer": "primitive",
+      "$value": "18px"
+    },
+    "primitive.spacing.900": {
+      "layer": "primitive",
+      "$value": "24px"
+    },
+    "primitive.spacing.966": {
+      "layer": "primitive",
+      "$value": "30px"
+    },
+    "spacing.horizontal.100": {
+      "layer": "semantic",
+      "$value": "1px"
+    },
+    "spacing.horizontal.1000": {
+      "layer": "semantic",
+      "$value": "72px"
+    },
+    "spacing.horizontal.1100": {
+      "layer": "semantic",
+      "$value": "84px"
+    },
+    "spacing.horizontal.1200": {
+      "layer": "semantic",
+      "$value": "96px"
+    },
+    "spacing.horizontal.1300": {
+      "layer": "semantic",
+      "$value": "120px"
+    },
+    "spacing.horizontal.1400": {
+      "layer": "semantic",
+      "$value": "144px"
+    },
+    "spacing.horizontal.1500": {
+      "layer": "semantic",
+      "$value": "168px"
+    },
+    "spacing.horizontal.1600": {
+      "layer": "semantic",
+      "$value": "192px"
+    },
+    "spacing.horizontal.200": {
+      "layer": "semantic",
+      "$value": "2px"
+    },
+    "spacing.horizontal.300": {
+      "layer": "semantic",
+      "$value": "4px"
+    },
+    "spacing.horizontal.400": {
+      "layer": "semantic",
+      "$value": "8px"
+    },
+    "spacing.horizontal.500": {
+      "layer": "semantic",
+      "$value": "12px"
+    },
+    "spacing.horizontal.600": {
+      "layer": "semantic",
+      "$value": "16px"
+    },
+    "spacing.horizontal.700": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "spacing.horizontal.800": {
+      "layer": "semantic",
+      "$value": "32px"
+    },
+    "spacing.horizontal.900": {
+      "layer": "semantic",
+      "$value": "48px"
+    },
+    "spacing.vertical.100": {
+      "layer": "semantic",
+      "$value": "1px"
+    },
+    "spacing.vertical.1000": {
+      "layer": "semantic",
+      "$value": "72px"
+    },
+    "spacing.vertical.1100": {
+      "layer": "semantic",
+      "$value": "84px"
+    },
+    "spacing.vertical.1200": {
+      "layer": "semantic",
+      "$value": "96px"
+    },
+    "spacing.vertical.1250": {
+      "layer": "semantic",
+      "$value": "108px"
+    },
+    "spacing.vertical.1300": {
+      "layer": "semantic",
+      "$value": "120px"
+    },
+    "spacing.vertical.1400": {
+      "layer": "semantic",
+      "$value": "144px"
+    },
+    "spacing.vertical.1500": {
+      "layer": "semantic",
+      "$value": "168px"
+    },
+    "spacing.vertical.1600": {
+      "layer": "semantic",
+      "$value": "192px"
+    },
+    "spacing.vertical.200": {
+      "layer": "semantic",
+      "$value": "2px"
+    },
+    "spacing.vertical.250": {
+      "layer": "semantic",
+      "$value": "3px"
+    },
+    "spacing.vertical.300": {
+      "layer": "semantic",
+      "$value": "4px"
+    },
+    "spacing.vertical.400": {
+      "layer": "semantic",
+      "$value": "6px"
+    },
+    "spacing.vertical.500": {
+      "layer": "semantic",
+      "$value": "12px"
+    },
+    "spacing.vertical.600": {
+      "layer": "semantic",
+      "$value": "18px"
+    },
+    "spacing.vertical.700": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "spacing.vertical.775": {
+      "layer": "semantic",
+      "$value": "30px"
+    },
+    "spacing.vertical.800": {
+      "layer": "semantic",
+      "$value": "36px"
+    },
+    "spacing.vertical.900": {
+      "layer": "semantic",
+      "$value": "48px"
+    },
+    "spacing.vertical.950": {
+      "layer": "semantic",
+      "$value": "60px"
+    }
+  }
+}
