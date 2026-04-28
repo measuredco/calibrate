@@ -1,5 +1,22 @@
 # @measured/calibrate-react
 
+## 0.2.0-alpha.3
+
+### Minor Changes
+
+- 9a25190: Rename two `Heading` props for clarity:
+  - `children` → `text`
+  - `opticalInline` → `opticalAlign`
+
+  Update consumers to use the new names. The corresponding host attribute also renames from `data-optical-inline` to `data-optical-align`. Per the alpha versioning posture, this is a minor bump rather than a major.
+
+### Patch Changes
+
+- Updated dependencies [9a25190]
+- Updated dependencies [ec27a3a]
+- Updated dependencies [53caec4]
+  - @measured/calibrate-core@0.2.0-alpha.3
+
 ## 0.2.0-alpha.2
 
 ### Patch Changes
