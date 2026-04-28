@@ -20,12 +20,21 @@ import {
  *
  * Reads the resolver, fully resolves every relevant context permutation,
  * and emits a token-centric JSON artifact suitable for downstream tools
- * (docs sites, MCP, agents, framework adapters). Values stay in source
- * units (px) — language-agnostic and DTCG-faithful; rem conversion is a
- * CSS-specific concern that lives in the CSS pipeline only.
+ * (docs sites, MCP, agents). Values stay in source units (px) — language-
+ * agnostic and DTCG-faithful; rem conversion is a CSS-specific concern that
+ * lives in the CSS pipeline only.
+ *
+ * Per-token shape reflects how each token actually depends on context.
+ * Override maps are overlay-only (DTCG-faithful: `$value` carries the default;
+ * `by<Axis>` / `byContext` carry only the contexts that actually differ):
+ *
+ * - Constant tokens: `$value` only.
+ * - Single-axis variation: `$value` (default) + `$varyingModifiers: [axis]`
+ *   + `by<Axis>: { <axisValue>: { $value, ... } }`.
+ * - Multi-axis variation: `$value` (default) + `$varyingModifiers: [a, b]`
+ *   + `byContext: { "a=v1,b=v2": { $value, ... } }`. Only varying modifier
+ *   axes appear in the partial-tuple key.
  */
-
-const SCHEMA_VERSION = "1";
 
 const cwd = process.cwd();
 
@@ -167,6 +176,91 @@ function stripInternalExtensions(node) {
 }
 
 /**
+ * Parses a context tuple identifier (positional values joined by `-`, e.g.
+ * `"baseline-lightDefault-off"`) into an axis-keyed object using the
+ * modifier order from the resolver.
+ *
+ * @param {string} ctxId
+ * @param {string[]} modifierOrder
+ * @returns {Record<string, string>}
+ */
+function parseCtxId(ctxId, modifierOrder) {
+  const out = {};
+
+  if (!ctxId) return out;
+
+  const parts = ctxId.split("-");
+
+  for (let i = 0; i < modifierOrder.length && i < parts.length; i += 1) {
+    out[modifierOrder[i]] = parts[i];
+  }
+
+  return out;
+}
+
+/**
+ * Tests whether the token value is fully determined by a given subset of
+ * modifier axes. Groups every observed context by its projection onto `axes`
+ * and returns false if any group contains differing values.
+ *
+ * @param {string[]} axes
+ * @param {Record<string, { $value: unknown, $extensions?: unknown }>} valueByCtx
+ * @returns {boolean}
+ */
+function valueOnlyDependsOn(axes, valueByCtx, modifierOrder) {
+  const groups = new Map();
+
+  for (const [ctxId, value] of Object.entries(valueByCtx)) {
+    const parsed = parseCtxId(ctxId, modifierOrder);
+    const key = axes.map((a) => `${a}=${parsed[a] ?? ""}`).join(",");
+    const valueKey = JSON.stringify(value);
+
+    if (groups.has(key)) {
+      if (groups.get(key) !== valueKey) return false;
+    } else {
+      groups.set(key, valueKey);
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Identifies which modifier axes the token's value actually depends on.
+ *
+ * An axis is varying iff fixing every other axis still leaves the value
+ * indeterminate — i.e., projecting the contexts onto `modifierOrder \ {axis}`
+ * yields a group with mismatched values.
+ *
+ * @param {Record<string, { $value: unknown, $extensions?: unknown }>} valueByCtx
+ * @param {string[]} modifierOrder
+ * @returns {string[]}
+ */
+function findVaryingModifiers(valueByCtx, modifierOrder) {
+  const varying = [];
+
+  for (const axis of modifierOrder) {
+    const otherAxes = modifierOrder.filter((a) => a !== axis);
+
+    if (!valueOnlyDependsOn(otherAxes, valueByCtx, modifierOrder)) {
+      varying.push(axis);
+    }
+  }
+
+  return varying;
+}
+
+/**
+ * Capitalises the first character of a string for `by<Axis>` field naming.
+ *
+ * @param {string} s
+ * @returns {string}
+ */
+function capitalize(s) {
+  return s.length === 0 ? s : `${s[0].toUpperCase()}${s.slice(1)}`;
+}
+
+/**
  * Walks a resolved token tree and accumulates token entries in a flat map
  * keyed by dotted path. Each token entry collects per-context values plus
  * stable metadata (`$type`, `$description`, `$layer`).
@@ -305,10 +399,6 @@ async function main() {
       tokenOut.$description = entry.$description;
     }
 
-    // Default-context value sits at the token level (matches DTCG resolver
-    // intent: "context overrides only what's needed"). Tokens that exist
-    // outside the default context but not in it have no top-level `$value` —
-    // their entries live entirely in `contextOverrides`.
     const defaultValue = entry.contexts[defaultContextId];
 
     if (defaultValue !== undefined) {
@@ -318,29 +408,61 @@ async function main() {
       }
     }
 
-    const contextOverrides = {};
+    const varying = findVaryingModifiers(entry.contexts, modifierOrder);
 
-    for (const [ctxId, ctxValue] of Object.entries(entry.contexts)) {
-      if (ctxId === defaultContextId) continue;
-      if (defaultValue !== undefined && deepEqual(ctxValue, defaultValue)) {
-        continue;
+    if (varying.length === 1) {
+      const axis = varying[0];
+      const byKey = `by${capitalize(axis)}`;
+      const byMap = {};
+      const seen = new Set();
+
+      for (const ctxId of Object.keys(entry.contexts).sort()) {
+        const ctxValue = entry.contexts[ctxId];
+
+        if (defaultValue !== undefined && deepEqual(ctxValue, defaultValue)) {
+          continue;
+        }
+
+        const av = parseCtxId(ctxId, modifierOrder)[axis];
+
+        if (av === undefined || seen.has(av)) continue;
+        seen.add(av);
+        byMap[av] = ctxValue;
       }
-      contextOverrides[ctxId] = ctxValue;
-    }
 
-    if (Object.keys(contextOverrides).length > 0) {
-      tokenOut.contextOverrides = contextOverrides;
+      tokenOut.$varyingModifiers = varying;
+      tokenOut[byKey] = byMap;
+    } else if (varying.length > 1) {
+      const byContext = {};
+
+      for (const [ctxId, ctxValue] of Object.entries(entry.contexts)) {
+        if (defaultValue !== undefined && deepEqual(ctxValue, defaultValue)) {
+          continue;
+        }
+
+        const parsed = parseCtxId(ctxId, modifierOrder);
+        const partialKey = varying
+          .map((a) => `${a}=${parsed[a] ?? ""}`)
+          .join(",");
+
+        byContext[partialKey] = ctxValue;
+      }
+
+      tokenOut.$varyingModifiers = varying;
+      tokenOut.byContext = Object.fromEntries(
+        Object.entries(byContext).sort(([a], [b]) => a.localeCompare(b)),
+      );
     }
 
     tokens[key] = tokenOut;
   }
 
   const output = {
-    $schemaVersion: SCHEMA_VERSION,
+    $schema: "../../schemas/output/tokens.v1.json",
     namespace,
     brand,
     modifierOrder,
-    defaultContext: defaultContextId,
+    defaultContext,
     tokens,
   };
 

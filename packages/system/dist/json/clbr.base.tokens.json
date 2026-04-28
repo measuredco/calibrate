@@ -1,12 +1,15 @@
 {
-  "$schemaVersion": "1",
+  "$schema": "../../schemas/output/tokens.v1.json",
   "namespace": "clbr",
   "brand": null,
   "modifierOrder": [
     "size",
     "root"
   ],
-  "defaultContext": "baseline-default",
+  "defaultContext": {
+    "size": "baseline",
+    "root": "default"
+  },
   "tokens": {
     "breakpoint.baseline": {
       "path": [
@@ -93,23 +96,17 @@
       ],
       "$layer": "semantic",
       "$value": "16px",
-      "contextOverrides": {
-        "tablet-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "32px"
         },
-        "tablet-scoped": {
+        "notebook": {
           "$value": "32px"
         },
-        "notebook-default": {
-          "$value": "32px"
-        },
-        "notebook-scoped": {
-          "$value": "32px"
-        },
-        "laptop-default": {
-          "$value": "32px"
-        },
-        "laptop-scoped": {
+        "tablet": {
           "$value": "32px"
         }
       }
@@ -123,23 +120,17 @@
       ],
       "$layer": "semantic",
       "$value": "16px",
-      "contextOverrides": {
-        "tablet-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "24px"
         },
-        "tablet-scoped": {
+        "notebook": {
           "$value": "24px"
         },
-        "notebook-default": {
-          "$value": "24px"
-        },
-        "notebook-scoped": {
-          "$value": "24px"
-        },
-        "laptop-default": {
-          "$value": "24px"
-        },
-        "laptop-scoped": {
+        "tablet": {
           "$value": "24px"
         }
       }
@@ -356,17 +347,14 @@
       ],
       "$layer": "semantic",
       "$value": "72px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "108px"
         },
-        "notebook-scoped": {
-          "$value": "108px"
-        },
-        "laptop-default": {
-          "$value": "108px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "108px"
         }
       }
@@ -380,17 +368,14 @@
       ],
       "$layer": "semantic",
       "$value": "84px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "120px"
         },
-        "notebook-scoped": {
-          "$value": "120px"
-        },
-        "laptop-default": {
-          "$value": "120px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "120px"
         }
       }
@@ -404,17 +389,14 @@
       ],
       "$layer": "semantic",
       "$value": "96px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "144px"
         },
-        "notebook-scoped": {
-          "$value": "144px"
-        },
-        "laptop-default": {
-          "$value": "144px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "144px"
         }
       }
@@ -428,17 +410,14 @@
       ],
       "$layer": "semantic",
       "$value": "3px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "6px"
         },
-        "notebook-scoped": {
-          "$value": "6px"
-        },
-        "laptop-default": {
-          "$value": "6px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "6px"
         }
       }
@@ -452,17 +431,14 @@
       ],
       "$layer": "semantic",
       "$value": "6px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "12px"
         },
-        "notebook-scoped": {
-          "$value": "12px"
-        },
-        "laptop-default": {
-          "$value": "12px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "12px"
         }
       }
@@ -476,17 +452,14 @@
       ],
       "$layer": "semantic",
       "$value": "12px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "18px"
         },
-        "notebook-scoped": {
-          "$value": "18px"
-        },
-        "laptop-default": {
-          "$value": "18px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "18px"
         }
       }
@@ -500,17 +473,14 @@
       ],
       "$layer": "semantic",
       "$value": "18px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "24px"
         },
-        "notebook-scoped": {
-          "$value": "24px"
-        },
-        "laptop-default": {
-          "$value": "24px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "24px"
         }
       }
@@ -524,17 +494,14 @@
       ],
       "$layer": "semantic",
       "$value": "24px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "36px"
         },
-        "notebook-scoped": {
-          "$value": "36px"
-        },
-        "laptop-default": {
-          "$value": "36px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "36px"
         }
       }
@@ -548,17 +515,14 @@
       ],
       "$layer": "semantic",
       "$value": "36px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "48px"
         },
-        "notebook-scoped": {
-          "$value": "48px"
-        },
-        "laptop-default": {
-          "$value": "48px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "48px"
         }
       }
@@ -572,17 +536,14 @@
       ],
       "$layer": "semantic",
       "$value": "48px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "72px"
         },
-        "notebook-scoped": {
-          "$value": "72px"
-        },
-        "laptop-default": {
-          "$value": "72px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "72px"
         }
       }
@@ -596,17 +557,14 @@
       ],
       "$layer": "semantic",
       "$value": "60px",
-      "contextOverrides": {
-        "notebook-default": {
+      "$varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
           "$value": "96px"
         },
-        "notebook-scoped": {
-          "$value": "96px"
-        },
-        "laptop-default": {
-          "$value": "96px"
-        },
-        "laptop-scoped": {
+        "notebook": {
           "$value": "96px"
         }
       }
