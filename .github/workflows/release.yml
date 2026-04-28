@@ -31,11 +31,6 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-          # Configures ~/.npmrc with `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}`
-          # — fallback for packages that don't yet have a trusted publisher
-          # configured. Packages that do have one continue to use OIDC.
-          # Remove once @measured/calibrate-tokens has a trusted publisher set up.
-          registry-url: https://registry.npmjs.org
 
       # Trusted Publishing requires npm >= 11.5.1; bulk publisher setup needs
       # >= 11.10.0. Node 24's bundled npm may lag — pin explicitly.
@@ -54,10 +49,6 @@ jobs:
           title: "chore(repo): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Token-based auth fallback for packages without a trusted publisher
-          # configured (currently @measured/calibrate-tokens initial publish).
-          # Packages with a trusted publisher continue to use OIDC.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Generate npm provenance attestations on publish (uses the
           # job-scoped id-token: write permission above).
           NPM_CONFIG_PROVENANCE: "true"
