@@ -14,7 +14,15 @@
   },
   "changesets": [
     "assets-favicons",
+    "calibrate-config-lint-presets",
+    "heading-rename-props",
+    "import-sort",
     "initial-alpha-release",
+    "storybook-a11y-rule-scope",
+    "stylelint-css-reorder",
+    "stylelint-logical-css",
+    "stylelint-token-guards",
+    "tokens-package",
     "validate-trusted-publishing"
   ]
 }
