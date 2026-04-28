@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schemas/output/tokens.v1.json",
+  "$schema": "../schemas/tokens.v1.json",
   "namespace": "clbr",
   "brand": "wrfr",
   "modifierOrder": [

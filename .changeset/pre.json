@@ -9,7 +9,8 @@
     "@measured/calibrate-config": "0.1.0",
     "@measured/calibrate-core": "0.1.0",
     "@measured/calibrate-react": "0.1.0",
-    "@measured/calibrate-system": "0.1.0"
+    "@measured/calibrate-system": "0.1.0",
+    "@measured/calibrate-tokens": "0.1.0"
   },
   "changesets": [
     "assets-favicons",

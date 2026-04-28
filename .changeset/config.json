@@ -13,7 +13,8 @@
       "@measured/calibrate-playground-react",
       "@measured/calibrate-react",
       "@measured/calibrate-storybook",
-      "@measured/calibrate-system"
+      "@measured/calibrate-system",
+      "@measured/calibrate-tokens"
     ]
   ],
   "ignore": [],

@@ -64,7 +64,12 @@ function buildTargetConfigFromResolver(resolverPath, resolverDoc) {
     ),
     contexts: normalizePath("build", "sd", `${fileBase}.contexts.json`),
     manifest: normalizePath("build", "sd", `${fileBase}.css-manifest.json`),
-    json: normalizePath("dist", "json", `${fileBase}.tokens.json`),
+    // JSON is published by the sibling `@measured/calibrate-tokens` package;
+    // the pipeline writes the artifact directly into that package's `dist`
+    // (one cross-package path constant kept here in lieu of duplicating the
+    // emission logic). Schema source lives in tokens too, see
+    // `prepare-json-output.mjs` for the `$schema` ref it embeds.
+    json: normalizePath("..", "tokens", "dist", `${fileBase}.tokens.json`),
   };
 }
 

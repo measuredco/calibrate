@@ -461,7 +461,7 @@ async function main() {
   }
 
   const output = {
-    $schema: "../../schemas/output/tokens.v1.json",
+    $schema: "../schemas/tokens.v1.json",
     namespace,
     brand,
     modifierOrder,
