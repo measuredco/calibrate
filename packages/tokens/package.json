@@ -1,0 +1,29 @@
+{
+  "name": "@measured/calibrate-tokens",
+  "version": "0.2.0-alpha.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "packages/tokens"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "schemas",
+    "README.md"
+  ],
+  "exports": {
+    "./base": "./dist/clbr.base.tokens.json",
+    "./msrd": "./dist/clbr.msrd.tokens.json",
+    "./wrfr": "./dist/clbr.wrfr.tokens.json",
+    "./schemas/v1": "./schemas/tokens.v1.json"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "@measured/calibrate-system": "workspace:*",
+    "ajv": "^8.18.0"
+  }
+}
