@@ -27,3 +27,26 @@ export function parseJsonPointer(pointer) {
     .split("/")
     .map((segment) => segment.replace(/~1/g, "/").replace(/~0/g, "~"));
 }
+
+/**
+ * Checks whether a value is a token object (object with `$value` field).
+ *
+ * @param {unknown} value
+ * @returns {boolean}
+ */
+export function isTokenObject(value) {
+  return (
+    isObject(value) && Object.prototype.hasOwnProperty.call(value, "$value")
+  );
+}
+
+/**
+ * Performs structural equality via JSON serialization for token values.
+ *
+ * @param {unknown} a
+ * @param {unknown} b
+ * @returns {boolean}
+ */
+export function deepEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}

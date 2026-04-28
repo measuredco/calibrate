@@ -6,6 +6,18 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Tokens public surface
+
+Three coupled steps to make Calibrate tokens consumable beyond CSS — by docs, agents, and downstream tooling — while keeping pipeline complexity bounded.
+
+**Phase 1 — extract DTCG resolver semantics from the pipeline.** Move the resolver / alias / context-merge / context-id functions from `prepare-sd-contexts.mjs` into a dedicated module exposing `resolveAllContextPermutations(resolverDoc) → Map<contextId, ResolvedTree>`. Orchestrator becomes a consumer of pre-resolved trees. Independently valuable: makes the pipeline simpler to reason about, and dramatically reduces the migration footprint when Style Dictionary lands native DTCG resolver support (see _SD DTCG 2025.10 gaps_ in Later). Regression test: byte-identical `*.contexts.json` build artifacts + byte-identical CSS dist.
+
+**Phase 2 — promote `contexts.json` to a stable consumer JSON export.** The pipeline already produces `build/sd/*.contexts.json` files containing fully resolved tokens with `$description` and `$type` preserved — they're just internal build artifacts today. Phase 2 transforms these into a consumer-facing JSON artifact: token-centric shape (`{ "color.brand.primary": { contexts: { "light/default": "...", "dark/brand": "..." }, $type, $description } }`) so consumers can ask "what's this token's value across contexts?" without iterating, internal `dev.msrd.calibrate.bridge` metadata stripped, versioned schema header. Likely shipped as `packages/tokens` / `@measured/calibrate-tokens`. **Values stay in source units (px) rather than CSS-converted (rem)** — px is language-agnostic and DTCG-faithful; rem is a CSS-specific concept handled in the CSS pipeline.
+
+**Phase 3 — semantic-token `$description` coverage.** Action-oriented intent guidance on every semantic token ("Use for X" / "Don't use for Y", differential against neighbouring tokens, concise). Primitive tokens skip — descriptions there mostly restate names. Quality bar over coverage: better 30 great descriptions than 100 lazy ones. The JSON export populates `$description` automatically; together they form the token-as-API surface for docs / agents / MCP.
+
+**Out of scope here.** Style Dictionary native-resolver migration — see _SD DTCG 2025.10 gaps_ in Later, triggered when SD lands the support.
+
 ## Next
 
 What we could be working on next.
@@ -36,7 +48,8 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 
 #### More components
 
-- `Control/Listbox` (JS required, selection/value semantics)
+- `Control/Listbox` (JS required, selection semantics)
+- `Control/Select` (native select with thin styling)
 - `Control/Form` (if it becomes a real stateful runtime abstraction)
 - `Control/Tag` (delete, remove, select)
 - `Status/Progress` (updating)
@@ -57,22 +70,6 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
   - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
-
-#### Machine-readable intent
-
-- Expand token/group `$description` coverage for intent guidance:
-  - usage guidance for humans/agents
-  - token selection hints and anti-pattern notes
-  - context expectations where relevant
-- Define structured token/group `$extensions` for machine-readable intent:
-  - stable fields for tooling/agents beyond prose descriptions
-  - worked examples where intent is easy to misuse
-
-#### JSON export target
-
-Define a stable JSON artifact contract for downstream consumers (including docs) so metadata and token data can be consumed without coupling to internal bridge/build intermediates. Likely `packages/tokens` / `@measured/calibrate-tokens`.
-
-Note: pipeline is currently hard-coded to CSS; probably add optional `--formats` in `packages/system/scripts/pipeline/index.mjs` when implementing a second export target.
 
 #### Design model evolution
 
@@ -107,7 +104,7 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 
 ### Content package (`@measured/calibrate-content`)
 
-Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers.
+Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers. Note: consider current `prose` a11y issues.
 
 ### MCP/API
 
