@@ -216,9 +216,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@measured/calibrate-system':
-        specifier: workspace:*
-        version: link:../system
       lucide:
         specifier: 0.577.0
         version: 0.577.0
@@ -226,6 +223,9 @@ importers:
       '@measured/calibrate-config':
         specifier: workspace:*
         version: link:../config
+      '@measured/calibrate-system':
+        specifier: workspace:*
+        version: link:../system
       '@testing-library/dom':
         specifier: ^10.4.1
         version: 10.4.1
