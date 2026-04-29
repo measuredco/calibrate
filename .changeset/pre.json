@@ -15,6 +15,7 @@
   "changesets": [
     "assets-favicons",
     "calibrate-config-lint-presets",
+    "core-private-system-dep-leak",
     "heading-rename-props",
     "import-sort",
     "initial-alpha-release",
