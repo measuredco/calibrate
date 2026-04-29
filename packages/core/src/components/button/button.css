@@ -144,7 +144,7 @@
       );
 
       & .icon-wrapper {
-        block-size: var(--clbr-layout-icon-size-default);
+        block-size: var(--clbr-layout-icon-size-md);
         margin: 0;
       }
 
@@ -184,7 +184,7 @@
         );
 
         & .icon-wrapper {
-          block-size: var(--clbr-layout-icon-size-default);
+          block-size: var(--clbr-layout-icon-size-md);
           margin: 0;
         }
 

@@ -926,89 +926,6 @@
         }
       }
     },
-    "color.background.inverse": {
-      "layer": "semantic",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.043137,
-          0.047059,
-          0.05098
-        ],
-        "hex": "#0b0c0d"
-      },
-      "varyingModifiers": [
-        "theme"
-      ],
-      "byTheme": {
-        "contentDarkBrand": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        },
-        "contentDarkDefault": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        },
-        "darkBrand": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        },
-        "darkDefault": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        },
-        "lightBrandInverse": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        },
-        "lightInverse": {
-          "$value": {
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1
-            ],
-            "hex": "#ffffff"
-          }
-        }
-      }
-    },
     "color.background.panel": {
       "layer": "semantic",
       "$value": {
@@ -8485,16 +8402,6 @@
       "layer": "semantic",
       "$type": "number",
       "$value": 1.285714
-    },
-    "typography.typeStep.default.fontSize": {
-      "layer": "semantic",
-      "$type": "dimension",
-      "$value": "16px"
-    },
-    "typography.typeStep.default.lineHeight": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 1.5
     }
   }
 }

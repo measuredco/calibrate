@@ -1,13 +1,14 @@
 {
   "$schema": "../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic layout tokens for msrd baseline size context.",
   "container": {
     "gutter": {
       "$type": "dimension",
       "default": {
+        "$description": "Default container gutter. The inline padding between page edge and content.",
         "$value": "{spacing.horizontal.600}"
       },
       "narrow": {
+        "$description": "Narrow container gutter. Use in tight layouts where the default gutter consumes too much horizontal space.",
         "$value": "{container.gutter.default}"
       }
     }
@@ -15,36 +16,47 @@
   "spacing": {
     "vertical": {
       "250": {
+        "$description": "Layout vertical spacing 250. Minimal vertical block gap.",
         "$value": "{spacing.vertical.250}"
       },
       "400": {
+        "$description": "Layout vertical spacing 400.",
         "$value": "{spacing.vertical.400}"
       },
       "500": {
+        "$description": "Layout vertical spacing 500.",
         "$value": "{spacing.vertical.500}"
       },
       "600": {
+        "$description": "Layout vertical spacing 600.",
         "$value": "{spacing.vertical.600}"
       },
       "700": {
+        "$description": "Layout vertical spacing 700.",
         "$value": "{spacing.vertical.700}"
       },
       "800": {
+        "$description": "Layout vertical spacing 800.",
         "$value": "{spacing.vertical.800}"
       },
       "900": {
+        "$description": "Layout vertical spacing 900.",
         "$value": "{spacing.vertical.900}"
       },
       "950": {
+        "$description": "Layout vertical spacing 950.",
         "$value": "{spacing.vertical.950}"
       },
       "1000": {
+        "$description": "Layout vertical spacing 1000.",
         "$value": "{spacing.vertical.1000}"
       },
       "1100": {
+        "$description": "Layout vertical spacing 1100.",
         "$value": "{spacing.vertical.1100}"
       },
       "1200": {
+        "$description": "Layout vertical spacing 1200. Largest vertical block gap.",
         "$value": "{spacing.vertical.1200}"
       },
       "$type": "dimension"
