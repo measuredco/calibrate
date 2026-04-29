@@ -44,15 +44,11 @@ function run(cmd, args, opts = {}) {
 function main() {
   run("pnpm", ["run", "build"], { stdio: "inherit" });
 
-  const diff = spawnSync(
-    "git",
-    ["diff", "--exit-code", "--", "packages/system/dist"],
-    {
-      cwd,
-      stdio: "pipe",
-      encoding: "utf8",
-    },
-  );
+  const diff = spawnSync("git", ["diff", "--exit-code", "--", "dist"], {
+    cwd,
+    stdio: "pipe",
+    encoding: "utf8",
+  });
 
   if (diff.status !== 0) {
     console.error(

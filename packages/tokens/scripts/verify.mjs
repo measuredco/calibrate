@@ -32,11 +32,11 @@ async function main() {
   run("pnpm", ["--filter", "@measured/calibrate-system", "build"]);
   run("pnpm", ["--filter", "@measured/calibrate-tokens", "validate"]);
 
-  const diff = spawnSync(
-    "git",
-    ["diff", "--exit-code", "--", "packages/tokens/dist"],
-    { cwd, stdio: "pipe", encoding: "utf8" },
-  );
+  const diff = spawnSync("git", ["diff", "--exit-code", "--", "dist"], {
+    cwd,
+    stdio: "pipe",
+    encoding: "utf8",
+  });
 
   if (diff.status !== 0) {
     process.stdout.write(diff.stdout || "");
