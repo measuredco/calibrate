@@ -15,7 +15,7 @@
           }
         },
         "sm": {
-          "$description": "Small body text. Use for secondary copy (captions, helper text) where default body would be too prominent.",
+          "$description": "Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.200.fontSize}",

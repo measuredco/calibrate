@@ -32,7 +32,7 @@
         "$value": "{spacing.vertical.600}"
       },
       "700": {
-        "$description": "Layout vertical spacing 700.",
+        "$description": "Layout vertical spacing 700. Default layout vertical step.",
         "$value": "{spacing.vertical.700}"
       },
       "800": {

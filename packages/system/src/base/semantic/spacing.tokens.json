@@ -30,7 +30,7 @@
       "$value": "{primitive.spacing.800}"
     },
     "700": {
-      "$description": "Vertical spacing step 700.",
+      "$description": "Vertical spacing step 700. Default vertical step.",
       "$value": "{primitive.spacing.900}"
     },
     "775": {
@@ -109,7 +109,7 @@
       "$value": "{primitive.spacing.700}"
     },
     "700": {
-      "$description": "Horizontal spacing step 700.",
+      "$description": "Horizontal spacing step 700. Default horizontal step.",
       "$value": "{primitive.spacing.900}"
     },
     "800": {
