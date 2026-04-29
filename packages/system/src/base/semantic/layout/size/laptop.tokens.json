@@ -1,4 +1,3 @@
 {
-  "$schema": "../../../../../schemas/2025.10/schema/format.json",
-  "$description": "Semantic layout tokens for msrd laptop size context."
+  "$schema": "../../../../../schemas/2025.10/schema/format.json"
 }

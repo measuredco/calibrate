@@ -19,7 +19,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #f2f3f4;
@@ -226,8 +225,6 @@
     --clbr-typography-type-step-800-line-height: 1.333333;
     --clbr-typography-type-step-900-font-size: 2.625rem;
     --clbr-typography-type-step-900-line-height: 1.285714;
-    --clbr-typography-type-step-default-font-size: 1rem;
-    --clbr-typography-type-step-default-line-height: 1.5;
   }
 
   /* lightBrand | baseline | default-states */
@@ -243,7 +240,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #f2f3f4;
@@ -321,7 +317,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #f2f3f4;
@@ -399,7 +394,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #f2f3f4;
@@ -477,7 +471,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #191a1a;
@@ -555,7 +548,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #191a1a;
@@ -634,7 +626,6 @@
       --clbr-color-avatar-09: #c8c9ca;
       --clbr-color-avatar-default: #c8c9ca;
       --clbr-color-background-default: #0e0f10;
-      --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
       --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
       --clbr-color-background-subtle: #191a1a;
@@ -714,7 +705,6 @@
       --clbr-color-avatar-09: #c8c9ca;
       --clbr-color-avatar-default: #c8c9ca;
       --clbr-color-background-default: #0e0f10;
-      --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
       --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
       --clbr-color-background-subtle: #191a1a;
@@ -793,7 +783,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #191a1a;
@@ -871,7 +860,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
     --clbr-color-background-subtle: #191a1a;
@@ -950,7 +938,6 @@
       --clbr-color-avatar-09: #434444;
       --clbr-color-avatar-default: #434444;
       --clbr-color-background-default: #f9fafb;
-      --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
       --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
       --clbr-color-background-subtle: #f2f3f4;
@@ -1030,7 +1017,6 @@
       --clbr-color-avatar-09: #434444;
       --clbr-color-avatar-default: #434444;
       --clbr-color-background-default: #f9fafb;
-      --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
       --clbr-color-background-scrim: rgba(0, 0, 0, 0.56);
       --clbr-color-background-subtle: #f2f3f4;
@@ -1110,7 +1096,6 @@
       --clbr-color-avatar-09: #434444;
       --clbr-color-avatar-default: #434444;
       --clbr-color-background-default: #f9fafb;
-      --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
       --clbr-color-background-subtle: #f2f3f4;
       --clbr-color-base16-00: #f9fafb;
@@ -1185,7 +1170,6 @@
       --clbr-color-avatar-09: #434444;
       --clbr-color-avatar-default: #434444;
       --clbr-color-background-default: #f9fafb;
-      --clbr-color-background-inverse: #0b0c0d;
       --clbr-color-background-panel: #ffffff;
       --clbr-color-background-subtle: #f2f3f4;
       --clbr-color-base16-00: #f9fafb;
@@ -1259,7 +1243,6 @@
       --clbr-color-avatar-09: #c8c9ca;
       --clbr-color-avatar-default: #c8c9ca;
       --clbr-color-background-default: #0e0f10;
-      --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
       --clbr-color-background-subtle: #191a1a;
       --clbr-color-base16-00: #0b0c0d;
@@ -1334,7 +1317,6 @@
       --clbr-color-avatar-09: #c8c9ca;
       --clbr-color-avatar-default: #c8c9ca;
       --clbr-color-background-default: #0e0f10;
-      --clbr-color-background-inverse: #ffffff;
       --clbr-color-background-panel: #0b0c0d;
       --clbr-color-background-subtle: #191a1a;
       --clbr-color-base16-00: #0b0c0d;
@@ -1407,7 +1389,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
@@ -1480,7 +1461,6 @@
     --clbr-color-avatar-09: #c8c9ca;
     --clbr-color-avatar-default: #c8c9ca;
     --clbr-color-background-default: #0e0f10;
-    --clbr-color-background-inverse: #ffffff;
     --clbr-color-background-panel: #0b0c0d;
     --clbr-color-background-subtle: #191a1a;
     --clbr-color-base16-00: #0b0c0d;
@@ -1552,7 +1532,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;
@@ -1625,7 +1604,6 @@
     --clbr-color-avatar-09: #434444;
     --clbr-color-avatar-default: #434444;
     --clbr-color-background-default: #f9fafb;
-    --clbr-color-background-inverse: #0b0c0d;
     --clbr-color-background-panel: #ffffff;
     --clbr-color-background-subtle: #f2f3f4;
     --clbr-color-base16-00: #f9fafb;

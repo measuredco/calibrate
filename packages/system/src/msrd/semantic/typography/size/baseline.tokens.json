@@ -5,6 +5,7 @@
     "body": {
       "responsive": {
         "xs": {
+          "$description": "Extra small body text. Use for the smallest body copy (microtext).",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.150.fontSize}",
@@ -14,6 +15,7 @@
           }
         },
         "sm": {
+          "$description": "Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.200.fontSize}",
@@ -23,6 +25,7 @@
           }
         },
         "md": {
+          "$description": "Default body text size.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.300.fontSize}",
@@ -32,6 +35,7 @@
           }
         },
         "lg": {
+          "$description": "Large body text. Use for emphasised copy (intro paragraphs, lede text).",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.400.fontSize}",
@@ -45,6 +49,7 @@
     "heading": {
       "responsive": {
         "xs": {
+          "$description": "Extra small heading (`h6`-equivalent). Use for subsection headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.200.fontSize}",
@@ -54,6 +59,7 @@
           }
         },
         "sm": {
+          "$description": "Small heading (`h5`-equivalent). Use for subsection headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.300.fontSize}",
@@ -63,6 +69,7 @@
           }
         },
         "md": {
+          "$description": "Medium heading (`h4`-equivalent). Use for subsection headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.400.fontSize}",
@@ -72,6 +79,7 @@
           }
         },
         "lg": {
+          "$description": "Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels).",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.500.fontSize}",
@@ -81,6 +89,7 @@
           }
         },
         "xl": {
+          "$description": "Extra large heading (`h2`-equivalent). Use for section headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.700.fontSize}",
@@ -90,6 +99,7 @@
           }
         },
         "2xl": {
+          "$description": "2xl heading (`h1`-equivalent). Use for page titles.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.900.fontSize}",
@@ -99,6 +109,7 @@
           }
         },
         "3xl": {
+          "$description": "Display heading (3xl). Use for hero/marketing headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.1000.fontSize}",
@@ -108,6 +119,7 @@
           }
         },
         "4xl": {
+          "$description": "Display heading (4xl). Use for larger hero/marketing headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.1100.fontSize}",
@@ -117,6 +129,7 @@
           }
         },
         "5xl": {
+          "$description": "Display heading (5xl). Use for the largest hero/marketing headings.",
           "$value": {
             "fontFamily": "{primitive.typography.fontFamily.sans}",
             "fontSize": "{primitive.typography.typeStep.1200.fontSize}",

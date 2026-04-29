@@ -13,42 +13,52 @@
   "tokens": {
     "breakpoint.baseline": {
       "layer": "semantic",
+      "$description": "Baseline breakpoint. The smallest viewport the system targets. Layouts should be functional at this width.",
       "$value": "320px"
     },
     "breakpoint.desktop": {
       "layer": "semantic",
+      "$description": "Desktop breakpoint. Use as the boundary at which desktop-class layouts engage.",
       "$value": "1440px"
     },
     "breakpoint.laptop": {
       "layer": "semantic",
+      "$description": "Laptop breakpoint. Use as the boundary at which standard-laptop-class layouts engage.",
       "$value": "1280px"
     },
     "breakpoint.mobile": {
       "layer": "semantic",
+      "$description": "Mobile breakpoint. Use as the boundary between baseline and mobile-class layouts.",
       "$value": "384px"
     },
     "breakpoint.notebook": {
       "layer": "semantic",
+      "$description": "Notebook breakpoint. Use as the boundary at which compact-laptop-class layouts engage.",
       "$value": "1024px"
     },
     "breakpoint.tablet": {
       "layer": "semantic",
+      "$description": "Tablet breakpoint. Use as the boundary at which tablet-class layouts engage.",
       "$value": "768px"
     },
     "breakpoint.widescreen": {
       "layer": "semantic",
+      "$description": "Widescreen breakpoint. Use as the boundary at which widescreen-class layouts engage.",
       "$value": "1536px"
     },
     "layout.border.width.default": {
       "layer": "semantic",
+      "$description": "Default border width — the standard for all borders.",
       "$value": "1px"
     },
     "layout.border.width.thick": {
       "layer": "semantic",
+      "$description": "Thick border width. Use for emphasised borders (focus rings, prominent dividers).",
       "$value": "2px"
     },
     "layout.container.gutter.default": {
       "layer": "semantic",
+      "$description": "Default container gutter. The inline padding between page edge and content.",
       "$value": "16px",
       "varyingModifiers": [
         "size"
@@ -67,6 +77,7 @@
     },
     "layout.container.gutter.narrow": {
       "layer": "semantic",
+      "$description": "Narrow container gutter. Use in tight layouts where the default gutter consumes too much horizontal space.",
       "$value": "16px",
       "varyingModifiers": [
         "size"
@@ -85,92 +96,108 @@
     },
     "layout.container.maxWidth.default": {
       "layer": "semantic",
+      "$description": "Default container max-width. Use as the standard content width for typical pages.",
       "$value": "1280px"
     },
     "layout.container.maxWidth.wide": {
       "layer": "semantic",
+      "$description": "Wide container max-width. Use for content that benefits from more horizontal space on wider screens (data tables, dashboards, marketing layouts).",
       "$value": "1440px"
     },
     "layout.focusRing.offset.default": {
       "layer": "semantic",
+      "$description": "Default focus ring offset between the focused element and its ring.",
       "$value": "2px"
     },
     "layout.focusRing.offset.inset": {
       "layer": "semantic",
+      "$description": "Inset focus ring offset. Use when the ring sits inside the element bounds (e.g. on filled controls where an outset ring would clip).",
       "$value": "-4px"
     },
     "layout.focusRing.offset.lg": {
       "layer": "semantic",
+      "$description": "Larger focus ring offset. Use on bigger elements where the default offset would feel cramped.",
       "$value": "4px"
     },
     "layout.focusRing.outset": {
       "layer": "semantic",
       "$type": "dimension",
+      "$description": "Focus ring outset — total outward extent of the ring beyond the element edge. Use in size calculations that need to account for the ring (e.g. border-radius on focus-visible states).",
       "$value": "8px"
     },
     "layout.focusRing.width": {
       "layer": "semantic",
       "$type": "dimension",
+      "$description": "Focus ring stroke width. Use as the line thickness of the focus indicator.",
       "$value": "2px"
     },
     "layout.grid.columns": {
       "layer": "semantic",
       "$type": "number",
+      "$description": "Grid column count for the standard layout grid.",
       "$value": 12
     },
     "layout.grid.gap.lg": {
       "layer": "semantic",
+      "$description": "Large grid gap. Use for spacious grids (marketing layouts, gallery views) where columns benefit from extra breathing room.",
       "$value": "32px"
     },
     "layout.grid.gap.md": {
       "layer": "semantic",
+      "$description": "Default grid gap.",
       "$value": "24px"
     },
     "layout.grid.gap.sm": {
       "layer": "semantic",
+      "$description": "Small grid gap. Use for compact grids where columns should sit close together.",
       "$value": "16px"
     },
     "layout.grid.item.minWidth": {
       "layer": "semantic",
       "$type": "dimension",
+      "$description": "Minimum width for grid items. Use as the floor below which items shouldn't shrink.",
       "$value": "288px"
     },
     "layout.icon.size.2xs": {
       "layer": "semantic",
+      "$description": "Smallest icon size.",
       "$value": "16px"
-    },
-    "layout.icon.size.default": {
-      "layer": "semantic",
-      "$value": "24px"
     },
     "layout.icon.size.lg": {
       "layer": "semantic",
+      "$description": "Largest icon size.",
       "$value": "28px"
     },
     "layout.icon.size.md": {
       "layer": "semantic",
+      "$description": "Default icon size — also used for icon-shaped elements (spinners, radios, checkboxes). Pick the step that visually balances surrounding text size and UI scale.",
       "$value": "24px"
     },
     "layout.icon.size.sm": {
       "layer": "semantic",
+      "$description": "Moderate icon size.",
       "$value": "20px"
     },
     "layout.icon.size.xs": {
       "layer": "semantic",
+      "$description": "Small icon size.",
       "$value": "18px"
     },
     "layout.icon.viewbox.insetRatio": {
       "layer": "semantic",
       "$type": "number",
+      "$description": "Icon viewBox inset ratio. Use as the multiplier for compensating icon edge inset in layout calculations.",
       "$value": 0.0833333333
     },
     "layout.icon.viewbox.outsetRatio": {
       "layer": "semantic",
       "$type": "number",
+      "$description": "Icon viewBox outset ratio. Use as the multiplier for compensating icon edge outset in layout calculations.",
       "$value": -0.0833333333
     },
     "layout.spacing.vertical.1000": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 1000.",
       "$value": "72px",
       "varyingModifiers": [
         "size"
@@ -186,6 +213,7 @@
     },
     "layout.spacing.vertical.1100": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 1100.",
       "$value": "84px",
       "varyingModifiers": [
         "size"
@@ -201,6 +229,7 @@
     },
     "layout.spacing.vertical.1200": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 1200. Largest vertical block gap.",
       "$value": "96px",
       "varyingModifiers": [
         "size"
@@ -216,6 +245,7 @@
     },
     "layout.spacing.vertical.250": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 250. Minimal vertical block gap.",
       "$value": "3px",
       "varyingModifiers": [
         "size"
@@ -231,6 +261,7 @@
     },
     "layout.spacing.vertical.400": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 400.",
       "$value": "6px",
       "varyingModifiers": [
         "size"
@@ -246,6 +277,7 @@
     },
     "layout.spacing.vertical.500": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 500.",
       "$value": "12px",
       "varyingModifiers": [
         "size"
@@ -261,6 +293,7 @@
     },
     "layout.spacing.vertical.600": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 600.",
       "$value": "18px",
       "varyingModifiers": [
         "size"
@@ -276,6 +309,7 @@
     },
     "layout.spacing.vertical.700": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 700.",
       "$value": "24px",
       "varyingModifiers": [
         "size"
@@ -291,6 +325,7 @@
     },
     "layout.spacing.vertical.800": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 800.",
       "$value": "36px",
       "varyingModifiers": [
         "size"
@@ -306,6 +341,7 @@
     },
     "layout.spacing.vertical.900": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 900.",
       "$value": "48px",
       "varyingModifiers": [
         "size"
@@ -321,6 +357,7 @@
     },
     "layout.spacing.vertical.950": {
       "layer": "semantic",
+      "$description": "Layout vertical spacing 950.",
       "$value": "60px",
       "varyingModifiers": [
         "size"
@@ -521,146 +558,182 @@
     },
     "spacing.horizontal.100": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 100. Minimal horizontal gap.",
       "$value": "1px"
     },
     "spacing.horizontal.1000": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1000.",
       "$value": "72px"
     },
     "spacing.horizontal.1100": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1100.",
       "$value": "84px"
     },
     "spacing.horizontal.1200": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1200.",
       "$value": "96px"
     },
     "spacing.horizontal.1300": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1300.",
       "$value": "120px"
     },
     "spacing.horizontal.1400": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1400.",
       "$value": "144px"
     },
     "spacing.horizontal.1500": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1500.",
       "$value": "168px"
     },
     "spacing.horizontal.1600": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 1600. Largest horizontal step.",
       "$value": "192px"
     },
     "spacing.horizontal.200": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 200.",
       "$value": "2px"
     },
     "spacing.horizontal.300": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 300.",
       "$value": "4px"
     },
     "spacing.horizontal.400": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 400.",
       "$value": "8px"
     },
     "spacing.horizontal.500": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 500.",
       "$value": "12px"
     },
     "spacing.horizontal.600": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 600.",
       "$value": "16px"
     },
     "spacing.horizontal.700": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 700.",
       "$value": "24px"
     },
     "spacing.horizontal.800": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 800.",
       "$value": "32px"
     },
     "spacing.horizontal.900": {
       "layer": "semantic",
+      "$description": "Horizontal spacing step 900.",
       "$value": "48px"
     },
     "spacing.vertical.100": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 100. Minimal vertical step.",
       "$value": "1px"
     },
     "spacing.vertical.1000": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1000.",
       "$value": "72px"
     },
     "spacing.vertical.1100": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1100.",
       "$value": "84px"
     },
     "spacing.vertical.1200": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1200.",
       "$value": "96px"
     },
     "spacing.vertical.1250": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1250.",
       "$value": "108px"
     },
     "spacing.vertical.1300": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1300.",
       "$value": "120px"
     },
     "spacing.vertical.1400": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1400.",
       "$value": "144px"
     },
     "spacing.vertical.1500": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1500.",
       "$value": "168px"
     },
     "spacing.vertical.1600": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 1600. Largest vertical step.",
       "$value": "192px"
     },
     "spacing.vertical.200": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 200.",
       "$value": "2px"
     },
     "spacing.vertical.250": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 250.",
       "$value": "3px"
     },
     "spacing.vertical.300": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 300.",
       "$value": "4px"
     },
     "spacing.vertical.400": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 400.",
       "$value": "6px"
     },
     "spacing.vertical.500": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 500.",
       "$value": "12px"
     },
     "spacing.vertical.600": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 600.",
       "$value": "18px"
     },
     "spacing.vertical.700": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 700.",
       "$value": "24px"
     },
     "spacing.vertical.775": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 775.",
       "$value": "30px"
     },
     "spacing.vertical.800": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 800.",
       "$value": "36px"
     },
     "spacing.vertical.900": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 900.",
       "$value": "48px"
     },
     "spacing.vertical.950": {
       "layer": "semantic",
+      "$description": "Vertical spacing step 950.",
       "$value": "60px"
     }
   }
