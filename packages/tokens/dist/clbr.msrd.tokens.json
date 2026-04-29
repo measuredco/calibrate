@@ -1643,7 +1643,7 @@
     },
     "color.base16.05": {
       "layer": "semantic",
-      "$description": "Base16 palette slot 05. Default foreground colour for code text.",
+      "$description": "Base16 palette slot 05. Default foreground color for code text.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2147,7 +2147,7 @@
     },
     "color.base16.0b": {
       "layer": "semantic",
-      "$description": "Base16 palette slot 0b. Strings, additions, and inherited colours.",
+      "$description": "Base16 palette slot 0b. Strings, additions, and inherited colors.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2567,7 +2567,7 @@
     },
     "color.border.brand": {
       "layer": "semantic",
-      "$description": "Brand-tinted border. Use to associate a bordered element with the brand (interactive cards, code blocks, branded section dividers).",
+      "$description": "Brand-tinted border. A decorative brand flourish (e.g. interactive cards, code blocks).",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2651,7 +2651,7 @@
     },
     "color.border.default": {
       "layer": "semantic",
-      "$description": "Default border colour. Use for standard component borders and dividers (cards, inputs, tables).",
+      "$description": "Default border color. Use for standard borders and dividers.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2738,7 +2738,7 @@
     },
     "color.border.subtle": {
       "layer": "semantic",
-      "$description": "Low-contrast border. Use for divider lines and separators that should recede visually.",
+      "$description": "Low-contrast border. Use where the border should recede visually.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2825,7 +2825,7 @@
     },
     "color.brand.primary": {
       "layer": "semantic",
-      "$description": "Primary brand colour. Use for prominent brand expressions and key brand-coloured interactive elements.",
+      "$description": "Primary brand color. Use for prominent brand expressions.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2909,7 +2909,7 @@
     },
     "color.brand.support": {
       "layer": "semantic",
-      "$description": "Supporting brand colour. A decorative flourish for accent strokes, brand patterns, and tints. Not contrast-safe; don't use for text, icons, or interactive elements.",
+      "$description": "Supporting brand color. A decorative accent (e.g. strokes, patterns). Not contrast-safe; don't use for text, icons, or interactive elements.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -2993,7 +2993,7 @@
     },
     "color.foreground.contrast": {
       "layer": "semantic",
-      "$description": "Contrast foreground. Use for text and icons placed over saturated coloured fills (brand, interactive, status, avatar) where the default foreground would lack sufficient contrast.",
+      "$description": "Contrast foreground. Use for text and icons placed over saturated colored fills (brand, interactive, status, avatar) where the default foreground would lack sufficient contrast.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3110,7 +3110,7 @@
     },
     "color.foreground.default": {
       "layer": "semantic",
-      "$description": "Default foreground colour. Use for primary UI text and icons.",
+      "$description": "Default foreground color. Use as the system's standard color for text and icons.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3197,7 +3197,7 @@
     },
     "color.foreground.muted.nonText": {
       "layer": "semantic",
-      "$description": "Muted foreground for non-text decorations (icons, dividers, indicator dots). Reduced contrast. Non-text shapes don't require text-grade contrast minimums.",
+      "$description": "Muted foreground for non-text shapes that should recede (e.g. inactive icons and control surfaces, slider tracks). Reduced contrast, but still perceivable.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3284,7 +3284,7 @@
     },
     "color.foreground.muted.text": {
       "layer": "semantic",
-      "$description": "Muted text colour. Use for secondary text (helper copy, metadata, captions, disabled labels) where lower emphasis is appropriate.",
+      "$description": "Muted text color. Use for secondary text (helper copy, metadata, disabled labels) where lower emphasis is appropriate.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3371,7 +3371,7 @@
     },
     "color.foreground.prose": {
       "layer": "semantic",
-      "$description": "Body copy colour. Use for paragraphs, descriptions, and any reading content. Slightly softer than the default foreground for visual comfort.",
+      "$description": "Body copy color.  Slightly softer than the default foreground for visual comfort.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3458,7 +3458,7 @@
     },
     "color.interactive.active": {
       "layer": "semantic",
-      "$description": "Active (pressed) state colour. Use during click or tap to signal activation.",
+      "$description": "Active (pressed) state color for interactive elements.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3542,7 +3542,7 @@
     },
     "color.interactive.default": {
       "layer": "semantic",
-      "$description": "Default interactive colour. Use for links and primary actionable elements in their resting state.",
+      "$description": "Default interactive color. Use for links and primary actionable elements in their resting state.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3626,7 +3626,7 @@
     },
     "color.interactive.focus": {
       "layer": "semantic",
-      "$description": "Focus indicator colour. Use for focus rings and keyboard-focus outlines on any interactive element.",
+      "$description": "Focus indicator color. Use for focus rings and keyboard-focus outlines on any interactive element.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3710,7 +3710,7 @@
     },
     "color.interactive.hover": {
       "layer": "semantic",
-      "$description": "Hover state colour for interactive elements. Use on pointer hover to signal affordance.",
+      "$description": "Hover state color for interactive elements.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3794,7 +3794,7 @@
     },
     "color.interactive.neutral.active": {
       "layer": "semantic",
-      "$description": "Active (pressed) state colour for neutral interactive elements.",
+      "$description": "Active (pressed) state color for neutral interactive elements.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3881,7 +3881,7 @@
     },
     "color.interactive.neutral.default": {
       "layer": "semantic",
-      "$description": "Neutral interactive colour. Use for actionable elements that shouldn't compete with brand-coloured interactive elements (neutral buttons, secondary controls, menu items).",
+      "$description": "Neutral interactive color. Use for links and actions that shouldn't compete with brand-colored interactive elements (control labels, secondary controls, navigation).",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -3968,7 +3968,7 @@
     },
     "color.interactive.neutral.focus": {
       "layer": "semantic",
-      "$description": "Focus state for neutral interactive elements. Inherits the standard interactive focus colour for consistency across element types.",
+      "$description": "Focus state for neutral interactive elements. Inherits the standard interactive focus color for consistency across element types.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4052,7 +4052,7 @@
     },
     "color.interactive.neutral.hover": {
       "layer": "semantic",
-      "$description": "Hover state colour for neutral interactive elements.",
+      "$description": "Hover state color for neutral interactive elements.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4139,7 +4139,7 @@
     },
     "color.interactive.neutral.visited": {
       "layer": "semantic",
-      "$description": "Visited state colour for neutral interactive elements. Inherits the default neutral interactive colour.",
+      "$description": "Visited state color for neutral interactive elements. Inherits the default neutral interactive color.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4226,7 +4226,7 @@
     },
     "color.interactive.prose.active": {
       "layer": "semantic",
-      "$description": "Active (pressed) state colour for prose links.",
+      "$description": "Active (pressed) state color for prose links.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4310,7 +4310,7 @@
     },
     "color.interactive.prose.activeDecoration": {
       "layer": "semantic",
-      "$description": "Underline colour for prose links during active (pressed) state.",
+      "$description": "Underline color for prose links during active (pressed) state.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4394,7 +4394,7 @@
     },
     "color.interactive.prose.default": {
       "layer": "semantic",
-      "$description": "Inline link colour for prose. Pairs with `foreground.prose`. Tuned for sufficient contrast against the softer prose text colour.",
+      "$description": "Inline link color for prose. Pairs with `foreground.prose`. Tuned for sufficient contrast against the softer prose text color.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4478,7 +4478,7 @@
     },
     "color.interactive.prose.focus": {
       "layer": "semantic",
-      "$description": "Focus state colour for prose links.",
+      "$description": "Focus state color for prose links.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4562,7 +4562,7 @@
     },
     "color.interactive.prose.hover": {
       "layer": "semantic",
-      "$description": "Hover state colour for prose links.",
+      "$description": "Hover state color for prose links.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4646,7 +4646,7 @@
     },
     "color.interactive.prose.hoverDecoration": {
       "layer": "semantic",
-      "$description": "Underline colour for prose links on hover.",
+      "$description": "Underline color for prose links on hover.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4730,7 +4730,7 @@
     },
     "color.interactive.prose.visited": {
       "layer": "semantic",
-      "$description": "Visited inline prose link colour.",
+      "$description": "Visited inline prose link color.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4814,7 +4814,7 @@
     },
     "color.interactive.visited": {
       "layer": "semantic",
-      "$description": "Visited interactive colour for links the user has already followed. Inherits the default interactive colour.",
+      "$description": "Visited interactive color for links the user has already followed. Inherits the default interactive color.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4898,7 +4898,7 @@
     },
     "color.logo.default": {
       "layer": "semantic",
-      "$description": "Logo colour in the current surface. Use as the fill for the brand mark.",
+      "$description": "Logo color. Use as the fill for the brand mark.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -4989,7 +4989,7 @@
     },
     "color.logo.neutral": {
       "layer": "semantic",
-      "$description": "Neutral logo colour. Use when the branded logo colour would clash with surrounding content (e.g. over imagery, in monochrome contexts).",
+      "$description": "Neutral logo color. Use when the branded logo color would clash with surrounding content (e.g. over imagery, in monochrome contexts).",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5080,7 +5080,7 @@
     },
     "color.status.error.default": {
       "layer": "semantic",
-      "$description": "Error status colour. Use for error icons, badges, alert borders, and any element conveying failure or destructive action.",
+      "$description": "Error status color. Use for foreground content (text, icons) and borders conveying failure or destructive action.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5164,7 +5164,7 @@
     },
     "color.status.error.subtle": {
       "layer": "semantic",
-      "$description": "Subtle error background. Use as the fill behind error messages and alerts.",
+      "$description": "Subtle error background. Use as a fill behind error messages.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5248,7 +5248,7 @@
     },
     "color.status.info.default": {
       "layer": "semantic",
-      "$description": "Informational status colour. Use for info icons, badges, and alerts conveying neutral notifications.",
+      "$description": "Informational status color. Use for foreground content (text, icons) and borders conveying information or neutral notices.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5332,7 +5332,7 @@
     },
     "color.status.info.subtle": {
       "layer": "semantic",
-      "$description": "Subtle info background. Use as the fill behind info messages and alerts.",
+      "$description": "Subtle info background. Use as a fill behind info messages.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5416,7 +5416,7 @@
     },
     "color.status.success.default": {
       "layer": "semantic",
-      "$description": "Success status colour. Use for success icons, confirmation indicators, and positive outcome messaging.",
+      "$description": "Success status color. Use for foreground content (text, icons) and borders conveying positive outcomes.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5500,7 +5500,7 @@
     },
     "color.status.success.subtle": {
       "layer": "semantic",
-      "$description": "Subtle success background. Use as the fill behind success messages and alerts.",
+      "$description": "Subtle success background. Use as a fill behind success messages.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5584,7 +5584,7 @@
     },
     "color.status.warning.default": {
       "layer": "semantic",
-      "$description": "Warning status colour. Use for caution icons, badges, and alerts requiring user attention but not signalling failure.",
+      "$description": "Warning status color. Use for foreground content (text, icons) and borders conveying caution.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5668,7 +5668,7 @@
     },
     "color.status.warning.subtle": {
       "layer": "semantic",
-      "$description": "Subtle warning background. Use as the fill behind warning messages and alerts.",
+      "$description": "Subtle warning background. Use as a fill behind warning messages.",
       "$value": {
         "colorSpace": "srgb",
         "components": [
@@ -5752,17 +5752,17 @@
     },
     "effect.filter.image": {
       "layer": "semantic",
-      "$description": "Image filter. Use on imagery (photos, illustrations) to apply the surface's image treatment. Some brands may not apply a filter.",
+      "$description": "Image filter. Use on imagery (photos, illustrations) to apply a styled image treatment.",
       "$value": 0
     },
     "effect.opacity.demoted": {
       "layer": "semantic",
-      "$description": "Opacity for de-emphasised content. Use for elements pushed visually into the background while still visible (placeholder previews, inactive list items).",
+      "$description": "Opacity for de-emphasised content. Use for elements pushed visually into the background but still perceivable (e.g. dimming surrounding content to draw attention to a focused element).",
       "$value": 0.4
     },
     "effect.opacity.disabled": {
       "layer": "semantic",
-      "$description": "Opacity for disabled controls. Use to dim non-interactive controls (disabled buttons, inputs, links) without changing their colour.",
+      "$description": "Opacity for disabled controls. A fallback for when color treatments (e.g. muted foreground, subtle background) can't fully convey the state.",
       "$value": 0.4,
       "varyingModifiers": [
         "theme"
@@ -5880,13 +5880,13 @@
     "layout.divider.brand.size": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Brand divider size — the length of a brand-marked divider element.",
+      "$description": "Brand divider size. The length of a brand-marked divider element.",
       "$value": "72px"
     },
     "layout.divider.brand.thickness": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Brand divider thickness — the cross-axis dimension of a brand-marked divider.",
+      "$description": "Brand divider thickness. The cross-axis dimension of a brand-marked divider.",
       "$value": "2px"
     },
     "motion.duration.0": {
@@ -8506,7 +8506,7 @@
     "radius.ratio.default": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Default radius ratio. Multiplier for computing radius from a known element dimension (e.g. shortest side × ratio). Prefer ratio-based calculation when the element's shortest side is known. Produces rounding that scales with the element.",
+      "$description": "Default radius ratio. Multiplier for computing radius from a known element dimension (e.g. shortest side × ratio). Prefer ratio-based calculation over t-shirt sizes when the element's shortest side is known.",
       "$value": 0.16
     },
     "radius.ratio.lg": {
@@ -8605,12 +8605,12 @@
     },
     "shape.logo.graphic.path": {
       "layer": "semantic",
-      "$description": "SVG path data for the graphic logo (mark only, no wordmark).",
+      "$description": "SVG path data for the graphic logo (mark only).",
       "$value": "M120 120V74.7C120 33.5 86.5 0 45.3 0H0v53.3h45.3c11.8 0 21.3 9.6 21.3 21.3v45.3h53.3zm120 0V74.7C240 33.5 206.5 0 165.3 0H120v53.3h45.3c11.8 0 21.3 9.6 21.3 21.3v45.3h53.3zm120 0V74.7C360 33.5 326.5 0 285.3 0H240v53.3h45.3c11.8 0 21.3 9.6 21.3 21.3v45.3h53.3z"
     },
     "shape.logo.graphic.viewBox": {
       "layer": "semantic",
-      "$description": "SVG viewBox dimensions for the graphic logo (mark only, no wordmark).",
+      "$description": "SVG viewBox dimensions for the graphic logo (mark only).",
       "$value": "0 0 360 120"
     },
     "shape.logo.primary.aspectRatio": {
@@ -8778,7 +8778,7 @@
     },
     "typography.fontFamily.mono": {
       "layer": "semantic",
-      "$description": "Monospaced font family. Use for code and contexts where character-width consistency matters.",
+      "$description": "Monospaced font family. Use for code, contexts where character-width consistency matters (e.g. avatar, badge), and occasional typographic flourishes.",
       "$value": [
         "Roboto Mono",
         "ui-monospace",
@@ -8787,7 +8787,7 @@
     },
     "typography.fontWeight.bold": {
       "layer": "semantic",
-      "$description": "Bold font weight. Use for strong emphasis (semantic strong/bold elements, small headings).",
+      "$description": "Bold font weight. Use for strong text emphasis (semantic `strong`/`b` elements, small headings).",
       "$value": 566
     },
     "typography.fontWeight.medium": {
@@ -8807,22 +8807,22 @@
     },
     "typography.leading.1000": {
       "layer": "semantic",
-      "$description": "Leading step 1000. Comfortable for body prose.",
+      "$description": "Leading step 1000.",
       "$value": "72px"
     },
     "typography.leading.1200": {
       "layer": "semantic",
-      "$description": "Leading step 1200. Generous leading for spacious reading.",
+      "$description": "Leading step 1200.",
       "$value": "96px"
     },
     "typography.leading.1300": {
       "layer": "semantic",
-      "$description": "Leading step 1300. Looser leading for headings or low-density layouts.",
+      "$description": "Leading step 1300.",
       "$value": "120px"
     },
     "typography.leading.700": {
       "layer": "semantic",
-      "$description": "Default leading dimension. A block size representing the line-height; divide by font size to derive a CSS `line-height` ratio. Use as the body baseline.",
+      "$description": "Default leading dimension. A block size representing the line-height; divide by font size to derive a line-height ratio. An escape hatch for aligning line-heights across elements with different font sizes (e.g. a small counter beside a large heading) — reach for text composites or typeStep pairs first.",
       "$value": "24px"
     },
     "typography.leading.750": {
@@ -8862,7 +8862,7 @@
     },
     "typography.measure.default": {
       "layer": "semantic",
-      "$description": "Default measure (line length, in em). Use as the comfortable max-width to keep line lengths readable.",
+      "$description": "Default measure (line length, in em). Use as the comfortable maximum width to keep line lengths readable.",
       "$value": 35.25
     },
     "typography.measure.tight": {
@@ -8888,58 +8888,58 @@
     "typography.prose.code.padding.block.default": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Default block padding for inline code. Use for tight inline `code` spans.",
+      "$description": "Default block padding for inline `code`. Use at smaller viewports.",
       "$value": 0.055
     },
     "typography.prose.code.padding.block.lg": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Larger block padding for inline code, used at larger viewports.",
+      "$description": "Larger block padding for inline `code`. Use at larger viewports.",
       "$value": 0.2
     },
     "typography.prose.code.padding.inline.default": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Inline (horizontal) padding for code spans.",
+      "$description": "Inline (horizontal) padding for inline `code`.",
       "$value": 0.25
     },
     "typography.prose.link.active.decoration.offset": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Underline offset for prose links during active (pressed) state, in em.",
+      "$description": "Decoration offset for prose links during active (pressed) state, in em.",
       "$value": 0.34
     },
     "typography.prose.link.default.decoration.line": {
       "layer": "semantic",
-      "$description": "Default text-decoration line for prose links (none. Underline appears on hover only).",
+      "$description": "Default decoration line for prose links.",
       "$value": "none"
     },
     "typography.prose.link.default.decoration.offset": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Default underline offset for prose links, in em.",
+      "$description": "Default decoration offset for prose links, in em.",
       "$value": 0.24
     },
     "typography.prose.link.default.decoration.thickness": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Default underline thickness for prose links.",
+      "$description": "Default decoration thickness for prose links.",
       "$value": "2px"
     },
     "typography.prose.link.hover.decoration.line": {
       "layer": "semantic",
-      "$description": "Text-decoration line for prose links on hover (underline).",
+      "$description": "Decoration line for prose links on hover.",
       "$value": "underline"
     },
     "typography.prose.link.hover.decoration.offset": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Underline offset for prose links on hover, in em. Slightly increased from default for vidual effect.",
+      "$description": "Decoration offset for prose links on hover, in em.",
       "$value": 0.29
     },
     "typography.text.body.lg": {
       "layer": "semantic",
-      "$description": "Large body text. Use for emphasised copy (intro paragraphs, lede text). Fixed size.",
+      "$description": "Large body text. Use for emphasised copy (intro paragraphs, lede text).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -8954,7 +8954,7 @@
     },
     "typography.text.body.md": {
       "layer": "semantic",
-      "$description": "Default body text size. Fixed size.",
+      "$description": "Default body text size.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -8969,7 +8969,7 @@
     },
     "typography.text.body.responsive.lg": {
       "layer": "semantic",
-      "$description": "Large body text. Use for emphasised copy (intro paragraphs, lede text). Scales with viewport (baseline → tablet).",
+      "$description": "Large body text. Use for emphasised copy (intro paragraphs, lede text).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9028,7 +9028,7 @@
     },
     "typography.text.body.responsive.md": {
       "layer": "semantic",
-      "$description": "Default body text size. Scales with viewport (baseline → tablet).",
+      "$description": "Default body text size.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9087,7 +9087,7 @@
     },
     "typography.text.body.responsive.sm": {
       "layer": "semantic",
-      "$description": "Small body text. Use for secondary copy (captions, helper text) where default body would be too prominent. Scales with viewport (baseline → tablet).",
+      "$description": "Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9146,7 +9146,7 @@
     },
     "typography.text.body.responsive.xs": {
       "layer": "semantic",
-      "$description": "Extra small body text. Use for the smallest body copy (footnotes, microtext). Scales with viewport (baseline → tablet).",
+      "$description": "Extra small body text. Use for the smallest body copy (microtext).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9205,7 +9205,7 @@
     },
     "typography.text.body.sm": {
       "layer": "semantic",
-      "$description": "Small body text. Use for secondary copy (captions, helper text) where default body would be too prominent. Fixed size.",
+      "$description": "Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9220,7 +9220,7 @@
     },
     "typography.text.body.xs": {
       "layer": "semantic",
-      "$description": "Extra small body text. Use for the smallest body copy (footnotes, microtext). Fixed size.",
+      "$description": "Extra small body text. Use for the smallest body copy (microtext).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9235,7 +9235,7 @@
     },
     "typography.text.heading.2xl": {
       "layer": "semantic",
-      "$description": "2xl heading (h1-equivalent). Use for page titles. Fixed size.",
+      "$description": "2xl heading (`h1`-equivalent). Use for page titles.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9250,7 +9250,7 @@
     },
     "typography.text.heading.3xl": {
       "layer": "semantic",
-      "$description": "Display heading (3xl). Use for hero/marketing headings. Fixed size.",
+      "$description": "Display heading (3xl). Use for hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9265,7 +9265,7 @@
     },
     "typography.text.heading.4xl": {
       "layer": "semantic",
-      "$description": "Display heading (4xl). Use for very large display headings. Fixed size.",
+      "$description": "Display heading (4xl). Use for larger hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9280,7 +9280,7 @@
     },
     "typography.text.heading.5xl": {
       "layer": "semantic",
-      "$description": "Display heading (5xl). Use for the largest display headings (statement marketing pages). Fixed size.",
+      "$description": "Display heading (5xl). Use for the largest hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9295,7 +9295,7 @@
     },
     "typography.text.heading.lg": {
       "layer": "semantic",
-      "$description": "Large heading (h3-equivalent). Fixed size.",
+      "$description": "Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9310,7 +9310,7 @@
     },
     "typography.text.heading.md": {
       "layer": "semantic",
-      "$description": "Medium heading (h4-equivalent). Fixed size.",
+      "$description": "Medium heading (`h4`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9325,7 +9325,7 @@
     },
     "typography.text.heading.responsive.2xl": {
       "layer": "semantic",
-      "$description": "2xl heading (h1-equivalent). Use for page titles. Scales with viewport (baseline → tablet).",
+      "$description": "2xl heading (`h1`-equivalent). Use for page titles.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9384,7 +9384,7 @@
     },
     "typography.text.heading.responsive.3xl": {
       "layer": "semantic",
-      "$description": "Display heading (3xl). Use for hero/marketing headings. Scales with viewport (baseline → tablet).",
+      "$description": "Display heading (3xl). Use for hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9443,7 +9443,7 @@
     },
     "typography.text.heading.responsive.4xl": {
       "layer": "semantic",
-      "$description": "Display heading (4xl). Use for very large display headings. Scales with viewport (baseline → tablet).",
+      "$description": "Display heading (4xl). Use for larger hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9502,7 +9502,7 @@
     },
     "typography.text.heading.responsive.5xl": {
       "layer": "semantic",
-      "$description": "Display heading (5xl). Use for the largest display headings (statement marketing pages). Scales with viewport (baseline → tablet).",
+      "$description": "Display heading (5xl). Use for the largest hero/marketing headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9561,7 +9561,7 @@
     },
     "typography.text.heading.responsive.lg": {
       "layer": "semantic",
-      "$description": "Large heading (h3-equivalent). Scales with viewport (baseline → tablet).",
+      "$description": "Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels).",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9620,7 +9620,7 @@
     },
     "typography.text.heading.responsive.md": {
       "layer": "semantic",
-      "$description": "Medium heading (h4-equivalent). Scales with viewport (baseline → tablet).",
+      "$description": "Medium heading (`h4`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9679,7 +9679,7 @@
     },
     "typography.text.heading.responsive.sm": {
       "layer": "semantic",
-      "$description": "Small heading (h5-equivalent). Scales with viewport (baseline → tablet).",
+      "$description": "Small heading (`h5`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9738,7 +9738,7 @@
     },
     "typography.text.heading.responsive.xl": {
       "layer": "semantic",
-      "$description": "Extra large heading (h2-equivalent). Use for section headings. Scales with viewport (baseline → tablet).",
+      "$description": "Extra large heading (`h2`-equivalent). Use for section headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9797,7 +9797,7 @@
     },
     "typography.text.heading.responsive.xs": {
       "layer": "semantic",
-      "$description": "Extra small heading (h6-equivalent). Use for subsection labels and sidebar titles. Scales with viewport (baseline → tablet).",
+      "$description": "Extra small heading (`h6`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9856,7 +9856,7 @@
     },
     "typography.text.heading.sm": {
       "layer": "semantic",
-      "$description": "Small heading (h5-equivalent). Fixed size.",
+      "$description": "Small heading (`h5`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9871,7 +9871,7 @@
     },
     "typography.text.heading.xl": {
       "layer": "semantic",
-      "$description": "Extra large heading (h2-equivalent). Use for section headings. Fixed size.",
+      "$description": "Extra large heading (`h2`-equivalent). Use for section headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9886,7 +9886,7 @@
     },
     "typography.text.heading.xs": {
       "layer": "semantic",
-      "$description": "Extra small heading (h6-equivalent). Use for subsection labels and sidebar titles. Fixed size.",
+      "$description": "Extra small heading (`h6`-equivalent). Use for subsection headings.",
       "$value": {
         "fontFamily": [
           "InterVariable",
@@ -9914,7 +9914,7 @@
     "typography.typeStep.1000.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 1000 font size. Display heading.",
+      "$description": "Type-step 1000 font size.",
       "$value": "48px"
     },
     "typography.typeStep.1000.lineHeight": {
@@ -9926,7 +9926,7 @@
     "typography.typeStep.1100.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 1100 font size. Large display heading.",
+      "$description": "Type-step 1100 font size.",
       "$value": "62px"
     },
     "typography.typeStep.1100.lineHeight": {
@@ -9938,7 +9938,7 @@
     "typography.typeStep.1200.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 1200 font size. Very large display heading.",
+      "$description": "Type-step 1200 font size.",
       "$value": "84px"
     },
     "typography.typeStep.1200.lineHeight": {
@@ -9950,7 +9950,7 @@
     "typography.typeStep.1300.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 1300 font size. Largest step in the type scale.",
+      "$description": "Type-step 1300 font size. Largest step.",
       "$value": "120px"
     },
     "typography.typeStep.1300.lineHeight": {
@@ -9974,19 +9974,19 @@
     "typography.typeStep.200.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 200 font size. Small-body equivalent. Use as the default type-step font size in compositions that need explicit size/leading control.",
+      "$description": "Default type-step font size. Type-steps are size/leading pairs for explicit typographic control without a full text composite (body/heading).",
       "$value": "16px"
     },
     "typography.typeStep.200.lineHeight": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Type-step 200 line height. Pairs with the default type-step font size.",
+      "$description": "Default type-step line height.",
       "$value": 1.5
     },
     "typography.typeStep.300.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 300 font size. Body-equivalent.",
+      "$description": "Type-step 300 font size.",
       "$value": "18px"
     },
     "typography.typeStep.300.lineHeight": {
@@ -9998,43 +9998,43 @@
     "typography.typeStep.400.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 400 font size. Large-body / small-heading.",
+      "$description": "Type-step 400 font size. Tight-leading variant.",
       "$value": "20px"
     },
     "typography.typeStep.400.lineHeight": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Type-step 400 line height.",
+      "$description": "Type-step 400 line height. Tight leading.",
       "$value": 1.5
     },
     "typography.typeStep.450.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 450 font size. Medium-heading equivalent.",
+      "$description": "Type-step 450 font size. Loose-leading variant of step 400.",
       "$value": "20px"
     },
     "typography.typeStep.450.lineHeight": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Type-step 450 line height.",
+      "$description": "Type-step 450 line height. Loose leading.",
       "$value": 1.8
     },
     "typography.typeStep.50.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 50 font size. Smallest step in the type scale.",
+      "$description": "Type-step 50 font size. Smallest step.",
       "$value": "12px"
     },
     "typography.typeStep.50.lineHeight": {
       "layer": "semantic",
       "$type": "number",
-      "$description": "Type-step 50 line height. Pairs with type-step 50 font size.",
+      "$description": "Type-step 50 line height.",
       "$value": 1.5
     },
     "typography.typeStep.500.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 500 font size. Heading equivalent.",
+      "$description": "Type-step 500 font size.",
       "$value": "24px"
     },
     "typography.typeStep.500.lineHeight": {
@@ -10046,7 +10046,7 @@
     "typography.typeStep.600.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 600 font size. Large heading.",
+      "$description": "Type-step 600 font size.",
       "$value": "28px"
     },
     "typography.typeStep.600.lineHeight": {
@@ -10058,7 +10058,7 @@
     "typography.typeStep.700.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 700 font size. Extra-large heading.",
+      "$description": "Type-step 700 font size.",
       "$value": "32px"
     },
     "typography.typeStep.700.lineHeight": {
@@ -10082,7 +10082,7 @@
     "typography.typeStep.900.fontSize": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Type-step 900 font size. Page-title equivalent.",
+      "$description": "Type-step 900 font size.",
       "$value": "42px"
     },
     "typography.typeStep.900.lineHeight": {

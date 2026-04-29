@@ -48,12 +48,12 @@
     },
     "layout.border.width.default": {
       "layer": "semantic",
-      "$description": "Default border width — the standard for all borders.",
+      "$description": "Default border width. Use as the system's standard border weight.",
       "$value": "1px"
     },
     "layout.border.width.thick": {
       "layer": "semantic",
-      "$description": "Thick border width. Use for emphasised borders (focus rings, prominent dividers).",
+      "$description": "Thick border width. Use for emphasised strokes (focus rings, prominent dividers).",
       "$value": "2px"
     },
     "layout.container.gutter.default": {
@@ -101,7 +101,7 @@
     },
     "layout.container.maxWidth.wide": {
       "layer": "semantic",
-      "$description": "Wide container max-width. Use for content that benefits from more horizontal space on wider screens (data tables, dashboards, marketing layouts).",
+      "$description": "Wide container max-width. Use for content that benefits from more horizontal space on wider screens (e.g. site furniture).",
       "$value": "1440px"
     },
     "layout.focusRing.offset.default": {
@@ -111,18 +111,18 @@
     },
     "layout.focusRing.offset.inset": {
       "layer": "semantic",
-      "$description": "Inset focus ring offset. Use when the ring sits inside the element bounds (e.g. on filled controls where an outset ring would clip).",
+      "$description": "Inset focus ring offset. Use when the ring sits inside the element bounds (e.g. when an outset ring would clip).",
       "$value": "-4px"
     },
     "layout.focusRing.offset.lg": {
       "layer": "semantic",
-      "$description": "Larger focus ring offset. Use on bigger elements where the default offset would feel cramped.",
+      "$description": "Larger focus ring offset. Use on elements where the default offset would feel cramped.",
       "$value": "4px"
     },
     "layout.focusRing.outset": {
       "layer": "semantic",
       "$type": "dimension",
-      "$description": "Focus ring outset — total outward extent of the ring beyond the element edge. Use in size calculations that need to account for the ring (e.g. border-radius on focus-visible states).",
+      "$description": "Focus ring outset. Total outward extent of the ring beyond the element edge. Use in size calculations that need to account for the ring (e.g. corner radius on focus states).",
       "$value": "8px"
     },
     "layout.focusRing.width": {
@@ -170,7 +170,7 @@
     },
     "layout.icon.size.md": {
       "layer": "semantic",
-      "$description": "Default icon size — also used for icon-shaped elements (spinners, radios, checkboxes). Pick the step that visually balances surrounding text size and UI scale.",
+      "$description": "Default icon size. Also used for icon-shaped elements (spinners, radios, checkboxes). Pick the step that visually balances surrounding text size and UI scale.",
       "$value": "24px"
     },
     "layout.icon.size.sm": {
@@ -309,7 +309,7 @@
     },
     "layout.spacing.vertical.700": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 700.",
+      "$description": "Layout vertical spacing 700. Default layout vertical step.",
       "$value": "24px",
       "varyingModifiers": [
         "size"
@@ -623,7 +623,7 @@
     },
     "spacing.horizontal.700": {
       "layer": "semantic",
-      "$description": "Horizontal spacing step 700.",
+      "$description": "Horizontal spacing step 700. Default horizontal step.",
       "$value": "24px"
     },
     "spacing.horizontal.800": {
@@ -713,7 +713,7 @@
     },
     "spacing.vertical.700": {
       "layer": "semantic",
-      "$description": "Vertical spacing step 700.",
+      "$description": "Vertical spacing step 700. Default vertical step.",
       "$value": "24px"
     },
     "spacing.vertical.775": {
