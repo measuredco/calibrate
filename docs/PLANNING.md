@@ -6,42 +6,13 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Tokens public surface
-
-Final phase of the workstream that made Calibrate tokens consumable beyond CSS (DTCG resolver extraction in #42, consumer JSON export in #43, dedicated `@measured/calibrate-tokens` public package in #45 — all landed).
-
-**Phase 4 — semantic-token `$description` coverage.** Action-oriented intent guidance on every semantic token ("Use for X" / "Don't use for Y", differential against neighbouring tokens, concise). Primitive tokens skip — descriptions there mostly restate names. Quality bar over coverage: better 30 great descriptions than 100 lazy ones. The JSON export populates `$description` automatically; together they form the token-as-API surface for docs / agents / MCP.
-
-Authoring scope verified by spike: descriptions go in default-context source files only — overrides (brand surface, dark theme, forced-colors, tablet size) only override existing tokens, never introduce new ones, and don't carry their own descriptions in the JSON output. msrd is authored first; wrfr's semantic structure matches exactly, so descriptions copy mechanically.
-
-Per brand:
-
-| Domain                  | File                              |
-| ----------------------- | --------------------------------- |
-| Color                   | `theme/light/default.tokens.json` |
-| Effect                  | `theme/light/default.tokens.json` |
-| Typography (responsive) | `size/baseline.tokens.json`       |
-| Typography (other)      | `tokens.json`                     |
-| Shape                   | `tokens.json`                     |
-| Layout                  | `tokens.json`                     |
-| Motion                  | `tokens.json`                     |
-| Radius                  | `tokens.json`                     |
-
-Plus base (cross-brand):
-
-| Domain     | File                                                             |
-| ---------- | ---------------------------------------------------------------- |
-| Breakpoint | `base/semantic/breakpoint.tokens.json`                           |
-| Spacing    | `base/semantic/spacing.tokens.json`                              |
-| Layout     | `base/semantic/layout/tokens.json` + `size/baseline.tokens.json` |
-
-**Follow-up — orchestrator pre-resolution refactor (maybe).** Close the Phase 1 gap: refactor `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` from standalone scripts into modules; have `index.mjs` call `resolveAllContextPermutations` once per resolver target and pass the resolved map to both. Architectural cleanliness over correctness — current per-stage iteration works (byte-identical proves it) but duplicates resolution work and risks stage drift. Tagged "maybe" because the cost/benefit isn't clearly worth a refactor today.
-
-**Out of scope here.** Style Dictionary native-resolver migration — see _SD DTCG 2025.10 gaps_ in Later, triggered when SD lands the support.
-
 ## Next
 
 What we could be working on next.
+
+### Orchestrator pre-resolution refactor (maybe)
+
+Close the Phase 1 gap from the Tokens public surface workstream: refactor `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` from standalone scripts into modules; have `index.mjs` call `resolveAllContextPermutations` once per resolver target and pass the resolved map to both. Architectural cleanliness over correctness — current per-stage iteration works (byte-identical proves it) but duplicates resolution work and risks stage drift. Tagged "maybe" because the cost/benefit isn't clearly worth a refactor today.
 
 ## Later
 
@@ -133,7 +104,7 @@ Evaluate whether an MCP/API distribution path adds clear value beyond package an
 
 ### Brand tree-shaking strategy
 
-Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract.
+Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract. At that point, consider splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
 
 ### Stylelint token enforcement
 
