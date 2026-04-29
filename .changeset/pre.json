@@ -18,6 +18,7 @@
     "heading-rename-props",
     "import-sort",
     "initial-alpha-release",
+    "semantic-token-descriptions",
     "storybook-a11y-rule-scope",
     "stylelint-css-reorder",
     "stylelint-logical-css",

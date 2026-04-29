@@ -1,5 +1,13 @@
 # @measured/calibrate-playground-react
 
+## 0.2.0-alpha.4
+
+### Patch Changes
+
+- @measured/calibrate-assets@0.2.0-alpha.4
+- @measured/calibrate-core@0.2.0-alpha.4
+- @measured/calibrate-react@0.2.0-alpha.4
+
 ## 0.2.0-alpha.3
 
 ### Patch Changes
