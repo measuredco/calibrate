@@ -29,11 +29,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@measured/calibrate-system": "workspace:*",
     "lucide": "0.577.0"
   },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
+    "@measured/calibrate-system": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "catalog:",

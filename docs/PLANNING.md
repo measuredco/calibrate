@@ -6,13 +6,15 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Editor IntelliSense for `--clbr-*` custom properties
+
+Surface descriptions for every published `--clbr-*` custom property in consumers' editors. VS Code's CSS language service resolves var values via workspace scan but does not extract descriptions from CSS comments adjacent to declarations — confirmed locally. The likely vehicle is [CSS Custom Data](https://code.visualstudio.com/api/extension-guides/custom-data-extension), shipped per brand alongside the existing CSS / JSON outputs and wired in via `css.customData`. Verify the integration provides completion within `var(...)` (not just hover) before committing to the shape; fallback paths include `css.styleSheets` workspace settings or a dedicated VS Code extension.
+
+Note: the dist CSS still emits `$description` as block comments adjacent to each custom property declaration. Those descriptions are useful for direct file reading and grep-based tools but do not surface in VS Code's hover / completion. The Custom Data export (or equivalent) is what bridges them to the editor.
+
 ## Next
 
 What we could be working on next.
-
-### Orchestrator pre-resolution refactor (maybe)
-
-Close the Phase 1 gap from the Tokens public surface workstream: refactor `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` from standalone scripts into modules; have `index.mjs` call `resolveAllContextPermutations` once per resolver target and pass the resolved map to both. Architectural cleanliness over correctness — current per-stage iteration works (byte-identical proves it) but duplicates resolution work and risks stage drift. Tagged "maybe" because the cost/benefit isn't clearly worth a refactor today.
 
 ## Later
 
@@ -52,9 +54,7 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 - `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required, a11y)
 
-### Tokens evolution
-
-#### Style Dictionary DTCG 2025.10 gaps
+### Style Dictionary DTCG 2025.10 gaps
 
 [Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
 
@@ -62,19 +62,7 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
   - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
 - Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
   - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
-
-#### Design model evolution
-
-- Border and Transition DTCG Composites
-- Consider introducing Newsreader as a serif font for prose body copy.
-
-#### Export target evolution
-
-1. Penpot
-1. Figma
-1. VS Code token lookup artifact
-1. iOS
-1. Android
+  - consider extracting `resolveAllContextPermutations` into a single module-level call shared by `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` — eliminates duplicate resolution and stage drift risk. May be obsolete if SD's native consumption removes the per-stage iteration entirely.
 
 ### Documentation website (`apps/documentation`)
 
@@ -85,10 +73,6 @@ Stand up a docs site that consumes published token/component packages and serves
 Agent skills markdown. Some ideas:
 
 - Sorting conventions that don't fit lint rules
-
-### Architecture Decision Records (ADRs)
-
-Add `docs/adr/` to capture significant architectural decisions.
 
 ### CLI bootstrap tool (`@measured/calibrate`)
 
@@ -117,3 +101,7 @@ Emit a non-exported private CSS artifact from `@measured/calibrate-core` that co
 ### Vue framework adapter
 
 Validate that the `packages/adapter` SPEC walker and emitter generalises by authoring a second emitter alongside `src/react`. A small archetype floor (Button, Banner, Page, Menu — pass-through + slotted + CE + events).
+
+### iOS / Android token emit targets
+
+Speculative. Style Dictionary ships built-in iOS Swift, Android XML, and Compose formats; adding them potentially an SD platform extension on top of the existing CSS pipeline.
