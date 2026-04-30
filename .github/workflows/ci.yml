@@ -250,9 +250,6 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Build markdown
-        run: pnpm run markdown:build
-
       - name: Build Storybook
         run: pnpm run storybook:build
 
