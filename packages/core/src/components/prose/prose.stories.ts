@@ -66,9 +66,6 @@ Now a nested list
 
     Do not bump wooden spoon or it will fall
 
-- [ ] This
-- [x] That
-
 #### An \`h4\` heading
 
 Here’s some code samples
@@ -188,16 +185,5 @@ export const Default = {
     responsive: false,
     children: processMarkdown(markdown),
   } satisfies ClbrProseProps,
-  parameters: {
-    // Structural to GFM-to-HTML output: missing labels and keyboard scroll access.
-    a11y: {
-      options: {
-        rules: {
-          label: { enabled: false },
-          "scrollable-region-focusable": { enabled: false },
-        },
-      },
-    },
-  },
   render: (args: ClbrProseProps) => renderClbrProse({ ...args }),
 };

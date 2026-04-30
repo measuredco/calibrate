@@ -1,3 +1,5 @@
+import { processMarkdownInline } from "@measured/calibrate-markdown";
+
 import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { CLBR_TEXT_SPEC, type ClbrTextProps, renderClbrText } from "./text";
 
@@ -36,8 +38,9 @@ export const Markup = {
   args: {
     as: "p",
     align: "start",
-    children:
-      '<em>Emphasis</em>, <code>code</code>, <del>deleted</del>, <strong>bold</strong>, and <sup>superscript</sup>. Here’s a link to <a href="https://measured.co">a website</a>.',
+    children: processMarkdownInline(
+      "_Emphasis_, `code`, ~~deleted~~, **bold**, and <sup>superscript</sup>. Here’s a link to [a website](https://measured.co).",
+    ),
     linkVisited: true,
     measured: true,
     responsive: false,

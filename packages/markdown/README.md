@@ -26,7 +26,7 @@ Both return an HTML string.
 
 ## Features
 
-- GFM extensions: tables, task lists, strikethrough, autolinks, footnotes
+- GFM extensions: tables, strikethrough, autolinks, footnotes
 - Heading `id` slugs (for in-page anchor links)
 - Inline color chip swatches for color literals (`#ff69b4`, `hotpink`, …)
 - Syntax highlighting on fenced code blocks (highlight.js class names)

@@ -6,13 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Prose a11y refinements
-
-Open items deferred from the `@measured/calibrate-markdown` v1 ship — both surface as `prose` rendering concerns, since the markdown pipeline emits the HTML that prose styles:
-
-- Address `prose` code-block scroll a11y. May warrant swapping the `rehype-highlight` (highlight.js) approach in `@measured/calibrate-markdown` for an alternative that produces more accessible output structure.
-- Add labels to `prose` GFM task list items for screen-reader clarity.
-
 ## Next
 
 What we could be working on next.

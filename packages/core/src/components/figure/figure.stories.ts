@@ -44,7 +44,7 @@ export const Code = {
     caption:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     children: renderClbrProse({
-      children: `<pre><code class="language-js"><span class="hljs-comment">/* JavaScript */</span>
+      children: `<pre><code class="language-js" tabIndex="0"><span class="hljs-comment">/* JavaScript */</span>
 
 <span class="hljs-variable">console</span>.<span class="hljs-title">log</span>(<span class="hljs-string">"oO0 iIlL1 g9qCGQ ~-+=&gt;-&gt;"</span>);
 
@@ -77,14 +77,6 @@ export const Code = {
 </code></pre>`,
     }),
   } satisfies ClbrFigureProps,
-  parameters: {
-    // Structural to GFM-to-HTML output: long highlighted code overflows without keyboard scroll access.
-    a11y: {
-      options: {
-        rules: { "scrollable-region-focusable": { enabled: false } },
-      },
-    },
-  },
   render: (args: ClbrFigureProps) => renderClbrFigure(args),
 };
 

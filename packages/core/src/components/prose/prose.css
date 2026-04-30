@@ -184,6 +184,10 @@
         position: absolute;
       }
 
+      &:has(> code:focus-visible)::after {
+        border-color: var(--clbr-color-interactive-focus);
+      }
+
       & code {
         background-color: var(--clbr-color-base16-00);
         border-radius: var(--clbr-radius-md);

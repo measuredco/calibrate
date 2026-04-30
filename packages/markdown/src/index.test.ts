@@ -21,6 +21,18 @@ describe("processMarkdown", () => {
 
     expect(out).not.toContain("<script>");
   });
+
+  it("adds tabIndex to fenced code blocks for keyboard scroll a11y", () => {
+    const out = processMarkdown("```\nfoo\n```");
+
+    expect(out).toMatch(/<code[^>]*\btabindex="0"/);
+  });
+
+  it("does not add tabIndex to inline code", () => {
+    const out = processMarkdown("a `inline` snippet");
+
+    expect(out).not.toMatch(/<code[^>]*\btabindex/);
+  });
 });
 
 describe("processMarkdownInline", () => {

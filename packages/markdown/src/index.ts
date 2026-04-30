@@ -1,4 +1,5 @@
 import deepmerge from "deepmerge";
+import type { Element, Root } from "hast";
 import type { Schema } from "hast-util-sanitize";
 import rehypeColorChips from "rehype-color-chips";
 import rehypeHighlight from "rehype-highlight";
@@ -10,6 +11,7 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
+import { visit } from "unist-util-visit";
 
 // Allowances for `rehype-highlight` (hljs class names) and
 // `rehype-color-chips` (chip class + inline background-color style).
@@ -30,6 +32,20 @@ export const sanitizeInlineSchema: Schema = {
   tagNames: ["a", "b", "br", "code", "cite", "del", "em", "i", "strong", "sup"],
 };
 
+// Make fenced code blocks keyboard-focusable so users can scroll overflowing code.
+const rehypeAccessibleCodeBlocks = () => (tree: Root) => {
+  visit(tree, "element", (node) => {
+    if (node.tagName !== "pre") return;
+    const code = node.children.find(
+      (child): child is Element =>
+        child.type === "element" && child.tagName === "code",
+    );
+    if (code) {
+      code.properties = { ...(code.properties ?? {}), tabIndex: 0 };
+    }
+  });
+};
+
 export const processMarkdown = (markdown: string): string =>
   String(
     unified()
@@ -40,6 +56,7 @@ export const processMarkdown = (markdown: string): string =>
       .use(rehypeSlug)
       .use(rehypeColorChips)
       .use(rehypeHighlight)
+      .use(rehypeAccessibleCodeBlocks)
       .use(rehypeSanitize, sanitizeSchema)
       .use(rehypeStringify)
       .processSync(markdown),
