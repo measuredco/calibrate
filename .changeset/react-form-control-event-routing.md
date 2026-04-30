@@ -5,5 +5,6 @@
 
 Form controls now play cleanly with React's controlled-input checks:
 
-- The React adapter routes form-control event handlers (and `autoFocus`) to the inner `<input>` / `<textarea>` / `<select>` instead of the host wrapper. Eliminates React's "value prop without onChange" warnings. `ref` continues to land on the host wrapper.
-- `Input` preserves the empty string distinctly from `undefined`, so clearing a controlled field no longer flips the input from controlled to uncontrolled.
+- Event handlers and `autoFocus` route to the inner `<input>` / `<textarea>` / `<select>` instead of the host wrapper, so React sees them on the element it checks. `ref` continues to land on the host wrapper.
+- HTML boolean props (`checked`, `disabled`, `required`, `readonly`, etc.) preserve their `false` value through the React adapter, so toggling a checkbox / switch keeps the input controlled. `false` on `data-*` and `aria-*` is still omitted (matches SSR).
+- `Input` preserves the empty string distinctly from `undefined`, so clearing a controlled field doesn't flip it from controlled to uncontrolled.

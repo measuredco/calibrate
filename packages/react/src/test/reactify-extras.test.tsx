@@ -1,7 +1,8 @@
-import { Checkbox, Input, Switch, Textarea } from "../index";
 import { act, createRef, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import { describe, expect, it } from "vitest";
+
+import { Checkbox, Input, Switch, Textarea } from "../index";
 
 // -----------------------------------------------------------------------------
 // Form-control event-handler routing.
