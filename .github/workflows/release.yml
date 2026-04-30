@@ -31,11 +31,6 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-          # Configures ~/.npmrc with `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}`
-          # — fallback for packages that don't yet have a trusted publisher
-          # configured. Packages that do have one continue to use OIDC.
-          # Remove once @measured/calibrate-markdown has a trusted publisher set up.
-          registry-url: https://registry.npmjs.org
 
       # Trusted Publishing requires npm >= 11.5.1; bulk publisher setup needs
       # >= 11.10.0. Node 24's bundled npm may lag — pin explicitly.
@@ -54,20 +49,6 @@ jobs:
           title: "chore(repo): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Token-based auth fallback for packages without a trusted publisher
-          # configured (currently @measured/calibrate-markdown initial publish).
-          # NPM_TOKEN tells changesets/action to use token publishing rather
-          # than OIDC; without it the action picks OIDC and fails for any
-          # package that lacks a configured trusted publisher.
-          # NODE_AUTH_TOKEN feeds setup-node's `~/.npmrc` template so npm CLI
-          # itself can authenticate when invoked.
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          # Provenance is normally on (uses the job-scoped id-token: write
-          # permission above), but npm 11.x prefers OIDC trusted publishing
-          # when provenance is enabled, and trusted publishing fails outright
-          # for packages without a configured trusted publisher (no fallback
-          # to token auth). Temporarily disable while @measured/calibrate-markdown
-          # is being published for the first time. Re-enable once trusted
-          # publishing is configured for it on npm.com.
-          # NPM_CONFIG_PROVENANCE: "true"
+          # Generate npm provenance attestations on publish (uses the
+          # job-scoped id-token: write permission above).
+          NPM_CONFIG_PROVENANCE: "true"
