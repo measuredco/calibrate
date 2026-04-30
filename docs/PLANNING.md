@@ -34,20 +34,28 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 
 ### Component evolution
 
-- Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
-- Add `renderPosterImage` to expose subset of `image` props in `poster` API
-- Add a light theme `poster` story
-- Add `image` `sources` art direction example to Storybook
-- Show `page` sticky header border on scroll only
-
-#### Component size gaps
+#### Size gaps
 
 - Missing lg: Alert, Badge, Checkbox, Input, Menu, Nav, Radios, Range, Textarea, Sidebar
 - Missing sm: Blockquote
 - No size prop: Card, Details, Fieldset, Prose
 - Button & Link with size lg are the same as size md if 1. appearance text and label visible or 2. appearance outline or solid, and label hidden.
 
-#### More components
+#### Features
+
+- Menu support for `menuitemcheckbox` and `menuitemradio`
+- Page hide sticky header border until scrolled
+- Poster include `renderPosterImage` to expose subset of `image` props in the API
+- Spinner reduced motion pulse animation
+
+#### Stories
+
+- Button icon-only stories
+- Checkbox required/optional stories
+- Poster light theme story
+- Image art direction `sources` story
+
+#### Factory
 
 - `Control/Listbox` (JS required, selection semantics)
 - `Control/Select` (native select with thin styling)
