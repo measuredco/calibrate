@@ -73,9 +73,9 @@ export function buildClbrInput({
     autocomplete === false ? false : autocomplete?.trim();
   const normalizedName = name?.trim();
   const normalizedPattern = pattern?.trim();
-  // Preserve `""` distinctly from `undefined` so React keeps the input
-  // controlled when the consumer clears the field; coerce only when a
-  // value was supplied.
+  // Preserve `""` distinctly from `undefined` — explicit empty value vs
+  // value not provided. Adapters with controlled-input semantics rely on
+  // this to keep the field controlled when the consumer clears it.
   const normalizedValue = value === undefined ? undefined : value.trim();
 
   if (!normalizedId) {

@@ -25,13 +25,9 @@ const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
   tabindex: "tabIndex",
 };
 
-/**
- * Tags that React treats as form controls. When a Calibrate component
- * renders one of these inside its host wrapper, `pickNativeExtras`-supplied
- * event handlers (and `autoFocus`) are routed to the inner control rather
- * than the wrapper, so React's controlled-input checks see them on the
- * element they belong to.
- */
+// Form-control tags. Caller event handlers route to these descendants
+// rather than the wrapper so React's controlled-input checks fire on the
+// right element.
 const PRIMARY_CONTROL_TAGS = new Set(["input", "textarea", "select"]);
 
 /**
@@ -50,15 +46,10 @@ export type NativeAttrsFor<E extends Element> = Omit<
 };
 
 /**
- * Convert a Calibrate IR attr record into React props. Renames via
- * `ATTR_NAME_MAP`; drops `undefined`; drops `false` for `data-*` /
- * `aria-*` (matches core SSR's omit behaviour); preserves `false` for
- * HTML boolean attrs (`checked`, `disabled`, `required`, `readonly`,
- * etc.) so React keeps inputs controlled across edits — dropping a
- * false `checked` flips the element from controlled to uncontrolled
- * and triggers React's controlled-input warning. Maps `true` on
- * `data-*` to `""` (core SSR emits the bare attribute; React otherwise
- * stringifies to `"true"`).
+ * Convert a Calibrate IR attr record into React props. `false` is kept
+ * for HTML boolean attrs (so React sees `checked={false}` as controlled,
+ * not absent) but dropped for `data-*`/`aria-*` (matches SSR omit). `true`
+ * on `data-*` becomes `""` so React renders the bare attribute.
  */
 function toReactProps(
   attrs: Record<string, string | boolean | undefined>,
@@ -78,11 +69,6 @@ function toReactProps(
   return out;
 }
 
-/**
- * Walks the IR tree and returns descendant primary-control nodes in
- * document order. Used to decide where caller-supplied event handlers
- * land.
- */
 function collectPrimaryControls(node: ClbrNode): ClbrNode[] {
   const out: ClbrNode[] = [];
   const visit = (n: ClbrNode): void => {
@@ -100,12 +86,8 @@ type SplitExtras = {
   primaryRestExtras: Record<string, unknown>;
 };
 
-/**
- * Split caller extras for a component with primary-control descendants.
- * `ref` stays on the wrapper (lets consumers query layout/measure). Event
- * handlers route to every primary control (so React's controlled-input
- * checks pass). `autoFocus` lands on the first primary only.
- */
+// `ref` stays on the wrapper; event handlers route to every primary
+// control; `autoFocus` lands on the first primary only.
 function splitExtras(extras: Record<string, unknown>): SplitExtras {
   const rootExtras: Record<string, unknown> = {};
   const events: Record<string, unknown> = {};
@@ -214,15 +196,11 @@ function renderNode(
 }
 
 /**
- * Render a Calibrate IR tree as React elements. `rootExtras` holds caller-
- * supplied passthrough props (event handlers, `ref`, `autoFocus`). When
- * the tree contains an `<input>`, `<textarea>`, or `<select>` descendant,
- * event handlers and `autoFocus` route to those controls (so React's
- * controlled-input checks see them on the right element); `ref` stays on
- * the host wrapper. When no such descendant exists, `rootExtras` lands on
- * the root as before. `slots` substitutes named sentinel children with
- * ReactNodes (for wrappers like `Page`). Non-element roots wrap in a
- * fragment; `rootExtras` is ignored there (no host to attach handlers to).
+ * Render a Calibrate IR tree as React elements. `rootExtras` holds caller
+ * passthrough props (event handlers, `ref`, `autoFocus`); these route to
+ * the inner form control when the tree contains one (see `splitExtras`),
+ * otherwise they land on the root. `slots` substitutes named sentinel
+ * children with ReactNodes (e.g. `Page`).
  */
 export function reactify(
   node: ClbrNode,

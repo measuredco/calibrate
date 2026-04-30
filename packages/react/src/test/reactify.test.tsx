@@ -4,18 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { Checkbox, Input, Switch, Textarea } from "../index";
 
-// -----------------------------------------------------------------------------
-// Form-control event-handler routing.
-//
-// Caller-supplied `on*` handlers and `autoFocus` should land on the inner
-// input/textarea, not the wrapper, so React's controlled-input checks pass.
-// `ref` stays on the host wrapper.
-//
-// Verifies routing by reading React's stored props on the rendered DOM
-// nodes (the `__reactProps$<id>` symbol React 18 uses for delegated event
-// listeners). Bypasses fragile event simulation in jsdom.
-// -----------------------------------------------------------------------------
-
 function mount(node: React.ReactNode): {
   container: HTMLElement;
   unmount: () => void;
@@ -37,10 +25,10 @@ function mount(node: React.ReactNode): {
   };
 }
 
+// React 18 attaches props as a non-enumerable `__reactProps$<id>` own
+// property; Object.keys skips it. Read via getOwnPropertyNames so tests
+// can verify which element React bound the prop to.
 function reactProps(element: Element): Record<string, unknown> {
-  // React 18 attaches props as a non-enumerable string-keyed property
-  // (e.g. `__reactProps$abc123`). Use getOwnPropertyNames; Object.keys
-  // skips non-enumerable.
   const key = Object.getOwnPropertyNames(element).find((k) =>
     k.startsWith("__reactProps$"),
   );
