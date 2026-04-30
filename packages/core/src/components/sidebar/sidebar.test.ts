@@ -87,7 +87,9 @@ describe("renderClbrSidebar", () => {
     expect(html.includes('data-part="trigger"')).toBe(true);
     expect(html.includes('data-part="backdrop"')).toBe(true);
     expect(html.includes('data-part="close"')).toBe(false);
-    expect(html.includes('aria-controls="sidebar"')).toBe(true);
+    expect(html.includes('aria-controls="sidebar-panel"')).toBe(true);
+    expect(html.includes('id="sidebar-panel"')).toBe(true);
+    expect(html.includes('id="sidebar"')).toBe(true);
   });
 });
 
