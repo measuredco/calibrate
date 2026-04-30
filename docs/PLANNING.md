@@ -10,14 +10,6 @@ What we're working on now.
 
 What we could be working on next.
 
-### Brand tree-shaking — architectural check
-
-Verify the multi-brand architecture supports brand-selective consumption without re-architecture. Audit points across tokens, core CSS, and assets/fonts: per-brand CSS outputs are independently importable; assets-package font shipping doesn't preload unused brand fonts; the build doesn't conflate brand outputs into non-splittable artifacts.
-
-Primary value is the **verification** — confirming we haven't built a tree-shaking trap that future single-brand consumers couldn't escape. If the audit is clean, note it and move on. If it surfaces traps, fix them. The capability (selective-brand distribution model with consumer-facing tooling) could land alongside the audit if it falls out cheaply, but isn't the gating concern.
-
-Also consider, when reworking this area, splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
-
 ### Skills package (`@measured/calibrate-skills`)
 
 Agent skills markdown. Some ideas:
@@ -38,7 +30,7 @@ Stand up a docs site that consumes published token/component packages and serves
 
 ### CLI bootstrap tool (`@measured/calibrate`)
 
-Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
+Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets. Allow brand selection and support tree-shaking.
 
 ### Component evolution
 
