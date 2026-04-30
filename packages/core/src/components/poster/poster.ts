@@ -14,7 +14,7 @@ export interface ClbrPosterProps {
   children?: string;
   /** Absolute theme lock for foreground content over non-themeable media. */
   contentTheme?: ClbrTheme;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Background image HTML (usually `renderClbrImage(...)`). Caller sanitizes untrusted content. */
   image: string;
@@ -107,7 +107,7 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     image: {

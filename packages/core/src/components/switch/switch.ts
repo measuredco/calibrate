@@ -1,17 +1,17 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrSwitchProps {
   /** Checked state. @default false */
   checked?: boolean;
-  /** Helper text rendered after the label. */
+  /** Helper text rendered after the label. Requires `id`. */
   description?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
-  /** DOM id applied to the underlying input. */
-  id: string;
+  /** DOM id applied to the underlying input. Required when `description` is provided. */
+  id?: string;
   /** Label text content (escaped before render). */
   label: string;
   /** Form field name. */
@@ -38,17 +38,11 @@ export function buildClbrSwitch({
   size = "md",
   value,
 }: ClbrSwitchProps): ClbrNode {
-  const normalizedId = id.trim();
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDescription = description?.trim();
 
-  if (!normalizedId) {
-    throw new Error("id must be a non-empty string.");
-  }
-
-  if (!isValidHtmlId(normalizedId)) {
-    throw new Error(
-      "id must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
+  if (normalizedDescription && !normalizedId) {
+    throw new Error("id must be provided when description is provided.");
   }
 
   const descriptionId = normalizedDescription
@@ -143,8 +137,9 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       type: { kind: "boolean" },
     },
     id: {
-      description: "DOM id applied to the underlying input.",
-      required: true,
+      description:
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      requiredWhen: "`description` is provided",
       type: { kind: "string" },
     },
     label: {
@@ -217,15 +212,9 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       },
       {
         target: { on: "descendant", selector: "input" },
-        attribute: "aria-describedby",
-        condition: { kind: "when-non-empty", prop: "description" },
-        value: { kind: "template", pattern: "{id}-description" },
-      },
-      {
-        target: { on: "descendant", selector: "input" },
         attribute: "id",
-        condition: { kind: "always" },
-        value: { kind: "template", pattern: "{id}" },
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

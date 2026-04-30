@@ -8,7 +8,7 @@ export type ClbrBadgeSize = "sm" | "md";
 export interface ClbrBadgeProps {
   /** Positions the badge as a floating overlay. */
   floating?: boolean;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Badge text content. Escaped as plain text. */
   label: string;
@@ -71,7 +71,7 @@ export const CLBR_BADGE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     label: {

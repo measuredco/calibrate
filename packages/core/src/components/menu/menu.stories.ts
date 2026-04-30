@@ -57,6 +57,6 @@ export const Default = {
   render: (args: ClbrMenuProps) =>
     renderClbrMenu({
       ...args,
-      id: args.id || "storybook-fallback-id",
+      id: args.id || "storybook-fallback-menu-id",
     }),
 };

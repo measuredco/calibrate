@@ -18,7 +18,7 @@ export interface ClbrAlertProps {
   dismissible?: boolean;
   /** Accessible label for the runtime dismiss control. Ignored when not dismissible. @default "Dismiss alert" */
   dismissibleLabel?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
@@ -253,7 +253,7 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     inlineSize: {

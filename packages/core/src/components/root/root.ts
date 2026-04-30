@@ -18,7 +18,7 @@ export interface ClbrRootProps {
   children: string;
   /** Optional explicit text direction. */
   dir?: ClbrDirection;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Optional BCP47 language tag (e.g. `en-GB`). */
   lang?: string;
@@ -108,7 +108,7 @@ export const CLBR_ROOT_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     lang: {

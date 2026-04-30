@@ -16,7 +16,7 @@ export interface ClbrInlineProps {
   children?: string;
   /** Spacing gap size. @default "md" */
   gap?: ClbrInlineGap;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Main-axis distribution. @default "start" */
   justify?: ClbrInlineJustify;
@@ -97,7 +97,7 @@ export const CLBR_INLINE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     justify: {

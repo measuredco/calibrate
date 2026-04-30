@@ -9,7 +9,7 @@ export interface ClbrExpanderProps {
   controlsId?: string;
   /** Expanded state. @default false */
   expanded?: boolean;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Accessible label for the toggle control. @default "Menu" */
   label?: string;
@@ -102,7 +102,7 @@ export const CLBR_EXPANDER_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     label: {

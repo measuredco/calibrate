@@ -6,7 +6,7 @@ export type ClbrDividerOrientation = "horizontal" | "vertical";
 export type ClbrDividerTone = "default" | "subtle" | "brand";
 
 export interface ClbrDividerProps {
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Divider orientation. @default "horizontal" */
   orientation?: ClbrDividerOrientation;
@@ -67,7 +67,7 @@ export const CLBR_DIVIDER_SPEC: ClbrComponentSpec = {
   props: {
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     orientation: {

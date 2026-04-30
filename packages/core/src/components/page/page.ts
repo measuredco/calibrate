@@ -13,7 +13,7 @@ export interface ClbrPageProps {
   children?: string;
   /** Header region markup. Caller sanitizes untrusted content. */
   header: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Sticky header behavior. Emits `data-sticky-header` when provided. */
   stickyHeader?: ClbrPageStickyHeader;
@@ -126,7 +126,7 @@ export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     stickyHeader: {

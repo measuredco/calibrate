@@ -55,7 +55,7 @@ export interface ClbrImageProps {
   shadow?: boolean;
   /** Height in pixels. When `cover` is false, sets the intrinsic `<img>` height attribute. When `cover` is true, sizes the wrapper; if only one of `width`/`height` is set, the wrapper still follows `aspectRatio`, but setting both takes precedence over `aspectRatio`. */
   height?: number;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Emit `loading="lazy"` on the image. @default false */
   lazy?: boolean;
@@ -257,7 +257,7 @@ export const CLBR_IMAGE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     lazy: {

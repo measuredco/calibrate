@@ -22,7 +22,7 @@ export interface ClbrBoxProps {
   border?: boolean;
   /** Trusted inner HTML. */
   children?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Inner block-axis spacing scale. @default "md" */
   paddingBlock?: ClbrBoxPadding;
@@ -106,7 +106,7 @@ export const CLBR_BOX_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     paddingBlock: {

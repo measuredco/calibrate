@@ -27,7 +27,7 @@ export interface ClbrNavProps {
   expanderLabel?: string;
   /** Expander placement when collapsible. @default "start" */
   expanderPosition?: ClbrNavExpanderPosition;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Nav items rendered as semantic list links. */
   items: ClbrNavItem[];
@@ -353,7 +353,7 @@ export const CLBR_NAV_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     collapsible: {

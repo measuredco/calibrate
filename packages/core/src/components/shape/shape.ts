@@ -14,7 +14,7 @@ export type ClbrShapeVariant =
   | "circle-sm";
 
 export interface ClbrShapeProps {
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Size mode. @default "md" */
   size?: ClbrShapeSize;
@@ -74,7 +74,7 @@ export const CLBR_SHAPE_SPEC: ClbrComponentSpec = {
   props: {
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     variant: {

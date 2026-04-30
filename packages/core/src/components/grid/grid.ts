@@ -11,7 +11,7 @@ export interface ClbrGridProps {
   children?: string;
   /** Gap behavior. @default "default" */
   gap?: ClbrGridGap;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
 }
 
@@ -32,7 +32,7 @@ export interface ClbrGridItemProps {
   colStartNarrow?: ClbrGridTrack;
   /** Column start at wide container threshold. Effect is only visible above the wide breakpoint. */
   colStartWide?: ClbrGridTrack;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Justify-self. */
   justify?: ClbrAlign;
@@ -179,7 +179,7 @@ export const CLBR_GRID_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
   },
@@ -242,7 +242,7 @@ export const CLBR_GRID_ITEM_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     rowSpan: {

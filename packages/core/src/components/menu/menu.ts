@@ -99,6 +99,7 @@ export function buildClbrMenu({
       class: "clbr-menu",
       "data-align": align === "start" ? undefined : align,
       "data-size": size,
+      id: normalizedId,
     },
     children: [
       {
@@ -516,6 +517,12 @@ export const CLBR_MENU_SPEC: ClbrComponentSpec = {
         attribute: "data-align",
         condition: { kind: "when-equals", prop: "align", to: "end" },
         value: { kind: "prop", prop: "align" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}" },
       },
       {
         target: {

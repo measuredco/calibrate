@@ -10,7 +10,7 @@ export type ClbrPatternVariant = ClbrShapeVariant;
 export interface ClbrPatternProps {
   /** Trusted inner HTML rendered inside the pattern container. */
   children?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Pattern variant. @default "corner" */
   variant?: ClbrPatternVariant;
@@ -73,7 +73,7 @@ export const CLBR_PATTERN_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     tone: {

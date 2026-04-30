@@ -14,7 +14,7 @@ export interface ClbrTextProps {
   as?: ClbrTextAs;
   /** Text alignment. Ignored when `as` is `span`. @default "start" */
   align?: ClbrAlign;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Enables visited-state styling for links inside text. @default true */
   linkVisited?: boolean;
@@ -102,7 +102,7 @@ export const CLBR_TEXT_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     linkVisited: {

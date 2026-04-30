@@ -16,7 +16,7 @@ export type ClbrHeadingSize =
 export interface ClbrHeadingProps {
   /** Text alignment. @default "start" */
   align?: ClbrAlign;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Semantic heading level; omit to render a `span`. */
   level?: ClbrHeadingLevel;
@@ -100,7 +100,7 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     level: {

@@ -12,7 +12,7 @@ export interface ClbrCardProps {
   headingLevel?: ClbrHeadingLevel;
   /** Optional link destination for the title. Adds a trailing arrow icon when `note` is also provided. */
   href?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Optional note HTML content. Caller sanitizes untrusted content. */
   note?: string;
@@ -158,7 +158,7 @@ export const CLBR_CARD_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     note: {

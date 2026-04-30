@@ -11,7 +11,7 @@ export type ClbrLogoVariant =
   | "graphic";
 
 export interface ClbrLogoProps {
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Accessible label. */
   label: string;
@@ -78,7 +78,7 @@ export const CLBR_LOGO_SPEC: ClbrComponentSpec = {
   props: {
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     label: {

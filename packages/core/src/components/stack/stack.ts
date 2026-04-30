@@ -15,7 +15,7 @@ export interface ClbrStackProps {
   children?: string;
   /** Spacing gap size. @default "md" */
   gap?: ClbrStackGap;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Enables layout-context responsive spacing scale. @default false */
   responsive?: boolean;
@@ -92,7 +92,7 @@ export const CLBR_STACK_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     responsive: {

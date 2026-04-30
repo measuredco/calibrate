@@ -15,9 +15,7 @@ function mountCheckbox(html: string): HTMLElement {
 
 describe("renderClbrCheckbox", () => {
   it("renders checkbox with label", () => {
-    const root = mountCheckbox(
-      renderClbrCheckbox({ id: "subscribe", label: "Subscribe" }),
-    );
+    const root = mountCheckbox(renderClbrCheckbox({ label: "Subscribe" }));
     const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
     const field = root.querySelector(".clbr-checkbox");
 
@@ -29,7 +27,6 @@ describe("renderClbrCheckbox", () => {
   it("emits requested size variant", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
-        id: "subscribe",
         label: "Subscribe",
         size: "sm",
       }),
@@ -44,7 +41,6 @@ describe("renderClbrCheckbox", () => {
       renderClbrCheckbox({
         checked: true,
         disabled: true,
-        id: "subscribe",
         label: "Subscribe",
         required: true,
       }),
@@ -60,7 +56,6 @@ describe("renderClbrCheckbox", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         checked: false,
-        id: "subscribe",
         label: "Subscribe",
       }),
     );
@@ -70,23 +65,14 @@ describe("renderClbrCheckbox", () => {
   });
 
   it("emits aria-invalid only when invalid is true", () => {
-    const validRoot = mountCheckbox(
-      renderClbrCheckbox({
-        id: "subscribe",
-        label: "Subscribe",
-      }),
-    );
+    const validRoot = mountCheckbox(renderClbrCheckbox({ label: "Subscribe" }));
     const validCheckbox = getByRole(validRoot, "checkbox", {
       name: "Subscribe",
     });
     expect(validCheckbox.getAttribute("aria-invalid")).toBeNull();
 
     const invalidRoot = mountCheckbox(
-      renderClbrCheckbox({
-        id: "subscribe",
-        invalid: true,
-        label: "Subscribe",
-      }),
+      renderClbrCheckbox({ invalid: true, label: "Subscribe" }),
     );
     const invalidCheckbox = getByRole(invalidRoot, "checkbox", {
       name: "Subscribe",
@@ -98,7 +84,6 @@ describe("renderClbrCheckbox", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         disabled: true,
-        id: "subscribe",
         invalid: true,
         label: "Subscribe",
       }),
@@ -111,7 +96,6 @@ describe("renderClbrCheckbox", () => {
   it("emits name/value and omits empty values", () => {
     const withValuesRoot = mountCheckbox(
       renderClbrCheckbox({
-        id: "subscribe",
         label: "Subscribe",
         name: "subscribe",
         value: "yes",
@@ -125,12 +109,7 @@ describe("renderClbrCheckbox", () => {
     expect(withValues.getAttribute("value")).toBe("yes");
 
     const withoutValuesRoot = mountCheckbox(
-      renderClbrCheckbox({
-        id: "subscribe",
-        label: "Subscribe",
-        name: "",
-        value: "",
-      }),
+      renderClbrCheckbox({ label: "Subscribe", name: "", value: "" }),
     );
     const withoutValues = getByRole(withoutValuesRoot, "checkbox", {
       name: "Subscribe",
@@ -184,10 +163,16 @@ describe("renderClbrCheckbox", () => {
     expect(root.querySelector(".description")).toBeNull();
   });
 
-  it("throws when id is empty or invalid", () => {
-    expect(() => renderClbrCheckbox({ id: "", label: "Subscribe" })).toThrow(
-      "id must be a non-empty string.",
-    );
+  it("throws when description is provided without id", () => {
+    expect(() =>
+      renderClbrCheckbox({
+        description: "Optional helper text",
+        label: "Subscribe",
+      }),
+    ).toThrow("id must be provided when description is provided.");
+  });
+
+  it("throws on a syntactically invalid id", () => {
     expect(() =>
       renderClbrCheckbox({ id: "not valid", label: "Subscribe" }),
     ).toThrow();
@@ -218,10 +203,17 @@ describe("renderClbrCheckbox", () => {
 
     expect(input.id).toBe("my-checkbox");
   });
+
+  it("omits id when not provided", () => {
+    const root = mountCheckbox(renderClbrCheckbox({ label: "Label" }));
+    const input = root.querySelector("input.checkbox") as HTMLInputElement;
+
+    expect(input.hasAttribute("id")).toBe(false);
+  });
 });
 
 describeSpecConsistency<ClbrCheckboxProps>({
-  baseProps: { id: "cb", label: "Label" },
+  baseProps: { label: "Label" },
   renderer: renderClbrCheckbox,
   spec: CLBR_CHECKBOX_SPEC,
 });

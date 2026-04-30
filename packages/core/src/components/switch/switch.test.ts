@@ -15,9 +15,7 @@ function mountSwitch(html: string): HTMLElement {
 
 describe("renderClbrSwitch", () => {
   it("renders switch with label and default size", () => {
-    const root = mountSwitch(
-      renderClbrSwitch({ id: "notifications", label: "Notifications" }),
-    );
+    const root = mountSwitch(renderClbrSwitch({ label: "Notifications" }));
     const input = getByRole(root, "switch", { name: "Notifications" });
     const field = root.querySelector(".clbr-switch");
 
@@ -31,7 +29,6 @@ describe("renderClbrSwitch", () => {
       renderClbrSwitch({
         checked: true,
         disabled: true,
-        id: "notifications",
         label: "Notifications",
       }),
     );
@@ -43,11 +40,7 @@ describe("renderClbrSwitch", () => {
 
   it("omits checked when checked is false", () => {
     const root = mountSwitch(
-      renderClbrSwitch({
-        checked: false,
-        id: "notifications",
-        label: "Notifications",
-      }),
+      renderClbrSwitch({ checked: false, label: "Notifications" }),
     );
     const input = getByRole(root, "switch", { name: "Notifications" });
 
@@ -56,11 +49,7 @@ describe("renderClbrSwitch", () => {
 
   it("emits size attribute for sm", () => {
     const root = mountSwitch(
-      renderClbrSwitch({
-        id: "notifications",
-        label: "Notifications",
-        size: "sm",
-      }),
+      renderClbrSwitch({ label: "Notifications", size: "sm" }),
     );
     const field = root.querySelector(".clbr-switch");
 
@@ -70,7 +59,6 @@ describe("renderClbrSwitch", () => {
   it("emits name/value and omits empty values", () => {
     const withValuesRoot = mountSwitch(
       renderClbrSwitch({
-        id: "notifications",
         label: "Notifications",
         name: "notifications",
         value: "yes",
@@ -84,12 +72,7 @@ describe("renderClbrSwitch", () => {
     expect(withValues.getAttribute("value")).toBe("yes");
 
     const withoutValuesRoot = mountSwitch(
-      renderClbrSwitch({
-        id: "notifications",
-        label: "Notifications",
-        name: "",
-        value: "",
-      }),
+      renderClbrSwitch({ label: "Notifications", name: "", value: "" }),
     );
     const withoutValues = getByRole(withoutValuesRoot, "switch", {
       name: "Notifications",
@@ -143,10 +126,16 @@ describe("renderClbrSwitch", () => {
     expect(root.querySelector(".description")).toBeNull();
   });
 
-  it("throws when id is empty or invalid", () => {
-    expect(() => renderClbrSwitch({ id: "", label: "Notifications" })).toThrow(
-      "id must be a non-empty string.",
-    );
+  it("throws when description is provided without id", () => {
+    expect(() =>
+      renderClbrSwitch({
+        description: "Optional helper text",
+        label: "Notifications",
+      }),
+    ).toThrow("id must be provided when description is provided.");
+  });
+
+  it("throws on a syntactically invalid id", () => {
     expect(() =>
       renderClbrSwitch({ id: "not valid", label: "Notifications" }),
     ).toThrow();
@@ -177,10 +166,17 @@ describe("renderClbrSwitch", () => {
 
     expect(input.id).toBe("my-switch");
   });
+
+  it("omits id when not provided", () => {
+    const root = mountSwitch(renderClbrSwitch({ label: "Label" }));
+    const input = root.querySelector("input.switch") as HTMLInputElement;
+
+    expect(input.hasAttribute("id")).toBe(false);
+  });
 });
 
 describeSpecConsistency<ClbrSwitchProps>({
-  baseProps: { id: "sw", label: "Label" },
+  baseProps: { label: "Label" },
   renderer: renderClbrSwitch,
   spec: CLBR_SWITCH_SPEC,
 });

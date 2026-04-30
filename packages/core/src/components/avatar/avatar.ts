@@ -50,7 +50,7 @@ export interface ClbrAvatarProps {
   entity?: ClbrAvatarEntity;
   /** Avatar background color token. If omitted and `name` exists, color is hash-derived (01..09). */
   color?: ClbrAvatarColor;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Explicit initials override. Trimmed and whitespace-collapsed; alphabetic only, 1-3 characters. */
   initials?: string;
@@ -265,7 +265,7 @@ export const CLBR_AVATAR_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     initials: {

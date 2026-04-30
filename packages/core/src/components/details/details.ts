@@ -7,7 +7,7 @@ import { buildClbrIcon } from "../icon/icon";
 export interface ClbrDetailsProps {
   /** Content markup inside the details panel. Caller sanitizes untrusted content. */
   children?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
@@ -110,7 +110,7 @@ export const CLBR_DETAILS_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     inlineSize: {

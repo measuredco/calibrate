@@ -12,7 +12,7 @@ export interface ClbrProseProps {
   align?: ClbrAlign;
   /** Hanging-indent layout behavior. */
   hangingPunctuation?: ClbrProseHangingPunctuation;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
@@ -85,7 +85,7 @@ export const CLBR_PROSE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     measured: {

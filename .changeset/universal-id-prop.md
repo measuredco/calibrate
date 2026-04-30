@@ -9,7 +9,7 @@ Consumers retain control of id generation; the renderer never auto-generates ids
 
 **Breaking changes** (alpha — bumped as minor per the existing posture):
 
-- `Checkbox` and `Switch` drop their `descriptionId` prop and instead require an `id`. The description's id is now derived as `${id}-description`. This aligns them with `Input`, `Textarea`, `Range`, `Radios`, and `Fieldset`, which already followed this pattern.
-- `Icon` drops its `titleId` prop and now requires an `id` when `ariaHidden` is false. The title's id is derived as `${id}-title`.
+- `Checkbox` and `Switch` drop their `descriptionId` prop. When `description` is provided, `id` is now required and the description element's id is derived as `${id}-description`. This aligns them with `Input`, `Textarea`, `Range`, `Radios`, and `Fieldset`, which already followed this pattern.
+- `Icon` drops its `titleId` prop. When `ariaHidden` is false, `id` is now required and the title element's id is derived as `${id}-title`.
 
 Migration: replace `descriptionId="my-id"` with `id="my-id"` on Checkbox/Switch, and `titleId="my-id"` with `id="my-id"` on Icon (in named mode). The derived id is internal and rarely needs to be referenced directly.

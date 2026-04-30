@@ -53,7 +53,7 @@ export type ClbrIconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "fill";
 export interface ClbrIconProps {
   /** Emits `aria-hidden="true"` when true. @default true */
   ariaHidden?: boolean;
-  /** Optional DOM id. Required when `ariaHidden` is false. */
+  /** DOM id. Required when `ariaHidden` is false. */
   id?: string;
   /** SVG title text. Required when `ariaHidden` is false. */
   title?: string;
@@ -200,7 +200,7 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       requiredWhen: "`ariaHidden` is false",
       type: { kind: "string" },
     },

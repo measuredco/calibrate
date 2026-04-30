@@ -11,7 +11,7 @@ export interface ClbrFigureProps {
   caption: string;
   /** Trusted media HTML (typically a `renderClbrImage` result). */
   children: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Enables breakpoint-responsive type sizing for the caption. @default false */
   responsive?: boolean;
@@ -100,7 +100,7 @@ export const CLBR_FIGURE_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     responsive: {

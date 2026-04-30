@@ -23,7 +23,7 @@ export interface ClbrLinkProps {
   download?: boolean | string;
   /** Link destination. */
   href: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Optional icon markup rendered alongside the label. Caller sanitizes untrusted content. */
   icon?: string;
@@ -187,7 +187,7 @@ export const CLBR_LINK_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     icon: {

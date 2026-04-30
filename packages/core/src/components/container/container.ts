@@ -10,7 +10,7 @@ export interface ClbrContainerProps {
   children?: string;
   /** Inline gutter behavior. @default "default" */
   gutter?: ClbrContainerGutter;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Max-inline-size behavior. Effect is only visible on wider viewports. @default "default" */
   maxInlineSize?: ClbrContainerMaxInlineSize;
@@ -71,7 +71,7 @@ export const CLBR_CONTAINER_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     maxInlineSize: {

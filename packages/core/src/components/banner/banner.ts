@@ -23,7 +23,7 @@ export interface ClbrBannerProps {
   /** Accessible label for the runtime dismiss control. Ignored when not dismissible.
    * @default "Dismiss banner" */
   dismissibleLabel?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Banner body text (escaped before render). */
   message: string;
@@ -219,7 +219,7 @@ export const CLBR_BANNER_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     message: {

@@ -8,7 +8,7 @@ export type ClbrPanelPadding = "xs" | "sm" | "md" | "lg" | "xl";
 export interface ClbrPanelProps {
   /** Trusted inner HTML. */
   children?: string;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Inner spacing scale. @default "md" */
   padding?: ClbrPanelPadding;
@@ -66,7 +66,7 @@ export const CLBR_PANEL_SPEC: ClbrComponentSpec = {
     },
     id: {
       description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+        "DOM id. Useful for analytics, deep links, or programmatic focus.",
       type: { kind: "string" },
     },
     padding: {
