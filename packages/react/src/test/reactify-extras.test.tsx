@@ -133,6 +133,15 @@ describe("form-control event-handler routing", () => {
     unmount();
   });
 
+  it("preserves checked={false} on the inner input so React keeps it controlled", () => {
+    const { container, unmount } = mount(
+      <Checkbox checked={false} id="cb" label="Agree" value="yes" />,
+    );
+    const input = container.querySelector("input.checkbox") as HTMLInputElement;
+    expect(reactProps(input).checked).toBe(false);
+    unmount();
+  });
+
   it("attaches autoFocus to the inner input only on Input", () => {
     const { container, unmount } = mount(
       <Input autoFocus id="email" label="Email" type="email" />,

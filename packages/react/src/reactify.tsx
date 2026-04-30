@@ -51,17 +51,27 @@ export type NativeAttrsFor<E extends Element> = Omit<
 
 /**
  * Convert a Calibrate IR attr record into React props. Renames via
- * `ATTR_NAME_MAP`; drops `false` / `undefined`; maps `true` on `data-*`
- * to `""` (matches core SSR's valueless output — React otherwise
- * stringifies to `"true"`). Native bool attrs and `aria-*` booleans pass
- * through for React's spec-correct rendering.
+ * `ATTR_NAME_MAP`; drops `undefined`; drops `false` for `data-*` /
+ * `aria-*` (matches core SSR's omit behaviour); preserves `false` for
+ * HTML boolean attrs (`checked`, `disabled`, `required`, `readonly`,
+ * etc.) so React keeps inputs controlled across edits — dropping a
+ * false `checked` flips the element from controlled to uncontrolled
+ * and triggers React's controlled-input warning. Maps `true` on
+ * `data-*` to `""` (core SSR emits the bare attribute; React otherwise
+ * stringifies to `"true"`).
  */
 function toReactProps(
   attrs: Record<string, string | boolean | undefined>,
 ): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(attrs)) {
-    if (value === false || value == null) continue;
+    if (value == null) continue;
+    if (
+      value === false &&
+      (key.startsWith("data-") || key.startsWith("aria-"))
+    ) {
+      continue;
+    }
     const reactKey = ATTR_NAME_MAP[key] ?? key;
     out[reactKey] = value === true && key.startsWith("data-") ? "" : value;
   }
