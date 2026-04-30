@@ -137,8 +137,7 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       type: { kind: "boolean" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       requiredWhen: "`description` is provided",
       type: { kind: "string" },
     },

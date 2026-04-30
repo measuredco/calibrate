@@ -25,7 +25,7 @@ export interface ClbrMenuItem {
 export interface ClbrMenuProps {
   /** Popup alignment relative to the trigger. @default "start" */
   align?: ClbrMenuAlign;
-  /** Required HTML id seed for the menu popup and trigger relationship. */
+  /** DOM id applied to the host. Trigger and popup ids are derived as `${id}-button` and `${id}-popup`. */
   id: string;
   /** Action items rendered inside the popup menu. */
   items: ClbrMenuItem[];
@@ -437,7 +437,8 @@ export const CLBR_MENU_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["start", "end"] },
     },
     id: {
-      description: "`id` seed used for the trigger and popup.",
+      description:
+        "DOM id applied to the host. Trigger and popup ids are derived as `${id}-button` and `${id}-popup`.",
       required: true,
       type: { kind: "string" },
     },

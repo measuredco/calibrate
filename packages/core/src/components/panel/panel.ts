@@ -65,8 +65,7 @@ export const CLBR_PANEL_SPEC: ClbrComponentSpec = {
       type: { kind: "html" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     padding: {

@@ -199,8 +199,7 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
       type: { kind: "boolean" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       requiredWhen: "`ariaHidden` is false",
       type: { kind: "string" },
     },

@@ -77,8 +77,7 @@ export const CLBR_LOGO_SPEC: ClbrComponentSpec = {
   content: { kind: "text", prop: "label" },
   props: {
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     label: {

@@ -84,8 +84,7 @@ export const CLBR_PROSE_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["always", "notebook"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     measured: {

@@ -96,8 +96,7 @@ export const CLBR_INLINE_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["2xs", "xs", "sm", "md", "lg"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     justify: {

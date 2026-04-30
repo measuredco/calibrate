@@ -256,8 +256,7 @@ export const CLBR_IMAGE_SPEC: ClbrComponentSpec = {
       type: { kind: "number" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     lazy: {

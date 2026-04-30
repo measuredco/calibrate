@@ -107,8 +107,7 @@ export const CLBR_ROOT_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["ltr", "rtl"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     lang: {

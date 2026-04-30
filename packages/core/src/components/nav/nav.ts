@@ -352,8 +352,7 @@ export const CLBR_NAV_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["start", "end"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     collapsible: {

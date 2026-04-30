@@ -99,8 +99,7 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["start", "center", "end"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     level: {

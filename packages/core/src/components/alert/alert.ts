@@ -252,8 +252,7 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
       type: { kind: "string" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     inlineSize: {

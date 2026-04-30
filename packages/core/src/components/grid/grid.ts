@@ -178,8 +178,7 @@ export const CLBR_GRID_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["default", "expanded", "none"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
   },
@@ -241,8 +240,7 @@ export const CLBR_GRID_ITEM_SPEC: ClbrComponentSpec = {
       type: gridTrackType,
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     rowSpan: {

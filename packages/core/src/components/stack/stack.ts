@@ -91,8 +91,7 @@ export const CLBR_STACK_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["none", "xs", "sm", "md", "lg"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     responsive: {

@@ -70,8 +70,7 @@ export const CLBR_CONTAINER_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["default", "narrow", "none"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     maxInlineSize: {

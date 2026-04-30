@@ -70,8 +70,7 @@ export const CLBR_BADGE_SPEC: ClbrComponentSpec = {
       type: { kind: "boolean" },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     label: {

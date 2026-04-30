@@ -106,8 +106,7 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
       type: { kind: "enum", values: ["light", "dark"] },
     },
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     image: {

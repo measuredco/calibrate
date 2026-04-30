@@ -73,8 +73,7 @@ export const CLBR_SHAPE_SPEC: ClbrComponentSpec = {
   content: { kind: "none" },
   props: {
     id: {
-      description:
-        "DOM id. Useful for analytics, deep links, or programmatic focus.",
+      description: "DOM id.",
       type: { kind: "string" },
     },
     variant: {
