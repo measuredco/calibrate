@@ -6,12 +6,6 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Editor description hover for `--clbr-*` custom properties
-
-`@measured/calibrate-config/editor/clbr.intellisense.css` (shipped) gives consumers typeahead and value hover via VS Code's CSS workspace scan, but `$description` does not surface in editor hover for `var(...)` — VS Code's CSS language service doesn't extract descriptions from comments adjacent to custom-property declarations.
-
-The likely path is [CSS Custom Data](https://code.visualstudio.com/api/extension-guides/custom-data-extension) emitted alongside the lookup (`.../editor/clbr.custom-data.json`) and wired in via `css.customData`. Custom Data is hover-oriented and a natural fit for description metadata. A dedicated VS Code extension is the last-resort fallback.
-
 ## Next
 
 What we could be working on next.
