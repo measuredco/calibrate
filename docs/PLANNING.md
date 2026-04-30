@@ -10,20 +10,6 @@ What we're working on now.
 
 What we could be working on next.
 
-### Structured `requiredWhen` in the SPEC
-
-Today `requiredWhen` is a free-form string ("`description` is provided"). The spec consistency runner can't evaluate it, so it probes referenced props with empty/undefined values regardless. This is fine while no rule references a `requiredWhen` prop _together with_ its trigger — but when one does (e.g. an `aria-describedby` rule whose `value` template references the conditional `id` and whose `condition` references `description`), the runner explores combinations the renderer rejects with a throw.
-
-Concrete impact today: `Checkbox`, `Switch`, and `Icon` keep their description / title id wiring in build code only, instead of also expressing it as a spec rule. That works but means the SPEC under-describes the contract that adapters / codegen could otherwise consume.
-
-Proposed direction:
-
-1. Make `requiredWhen` a structured condition (reuse the existing rule-condition vocabulary: `when-truthy`, `when-non-empty`, `when-equals`, etc.).
-2. Have the spec consistency runner skip combos that violate it (or: assert the renderer throws as documentation of the requirement).
-3. Add the omitted aria-describedby / aria-labelledby rules to Checkbox, Switch, and Icon once the runner can reason about them.
-
-Touches: `packages/core/src/spec.ts`, `packages/core/src/test/spec.ts`, plus the three components above.
-
 ### Skills package (`@measured/calibrate-skills`)
 
 Agent skills markdown. Some ideas:
