@@ -186,13 +186,39 @@ async function main() {
     outputs.push(cfg);
   }
 
+  // IntelliSense lookup CSS — derived from the per-target public CSS already
+  // emitted above. Combines the cross-brand base surface with the canonical
+  // brand (msrd) so consumers get a single file to drop into their `.vscode/`
+  // directory. Cross-writes into `@measured/calibrate-config` (no build of
+  // its own; mirrors the tokens-package pattern).
+  const intellisenseSources = outputs.filter(
+    (cfg) => cfg.key === "base" || cfg.key === "msrd",
+  );
+  const intellisenseOut = normalizePath(
+    "..",
+    "config",
+    "editor",
+    "clbr.intellisense.css",
+  );
+
+  if (intellisenseSources.length > 0) {
+    const args = ["scripts/pipeline/prepare-intellisense-output.mjs"];
+
+    for (const cfg of intellisenseSources) {
+      args.push("--input", cfg.out);
+    }
+
+    args.push("--out", intellisenseOut);
+    run("node", args);
+  }
+
   console.log(
     `Built token artifacts:\n${outputs
       .map(
         (cfg) =>
           `- CSS: ${cfg.out}\n  Private primitive CSS: ${cfg.outPrivate}\n  Consumer JSON: ${cfg.json}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
       )
-      .join("\n")}`,
+      .join("\n")}\n- IntelliSense lookup: ${intellisenseOut}`,
   );
 }
 
