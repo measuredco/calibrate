@@ -154,6 +154,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Build markdown
+        run: pnpm run markdown:build
+
       - name: Typecheck core
         run: pnpm run core:typecheck
 
@@ -182,6 +185,9 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile
+
+      - name: Build markdown
+        run: pnpm run markdown:build
 
       - name: Build core
         run: pnpm run core:build
@@ -243,6 +249,9 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile
+
+      - name: Build markdown
+        run: pnpm run markdown:build
 
       - name: Build Storybook
         run: pnpm run storybook:build
