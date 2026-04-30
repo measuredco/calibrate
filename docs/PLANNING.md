@@ -6,11 +6,11 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Editor IntelliSense for `--clbr-*` custom properties
+### Editor description hover for `--clbr-*` custom properties
 
-Surface descriptions for every published `--clbr-*` custom property in consumers' editors. VS Code's CSS language service resolves var values via workspace scan but does not extract descriptions from CSS comments adjacent to declarations — confirmed locally. The likely vehicle is [CSS Custom Data](https://code.visualstudio.com/api/extension-guides/custom-data-extension), shipped per brand alongside the existing CSS / JSON outputs and wired in via `css.customData`. Verify the integration provides completion within `var(...)` (not just hover) before committing to the shape; fallback paths include `css.styleSheets` workspace settings or a dedicated VS Code extension.
+`@measured/calibrate-config/editor/clbr.intellisense.css` (shipped) gives consumers typeahead and value hover via VS Code's CSS workspace scan, but `$description` does not surface in editor hover for `var(...)` — VS Code's CSS language service doesn't extract descriptions from comments adjacent to custom-property declarations.
 
-Note: the dist CSS still emits `$description` as block comments adjacent to each custom property declaration. Those descriptions are useful for direct file reading and grep-based tools but do not surface in VS Code's hover / completion. The Custom Data export (or equivalent) is what bridges them to the editor.
+The likely path is [CSS Custom Data](https://code.visualstudio.com/api/extension-guides/custom-data-extension) emitted alongside the lookup (`.../editor/clbr.custom-data.json`) and wired in via `css.customData`. Custom Data is hover-oriented and a natural fit for description metadata. A dedicated VS Code extension is the last-resort fallback.
 
 ## Next
 
@@ -54,15 +54,9 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 - `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required, a11y)
 
-### Style Dictionary DTCG 2025.10 gaps
+### Content package (`@measured/calibrate-content`)
 
-[Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
-
-- Revisit bridge-side DTCG `$dimension`/`$duration` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
-  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
-- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
-  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
-  - consider extracting `resolveAllContextPermutations` into a single module-level call shared by `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` — eliminates duplicate resolution and stage drift risk. May be obsolete if SD's native consumption removes the per-stage iteration entirely.
+Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers. Note: consider current `prose` a11y issues.
 
 ### Documentation website (`apps/documentation`)
 
@@ -74,33 +68,39 @@ Agent skills markdown. Some ideas:
 
 - Sorting conventions that don't fit lint rules
 
-### CLI bootstrap tool (`@measured/calibrate`)
-
-Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
-
-### Content package (`@measured/calibrate-content`)
-
-Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers. Note: consider current `prose` a11y issues.
-
 ### MCP/API
 
 Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
-
-### Brand tree-shaking strategy
-
-Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract. At that point, consider splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
-
-### Stylelint token enforcement
-
-Adopt "must reference Calibrate token" rules via [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value), or a fully custom config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config).
 
 ### Private tokens in `core`
 
 Emit a non-exported private CSS artifact from `@measured/calibrate-core` that composes `packages/system/dist/private/css/*` for discovery/debug workflows, paired with a `no-restricted-imports` rule in `@measured/calibrate-config/eslint`.
 
+### CLI bootstrap tool (`@measured/calibrate`)
+
+Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
+
+### Stylelint token enforcement
+
+Adopt "must reference Calibrate token" rules via [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value), or a fully custom config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config).
+
+### Brand tree-shaking strategy
+
+Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract. At that point, consider splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
+
 ### Vue framework adapter
 
 Validate that the `packages/adapter` SPEC walker and emitter generalises by authoring a second emitter alongside `src/react`. A small archetype floor (Button, Banner, Page, Menu — pass-through + slotted + CE + events).
+
+### Style Dictionary DTCG 2025.10 gaps
+
+[Support for DTCG v2025.10](https://github.com/style-dictionary/style-dictionary/issues/1590)
+
+- Revisit bridge-side DTCG `$dimension`/`$duration` normalization once Style Dictionary fully supports nested `{value, unit}` in composite CSS transforms:
+  - remove `normalizeDtcgValueObjects` compatibility shim from `prepare-sd-sources.mjs` when safe
+- Revisit resolver bridge scope once Style Dictionary lands native DTCG resolver support:
+  - reduce/remove custom resolver->SD source adaptation where SD can natively consume resolver semantics
+  - consider extracting `resolveAllContextPermutations` into a single module-level call shared by `prepare-sd-contexts.mjs` and `prepare-json-output.mjs` — eliminates duplicate resolution and stage drift risk. May be obsolete if SD's native consumption removes the per-stage iteration entirely.
 
 ### iOS / Android token emit targets
 

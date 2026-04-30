@@ -16,8 +16,12 @@
     "eslint.d.ts",
     "stylelint.mjs",
     "stylelint.d.ts",
+    "editor",
     "README.md"
   ],
+  "scripts": {
+    "verify": "node scripts/verify.mjs"
+  },
   "types": "./index.d.ts",
   "exports": {
     "./browserslist": {
