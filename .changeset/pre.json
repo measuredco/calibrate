@@ -10,15 +10,19 @@
     "@measured/calibrate-core": "0.1.0",
     "@measured/calibrate-react": "0.1.0",
     "@measured/calibrate-system": "0.1.0",
-    "@measured/calibrate-tokens": "0.1.0"
+    "@measured/calibrate-tokens": "0.1.0",
+    "@measured/calibrate-markdown": "0.2.0-alpha.5"
   },
   "changesets": [
     "assets-favicons",
     "calibrate-config-lint-presets",
+    "code-block-keyboard-scroll-a11y",
+    "config-intellisense-lookup",
     "core-private-system-dep-leak",
     "heading-rename-props",
     "import-sort",
     "initial-alpha-release",
+    "markdown-package",
     "semantic-token-descriptions",
     "storybook-a11y-rule-scope",
     "stylelint-css-reorder",

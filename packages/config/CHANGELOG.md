@@ -1,5 +1,15 @@
 # @measured/calibrate-config
 
+## 0.2.0-alpha.6
+
+### Minor Changes
+
+- 29965e7: Add an editor IntelliSense lookup for Calibrate's `--clbr-*` custom properties. The new file ships at `@measured/calibrate-config/editor/clbr.intellisense.css` listing every published semantic token (base + msrd at default context) with its resolved value and `$description`. Consumers drop the file into their project's `.vscode/` directory and VS Code's CSS workspace scan surfaces typeahead and value hover for every var when authoring CSS.
+
+  ```sh
+  cp node_modules/@measured/calibrate-config/editor/clbr.intellisense.css .vscode/
+  ```
+
 ## 0.2.0-alpha.5
 
 ## 0.2.0-alpha.4
