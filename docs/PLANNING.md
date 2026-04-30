@@ -6,16 +6,12 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Markdown package (`@measured/calibrate-markdown`)
+### Prose a11y refinements
 
-Opinionated GFM markdown → HTML utility, designed to pair with the `prose` component (loose coupling — both target GFM's element set, neither knows about the other beyond that). Port the existing implementation from [measuredco-site/lib/markdown.ts](https://github.com/measuredco/measuredco-site/blob/main/lib/markdown.ts).
+Open items deferred from the `@measured/calibrate-markdown` v1 ship — both surface as `prose` rendering concerns, since the markdown pipeline emits the HTML that prose styles:
 
-Sanitization is intentionally out of scope: core's SSR renderers assume trusted HTML, and sanitization has different maintenance posture (security cadence, threat-model-dependent shape) than markdown processing. If a sanitization use case emerges, it ships as a separate package (`calibrate-sanitize`).
-
-Tweaks to consider during the port (not strict requirements — open questions, not blockers):
-
-- Address `prose` a11y issues. Notably the code-block scroll behaviour — may warrant a different syntax-highlighting approach in the renderer than the reference implementation uses.
-- Consider adding labels to GFM task list items for screen-reader clarity.
+- Address `prose` code-block scroll a11y. May warrant swapping the `rehype-highlight` (highlight.js) approach in `@measured/calibrate-markdown` for an alternative that produces more accessible output structure.
+- Add labels to `prose` GFM task list items for screen-reader clarity.
 
 ## Next
 
