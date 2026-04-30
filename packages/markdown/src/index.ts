@@ -1,4 +1,5 @@
 import deepmerge from "deepmerge";
+import type { Root } from "hast";
 import type { Schema } from "hast-util-sanitize";
 import rehypeColorChips from "rehype-color-chips";
 import rehypeHighlight from "rehype-highlight";
@@ -10,6 +11,7 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
+import { visit } from "unist-util-visit";
 
 // Allowances for `rehype-highlight` (hljs class names) and
 // `rehype-color-chips` (chip class + inline background-color style).
@@ -30,6 +32,15 @@ export const sanitizeInlineSchema: Schema = {
   tagNames: ["a", "b", "br", "code", "cite", "del", "em", "i", "strong", "sup"],
 };
 
+// Make `<pre>` keyboard-focusable so users can scroll overflowing code blocks.
+const rehypeAccessiblePre = () => (tree: Root) => {
+  visit(tree, "element", (node) => {
+    if (node.tagName === "pre") {
+      node.properties = { ...(node.properties ?? {}), tabIndex: 0 };
+    }
+  });
+};
+
 export const processMarkdown = (markdown: string): string =>
   String(
     unified()
@@ -40,6 +51,7 @@ export const processMarkdown = (markdown: string): string =>
       .use(rehypeSlug)
       .use(rehypeColorChips)
       .use(rehypeHighlight)
+      .use(rehypeAccessiblePre)
       .use(rehypeSanitize, sanitizeSchema)
       .use(rehypeStringify)
       .processSync(markdown),

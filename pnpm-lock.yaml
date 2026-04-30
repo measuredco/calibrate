@@ -295,7 +295,13 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.1.0
     devDependencies:
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
       hast-util-sanitize:
         specifier: ^5.0.0
         version: 5.0.2

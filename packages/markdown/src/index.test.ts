@@ -21,6 +21,12 @@ describe("processMarkdown", () => {
 
     expect(out).not.toContain("<script>");
   });
+
+  it("adds tabIndex to <pre> for keyboard scroll a11y", () => {
+    const out = processMarkdown("```\nfoo\n```");
+
+    expect(out).toMatch(/<pre[^>]+tabindex="0"/);
+  });
 });
 
 describe("processMarkdownInline", () => {
