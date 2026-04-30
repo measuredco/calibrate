@@ -227,6 +227,28 @@ describe("renderClbrCheckbox", () => {
     ).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+
+  it("renders consumer-provided id on the underlying input", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({ id: "my-checkbox", label: "Label" }),
+    );
+    const input = root.querySelector("input.checkbox") as HTMLInputElement;
+
+    expect(input.id).toBe("my-checkbox");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountCheckbox(renderClbrCheckbox({ label: "Label" }));
+    const input = root.querySelector("input.checkbox") as HTMLInputElement;
+
+    expect(input.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrCheckbox({ id: "not valid", label: "Label" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrCheckboxProps>({

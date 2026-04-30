@@ -26,6 +26,7 @@ export const Default = {
   args: {
     children: `<div class="example-content"></div>`,
     gutter: "default",
+    id: "",
     maxInlineSize: "default",
   } satisfies ClbrContainerProps,
   render: (args: ClbrContainerProps) => renderClbrContainer(args),

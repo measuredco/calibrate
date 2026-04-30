@@ -24,6 +24,7 @@ export const Default = {
     as: "div",
     children: "",
     gap: "md",
+    id: "",
     responsive: false,
   } satisfies ClbrStackProps,
   render: (args: ClbrStackProps) => {

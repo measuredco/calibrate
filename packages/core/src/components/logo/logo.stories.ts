@@ -17,6 +17,7 @@ export default meta;
 
 export const Default = {
   args: {
+    id: "",
     label: "Measured",
     size: "md",
     tone: "default",

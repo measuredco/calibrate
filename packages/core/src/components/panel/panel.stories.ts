@@ -20,6 +20,7 @@ export default meta;
 export const Default = {
   args: {
     children: '<div class="example-content"></div>',
+    id: "",
     padding: "md",
     surface: undefined,
   } satisfies ClbrPanelProps,

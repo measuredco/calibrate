@@ -45,6 +45,7 @@ const simpleIcons = {
 export const Default = {
   args: {
     centerMain: false,
+    id: "",
     stickyHeader: "always",
     banner: undefined,
     header: renderClbrContainer({

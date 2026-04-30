@@ -34,6 +34,7 @@ export const Default = {
       shadow: true,
       src: "https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_640,h_360,c_fill/v1771287162/facet/facet-965825281_gatqoa.png",
     }),
+    id: "",
     responsive: false,
   } satisfies ClbrFigureProps,
   render: (args: ClbrFigureProps) => renderClbrFigure(args),

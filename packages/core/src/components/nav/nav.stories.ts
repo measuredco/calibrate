@@ -38,6 +38,7 @@ export const Default = {
     contentId: "content-id",
     expanderLabel: "",
     expanderPosition: "start",
+    id: "",
     items,
     label: "",
     size: "md",

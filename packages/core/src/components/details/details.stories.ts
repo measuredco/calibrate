@@ -24,6 +24,7 @@ export default meta;
 export const Default = {
   args: {
     children: '<div class="example-content"></div>',
+    id: "",
     inlineSize: "fit",
     open: false,
     summary: "Summary",

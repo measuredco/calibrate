@@ -26,6 +26,7 @@ export default meta;
 export const Default = {
   args: {
     floating: false,
+    id: "",
     label: "Badge",
     size: "md",
     tone: undefined,

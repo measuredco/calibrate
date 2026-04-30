@@ -27,6 +27,7 @@ export const Default = {
     description: "Description",
     descriptionId: "description-id",
     disabled: false,
+    id: "",
     invalid: false,
     label: "Label",
     name: "",

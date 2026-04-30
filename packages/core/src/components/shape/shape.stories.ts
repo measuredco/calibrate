@@ -18,6 +18,7 @@ export default meta;
 
 export const Default = {
   args: {
+    id: "",
     size: "md",
     tone: "brand",
     variant: "corner",

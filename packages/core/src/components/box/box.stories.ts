@@ -22,6 +22,7 @@ export const Default = {
     background: "default",
     border: true,
     children: '<div class="example-content"></div>',
+    id: "",
     paddingBlock: "md",
     paddingInline: "md",
     radius: undefined,

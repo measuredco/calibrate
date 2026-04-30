@@ -24,6 +24,7 @@ export default meta;
 export const Default = {
   args: {
     align: "start",
+    id: "",
     level: undefined,
     opticalAlign: false,
     responsive: false,

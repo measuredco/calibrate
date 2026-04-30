@@ -25,6 +25,7 @@ export default meta;
 export const Default = {
   args: {
     children: `<div style="block-size: 6rem;"></div>`,
+    id: "",
     size: "md",
     tone: "default",
     variant: "corner",

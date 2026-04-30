@@ -25,6 +25,7 @@ export const Default = {
     description: "Description",
     headingLevel: undefined,
     href: "#",
+    id: "",
     note: "Note",
     surface: undefined,
     title: "Title",

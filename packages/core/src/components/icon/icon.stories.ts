@@ -33,6 +33,7 @@ export default meta;
 export const Default = {
   args: {
     ariaHidden: true,
+    id: "",
     mirrored: undefined,
     name: "settings",
     size: "md",

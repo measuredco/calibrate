@@ -25,6 +25,7 @@ export const Default = {
     as: "span",
     children:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="/">Ut enim ad minim</a>, nostrud exercitation ullamco laboris nisi ut aliquip ex ea.',
+    id: "",
     linkVisited: true,
     measured: true,
     responsive: false,

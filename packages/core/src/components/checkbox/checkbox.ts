@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { isValidHtmlId, normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
@@ -12,6 +12,8 @@ export interface ClbrCheckboxProps {
   descriptionId?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
+  /** Optional DOM id applied to the underlying input. */
+  id?: string;
   /** Invalid state. Ignored when `disabled`. @default false */
   invalid?: boolean;
   /** Label text content (escaped before render). */
@@ -37,6 +39,7 @@ export function buildClbrCheckbox({
   description,
   descriptionId,
   disabled,
+  id,
   invalid,
   label,
   name,
@@ -44,6 +47,7 @@ export function buildClbrCheckbox({
   size = "md",
   value,
 }: ClbrCheckboxProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDescription = description?.trim();
   const normalizedDescriptionId = descriptionId?.trim();
 
@@ -79,6 +83,7 @@ export function buildClbrCheckbox({
             checked: Boolean(checked),
             class: "checkbox",
             disabled: isDisabled,
+            id: normalizedId,
             name: name || undefined,
             required: Boolean(required),
             type: "checkbox",
@@ -154,6 +159,11 @@ export const CLBR_CHECKBOX_SPEC: ClbrComponentSpec = {
       default: false,
       description: "Prevents interaction.",
       type: { kind: "boolean" },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     invalid: {
       default: false,
@@ -244,6 +254,12 @@ export const CLBR_CHECKBOX_SPEC: ClbrComponentSpec = {
           ],
         },
         value: { kind: "literal", text: "true" },
+      },
+      {
+        target: { on: "descendant", selector: "input" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },
