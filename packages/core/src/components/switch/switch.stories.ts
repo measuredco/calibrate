@@ -25,20 +25,12 @@ export const Default = {
   args: {
     checked: true,
     description: "Description",
-    descriptionId: "description-id",
     disabled: false,
-    id: "",
+    id: "storybook-switch",
     label: "Label",
     name: "",
     size: "md",
     value: "",
   } satisfies ClbrSwitchProps,
-  render: (args: ClbrSwitchProps) => {
-    return renderClbrSwitch({
-      ...args,
-      descriptionId: args.description?.trim()
-        ? args.descriptionId?.trim() || "storybook-fallback-description-id"
-        : undefined,
-    });
-  },
+  render: (args: ClbrSwitchProps) => renderClbrSwitch(args),
 };

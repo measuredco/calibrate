@@ -16,11 +16,12 @@ export type GridProps = Omit<ClbrGridProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Grid(props: GridProps): ReturnType<typeof reactify> {
-  const { children, gap, ...rest } = props;
+  const { children, gap, id, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrGrid({
     children: hasChildren ? SLOT_GRID_CHILDREN : undefined,
     gap,
+    id,
   });
   return reactify(
     node,

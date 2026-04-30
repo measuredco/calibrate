@@ -92,7 +92,7 @@ function Header({ announce }: { announce: (message: string) => void }) {
               </Box>
             </Sidebar>
             <a href="/">
-              <Heading size="lg">Playground.</Heading>
+              <Heading size="lg" text="Playground." />
             </a>
           </Inline>
           <Inline align="end" gap="xs">
@@ -220,7 +220,7 @@ export function App() {
                       />
                     </Text>
                     <Divider />
-                    <Heading size="xl">Form</Heading>
+                    <Heading size="xl" text="Form" />
                     <Input
                       description="We'll only use this for account updates."
                       id="playground-email"
@@ -253,7 +253,7 @@ export function App() {
                     <Checkbox
                       checked={updates}
                       description="You can unsubscribe at any time."
-                      descriptionId="playground-updates-description"
+                      id="playground-updates"
                       label="Send me product updates"
                       name="updates"
                       onChange={(event) => {
@@ -267,7 +267,7 @@ export function App() {
                     <Switch
                       checked={urgentNotifications}
                       description="Enable this to receive urgent notifications."
-                      descriptionId="playground-notifications-description"
+                      id="playground-notifications"
                       label="Urgent notifications"
                       name="urgentNotifications"
                       onChange={(event) => {

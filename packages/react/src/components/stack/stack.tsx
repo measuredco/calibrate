@@ -16,13 +16,14 @@ export type StackProps = Omit<ClbrStackProps, "children"> & {
 } & NativeAttrsFor<HTMLElement>;
 
 export function Stack(props: StackProps): ReturnType<typeof reactify> {
-  const { align, as, children, gap, responsive, ...rest } = props;
+  const { align, as, children, gap, id, responsive, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrStack({
     align,
     as,
     children: hasChildren ? SLOT_STACK_CHILDREN : undefined,
     gap,
+    id,
     responsive,
   });
   return reactify(

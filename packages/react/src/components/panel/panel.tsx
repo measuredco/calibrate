@@ -16,10 +16,11 @@ export type PanelProps = Omit<ClbrPanelProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Panel(props: PanelProps): ReturnType<typeof reactify> {
-  const { children, padding, surface, ...rest } = props;
+  const { children, id, padding, surface, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPanel({
     children: hasChildren ? SLOT_PANEL_CHILDREN : undefined,
+    id,
     padding,
     surface,
   });

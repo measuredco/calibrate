@@ -19,11 +19,12 @@ export type ContainerProps = Omit<ClbrContainerProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Container(props: ContainerProps): ReturnType<typeof reactify> {
-  const { children, gutter, maxInlineSize, ...rest } = props;
+  const { children, gutter, id, maxInlineSize, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrContainer({
     children: hasChildren ? SLOT_CONTAINER_CHILDREN : undefined,
     gutter,
+    id,
     maxInlineSize,
   });
   return reactify(

@@ -1,19 +1,17 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId, normalizeOptionalHtmlId } from "../../helpers/string";
+import { isValidHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrSwitchProps {
   /** Checked state. @default false */
   checked?: boolean;
-  /** Helper text rendered after the label. Requires `descriptionId`. */
+  /** Helper text rendered after the label. */
   description?: string;
-  /** ID for the description element, used by `aria-describedby`. Required when `description` is provided. */
-  descriptionId?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
-  /** Optional DOM id applied to the underlying input. */
-  id?: string;
+  /** DOM id applied to the underlying input. */
+  id: string;
   /** Label text content (escaped before render). */
   label: string;
   /** Form field name. */
@@ -33,7 +31,6 @@ export interface ClbrSwitchProps {
 export function buildClbrSwitch({
   checked,
   description,
-  descriptionId,
   disabled,
   id,
   label,
@@ -41,21 +38,22 @@ export function buildClbrSwitch({
   size = "md",
   value,
 }: ClbrSwitchProps): ClbrNode {
-  const normalizedId = normalizeOptionalHtmlId(id);
+  const normalizedId = id.trim();
   const normalizedDescription = description?.trim();
-  const normalizedDescriptionId = descriptionId?.trim();
 
-  if (normalizedDescription && !normalizedDescriptionId) {
+  if (!normalizedId) {
+    throw new Error("id must be a non-empty string.");
+  }
+
+  if (!isValidHtmlId(normalizedId)) {
     throw new Error(
-      "descriptionId must be non-empty when description is provided.",
+      "id must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
     );
   }
 
-  if (normalizedDescription && !isValidHtmlId(normalizedDescriptionId!)) {
-    throw new Error(
-      "descriptionId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
-  }
+  const descriptionId = normalizedDescription
+    ? `${normalizedId}-description`
+    : undefined;
 
   const children: ClbrNode[] = [
     {
@@ -67,9 +65,7 @@ export function buildClbrSwitch({
           kind: "element",
           tag: "input",
           attrs: {
-            "aria-describedby": normalizedDescription
-              ? normalizedDescriptionId
-              : undefined,
+            "aria-describedby": descriptionId,
             checked: Boolean(checked),
             class: "switch",
             disabled: Boolean(disabled),
@@ -95,7 +91,7 @@ export function buildClbrSwitch({
     children.push({
       kind: "element",
       tag: "p",
-      attrs: { class: "description", id: normalizedDescriptionId },
+      attrs: { class: "description", id: descriptionId },
       children: [{ kind: "text", value: normalizedDescription }],
     });
   }
@@ -141,19 +137,14 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       description: "Helper text shown below the label.",
       type: { kind: "string" },
     },
-    descriptionId: {
-      description: "`id` of the `description` element referenced by the input.",
-      requiredWhen: "`description` is provided",
-      type: { kind: "string" },
-    },
     disabled: {
       default: false,
       description: "Disables the switch.",
       type: { kind: "boolean" },
     },
     id: {
-      description:
-        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      description: "DOM id applied to the underlying input.",
+      required: true,
       type: { kind: "string" },
     },
     label: {
@@ -226,9 +217,15 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       },
       {
         target: { on: "descendant", selector: "input" },
+        attribute: "aria-describedby",
+        condition: { kind: "when-non-empty", prop: "description" },
+        value: { kind: "template", pattern: "{id}-description" },
+      },
+      {
+        target: { on: "descendant", selector: "input" },
         attribute: "id",
-        condition: { kind: "when-non-empty", prop: "id" },
-        value: { kind: "prop", prop: "id" },
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}" },
       },
     ],
   },

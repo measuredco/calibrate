@@ -1,4 +1,3 @@
-import { isValidHtmlId } from "../../helpers/string";
 import { specToArgTypes, specToComponentDescription } from "../../spec";
 import {
   CLBR_ICON_RECOMMENDED,
@@ -33,12 +32,11 @@ export default meta;
 export const Default = {
   args: {
     ariaHidden: true,
-    id: "",
+    id: "storybook-icon",
     mirrored: undefined,
     name: "settings",
     size: "md",
     title: "Title",
-    titleId: "title-id",
   },
   render: (args: ClbrIconProps) => {
     const normalizedArgs = { ...args };
@@ -46,12 +44,8 @@ export const Default = {
     if (!normalizedArgs.name) {
       normalizedArgs.name = CLBR_ICON_RECOMMENDED[0];
     }
-    if (args.ariaHidden === false) {
-      if (!args.title?.trim())
-        normalizedArgs.title = "Storybook fallback title";
-      if (!args.titleId?.trim() || !isValidHtmlId(args.titleId.trim())) {
-        normalizedArgs.titleId = "storybook-fallback-title-id";
-      }
+    if (args.ariaHidden === false && !args.title?.trim()) {
+      normalizedArgs.title = "Storybook fallback title";
     }
 
     return renderClbrIcon(normalizedArgs);

@@ -16,12 +16,20 @@ export type ProseProps = Omit<ClbrProseProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Prose(props: ProseProps): ReturnType<typeof reactify> {
-  const { children, align, hangingPunctuation, measured, responsive, ...rest } =
-    props;
+  const {
+    children,
+    align,
+    hangingPunctuation,
+    id,
+    measured,
+    responsive,
+    ...rest
+  } = props;
   const node = buildClbrProse({
     children: SLOT_PROSE_CHILDREN,
     align,
     hangingPunctuation,
+    id,
     measured,
     responsive,
   });

@@ -18,13 +18,14 @@ export type CardProps = Omit<ClbrCardProps, "description" | "note"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Card(props: CardProps): ReturnType<typeof reactify> {
-  const { description, headingLevel, href, note, surface, title, ...rest } =
+  const { description, headingLevel, href, id, note, surface, title, ...rest } =
     props;
   const hasNote = note != null && note !== false;
   const node = buildClbrCard({
     description: SLOT_CARD_DESCRIPTION,
     headingLevel,
     href,
+    id,
     note: hasNote ? SLOT_CARD_NOTE : undefined,
     surface,
     title,

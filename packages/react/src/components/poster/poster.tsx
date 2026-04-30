@@ -21,11 +21,12 @@ export type PosterProps = Omit<ClbrPosterProps, "image" | "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Poster(props: PosterProps): ReturnType<typeof reactify> {
-  const { children, contentTheme, image, surface, ...rest } = props;
+  const { children, contentTheme, id, image, surface, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPoster({
     children: hasChildren ? SLOT_POSTER_CHILDREN : undefined,
     contentTheme,
+    id,
     image: SLOT_POSTER_IMAGE,
     surface,
   });

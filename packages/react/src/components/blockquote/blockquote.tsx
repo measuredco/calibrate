@@ -26,11 +26,12 @@ export type BlockquoteProps = Omit<
 export function Blockquote(
   props: BlockquoteProps,
 ): ReturnType<typeof reactify> {
-  const { align, attribution, measured, quote, responsive, size, ...rest } =
+  const { align, attribution, id, measured, quote, responsive, size, ...rest } =
     props;
   const node = buildClbrBlockquote({
     align,
     attribution: SLOT_BLOCKQUOTE_ATTRIBUTION,
+    id,
     measured,
     quote: SLOT_BLOCKQUOTE_QUOTE,
     responsive,

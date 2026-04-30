@@ -19,13 +19,14 @@ export type InlineProps = Omit<ClbrInlineProps, "children"> & {
 } & NativeAttrsFor<HTMLElement>;
 
 export function Inline(props: InlineProps): ReturnType<typeof reactify> {
-  const { as, align, children, gap, justify, nowrap, ...rest } = props;
+  const { as, align, children, gap, id, justify, nowrap, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrInline({
     as,
     align,
     children: hasChildren ? SLOT_INLINE_CHILDREN : undefined,
     gap,
+    id,
     justify,
     nowrap,
   });

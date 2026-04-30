@@ -33,20 +33,20 @@ describe("renderClbrIcon", () => {
   });
 
   describe("named mode (ariaHidden false)", () => {
-    it("requires title and titleId when ariaHidden is false", () => {
+    it("requires title when ariaHidden is false", () => {
       expect(() =>
-        renderClbrIcon({ ariaHidden: false, name: "check" }),
+        renderClbrIcon({ ariaHidden: false, id: "check", name: "check" }),
       ).toThrow("title must be non-empty when ariaHidden is false.");
     });
 
-    it("renders role/img labelling and title", () => {
+    it("renders role/img labelling and derives title id from id", () => {
       const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
+          id: "search-icon",
           name: "search",
           size: "lg",
           title: "Search",
-          titleId: "search-icon-title",
         }),
       );
       const icon = root.querySelector("svg") as SVGElement;
@@ -60,13 +60,13 @@ describe("renderClbrIcon", () => {
       expect(title?.textContent).toBe("Search");
     });
 
-    it("trims title and titleId input", () => {
+    it("trims title input", () => {
       const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
+          id: "close-icon",
           name: "x",
           title: "  Close  ",
-          titleId: "  close-icon-title  ",
         }),
       );
       const icon = root.querySelector("svg") as SVGElement;
@@ -81,9 +81,9 @@ describe("renderClbrIcon", () => {
       const root = mountIcon(
         renderClbrIcon({
           ariaHidden: false,
+          id: "close-icon",
           name: "x",
           title: '"quoted" <unsafe>',
-          titleId: "close-icon-title",
         }),
       );
       const title = root.querySelector("svg title");
@@ -98,34 +98,21 @@ describe("renderClbrIcon", () => {
       expect(() =>
         renderClbrIcon({
           ariaHidden: false,
+          id: "check-icon",
           name: "check",
           title: "",
-          titleId: "check-icon-title",
         }),
       ).toThrow("title must be non-empty when ariaHidden is false.");
     });
 
-    it("throws when titleId is missing in named mode", () => {
+    it("throws when id is missing in named mode", () => {
       expect(() =>
         renderClbrIcon({
           ariaHidden: false,
           name: "check",
           title: "Check",
         }),
-      ).toThrow("titleId must be non-empty when ariaHidden is false.");
-    });
-
-    it("throws when titleId is invalid", () => {
-      expect(() =>
-        renderClbrIcon({
-          ariaHidden: false,
-          name: "check",
-          title: "Check",
-          titleId: "not valid",
-        }),
-      ).toThrow(
-        "titleId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-      );
+      ).toThrow("id must be provided when ariaHidden is false.");
     });
 
     it("throws when icon name is unknown", () => {
@@ -231,7 +218,7 @@ describe("renderClbrIcon", () => {
 });
 
 describeSpecConsistency<ClbrIconProps>({
-  baseProps: { name: "check", title: "Check", titleId: "check-title" },
+  baseProps: { id: "check-icon", name: "check", title: "Check" },
   renderer: renderClbrIcon,
   spec: CLBR_ICON_SPEC,
 });

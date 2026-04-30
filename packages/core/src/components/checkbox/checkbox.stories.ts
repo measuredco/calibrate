@@ -25,9 +25,8 @@ export const Default = {
   args: {
     checked: false,
     description: "Description",
-    descriptionId: "description-id",
     disabled: false,
-    id: "",
+    id: "storybook-checkbox",
     invalid: false,
     label: "Label",
     name: "",
@@ -35,14 +34,7 @@ export const Default = {
     size: "md",
     value: "",
   } satisfies ClbrCheckboxProps,
-  render: (args: ClbrCheckboxProps) => {
-    return renderClbrCheckbox({
-      ...args,
-      descriptionId: args.description?.trim()
-        ? args.descriptionId?.trim() || "storybook-fallback-description-id"
-        : undefined,
-    });
-  },
+  render: (args: ClbrCheckboxProps) => renderClbrCheckbox(args),
 };
 
 export const Indeterminate = {
