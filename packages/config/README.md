@@ -1,6 +1,6 @@
 # @measured/calibrate-config
 
-Shared quality/tooling config for Calibrate. Subpath presets for ESLint, Stylelint, and Browserslist/esbuild — install once, plug in via subpath imports.
+Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus editor IntelliSense lookup — install once, plug in via subpath imports.
 
 ## ESLint
 

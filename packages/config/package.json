@@ -1,6 +1,7 @@
 {
   "name": "@measured/calibrate-config",
   "version": "0.2.0-alpha.6",
+  "description": "Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus editor IntelliSense lookup.",
   "repository": {
     "type": "git",
     "url": "https://github.com/measuredco/calibrate.git",

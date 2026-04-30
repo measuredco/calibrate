@@ -1,6 +1,6 @@
 # `@measured/calibrate-markdown`
 
-Opinionated GitHub Flavored Markdown → safe HTML utility.
+Opinionated GFM markdown → safe HTML utility. Pairs with Calibrate's `prose` component.
 
 ## Install
 

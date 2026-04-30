@@ -1,6 +1,7 @@
 {
   "name": "@measured/calibrate-core",
   "version": "0.2.0-alpha.6",
+  "description": "SSR-first component library for Calibrate. Native HTML output via custom elements, with a co-located CSS contract.",
   "repository": {
     "type": "git",
     "url": "https://github.com/measuredco/calibrate.git",
