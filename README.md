@@ -10,8 +10,9 @@ This is a pnpm monorepo with lockstep versioning across publishable and private 
 | ----------------------------- | -------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | `@measured/calibrate-core`    | [`packages/core`](packages/core)       | yes    | SSR-first component library and primary consumer-facing CSS entrypoint (`@measured/calibrate-core/styles.css`).                   |
 | `@measured/calibrate-react`   | [`packages/react`](packages/react)     | yes    | React adapter — generated wrappers over the core IR.                                                                              |
+| `@measured/calibrate-tokens`  | [`packages/tokens`](packages/tokens)   | yes    | Calibrate tokens as data: DTCG-shaped JSON artifacts and JSON Schema, for docs sites, MCP, agents, and other token-as-data tools. |
 | `@measured/calibrate-assets`  | [`packages/assets`](packages/assets)   | yes    | Runtime assets (fonts today).                                                                                                     |
-| `@measured/calibrate-config`  | [`packages/config`](packages/config)   | yes    | Shared consumer/tooling config presets (browserslist, esbuild target).                                                            |
+| `@measured/calibrate-config`  | [`packages/config`](packages/config)   | yes    | Shared consumer/tooling presets (browserslist, esbuild target, ESLint, Stylelint) plus editor IntelliSense lookup.                |
 | `@measured/calibrate-system`  | [`packages/system`](packages/system)   | no     | Token authoring + resolver/build pipeline. Outputs feed core's CSS. See [`packages/system/README.md`](packages/system/README.md). |
 | `@measured/calibrate-adapter` | [`packages/adapter`](packages/adapter) | no     | Codegen for framework adapters (drives `react`'s wrapper generation).                                                             |
 
@@ -40,7 +41,7 @@ Common scripts (root, delegating via workspace filters):
 ## Contribution conventions
 
 - **Conventional Commits** enforced on PR titles via [`.github/workflows/pr-title.yml`](.github/workflows/pr-title.yml). Squash-merge means the PR title becomes the commit subject on `main`, so this is the canonical validation surface.
-- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `react`, `system`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
+- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `react`, `system`, `tokens`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
 - **Pre-commit auto-formatting** via Husky + `lint-staged`: prettier runs on staged files before each commit, no opt-in.
 - **Changesets required** when a PR touches `packages/{core,react,config,assets}/src/**`. Run `pnpm changeset` per consumer-visible change.
 
