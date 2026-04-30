@@ -63,6 +63,11 @@ jobs:
           # itself can authenticate when invoked.
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          # Generate npm provenance attestations on publish (uses the
-          # job-scoped id-token: write permission above).
-          NPM_CONFIG_PROVENANCE: "true"
+          # Provenance is normally on (uses the job-scoped id-token: write
+          # permission above), but npm 11.x prefers OIDC trusted publishing
+          # when provenance is enabled, and trusted publishing fails outright
+          # for packages without a configured trusted publisher (no fallback
+          # to token auth). Temporarily disable while @measured/calibrate-markdown
+          # is being published for the first time. Re-enable once trusted
+          # publishing is configured for it on npm.com.
+          # NPM_CONFIG_PROVENANCE: "true"
