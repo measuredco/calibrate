@@ -1,6 +1,6 @@
 # @measured/calibrate-assets
 
-Runtime asset package for Calibrate. Ships fonts and favicons consumed by sites and apps building on the system.
+Runtime assets for Calibrate. Fonts and favicons consumed by sites and apps building on the system.
 
 ## Fonts
 

@@ -1,6 +1,6 @@
 # @measured/calibrate-tokens
 
-The Calibrate design system as a JSON artifact, with its accompanying JSON Schema. Token-centric, DTCG-faithful, language-agnostic — suitable for documentation sites, MCP servers, agents, and downstream tooling.
+Calibrate tokens as data: DTCG-shaped JSON artifacts and JSON Schema. For docs sites, MCP, agents, and downstream tooling.
 
 ## Usage
 

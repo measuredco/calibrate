@@ -6,16 +6,16 @@ This is a pnpm monorepo with lockstep versioning across publishable and private 
 
 ## Packages
 
-| Package                        | Path                                     | Public | Description                                                                                                                       |
-| ------------------------------ | ---------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `@measured/calibrate-core`     | [`packages/core`](packages/core)         | yes    | SSR-first component library and primary consumer-facing CSS entrypoint (`@measured/calibrate-core/styles.css`).                   |
-| `@measured/calibrate-react`    | [`packages/react`](packages/react)       | yes    | React adapter — generated wrappers over the core IR.                                                                              |
-| `@measured/calibrate-tokens`   | [`packages/tokens`](packages/tokens)     | yes    | Calibrate tokens as data: DTCG-shaped JSON artifacts and JSON Schema, for docs sites, MCP, agents, and other token-as-data tools. |
-| `@measured/calibrate-markdown` | [`packages/markdown`](packages/markdown) | yes    | Opinionated GFM markdown → safe HTML utility. Pairs with core's `prose` component (loose coupling via GFM's element set).         |
-| `@measured/calibrate-assets`   | [`packages/assets`](packages/assets)     | yes    | Runtime assets (fonts today).                                                                                                     |
-| `@measured/calibrate-config`   | [`packages/config`](packages/config)     | yes    | Shared consumer/tooling presets (browserslist, esbuild target, ESLint, Stylelint) plus editor IntelliSense lookup.                |
-| `@measured/calibrate-system`   | [`packages/system`](packages/system)     | no     | Token authoring + resolver/build pipeline. Outputs feed core's CSS. See [`packages/system/README.md`](packages/system/README.md). |
-| `@measured/calibrate-adapter`  | [`packages/adapter`](packages/adapter)   | no     | Codegen for framework adapters (drives `react`'s wrapper generation).                                                             |
+| Package                        | Path                                     | Public | Description                                                                                                                |
+| ------------------------------ | ---------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `@measured/calibrate-adapter`  | [`packages/adapter`](packages/adapter)   | no     | Codegen for framework adapters (drives `react`'s wrapper generation).                                                      |
+| `@measured/calibrate-assets`   | [`packages/assets`](packages/assets)     | yes    | Runtime assets for Calibrate. Fonts and favicons consumed by sites and apps building on the system.                        |
+| `@measured/calibrate-config`   | [`packages/config`](packages/config)     | yes    | Shared developer-tooling config (ESLint, Stylelint, Prettier, browserslist) plus editor IntelliSense lookup.               |
+| `@measured/calibrate-core`     | [`packages/core`](packages/core)         | yes    | SSR-first component library. Native HTML output via custom elements, with a co-located CSS contract.                       |
+| `@measured/calibrate-markdown` | [`packages/markdown`](packages/markdown) | yes    | Opinionated GFM markdown → safe HTML utility. Pairs with core's `prose` component (loose coupling via GFM's element set).  |
+| `@measured/calibrate-react`    | [`packages/react`](packages/react)       | yes    | React adapter — typed wrappers over the core custom-element library.                                                       |
+| `@measured/calibrate-system`   | [`packages/system`](packages/system)     | no     | Token authoring + resolver/build pipeline. Outputs feed core's CSS. Internal — consumers use `@measured/calibrate-core`.   |
+| `@measured/calibrate-tokens`   | [`packages/tokens`](packages/tokens)     | yes    | Calibrate tokens as data: DTCG-shaped JSON artifacts and JSON Schema. For docs sites, MCP, agents, and downstream tooling. |
 
 ## Apps
 
@@ -32,12 +32,17 @@ pnpm install
 
 Common scripts (root, delegating via workspace filters):
 
-- `pnpm core:test` / `pnpm core:build` / `pnpm core:typecheck`
-- `pnpm react:test` / `pnpm react:build` / `pnpm react:generate`
-- `pnpm system:build` / `pnpm system:validate` / `pnpm system:verify`
+- `pnpm config:verify`
+- `pnpm core:build` / `pnpm core:test` / `pnpm core:typecheck`
+- `pnpm format` / `pnpm format:check`
+- `pnpm lint` / `pnpm lint:fix`
+- `pnpm markdown:build` / `pnpm markdown:test` / `pnpm markdown:typecheck`
+- `pnpm playground:react` / `pnpm playground:react:build` / `pnpm playground:react:typecheck`
+- `pnpm react:build` / `pnpm react:test` / `pnpm react:typecheck` / `pnpm react:generate`
 - `pnpm storybook` / `pnpm storybook:build` / `pnpm storybook:test`
-- `pnpm playground:react` / `pnpm playground:react:build`
-- `pnpm lint` / `pnpm format` / `pnpm format:check`
+- `pnpm stylelint` / `pnpm stylelint:fix`
+- `pnpm system:build` / `pnpm system:validate` / `pnpm system:verify`
+- `pnpm tokens:validate` / `pnpm tokens:verify`
 
 ## Contribution conventions
 

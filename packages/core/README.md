@@ -1,6 +1,6 @@
 # @measured/calibrate-core
 
-Component contract package for Calibrate.
+SSR-first component library for Calibrate. Native HTML output via custom elements, with a co-located CSS contract.
 
 ## Current scope
 
