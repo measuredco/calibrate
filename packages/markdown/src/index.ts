@@ -41,7 +41,7 @@ export const sanitizeSchema: Schema = deepmerge(defaultSchema, {
  */
 export const sanitizeInlineSchema: Schema = {
   ...sanitizeSchema,
-  tagNames: ["a", "b", "br", "code", "del", "em", "strong", "sup"],
+  tagNames: ["a", "b", "br", "code", "cite", "del", "em", "i", "strong", "sup"],
 };
 
 /**
