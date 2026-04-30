@@ -73,7 +73,10 @@ export function buildClbrInput({
     autocomplete === false ? false : autocomplete?.trim();
   const normalizedName = name?.trim();
   const normalizedPattern = pattern?.trim();
-  const normalizedValue = value?.trim();
+  // Preserve `""` distinctly from `undefined` so React keeps the input
+  // controlled when the consumer clears the field; coerce only when a
+  // value was supplied.
+  const normalizedValue = value === undefined ? undefined : value.trim();
 
   if (!normalizedId) {
     throw new Error("id must be a non-empty string.");
@@ -129,7 +132,7 @@ export function buildClbrInput({
             ? undefined
             : String(resolvedSpellcheck),
         type: resolvedType,
-        value: normalizedValue || undefined,
+        value: normalizedValue,
       },
       children: [],
     },
@@ -300,7 +303,7 @@ export const CLBR_INPUT_SPEC: ClbrComponentSpec = {
       {
         target: { on: "descendant", selector: "input" },
         attribute: "value",
-        condition: { kind: "when-non-empty", prop: "value" },
+        condition: { kind: "when-provided", prop: "value" },
         value: { kind: "prop", prop: "value" },
       },
       {

@@ -1,4 +1,4 @@
-import { Checkbox, Input, Switch, Textarea } from "@measured/calibrate-react";
+import { Checkbox, Input, Switch, Textarea } from "../index";
 import { act, createRef, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import { describe, expect, it } from "vitest";
