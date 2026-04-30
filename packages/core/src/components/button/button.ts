@@ -41,7 +41,7 @@ export interface ClbrButtonProps {
    * Popup type for button interactions.
    */
   haspopup?: ClbrButtonHasPopup;
-  /** Optional DOM id. */
+  /** DOM id. */
   id?: string;
   /** Optional icon name (Lucide naming semantics). */
   icon?: string;

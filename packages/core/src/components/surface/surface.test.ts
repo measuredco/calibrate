@@ -66,6 +66,30 @@ describe("renderClbrSurface", () => {
     expect(getByText(surface, "Surface")).toBeTruthy();
     expect(getByText(surface, "Body")).toBeTruthy();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountSurface(
+      renderClbrSurface({ children: "<p>content</p>", id: "my-surface" }),
+    );
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+
+    expect(surface.id).toBe("my-surface");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountSurface(
+      renderClbrSurface({ children: "<p>content</p>" }),
+    );
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+
+    expect(surface.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrSurface({ children: "<p>content</p>", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrSurfaceProps>({

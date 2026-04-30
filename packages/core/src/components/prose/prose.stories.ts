@@ -181,6 +181,7 @@ export const Default = {
   args: {
     align: "start",
     hangingPunctuation: undefined,
+    id: "",
     measured: true,
     responsive: false,
     children: processMarkdown(markdown),

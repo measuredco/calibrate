@@ -68,6 +68,7 @@ export const Default = {
       }),
     }),
     contentTheme: "dark",
+    id: "",
     image: renderClbrImage({
       cover: true,
       gravity: "SE",

@@ -25,6 +25,7 @@ export const Default = {
     brand: "msrd",
     children: `<div style="padding: 1.75rem 1.25rem">Example content</div>`,
     dir: undefined,
+    id: "",
     lang: "",
     theme: undefined,
   },

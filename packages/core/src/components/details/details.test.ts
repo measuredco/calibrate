@@ -88,6 +88,28 @@ describe("renderClbrDetails", () => {
     expect(summary.textContent).toBe("<More information>");
     expect(content.innerHTML).toBe("<p><strong>Trusted</strong> content.</p>");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountDetails(
+      renderClbrDetails({ id: "my-details", summary: "Summary" }),
+    );
+    const details = root.querySelector(".clbr-details") as HTMLElement;
+
+    expect(details.id).toBe("my-details");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountDetails(renderClbrDetails({ summary: "Summary" }));
+    const details = root.querySelector(".clbr-details") as HTMLElement;
+
+    expect(details.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrDetails({ id: "not valid", summary: "Summary" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrDetailsProps>({

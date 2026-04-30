@@ -28,6 +28,7 @@ export const Default = {
     align: "center",
     children: "",
     gap: "md",
+    id: "",
     justify: "start",
     nowrap: false,
   } satisfies ClbrInlineProps,

@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrStatusTone } from "../../types";
 
@@ -7,6 +8,8 @@ export type ClbrBadgeSize = "sm" | "md";
 export interface ClbrBadgeProps {
   /** Positions the badge as a floating overlay. */
   floating?: boolean;
+  /** DOM id. */
+  id?: string;
   /** Badge text content. Escaped as plain text. */
   label: string;
   /** Badge size. @default "md" */
@@ -23,10 +26,13 @@ export interface ClbrBadgeProps {
  */
 export function buildClbrBadge({
   floating,
+  id,
   label,
   size = "md",
   tone,
 }: ClbrBadgeProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "span",
@@ -35,6 +41,7 @@ export function buildClbrBadge({
       "data-floating": floating,
       "data-size": size,
       "data-tone": tone || undefined,
+      id: normalizedId,
     },
     children: [{ kind: "text", value: label }],
   };
@@ -61,6 +68,10 @@ export const CLBR_BADGE_SPEC: ClbrComponentSpec = {
       default: false,
       description: "Positions the badge as a floating overlay.",
       type: { kind: "boolean" },
+    },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
     },
     label: {
       description: "Badge text.",
@@ -96,6 +107,12 @@ export const CLBR_BADGE_SPEC: ClbrComponentSpec = {
         attribute: "data-tone",
         condition: { kind: "when-provided", prop: "tone" },
         value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

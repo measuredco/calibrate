@@ -120,6 +120,28 @@ describe("renderClbrStack", () => {
     const stretchStack = getByText(stretchRoot, "Body");
     expect(stretchStack.hasAttribute("data-align")).toBe(false);
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountStack(
+      renderClbrStack({ children: "Body", id: "my-stack" }),
+    );
+    const stack = root.querySelector(".clbr-stack") as HTMLElement;
+
+    expect(stack.id).toBe("my-stack");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountStack(renderClbrStack({ children: "Body" }));
+    const stack = root.querySelector(".clbr-stack") as HTMLElement;
+
+    expect(stack.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrStack({ children: "Body", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrStackProps>({

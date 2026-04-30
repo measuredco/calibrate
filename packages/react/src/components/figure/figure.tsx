@@ -21,11 +21,12 @@ export type FigureProps = Omit<ClbrFigureProps, "children" | "caption"> & {
 } & NativeAttrsFor<HTMLElement>;
 
 export function Figure(props: FigureProps): ReturnType<typeof reactify> {
-  const { align, caption, children, responsive, ...rest } = props;
+  const { align, caption, children, id, responsive, ...rest } = props;
   const node = buildClbrFigure({
     align,
     caption: SLOT_FIGURE_CAPTION,
     children: SLOT_FIGURE_CHILDREN,
+    id,
     responsive,
   });
   return reactify(

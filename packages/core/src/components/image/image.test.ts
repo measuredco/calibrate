@@ -232,6 +232,28 @@ describe("renderClbrImage", () => {
     const defaultRoot = mountImage(renderClbrImage({ src: "/image.jpg" }));
     expect(getImg(defaultRoot).hasAttribute("fetchpriority")).toBe(false);
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountImage(
+      renderClbrImage({ id: "my-image", src: "/image.jpg" }),
+    );
+    const image = root.querySelector(".clbr-image") as HTMLElement;
+
+    expect(image.id).toBe("my-image");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountImage(renderClbrImage({ src: "/image.jpg" }));
+    const image = root.querySelector(".clbr-image") as HTMLElement;
+
+    expect(image.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrImage({ id: "not valid", src: "/image.jpg" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrImageProps>({

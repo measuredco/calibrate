@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrSpinnerSize =
@@ -13,6 +14,8 @@ export type ClbrSpinnerSize =
 export type ClbrSpinnerTone = "default" | "brand";
 
 export interface ClbrSpinnerProps {
+  /** DOM id. */
+  id?: string;
   /** Accessible status label. */
   label?: string;
   /** Size variant. @default "md" */
@@ -28,10 +31,12 @@ export interface ClbrSpinnerProps {
  * @returns IR node for a spinner element.
  */
 export function buildClbrSpinner({
+  id,
   label,
   size = "md",
   tone = "default",
 }: ClbrSpinnerProps = {}): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const children: ClbrNode[] = [
     {
       kind: "element",
@@ -88,6 +93,7 @@ export function buildClbrSpinner({
       class: "clbr-spinner",
       "data-size": size,
       "data-tone": tone === "brand" ? "brand" : undefined,
+      id: normalizedId,
       role: label ? "status" : undefined,
     },
     children,
@@ -111,6 +117,10 @@ export const CLBR_SPINNER_SPEC: ClbrComponentSpec = {
   output: { element: "span", class: "clbr-spinner" },
   content: { kind: "text", prop: "label" },
   props: {
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     label: {
       description: "Accessible status label announced to assistive tech.",
       type: { kind: "string" },
@@ -149,6 +159,12 @@ export const CLBR_SPINNER_SPEC: ClbrComponentSpec = {
         attribute: "role",
         condition: { kind: "when-non-empty", prop: "label" },
         value: { kind: "literal", text: "status" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

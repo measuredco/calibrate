@@ -23,6 +23,7 @@ export const Default = {
   args: {
     controlsId: "",
     expanded: false,
+    id: "",
     label: "Menu",
     size: "md",
   } satisfies ClbrExpanderProps,

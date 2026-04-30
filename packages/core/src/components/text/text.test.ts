@@ -137,6 +137,27 @@ describe("renderClbrText", () => {
     expect(text.hasAttribute("data-measured")).toBe(false);
   });
 
+  it("renders consumer-provided id on the host", () => {
+    const root = mountText(
+      renderClbrText({ children: "Body text", id: "my-text" }),
+    );
+    const text = getByText(root, "Body text");
+
+    expect(text.id).toBe("my-text");
+  });
+
+  it("omits id when not provided", () => {
+    const text = renderAndGetText();
+
+    expect(text.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrText({ children: "Body text", id: "not valid" }),
+    ).toThrow();
+  });
+
   it("renders trusted inline HTML content", () => {
     const root = mountText(
       renderClbrText({

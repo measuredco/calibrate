@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 import { buildClbrText } from "../text/text";
@@ -10,6 +11,8 @@ export interface ClbrBlockquoteProps {
   align?: ClbrAlign;
   /** Trusted attribution HTML. */
   attribution: string;
+  /** DOM id. */
+  id?: string;
   /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
   /** Trusted quote HTML. */
@@ -29,17 +32,21 @@ export interface ClbrBlockquoteProps {
 export function buildClbrBlockquote({
   align = "start",
   attribution,
+  id,
   measured = true,
   quote,
   responsive = false,
   size = "md",
 }: ClbrBlockquoteProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "figure",
     attrs: {
       class: "clbr-blockquote",
       "data-align": align === "start" ? undefined : align,
+      id: normalizedId,
     },
     children: [
       {
@@ -108,6 +115,10 @@ export const CLBR_BLOCKQUOTE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     measured: {
       default: true,
       description: "Caps line length for comfortable reading.",
@@ -142,6 +153,12 @@ export const CLBR_BLOCKQUOTE_SPEC: ClbrComponentSpec = {
           values: ["center", "end"],
         },
         value: { kind: "prop", prop: "align" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

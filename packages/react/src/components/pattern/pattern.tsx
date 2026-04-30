@@ -19,10 +19,11 @@ export type PatternProps = Omit<ClbrPatternProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Pattern(props: PatternProps): ReturnType<typeof reactify> {
-  const { children, tone, size, variant, ...rest } = props;
+  const { children, id, tone, size, variant, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPattern({
     children: hasChildren ? SLOT_PATTERN_CHILDREN : undefined,
+    id,
     tone,
     size,
     variant,

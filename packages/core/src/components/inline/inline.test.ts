@@ -150,6 +150,28 @@ describe("renderClbrInline", () => {
     const betweenInline = getByText(betweenRoot, "Body");
     expect(betweenInline.getAttribute("data-justify")).toBe("between");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountInline(
+      renderClbrInline({ children: "Body", id: "my-inline" }),
+    );
+    const inline = root.querySelector(".clbr-inline") as HTMLElement;
+
+    expect(inline.id).toBe("my-inline");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountInline(renderClbrInline({ children: "Body" }));
+    const inline = root.querySelector(".clbr-inline") as HTMLElement;
+
+    expect(inline.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrInline({ children: "Body", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrInlineProps>({

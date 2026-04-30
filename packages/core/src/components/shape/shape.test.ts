@@ -53,6 +53,24 @@ describe("renderClbrShape", () => {
     expect(shape.getAttribute("data-variant")).toBe("tile-slice-lg");
     expect(shape.getAttribute("data-size")).toBe("xl");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountShape(renderClbrShape({ id: "my-shape" }));
+    const shape = root.querySelector(".clbr-shape") as HTMLElement;
+
+    expect(shape.id).toBe("my-shape");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountShape(renderClbrShape());
+    const shape = root.querySelector(".clbr-shape") as HTMLElement;
+
+    expect(shape.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrShape({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrShapeProps>({

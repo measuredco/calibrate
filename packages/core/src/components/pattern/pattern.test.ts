@@ -60,6 +60,24 @@ describe("renderClbrPattern", () => {
     expect(content).toBeTruthy();
     expect(content.textContent).toBe("Pattern content");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountPattern(renderClbrPattern({ id: "my-pattern" }));
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
+
+    expect(pattern.id).toBe("my-pattern");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountPattern(renderClbrPattern());
+    const pattern = root.querySelector(".clbr-pattern") as HTMLElement;
+
+    expect(pattern.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrPattern({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrPatternProps>({

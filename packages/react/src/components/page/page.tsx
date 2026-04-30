@@ -30,6 +30,7 @@ export function Page(props: PageProps): ReturnType<typeof reactify> {
     children,
     centerMain,
     header,
+    id,
     stickyHeader,
     footer,
     ...rest
@@ -41,6 +42,7 @@ export function Page(props: PageProps): ReturnType<typeof reactify> {
     children: hasChildren ? SLOT_PAGE_CHILDREN : undefined,
     centerMain,
     header: SLOT_PAGE_HEADER,
+    id,
     stickyHeader,
     footer: SLOT_PAGE_FOOTER,
   });

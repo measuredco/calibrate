@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -7,6 +8,8 @@ export type ClbrPanelPadding = "xs" | "sm" | "md" | "lg" | "xl";
 export interface ClbrPanelProps {
   /** Trusted inner HTML. */
   children?: string;
+  /** DOM id. */
+  id?: string;
   /** Inner spacing scale. @default "md" */
   padding?: ClbrPanelPadding;
   /** Surface context. */
@@ -21,9 +24,12 @@ export interface ClbrPanelProps {
  */
 export function buildClbrPanel({
   children,
+  id,
   padding = "md",
   surface,
 }: ClbrPanelProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -31,6 +37,7 @@ export function buildClbrPanel({
       class: "clbr-panel",
       "data-padding": padding,
       "data-clbr-surface": surface,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -56,6 +63,10 @@ export const CLBR_PANEL_SPEC: ClbrComponentSpec = {
     children: {
       description: "Content rendered inside the panel.",
       type: { kind: "html" },
+    },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
     },
     padding: {
       default: "md",
@@ -84,6 +95,12 @@ export const CLBR_PANEL_SPEC: ClbrComponentSpec = {
         attribute: "data-clbr-surface",
         condition: { kind: "when-provided", prop: "surface" },
         value: { kind: "prop", prop: "surface" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

@@ -36,6 +36,7 @@ export const Default = {
     colSpan: 4,
     colSpanNarrow: 6,
     colSpanWide: 3,
+    id: "",
   } satisfies ClbrGridItemProps,
   render: (args: ClbrGridItemProps) =>
     renderClbrGrid({

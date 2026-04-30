@@ -55,6 +55,28 @@ describe("renderClbrPanel", () => {
     expect(panel.getAttribute("data-padding")).toBe("xl");
     expect(panel.getAttribute("data-clbr-surface")).toBe("inverse");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountPanel(
+      renderClbrPanel({ children: "Body", id: "my-panel" }),
+    );
+    const panel = root.querySelector(".clbr-panel") as HTMLElement;
+
+    expect(panel.id).toBe("my-panel");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountPanel(renderClbrPanel({ children: "Body" }));
+    const panel = root.querySelector(".clbr-panel") as HTMLElement;
+
+    expect(panel.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrPanel({ children: "Body", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrPanelProps>({

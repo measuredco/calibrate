@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
@@ -12,6 +13,8 @@ export interface ClbrPageProps {
   children?: string;
   /** Header region markup. Caller sanitizes untrusted content. */
   header: string;
+  /** DOM id. */
+  id?: string;
   /** Sticky header behavior. Emits `data-sticky-header` when provided. */
   stickyHeader?: ClbrPageStickyHeader;
   /** Footer region markup. Caller sanitizes untrusted content. */
@@ -30,8 +33,10 @@ export function buildClbrPage({
   children,
   footer,
   header,
+  id,
   stickyHeader,
 }: ClbrPageProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const regionChildren: ClbrNode[] = [];
 
   if (banner) regionChildren.push({ kind: "raw", html: banner });
@@ -64,6 +69,7 @@ export function buildClbrPage({
       class: "clbr-page",
       "data-center-main": centerMain,
       "data-sticky-header": stickyHeader,
+      id: normalizedId,
     },
     children: regionChildren,
   };
@@ -118,6 +124,10 @@ export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     stickyHeader: {
       description: "When the header stays stuck to the top of the viewport.",
       type: { kind: "enum", values: ["always", "belowNotebook"] },
@@ -141,6 +151,12 @@ export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
         attribute: "data-sticky-header",
         condition: { kind: "when-provided", prop: "stickyHeader" },
         value: { kind: "prop", prop: "stickyHeader" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

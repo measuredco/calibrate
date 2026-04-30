@@ -1,17 +1,17 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrSwitchProps {
   /** Checked state. @default false */
   checked?: boolean;
-  /** Helper text rendered after the label. Requires `descriptionId`. */
+  /** Helper text rendered after the label. Requires `id`. */
   description?: string;
-  /** ID for the description element, used by `aria-describedby`. Required when `description` is provided. */
-  descriptionId?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
+  /** DOM id applied to the underlying input. Required when `description` is provided. */
+  id?: string;
   /** Label text content (escaped before render). */
   label: string;
   /** Form field name. */
@@ -31,27 +31,23 @@ export interface ClbrSwitchProps {
 export function buildClbrSwitch({
   checked,
   description,
-  descriptionId,
   disabled,
+  id,
   label,
   name,
   size = "md",
   value,
 }: ClbrSwitchProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDescription = description?.trim();
-  const normalizedDescriptionId = descriptionId?.trim();
 
-  if (normalizedDescription && !normalizedDescriptionId) {
-    throw new Error(
-      "descriptionId must be non-empty when description is provided.",
-    );
+  if (normalizedDescription && !normalizedId) {
+    throw new Error("id must be provided when description is provided.");
   }
 
-  if (normalizedDescription && !isValidHtmlId(normalizedDescriptionId!)) {
-    throw new Error(
-      "descriptionId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
-  }
+  const descriptionId = normalizedDescription
+    ? `${normalizedId}-description`
+    : undefined;
 
   const children: ClbrNode[] = [
     {
@@ -63,12 +59,11 @@ export function buildClbrSwitch({
           kind: "element",
           tag: "input",
           attrs: {
-            "aria-describedby": normalizedDescription
-              ? normalizedDescriptionId
-              : undefined,
+            "aria-describedby": descriptionId,
             checked: Boolean(checked),
             class: "switch",
             disabled: Boolean(disabled),
+            id: normalizedId,
             name: name || undefined,
             role: "switch",
             type: "checkbox",
@@ -90,7 +85,7 @@ export function buildClbrSwitch({
     children.push({
       kind: "element",
       tag: "p",
-      attrs: { class: "description", id: normalizedDescriptionId },
+      attrs: { class: "description", id: descriptionId },
       children: [{ kind: "text", value: normalizedDescription }],
     });
   }
@@ -136,15 +131,15 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       description: "Helper text shown below the label.",
       type: { kind: "string" },
     },
-    descriptionId: {
-      description: "`id` of the `description` element referenced by the input.",
-      requiredWhen: "`description` is provided",
-      type: { kind: "string" },
-    },
     disabled: {
       default: false,
       description: "Disables the switch.",
       type: { kind: "boolean" },
+    },
+    id: {
+      description: "DOM id.",
+      requiredWhen: "`description` is provided",
+      type: { kind: "string" },
     },
     label: {
       description: "Label text.",
@@ -213,6 +208,12 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
         attribute: "value",
         condition: { kind: "when-non-empty", prop: "value" },
         value: { kind: "prop", prop: "value" },
+      },
+      {
+        target: { on: "descendant", selector: "input" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

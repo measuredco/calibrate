@@ -44,6 +44,7 @@ export const Default = {
     appearance: "text",
     download: undefined,
     href: "#",
+    id: "",
     icon: undefined,
     iconPlacement: "start",
     label: "Link",

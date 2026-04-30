@@ -53,6 +53,24 @@ describe("renderClbrLogo", () => {
     expect(label.textContent).toBe("Measured <Logo>");
     expect(label.querySelector("logo")).toBeNull();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountLogo(renderClbrLogo({ id: "my-logo", label: "Brand" }));
+    const logo = root.querySelector(".clbr-logo") as HTMLElement;
+
+    expect(logo.id).toBe("my-logo");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountLogo(renderClbrLogo({ label: "Brand" }));
+    const logo = root.querySelector(".clbr-logo") as HTMLElement;
+
+    expect(logo.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrLogo({ id: "not valid", label: "Brand" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrLogoProps>({

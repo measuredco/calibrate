@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrHeadingLevel } from "../../types";
 import { buildClbrIcon } from "../icon/icon";
@@ -11,6 +12,8 @@ export interface ClbrCardProps {
   headingLevel?: ClbrHeadingLevel;
   /** Optional link destination for the title. Adds a trailing arrow icon when `note` is also provided. */
   href?: string;
+  /** DOM id. */
+  id?: string;
   /** Optional note HTML content. Caller sanitizes untrusted content. */
   note?: string;
   /** Surface context. Emits `data-clbr-surface` when provided. */
@@ -29,10 +32,12 @@ export function buildClbrCard({
   description,
   headingLevel,
   href,
+  id,
   note,
   surface,
   title,
 }: ClbrCardProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const headingTag = headingLevel ? `h${headingLevel}` : "div";
   const titleChildren: ClbrNode[] = href
     ? [
@@ -96,7 +101,11 @@ export function buildClbrCard({
   return {
     kind: "element",
     tag: "div",
-    attrs: { class: "clbr-card", "data-clbr-surface": surface },
+    attrs: {
+      class: "clbr-card",
+      "data-clbr-surface": surface,
+      id: normalizedId,
+    },
     children,
   };
 }
@@ -147,6 +156,10 @@ export const CLBR_CARD_SPEC: ClbrComponentSpec = {
       description: "Link destination for the `title`.",
       type: { kind: "string" },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     note: {
       description: "Short note shown beneath the `description`.",
       type: { kind: "html" },
@@ -172,6 +185,12 @@ export const CLBR_CARD_SPEC: ClbrComponentSpec = {
         attribute: "data-clbr-surface",
         condition: { kind: "when-provided", prop: "surface" },
         value: { kind: "prop", prop: "surface" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

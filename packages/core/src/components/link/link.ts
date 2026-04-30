@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrLinkAppearance = "outline" | "solid" | "text";
@@ -22,6 +23,8 @@ export interface ClbrLinkProps {
   download?: boolean | string;
   /** Link destination. */
   href: string;
+  /** DOM id. */
+  id?: string;
   /** Optional icon markup rendered alongside the label. Caller sanitizes untrusted content. */
   icon?: string;
   /**
@@ -75,6 +78,7 @@ export function buildClbrLink(props: ClbrLinkProps): ClbrNode {
     appearance = "text",
     download,
     href,
+    id,
     icon,
     iconPlacement = "start",
     label,
@@ -86,6 +90,7 @@ export function buildClbrLink(props: ClbrLinkProps): ClbrNode {
     underline,
   } = props;
 
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedIcon = icon?.trim() || undefined;
   const hasIcon = Boolean(normalizedIcon);
 
@@ -130,6 +135,7 @@ export function buildClbrLink(props: ClbrLinkProps): ClbrNode {
       "data-underline": underline && appearance === "text" ? true : undefined,
       download: normalizedDownload,
       href,
+      id: normalizedId,
       rel: normalizedDownload ? undefined : rel || undefined,
       target: normalizedDownload ? undefined : target || undefined,
     },
@@ -177,6 +183,10 @@ export const CLBR_LINK_SPEC: ClbrComponentSpec = {
     href: {
       description: "Link destination.",
       required: true,
+      type: { kind: "string" },
+    },
+    id: {
+      description: "DOM id.",
       type: { kind: "string" },
     },
     icon: {
@@ -315,6 +325,12 @@ export const CLBR_LINK_SPEC: ClbrComponentSpec = {
             { kind: "when-equals", prop: "appearance", to: "text" },
           ],
         },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

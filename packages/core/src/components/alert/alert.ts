@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrInlineSize, ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
@@ -17,6 +18,8 @@ export interface ClbrAlertProps {
   dismissible?: boolean;
   /** Accessible label for the runtime dismiss control. Ignored when not dismissible. @default "Dismiss alert" */
   dismissibleLabel?: string;
+  /** DOM id. */
+  id?: string;
   /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
   /** Alert body text (escaped before render). */
@@ -73,12 +76,14 @@ function getAlertRole(tone?: ClbrStatusTone): "status" | "alert" {
 export function buildClbrAlert({
   dismissible,
   dismissibleLabel = dismissibleLabelDefault,
+  id,
   inlineSize = "full",
   message,
   size = "md",
   tone,
   title,
 }: ClbrAlertProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDismissibleLabel =
     dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
@@ -110,6 +115,7 @@ export function buildClbrAlert({
       "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
       "data-size": size,
       "data-tone": tone || undefined,
+      id: normalizedId,
       role: getAlertRole(tone),
     },
     children: [
@@ -245,6 +251,10 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
       ignoredWhen: "`dismissible` is false",
       type: { kind: "string" },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     inlineSize: {
       default: "full",
       description: "Whether the alert fills its container or shrinks to fit.",
@@ -356,6 +366,12 @@ export const CLBR_ALERT_SPEC: ClbrComponentSpec = {
         attribute: "data-size",
         condition: { kind: "always" },
         value: { kind: "prop", prop: "size" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

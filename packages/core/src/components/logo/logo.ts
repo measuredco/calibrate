@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrLogoTone = "default" | "neutral";
@@ -10,6 +11,8 @@ export type ClbrLogoVariant =
   | "graphic";
 
 export interface ClbrLogoProps {
+  /** DOM id. */
+  id?: string;
   /** Accessible label. */
   label: string;
   /** Size. @default "md" */
@@ -27,11 +30,14 @@ export interface ClbrLogoProps {
  * @returns IR node for a masked logo element.
  */
 export function buildClbrLogo({
+  id,
   label,
   size = "md",
   tone = "default",
   variant = "primary",
 }: ClbrLogoProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -40,6 +46,7 @@ export function buildClbrLogo({
       "data-size": size,
       "data-tone": tone === "neutral" ? "neutral" : undefined,
       "data-variant": variant === "primary" ? undefined : variant,
+      id: normalizedId,
     },
     children: [
       {
@@ -69,6 +76,10 @@ export const CLBR_LOGO_SPEC: ClbrComponentSpec = {
   output: { element: "div", class: "clbr-logo" },
   content: { kind: "text", prop: "label" },
   props: {
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     label: {
       description: "Accessible label.",
       required: true,
@@ -117,6 +128,12 @@ export const CLBR_LOGO_SPEC: ClbrComponentSpec = {
           values: ["secondary", "typographic", "graphic"],
         },
         value: { kind: "prop", prop: "variant" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

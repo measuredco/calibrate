@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 
@@ -10,6 +11,8 @@ export interface ClbrGridProps {
   children?: string;
   /** Gap behavior. @default "default" */
   gap?: ClbrGridGap;
+  /** DOM id. */
+  id?: string;
 }
 
 export interface ClbrGridItemProps {
@@ -29,6 +32,8 @@ export interface ClbrGridItemProps {
   colStartNarrow?: ClbrGridTrack;
   /** Column start at wide container threshold. Effect is only visible above the wide breakpoint. */
   colStartWide?: ClbrGridTrack;
+  /** DOM id. */
+  id?: string;
   /** Justify-self. */
   justify?: ClbrAlign;
   /** Row span at default container threshold. */
@@ -62,13 +67,17 @@ const validateGridTrack = (
 export function buildClbrGrid({
   children,
   gap = "default",
+  id,
 }: ClbrGridProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
     attrs: {
       class: "clbr-grid",
       "data-gap": gap === "default" ? undefined : gap,
+      id: normalizedId,
     },
     children: [
       {
@@ -106,6 +115,7 @@ export function buildClbrGridItem({
   colStart,
   colStartNarrow,
   colStartWide,
+  id,
   justify,
   rowSpan,
   rowSpanNarrow,
@@ -114,6 +124,8 @@ export function buildClbrGridItem({
   rowStartNarrow,
   rowStartWide,
 }: ClbrGridItemProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -133,6 +145,7 @@ export function buildClbrGridItem({
       "data-row-start": validateGridTrack(rowStart),
       "data-row-span-wide": validateGridTrack(rowSpanWide),
       "data-row-start-wide": validateGridTrack(rowStartWide),
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -164,6 +177,10 @@ export const CLBR_GRID_SPEC: ClbrComponentSpec = {
       description: "Space between the `grid-item` components.",
       type: { kind: "enum", values: ["default", "expanded", "none"] },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
   },
   events: {},
   rules: {
@@ -177,6 +194,12 @@ export const CLBR_GRID_SPEC: ClbrComponentSpec = {
           values: ["expanded", "none"],
         },
         value: { kind: "prop", prop: "gap" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },
@@ -215,6 +238,10 @@ export const CLBR_GRID_ITEM_SPEC: ClbrComponentSpec = {
     colStart: {
       description: "Starting column at the default breakpoint.",
       type: gridTrackType,
+    },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
     },
     rowSpan: {
       description: "Rows spanned at the default breakpoint.",
@@ -347,6 +374,12 @@ export const CLBR_GRID_ITEM_SPEC: ClbrComponentSpec = {
         attribute: "data-row-start-wide",
         condition: { kind: "when-provided", prop: "rowStartWide" },
         value: { kind: "prop", prop: "rowStartWide" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

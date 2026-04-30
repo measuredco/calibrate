@@ -19,6 +19,7 @@ export function Text(props: TextProps): ReturnType<typeof reactify> {
   const {
     as,
     children,
+    id,
     linkVisited,
     responsive,
     align,
@@ -30,6 +31,7 @@ export function Text(props: TextProps): ReturnType<typeof reactify> {
   const node = buildClbrText({
     as,
     children: SLOT_TEXT_CHILDREN,
+    id,
     linkVisited,
     responsive,
     align,

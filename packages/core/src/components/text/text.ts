@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 
@@ -13,6 +14,8 @@ export interface ClbrTextProps {
   as?: ClbrTextAs;
   /** Text alignment. Ignored when `as` is `span`. @default "start" */
   align?: ClbrAlign;
+  /** DOM id. */
+  id?: string;
   /** Enables visited-state styling for links inside text. @default true */
   linkVisited?: boolean;
   /** Applies max measure constraints for long-form readability. Ignored when `as` is `span`. @default true */
@@ -35,12 +38,14 @@ export function buildClbrText({
   align,
   as,
   children,
+  id,
   linkVisited = true,
   measured,
   responsive,
   size = "md",
   tone = "default",
 }: ClbrTextProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const tag: ClbrTextAs = as === "p" ? "p" : "span";
   const isParagraph = tag === "p";
   const resolvedAlign = isParagraph ? (align ?? "start") : undefined;
@@ -58,6 +63,7 @@ export function buildClbrText({
       "data-responsive": responsive,
       "data-size": size,
       "data-tone": tone === "muted" ? "muted" : undefined,
+      id: normalizedId,
     },
     children: [{ kind: "raw", html: children }],
   };
@@ -93,6 +99,10 @@ export const CLBR_TEXT_SPEC: ClbrComponentSpec = {
         "Text content. Supports inline markup such as `<em>`, `<strong>`, `<a>`, `<code>`, `<cite>`, etc.",
       required: true,
       type: { kind: "html" },
+    },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
     },
     linkVisited: {
       default: true,
@@ -175,6 +185,12 @@ export const CLBR_TEXT_SPEC: ClbrComponentSpec = {
         attribute: "data-tone",
         condition: { kind: "when-equals", prop: "tone", to: "muted" },
         value: { kind: "literal", text: "muted" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

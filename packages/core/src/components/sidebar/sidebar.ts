@@ -22,7 +22,7 @@ export interface ClbrSidebarProps {
   footer?: string;
   /** Optional header region markup. Caller sanitizes untrusted content. */
   header?: string;
-  /** Required id for the inner `.sidebar`; used by the trigger via `aria-controls`. */
+  /** DOM id applied to the host. The inner panel id is derived as `${id}-panel` and referenced by the trigger via `aria-controls`. */
   id: string;
   /** Accessible label for the component-owned trigger. @default "Open sidebar" */
   triggerLabel?: string;
@@ -97,6 +97,8 @@ export function buildClbrSidebar({
     });
   }
 
+  const panelId = `${normalizedId}-panel`;
+
   return {
     kind: "element",
     tag: CLBR_SIDEBAR_TAG_NAME,
@@ -108,6 +110,7 @@ export function buildClbrSidebar({
           ? normalizedCollapseLabel
           : undefined,
       "data-size": size,
+      id: normalizedId,
     },
     children: [
       {
@@ -117,7 +120,7 @@ export function buildClbrSidebar({
         children: [
           buildClbrButton({
             appearance: "text",
-            controls: normalizedId,
+            controls: panelId,
             disclosure: true,
             icon: "PanelLeft",
             iconMirrored: "rtl",
@@ -132,7 +135,7 @@ export function buildClbrSidebar({
       {
         kind: "element",
         tag: "div",
-        attrs: { class: "sidebar", id: normalizedId, tabindex: "-1" },
+        attrs: { class: "sidebar", id: panelId, tabindex: "-1" },
         children: sidebarChildren,
       },
       {
@@ -479,7 +482,8 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
       type: { kind: "html" },
     },
     id: {
-      description: "`id` used to wire the trigger to the sidebar.",
+      description:
+        "DOM id applied to the host. The inner panel id is derived as `${id}-panel` and wired to the trigger via `aria-controls`.",
       required: true,
       type: { kind: "string" },
     },
@@ -529,10 +533,16 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
         value: { kind: "prop", prop: "collapseLabel" },
       },
       {
-        target: { on: "descendant", selector: "div.sidebar" },
+        target: { on: "host" },
         attribute: "id",
         condition: { kind: "always" },
         value: { kind: "template", pattern: "{id}" },
+      },
+      {
+        target: { on: "descendant", selector: "div.sidebar" },
+        attribute: "id",
+        condition: { kind: "always" },
+        value: { kind: "template", pattern: "{id}-panel" },
       },
       {
         target: { on: "descendant", selector: "div.sidebar" },

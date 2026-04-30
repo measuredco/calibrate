@@ -31,6 +31,7 @@ export const Default = {
     actionLabel: "Action link",
     dismissible: true,
     dismissibleLabel: "Dismiss banner",
+    id: "",
     message: `Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.`,
     tone: undefined,
   } satisfies ClbrBannerProps,

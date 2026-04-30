@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrShapeSize = "xs" | "sm" | "md" | "lg" | "xl" | "fill";
@@ -13,6 +14,8 @@ export type ClbrShapeVariant =
   | "circle-sm";
 
 export interface ClbrShapeProps {
+  /** DOM id. */
+  id?: string;
   /** Size mode. @default "md" */
   size?: ClbrShapeSize;
   /** Tone. @default "default" */
@@ -28,10 +31,13 @@ export interface ClbrShapeProps {
  * @returns IR node for a masked shape element.
  */
 export function buildClbrShape({
+  id,
   variant = "corner",
   tone = "default",
   size = "md",
 }: ClbrShapeProps = {}): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -43,6 +49,7 @@ export function buildClbrShape({
           ? tone
           : undefined,
       "data-variant": variant,
+      id: normalizedId,
     },
     children: [],
   };
@@ -65,6 +72,10 @@ export const CLBR_SHAPE_SPEC: ClbrComponentSpec = {
   output: { element: "div", class: "clbr-shape" },
   content: { kind: "none" },
   props: {
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     variant: {
       default: "corner",
       description: "Shape to render.",
@@ -119,6 +130,12 @@ export const CLBR_SHAPE_SPEC: ClbrComponentSpec = {
           values: ["neutral", "brand", "support"],
         },
         value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

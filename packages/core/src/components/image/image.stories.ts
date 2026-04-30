@@ -27,6 +27,7 @@ export const Default = {
     aspectRatio: undefined,
     width: 0,
     height: 0,
+    id: "",
     radius: undefined,
     shadow: false,
     alt: "",

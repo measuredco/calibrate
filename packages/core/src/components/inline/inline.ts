@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 
@@ -15,6 +16,8 @@ export interface ClbrInlineProps {
   children?: string;
   /** Spacing gap size. @default "md" */
   gap?: ClbrInlineGap;
+  /** DOM id. */
+  id?: string;
   /** Main-axis distribution. @default "start" */
   justify?: ClbrInlineJustify;
   /** Prevents wrapping of inline children. */
@@ -32,9 +35,12 @@ export function buildClbrInline({
   as = "div",
   children,
   gap = "md",
+  id,
   justify = "start",
   nowrap,
 }: ClbrInlineProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: as,
@@ -44,6 +50,7 @@ export function buildClbrInline({
       "data-gap": gap,
       "data-justify": justify === "start" ? undefined : justify,
       "data-nowrap": nowrap,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -88,6 +95,10 @@ export const CLBR_INLINE_SPEC: ClbrComponentSpec = {
       description: "Space between children.",
       type: { kind: "enum", values: ["2xs", "xs", "sm", "md", "lg"] },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     justify: {
       default: "start",
       description: "Distributes items along the main axis.",
@@ -131,6 +142,12 @@ export const CLBR_INLINE_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "data-nowrap",
         condition: { kind: "when-truthy", prop: "nowrap" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

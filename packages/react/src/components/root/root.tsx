@@ -22,6 +22,7 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
     brand,
     children,
     dir,
+    id,
     lang,
     theme,
     ...rest
@@ -32,6 +33,7 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
     brand,
     children: SLOT_ROOT_CHILDREN,
     dir,
+    id,
     lang,
     theme,
   });

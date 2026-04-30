@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrSurfaceVariant =
@@ -10,6 +11,8 @@ export type ClbrSurfaceVariant =
 export interface ClbrSurfaceProps {
   /** Trusted inner HTML. */
   children: string;
+  /** DOM id. */
+  id?: string;
   /** Surface variant. @default "default" */
   variant?: ClbrSurfaceVariant;
 }
@@ -22,14 +25,18 @@ export interface ClbrSurfaceProps {
  */
 export function buildClbrSurface({
   children,
+  id,
   variant = "default",
 }: ClbrSurfaceProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
     attrs: {
       class: "clbr-surface",
       "data-clbr-surface": variant,
+      id: normalizedId,
     },
     children: [{ kind: "raw", html: children }],
   };
@@ -57,6 +64,10 @@ export const CLBR_SURFACE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     variant: {
       default: "default",
       description: "Surface context.",
@@ -74,6 +85,12 @@ export const CLBR_SURFACE_SPEC: ClbrComponentSpec = {
         attribute: "data-clbr-surface",
         condition: { kind: "always" },
         value: { kind: "prop", prop: "variant" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

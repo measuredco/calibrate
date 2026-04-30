@@ -109,6 +109,38 @@ describe("renderClbrCard", () => {
     );
     expect(html).not.toContain("<script>");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountCard(
+      renderClbrCard({
+        description: "Description",
+        id: "my-card",
+        title: "Title",
+      }),
+    );
+    const card = root.querySelector(".clbr-card") as HTMLElement;
+
+    expect(card.id).toBe("my-card");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountCard(
+      renderClbrCard({ description: "Description", title: "Title" }),
+    );
+    const card = root.querySelector(".clbr-card") as HTMLElement;
+
+    expect(card.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrCard({
+        description: "Description",
+        id: "not valid",
+        title: "Title",
+      }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrCardProps>({

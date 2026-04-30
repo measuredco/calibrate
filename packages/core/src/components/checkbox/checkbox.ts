@@ -1,17 +1,17 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
 export interface ClbrCheckboxProps {
   /** Checked state. @default false */
   checked?: boolean;
-  /** Helper text rendered after the label. Requires `descriptionId`. */
+  /** Helper text rendered after the label. Requires `id`. */
   description?: string;
-  /** ID for the description element, used by `aria-describedby`. Required when `description` is provided. */
-  descriptionId?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
+  /** DOM id applied to the underlying input. Required when `description` is provided. */
+  id?: string;
   /** Invalid state. Ignored when `disabled`. @default false */
   invalid?: boolean;
   /** Label text content (escaped before render). */
@@ -35,8 +35,8 @@ export interface ClbrCheckboxProps {
 export function buildClbrCheckbox({
   checked,
   description,
-  descriptionId,
   disabled,
+  id,
   invalid,
   label,
   name,
@@ -44,20 +44,16 @@ export function buildClbrCheckbox({
   size = "md",
   value,
 }: ClbrCheckboxProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDescription = description?.trim();
-  const normalizedDescriptionId = descriptionId?.trim();
 
-  if (normalizedDescription && !normalizedDescriptionId) {
-    throw new Error(
-      "descriptionId must be non-empty when description is provided.",
-    );
+  if (normalizedDescription && !normalizedId) {
+    throw new Error("id must be provided when description is provided.");
   }
 
-  if (normalizedDescription && !isValidHtmlId(normalizedDescriptionId!)) {
-    throw new Error(
-      "descriptionId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
-  }
+  const descriptionId = normalizedDescription
+    ? `${normalizedId}-description`
+    : undefined;
 
   const isDisabled = Boolean(disabled);
   const isInvalid = !isDisabled && Boolean(invalid);
@@ -72,13 +68,12 @@ export function buildClbrCheckbox({
           kind: "element",
           tag: "input",
           attrs: {
-            "aria-describedby": normalizedDescription
-              ? normalizedDescriptionId
-              : undefined,
+            "aria-describedby": descriptionId,
             "aria-invalid": isInvalid ? "true" : undefined,
             checked: Boolean(checked),
             class: "checkbox",
             disabled: isDisabled,
+            id: normalizedId,
             name: name || undefined,
             required: Boolean(required),
             type: "checkbox",
@@ -100,7 +95,7 @@ export function buildClbrCheckbox({
     children.push({
       kind: "element",
       tag: "p",
-      attrs: { class: "description", id: normalizedDescriptionId },
+      attrs: { class: "description", id: descriptionId },
       children: [{ kind: "text", value: normalizedDescription }],
     });
   }
@@ -145,15 +140,15 @@ export const CLBR_CHECKBOX_SPEC: ClbrComponentSpec = {
       description: "Helper text shown below the label.",
       type: { kind: "string" },
     },
-    descriptionId: {
-      description: "`id` for the `description` element.",
-      requiredWhen: "`description` is provided",
-      type: { kind: "string" },
-    },
     disabled: {
       default: false,
       description: "Prevents interaction.",
       type: { kind: "boolean" },
+    },
+    id: {
+      description: "DOM id.",
+      requiredWhen: "`description` is provided",
+      type: { kind: "string" },
     },
     invalid: {
       default: false,
@@ -244,6 +239,12 @@ export const CLBR_CHECKBOX_SPEC: ClbrComponentSpec = {
           ],
         },
         value: { kind: "literal", text: "true" },
+      },
+      {
+        target: { on: "descendant", selector: "input" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

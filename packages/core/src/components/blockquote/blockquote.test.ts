@@ -148,6 +148,38 @@ describe("renderClbrBlockquote", () => {
         ?.getAttribute("href"),
     ).toBe("/team");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountBlockquote(
+      renderClbrBlockquote({
+        attribution: "Measured",
+        id: "my-blockquote",
+        quote: "Quote",
+      }),
+    );
+    const blockquote = root.querySelector(".clbr-blockquote") as HTMLElement;
+
+    expect(blockquote.id).toBe("my-blockquote");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountBlockquote(
+      renderClbrBlockquote({ attribution: "Measured", quote: "Quote" }),
+    );
+    const blockquote = root.querySelector(".clbr-blockquote") as HTMLElement;
+
+    expect(blockquote.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrBlockquote({
+        attribution: "Measured",
+        id: "not valid",
+        quote: "Quote",
+      }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrBlockquoteProps>({

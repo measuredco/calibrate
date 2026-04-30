@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrImageAspectRatio = "1:1" | "4:5" | "3:2" | "16:9" | "21:9";
@@ -54,6 +55,8 @@ export interface ClbrImageProps {
   shadow?: boolean;
   /** Height in pixels. When `cover` is false, sets the intrinsic `<img>` height attribute. When `cover` is true, sizes the wrapper; if only one of `width`/`height` is set, the wrapper still follows `aspectRatio`, but setting both takes precedence over `aspectRatio`. */
   height?: number;
+  /** DOM id. */
+  id?: string;
   /** Emit `loading="lazy"` on the image. @default false */
   lazy?: boolean;
   /** Emit `fetchpriority="high"` and suppress `loading="lazy"`. @default false */
@@ -86,6 +89,7 @@ export function buildClbrImage({
   cover,
   gravity = "C",
   height,
+  id,
   lazy,
   priority,
   radius,
@@ -96,6 +100,7 @@ export function buildClbrImage({
   srcSet,
   width,
 }: ClbrImageProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedSrc = src.trim();
   const normalizedSrcSet = srcSet?.trim();
   const normalizedSizes = sizes?.trim();
@@ -182,6 +187,7 @@ export function buildClbrImage({
       "data-shadow": Boolean(shadow),
       "data-object-fit": cover ? "cover" : undefined,
       "data-radius": radius,
+      id: normalizedId,
       style: styleChunks.length > 0 ? styleChunks.join("; ") : undefined,
     },
     children: [imageNode],
@@ -248,6 +254,10 @@ export const CLBR_IMAGE_SPEC: ClbrComponentSpec = {
       description:
         "Height in pixels. When `cover` is false, sets the intrinsic `<img>` height. When `cover` is true, sizes the wrapper — alone it defers to `aspectRatio`, together with `width` it overrides `aspectRatio`.",
       type: { kind: "number" },
+    },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
     },
     lazy: {
       default: false,
@@ -372,6 +382,12 @@ export const CLBR_IMAGE_SPEC: ClbrComponentSpec = {
           ],
         },
         value: { kind: "literal", text: "lazy" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

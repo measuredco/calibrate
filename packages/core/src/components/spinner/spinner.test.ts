@@ -72,6 +72,24 @@ describe("renderClbrSpinner", () => {
 
     expect(hiddenLabel.innerHTML).toBe("&lt;strong&gt;Loading&lt;/strong&gt;");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountSpinner(renderClbrSpinner({ id: "my-spinner" }));
+    const spinner = root.querySelector(".clbr-spinner") as HTMLElement;
+
+    expect(spinner.id).toBe("my-spinner");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountSpinner(renderClbrSpinner());
+    const spinner = root.querySelector(".clbr-spinner") as HTMLElement;
+
+    expect(spinner.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrSpinner({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrSpinnerProps>({

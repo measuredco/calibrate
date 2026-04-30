@@ -40,10 +40,7 @@ describe("renderClbrSwitch", () => {
 
   it("omits checked when checked is false", () => {
     const root = mountSwitch(
-      renderClbrSwitch({
-        checked: false,
-        label: "Notifications",
-      }),
+      renderClbrSwitch({ checked: false, label: "Notifications" }),
     );
     const input = getByRole(root, "switch", { name: "Notifications" });
 
@@ -52,10 +49,7 @@ describe("renderClbrSwitch", () => {
 
   it("emits size attribute for sm", () => {
     const root = mountSwitch(
-      renderClbrSwitch({
-        label: "Notifications",
-        size: "sm",
-      }),
+      renderClbrSwitch({ label: "Notifications", size: "sm" }),
     );
     const field = root.querySelector(".clbr-switch");
 
@@ -78,11 +72,7 @@ describe("renderClbrSwitch", () => {
     expect(withValues.getAttribute("value")).toBe("yes");
 
     const withoutValuesRoot = mountSwitch(
-      renderClbrSwitch({
-        label: "Notifications",
-        name: "",
-        value: "",
-      }),
+      renderClbrSwitch({ label: "Notifications", name: "", value: "" }),
     );
     const withoutValues = getByRole(withoutValuesRoot, "switch", {
       name: "Notifications",
@@ -92,41 +82,41 @@ describe("renderClbrSwitch", () => {
     expect(withoutValues.getAttribute("value")).toBeNull();
   });
 
-  it("renders description and wires aria-describedby", () => {
+  it("renders description and derives aria-describedby from id", () => {
     const root = mountSwitch(
       renderClbrSwitch({
         description: "Optional helper text",
-        descriptionId: "switch-description",
+        id: "notifications",
         label: "Notifications",
       }),
     );
     const input = getByRole(root, "switch", { name: "Notifications" });
     const description = getByText(root, "Optional helper text");
 
-    expect(input.getAttribute("aria-describedby")).toBe("switch-description");
-    expect(description.getAttribute("id")).toBe("switch-description");
+    expect(input.getAttribute("aria-describedby")).toBe(
+      "notifications-description",
+    );
+    expect(description.getAttribute("id")).toBe("notifications-description");
   });
 
-  it("trims description and descriptionId before render", () => {
+  it("trims description before render", () => {
     const root = mountSwitch(
       renderClbrSwitch({
         description: "  Optional helper text  ",
-        descriptionId: "  switch-description  ",
+        id: "notifications",
         label: "Notifications",
       }),
     );
-    const input = getByRole(root, "switch", { name: "Notifications" });
     const description = getByText(root, "Optional helper text");
 
-    expect(input.getAttribute("aria-describedby")).toBe("switch-description");
-    expect(description.getAttribute("id")).toBe("switch-description");
+    expect(description.getAttribute("id")).toBe("notifications-description");
   });
 
   it("omits description markup and aria-describedby when description is blank", () => {
     const root = mountSwitch(
       renderClbrSwitch({
         description: "   ",
-        descriptionId: "switch-description",
+        id: "notifications",
         label: "Notifications",
       }),
     );
@@ -136,44 +126,26 @@ describe("renderClbrSwitch", () => {
     expect(root.querySelector(".description")).toBeNull();
   });
 
-  it("ignores descriptionId when description is omitted", () => {
-    const root = mountSwitch(
-      renderClbrSwitch({
-        descriptionId: "switch-description",
-        label: "Notifications",
-      }),
-    );
-    const input = getByRole(root, "switch", { name: "Notifications" });
-
-    expect(input.getAttribute("aria-describedby")).toBeNull();
-  });
-
-  it("throws when description is provided without descriptionId", () => {
+  it("throws when description is provided without id", () => {
     expect(() =>
       renderClbrSwitch({
         description: "Optional helper text",
         label: "Notifications",
       }),
-    ).toThrow("descriptionId must be non-empty when description is provided.");
+    ).toThrow("id must be provided when description is provided.");
   });
 
-  it("throws when descriptionId is invalid", () => {
+  it("throws on a syntactically invalid id", () => {
     expect(() =>
-      renderClbrSwitch({
-        description: "Optional helper text",
-        descriptionId: "not valid",
-        label: "Notifications",
-      }),
-    ).toThrow(
-      "descriptionId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
+      renderClbrSwitch({ id: "not valid", label: "Notifications" }),
+    ).toThrow();
   });
 
   it("escapes label and description text", () => {
     const root = mountSwitch(
       renderClbrSwitch({
         description: `<img src=x onerror=alert(2)>`,
-        descriptionId: "switch-description",
+        id: "notifications",
         label: `<script>alert(1)</script>`,
       }),
     );
@@ -185,13 +157,26 @@ describe("renderClbrSwitch", () => {
     ).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
   });
+
+  it("renders consumer-provided id on the inner input", () => {
+    const root = mountSwitch(
+      renderClbrSwitch({ id: "my-switch", label: "Label" }),
+    );
+    const input = root.querySelector("input.switch") as HTMLInputElement;
+
+    expect(input.id).toBe("my-switch");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountSwitch(renderClbrSwitch({ label: "Label" }));
+    const input = root.querySelector("input.switch") as HTMLInputElement;
+
+    expect(input.hasAttribute("id")).toBe(false);
+  });
 });
 
 describeSpecConsistency<ClbrSwitchProps>({
   baseProps: { label: "Label" },
-  propOverrides: {
-    descriptionId: { description: "Desc" },
-  },
   renderer: renderClbrSwitch,
   spec: CLBR_SWITCH_SPEC,
 });

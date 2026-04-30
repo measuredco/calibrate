@@ -55,6 +55,24 @@ describe("renderClbrGrid", () => {
     expect(root.querySelector("em")?.textContent).toBe("ipsum");
     expect(root.querySelector("a")?.getAttribute("href")).toBe("/docs");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountGrid(renderClbrGrid({ id: "my-grid" }));
+    const grid = root.querySelector(".clbr-grid") as HTMLElement;
+
+    expect(grid.id).toBe("my-grid");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountGrid(renderClbrGrid({}));
+    const grid = root.querySelector(".clbr-grid") as HTMLElement;
+
+    expect(grid.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrGrid({ id: "not valid" })).toThrow();
+  });
 });
 
 describe("renderClbrGridItem", () => {
@@ -145,6 +163,28 @@ describe("renderClbrGridItem", () => {
     expect(getByText(root, "B").classList.contains("clbr-grid-item")).toBe(
       true,
     );
+  });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountGrid(
+      renderClbrGridItem({ children: "Item", id: "my-grid-item" }),
+    );
+    const item = getByText(root, "Item");
+
+    expect(item.id).toBe("my-grid-item");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountGrid(renderClbrGridItem({ children: "Item" }));
+    const item = getByText(root, "Item");
+
+    expect(item.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrGridItem({ children: "Item", id: "not valid" }),
+    ).toThrow();
   });
 });
 

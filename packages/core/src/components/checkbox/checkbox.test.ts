@@ -65,21 +65,14 @@ describe("renderClbrCheckbox", () => {
   });
 
   it("emits aria-invalid only when invalid is true", () => {
-    const validRoot = mountCheckbox(
-      renderClbrCheckbox({
-        label: "Subscribe",
-      }),
-    );
+    const validRoot = mountCheckbox(renderClbrCheckbox({ label: "Subscribe" }));
     const validCheckbox = getByRole(validRoot, "checkbox", {
       name: "Subscribe",
     });
     expect(validCheckbox.getAttribute("aria-invalid")).toBeNull();
 
     const invalidRoot = mountCheckbox(
-      renderClbrCheckbox({
-        invalid: true,
-        label: "Subscribe",
-      }),
+      renderClbrCheckbox({ invalid: true, label: "Subscribe" }),
     );
     const invalidCheckbox = getByRole(invalidRoot, "checkbox", {
       name: "Subscribe",
@@ -116,11 +109,7 @@ describe("renderClbrCheckbox", () => {
     expect(withValues.getAttribute("value")).toBe("yes");
 
     const withoutValuesRoot = mountCheckbox(
-      renderClbrCheckbox({
-        label: "Subscribe",
-        name: "",
-        value: "",
-      }),
+      renderClbrCheckbox({ label: "Subscribe", name: "", value: "" }),
     );
     const withoutValues = getByRole(withoutValuesRoot, "checkbox", {
       name: "Subscribe",
@@ -130,11 +119,11 @@ describe("renderClbrCheckbox", () => {
     expect(withoutValues.getAttribute("value")).toBeNull();
   });
 
-  it("renders description and wires aria-describedby", () => {
+  it("renders description and derives aria-describedby from id", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         description: "Optional helper text",
-        descriptionId: "subscribe-description",
+        id: "subscribe",
         label: "Subscribe",
       }),
     );
@@ -147,20 +136,16 @@ describe("renderClbrCheckbox", () => {
     expect(description.getAttribute("id")).toBe("subscribe-description");
   });
 
-  it("trims description and descriptionId before render", () => {
+  it("trims description before render", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         description: "  Optional helper text  ",
-        descriptionId: "  subscribe-description  ",
+        id: "subscribe",
         label: "Subscribe",
       }),
     );
-    const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
     const description = getByText(root, "Optional helper text");
 
-    expect(checkbox.getAttribute("aria-describedby")).toBe(
-      "subscribe-description",
-    );
     expect(description.getAttribute("id")).toBe("subscribe-description");
   });
 
@@ -168,7 +153,7 @@ describe("renderClbrCheckbox", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         description: "   ",
-        descriptionId: "subscribe-description",
+        id: "subscribe",
         label: "Subscribe",
       }),
     );
@@ -178,44 +163,26 @@ describe("renderClbrCheckbox", () => {
     expect(root.querySelector(".description")).toBeNull();
   });
 
-  it("ignores descriptionId when description is omitted", () => {
-    const root = mountCheckbox(
-      renderClbrCheckbox({
-        descriptionId: "subscribe-description",
-        label: "Subscribe",
-      }),
-    );
-    const checkbox = getByRole(root, "checkbox", { name: "Subscribe" });
-
-    expect(checkbox.getAttribute("aria-describedby")).toBeNull();
-  });
-
-  it("throws when description is provided without descriptionId", () => {
+  it("throws when description is provided without id", () => {
     expect(() =>
       renderClbrCheckbox({
         description: "Optional helper text",
         label: "Subscribe",
       }),
-    ).toThrow("descriptionId must be non-empty when description is provided.");
+    ).toThrow("id must be provided when description is provided.");
   });
 
-  it("throws when descriptionId is invalid", () => {
+  it("throws on a syntactically invalid id", () => {
     expect(() =>
-      renderClbrCheckbox({
-        description: "Optional helper text",
-        descriptionId: "not valid",
-        label: "Subscribe",
-      }),
-    ).toThrow(
-      "descriptionId must start with a letter and contain only letters, numbers, '_', '-', or ':'.",
-    );
+      renderClbrCheckbox({ id: "not valid", label: "Subscribe" }),
+    ).toThrow();
   });
 
   it("escapes label and description text", () => {
     const root = mountCheckbox(
       renderClbrCheckbox({
         description: `<img src=x onerror=alert(2)>`,
-        descriptionId: "subscribe-description",
+        id: "subscribe",
         label: `<script>alert(1)</script>`,
       }),
     );
@@ -226,6 +193,22 @@ describe("renderClbrCheckbox", () => {
       getByRole(root, "checkbox", { name: `<script>alert(1)</script>` }),
     ).toBeTruthy();
     expect(getByText(root, `<img src=x onerror=alert(2)>`)).toBeTruthy();
+  });
+
+  it("renders consumer-provided id on the underlying input", () => {
+    const root = mountCheckbox(
+      renderClbrCheckbox({ id: "my-checkbox", label: "Label" }),
+    );
+    const input = root.querySelector("input.checkbox") as HTMLInputElement;
+
+    expect(input.id).toBe("my-checkbox");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountCheckbox(renderClbrCheckbox({ label: "Label" }));
+    const input = root.querySelector("input.checkbox") as HTMLInputElement;
+
+    expect(input.hasAttribute("id")).toBe(false);
   });
 });
 

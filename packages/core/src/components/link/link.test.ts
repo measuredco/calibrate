@@ -162,6 +162,26 @@ describe("renderClbrLink", () => {
     expect(link.hasAttribute("download")).toBe(true);
     expect(link.getAttribute("download")).toBe("");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    mount(renderClbrLink({ href: "/docs", id: "my-link", label: "Docs" }));
+    const link = getByRole(document.body, "link", { name: "Docs" });
+
+    expect(link.id).toBe("my-link");
+  });
+
+  it("omits id when not provided", () => {
+    mount(renderClbrLink({ href: "/docs", label: "Docs" }));
+    const link = getByRole(document.body, "link", { name: "Docs" });
+
+    expect(link.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrLink({ href: "/docs", id: "not valid", label: "Docs" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrLinkProps>({

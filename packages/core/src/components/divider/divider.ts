@@ -1,10 +1,13 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrDividerOrientation = "horizontal" | "vertical";
 export type ClbrDividerTone = "default" | "subtle" | "brand";
 
 export interface ClbrDividerProps {
+  /** DOM id. */
+  id?: string;
   /** Divider orientation. @default "horizontal" */
   orientation?: ClbrDividerOrientation;
   /** Tone variant. @default "default" */
@@ -18,9 +21,12 @@ export interface ClbrDividerProps {
  * @returns IR node for a separator element.
  */
 export function buildClbrDivider({
+  id,
   orientation = "horizontal",
   tone = "default",
 }: ClbrDividerProps = {}): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: orientation === "horizontal" ? "hr" : "span",
@@ -28,6 +34,7 @@ export function buildClbrDivider({
       "aria-orientation": orientation === "vertical" ? "vertical" : undefined,
       class: "clbr-divider",
       "data-tone": tone === "subtle" || tone === "brand" ? tone : undefined,
+      id: normalizedId,
       role: orientation === "vertical" ? "separator" : undefined,
     },
     children: [],
@@ -58,6 +65,10 @@ export const CLBR_DIVIDER_SPEC: ClbrComponentSpec = {
   },
   content: { kind: "none" },
   props: {
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     orientation: {
       default: "horizontal",
       description: "Divider orientation.",
@@ -93,6 +104,12 @@ export const CLBR_DIVIDER_SPEC: ClbrComponentSpec = {
           values: ["subtle", "brand"],
         },
         value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

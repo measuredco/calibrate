@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrContainerGutter = "default" | "narrow" | "none";
@@ -9,6 +10,8 @@ export interface ClbrContainerProps {
   children?: string;
   /** Inline gutter behavior. @default "default" */
   gutter?: ClbrContainerGutter;
+  /** DOM id. */
+  id?: string;
   /** Max-inline-size behavior. Effect is only visible on wider viewports. @default "default" */
   maxInlineSize?: ClbrContainerMaxInlineSize;
 }
@@ -22,8 +25,10 @@ export interface ClbrContainerProps {
 export function buildClbrContainer({
   children,
   gutter = "default",
+  id,
   maxInlineSize = "default",
 }: ClbrContainerProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   return {
     kind: "element",
     tag: "div",
@@ -32,6 +37,7 @@ export function buildClbrContainer({
       "data-gutter": gutter === "default" ? undefined : gutter,
       "data-max-inline-size":
         maxInlineSize === "default" ? undefined : maxInlineSize,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -63,6 +69,10 @@ export const CLBR_CONTAINER_SPEC: ClbrComponentSpec = {
       description: "Horizontal gutter width.",
       type: { kind: "enum", values: ["default", "narrow", "none"] },
     },
+    id: {
+      description: "DOM id.",
+      type: { kind: "string" },
+    },
     maxInlineSize: {
       default: "default",
       description:
@@ -92,6 +102,12 @@ export const CLBR_CONTAINER_SPEC: ClbrComponentSpec = {
           values: ["narrow", "none"],
         },
         value: { kind: "prop", prop: "gutter" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

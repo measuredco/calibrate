@@ -54,6 +54,24 @@ describe("renderClbrExpander", () => {
 
     expect(button).not.toBeNull();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    mount(renderClbrExpander({ id: "my-expander" }));
+    const button = getByRole(document.body, "button", { name: "Menu" });
+
+    expect(button.id).toBe("my-expander");
+  });
+
+  it("omits id when not provided", () => {
+    mount(renderClbrExpander());
+    const button = getByRole(document.body, "button", { name: "Menu" });
+
+    expect(button.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrExpander({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrExpanderProps>({

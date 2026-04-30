@@ -60,6 +60,28 @@ describe("renderClbrBadge", () => {
     ) as HTMLElement;
     expect(defaultBadge.getAttribute("data-size")).toBe("md");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountBadge(
+      renderClbrBadge({ id: "my-badge", label: "Badge" }),
+    );
+    const badge = root.querySelector(".clbr-badge") as HTMLElement;
+
+    expect(badge.id).toBe("my-badge");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountBadge(renderClbrBadge({ label: "Badge" }));
+    const badge = root.querySelector(".clbr-badge") as HTMLElement;
+
+    expect(badge.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrBadge({ id: "not valid", label: "Badge" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency({

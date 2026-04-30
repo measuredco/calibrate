@@ -28,6 +28,7 @@ export const Default = {
     ariaHidden: false,
     color: undefined,
     entity: "person",
+    id: "",
     initials: "",
     name: "",
     size: "md",

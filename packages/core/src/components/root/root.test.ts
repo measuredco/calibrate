@@ -132,6 +132,26 @@ describe("renderClbrRoot", () => {
     expect(getByText(root, "Title")).toBeTruthy();
     expect(getByText(root, "Body")).toBeTruthy();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountRoot(
+      renderClbrRoot({ children: "<p>content</p>", id: "my-root" }),
+    );
+
+    expect(root.id).toBe("my-root");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountRoot(renderClbrRoot({ children: "<p>content</p>" }));
+
+    expect(root.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrRoot({ children: "<p>content</p>", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrRootProps>({
