@@ -82,6 +82,7 @@ describe("form-control event-handler routing", () => {
     const input = container.querySelector("input.switch") as HTMLInputElement;
     expect(reactProps(input).onChange).toBe(onChange);
     expect(reactProps(wrapper).onChange).toBeUndefined();
+    unmount();
   });
 
   it("attaches onChange to the inner input on Input, not the wrapper", () => {
