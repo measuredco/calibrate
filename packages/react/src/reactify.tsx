@@ -26,6 +26,15 @@ const ATTR_NAME_MAP: Readonly<Record<string, string>> = {
 };
 
 /**
+ * Tags that React treats as form controls. When a Calibrate component
+ * renders one of these inside its host wrapper, `pickNativeExtras`-supplied
+ * event handlers (and `autoFocus`) are routed to the inner control rather
+ * than the wrapper, so React's controlled-input checks see them on the
+ * element they belong to.
+ */
+const PRIMARY_CONTROL_TAGS = new Set(["input", "textarea", "select"]);
+
+/**
  * Native attrs a Calibrate React wrapper forwards to the root element:
  * React's `DOMAttributes` surface (event handlers, minus `children` and
  * `dangerouslySetInnerHTML`) plus `ref` and `autoFocus`. Everything else
@@ -59,10 +68,71 @@ function toReactProps(
   return out;
 }
 
+/**
+ * Walks the IR tree and returns descendant primary-control nodes in
+ * document order. Used to decide where caller-supplied event handlers
+ * land.
+ */
+function collectPrimaryControls(node: ClbrNode): ClbrNode[] {
+  const out: ClbrNode[] = [];
+  const visit = (n: ClbrNode): void => {
+    if (n.kind !== "element") return;
+    if (PRIMARY_CONTROL_TAGS.has(n.tag)) out.push(n);
+    for (const child of n.children) visit(child);
+  };
+  visit(node);
+  return out;
+}
+
+type SplitExtras = {
+  rootExtras: Record<string, unknown>;
+  primaryFirstExtras: Record<string, unknown>;
+  primaryRestExtras: Record<string, unknown>;
+};
+
+/**
+ * Split caller extras for a component with primary-control descendants.
+ * `ref` stays on the wrapper (lets consumers query layout/measure). Event
+ * handlers route to every primary control (so React's controlled-input
+ * checks pass). `autoFocus` lands on the first primary only.
+ */
+function splitExtras(extras: Record<string, unknown>): SplitExtras {
+  const rootExtras: Record<string, unknown> = {};
+  const events: Record<string, unknown> = {};
+  let autoFocus: unknown;
+  for (const [key, value] of Object.entries(extras)) {
+    if (value === undefined) continue;
+    if (key === "ref") rootExtras[key] = value;
+    else if (key === "autoFocus") autoFocus = value;
+    else events[key] = value;
+  }
+  const primaryFirstExtras =
+    autoFocus !== undefined ? { autoFocus, ...events } : { ...events };
+  return { rootExtras, primaryFirstExtras, primaryRestExtras: events };
+}
+
+type RenderCtx = {
+  slots: Record<string, ReactNode>;
+  primaries: ClbrNode[];
+  primaryFirstExtras: Record<string, unknown>;
+  primaryRestExtras: Record<string, unknown>;
+};
+
+function extrasForNode(
+  node: ClbrNode,
+  ctx: RenderCtx,
+): Record<string, unknown> {
+  if (ctx.primaries.length === 0) return {};
+  const idx = ctx.primaries.indexOf(node);
+  if (idx === 0) return ctx.primaryFirstExtras;
+  if (idx > 0) return ctx.primaryRestExtras;
+  return {};
+}
+
 function buildElementProps(
   node: Extract<ClbrNode, { kind: "element" }>,
   extras: Record<string, unknown>,
-  slots: Record<string, ReactNode>,
+  ctx: RenderCtx,
 ): { props: Record<string, unknown>; children: ReactNode[] | null } {
   const props: Record<string, unknown> = {
     ...toReactProps(node.attrs),
@@ -79,7 +149,7 @@ function buildElementProps(
     return { props, children: null };
   }
   const hasUnmatchedRaw = node.children.some(
-    (child) => child.kind === "raw" && !(child.html in slots),
+    (child) => child.kind === "raw" && !(child.html in ctx.slots),
   );
   if (hasUnmatchedRaw) {
     // React forbids mixing `dangerouslySetInnerHTML` with `children`, so when
@@ -92,10 +162,10 @@ function buildElementProps(
     return { props, children: null };
   }
   const children = node.children.map((child, index) => {
-    if (child.kind === "raw" && child.html in slots) {
-      return createElement(Fragment, { key: index }, slots[child.html]);
+    if (child.kind === "raw" && child.html in ctx.slots) {
+      return createElement(Fragment, { key: index }, ctx.slots[child.html]);
     }
-    return renderNode(child, index, slots);
+    return renderNode(child, index, ctx);
   });
   return { props, children };
 }
@@ -103,17 +173,17 @@ function buildElementProps(
 function renderNode(
   node: ClbrNode,
   key: number | undefined,
-  slots: Record<string, ReactNode>,
+  ctx: RenderCtx,
 ): ReactNode {
   if (node.kind === "text") {
-    if (node.value in slots) {
-      return createElement(Fragment, { key }, slots[node.value]);
+    if (node.value in ctx.slots) {
+      return createElement(Fragment, { key }, ctx.slots[node.value]);
     }
     return node.value;
   }
   if (node.kind === "raw") {
-    if (node.html in slots) {
-      return createElement(Fragment, { key }, slots[node.html]);
+    if (node.html in ctx.slots) {
+      return createElement(Fragment, { key }, ctx.slots[node.html]);
     }
     // Raw nodes should be handled by the parent element. If a raw node
     // appears at the top level, wrap it in a fragment-like span.
@@ -122,7 +192,11 @@ function renderNode(
       dangerouslySetInnerHTML: { __html: node.html },
     });
   }
-  const { props, children } = buildElementProps(node, {}, slots);
+  const { props, children } = buildElementProps(
+    node,
+    extrasForNode(node, ctx),
+    ctx,
+  );
   if (key !== undefined) props.key = key;
   return children === null
     ? createElement(node.tag, props)
@@ -130,11 +204,15 @@ function renderNode(
 }
 
 /**
- * Render a Calibrate IR tree as React elements. `rootExtras` merges into
- * the root element's props (event handlers, `ref`, `autoFocus`). `slots`
- * substitutes named sentinel children with ReactNodes (for wrappers like
- * `Page`). Non-element roots wrap in a fragment; `rootExtras` is ignored
- * there (no host to attach handlers to).
+ * Render a Calibrate IR tree as React elements. `rootExtras` holds caller-
+ * supplied passthrough props (event handlers, `ref`, `autoFocus`). When
+ * the tree contains an `<input>`, `<textarea>`, or `<select>` descendant,
+ * event handlers and `autoFocus` route to those controls (so React's
+ * controlled-input checks see them on the right element); `ref` stays on
+ * the host wrapper. When no such descendant exists, `rootExtras` lands on
+ * the root as before. `slots` substitutes named sentinel children with
+ * ReactNodes (for wrappers like `Page`). Non-element roots wrap in a
+ * fragment; `rootExtras` is ignored there (no host to attach handlers to).
  */
 export function reactify(
   node: ClbrNode,
@@ -142,9 +220,30 @@ export function reactify(
   slots: Record<string, ReactNode> = {},
 ): ReactNode {
   if (node.kind !== "element") {
-    return createElement(Fragment, null, renderNode(node, undefined, slots));
+    const ctx: RenderCtx = {
+      slots,
+      primaries: [],
+      primaryFirstExtras: {},
+      primaryRestExtras: {},
+    };
+    return createElement(Fragment, null, renderNode(node, undefined, ctx));
   }
-  const { props, children } = buildElementProps(node, rootExtras, slots);
+  const primaries = collectPrimaryControls(node);
+  const split: SplitExtras =
+    primaries.length > 0
+      ? splitExtras(rootExtras)
+      : {
+          rootExtras,
+          primaryFirstExtras: {},
+          primaryRestExtras: {},
+        };
+  const ctx: RenderCtx = {
+    slots,
+    primaries,
+    primaryFirstExtras: split.primaryFirstExtras,
+    primaryRestExtras: split.primaryRestExtras,
+  };
+  const { props, children } = buildElementProps(node, split.rootExtras, ctx);
   return children === null
     ? createElement(node.tag, props)
     : createElement(node.tag, props, ...children);
