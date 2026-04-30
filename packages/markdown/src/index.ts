@@ -1,5 +1,5 @@
 import deepmerge from "deepmerge";
-import type { Root } from "hast";
+import type { Element, Root } from "hast";
 import type { Schema } from "hast-util-sanitize";
 import rehypeColorChips from "rehype-color-chips";
 import rehypeHighlight from "rehype-highlight";
@@ -32,11 +32,16 @@ export const sanitizeInlineSchema: Schema = {
   tagNames: ["a", "b", "br", "code", "cite", "del", "em", "i", "strong", "sup"],
 };
 
-// Make `<pre>` keyboard-focusable so users can scroll overflowing code blocks.
-const rehypeAccessiblePre = () => (tree: Root) => {
+// Make fenced code blocks keyboard-focusable so users can scroll overflowing code.
+const rehypeAccessibleCodeBlocks = () => (tree: Root) => {
   visit(tree, "element", (node) => {
-    if (node.tagName === "pre") {
-      node.properties = { ...(node.properties ?? {}), tabIndex: 0 };
+    if (node.tagName !== "pre") return;
+    const code = node.children.find(
+      (child): child is Element =>
+        child.type === "element" && child.tagName === "code",
+    );
+    if (code) {
+      code.properties = { ...(code.properties ?? {}), tabIndex: 0 };
     }
   });
 };
@@ -51,7 +56,7 @@ export const processMarkdown = (markdown: string): string =>
       .use(rehypeSlug)
       .use(rehypeColorChips)
       .use(rehypeHighlight)
-      .use(rehypeAccessiblePre)
+      .use(rehypeAccessibleCodeBlocks)
       .use(rehypeSanitize, sanitizeSchema)
       .use(rehypeStringify)
       .processSync(markdown),
