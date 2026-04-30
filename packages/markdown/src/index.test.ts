@@ -1,0 +1,32 @@
+import { describe, expect, it } from "vitest";
+
+import { processMarkdown, processMarkdownInline } from "./index.js";
+
+describe("processMarkdown", () => {
+  it("preserves syntax-highlighting classes on fenced code", () => {
+    const out = processMarkdown("```js\nconst x = 1;\n```");
+
+    expect(out).toContain("hljs");
+    expect(out).toContain("language-js");
+  });
+
+  it("renders inline color references as color chips", () => {
+    const out = processMarkdown("`#ff0000`");
+
+    expect(out).toContain("gfm-color-chip");
+  });
+
+  it("sanitizes script tags", () => {
+    const out = processMarkdown("<script>alert('xss')</script>");
+
+    expect(out).not.toContain("<script>");
+  });
+});
+
+describe("processMarkdownInline", () => {
+  it("strips block-level elements like headings", () => {
+    const out = processMarkdownInline("# Should not appear");
+
+    expect(out).not.toContain("<h1");
+  });
+});

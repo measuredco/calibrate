@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
+    "@measured/calibrate-markdown": "workspace:*",
     "@measured/calibrate-system": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/user-event": "^14.6.1",

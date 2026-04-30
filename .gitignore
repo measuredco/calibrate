@@ -4,6 +4,7 @@ build
 .pnpm-store
 apps/playground-react/dist
 packages/core/dist
+packages/markdown/dist
 packages/react/dist
 storybook-static
 .claude/settings.local.json
