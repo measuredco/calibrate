@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrStackAlign = "stretch" | "start" | "center" | "end";
@@ -14,6 +15,8 @@ export interface ClbrStackProps {
   children?: string;
   /** Spacing gap size. @default "md" */
   gap?: ClbrStackGap;
+  /** Optional DOM id. */
+  id?: string;
   /** Enables layout-context responsive spacing scale. @default false */
   responsive?: boolean;
 }
@@ -29,8 +32,11 @@ export function buildClbrStack({
   as = "div",
   children,
   gap = "md",
+  id,
   responsive,
 }: ClbrStackProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: as,
@@ -39,6 +45,7 @@ export function buildClbrStack({
       "data-align": align === "stretch" ? undefined : align,
       "data-gap": gap,
       "data-responsive": responsive,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -83,6 +90,11 @@ export const CLBR_STACK_SPEC: ClbrComponentSpec = {
       description: "Space between children.",
       type: { kind: "enum", values: ["none", "xs", "sm", "md", "lg"] },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     responsive: {
       default: false,
       description: "Scales spacing across breakpoints.",
@@ -112,6 +124,12 @@ export const CLBR_STACK_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "data-responsive",
         condition: { kind: "when-truthy", prop: "responsive" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

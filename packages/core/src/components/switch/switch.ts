@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { isValidHtmlId, normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrControlSize } from "../../types";
 
@@ -12,6 +12,8 @@ export interface ClbrSwitchProps {
   descriptionId?: string;
   /** Disabled state. @default false */
   disabled?: boolean;
+  /** Optional DOM id applied to the underlying input. */
+  id?: string;
   /** Label text content (escaped before render). */
   label: string;
   /** Form field name. */
@@ -33,11 +35,13 @@ export function buildClbrSwitch({
   description,
   descriptionId,
   disabled,
+  id,
   label,
   name,
   size = "md",
   value,
 }: ClbrSwitchProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDescription = description?.trim();
   const normalizedDescriptionId = descriptionId?.trim();
 
@@ -69,6 +73,7 @@ export function buildClbrSwitch({
             checked: Boolean(checked),
             class: "switch",
             disabled: Boolean(disabled),
+            id: normalizedId,
             name: name || undefined,
             role: "switch",
             type: "checkbox",
@@ -146,6 +151,11 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
       description: "Disables the switch.",
       type: { kind: "boolean" },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     label: {
       description: "Label text.",
       required: true,
@@ -213,6 +223,12 @@ export const CLBR_SWITCH_SPEC: ClbrComponentSpec = {
         attribute: "value",
         condition: { kind: "when-non-empty", prop: "value" },
         value: { kind: "prop", prop: "value" },
+      },
+      {
+        target: { on: "descendant", selector: "input" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

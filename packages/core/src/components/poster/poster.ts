@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrTheme } from "../root/root";
 import type { ClbrSurfaceVariant } from "../surface/surface";
@@ -13,6 +14,8 @@ export interface ClbrPosterProps {
   children?: string;
   /** Absolute theme lock for foreground content over non-themeable media. */
   contentTheme?: ClbrTheme;
+  /** Optional DOM id. */
+  id?: string;
   /** Background image HTML (usually `renderClbrImage(...)`). Caller sanitizes untrusted content. */
   image: string;
   /** Surface context. Emits `data-clbr-surface` when provided. */
@@ -28,9 +31,11 @@ export interface ClbrPosterProps {
 export function buildClbrPoster({
   children,
   contentTheme,
+  id,
   image,
   surface,
 }: ClbrPosterProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const resolvedSurface = contentTheme ? (surface ?? "default") : surface;
   const posterChildren: ClbrNode[] = [
     {
@@ -57,6 +62,7 @@ export function buildClbrPoster({
       class: "clbr-poster",
       "data-clbr-content-theme": contentTheme,
       "data-clbr-surface": resolvedSurface,
+      id: normalizedId,
     },
     children: posterChildren,
   };
@@ -99,6 +105,11 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
         "Fixed theme for foreground content over non-themeable media.",
       type: { kind: "enum", values: ["light", "dark"] },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     image: {
       description:
         "Background image markup, usually a calibrate image component.",
@@ -136,6 +147,12 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
         attribute: "data-clbr-surface",
         condition: { kind: "when-provided", prop: "surface" },
         value: { kind: "prop", prop: "surface" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

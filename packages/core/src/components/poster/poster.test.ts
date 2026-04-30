@@ -88,6 +88,36 @@ describe("renderClbrPoster", () => {
     expect(poster.getAttribute("data-clbr-content-theme")).toBe("light");
     expect(poster.getAttribute("data-clbr-surface")).toBe("brand");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountPoster(
+      renderClbrPoster({
+        id: "my-poster",
+        image: '<img src="/i.jpg" alt="" />',
+      }),
+    );
+    const poster = root.querySelector(".clbr-poster") as HTMLElement;
+
+    expect(poster.id).toBe("my-poster");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountPoster(
+      renderClbrPoster({ image: '<img src="/i.jpg" alt="" />' }),
+    );
+    const poster = root.querySelector(".clbr-poster") as HTMLElement;
+
+    expect(poster.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrPoster({
+        id: "not valid",
+        image: '<img src="/i.jpg" alt="" />',
+      }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrPosterProps>({

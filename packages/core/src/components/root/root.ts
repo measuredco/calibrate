@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrBrand = "msrd" | "wrfr";
@@ -17,6 +18,8 @@ export interface ClbrRootProps {
   children: string;
   /** Optional explicit text direction. */
   dir?: ClbrDirection;
+  /** Optional DOM id. */
+  id?: string;
   /** Optional BCP47 language tag (e.g. `en-GB`). */
   lang?: string;
   /** Optional explicit theme variant. */
@@ -35,9 +38,12 @@ export function buildClbrRoot({
   brand = "msrd",
   children,
   dir,
+  id,
   lang,
   theme,
 }: ClbrRootProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -48,6 +54,7 @@ export function buildClbrRoot({
         appOverscrollBehavior === "none" ? "none" : undefined,
       "data-clbr-brand": brand,
       "data-clbr-theme": theme,
+      id: normalizedId,
       lang: lang === "" ? undefined : lang,
       dir,
     },
@@ -99,6 +106,11 @@ export const CLBR_ROOT_SPEC: ClbrComponentSpec = {
       description: "Text direction.",
       type: { kind: "enum", values: ["ltr", "rtl"] },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     lang: {
       description: "BCP47 language tag (e.g. `en-GB`).",
       type: { kind: "string" },
@@ -149,6 +161,12 @@ export const CLBR_ROOT_SPEC: ClbrComponentSpec = {
         attribute: "lang",
         condition: { kind: "when-non-empty", prop: "lang" },
         value: { kind: "prop", prop: "lang" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

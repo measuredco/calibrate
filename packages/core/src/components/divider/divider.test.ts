@@ -49,6 +49,24 @@ describe("renderClbrDivider", () => {
     ) as HTMLElement;
     expect(defaultTone.hasAttribute("data-tone")).toBe(false);
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountDivider(renderClbrDivider({ id: "my-divider" }));
+    const divider = root.querySelector(".clbr-divider") as HTMLElement;
+
+    expect(divider.id).toBe("my-divider");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountDivider(renderClbrDivider());
+    const divider = root.querySelector(".clbr-divider") as HTMLElement;
+
+    expect(divider.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrDivider({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrDividerProps>({

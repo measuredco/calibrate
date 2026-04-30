@@ -90,6 +90,28 @@ describe("renderClbrProse", () => {
     expect(whitespaceProse).toBeTruthy();
     expect(whitespaceProse?.innerHTML).toBe("   ");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountProse(
+      renderClbrProse({ children: "<p>Body</p>", id: "my-prose" }),
+    );
+    const prose = root.querySelector(".clbr-prose") as HTMLElement;
+
+    expect(prose.id).toBe("my-prose");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountProse(renderClbrProse({ children: "<p>Body</p>" }));
+    const prose = root.querySelector(".clbr-prose") as HTMLElement;
+
+    expect(prose.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrProse({ children: "<p>Body</p>", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrProseProps>({

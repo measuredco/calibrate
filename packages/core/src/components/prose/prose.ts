@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 
@@ -11,6 +12,8 @@ export interface ClbrProseProps {
   align?: ClbrAlign;
   /** Hanging-indent layout behavior. */
   hangingPunctuation?: ClbrProseHangingPunctuation;
+  /** Optional DOM id. */
+  id?: string;
   /** Applies max measure constraints for long-form readability. @default true */
   measured?: boolean;
   /** Enables breakpoint-responsive body scale. @default false */
@@ -27,9 +30,12 @@ export function buildClbrProse({
   align = "start",
   children,
   hangingPunctuation,
+  id,
   measured = true,
   responsive,
 }: ClbrProseProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -39,6 +45,7 @@ export function buildClbrProse({
       "data-hanging-punctuation": hangingPunctuation,
       "data-measured": measured,
       "data-responsive": responsive,
+      id: normalizedId,
     },
     children: [{ kind: "raw", html: children }],
   };
@@ -75,6 +82,11 @@ export const CLBR_PROSE_SPEC: ClbrComponentSpec = {
       description:
         "Position list markers and leading quote marks in the margin, with text aligned.",
       type: { kind: "enum", values: ["always", "notebook"] },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     measured: {
       default: true,
@@ -115,6 +127,12 @@ export const CLBR_PROSE_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "data-responsive",
         condition: { kind: "when-truthy", prop: "responsive" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

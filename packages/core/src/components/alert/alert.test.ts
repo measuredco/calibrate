@@ -80,6 +80,28 @@ describe("renderClbrAlert", () => {
     expect(root.querySelector("strong")).toBeNull();
     expect(root.querySelector("img")).toBeNull();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountAlert(
+      renderClbrAlert({ id: "my-alert", message: "Body copy" }),
+    );
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
+
+    expect(alert.id).toBe("my-alert");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountAlert(renderClbrAlert({ message: "Body copy" }));
+    const alert = root.querySelector(CLBR_ALERT_TAG_NAME) as HTMLElement;
+
+    expect(alert.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrAlert({ id: "not valid", message: "Body copy" }),
+    ).toThrow();
+  });
 });
 
 describe("defineClbrAlert", () => {

@@ -1,7 +1,7 @@
 import { icons } from "lucide";
 
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { isValidHtmlId, normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 type LucideSvgAttrs = Record<string, string | number | undefined>;
@@ -53,6 +53,8 @@ export type ClbrIconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "fill";
 export interface ClbrIconProps {
   /** Emits `aria-hidden="true"` when true. @default true */
   ariaHidden?: boolean;
+  /** Optional DOM id. */
+  id?: string;
   /** SVG title text. Required when `ariaHidden` is false. */
   title?: string;
   /** ID for `<title>` referenced via `aria-labelledby`. Required when `ariaHidden` is false. */
@@ -113,6 +115,7 @@ function iconNodeToChildren(iconNode: LucideIconNode): ClbrNode[] {
  */
 export function buildClbrIcon({
   ariaHidden = true,
+  id,
   mirrored,
   name,
   size = "md",
@@ -125,6 +128,7 @@ export function buildClbrIcon({
     throw new Error(`Unknown Lucide icon name: ${name}`);
   }
 
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedTitle = title?.trim();
   const normalizedTitleId = titleId?.trim();
 
@@ -164,6 +168,7 @@ export function buildClbrIcon({
       "data-size": size,
       fill: "none",
       height: "24",
+      id: normalizedId,
       role: !ariaHidden ? "img" : undefined,
       stroke: "currentColor",
       "stroke-linecap": "round",
@@ -200,6 +205,11 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
       description:
         "Hides the icon from assistive technology. Decorative by default; set to false for a labelled icon (then title and titleId are required).",
       type: { kind: "boolean" },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     mirrored: {
       description: "Mirrors the icon horizontally.",
@@ -306,6 +316,12 @@ export const CLBR_ICON_SPEC: ClbrComponentSpec = {
         attribute: "xmlns",
         condition: { kind: "always" },
         value: { kind: "literal", text: "http://www.w3.org/2000/svg" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

@@ -2,6 +2,6 @@
 "@measured/calibrate-core": minor
 ---
 
-Add an optional `id` prop to structural components: `Box`, `Card`, `Heading`, `Text`, `Banner`, `Container`. The id is placed on the outermost host element and validated against the HTML id syntax. Consumers retain control of id generation; the renderer never auto-generates ids to avoid SSR/hydration leaks.
+Add an optional `id` prop to every component that didn't already accept one. Placement is semantic: structural / presentational components (Alert, Avatar, Badge, Banner, Blockquote, Box, Card, Container, Details, Divider, Expander, Figure, Grid, GridItem, Heading, Icon, Image, Inline, Logo, Nav, Page, Panel, Pattern, Poster, Prose, Root, Shape, Spinner, Stack, Surface, Text) emit `id` on the outermost host element; interactive non-form components (Link) emit it on the actual interactive element; form controls (Switch) emit it on the inner labelled input.
 
-This establishes the pattern for a follow-up workstream that will bring the same `id` support to the remaining components in the package.
+The id is validated against the HTML id syntax. Consumers retain control of id generation; the renderer never auto-generates ids to avoid SSR/hydration leaks. Components that already required an `id` (Range, Sidebar) for aria relationships keep their existing required-prop semantics.

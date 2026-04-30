@@ -169,6 +169,20 @@ describe("renderClbrAvatar", () => {
     const root = mountAvatar(renderClbrAvatar({ size: "xl" }));
     expect(getAvatar(root).getAttribute("data-size")).toBe("xl");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountAvatar(renderClbrAvatar({ id: "my-avatar" }));
+    expect(getAvatar(root).id).toBe("my-avatar");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountAvatar(renderClbrAvatar({}));
+    expect(getAvatar(root).hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrAvatar({ id: "not valid" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrAvatarProps>({

@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign } from "../../types";
 import { buildClbrText } from "../text/text";
@@ -10,6 +11,8 @@ export interface ClbrFigureProps {
   caption: string;
   /** Trusted media HTML (typically a `renderClbrImage` result). */
   children: string;
+  /** Optional DOM id. */
+  id?: string;
   /** Enables breakpoint-responsive type sizing for the caption. @default false */
   responsive?: boolean;
 }
@@ -24,14 +27,18 @@ export function buildClbrFigure({
   align = "start",
   caption,
   children,
+  id,
   responsive = false,
 }: ClbrFigureProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "figure",
     attrs: {
       class: "clbr-figure",
       "data-align": align === "start" ? undefined : align,
+      id: normalizedId,
     },
     children: [
       { kind: "raw", html: children },
@@ -91,6 +98,11 @@ export const CLBR_FIGURE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     responsive: {
       default: false,
       description: "Scales the caption across breakpoints.",
@@ -109,6 +121,12 @@ export const CLBR_FIGURE_SPEC: ClbrComponentSpec = {
           values: ["center", "end"],
         },
         value: { kind: "prop", prop: "align" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

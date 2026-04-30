@@ -94,6 +94,41 @@ describe("renderClbrPage", () => {
       root.querySelector(".clbr-page")?.getAttribute("data-sticky-header"),
     ).toBe("always");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountPage(
+      renderClbrPage({
+        footer: "<div>Footer</div>",
+        header: "<div>Header</div>",
+        id: "my-page",
+      }),
+    );
+    const page = root.querySelector(".clbr-page") as HTMLElement;
+
+    expect(page.id).toBe("my-page");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountPage(
+      renderClbrPage({
+        footer: "<div>Footer</div>",
+        header: "<div>Header</div>",
+      }),
+    );
+    const page = root.querySelector(".clbr-page") as HTMLElement;
+
+    expect(page.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrPage({
+        footer: "<div>Footer</div>",
+        header: "<div>Header</div>",
+        id: "not valid",
+      }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrPageProps>({

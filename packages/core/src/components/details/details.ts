@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrInlineSize } from "../../types";
 import { buildClbrIcon } from "../icon/icon";
@@ -6,6 +7,8 @@ import { buildClbrIcon } from "../icon/icon";
 export interface ClbrDetailsProps {
   /** Content markup inside the details panel. Caller sanitizes untrusted content. */
   children?: string;
+  /** Optional DOM id. */
+  id?: string;
   /** Inline-size behavior. @default "full" */
   inlineSize?: ClbrInlineSize;
   /** Whether the details is initially open. @default false */
@@ -22,10 +25,13 @@ export interface ClbrDetailsProps {
  */
 export function buildClbrDetails({
   children,
+  id,
   open,
   summary,
   inlineSize = "full",
 }: ClbrDetailsProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "details",
@@ -33,6 +39,7 @@ export function buildClbrDetails({
       class: "clbr-details",
       open,
       "data-inline-size": inlineSize === "fit" ? "fit" : undefined,
+      id: normalizedId,
     },
     children: [
       {
@@ -101,6 +108,11 @@ export const CLBR_DETAILS_SPEC: ClbrComponentSpec = {
       description: "Content revealed when the details is open.",
       type: { kind: "html" },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     inlineSize: {
       default: "full",
       description: "Whether the details fills its container or shrinks to fit.",
@@ -130,6 +142,12 @@ export const CLBR_DETAILS_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "open",
         condition: { kind: "when-truthy", prop: "open" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

@@ -210,6 +210,24 @@ describe("renderClbrIcon", () => {
       expect(icon.getAttribute("data-size")).toBe("fill");
     });
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountIcon(renderClbrIcon({ id: "my-icon", name: "check" }));
+    const icon = root.querySelector("svg") as SVGElement;
+
+    expect(icon.getAttribute("id")).toBe("my-icon");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountIcon(renderClbrIcon({ name: "check" }));
+    const icon = root.querySelector("svg") as SVGElement;
+
+    expect(icon.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrIcon({ id: "not valid", name: "check" })).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrIconProps>({

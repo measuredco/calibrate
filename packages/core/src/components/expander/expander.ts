@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
 export type ClbrExpanderSize = "sm" | "md" | "lg";
@@ -8,6 +9,8 @@ export interface ClbrExpanderProps {
   controlsId?: string;
   /** Expanded state. @default false */
   expanded?: boolean;
+  /** Optional DOM id. */
+  id?: string;
   /** Accessible label for the toggle control. @default "Menu" */
   label?: string;
   /** Size variant. @default "md" */
@@ -25,9 +28,11 @@ const expanderLabelDefault = "Menu";
 export function buildClbrExpander({
   controlsId,
   expanded,
+  id,
   label = expanderLabelDefault,
   size = "md",
 }: ClbrExpanderProps = {}): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedLabel = label.trim() === "" ? expanderLabelDefault : label;
 
   return {
@@ -38,6 +43,7 @@ export function buildClbrExpander({
       "aria-expanded": expanded ? "true" : "false",
       class: "clbr-expander",
       "data-size": size,
+      id: normalizedId,
       type: "button",
     },
     children: [
@@ -94,6 +100,11 @@ export const CLBR_EXPANDER_SPEC: ClbrComponentSpec = {
       description: "Whether the controlled region is expanded.",
       type: { kind: "boolean" },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     label: {
       default: expanderLabelDefault,
       description: "Accessible label.",
@@ -131,6 +142,12 @@ export const CLBR_EXPANDER_SPEC: ClbrComponentSpec = {
         attribute: "data-size",
         condition: { kind: "always" },
         value: { kind: "prop", prop: "size" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

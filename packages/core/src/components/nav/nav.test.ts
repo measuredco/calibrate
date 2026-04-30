@@ -94,6 +94,24 @@ describe("renderClbrNav", () => {
       }),
     ).toThrow(/contentId must start with a letter/);
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountNav(renderClbrNav({ id: "my-nav", items }));
+    const nav = root.querySelector("clbr-nav") as HTMLElement;
+
+    expect(nav.id).toBe("my-nav");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountNav(renderClbrNav({ items }));
+    const nav = root.querySelector("clbr-nav") as HTMLElement;
+
+    expect(nav.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() => renderClbrNav({ id: "not valid", items })).toThrow();
+  });
 });
 
 describe("defineClbrNav", () => {

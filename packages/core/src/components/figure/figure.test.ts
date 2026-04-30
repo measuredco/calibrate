@@ -83,6 +83,41 @@ describe("renderClbrFigure", () => {
         ?.hasAttribute("data-responsive"),
     ).toBe(true);
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountFigure(
+      renderClbrFigure({
+        caption: "Caption",
+        children: '<img src="/i.jpg" alt="" />',
+        id: "my-figure",
+      }),
+    );
+    const figure = root.querySelector(".clbr-figure") as HTMLElement;
+
+    expect(figure.id).toBe("my-figure");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountFigure(
+      renderClbrFigure({
+        caption: "Caption",
+        children: '<img src="/i.jpg" alt="" />',
+      }),
+    );
+    const figure = root.querySelector(".clbr-figure") as HTMLElement;
+
+    expect(figure.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrFigure({
+        caption: "Caption",
+        children: '<img src="/i.jpg" alt="" />',
+        id: "not valid",
+      }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrFigureProps>({

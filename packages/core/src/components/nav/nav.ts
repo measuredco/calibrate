@@ -1,5 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { isValidHtmlId } from "../../helpers/string";
+import { isValidHtmlId, normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import { renderClbrExpander } from "../expander/expander";
 
@@ -27,6 +27,8 @@ export interface ClbrNavProps {
   expanderLabel?: string;
   /** Expander placement when collapsible. @default "start" */
   expanderPosition?: ClbrNavExpanderPosition;
+  /** Optional DOM id. */
+  id?: string;
   /** Nav items rendered as semantic list links. */
   items: ClbrNavItem[];
   /** Accessible nav label. */
@@ -46,10 +48,12 @@ export function buildClbrNav({
   contentId,
   expanderLabel,
   expanderPosition = "start",
+  id,
   items,
   label,
   size = "md",
 }: ClbrNavProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedExpanderLabel = expanderLabel?.trim() || undefined;
   const normalizedContentId = contentId?.trim();
 
@@ -95,6 +99,7 @@ export function buildClbrNav({
           : undefined,
       "data-expander-position": collapsible ? expanderPosition : undefined,
       "data-size": size,
+      id: normalizedId,
     },
     children: [
       {
@@ -346,6 +351,11 @@ export const CLBR_NAV_SPEC: ClbrComponentSpec = {
       description: "Where the expander sits within the composition.",
       type: { kind: "enum", values: ["start", "end"] },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     collapsible: {
       description: "When to collapse the nav behind an expander.",
       type: { kind: "enum", values: ["always", "belowTablet"] },
@@ -405,6 +415,12 @@ export const CLBR_NAV_SPEC: ClbrComponentSpec = {
         attribute: "id",
         condition: { kind: "when-provided", prop: "contentId" },
         value: { kind: "prop", prop: "contentId" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

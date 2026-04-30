@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrShapeVariant } from "../shape/shape";
 
@@ -9,6 +10,8 @@ export type ClbrPatternVariant = ClbrShapeVariant;
 export interface ClbrPatternProps {
   /** Trusted inner HTML rendered inside the pattern container. */
   children?: string;
+  /** Optional DOM id. */
+  id?: string;
   /** Pattern variant. @default "corner" */
   variant?: ClbrPatternVariant;
   /** Tone. @default "default" */
@@ -25,10 +28,13 @@ export interface ClbrPatternProps {
  */
 export function buildClbrPattern({
   children,
+  id,
   size = "md",
   tone = "default",
   variant = "corner",
 }: ClbrPatternProps = {}): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -37,6 +43,7 @@ export function buildClbrPattern({
       "data-size": size,
       "data-tone": tone === "default" ? undefined : tone,
       "data-variant": variant,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -63,6 +70,11 @@ export const CLBR_PATTERN_SPEC: ClbrComponentSpec = {
     children: {
       description: "Content rendered above the pattern.",
       type: { kind: "html" },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     tone: {
       default: "default",
@@ -115,6 +127,12 @@ export const CLBR_PATTERN_SPEC: ClbrComponentSpec = {
           values: ["subtle", "support"],
         },
         value: { kind: "prop", prop: "tone" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

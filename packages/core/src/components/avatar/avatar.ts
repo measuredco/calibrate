@@ -1,5 +1,8 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
-import { collapseWhitespace } from "../../helpers/string";
+import {
+  collapseWhitespace,
+  normalizeOptionalHtmlId,
+} from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import { buildClbrIcon } from "../icon/icon";
 import { getClbrInitials } from "./get-initials";
@@ -47,6 +50,8 @@ export interface ClbrAvatarProps {
   entity?: ClbrAvatarEntity;
   /** Avatar background color token. If omitted and `name` exists, color is hash-derived (01..09). */
   color?: ClbrAvatarColor;
+  /** Optional DOM id. */
+  id?: string;
   /** Explicit initials override. Trimmed and whitespace-collapsed; alphabetic only, 1-3 characters. */
   initials?: string;
   /** Full name used for accessible-label fallback and initials derivation. */
@@ -131,11 +136,13 @@ export function buildClbrAvatar({
   ariaHidden,
   color,
   entity = "person",
+  id,
   initials,
   name,
   size = "md",
   src,
 }: ClbrAvatarProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedInitials = normalizeInitials(initials);
   const normalizedName = collapseWhitespace(name);
   const normalizedSrc = collapseWhitespace(src);
@@ -158,6 +165,7 @@ export function buildClbrAvatar({
     "data-color": resolvedColor === "neutral" ? undefined : resolvedColor,
     "data-entity": entity === "person" ? undefined : entity,
     "data-size": size,
+    id: normalizedId,
     role: !ariaHidden && !renderAsImage ? "img" : undefined,
   };
 
@@ -255,6 +263,11 @@ export const CLBR_AVATAR_SPEC: ClbrComponentSpec = {
         ],
       },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     initials: {
       description:
         "Initials to display. 1–3 alphabetic characters. Overrides name-derived initials.",
@@ -308,6 +321,12 @@ export const CLBR_AVATAR_SPEC: ClbrComponentSpec = {
         attribute: "aria-hidden",
         condition: { kind: "when-truthy", prop: "ariaHidden" },
         value: { kind: "literal", text: "true" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },
