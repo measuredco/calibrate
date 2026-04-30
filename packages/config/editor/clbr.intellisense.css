@@ -24,12 +24,7 @@
   --clbr-color-avatar-default: #434444; /** Default avatar background. Use as a fallback when no palette slot has been assigned. Slots 01–09 provide a palette for distinguishable per-user backgrounds when no uploaded image is available. */
   --clbr-color-background-default: #f9fafb; /** Default page background. Use for the main canvas behind content. */
   --clbr-color-background-panel: #ffffff; /** Elevated surface background. Use for cards, modals, and other contained surfaces that sit above the page. */
-  --clbr-color-background-scrim: rgba(
-    0,
-    0,
-    0,
-    0.56
-  ); /** Translucent overlay. Use as a backdrop behind overlay surfaces (e.g. modals, drawers) to dim underlying content while keeping it partially visible. */
+  --clbr-color-background-scrim: rgba(0, 0, 0, 0.56); /** Translucent overlay. Use as a backdrop behind overlay surfaces (e.g. modals, drawers) to dim underlying content while keeping it partially visible. */
   --clbr-color-background-subtle: #f2f3f4; /** Low-contrast surface background. Use for small discrete surfaces (inline code, zebra stripes, disabled inputs) that need light differentiation. */
   --clbr-color-base16-00: #fef4e8; /** Base16 palette slot 00. Default background for code blocks and syntax-highlighted regions. */
   --clbr-color-base16-01: #ffe9d4; /** Base16 palette slot 01. Lighter background variant (panels, gutters in code views). */
@@ -87,8 +82,7 @@
   --clbr-effect-filter-image: 0; /** Image filter. Use on imagery (photos, illustrations) to apply a styled image treatment. */
   --clbr-effect-opacity-demoted: 0.4; /** Opacity for de-emphasised content. Use for elements pushed visually into the background but still perceivable (e.g. dimming surrounding content to draw attention to a focused element). */
   --clbr-effect-opacity-disabled: 0.4; /** Opacity for disabled controls. A fallback for when color treatments (e.g. muted foreground, subtle background) can't fully convey the state. */
-  --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem
-    rgb(0% 0% 0% / 0.08); /** Default elevation shadow. Use on any element that should appear lifted above the page (cards, popovers, controls). */
+  --clbr-effect-shadow-default: 0.125rem 0.125rem 0.25rem 0rem rgb(0% 0% 0% / 0.08); /** Default elevation shadow. Use on any element that should appear lifted above the page (cards, popovers, controls). */
   --clbr-effect-stroke-inset: 0.25rem; /** Inset stroke. Use with outset to create a decorative offset stroke effect (e.g. on cards). Applied at the block-end and inline-end edges. */
   --clbr-effect-stroke-outset: -0.25rem; /** Outset stroke. Use with inset to create a decorative offset stroke effect (e.g. on cards). Applied at the block-start and inline-start edges. */
   --clbr-layout-border-width-default: 0.0625rem; /** Default border width. Use as the system's standard border weight. */
@@ -135,30 +129,10 @@
   --clbr-motion-duration-300: 300ms; /** Extended duration step. */
   --clbr-motion-duration-50: 50ms; /** Micro duration step. */
   --clbr-motion-duration-600: 600ms; /** Longest duration step. */
-  --clbr-motion-easing-ease-in: cubic-bezier(
-    0.44,
-    0,
-    1,
-    1
-  ); /** Ease-in curve. Use for elements leaving the viewport — slow start, accelerating exit. */
-  --clbr-motion-easing-ease-in-out: cubic-bezier(
-    0.44,
-    0,
-    0.55,
-    0.94
-  ); /** Ease-in-out curve. Use for movements that both originate and settle on screen (e.g. expansions in place). */
-  --clbr-motion-easing-ease-out: cubic-bezier(
-    0,
-    0,
-    0.55,
-    0.94
-  ); /** Ease-out curve. Use for elements entering the viewport — fast start, gentle settle. */
-  --clbr-motion-easing-emphasized: cubic-bezier(
-    0.96,
-    0.03,
-    0.53,
-    0.96
-  ); /** Emphasised easing curve. Use for transitions that should feel more expressive (e.g. brand-led page transitions, hero reveal motion). */
+  --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1); /** Ease-in curve. Use for elements leaving the viewport — slow start, accelerating exit. */
+  --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94); /** Ease-in-out curve. Use for movements that both originate and settle on screen (e.g. expansions in place). */
+  --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94); /** Ease-out curve. Use for elements entering the viewport — fast start, gentle settle. */
+  --clbr-motion-easing-emphasized: cubic-bezier(0.96, 0.03, 0.53, 0.96); /** Emphasised easing curve. Use for transitions that should feel more expressive (e.g. brand-led page transitions, hero reveal motion). */
   --clbr-radius-2xs: 0.0625rem; /** Radius 2xs. Minimal rounding for very small elements (default focus rings, small boxes). */
   --clbr-radius-lg: 1.125rem; /** Radius lg. Pronounced rounding for large surfaces (cards, panels). */
   --clbr-radius-md: 0.75rem; /** Radius md. Default rounding for standard UI surfaces (alerts, code blocks). Pick t-shirt sizes when the element's shortest side is unknown — match the size to the component's relative scale. */
@@ -235,10 +209,8 @@
   --clbr-spacing-vertical-800: 2.25rem; /** Vertical spacing step 800. */
   --clbr-spacing-vertical-900: 3rem; /** Vertical spacing step 900. */
   --clbr-spacing-vertical-950: 3.75rem; /** Vertical spacing step 950. */
-  --clbr-typography-font-family-default:
-    InterVariable, system-ui, sans-serif; /** Default font family. Use as the system's standard typeface. */
-  --clbr-typography-font-family-mono:
-    "Roboto Mono", ui-monospace, monospace; /** Monospaced font family. Use for code, contexts where character-width consistency matters (e.g. avatar, badge), and occasional typographic flourishes. */
+  --clbr-typography-font-family-default: InterVariable, system-ui, sans-serif; /** Default font family. Use as the system's standard typeface. */
+  --clbr-typography-font-family-mono: 'Roboto Mono', ui-monospace, monospace; /** Monospaced font family. Use for code, contexts where character-width consistency matters (e.g. avatar, badge), and occasional typographic flourishes. */
   --clbr-typography-font-weight-bold: 566; /** Bold font weight. Use for strong text emphasis (semantic `strong`/`b` elements, small headings). */
   --clbr-typography-font-weight-medium: 466; /** Medium font weight. Use for medium text emphasis (e.g. medium headings). */
   --clbr-typography-font-weight-regular: 400; /** Regular font weight. Use as the system's standard text weight. */
@@ -268,58 +240,32 @@
   --clbr-typography-prose-link-default-decoration-thickness: 0.125rem; /** Default decoration thickness for prose links. */
   --clbr-typography-prose-link-hover-decoration-line: underline; /** Decoration line for prose links on hover. */
   --clbr-typography-prose-link-hover-decoration-offset: 0.29em; /** Decoration offset for prose links on hover, in em. */
-  --clbr-typography-text-body-lg:
-    400 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Large body text. Use for emphasised copy (intro paragraphs, lede text). */
-  --clbr-typography-text-body-md:
-    400 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Default body text size. */
-  --clbr-typography-text-body-responsive-lg:
-    400 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Large body text. Use for emphasised copy (intro paragraphs, lede text). */
-  --clbr-typography-text-body-responsive-md:
-    400 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Default body text size. */
-  --clbr-typography-text-body-responsive-sm:
-    400 1rem/1.5 InterVariable, system-ui, sans-serif; /** Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent. */
-  --clbr-typography-text-body-responsive-xs:
-    400 0.875rem/1.714286 InterVariable, system-ui, sans-serif; /** Extra small body text. Use for the smallest body copy (microtext). */
-  --clbr-typography-text-body-sm:
-    400 1rem/1.5 InterVariable, system-ui, sans-serif; /** Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent. */
-  --clbr-typography-text-body-xs:
-    400 0.875rem/1.714286 InterVariable, system-ui, sans-serif; /** Extra small body text. Use for the smallest body copy (microtext). */
-  --clbr-typography-text-heading-2xl:
-    366 2.625rem/1.285714 InterVariable, system-ui, sans-serif; /** 2xl heading (`h1`-equivalent). Use for page titles. */
-  --clbr-typography-text-heading-3xl:
-    300 3rem/1.25 InterVariable, system-ui, sans-serif; /** Display heading (3xl). Use for hero/marketing headings. */
-  --clbr-typography-text-heading-4xl:
-    250 3.875rem/1.16129 InterVariable, system-ui, sans-serif; /** Display heading (4xl). Use for larger hero/marketing headings. */
-  --clbr-typography-text-heading-5xl:
-    200 5.25rem/1.142857 InterVariable, system-ui, sans-serif; /** Display heading (5xl). Use for the largest hero/marketing headings. */
-  --clbr-typography-text-heading-lg:
-    433 1.5rem/1.5 InterVariable, system-ui, sans-serif; /** Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels). */
-  --clbr-typography-text-heading-md:
-    466 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Medium heading (`h4`-equivalent). Use for subsection headings. */
-  --clbr-typography-text-heading-responsive-2xl:
-    366 2.625rem/1.285714 InterVariable, system-ui, sans-serif; /** 2xl heading (`h1`-equivalent). Use for page titles. */
-  --clbr-typography-text-heading-responsive-3xl:
-    300 3rem/1.25 InterVariable, system-ui, sans-serif; /** Display heading (3xl). Use for hero/marketing headings. */
-  --clbr-typography-text-heading-responsive-4xl:
-    250 3.875rem/1.16129 InterVariable, system-ui, sans-serif; /** Display heading (4xl). Use for larger hero/marketing headings. */
-  --clbr-typography-text-heading-responsive-5xl:
-    200 5.25rem/1.142857 InterVariable, system-ui, sans-serif; /** Display heading (5xl). Use for the largest hero/marketing headings. */
-  --clbr-typography-text-heading-responsive-lg:
-    433 1.5rem/1.5 InterVariable, system-ui, sans-serif; /** Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels). */
-  --clbr-typography-text-heading-responsive-md:
-    466 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Medium heading (`h4`-equivalent). Use for subsection headings. */
-  --clbr-typography-text-heading-responsive-sm:
-    500 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Small heading (`h5`-equivalent). Use for subsection headings. */
-  --clbr-typography-text-heading-responsive-xl:
-    400 2rem/1.354839 InterVariable, system-ui, sans-serif; /** Extra large heading (`h2`-equivalent). Use for section headings. */
-  --clbr-typography-text-heading-responsive-xs:
-    533 1rem/1.5 InterVariable, system-ui, sans-serif; /** Extra small heading (`h6`-equivalent). Use for subsection headings. */
-  --clbr-typography-text-heading-sm:
-    500 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Small heading (`h5`-equivalent). Use for subsection headings. */
-  --clbr-typography-text-heading-xl:
-    400 2rem/1.354839 InterVariable, system-ui, sans-serif; /** Extra large heading (`h2`-equivalent). Use for section headings. */
-  --clbr-typography-text-heading-xs:
-    533 1rem/1.5 InterVariable, system-ui, sans-serif; /** Extra small heading (`h6`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-body-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Large body text. Use for emphasised copy (intro paragraphs, lede text). */
+  --clbr-typography-text-body-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Default body text size. */
+  --clbr-typography-text-body-responsive-lg: 400 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Large body text. Use for emphasised copy (intro paragraphs, lede text). */
+  --clbr-typography-text-body-responsive-md: 400 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Default body text size. */
+  --clbr-typography-text-body-responsive-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif; /** Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent. */
+  --clbr-typography-text-body-responsive-xs: 400 0.875rem/1.714286 InterVariable, system-ui, sans-serif; /** Extra small body text. Use for the smallest body copy (microtext). */
+  --clbr-typography-text-body-sm: 400 1rem/1.5 InterVariable, system-ui, sans-serif; /** Small body text. Use for secondary copy (labels, captions, helper text) where default body would be too prominent. */
+  --clbr-typography-text-body-xs: 400 0.875rem/1.714286 InterVariable, system-ui, sans-serif; /** Extra small body text. Use for the smallest body copy (microtext). */
+  --clbr-typography-text-heading-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif; /** 2xl heading (`h1`-equivalent). Use for page titles. */
+  --clbr-typography-text-heading-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif; /** Display heading (3xl). Use for hero/marketing headings. */
+  --clbr-typography-text-heading-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif; /** Display heading (4xl). Use for larger hero/marketing headings. */
+  --clbr-typography-text-heading-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif; /** Display heading (5xl). Use for the largest hero/marketing headings. */
+  --clbr-typography-text-heading-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif; /** Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels). */
+  --clbr-typography-text-heading-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Medium heading (`h4`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-heading-responsive-2xl: 366 2.625rem/1.285714 InterVariable, system-ui, sans-serif; /** 2xl heading (`h1`-equivalent). Use for page titles. */
+  --clbr-typography-text-heading-responsive-3xl: 300 3rem/1.25 InterVariable, system-ui, sans-serif; /** Display heading (3xl). Use for hero/marketing headings. */
+  --clbr-typography-text-heading-responsive-4xl: 250 3.875rem/1.16129 InterVariable, system-ui, sans-serif; /** Display heading (4xl). Use for larger hero/marketing headings. */
+  --clbr-typography-text-heading-responsive-5xl: 200 5.25rem/1.142857 InterVariable, system-ui, sans-serif; /** Display heading (5xl). Use for the largest hero/marketing headings. */
+  --clbr-typography-text-heading-responsive-lg: 433 1.5rem/1.5 InterVariable, system-ui, sans-serif; /** Large heading (`h3`-equivalent). Use for subsection headings and component-level titles (cards, panels). */
+  --clbr-typography-text-heading-responsive-md: 466 1.25rem/1.5 InterVariable, system-ui, sans-serif; /** Medium heading (`h4`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-heading-responsive-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Small heading (`h5`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-heading-responsive-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif; /** Extra large heading (`h2`-equivalent). Use for section headings. */
+  --clbr-typography-text-heading-responsive-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif; /** Extra small heading (`h6`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-heading-sm: 500 1.125rem/1.5 InterVariable, system-ui, sans-serif; /** Small heading (`h5`-equivalent). Use for subsection headings. */
+  --clbr-typography-text-heading-xl: 400 2rem/1.354839 InterVariable, system-ui, sans-serif; /** Extra large heading (`h2`-equivalent). Use for section headings. */
+  --clbr-typography-text-heading-xs: 533 1rem/1.5 InterVariable, system-ui, sans-serif; /** Extra small heading (`h6`-equivalent). Use for subsection headings. */
   --clbr-typography-type-step-100-font-size: 0.875rem; /** Type-step 100 font size. Tight-leading variant. */
   --clbr-typography-type-step-100-line-height: 1.285714; /** Type-step 100 line height. Tight leading. */
   --clbr-typography-type-step-1000-font-size: 3rem; /** Type-step 1000 font size. */
