@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrStatusTone } from "../../types";
 import { renderClbrButton } from "../button/button";
@@ -22,6 +23,8 @@ export interface ClbrBannerProps {
   /** Accessible label for the runtime dismiss control. Ignored when not dismissible.
    * @default "Dismiss banner" */
   dismissibleLabel?: string;
+  /** Optional DOM id. */
+  id?: string;
   /** Banner body text (escaped before render). */
   message: string;
   /** Semantic message intent. */
@@ -56,6 +59,7 @@ export function buildClbrBanner({
   actionLabel,
   dismissible = true,
   dismissibleLabel = dismissibleLabelDefault,
+  id,
   message,
   tone,
 }: ClbrBannerProps): ClbrNode {
@@ -63,6 +67,7 @@ export function buildClbrBanner({
     throw new Error("actionHref and actionLabel must be provided together.");
   }
 
+  const normalizedId = normalizeOptionalHtmlId(id);
   const normalizedDismissibleLabel =
     dismissibleLabel.trim() === "" ? dismissibleLabelDefault : dismissibleLabel;
 
@@ -84,12 +89,13 @@ export function buildClbrBanner({
     tag: CLBR_BANNER_TAG_NAME,
     attrs: {
       class: "clbr-banner",
+      "data-clbr-surface": "inverse",
       "data-dismissible": dismissible,
       "data-dismissible-label": dismissible
         ? normalizedDismissibleLabel
         : undefined,
-      "data-clbr-surface": "inverse",
       "data-tone": tone || undefined,
+      id: normalizedId,
     },
     children: [
       {
@@ -211,6 +217,11 @@ export const CLBR_BANNER_SPEC: ClbrComponentSpec = {
       ignoredWhen: "`dismissible` is false",
       type: { kind: "string" },
     },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
+    },
     message: {
       description: "Body text of the banner.",
       required: true,
@@ -255,6 +266,12 @@ export const CLBR_BANNER_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "data-dismissible",
         condition: { kind: "when-truthy", prop: "dismissible" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

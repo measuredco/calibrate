@@ -6,6 +6,27 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
+### Universal `id` prop on every component
+
+Every component in `@measured/calibrate-core` should accept an optional `id` prop. Drives analytics tracking (e.g. Plausible event selectors), fragment-URL navigation, programmatic focus / scroll-to, JS selectors, external aria refs, and serves as the test handle when needed.
+
+**Decisions:**
+
+- **`id`, not `data-testid`.** `id` is broader — it covers tests _and_ analytics _and_ deep linking _and_ JS selectors. Revisit `data-testid` only if a real test-isolation case surfaces (e.g. `id` semantics churn and tests need a stable handle).
+- **No auto-generation.** Auto-generated ids are SSR-leaky (hydration mismatches when generation isn't deterministic). Consumer provides `id` or no `id` is rendered. Components that already require `id` for aria stay as-is.
+- **Placement is semantic, per-component:**
+  - **Form controls** (Input, Textarea, Range, Radios, Checkbox, Switch, Fieldset) → inner labelled element (existing behaviour preserved). Required for `<label for="...">` to work.
+  - **Interactive non-form** (Button, Link) → the actual interactive element.
+  - **Structural / presentational** (Box, Card, Container, Heading, Text, Banner, Alert, etc.) → outermost wrapper.
+
+**Implementation:**
+
+1. SPEC type + adapter walker: model `id` as a universal optional prop (consistent surface across components without per-component decoration of the shared part)
+2. Per-component renderer: forward `id` to the right element per the placement rule; existing components keep their placements
+3. Validate consumer-provided `id` at the component boundary — non-empty, no whitespace
+4. Tests per renderer asserting `id` passes through to the right element
+5. Storybook arg type at the meta level so every story exposes it for free
+
 ## Next
 
 What we could be working on next.
@@ -34,7 +55,6 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 
 ### Component evolution
 
-- Add `data-testid` and/or `id` support
 - Add `menuitemcheckbox`/`menuitemradio` support to `Menu`
 - Add `renderPosterImage` to expose subset of `image` props in `poster` API
 - Add a light theme `poster` story
@@ -47,10 +67,6 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 - Missing sm: Blockquote
 - No size prop: Card, Details, Fieldset, Prose
 - Button & Link with size lg are the same as size md if 1. appearance text and label visible or 2. appearance outline or solid, and label hidden.
-
-#### Component analytics
-
-Figure out a way to support arbitrary analytics attributes/classes without opening a general escape hatch. Note - Plausible implementation in Facet used classnames.
 
 #### More components
 

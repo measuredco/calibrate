@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrAlign, ClbrHeadingLevel } from "../../types";
 export type ClbrHeadingSize =
@@ -15,6 +16,8 @@ export type ClbrHeadingSize =
 export interface ClbrHeadingProps {
   /** Text alignment. @default "start" */
   align?: ClbrAlign;
+  /** Optional DOM id. */
+  id?: string;
   /** Semantic heading level; omit to render a `span`. */
   level?: ClbrHeadingLevel;
   /** Enables optical alignment for left sidebearing-heavy glyphs. @default false */
@@ -35,12 +38,14 @@ export interface ClbrHeadingProps {
  */
 export function buildClbrHeading({
   align = "start",
+  id,
   level,
   opticalAlign,
   responsive,
   size = "md",
   text,
 }: ClbrHeadingProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
   const tag = level ? (`h${level}` as const) : "span";
   return {
     kind: "element",
@@ -51,6 +56,7 @@ export function buildClbrHeading({
       "data-optical-align": opticalAlign,
       "data-responsive": responsive,
       "data-size": size,
+      id: normalizedId,
     },
     children: [{ kind: "text", value: text }],
   };
@@ -91,6 +97,11 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
       default: "start",
       description: "Text alignment.",
       type: { kind: "enum", values: ["start", "center", "end"] },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     level: {
       description: "Semantic heading level. Renders a `<span>` when omitted.",
@@ -148,6 +159,12 @@ export const CLBR_HEADING_SPEC: ClbrComponentSpec = {
         attribute: "data-size",
         condition: { kind: "always" },
         value: { kind: "prop", prop: "size" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

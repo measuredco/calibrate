@@ -102,6 +102,28 @@ describe("renderClbrHeading", () => {
 
     expect(queryByRole(root, "heading")).toBeNull();
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountHeading(
+      renderClbrHeading({ id: "my-heading", level: 2, text: "Heading" }),
+    );
+    const heading = root.querySelector(".clbr-heading") as HTMLElement;
+
+    expect(heading.id).toBe("my-heading");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountHeading(renderClbrHeading({ level: 2, text: "Heading" }));
+    const heading = root.querySelector(".clbr-heading") as HTMLElement;
+
+    expect(heading.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrHeading({ id: "not valid", level: 2, text: "Heading" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrHeadingProps>({

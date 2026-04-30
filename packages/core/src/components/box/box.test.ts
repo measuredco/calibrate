@@ -143,6 +143,26 @@ describe("renderClbrBox", () => {
 
     expect(box.getAttribute("data-background")).toBe("transparent");
   });
+
+  it("renders consumer-provided id on the host", () => {
+    const root = mountBox(renderClbrBox({ children: "Body", id: "my-box" }));
+    const box = root.querySelector(".clbr-box") as HTMLElement;
+
+    expect(box.id).toBe("my-box");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountBox(renderClbrBox({ children: "Body" }));
+    const box = root.querySelector(".clbr-box") as HTMLElement;
+
+    expect(box.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrBox({ children: "Body", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrBoxProps>({

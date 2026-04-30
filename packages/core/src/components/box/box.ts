@@ -1,4 +1,5 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
+import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -21,6 +22,8 @@ export interface ClbrBoxProps {
   border?: boolean;
   /** Trusted inner HTML. */
   children?: string;
+  /** Optional DOM id. */
+  id?: string;
   /** Inner block-axis spacing scale. @default "md" */
   paddingBlock?: ClbrBoxPadding;
   /** Inner inline-axis spacing scale. @default "md" */
@@ -41,14 +44,17 @@ export interface ClbrBoxProps {
  */
 export function buildClbrBox({
   background = "default",
-  children,
   border,
+  children,
+  id,
   paddingBlock = "md",
   paddingInline = "md",
   radius,
   responsive,
   surface,
 }: ClbrBoxProps): ClbrNode {
+  const normalizedId = normalizeOptionalHtmlId(id);
+
   return {
     kind: "element",
     tag: "div",
@@ -56,11 +62,12 @@ export function buildClbrBox({
       class: "clbr-box",
       "data-background": background === "default" ? undefined : background,
       "data-border": border,
+      "data-clbr-surface": surface,
       "data-padding-block": paddingBlock,
       "data-padding-inline": paddingInline,
       "data-radius": radius,
       "data-responsive": responsive,
-      "data-clbr-surface": surface,
+      id: normalizedId,
     },
     children: children ? [{ kind: "raw", html: children }] : [],
   };
@@ -96,6 +103,11 @@ export const CLBR_BOX_SPEC: ClbrComponentSpec = {
     children: {
       description: "Content rendered inside the box.",
       type: { kind: "html" },
+    },
+    id: {
+      description:
+        "Optional DOM id. Use for analytics tracking, fragment URL navigation, programmatic focus, or external aria refs.",
+      type: { kind: "string" },
     },
     paddingBlock: {
       default: "md",
@@ -176,6 +188,12 @@ export const CLBR_BOX_SPEC: ClbrComponentSpec = {
         attribute: "data-clbr-surface",
         condition: { kind: "when-provided", prop: "surface" },
         value: { kind: "prop", prop: "surface" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "id",
+        condition: { kind: "when-non-empty", prop: "id" },
+        value: { kind: "prop", prop: "id" },
       },
     ],
   },

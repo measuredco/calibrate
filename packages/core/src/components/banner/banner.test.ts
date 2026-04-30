@@ -81,6 +81,28 @@ describe("renderClbrBanner", () => {
     expect(banner.getAttribute("data-dismissible-label")).toBe("Close banner");
   });
 
+  it("renders consumer-provided id on the host", () => {
+    const root = mountBanner(
+      renderClbrBanner({ id: "my-banner", message: "Body copy" }),
+    );
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
+
+    expect(banner.id).toBe("my-banner");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountBanner(renderClbrBanner({ message: "Body copy" }));
+    const banner = root.querySelector(CLBR_BANNER_TAG_NAME) as HTMLElement;
+
+    expect(banner.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrBanner({ id: "not valid", message: "Body copy" }),
+    ).toThrow();
+  });
+
   it("escapes message text content", () => {
     const root = mountBanner(
       renderClbrBanner({

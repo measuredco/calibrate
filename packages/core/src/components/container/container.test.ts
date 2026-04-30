@@ -89,6 +89,27 @@ describe("renderClbrContainer", () => {
     expect(noneContainer.getAttribute("data-max-inline-size")).toBe("none");
     expect(noneContainer.getAttribute("data-gutter")).toBe("none");
   });
+  it("renders consumer-provided id on the host", () => {
+    const root = mountContainer(
+      renderClbrContainer({ children: "Body", id: "my-container" }),
+    );
+    const container = root.querySelector(".clbr-container") as HTMLElement;
+
+    expect(container.id).toBe("my-container");
+  });
+
+  it("omits id when not provided", () => {
+    const root = mountContainer(renderClbrContainer({ children: "Body" }));
+    const container = root.querySelector(".clbr-container") as HTMLElement;
+
+    expect(container.hasAttribute("id")).toBe(false);
+  });
+
+  it("throws on a syntactically invalid id", () => {
+    expect(() =>
+      renderClbrContainer({ children: "Body", id: "not valid" }),
+    ).toThrow();
+  });
 });
 
 describeSpecConsistency<ClbrContainerProps>({
