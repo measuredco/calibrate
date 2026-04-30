@@ -11,17 +11,9 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-/**
- * Default sanitize schema for full-document markdown rendering.
- *
- * Extends `hast-util-sanitize`'s default schema with allowances for
- * `rehype-highlight` class names on `<code>` and `<span>` (so syntax
- * highlighting survives sanitization), plus `rehype-color-chips` class
- * and inline `style` for color swatches.
- *
- * Exported so consumers (and a future sanitization companion package)
- * can extend it without re-deriving the same allowances.
- */
+// Allowances for `rehype-highlight` (hljs class names) and
+// `rehype-color-chips` (chip class + inline background-color style).
+// Required for those plugins' output to survive sanitization.
 export const sanitizeSchema: Schema = deepmerge(defaultSchema, {
   attributes: {
     code: ["className", /^language-./],
@@ -33,24 +25,11 @@ export const sanitizeSchema: Schema = deepmerge(defaultSchema, {
   clobberPrefix: "",
 }) as Schema;
 
-/**
- * Inline-only sanitize schema. Restricts to a small set of inline tags
- * suitable for short-form content (badges, captions, helper text).
- *
- * Exported alongside `sanitizeSchema` for the same extensibility reason.
- */
 export const sanitizeInlineSchema: Schema = {
   ...sanitizeSchema,
   tagNames: ["a", "b", "br", "code", "cite", "del", "em", "i", "strong", "sup"],
 };
 
-/**
- * Renders GFM markdown to safe HTML, suitable for use inside the
- * `prose` component.
- *
- * Pipeline: parse → GFM → rehype (with raw HTML support) → slug
- * (heading ids) → color chips → syntax highlighting → sanitize.
- */
 export const processMarkdown = (markdown: string): string =>
   String(
     unified()
@@ -66,11 +45,6 @@ export const processMarkdown = (markdown: string): string =>
       .processSync(markdown),
   );
 
-/**
- * Renders GFM markdown to safe inline HTML — restricted to a small set
- * of inline tags. Use for short-form content where block-level elements
- * (headings, paragraphs, lists) are inappropriate.
- */
 export const processMarkdownInline = (markdown: string): string =>
   String(
     unified()
