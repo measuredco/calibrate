@@ -6,19 +6,50 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Editor description hover for `--clbr-*` custom properties
+### Markdown package (`@measured/calibrate-markdown`)
 
-`@measured/calibrate-config/editor/clbr.intellisense.css` (shipped) gives consumers typeahead and value hover via VS Code's CSS workspace scan, but `$description` does not surface in editor hover for `var(...)` — VS Code's CSS language service doesn't extract descriptions from comments adjacent to custom-property declarations.
+Opinionated GFM markdown → HTML utility, designed to pair with the `prose` component (loose coupling — both target GFM's element set, neither knows about the other beyond that). Port the existing implementation from [measuredco-site/lib/markdown.ts](https://github.com/measuredco/measuredco-site/blob/main/lib/markdown.ts).
 
-The likely path is [CSS Custom Data](https://code.visualstudio.com/api/extension-guides/custom-data-extension) emitted alongside the lookup (`.../editor/clbr.custom-data.json`) and wired in via `css.customData`. Custom Data is hover-oriented and a natural fit for description metadata. A dedicated VS Code extension is the last-resort fallback.
+Sanitization is intentionally out of scope: core's SSR renderers assume trusted HTML, and sanitization has different maintenance posture (security cadence, threat-model-dependent shape) than markdown processing. If a sanitization use case emerges, it ships as a separate package (`calibrate-sanitize`).
+
+Tweaks to consider during the port (not strict requirements — open questions, not blockers):
+
+- Address `prose` a11y issues. Notably the code-block scroll behaviour — may warrant a different syntax-highlighting approach in the renderer than the reference implementation uses.
+- Consider adding labels to GFM task list items for screen-reader clarity.
 
 ## Next
 
 What we could be working on next.
 
+### Brand tree-shaking — architectural check
+
+Verify the multi-brand architecture supports brand-selective consumption without re-architecture. Audit points across tokens, core CSS, and assets/fonts: per-brand CSS outputs are independently importable; assets-package font shipping doesn't preload unused brand fonts; the build doesn't conflate brand outputs into non-splittable artifacts.
+
+Primary value is the **verification** — confirming we haven't built a tree-shaking trap that future single-brand consumers couldn't escape. If the audit is clean, note it and move on. If it surfaces traps, fix them. The capability (selective-brand distribution model with consumer-facing tooling) could land alongside the audit if it falls out cheaply, but isn't the gating concern.
+
+Also consider, when reworking this area, splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
+
+### Skills package (`@measured/calibrate-skills`)
+
+Agent skills markdown. Some ideas:
+
+- Sorting conventions that don't fit lint rules
+
 ## Later
 
 Everything we could attempt given sufficient time and resources.
+
+### Stylelint token enforcement
+
+Adopt "must reference Calibrate token" rules via [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value), or a fully custom config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config).
+
+### Documentation website (`apps/documentation`)
+
+Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples. Deploy to `http://calibrate.msrd.dev` (`apps/storybook` deploys to `http://calibrate-storybook.msrd.dev/`, could reverse proxy to `/storybook`)
+
+### CLI bootstrap tool (`@measured/calibrate`)
+
+Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
 
 ### Component evolution
 
@@ -53,40 +84,6 @@ Figure out a way to support arbitrary analytics attributes/classes without openi
 - `Structure/Breadcrumb` (JS responsive)
 - `Structure/Code` (copy to clipboard)
 - `Structure/Tabs` (JS required, a11y)
-
-### Content package (`@measured/calibrate-content`)
-
-Define a dedicated content wrangling package for shared transforms and safety utilities (for example `processMarkdown`, `sanitizeHtml`) that can be reused by docs, stories, and app-layer integrations without baking parsing/sanitization into core renderers. Note: consider current `prose` a11y issues.
-
-### Documentation website (`apps/documentation`)
-
-Stand up a docs site that consumes published token/component packages and serves as the canonical reference for usage, contracts, and examples. Deploy to `http://calibrate.msrd.dev` (`apps/storybook` deploys to `http://calibrate-storybook.msrd.dev/`, could reverse proxy to `/storybook`)
-
-### Skills package (`@measured/calibrate-skills`)
-
-Agent skills markdown. Some ideas:
-
-- Sorting conventions that don't fit lint rules
-
-### MCP/API
-
-Evaluate whether an MCP/API distribution path adds clear value beyond package and CLI workflows for token discovery and integration.
-
-### Private tokens in `core`
-
-Emit a non-exported private CSS artifact from `@measured/calibrate-core` that composes `packages/system/dist/private/css/*` for discovery/debug workflows, paired with a `no-restricted-imports` rule in `@measured/calibrate-config/eslint`.
-
-### CLI bootstrap tool (`@measured/calibrate`)
-
-Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible defaults for tokens, components, and optional assets.
-
-### Stylelint token enforcement
-
-Adopt "must reference Calibrate token" rules via [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value), or a fully custom config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config).
-
-### Brand tree-shaking strategy
-
-Define a selective-brand distribution model across tokens, core CSS, and assets/fonts so consumers can opt into single-brand payloads without breaking the default multi-brand contract. At that point, consider splitting `$description` out of per-brand source into a shared semantic-surface schema — descriptions describe the surface (invariant across brands), so a single-brand build (e.g. wrfr-only) shouldn't lose them.
 
 ### Vue framework adapter
 
