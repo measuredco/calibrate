@@ -1,5 +1,4 @@
 ---
-"@measured/calibrate-system": minor
 "@measured/calibrate-tokens": minor
 "@measured/calibrate-core": patch
 ---
