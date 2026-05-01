@@ -32,7 +32,9 @@ export function Box(props: BoxProps): ReturnType<typeof reactify> {
   const node = buildClbrBox({
     background,
     border,
-    children: hasChildren ? SLOT_BOX_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_BOX_CHILDREN as unknown as ClbrBoxProps["children"])
+      : undefined,
     id,
     paddingBlock,
     paddingInline,

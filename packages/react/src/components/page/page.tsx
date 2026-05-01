@@ -38,13 +38,17 @@ export function Page(props: PageProps): ReturnType<typeof reactify> {
   const hasBanner = banner != null && banner !== false;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPage({
-    banner: hasBanner ? SLOT_PAGE_BANNER : undefined,
-    children: hasChildren ? SLOT_PAGE_CHILDREN : undefined,
+    banner: hasBanner
+      ? (SLOT_PAGE_BANNER as unknown as ClbrPageProps["banner"])
+      : undefined,
+    children: hasChildren
+      ? (SLOT_PAGE_CHILDREN as unknown as ClbrPageProps["children"])
+      : undefined,
     centerMain,
-    header: SLOT_PAGE_HEADER,
+    header: SLOT_PAGE_HEADER as unknown as ClbrPageProps["header"],
     id,
     stickyHeader,
-    footer: SLOT_PAGE_FOOTER,
+    footer: SLOT_PAGE_FOOTER as unknown as ClbrPageProps["footer"],
   });
   return reactify(
     node,

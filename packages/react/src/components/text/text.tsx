@@ -30,7 +30,7 @@ export function Text(props: TextProps): ReturnType<typeof reactify> {
   } = props;
   const node = buildClbrText({
     as,
-    children: SLOT_TEXT_CHILDREN,
+    children: SLOT_TEXT_CHILDREN as unknown as ClbrTextProps["children"],
     id,
     linkVisited,
     responsive,

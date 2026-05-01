@@ -22,7 +22,9 @@ export function Details(props: DetailsProps): ReturnType<typeof reactify> {
   const { children, id, inlineSize, open, summary, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrDetails({
-    children: hasChildren ? SLOT_DETAILS_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_DETAILS_CHILDREN as unknown as ClbrDetailsProps["children"])
+      : undefined,
     id,
     inlineSize,
     open,

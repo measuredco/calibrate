@@ -22,7 +22,9 @@ export function Pattern(props: PatternProps): ReturnType<typeof reactify> {
   const { children, id, tone, size, variant, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPattern({
-    children: hasChildren ? SLOT_PATTERN_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_PATTERN_CHILDREN as unknown as ClbrPatternProps["children"])
+      : undefined,
     id,
     tone,
     size,

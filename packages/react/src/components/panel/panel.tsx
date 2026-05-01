@@ -19,7 +19,9 @@ export function Panel(props: PanelProps): ReturnType<typeof reactify> {
   const { children, id, padding, surface, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPanel({
-    children: hasChildren ? SLOT_PANEL_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_PANEL_CHILDREN as unknown as ClbrPanelProps["children"])
+      : undefined,
     id,
     padding,
     surface,

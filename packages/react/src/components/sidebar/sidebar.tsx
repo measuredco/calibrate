@@ -43,10 +43,16 @@ export function Sidebar(props: SidebarProps): ReturnType<typeof reactify> {
   const hasFooter = footer != null && footer !== false;
   const node = buildClbrSidebar({
     aboveNotebook,
-    children: hasChildren ? SLOT_SIDEBAR_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_SIDEBAR_CHILDREN as unknown as ClbrSidebarProps["children"])
+      : undefined,
     collapseLabel,
-    footer: hasFooter ? SLOT_SIDEBAR_FOOTER : undefined,
-    header: hasHeader ? SLOT_SIDEBAR_HEADER : undefined,
+    footer: hasFooter
+      ? (SLOT_SIDEBAR_FOOTER as unknown as ClbrSidebarProps["footer"])
+      : undefined,
+    header: hasHeader
+      ? (SLOT_SIDEBAR_HEADER as unknown as ClbrSidebarProps["header"])
+      : undefined,
     id,
     size,
     triggerLabel,

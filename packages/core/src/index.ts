@@ -261,9 +261,12 @@ export {
 export {
   buildClbrPoster,
   CLBR_POSTER_SPEC,
+  type ClbrPosterImageProps,
+  type ClbrPosterMedia,
   type ClbrPosterProps,
   type ClbrPosterSurface,
   renderClbrPoster,
+  renderClbrPosterImage,
 } from "./components/poster/poster";
 export {
   buildClbrProse,

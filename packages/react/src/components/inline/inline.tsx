@@ -24,7 +24,9 @@ export function Inline(props: InlineProps): ReturnType<typeof reactify> {
   const node = buildClbrInline({
     as,
     align,
-    children: hasChildren ? SLOT_INLINE_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_INLINE_CHILDREN as unknown as ClbrInlineProps["children"])
+      : undefined,
     gap,
     id,
     justify,
