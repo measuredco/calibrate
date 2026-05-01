@@ -5919,6 +5919,11 @@
       "$description": "Extended duration step.",
       "$value": "300ms"
     },
+    "motion.duration.3000": {
+      "layer": "semantic",
+      "$description": "Ambient duration step.",
+      "$value": "3000ms"
+    },
     "motion.duration.50": {
       "layer": "semantic",
       "$description": "Micro duration step.",
@@ -5926,7 +5931,7 @@
     },
     "motion.duration.600": {
       "layer": "semantic",
-      "$description": "Longest duration step.",
+      "$description": "Long duration step.",
       "$value": "600ms"
     },
     "motion.easing.easeIn": {
@@ -7817,6 +7822,10 @@
     "primitive.motion.duration.300": {
       "layer": "primitive",
       "$value": "300ms"
+    },
+    "primitive.motion.duration.3000": {
+      "layer": "primitive",
+      "$value": "3000ms"
     },
     "primitive.motion.duration.50": {
       "layer": "primitive",
