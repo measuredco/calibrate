@@ -1,5 +1,4 @@
 ---
-"@measured/calibrate-core": patch
 ---
 
-Add `search` to `CLBR_ICON_RECOMMENDED` so it surfaces in the Storybook icon control by default. Story-only Button/Prose changes ship alongside.
+Internal: Storybook story improvements (Button Icon story, Prose image refresh) plus `search` added to `CLBR_ICON_RECOMMENDED` to surface in the icon control. No version bump — additive list change with no impact on existing consumers.
