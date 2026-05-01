@@ -1,5 +1,6 @@
 import { specToArgTypes, specToComponentDescription } from "../../spec";
 import { CLBR_ICON_RECOMMENDED } from "../icon/icon";
+import { renderClbrInline } from "../inline/inline";
 import {
   CLBR_BUTTON_SPEC,
   type ClbrButtonProps,
@@ -61,5 +62,24 @@ export const Button = {
       labelVisibility: args.icon ? args.labelVisibility : "visible",
       name: args.name || undefined,
       value: args.value || undefined,
+    }),
+};
+
+export const Icon = {
+  parameters: { controls: { disable: true } },
+  render: () =>
+    renderClbrInline({
+      gap: "xs",
+      children: (["text", "outline", "solid"] as const)
+        .map((appearance) =>
+          renderClbrButton({
+            appearance,
+            icon: "search",
+            label: "Search",
+            labelVisibility: "hidden",
+            tone: "neutral",
+          }),
+        )
+        .join(""),
     }),
 };

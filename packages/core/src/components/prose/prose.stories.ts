@@ -113,7 +113,7 @@ const total = price * quantity + tax;
 
 Images can be specified like so
 
-![Measured](https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto/v1734524207/social_ubhnos.png)
+![Measured](https://res.cloudinary.com/measuredco/image/upload/f_auto,q_auto,w_640,h_360,c_fill/v1771287162/facet/facet-965825281_gatqoa.png)
 
 A horizontal rule follows.
 

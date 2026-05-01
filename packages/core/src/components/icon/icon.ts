@@ -35,6 +35,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "link",
   "menu",
   "panel-left",
+  "search",
   "settings",
   "shuffle",
   "sliders-horizontal",
