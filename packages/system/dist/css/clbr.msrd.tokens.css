@@ -89,8 +89,9 @@
     --clbr-motion-duration-200: 200ms; /** Moderate duration step. */
     --clbr-motion-duration-250: 250ms; /** Comfortable duration step. */
     --clbr-motion-duration-300: 300ms; /** Extended duration step. */
+    --clbr-motion-duration-3000: 3000ms; /** Ambient duration step. */
     --clbr-motion-duration-50: 50ms; /** Micro duration step. */
-    --clbr-motion-duration-600: 600ms; /** Longest duration step. */
+    --clbr-motion-duration-600: 600ms; /** Long duration step. */
     --clbr-motion-easing-ease-in: cubic-bezier(0.44, 0, 1, 1); /** Ease-in curve. Use for elements leaving the viewport — slow start, accelerating exit. */
     --clbr-motion-easing-ease-in-out: cubic-bezier(0.44, 0, 0.55, 0.94); /** Ease-in-out curve. Use for movements that both originate and settle on screen (e.g. expansions in place). */
     --clbr-motion-easing-ease-out: cubic-bezier(0, 0, 0.55, 0.94); /** Ease-out curve. Use for elements entering the viewport — fast start, gentle settle. */

@@ -1,4 +1,15 @@
 @layer clbr.components {
+  @keyframes clbr-animation-name-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
   @keyframes clbr-animation-name-spin {
     to {
       transform: rotate(360deg);
@@ -60,7 +71,9 @@
       will-change: transform;
 
       @media (prefers-reduced-motion: reduce) {
-        animation: none;
+        animation: clbr-animation-name-pulse var(--clbr-motion-duration-3000)
+          var(--clbr-motion-easing-ease-in-out) infinite;
+        will-change: opacity;
       }
     }
   }

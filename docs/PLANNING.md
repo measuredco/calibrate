@@ -46,7 +46,6 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 - Menu support for `menuitemcheckbox` and `menuitemradio`
 - Page hide sticky header border until scrolled
 - Poster include `renderPosterImage` to expose subset of `image` props in the API
-- Spinner reduced motion pulse animation
 
 #### Factory
 
