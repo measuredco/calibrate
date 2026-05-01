@@ -5,6 +5,7 @@ import {
   CLBR_POSTER_SPEC,
   type ClbrPosterProps,
   renderClbrPoster,
+  renderClbrPosterImage,
 } from "./poster";
 
 function mountPoster(html: string): HTMLElement {
@@ -12,14 +13,11 @@ function mountPoster(html: string): HTMLElement {
   return document.body.querySelector(".clbr") as HTMLElement;
 }
 
+const fixtureMedia = renderClbrPosterImage({ src: "/image.jpg" });
+
 describe("renderClbrPoster", () => {
   it("renders the default poster contract", () => {
-    const root = mountPoster(
-      renderClbrPoster({
-        image:
-          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
-      }),
-    );
+    const root = mountPoster(renderClbrPoster({ media: fixtureMedia }));
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
 
     expect(poster.tagName).toBe("DIV");
@@ -36,8 +34,7 @@ describe("renderClbrPoster", () => {
     const root = mountPoster(
       renderClbrPoster({
         children: '<div class="copy">Poster content</div>',
-        image:
-          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        media: fixtureMedia,
       }),
     );
 
@@ -48,11 +45,7 @@ describe("renderClbrPoster", () => {
 
   it("emits data-clbr-surface when surface is provided", () => {
     const root = mountPoster(
-      renderClbrPoster({
-        image:
-          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
-        surface: "brand",
-      }),
+      renderClbrPoster({ media: fixtureMedia, surface: "brand" }),
     );
 
     expect(
@@ -62,11 +55,7 @@ describe("renderClbrPoster", () => {
 
   it("emits content theme and default surface when contentTheme is provided", () => {
     const root = mountPoster(
-      renderClbrPoster({
-        contentTheme: "dark",
-        image:
-          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
-      }),
+      renderClbrPoster({ contentTheme: "dark", media: fixtureMedia }),
     );
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
 
@@ -78,8 +67,7 @@ describe("renderClbrPoster", () => {
     const root = mountPoster(
       renderClbrPoster({
         contentTheme: "light",
-        image:
-          '<div class="clbr-image"><img src="/image.jpg" alt="Alt" /></div>',
+        media: fixtureMedia,
         surface: "brand",
       }),
     );
@@ -91,10 +79,7 @@ describe("renderClbrPoster", () => {
 
   it("renders consumer-provided id on the host", () => {
     const root = mountPoster(
-      renderClbrPoster({
-        id: "my-poster",
-        image: '<img src="/i.jpg" alt="" />',
-      }),
+      renderClbrPoster({ id: "my-poster", media: fixtureMedia }),
     );
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
 
@@ -102,9 +87,7 @@ describe("renderClbrPoster", () => {
   });
 
   it("omits id when not provided", () => {
-    const root = mountPoster(
-      renderClbrPoster({ image: '<img src="/i.jpg" alt="" />' }),
-    );
+    const root = mountPoster(renderClbrPoster({ media: fixtureMedia }));
     const poster = root.querySelector(".clbr-poster") as HTMLElement;
 
     expect(poster.hasAttribute("id")).toBe(false);
@@ -112,16 +95,48 @@ describe("renderClbrPoster", () => {
 
   it("throws on a syntactically invalid id", () => {
     expect(() =>
-      renderClbrPoster({
-        id: "not valid",
-        image: '<img src="/i.jpg" alt="" />',
-      }),
+      renderClbrPoster({ id: "not valid", media: fixtureMedia }),
     ).toThrow();
   });
 });
 
+describe("renderClbrPosterImage", () => {
+  it("emits cover and high-priority fetch hints regardless of caller", () => {
+    const root = mountPoster(
+      renderClbrPoster({
+        media: renderClbrPosterImage({ src: "/image.jpg" }),
+      }),
+    );
+    const wrapper = root.querySelector(".image-wrapper .clbr-image");
+    const img = wrapper?.querySelector("img");
+
+    expect(wrapper?.getAttribute("data-object-fit")).toBe("cover");
+    expect(img?.getAttribute("fetchpriority")).toBe("high");
+  });
+
+  it("forwards gravity, sizes, src, and srcSet; emits empty alt", () => {
+    const root = mountPoster(
+      renderClbrPoster({
+        media: renderClbrPosterImage({
+          gravity: "SE",
+          sizes: "(max-width: 30em) 100vw, 60rem",
+          src: "/image.jpg",
+          srcSet: "/image.jpg 1x, /image-2x.jpg 2x",
+        }),
+      }),
+    );
+    const wrapper = root.querySelector(".image-wrapper .clbr-image");
+    const img = wrapper?.querySelector("img");
+
+    expect(wrapper?.getAttribute("data-gravity")).toBe("SE");
+    expect(img?.getAttribute("alt")).toBe("");
+    expect(img?.getAttribute("sizes")).toBe("(max-width: 30em) 100vw, 60rem");
+    expect(img?.getAttribute("srcset")).toBe("/image.jpg 1x, /image-2x.jpg 2x");
+  });
+});
+
 describeSpecConsistency<ClbrPosterProps>({
-  baseProps: { image: '<img src="/i.jpg" alt="" />' },
+  baseProps: { media: fixtureMedia },
   renderer: renderClbrPoster,
   spec: CLBR_POSTER_SPEC,
 });

@@ -26,7 +26,7 @@ export function Prose(props: ProseProps): ReturnType<typeof reactify> {
     ...rest
   } = props;
   const node = buildClbrProse({
-    children: SLOT_PROSE_CHILDREN,
+    children: SLOT_PROSE_CHILDREN as unknown as ClbrProseProps["children"],
     align,
     hangingPunctuation,
     id,

@@ -31,7 +31,9 @@ export function Fieldset(props: FieldsetProps): ReturnType<typeof reactify> {
   } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrFieldset({
-    children: hasChildren ? SLOT_FIELDSET_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_FIELDSET_CHILDREN as unknown as ClbrFieldsetProps["children"])
+      : undefined,
     description,
     disabled,
     id,

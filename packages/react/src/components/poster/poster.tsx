@@ -12,29 +12,31 @@ import {
   reactify,
 } from "../../reactify";
 
-const SLOT_POSTER_IMAGE = "__CLBR_SLOT_POSTER_IMAGE__";
+const SLOT_POSTER_MEDIA = "__CLBR_SLOT_POSTER_MEDIA__";
 const SLOT_POSTER_CHILDREN = "__CLBR_SLOT_POSTER_CHILDREN__";
 
-export type PosterProps = Omit<ClbrPosterProps, "image" | "children"> & {
-  image: ReactNode;
+export type PosterProps = Omit<ClbrPosterProps, "media" | "children"> & {
+  media: ReactNode;
   children?: ReactNode;
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Poster(props: PosterProps): ReturnType<typeof reactify> {
-  const { children, contentTheme, id, image, surface, ...rest } = props;
+  const { children, contentTheme, id, media, surface, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrPoster({
-    children: hasChildren ? SLOT_POSTER_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_POSTER_CHILDREN as unknown as ClbrPosterProps["children"])
+      : undefined,
     contentTheme,
     id,
-    image: SLOT_POSTER_IMAGE,
+    media: SLOT_POSTER_MEDIA as unknown as ClbrPosterProps["media"],
     surface,
   });
   return reactify(
     node,
     pickNativeExtras(rest as unknown as Record<string, unknown>),
     {
-      [SLOT_POSTER_IMAGE]: image,
+      [SLOT_POSTER_MEDIA]: media,
       ...(hasChildren ? { [SLOT_POSTER_CHILDREN]: children } : {}),
     },
   );

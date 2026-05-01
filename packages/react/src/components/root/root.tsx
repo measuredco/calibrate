@@ -31,7 +31,7 @@ export function Root(props: RootProps): ReturnType<typeof reactify> {
     appOverscrollBehavior,
     appRoot,
     brand,
-    children: SLOT_ROOT_CHILDREN,
+    children: SLOT_ROOT_CHILDREN as unknown as ClbrRootProps["children"],
     dir,
     id,
     lang,

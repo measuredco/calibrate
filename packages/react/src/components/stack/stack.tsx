@@ -21,7 +21,9 @@ export function Stack(props: StackProps): ReturnType<typeof reactify> {
   const node = buildClbrStack({
     align,
     as,
-    children: hasChildren ? SLOT_STACK_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_STACK_CHILDREN as unknown as ClbrStackProps["children"])
+      : undefined,
     gap,
     id,
     responsive,

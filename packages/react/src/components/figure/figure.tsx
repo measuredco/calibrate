@@ -24,8 +24,8 @@ export function Figure(props: FigureProps): ReturnType<typeof reactify> {
   const { align, caption, children, id, responsive, ...rest } = props;
   const node = buildClbrFigure({
     align,
-    caption: SLOT_FIGURE_CAPTION,
-    children: SLOT_FIGURE_CHILDREN,
+    caption: SLOT_FIGURE_CAPTION as unknown as ClbrFigureProps["caption"],
+    children: SLOT_FIGURE_CHILDREN as unknown as ClbrFigureProps["children"],
     id,
     responsive,
   });

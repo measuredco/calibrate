@@ -22,7 +22,9 @@ export function Container(props: ContainerProps): ReturnType<typeof reactify> {
   const { children, gutter, id, maxInlineSize, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrContainer({
-    children: hasChildren ? SLOT_CONTAINER_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_CONTAINER_CHILDREN as unknown as ClbrContainerProps["children"])
+      : undefined,
     gutter,
     id,
     maxInlineSize,

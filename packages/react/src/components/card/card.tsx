@@ -22,11 +22,14 @@ export function Card(props: CardProps): ReturnType<typeof reactify> {
     props;
   const hasNote = note != null && note !== false;
   const node = buildClbrCard({
-    description: SLOT_CARD_DESCRIPTION,
+    description:
+      SLOT_CARD_DESCRIPTION as unknown as ClbrCardProps["description"],
     headingLevel,
     href,
     id,
-    note: hasNote ? SLOT_CARD_NOTE : undefined,
+    note: hasNote
+      ? (SLOT_CARD_NOTE as unknown as ClbrCardProps["note"])
+      : undefined,
     surface,
     title,
   });

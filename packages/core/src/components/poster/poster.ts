@@ -1,6 +1,7 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
+import { type ClbrImageGravity, renderClbrImage } from "../image/image";
 import type { ClbrTheme } from "../root/root";
 import type { ClbrSurfaceVariant } from "../surface/surface";
 
@@ -9,15 +10,55 @@ export type ClbrPosterSurface = Exclude<
   "inverse" | "brand-inverse"
 >;
 
+declare const __posterMediaBrand: unique symbol;
+/**
+ * HTML string returned by `renderClbrPosterImage`. The branded type forces
+ * consumers through the helper, which locks the cover/priority defaults
+ * Poster's layout needs.
+ */
+export type ClbrPosterMedia = string & {
+  readonly [__posterMediaBrand]: true;
+};
+
+export interface ClbrPosterImageProps {
+  /** Focal gravity for the cover crop. @default "C" */
+  gravity?: ClbrImageGravity;
+  /** HTML `sizes` attribute. */
+  sizes?: string;
+  /** Image source URL. */
+  src: string;
+  /** Candidate sources for the image (HTML `img[srcset]` format). */
+  srcSet?: string;
+}
+
+/**
+ * Renders the image media for a Poster. `cover` and `priority` are locked
+ * to the values Poster's layout needs; `alt` is empty because Poster's
+ * image is decorative (content-over-background).
+ *
+ * @param props - Poster image props.
+ * @returns HTML string suitable for Poster's `media` prop.
+ */
+export function renderClbrPosterImage(
+  props: ClbrPosterImageProps,
+): ClbrPosterMedia {
+  return renderClbrImage({
+    ...props,
+    alt: "",
+    cover: true,
+    priority: true,
+  }) as ClbrPosterMedia;
+}
+
 export interface ClbrPosterProps {
-  /** Foreground HTML content above the image. Caller sanitizes untrusted content. */
+  /** Foreground HTML content above the media. Caller sanitizes untrusted content. */
   children?: string;
   /** Absolute theme lock for foreground content over non-themeable media. */
   contentTheme?: ClbrTheme;
   /** DOM id. */
   id?: string;
-  /** Background image HTML (usually `renderClbrImage(...)`). Caller sanitizes untrusted content. */
-  image: string;
+  /** Background media; build with `renderClbrPosterImage`. */
+  media: ClbrPosterMedia;
   /** Surface context. Emits `data-clbr-surface` when provided. */
   surface?: ClbrPosterSurface;
 }
@@ -32,7 +73,7 @@ export function buildClbrPoster({
   children,
   contentTheme,
   id,
-  image,
+  media,
   surface,
 }: ClbrPosterProps): ClbrNode {
   const normalizedId = normalizeOptionalHtmlId(id);
@@ -42,7 +83,7 @@ export function buildClbrPoster({
       kind: "element",
       tag: "div",
       attrs: { class: "image-wrapper" },
-      children: [{ kind: "raw", html: image }],
+      children: [{ kind: "raw", html: media }],
     },
   ];
 
@@ -71,7 +112,7 @@ export function buildClbrPoster({
 /**
  * SSR renderer for the Calibrate poster component.
  *
- * Emits a single `div.poster` root containing an image wrapper behind optional
+ * Emits a single `div.poster` root containing a media wrapper behind optional
  * trusted foreground content. `contentTheme`, when provided, is an absolute
  * local foreground theme override intended for poster-like content over
  * non-themeable media.
@@ -86,18 +127,18 @@ export function renderClbrPoster(props: ClbrPosterProps): string {
 /** Declarative poster contract mirror for tooling, docs, and adapters. */
 export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
   name: "poster",
-  description: "Use `poster` to layer content over a background image.",
+  description: "Use `poster` to layer content over background media.",
   output: { element: "div", class: "clbr-poster" },
   content: {
     kind: "slots",
     slots: [
-      { prop: "image", kind: "html" },
+      { prop: "media", kind: "html" },
       { prop: "children", kind: "html" },
     ],
   },
   props: {
     children: {
-      description: "Foreground content rendered over the image.",
+      description: "Foreground content rendered over the media.",
       type: { kind: "html" },
     },
     contentTheme: {
@@ -109,9 +150,9 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
       description: "DOM id.",
       type: { kind: "string" },
     },
-    image: {
+    media: {
       description:
-        "Background image markup, usually a calibrate image component.",
+        "Background media markup. Build with `renderClbrPosterImage`.",
       required: true,
       type: { kind: "html" },
     },

@@ -44,7 +44,6 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 #### Features
 
 - Menu support for `menuitemcheckbox` and `menuitemradio`
-- Poster include `renderPosterImage` to expose subset of `image` props in the API
 
 #### Factory
 

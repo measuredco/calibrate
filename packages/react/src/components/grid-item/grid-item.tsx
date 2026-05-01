@@ -40,7 +40,9 @@ export function GridItem(props: GridItemProps): ReturnType<typeof reactify> {
   } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrGridItem({
-    children: hasChildren ? SLOT_GRID_ITEM_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_GRID_ITEM_CHILDREN as unknown as ClbrGridItemProps["children"])
+      : undefined,
     align,
     justify,
     colSpan,

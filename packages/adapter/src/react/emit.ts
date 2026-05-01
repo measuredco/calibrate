@@ -395,8 +395,11 @@ function contributeSlotted(parts: EmitParts, spec: ClbrComponentSpec): void {
     .map((p) => {
       const slot = slots.find((s) => s.prop === p);
       if (!slot || slot.kind === "text") return `    ${p},`;
-      if (slot.required) return `    ${p}: ${sentinelName(slot)},`;
-      return `    ${p}: has${pascalCase(p)} ? ${sentinelName(slot)} : undefined,`;
+      // Cast the slot sentinel to the core prop type so branded slot
+      // props (e.g. Poster's `ClbrPosterMedia`) accept the placeholder.
+      const cast = ` as unknown as ${corePropsType}["${p}"]`;
+      if (slot.required) return `    ${p}: ${sentinelName(slot)}${cast},`;
+      return `    ${p}: has${pascalCase(p)} ? ${sentinelName(slot)}${cast} : undefined,`;
     })
     .join("\n");
   parts.functionBody.push(`  const node = ${buildFn}({`);

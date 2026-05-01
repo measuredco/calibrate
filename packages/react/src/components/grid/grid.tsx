@@ -19,7 +19,9 @@ export function Grid(props: GridProps): ReturnType<typeof reactify> {
   const { children, gap, id, ...rest } = props;
   const hasChildren = children != null && children !== false;
   const node = buildClbrGrid({
-    children: hasChildren ? SLOT_GRID_CHILDREN : undefined,
+    children: hasChildren
+      ? (SLOT_GRID_CHILDREN as unknown as ClbrGridProps["children"])
+      : undefined,
     gap,
     id,
   });

@@ -30,10 +30,11 @@ export function Blockquote(
     props;
   const node = buildClbrBlockquote({
     align,
-    attribution: SLOT_BLOCKQUOTE_ATTRIBUTION,
+    attribution:
+      SLOT_BLOCKQUOTE_ATTRIBUTION as unknown as ClbrBlockquoteProps["attribution"],
     id,
     measured,
-    quote: SLOT_BLOCKQUOTE_QUOTE,
+    quote: SLOT_BLOCKQUOTE_QUOTE as unknown as ClbrBlockquoteProps["quote"],
     responsive,
     size,
   });

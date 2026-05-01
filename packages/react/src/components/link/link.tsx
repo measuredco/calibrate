@@ -38,7 +38,9 @@ export function Link(props: LinkProps): ReturnType<typeof reactify> {
     download,
     href,
     id,
-    icon: hasIcon ? SLOT_LINK_ICON : undefined,
+    icon: hasIcon
+      ? (SLOT_LINK_ICON as unknown as ClbrLinkProps["icon"])
+      : undefined,
     iconPlacement,
     label,
     labelVisibility,
