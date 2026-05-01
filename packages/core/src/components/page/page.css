@@ -41,6 +41,20 @@
           inset-inline: 0;
           position: absolute;
         }
+
+        @supports (container-type: scroll-state) {
+          container-type: scroll-state;
+
+          &::after {
+            opacity: 0;
+            transition: opacity var(--clbr-motion-duration-100)
+              var(--clbr-motion-easing-ease-out);
+
+            @container scroll-state(stuck: block-start) {
+              opacity: 1;
+            }
+          }
+        }
       }
 
       .clbr-page[data-sticky-header="belowNotebook"] > & {
