@@ -48,13 +48,6 @@ Scope a `calibrate` bootstrap CLI for fast project scaffolding with sensible def
 - Poster include `renderPosterImage` to expose subset of `image` props in the API
 - Spinner reduced motion pulse animation
 
-#### Stories
-
-- Button icon-only stories
-- Checkbox required/optional stories
-- Poster light theme story
-- Image art direction `sources` story
-
 #### Factory
 
 - `Control/Listbox` (JS required, selection semantics)
