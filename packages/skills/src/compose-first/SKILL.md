@@ -31,6 +31,8 @@ For embedded use (e.g. injecting Calibrate into a portion of a non-Calibrate pag
 </Surface>
 ```
 
+`Surface` can scope context across any region — a single strip, a section, or the whole page.
+
 Several components (`Box`, `Card`, `Panel`, etc.) also accept a `surface` prop — switch context at the component level without a separate wrapper:
 
 ```tsx
@@ -38,8 +40,6 @@ Several components (`Box`, `Card`, `Panel`, etc.) also accept a `surface` prop �
   {/* ... */}
 </Box>
 ```
-
-`Surface` can scope context across any region — a single strip, a section, or the whole page.
 
 ## Layout primitives
 

@@ -121,4 +121,4 @@ const html = renderClbrRoot({ appRoot: true, children: page });
 
 Main content runs the canonical chassis — **Root → Page → Container → Grid → GridItem → Stack → leaves** — with **Box** providing the section padding around the Grid (Box is a flexible primitive, applied wherever padding / background / border is needed; it has no fixed position in the chain). Site furniture (header, footer) rarely needs the column system, so it nests more simply: **Container → Inline → leaves**, again with Box where padding rhythm is needed.
 
-No custom CSS. No `display: flex`, no margins between siblings, no hardcoded widths.
+No custom CSS.
