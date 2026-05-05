@@ -89,7 +89,7 @@
       font-size: calc(var(--clbr-avatar-size) * 0.5);
       font-weight: var(--clbr-typography-font-weight-regular-plus);
       inset-block-start: -0.033em;
-      line-height: 1;
+      line-height: var(--clbr-typography-type-step-1300-line-height);
       position: relative;
       text-align: center;
     }

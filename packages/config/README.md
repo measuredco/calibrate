@@ -1,6 +1,6 @@
 # @measured/calibrate-config
 
-Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus editor IntelliSense lookup — install once, plug in via subpath imports.
+Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus the `--clbr-*` token catalog for editor autocomplete and tooling — install once, plug in via subpath imports.
 
 ## ESLint
 
@@ -50,6 +50,18 @@ export default {
 ```
 
 `stylelint` itself is a peer dependency — install it alongside.
+
+## Token catalog
+
+`@measured/calibrate-config/clbr.catalog.css` is a `:root` block listing every published `--clbr-*` token with its resolved value and `$description`. Used two ways:
+
+- **Editor autocomplete.** For VS Code, drop a copy or symlink into your project's `.vscode/` directory — VS Code's CSS workspace scan picks up the declarations and surfaces typeahead and value hover for every `var(--clbr-*)` when authoring CSS. Other editors with custom-CSS-data support can consume the same file via their own configuration.
+
+  ```sh
+  cp node_modules/@measured/calibrate-config/clbr.catalog.css .vscode/
+  ```
+
+- **Stylelint validation.** The Stylelint preset's `calibrate/clbr-known-tokens` rule reads the catalog automatically to validate `var(--clbr-*)` references. No setup required beyond extending the preset.
 
 ## Browserslist query
 

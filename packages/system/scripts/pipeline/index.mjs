@@ -186,29 +186,25 @@ async function main() {
     outputs.push(cfg);
   }
 
-  // IntelliSense lookup CSS — derived from the per-target public CSS already
+  // Token catalog CSS — derived from the per-target public CSS already
   // emitted above. Combines the cross-brand base surface with the canonical
-  // brand (msrd) so consumers get a single file to drop into their `.vscode/`
-  // directory. Cross-writes into `@measured/calibrate-config` (no build of
-  // its own; mirrors the tokens-package pattern).
-  const intellisenseSources = outputs.filter(
+  // brand (msrd) so consumers get a single file to drop into their editor's
+  // CSS-data directory (or to be consumed by tooling like the stylelint
+  // plugin). Cross-writes into `@measured/calibrate-config` (no build of its
+  // own; mirrors the tokens-package pattern).
+  const catalogSources = outputs.filter(
     (cfg) => cfg.key === "base" || cfg.key === "msrd",
   );
-  const intellisenseOut = normalizePath(
-    "..",
-    "config",
-    "editor",
-    "clbr.intellisense.css",
-  );
+  const catalogOut = normalizePath("..", "config", "clbr.catalog.css");
 
-  if (intellisenseSources.length > 0) {
-    const args = ["scripts/pipeline/prepare-intellisense-output.mjs"];
+  if (catalogSources.length > 0) {
+    const args = ["scripts/pipeline/prepare-catalog-output.mjs"];
 
-    for (const cfg of intellisenseSources) {
+    for (const cfg of catalogSources) {
       args.push("--input", cfg.out);
     }
 
-    args.push("--out", intellisenseOut);
+    args.push("--out", catalogOut);
     run("node", args);
   }
 
@@ -218,7 +214,7 @@ async function main() {
         (cfg) =>
           `- CSS: ${cfg.out}\n  Private primitive CSS: ${cfg.outPrivate}\n  Consumer JSON: ${cfg.json}\n  Contexts JSON: ${cfg.contexts}\n  CSS manifest: ${cfg.manifest}`,
       )
-      .join("\n")}\n- IntelliSense lookup: ${intellisenseOut}`,
+      .join("\n")}\n- Token catalog: ${catalogOut}`,
   );
 }
 

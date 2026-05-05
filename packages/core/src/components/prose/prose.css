@@ -231,10 +231,6 @@
           color: var(--clbr-color-base16-05);
         }
 
-        & .hljs-operator {
-          opacity: 0.72;
-        }
-
         & .hljs-bullet,
         & .hljs-deletion,
         & .hljs-name,

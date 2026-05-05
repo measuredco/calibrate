@@ -17,7 +17,7 @@
     "assets-favicons",
     "calibrate-config-lint-presets",
     "code-block-keyboard-scroll-a11y",
-    "config-intellisense-lookup",
+    "config-token-catalog",
     "core-private-system-dep-leak",
     "heading-rename-props",
     "import-sort",

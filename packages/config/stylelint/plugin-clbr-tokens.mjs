@@ -1,0 +1,99 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+import stylelint from "stylelint";
+
+// Validates `var(--*)` references against two gates: (1) the Calibrate
+// catalog (--clbr-* only), or (2) a definition in the same file. Cross-file
+// custom-property references — including consumers' own organisation across
+// CSS files — are intentionally rejected. Define within the file you use it
+// in.
+
+const ruleName = "calibrate/clbr-known-tokens";
+
+const messages = stylelint.utils.ruleMessages(ruleName, {
+  unknownClbr: (token) =>
+    `Unknown Calibrate token "${token}". Reference a published token (see @measured/calibrate-config/clbr.catalog.css) or define it in this file.`,
+  unknownCustom: (token) =>
+    `Unknown custom property "${token}". Define it in this file — cross-file custom properties are not supported.`,
+});
+
+const catalogPath = fileURLToPath(
+  new URL("../clbr.catalog.css", import.meta.url),
+);
+
+let canonicalCache = null;
+const canonicalTokens = () => {
+  if (canonicalCache) return canonicalCache;
+  const css = readFileSync(catalogPath, "utf8");
+  const set = new Set();
+  for (const match of css.matchAll(/(--clbr-[\w-]+)\s*:/g)) {
+    set.add(match[1]);
+  }
+  canonicalCache = set;
+  return set;
+};
+
+const refPattern = /var\(\s*(--[\w-]+)/g;
+
+const parseAllow = (entries) => {
+  const literals = new Set();
+  const patterns = [];
+  for (const entry of entries) {
+    if (typeof entry !== "string") continue;
+    const re = entry.match(/^\/(.+)\/([gimsuy]*)$/);
+    if (re) patterns.push(new RegExp(re[1], re[2]));
+    else literals.add(entry);
+  }
+  return { literals, patterns };
+};
+
+const rule = (primary, secondary) => (root, result) => {
+  const valid = stylelint.utils.validateOptions(
+    result,
+    ruleName,
+    {
+      actual: primary,
+      possible: [true],
+    },
+    {
+      actual: secondary,
+      possible: { allow: [(v) => typeof v === "string"] },
+      optional: true,
+    },
+  );
+  if (!valid) return;
+
+  const { literals: allowLiterals, patterns: allowPatterns } = parseAllow(
+    secondary?.allow ?? [],
+  );
+
+  const localDefs = new Set();
+  root.walkDecls(/^--/, (decl) => localDefs.add(decl.prop));
+
+  const known = canonicalTokens();
+
+  root.walkDecls((decl) => {
+    for (const match of decl.value.matchAll(refPattern)) {
+      const token = match[1];
+      if (known.has(token) || localDefs.has(token)) continue;
+      if (allowLiterals.has(token)) continue;
+      if (allowPatterns.some((re) => re.test(token))) continue;
+      const message = token.startsWith("--clbr-")
+        ? messages.unknownClbr(token)
+        : messages.unknownCustom(token);
+      stylelint.utils.report({
+        message,
+        node: decl,
+        result,
+        ruleName,
+        word: token,
+      });
+    }
+  });
+};
+
+rule.ruleName = ruleName;
+rule.messages = messages;
+
+export default stylelint.createPlugin(ruleName, rule);

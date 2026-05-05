@@ -1,6 +1,7 @@
 /*!
- * Calibrate token IntelliSense lookup. Place in your project's `.vscode/`
- * directory for `--clbr-*` autocomplete in CSS files.
+ * Calibrate token catalog. Lookup file for editor autocomplete and tooling
+ * (e.g. stylelint validation). Place in your editor's CSS-data directory
+ * (`.vscode/` for VS Code) for `--clbr-*` autocomplete in CSS files.
  *
  * Generated; do not edit.
  */

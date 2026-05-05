@@ -51,7 +51,7 @@
     }
 
     .attribution {
-      font: var(--clbr-prose-font-sm);
+      font: var(--clbr-typography-text-body-sm);
       font-feature-settings: "ss03" 1;
       font-optical-sizing: none;
       margin-block: 0;

@@ -4,6 +4,6 @@ export default {
     "**/build/**",
     "**/dist/**",
     "**/storybook-static/**",
-    "packages/config/editor/**",
+    "packages/config/clbr.catalog.css",
   ],
 };
