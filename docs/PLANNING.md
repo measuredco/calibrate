@@ -17,7 +17,7 @@ Markdown guardrails for AI coding agents (and humans) building sites and apps wi
 
 The system is largely self-guiding by construction at both layers — components encode design choices in their props, and tokens encode semantic intent in their `$description` fields. Picking the right component or token IS expressing the design language. The few residual mechanical concerns (logical properties, rem, naming) are caught by linting.
 
-A complementary `DESIGN.md` ships alongside the skills, covering the conceptual layer that imperative skills don't (compositional principle, tokens-as-contract, brand/system/component layering, opinion stack). Skills tell agents what to do; DESIGN.md tells them why the system is shaped that way, for judgment calls beyond the explicit guardrails.
+A complementary **design-language skill** ships alongside the operational skills, covering the conceptual layer they don't (compositional principle, tokens-as-contract, brand/system/component layering, opinion stack). Operational skills tell agents what to do; the design-language skill tells them why the system is shaped that way, for judgment calls beyond the explicit guardrails.
 
 **Decisions:**
 
@@ -25,13 +25,13 @@ A complementary `DESIGN.md` ships alongside the skills, covering the conceptual 
 - **Distribution.** Published as `@measured/calibrate-skills` with README copy-to-folder instructions (mirroring how `@measured/calibrate-config/editor/clbr.intellisense.css` is consumed today). Different agents read from different discovery directories — Claude Code's `.claude/skills/`, Codex's `.agents/skills/` — so consumers symlink or copy whichever they use. A bootstrap CLI to automate this can hook in later under the existing CLI bootstrap roadmap entry.
 - **Hand-authored vs derived.** Author skill narrative by hand. For reference data already documented elsewhere, link to or quote what's reachable to consumers: tokens JSON ships in `@measured/calibrate-tokens` (agents can read it at runtime), the SPEC ships as values from `@measured/calibrate-core`, the Storybook is on a deployed URL. The playground is repo-internal — worked compositional examples in skill `examples/` folders are hand-authored, drawing on the patterns demonstrated there. Don't build per-component auto-generated skills — that's what Storybook reference docs are for; skills carry the curated narrative across components. Revisit extraction tooling only if drift between skill snippets and source becomes a real problem.
 - **Core vs React flavor.** Cross-cutting skills (principle-led, e.g. "Compose first") share a single `SKILL.md` and split their `examples/` folder into `core/` and `react/` subfolders. The skill body narrates the principle without committing to a flavor and points consumers at the relevant subfolder. Discovery stays clean (one entry, not two near-duplicates) and the principle stays in one place; the CLI bootstrap can prune to the chosen flavor on install. Skills that are intrinsically flavor-specific (e.g. a future "React form-binding patterns") get their own skill named accordingly — the shared/split call is per-skill.
-- **DESIGN.md.** Ships in the same `@measured/calibrate-skills` package as a reference-style skill (descriptive, not imperative — discoverable via the same agent-skill mechanism, but consumed for context rather than as a prescriptive guardrail). Distinct from operational skills like "Compose first" that tell agents what to do.
+- **Design-language skill.** Ships in the same `@measured/calibrate-skills` package as a reference-style skill — same `SKILL.md` folder shape as operational skills (so it's auto-discovered by Claude Code / Codex), but with descriptive content (frontmatter description signals "read for context"). Distinct from operational skills like "Compose first" that tell agents what to do.
 
 **First steps:**
 
 1. Scaffold `packages/skills` (package.json, README, file layout).
 2. Author the "Compose first" skill end-to-end to lock conventions. Reference the playground patterns as worked examples.
-3. Author DESIGN.md alongside, covering the conceptual layer (compositional principle, tokens-as-contract, brand/system/component layering).
+3. Author the design-language skill alongside, covering the conceptual layer (compositional principle, tokens-as-contract, brand/system/component layering).
 4. Author "Custom with tokens" once stylelint enforcement lands.
 
 ## Next
