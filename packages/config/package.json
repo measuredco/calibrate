@@ -1,7 +1,7 @@
 {
   "name": "@measured/calibrate-config",
   "version": "0.2.0-alpha.6",
-  "description": "Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus editor IntelliSense lookup.",
+  "description": "Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus the --clbr-* token catalog for editor autocomplete and tooling.",
   "repository": {
     "type": "git",
     "url": "https://github.com/measuredco/calibrate.git",
@@ -9,37 +9,32 @@
   },
   "type": "module",
   "files": [
-    "index.mjs",
-    "index.d.ts",
-    "esbuild.mjs",
-    "esbuild.d.ts",
-    "eslint.mjs",
-    "eslint.d.ts",
-    "stylelint.mjs",
-    "stylelint.d.ts",
-    "editor",
+    "browserslist",
+    "eslint",
+    "stylelint",
+    "clbr.catalog.css",
     "README.md"
   ],
   "scripts": {
     "verify": "node scripts/verify.mjs"
   },
-  "types": "./index.d.ts",
+  "types": "./browserslist/index.d.ts",
   "exports": {
     "./browserslist": {
-      "types": "./index.d.ts",
-      "default": "./index.mjs"
+      "types": "./browserslist/index.d.ts",
+      "default": "./browserslist/index.mjs"
     },
     "./browserslist/esbuild": {
-      "types": "./esbuild.d.ts",
-      "default": "./esbuild.mjs"
+      "types": "./browserslist/esbuild.d.ts",
+      "default": "./browserslist/esbuild.mjs"
     },
     "./eslint": {
-      "types": "./eslint.d.ts",
-      "default": "./eslint.mjs"
+      "types": "./eslint/index.d.ts",
+      "default": "./eslint/index.mjs"
     },
     "./stylelint": {
-      "types": "./stylelint.d.ts",
-      "default": "./stylelint.mjs"
+      "types": "./stylelint/index.d.ts",
+      "default": "./stylelint/index.mjs"
     }
   },
   "browserslist": [
@@ -48,6 +43,7 @@
   "dependencies": {
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1",
     "stylelint-order": "^8.1.1",
     "stylelint-plugin-logical-css": "^2.1.0"
   },

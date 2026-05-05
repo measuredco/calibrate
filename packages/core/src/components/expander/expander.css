@@ -66,6 +66,7 @@
       );
       display: block;
       inline-size: calc(var(--clbr-expander-icon-size) * 3 / 4);
+      /* stylelint-disable-next-line declaration-property-unit-disallowed-list -- 1px hack for icon centering, not a spacing value */
       inset-block-start: calc(50% - calc(1rem / 16));
       inset-inline-start: calc(var(--clbr-expander-icon-size) / 8);
       position: absolute;

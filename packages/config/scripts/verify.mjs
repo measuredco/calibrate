@@ -3,12 +3,12 @@
 import { spawnSync } from "node:child_process";
 
 /**
- * Verification entrypoint for editor-tooling artifacts.
+ * Verification entrypoint for the generated token catalog.
  *
- * Re-runs the system pipeline (which writes generated files into this
- * package's `editor/` directory) and fails if the regenerated artifacts
- * differ from the checked-in state. Catches source/output drift the same
- * way `@measured/calibrate-tokens` verifies its JSON outputs.
+ * Re-runs the system pipeline (which writes `clbr.catalog.css` into this
+ * package) and fails if the regenerated artifact differs from the
+ * checked-in state. Catches source/output drift the same way
+ * `@measured/calibrate-tokens` verifies its JSON outputs.
  */
 
 const cwd = process.cwd();
@@ -30,21 +30,25 @@ function run(cmd, args) {
 async function main() {
   run("pnpm", ["--filter", "@measured/calibrate-system", "build"]);
 
-  const diff = spawnSync("git", ["diff", "--exit-code", "--", "editor"], {
-    cwd,
-    stdio: "pipe",
-    encoding: "utf8",
-  });
+  const diff = spawnSync(
+    "git",
+    ["diff", "--exit-code", "--", "clbr.catalog.css"],
+    {
+      cwd,
+      stdio: "pipe",
+      encoding: "utf8",
+    },
+  );
 
   if (diff.status !== 0) {
     process.stdout.write(diff.stdout || "");
     process.stderr.write(diff.stderr || "");
     throw new Error(
-      "packages/config/editor is not up to date. Run `pnpm --filter @measured/calibrate-system build` and commit updated artifacts.",
+      "packages/config/clbr.catalog.css is not up to date. Run `pnpm --filter @measured/calibrate-system build` and commit the updated artifact.",
     );
   }
 
-  console.log("packages/config/editor is up to date.");
+  console.log("packages/config/clbr.catalog.css is up to date.");
 }
 
 main().catch((error) => {

@@ -13,26 +13,29 @@ Markdown guardrails for AI coding agents (and humans) building sites and apps wi
 **Two operational guardrails, canonical → fallback:**
 
 1. **Compose first.** Use Calibrate components, especially layout primitives (Page, Container, Stack, Inline, Box, Grid), before authoring CSS. Playground app and the Page Storybook stories are the canonical worked examples — entire pages built with no custom CSS.
-2. **Custom with tokens.** When composition can't meet the requirement, build custom markup and reference design tokens. Stylelint token enforcement (deferred entry under Later) backs this.
+2. **Custom with tokens.** When composition can't meet the requirement, build custom markup and reference design tokens. Stylelint token enforcement (now folded into this workstream — see first steps) backs this.
 
 The system is largely self-guiding by construction at both layers — components encode design choices in their props, and tokens encode semantic intent in their `$description` fields. Picking the right component or token IS expressing the design language. The few residual mechanical concerns (logical properties, rem, naming) are caught by linting.
 
-A complementary `DESIGN.md` ships alongside the skills, covering the conceptual layer that imperative skills don't (compositional principle, tokens-as-contract, brand/system/component layering, opinion stack). Skills tell agents what to do; DESIGN.md tells them why the system is shaped that way, for judgment calls beyond the explicit guardrails.
+**Conceptual layer — paradigm fork (deferred decision):** two candidates, to be evaluated once the operational layers have settled in real use:
+
+- **Design-language skill** — descriptive context about the system's principles (compositional, tokens-as-contract, brand/system/component layering), in tandem with the compose-first / custom-with-tokens skills. Stays inside the compositional paradigm.
+- **DESIGN.md** — a conventional design-spec document (colors, typography, spacing, components, per the [DESIGN.md format](https://designmd.ai/what-is-design-md)) for consumers who want Calibrate's visual language as data, not via component composition. An _alternative_ paradigm, not a complement: this serves a different consumer relationship with the system.
 
 **Decisions:**
 
 - **Format.** Folder-per-skill with a `SKILL.md` containing minimal frontmatter (`name` + `description`) plus optional sibling folders (`examples/`, `references/`, `assets/`). Claude Code and OpenAI Codex have converged on this shape, so authoring vendor-neutral skills works in both — vendor-specific UI metadata can layer on top later if useful.
-- **Distribution.** Published as `@measured/calibrate-skills` with README copy-to-folder instructions (mirroring how `@measured/calibrate-config/editor/clbr.intellisense.css` is consumed today). Different agents read from different discovery directories — Claude Code's `.claude/skills/`, Codex's `.agents/skills/` — so consumers symlink or copy whichever they use. A bootstrap CLI to automate this can hook in later under the existing CLI bootstrap roadmap entry.
+- **Distribution.** Published as `@measured/calibrate-skills` with README copy-to-folder instructions (mirroring how `@measured/calibrate-config/clbr.catalog.css` is consumed today). Different agents read from different discovery directories — Claude Code's `.claude/skills/`, Codex's `.agents/skills/` — so consumers symlink or copy whichever they use. A bootstrap CLI to automate this can hook in later under the existing CLI bootstrap roadmap entry.
 - **Hand-authored vs derived.** Author skill narrative by hand. For reference data already documented elsewhere, link to or quote what's reachable to consumers: tokens JSON ships in `@measured/calibrate-tokens` (agents can read it at runtime), the SPEC ships as values from `@measured/calibrate-core`, the Storybook is on a deployed URL. The playground is repo-internal — worked compositional examples in skill `examples/` folders are hand-authored, drawing on the patterns demonstrated there. Don't build per-component auto-generated skills — that's what Storybook reference docs are for; skills carry the curated narrative across components. Revisit extraction tooling only if drift between skill snippets and source becomes a real problem.
 - **Core vs React flavor.** Cross-cutting skills (principle-led, e.g. "Compose first") share a single `SKILL.md` and split their `examples/` folder into `core/` and `react/` subfolders. The skill body narrates the principle without committing to a flavor and points consumers at the relevant subfolder. Discovery stays clean (one entry, not two near-duplicates) and the principle stays in one place; the CLI bootstrap can prune to the chosen flavor on install. Skills that are intrinsically flavor-specific (e.g. a future "React form-binding patterns") get their own skill named accordingly — the shared/split call is per-skill.
-- **DESIGN.md.** Ships in the same `@measured/calibrate-skills` package as a reference-style skill (descriptive, not imperative — discoverable via the same agent-skill mechanism, but consumed for context rather than as a prescriptive guardrail). Distinct from operational skills like "Compose first" that tell agents what to do.
 
-**First steps:**
+**First steps (re-ordered):**
 
-1. Scaffold `packages/skills` (package.json, README, file layout).
-2. Author the "Compose first" skill end-to-end to lock conventions. Reference the playground patterns as worked examples.
-3. Author DESIGN.md alongside, covering the conceptual layer (compositional principle, tokens-as-contract, brand/system/component layering).
-4. Author "Custom with tokens" once stylelint enforcement lands.
+1. ✅ Scaffold `packages/skills` (package.json, README, file layout).
+2. ✅ Author the "Compose first" skill end-to-end to lock conventions.
+3. **Stylelint token enforcement.** Pulled into this workstream from the deferred roadmap. Adopt `stylelint-declaration-strict-value` (or a Calibrate-specific config) so consumers' custom-layer CSS must reference tokens rather than raw values. Backs the next step.
+4. **Author the "Custom with tokens" skill.** Operational guidance for the next layer, anchored by the lint enforcement landed in step 3.
+5. **Decide design-language skill vs DESIGN.md.** With the operational layers in use, evaluate which paradigm fits — or whether both have a place serving different consumer relationships.
 
 ## Next
 
@@ -43,10 +46,6 @@ What we could be working on next.
 ## Later
 
 Everything we could attempt given sufficient time and resources.
-
-### Stylelint token enforcement
-
-Adopt "must reference Calibrate token" rules via [`stylelint-declaration-strict-value`](https://github.com/AndyOGo/stylelint-declaration-strict-value), or a fully custom config in the style of [`@primer/stylelint-config`](https://github.com/primer/stylelint-config).
 
 ### Documentation website (`apps/documentation`)
 

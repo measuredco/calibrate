@@ -4,13 +4,15 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 /**
- * Pipeline stage that emits a CSS lookup file for editor IntelliSense.
+ * Pipeline stage that emits a CSS catalog file for editor and tooling lookup.
  *
  * Reads the public token CSS files produced earlier in the pipeline,
  * extracts the default-context `--clbr-*` declarations, and emits a
- * combined `:root { ... }` block. The output ships via
- * `@measured/calibrate-config/editor/`; consumers drop it into their
- * `.vscode/` directory for typeahead + value hover on every var.
+ * combined `:root { ... }` block. The output ships at
+ * `@measured/calibrate-config/clbr.catalog.css`; consumers drop it into
+ * their editor's CSS-data directory (e.g. `.vscode/`) for typeahead +
+ * value hover, and the @measured/calibrate-config stylelint plugin reads
+ * it to validate `var(--clbr-*)` references.
  */
 
 const cwd = process.cwd();
@@ -39,7 +41,7 @@ function parseArgs(argv) {
 
   if (inputs.length === 0 || typeof out !== "string") {
     throw new Error(
-      "Usage: node scripts/pipeline/prepare-intellisense-output.mjs --input <css> [--input <css> ...] --out <output.css>",
+      "Usage: node scripts/pipeline/prepare-catalog-output.mjs --input <css> [--input <css> ...] --out <output.css>",
     );
   }
 
@@ -75,8 +77,9 @@ function extractDeclarations(cssText) {
 }
 
 const HEADER = `/*!
- * Calibrate token IntelliSense lookup. Place in your project's \`.vscode/\`
- * directory for \`--clbr-*\` autocomplete in CSS files.
+ * Calibrate token catalog. Lookup file for editor autocomplete and tooling
+ * (e.g. stylelint validation). Place in your editor's CSS-data directory
+ * (\`.vscode/\` for VS Code) for \`--clbr-*\` autocomplete in CSS files.
  *
  * Generated; do not edit.
  */
@@ -106,7 +109,7 @@ async function main() {
   await fs.writeFile(outPath, output, "utf8");
 
   console.log(
-    `Wrote IntelliSense lookup: ${path.relative(cwd, outPath)} (${sortedNames.length} vars from ${args.inputs.length} source(s))`,
+    `Wrote token catalog: ${path.relative(cwd, outPath)} (${sortedNames.length} vars from ${args.inputs.length} source(s))`,
   );
 }
 

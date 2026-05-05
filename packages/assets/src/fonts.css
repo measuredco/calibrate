@@ -1,3 +1,4 @@
+/* stylelint-disable scale-unlimited/declaration-strict-value -- @font-face font-weight is a font-file descriptor not a typographic styling */
 @font-face {
   font-display: swap;
   font-family: InterVariable;
