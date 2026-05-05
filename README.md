@@ -14,6 +14,7 @@ This is a pnpm monorepo with lockstep versioning across publishable and private 
 | `@measured/calibrate-core`     | [`packages/core`](packages/core)         | yes    | SSR-first component library. Native HTML output via custom elements, with a co-located CSS contract.                       |
 | `@measured/calibrate-markdown` | [`packages/markdown`](packages/markdown) | yes    | Opinionated GFM markdown → safe HTML utility. Pairs with core's `prose` component (loose coupling via GFM's element set).  |
 | `@measured/calibrate-react`    | [`packages/react`](packages/react)       | yes    | React adapter — typed wrappers over the core custom-element library.                                                       |
+| `@measured/calibrate-skills`   | [`packages/skills`](packages/skills)     | yes    | Markdown guardrails for AI coding agents (and humans) building sites and apps with Calibrate.                              |
 | `@measured/calibrate-system`   | [`packages/system`](packages/system)     | no     | Token authoring + resolver/build pipeline. Outputs feed core's CSS. Internal — consumers use `@measured/calibrate-core`.   |
 | `@measured/calibrate-tokens`   | [`packages/tokens`](packages/tokens)     | yes    | Calibrate tokens as data: DTCG-shaped JSON artifacts and JSON Schema. For docs sites, MCP, agents, and downstream tooling. |
 
