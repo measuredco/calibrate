@@ -85,27 +85,24 @@ const stylelintConfig = {
         "/^border.*width$/",
         "animation-timing-function",
         "box-shadow",
-        "font",
         "font-weight",
+        "font",
         "line-height",
         "opacity",
         "transition-timing-function",
       ],
       {
         ignoreValues: [
-          // `1` is included alongside `0` so opacity resets (`opacity: 1`)
-          // pass without forcing a token round-trip; opacity tokens are
-          // state-specific (demoted/disabled), not a full scale.
+          "/^[\\d.]+%$/",
           "0",
           "1",
-          "none",
           "inherit",
           "initial",
-          "unset",
+          "none",
           "revert",
-          "/^[\\d.]+%$/",
+          "unset",
         ],
-        message: `Value for "\${property}" must be a token, calc(), %, 0, or keyword. ${TOKENS_HINT}`,
+        message: `Value for "\${property}" must be a token, calc(), %, 0, 1, or keyword. ${TOKENS_HINT}`,
       },
     ],
     "unit-disallowed-list": [
