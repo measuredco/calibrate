@@ -6,7 +6,7 @@ Expand token-enforcement linting and rename the editor lookup.
 
 **Lint coverage**
 
-- New custom rule `calibrate/clbr-known-tokens` validates every `var(--*)` reference against either the Calibrate catalog (for `--clbr-*` names) or a same-file definition. Cross-file custom properties — including consumers' own organisation across CSS files — are intentionally rejected; define within the file you use it in.
+- New custom rule `calibrate/clbr-known-tokens` validates every `var(--*)` reference against either the Calibrate catalog (for `--clbr-*` names) or a same-file definition. Cross-file custom properties — including consumers' own organisation across CSS files — are rejected by default; define within the file you use it in. Consumers who organise tokens across files can opt out of the same-file gate via `[true, { allowCrossFile: true }]` while keeping catalog enforcement for `--clbr-*`.
 - `scale-unlimited/declaration-strict-value` apply-list extended to `opacity`, `transition-timing-function`, `animation-timing-function`.
 - `declaration-property-unit-disallowed-list` extended to ban `rem` on `font-size`, the `border` shorthand (and logical variants), `outline-width`, `outline-offset`, and `max/min-{width,inline-size}`.
 - Custom error messages on every token-discipline rule point at the catalog so the violation moment doubles as discoverability.

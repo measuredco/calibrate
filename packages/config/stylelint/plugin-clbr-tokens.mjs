@@ -6,8 +6,9 @@ import stylelint from "stylelint";
 // Validates `var(--*)` references against two gates: (1) the Calibrate
 // catalog (--clbr-* only), or (2) a definition in the same file. Cross-file
 // custom-property references — including consumers' own organisation across
-// CSS files — are intentionally rejected. Define within the file you use it
-// in.
+// CSS files — are rejected by default. Consumers who organise tokens across
+// files can pass `allowCrossFile: true` to disable the same-file gate for
+// non-clbr customs while keeping catalog enforcement for `--clbr-*`.
 
 const ruleName = "calibrate/clbr-known-tokens";
 
@@ -58,7 +59,10 @@ const rule = (primary, secondary) => (root, result) => {
     },
     {
       actual: secondary,
-      possible: { allow: [(v) => typeof v === "string"] },
+      possible: {
+        allow: [(v) => typeof v === "string"],
+        allowCrossFile: [(v) => typeof v === "boolean"],
+      },
       optional: true,
     },
   );
@@ -67,6 +71,7 @@ const rule = (primary, secondary) => (root, result) => {
   const { literals: allowLiterals, patterns: allowPatterns } = parseAllow(
     secondary?.allow ?? [],
   );
+  const allowCrossFile = secondary?.allowCrossFile === true;
 
   const localDefs = new Set();
   root.walkDecls(/^--/, (decl) => localDefs.add(decl.prop));
@@ -79,11 +84,12 @@ const rule = (primary, secondary) => (root, result) => {
       if (known.has(token) || localDefs.has(token)) continue;
       if (allowLiterals.has(token)) continue;
       if (allowPatterns.some((re) => re.test(token))) continue;
-      const message = token.startsWith("--clbr-")
-        ? messages.unknownClbr(token)
-        : messages.unknownCustom(token);
+      const isClbr = token.startsWith("--clbr-");
+      if (!isClbr && allowCrossFile) continue;
       stylelint.utils.report({
-        message,
+        message: isClbr
+          ? messages.unknownClbr(token)
+          : messages.unknownCustom(token),
         node: decl,
         result,
         ruleName,

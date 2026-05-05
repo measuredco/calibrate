@@ -38,18 +38,27 @@ Or as JSON:
 }
 ```
 
-Add your own overrides alongside as you'd expect from any Stylelint config:
+`stylelint` itself is a peer dependency — install it alongside.
+
+### Authoring stance
+
+This preset is opinionated. It encodes Calibrate's compose-first / custom-with-tokens authoring discipline rather than a generic Stylelint baseline. Two defaults are worth highlighting because they often surface in consumer projects:
+
+- **Same-file custom-property scope.** The `calibrate/clbr-known-tokens` rule rejects `var(--*)` references that aren't defined in the same file — including consumers' own organisation across CSS files (`theme.css` defining vars, `card.css` consuming them). Define within the file you use it in. Catalog tokens (`--clbr-*` from the catalog) and same-file definitions both pass; everything else fails.
+- **Tight value lists.** `border-radius`, `border-width`, `box-shadow`, `font`, `font-weight`, `line-height`, `opacity`, and the timing-function properties only accept `var()`, function calls (`calc()`, `cubic-bezier()`, etc.), `0`/`1`/keywords, and percentages.
+
+If your project organises tokens across files and you want catalog enforcement without same-file scope, opt out:
 
 ```js
 export default {
   extends: ["@measured/calibrate-config/stylelint"],
   rules: {
-    // your overrides
+    "calibrate/clbr-known-tokens": [true, { allowCrossFile: true }],
   },
 };
 ```
 
-`stylelint` itself is a peer dependency — install it alongside.
+Catalog enforcement for `--clbr-*` references is preserved; non-`--clbr-` customs pass through. Any individual rule can be turned off the usual way (`"rule-name": null`) — overrides are normal.
 
 ## Token catalog
 
