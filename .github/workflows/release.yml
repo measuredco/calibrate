@@ -49,6 +49,18 @@ jobs:
           title: "chore(repo): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Generate npm provenance attestations on publish (uses the
-          # job-scoped id-token: write permission above).
-          NPM_CONFIG_PROVENANCE: "true"
+          # Token-based auth fallback for the initial publish of
+          # @measured/calibrate-skills (no trusted publisher configured yet).
+          # NPM_TOKEN tells changesets/action to use token publishing rather
+          # than OIDC; without it the action picks OIDC and fails for any
+          # package that lacks a configured trusted publisher. Remove once
+          # skills has trusted publishing set up on npm.
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Provenance is normally on (uses the job-scoped id-token: write
+          # permission above), but npm 11.x prefers OIDC trusted publishing
+          # when provenance is enabled, and trusted publishing fails outright
+          # for packages without a configured trusted publisher (no fallback
+          # to token auth). Temporarily disabled while @measured/calibrate-skills
+          # is being published for the first time. Re-enable once trusted
+          # publishing is configured for it on npm.
+          # NPM_CONFIG_PROVENANCE: "true"
