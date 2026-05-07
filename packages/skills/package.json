@@ -1,6 +1,6 @@
 {
   "name": "@measured/calibrate-skills",
-  "version": "0.2.0-alpha.6",
+  "version": "0.2.0",
   "description": "Markdown guardrails for AI coding agents (and humans) building sites and apps with Calibrate.",
   "repository": {
     "type": "git",
