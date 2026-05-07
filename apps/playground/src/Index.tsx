@@ -5,37 +5,29 @@ import {
   Link,
   Root,
   Stack,
-  Text,
 } from "@measured/calibrate-react";
 
 export function Index() {
   return (
     <Root appRoot>
-      <Container gutter="narrow">
+      <Container>
         <Box paddingBlock="2xl" paddingInline="none">
-          <Stack gap="lg">
-            <Heading level={1} size="2xl" text="Calibrate playground" />
-            <Text as="p">
-              In-browser harness for the React adapter. Open one of the demos:
-            </Text>
-            <Stack as="ul" gap="sm">
+          <Stack gap="md">
+            <Heading
+              level={1}
+              opticalAlign={true}
+              size="xl"
+              text="Calibrate playground"
+            />
+            <Stack as="ul" gap="xs">
               <li>
-                <Link
-                  href="#app"
-                  label="Kitchen sink — form controls, alerts, sidebar, menu"
-                />
+                <Link href="#app" label="Kitchen sink" />
               </li>
               <li>
-                <Link
-                  href="#example"
-                  label="Full page — compose-first composition (skill example)"
-                />
+                <Link href="#example" label="Skill: compose-first" />
               </li>
               <li>
-                <Link
-                  href="#stepper"
-                  label="Stepper — custom-with-tokens example"
-                />
+                <Link href="#stepper" label="Skill: custom-with-tokens" />
               </li>
             </Stack>
           </Stack>

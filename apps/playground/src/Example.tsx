@@ -25,7 +25,7 @@ export function Example() {
             <Box paddingBlock="sm" paddingInline="none" responsive>
               <Inline gap="sm" justify="between">
                 <a href="/">
-                  <Logo label="Brand" variant="primary" />
+                  <Logo label="Brand" variant="secondary" />
                 </a>
                 <Nav
                   collapsible="belowTablet"
@@ -44,9 +44,9 @@ export function Example() {
         footer={
           <Container gutter="narrow" maxInlineSize="wide">
             <Divider tone="brand" />
-            <Box paddingBlock="md" paddingInline="none" responsive>
-              <Text as="p" tone="muted">
-                © 2026 Brand
+            <Box paddingBlock="sm" paddingInline="none" responsive>
+              <Text as="p" size="sm" tone="muted">
+                © 2026 Measured
               </Text>
             </Box>
           </Container>
