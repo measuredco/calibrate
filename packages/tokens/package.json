@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "@measured/calibrate-system": "workspace:*",
-    "ajv": "^8.18.0"
+    "ajv": "^8.20.0"
   }
 }
