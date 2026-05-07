@@ -1,10 +1,10 @@
 {
-  "name": "@measured/calibrate-playground-react",
+  "name": "@measured/calibrate-playground",
   "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/measuredco/calibrate.git",
-    "directory": "apps/playground-react"
+    "directory": "apps/playground"
   },
   "private": true,
   "type": "module",

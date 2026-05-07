@@ -20,10 +20,10 @@ This is a pnpm monorepo with lockstep versioning across publishable and private 
 
 ## Apps
 
-| App                | Path                                             | Description                                 |
-| ------------------ | ------------------------------------------------ | ------------------------------------------- |
-| Storybook          | [`apps/storybook`](apps/storybook)               | Component dev and a11y harness.             |
-| Playground (React) | [`apps/playground-react`](apps/playground-react) | Real-browser harness for the React adapter. |
+| App        | Path                                 | Description                                 |
+| ---------- | ------------------------------------ | ------------------------------------------- |
+| Storybook  | [`apps/storybook`](apps/storybook)   | Component dev and a11y harness.             |
+| Playground | [`apps/playground`](apps/playground) | Real-browser harness for the React adapter. |
 
 ## Working in the repo
 
@@ -38,7 +38,7 @@ Common scripts (root, delegating via workspace filters):
 - `pnpm format` / `pnpm format:check`
 - `pnpm lint` / `pnpm lint:fix`
 - `pnpm markdown:build` / `pnpm markdown:test` / `pnpm markdown:typecheck`
-- `pnpm playground:react` / `pnpm playground:react:build` / `pnpm playground:react:typecheck`
+- `pnpm playground` / `pnpm playground:build` / `pnpm playground:typecheck`
 - `pnpm react:build` / `pnpm react:test` / `pnpm react:typecheck` / `pnpm react:generate`
 - `pnpm storybook` / `pnpm storybook:build` / `pnpm storybook:test`
 - `pnpm stylelint` / `pnpm stylelint:fix`

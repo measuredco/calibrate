@@ -11,7 +11,7 @@
       "@measured/calibrate-config",
       "@measured/calibrate-core",
       "@measured/calibrate-markdown",
-      "@measured/calibrate-playground-react",
+      "@measured/calibrate-playground",
       "@measured/calibrate-react",
       "@measured/calibrate-skills",
       "@measured/calibrate-storybook",

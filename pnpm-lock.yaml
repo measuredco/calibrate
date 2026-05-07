@@ -84,7 +84,7 @@ importers:
         specifier: ^8.59.0
         version: 8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3)
 
-  apps/playground-react:
+  apps/playground:
     dependencies:
       '@measured/calibrate-assets':
         specifier: workspace:*
