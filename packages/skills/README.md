@@ -4,6 +4,20 @@ Markdown guardrails for AI coding agents (and humans) building sites and apps wi
 
 Each skill is a folder containing a `SKILL.md` (with `name` and `description` frontmatter) plus optional sibling `examples/`, `references/`, and `assets/` folders. The shape is shared by Claude Code and OpenAI Codex, so authoring vendor-neutral skills works in both.
 
+## About Calibrate
+
+These skills are companion content for the Calibrate design system: `@measured/calibrate-{core,assets,config,tokens}` (and `@measured/calibrate-react` for React projects), serving the **Measured** brand.
+
+- **Compositional** — components encode design choices in their props; consumers compose UI from the system's vocabulary rather than authoring custom CSS.
+- **Multi-context** — tokens resolve under theme (light / dark), brand, and surface context automatically.
+- **Brand contexts**:
+  - `msrd` — the public-facing Measured brand.
+  - `wrfr` — a stripped-back wireframe expression of the same brand (monochrome, no rounding, no motion). Use for wireframes, sketches, and internal tools.
+  - `base` — structural foundation layer. Not a brand; consumers don't pick it.
+- **Voice (for content, copy, and naming decisions)** — calm, business-like, time-less; organised and precise.
+
+The operational skills below cover _how_ to use the system; this section is just orientation.
+
 ## Install
 
 ```sh
