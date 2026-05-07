@@ -36,7 +36,7 @@ const page = renderClbrPage({
         gap: "sm",
         justify: "between",
         children: [
-          `<a href="/">${renderClbrLogo({ label: "Brand", variant: "primary" })}</a>`,
+          `<a href="/">${renderClbrLogo({ label: "Brand", variant: "secondary" })}</a>`,
           renderClbrNav({
             collapsible: "belowTablet",
             contentId: "site-nav",
@@ -91,7 +91,7 @@ const page = renderClbrPage({
     children: [
       renderClbrDivider({ tone: "brand" }),
       renderClbrBox({
-        paddingBlock: "md",
+        paddingBlock: "sm",
         paddingInline: "none",
         responsive: true,
         children: renderClbrText({

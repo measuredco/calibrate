@@ -30,7 +30,7 @@ export function App() {
             <Box paddingBlock="sm" paddingInline="none" responsive>
               <Inline gap="sm" justify="between">
                 <a href="/">
-                  <Logo label="Brand" variant="primary" />
+                  <Logo label="Brand" variant="secondary" />
                 </a>
                 <Nav
                   collapsible="belowTablet"
@@ -49,7 +49,7 @@ export function App() {
         footer={
           <Container gutter="narrow" maxInlineSize="wide">
             <Divider tone="brand" />
-            <Box paddingBlock="md" paddingInline="none" responsive>
+            <Box paddingBlock="sm" paddingInline="none" responsive>
               <Text as="p" tone="muted">
                 © 2026 Brand
               </Text>
