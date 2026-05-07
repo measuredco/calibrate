@@ -1,5 +1,7 @@
 # @measured/calibrate-storybook
 
+## 0.2.0
+
 ## 0.2.0-alpha.6
 
 ## 0.2.0-alpha.5
