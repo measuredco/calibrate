@@ -22,7 +22,7 @@ import {
 
 export function App() {
   return (
-    <Root appRoot>
+    <Root appOverscrollBehavior="none" appRoot>
       <Page
         stickyHeader="always"
         header={

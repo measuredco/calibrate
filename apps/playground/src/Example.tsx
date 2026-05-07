@@ -17,7 +17,7 @@ import {
 
 export function Example() {
   return (
-    <Root appRoot>
+    <Root appOverscrollBehavior="none" appRoot>
       <Page
         stickyHeader="always"
         header={

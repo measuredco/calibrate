@@ -9,7 +9,7 @@ import {
 
 export function Index() {
   return (
-    <Root appRoot>
+    <Root appOverscrollBehavior="none" appRoot>
       <Container>
         <Box paddingBlock="2xl" paddingInline="none">
           <Stack gap="md">

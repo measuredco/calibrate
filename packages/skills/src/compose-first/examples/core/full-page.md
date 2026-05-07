@@ -104,7 +104,11 @@ const page = renderClbrPage({
   }),
 });
 
-const html = renderClbrRoot({ appRoot: true, children: page });
+const html = renderClbrRoot({
+  appOverscrollBehavior: "none",
+  appRoot: true,
+  children: page,
+});
 ```
 
 ## What's compositional here
