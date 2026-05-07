@@ -6,18 +6,9 @@ This roadmap is intentionally fluid: items can move freely between `NOW`, `NEXT`
 
 What we're working on now.
 
-### Decide: design-language skill vs DESIGN.md (paradigm fork)
-
-The skills package now ships two operational guardrails — `compose-first` and `custom-with-tokens` — backed by token-discipline lint enforcement in `@measured/calibrate-config/stylelint`. The remaining call is conceptual: how (or whether) to surface Calibrate's design language as a discrete artefact, on top of (or alongside) the operational skills. Two candidates, to be evaluated once the operational layers have settled in real use:
-
-- **Design-language skill** — descriptive context about the system's principles (compositional, tokens-as-contract, brand/system/component layering), in tandem with the compose-first / custom-with-tokens skills. Stays inside the compositional paradigm.
-- **DESIGN.md** — a conventional design-spec document (colors, typography, spacing, components, per the [DESIGN.md format](https://designmd.ai/what-is-design-md)) for consumers who want Calibrate's visual language as data, not via component composition. An _alternative_ paradigm, not a complement: this serves a different consumer relationship with the system.
-
 ## Next
 
 What we could be working on next.
-
-### Update Lucide to 1.0
 
 ## Later
 
