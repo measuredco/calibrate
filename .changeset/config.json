@@ -13,6 +13,7 @@
       "@measured/calibrate-markdown",
       "@measured/calibrate-playground-react",
       "@measured/calibrate-react",
+      "@measured/calibrate-skills",
       "@measured/calibrate-storybook",
       "@measured/calibrate-system",
       "@measured/calibrate-tokens"

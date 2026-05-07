@@ -52,7 +52,7 @@ jobs:
         run: |
           BASE="origin/${{ github.base_ref }}"
           CHANGED=$(git diff --name-only "$BASE"...HEAD)
-          PUBLIC=$(echo "$CHANGED" | grep -E '^packages/(core|react|config|assets)/src/' || true)
+          PUBLIC=$(echo "$CHANGED" | grep -E '^packages/(assets|config|core|markdown|react|skills|tokens)/src/' || true)
           CHANGESET=$(echo "$CHANGED" | grep -E '^\.changeset/[^/]+\.md$' | grep -v '^\.changeset/README\.md$' || true)
           if [ -n "$PUBLIC" ] && [ -z "$CHANGESET" ]; then
             echo "::error::Public package source changed without a changeset. Run \`pnpm changeset\` and commit the result."

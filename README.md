@@ -48,9 +48,9 @@ Common scripts (root, delegating via workspace filters):
 ## Contribution conventions
 
 - **Conventional Commits** enforced on PR titles via [`.github/workflows/pr-title.yml`](.github/workflows/pr-title.yml). Squash-merge means the PR title becomes the commit subject on `main`, so this is the canonical validation surface.
-- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `markdown`, `react`, `system`, `tokens`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
+- **Required commit scopes**: `adapter`, `assets`, `config`, `core`, `markdown`, `react`, `skills`, `system`, `tokens`, `repo` (apps and root config use `repo`), plus `deps` for Dependabot PRs.
 - **Pre-commit auto-formatting** via Husky + `lint-staged`: prettier runs on staged files before each commit, no opt-in.
-- **Changesets required** when a PR touches `packages/{core,react,config,assets}/src/**`. Run `pnpm changeset` per consumer-visible change.
+- **Changesets required** when a PR touches `packages/{assets,config,core,markdown,react,skills,tokens}/src/**`. Run `pnpm changeset` per consumer-visible change.
 
 ## Releasing
 
