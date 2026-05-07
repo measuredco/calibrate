@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "lucide": "0.577.0"
+    "lucide": "1.14.0"
   },
   "devDependencies": {
     "@measured/calibrate-config": "workspace:*",
