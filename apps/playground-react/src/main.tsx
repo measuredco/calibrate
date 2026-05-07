@@ -4,7 +4,7 @@ import "@measured/calibrate-core/styles.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { StepperPage } from "./Stepper";
+import { App } from "./App";
 
 const container = document.getElementById("root");
 
@@ -12,6 +12,6 @@ if (!container) throw new Error("#root not found");
 
 createRoot(container).render(
   <StrictMode>
-    <StepperPage />
+    <App />
   </StrictMode>,
 );
