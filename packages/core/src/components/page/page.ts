@@ -2,6 +2,8 @@ import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
 
+export type ClbrPageHeaderBorder = "always" | "scroll";
+export type ClbrPageHeaderSize = "sm" | "md" | "lg";
 export type ClbrPageStickyHeader = "always" | "belowNotebook";
 
 export interface ClbrPageProps {
@@ -13,6 +15,10 @@ export interface ClbrPageProps {
   children?: string;
   /** Header region markup. Caller sanitizes untrusted content. */
   header: string;
+  /** Bottom border on the header. `"scroll"` requires `stickyHeader`. */
+  headerBorder?: ClbrPageHeaderBorder;
+  /** Header size. Reserves a minimum block size on the header. @default "md" */
+  headerSize?: ClbrPageHeaderSize;
   /** DOM id. */
   id?: string;
   /** Sticky header behavior. Emits `data-sticky-header` when provided. */
@@ -33,6 +39,8 @@ export function buildClbrPage({
   children,
   footer,
   header,
+  headerBorder,
+  headerSize = "md",
   id,
   stickyHeader,
 }: ClbrPageProps): ClbrNode {
@@ -68,6 +76,8 @@ export function buildClbrPage({
     attrs: {
       class: "clbr-page",
       "data-center-main": centerMain,
+      "data-header-border": headerBorder,
+      "data-header-size": headerSize,
       "data-sticky-header": stickyHeader,
       id: normalizedId,
     },
@@ -124,6 +134,17 @@ export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    headerBorder: {
+      description:
+        "Bottom border on the header. `'always'` is persistent; `'scroll'` fades in only when a sticky header is stuck (browsers without `container-type: scroll-state` fall back to always-on).",
+      type: { kind: "enum", values: ["always", "scroll"] },
+    },
+    headerSize: {
+      default: "md",
+      description:
+        "Reserves a minimum block size on the header. `--clbr-page-header-block-size` is exposed to descendants so persistent panels can open below the header band.",
+      type: { kind: "enum", values: ["sm", "md", "lg"] },
+    },
     id: {
       description: "DOM id.",
       type: { kind: "string" },
@@ -145,6 +166,18 @@ export const CLBR_PAGE_SPEC: ClbrComponentSpec = {
         target: { on: "host" },
         attribute: "data-center-main",
         condition: { kind: "when-truthy", prop: "centerMain" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-header-border",
+        condition: { kind: "when-provided", prop: "headerBorder" },
+        value: { kind: "prop", prop: "headerBorder" },
+      },
+      {
+        target: { on: "host" },
+        attribute: "data-header-size",
+        condition: { kind: "always" },
+        value: { kind: "prop", prop: "headerSize" },
       },
       {
         target: { on: "host" },

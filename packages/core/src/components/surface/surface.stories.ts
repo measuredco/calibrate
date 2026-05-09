@@ -27,6 +27,7 @@ const exampleContent = `<div style="padding: 1.75rem 1.25rem">Example content</d
 export const Default = {
   args: {
     children: exampleContent,
+    contentTheme: undefined,
     id: "",
     variant: "default",
   } satisfies ClbrSurfaceProps,

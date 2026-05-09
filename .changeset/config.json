@@ -10,6 +10,7 @@
       "@measured/calibrate-assets",
       "@measured/calibrate-config",
       "@measured/calibrate-core",
+      "@measured/calibrate-documentation",
       "@measured/calibrate-markdown",
       "@measured/calibrate-playground",
       "@measured/calibrate-react",

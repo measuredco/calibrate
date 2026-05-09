@@ -19,9 +19,10 @@ export type SurfaceProps = Omit<ClbrSurfaceProps, "children"> & {
 } & NativeAttrsFor<HTMLDivElement>;
 
 export function Surface(props: SurfaceProps): ReturnType<typeof reactify> {
-  const { children, id, variant, ...rest } = props;
+  const { children, contentTheme, id, variant, ...rest } = props;
   const node = buildClbrSurface({
     children: SLOT_SURFACE_CHILDREN as unknown as ClbrSurfaceProps["children"],
+    contentTheme,
     id,
     variant,
   });

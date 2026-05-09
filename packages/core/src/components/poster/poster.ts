@@ -143,7 +143,7 @@ export const CLBR_POSTER_SPEC: ClbrComponentSpec = {
     },
     contentTheme: {
       description:
-        "Fixed theme for foreground content over non-themeable media.",
+        "Absolute theme lock for foreground content over non-themeable media.",
       type: { kind: "enum", values: ["light", "dark"] },
     },
     id: {

@@ -1,9 +1,25 @@
 @layer clbr.components {
   :where(.clbr) .clbr-page {
+    --clbr-page-header-block-size: var(--clbr-spacing-vertical-950);
+
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto 1fr auto;
     min-block-size: 100dvb;
+
+    &[data-header-size="sm"] {
+      --clbr-page-header-block-size: var(--clbr-spacing-vertical-900);
+    }
+
+    &[data-header-size="lg"] {
+      --clbr-page-header-block-size: var(--clbr-spacing-vertical-1000);
+    }
+
+    @media (width >= 48em) {
+      &[data-header-size="lg"] {
+        --clbr-page-header-block-size: var(--clbr-spacing-vertical-1100);
+      }
+    }
 
     #storybook-docs & {
       min-block-size: auto;
@@ -14,17 +30,22 @@
     }
 
     @media (width >= 68em) {
-      &:has(> .header clbr-sidebar[data-above-notebook="persistent"]),
-      &:has(> .header clbr-sidebar[data-above-notebook="collapsible"]) {
+      &:has(> .header clbr-sidebar[data-above-notebook="persistent"]) > .main,
+      &:has(> .header clbr-sidebar[data-above-notebook="persistent"]) > .footer,
+      &:has(> .header clbr-sidebar[data-above-notebook="collapsible"]) > .main,
+      &:has(> .header clbr-sidebar[data-above-notebook="collapsible"])
+        > .footer {
         margin-inline-start: var(--clbr-breakpoint-baseline);
       }
 
-      &:has(> .header clbr-sidebar[data-collapsed]) {
+      &:has(> .header clbr-sidebar[data-collapsed]) > .main,
+      &:has(> .header clbr-sidebar[data-collapsed]) > .footer {
         margin-inline-start: var(--clbr-spacing-horizontal-900);
       }
     }
 
     .header {
+      min-block-size: var(--clbr-page-header-block-size);
       position: relative;
       z-index: 1;
 
@@ -32,7 +53,16 @@
       .clbr-page[data-sticky-header="belowNotebook"] > & {
         inset-block-start: 0;
         position: sticky;
+      }
 
+      .clbr-page[data-sticky-header="belowNotebook"] > & {
+        @media (width >= 64em) {
+          position: relative;
+        }
+      }
+
+      .clbr-page[data-header-border="always"] > &,
+      .clbr-page[data-header-border="scroll"] > & {
         &::after {
           background-color: var(--clbr-color-border-subtle);
           block-size: var(--clbr-layout-border-width-default);
@@ -41,7 +71,9 @@
           inset-inline: 0;
           position: absolute;
         }
+      }
 
+      .clbr-page[data-header-border="scroll"] > & {
         @supports (container-type: scroll-state) {
           container-type: scroll-state;
 
@@ -54,12 +86,6 @@
               opacity: 1;
             }
           }
-        }
-      }
-
-      .clbr-page[data-sticky-header="belowNotebook"] > & {
-        @media (width >= 64em) {
-          position: relative;
         }
       }
     }

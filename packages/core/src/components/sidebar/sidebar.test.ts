@@ -68,13 +68,32 @@ describe("renderClbrSidebar", () => {
 
     expect(host).not.toBeNull();
     expect(host.getAttribute("data-above-notebook")).toBe("persistent");
-    expect(host.getAttribute("data-size")).toBe("md");
+    expect(host.getAttribute("data-button-size")).toBe("md");
     expect(sidebar.classList.contains("clbr-sidebar")).toBe(true);
+    expect(
+      root.querySelector(".sidebar")?.hasAttribute("data-clbr-surface"),
+    ).toBe(false);
     expect(root.querySelector('[data-part="backdrop"]')).not.toBeNull();
     expect(getByRole(root, "button", { name: "Open sidebar" })).not.toBeNull();
     expect(getByText(root, "Header")).not.toBeNull();
     expect(getByText(root, "Body")).not.toBeNull();
     expect(getByText(root, "Footer")).not.toBeNull();
+  });
+
+  it("emits data-clbr-surface on the inner panel when surface is provided", () => {
+    const root = mountSidebar(
+      renderClbrSidebar({
+        children: "<p>Body</p>",
+        id: "sidebar",
+        surface: "brand",
+      }),
+    );
+
+    const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
+    const panel = root.querySelector(".sidebar") as HTMLElement;
+
+    expect(host.hasAttribute("data-clbr-surface")).toBe(false);
+    expect(panel.getAttribute("data-clbr-surface")).toBe("brand");
   });
 
   it("emits owned trigger markup in SSR output without runtime close control", () => {
@@ -97,9 +116,9 @@ describe("defineClbrSidebar", () => {
   it("injects a close button on upgrade", () => {
     const root = mountSidebar(
       renderClbrSidebar({
+        buttonSize: "sm",
         children: "<p>Body</p>",
         id: "sidebar",
-        size: "sm",
       }),
     );
 
@@ -107,7 +126,7 @@ describe("defineClbrSidebar", () => {
 
     const host = root.querySelector(CLBR_SIDEBAR_TAG_NAME) as HTMLElement;
 
-    expect(host.getAttribute("data-size")).toBe("sm");
+    expect(host.getAttribute("data-button-size")).toBe("sm");
     expect(
       getByRole(root, "button", { name: "Collapse sidebar" }),
     ).not.toBeNull();
@@ -115,7 +134,7 @@ describe("defineClbrSidebar", () => {
       root
         .querySelector('[data-part="close"] .clbr-button')
         ?.getAttribute("data-size"),
-    ).toBe("md");
+    ).toBe("sm");
   });
 
   it("uses a custom collapse label when provided", () => {

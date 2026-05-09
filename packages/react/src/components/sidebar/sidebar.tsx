@@ -29,12 +29,13 @@ export type SidebarProps = Omit<
 export function Sidebar(props: SidebarProps): ReturnType<typeof reactify> {
   const {
     aboveNotebook,
+    buttonSize,
     children,
     collapseLabel,
     footer,
     header,
     id,
-    size,
+    surface,
     triggerLabel,
     ...rest
   } = props;
@@ -43,6 +44,7 @@ export function Sidebar(props: SidebarProps): ReturnType<typeof reactify> {
   const hasFooter = footer != null && footer !== false;
   const node = buildClbrSidebar({
     aboveNotebook,
+    buttonSize,
     children: hasChildren
       ? (SLOT_SIDEBAR_CHILDREN as unknown as ClbrSidebarProps["children"])
       : undefined,
@@ -54,7 +56,7 @@ export function Sidebar(props: SidebarProps): ReturnType<typeof reactify> {
       ? (SLOT_SIDEBAR_HEADER as unknown as ClbrSidebarProps["header"])
       : undefined,
     id,
-    size,
+    surface,
     triggerLabel,
   });
   useEffect(() => {

@@ -1,11 +1,15 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import { isValidHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
-import { buildClbrButton, renderClbrButton } from "../button/button";
+import {
+  buildClbrButton,
+  type ClbrButtonSize,
+  renderClbrButton,
+} from "../button/button";
+import type { ClbrSurfaceVariant } from "../surface/surface";
 
 export const CLBR_SIDEBAR_TAG_NAME = "clbr-sidebar";
 export type ClbrSidebarAboveNotebook = "persistent" | "collapsible" | "overlay";
-export type ClbrSidebarSize = "sm" | "md";
 
 const aboveNotebookMedia = "(min-width: 68em)";
 const collapseLabelDefault = "Collapse sidebar";
@@ -14,6 +18,8 @@ const triggerLabelDefault = "Open sidebar";
 export interface ClbrSidebarProps {
   /** Behavior above the notebook breakpoint. @default "persistent" */
   aboveNotebook?: ClbrSidebarAboveNotebook;
+  /** Size of the trigger and collapse buttons.  @default "md" */
+  buttonSize?: ClbrButtonSize;
   /** Content region markup rendered inside `.content`. Caller sanitizes untrusted content. */
   children?: string;
   /** Accessible label for the runtime collapse/close button. @default "Collapse sidebar" */
@@ -24,20 +30,23 @@ export interface ClbrSidebarProps {
   header?: string;
   /** DOM id applied to the host. The inner panel id is derived as `${id}-panel` and referenced by the trigger via `aria-controls`. */
   id: string;
+  /** Surface context. Emits `data-clbr-surface` on the inner panel when provided. */
+  surface?: ClbrSurfaceVariant;
   /** Accessible label for the component-owned trigger. @default "Open sidebar" */
   triggerLabel?: string;
-  /** Size variant. @default "md" */
-  size?: ClbrSidebarSize;
 }
 
-function createCloseButtonMarkup(label: string, size: ClbrSidebarSize): string {
+function createCloseButtonMarkup(
+  label: string,
+  buttonSize: ClbrButtonSize,
+): string {
   return `<div data-part="close">${renderClbrButton({
     appearance: "text",
     icon: "PanelLeft",
     iconMirrored: "rtl",
     label,
     labelVisibility: "hidden",
-    size: size === "sm" ? "md" : "lg",
+    size: buttonSize,
     tone: "neutral",
     type: "button",
   })}</div>`;
@@ -51,12 +60,13 @@ function createCloseButtonMarkup(label: string, size: ClbrSidebarSize): string {
  */
 export function buildClbrSidebar({
   aboveNotebook = "persistent",
+  buttonSize = "md",
   children,
   collapseLabel = collapseLabelDefault,
   footer,
   header,
   id,
-  size = "md",
+  surface,
   triggerLabel = triggerLabelDefault,
 }: ClbrSidebarProps): ClbrNode {
   const normalizedId = id.trim();
@@ -109,7 +119,7 @@ export function buildClbrSidebar({
         normalizedCollapseLabel !== collapseLabelDefault
           ? normalizedCollapseLabel
           : undefined,
-      "data-size": size,
+      "data-button-size": buttonSize,
       id: normalizedId,
     },
     children: [
@@ -126,7 +136,7 @@ export function buildClbrSidebar({
             iconMirrored: "rtl",
             label: normalizedTriggerLabel,
             labelVisibility: "hidden",
-            size: size === "sm" ? "md" : "lg",
+            size: buttonSize,
             tone: "neutral",
             type: "button",
           }),
@@ -135,7 +145,12 @@ export function buildClbrSidebar({
       {
         kind: "element",
         tag: "div",
-        attrs: { class: "sidebar", id: panelId, tabindex: "-1" },
+        attrs: {
+          class: "sidebar",
+          "data-clbr-surface": surface,
+          id: panelId,
+          tabindex: "-1",
+        },
         children: sidebarChildren,
       },
       {
@@ -240,11 +255,12 @@ export function defineClbrSidebar(): void {
       const header = sidebar.querySelector<HTMLElement>(".header");
       const collapseLabel =
         this.getAttribute("data-collapse-label") || collapseLabelDefault;
-      const size = this.getAttribute("data-size") === "sm" ? "sm" : "md";
+      const buttonSize = (this.getAttribute("data-button-size") ??
+        "md") as ClbrButtonSize;
 
       header?.insertAdjacentHTML(
         "beforeend",
-        createCloseButtonMarkup(collapseLabel, size),
+        createCloseButtonMarkup(collapseLabel, buttonSize),
       );
     }
 
@@ -464,6 +480,11 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
         values: ["persistent", "collapsible", "overlay"],
       },
     },
+    buttonSize: {
+      default: "md",
+      description: "Size of the trigger and collapse buttons.",
+      type: { kind: "enum", values: ["sm", "md", "lg"] },
+    },
     children: {
       description: "Sidebar body content.",
       type: { kind: "html" },
@@ -487,10 +508,12 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "string" },
     },
-    size: {
-      default: "md",
-      description: "Size variant.",
-      type: { kind: "enum", values: ["sm", "md"] },
+    surface: {
+      description: "Surface context. Applied to the inner panel.",
+      type: {
+        kind: "enum",
+        values: ["default", "brand", "inverse", "brand-inverse"],
+      },
     },
     triggerLabel: {
       default: triggerLabelDefault,
@@ -509,9 +532,9 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
       },
       {
         target: { on: "host" },
-        attribute: "data-size",
+        attribute: "data-button-size",
         condition: { kind: "always" },
-        value: { kind: "prop", prop: "size" },
+        value: { kind: "prop", prop: "buttonSize" },
       },
       {
         target: { on: "host" },
@@ -549,6 +572,12 @@ export const CLBR_SIDEBAR_SPEC: ClbrComponentSpec = {
         attribute: "tabindex",
         condition: { kind: "always" },
         value: { kind: "literal", text: "-1" },
+      },
+      {
+        target: { on: "descendant", selector: "div.sidebar" },
+        attribute: "data-clbr-surface",
+        condition: { kind: "when-provided", prop: "surface" },
+        value: { kind: "prop", prop: "surface" },
       },
     ],
   },

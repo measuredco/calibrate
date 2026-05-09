@@ -45,6 +45,8 @@ const simpleIcons = {
 export const Default = {
   args: {
     centerMain: false,
+    headerBorder: "scroll",
+    headerSize: "lg",
     id: "",
     stickyHeader: "always",
     banner: undefined,
@@ -180,7 +182,6 @@ export const Alt = {
                 renderClbrSidebar({
                   aboveNotebook: "overlay",
                   id: "alt-sidebar",
-                  size: "sm",
                   header: renderClbrBox({
                     background: "panel",
                     paddingBlock: "none",
@@ -320,6 +321,8 @@ export const Alt = {
 export const Banner = {
   args: {
     centerMain: false,
+    headerBorder: "scroll",
+    headerSize: "lg",
     stickyHeader: "always",
     banner: renderClbrBanner({
       actionHref: "#",
