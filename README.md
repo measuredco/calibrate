@@ -20,10 +20,11 @@ This is a pnpm monorepo with lockstep versioning across publishable and private 
 
 ## Apps
 
-| App        | Path                                 | Description                                 |
-| ---------- | ------------------------------------ | ------------------------------------------- |
-| Storybook  | [`apps/storybook`](apps/storybook)   | Component dev and a11y harness.             |
-| Playground | [`apps/playground`](apps/playground) | Real-browser harness for the React adapter. |
+| App           | Path                                       | Description                                             |
+| ------------- | ------------------------------------------ | ------------------------------------------------------- |
+| Documentation | [`apps/documentation`](apps/documentation) | Public docs site, dogfooded with `core` and `markdown`. |
+| Playground    | [`apps/playground`](apps/playground)       | Real-browser harness for the React adapter.             |
+| Storybook     | [`apps/storybook`](apps/storybook)         | Component dev and a11y harness.                         |
 
 ## Working in the repo
 
