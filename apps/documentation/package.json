@@ -9,8 +9,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "eleventy",
+    "dev": "NODE_OPTIONS=\"--import tsx\" eleventy --serve",
+    "build": "NODE_OPTIONS=\"--import tsx\" eleventy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
+    "tsx": "^4.21.0",
     "typescript": "catalog:"
   }
 }

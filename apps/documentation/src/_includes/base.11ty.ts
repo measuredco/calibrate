@@ -92,20 +92,26 @@ const footer = [
   }),
 ].join("");
 
+interface PageData {
+  content?: string;
+  title?: string;
+}
+
 export default class Base {
-  render(data) {
+  render(data: PageData): string {
     const page = renderClbrPage({
-      stickyHeader: "always",
-      header,
-      headerSize: "sm",
-      footer,
       children: data.content ?? "",
+      footer,
+      header,
+      headerBorder: "scroll",
+      headerSize: "sm",
+      stickyHeader: "always",
     });
 
     const root = renderClbrRoot({
-      brand: "msrd",
       appOverscrollBehavior: "none",
       appRoot: true,
+      brand: "msrd",
       children: page,
     });
 

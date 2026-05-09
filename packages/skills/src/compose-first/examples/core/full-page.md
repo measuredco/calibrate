@@ -24,6 +24,7 @@ import {
 defineClbrNav();
 
 const page = renderClbrPage({
+  headerBorder: "scroll",
   headerSize: "lg",
   stickyHeader: "always",
   header: renderClbrContainer({

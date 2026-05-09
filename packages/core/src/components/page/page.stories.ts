@@ -45,6 +45,7 @@ const simpleIcons = {
 export const Default = {
   args: {
     centerMain: false,
+    headerBorder: "scroll",
     headerSize: "lg",
     id: "",
     stickyHeader: "always",
@@ -320,6 +321,8 @@ export const Alt = {
 export const Banner = {
   args: {
     centerMain: false,
+    headerBorder: "scroll",
+    headerSize: "lg",
     stickyHeader: "always",
     banner: renderClbrBanner({
       actionHref: "#",

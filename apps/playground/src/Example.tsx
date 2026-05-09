@@ -19,8 +19,9 @@ export function Example() {
   return (
     <Root appOverscrollBehavior="none" appRoot>
       <Page
-        stickyHeader="always"
+        headerBorder="scroll"
         headerSize="lg"
+        stickyHeader="always"
         header={
           <Container gutter="narrow" maxInlineSize="wide">
             <Box paddingBlock="sm" paddingInline="none" responsive>

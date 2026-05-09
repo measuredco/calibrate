@@ -6,7 +6,7 @@ export default class RedirectRoot {
     };
   }
 
-  render() {
+  render(): string {
     return `<!doctype html>
 <html lang="en">
 <head>

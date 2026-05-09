@@ -10,12 +10,12 @@ export default class Index {
   data() {
     return {
       title: "Home",
-      layout: "base.11ty.js",
+      layout: "base.11ty.ts",
       permalink: "/next/",
     };
   }
 
-  render() {
+  render(): string {
     return renderClbrContainer({
       children: renderClbrBox({
         paddingBlock: "md",

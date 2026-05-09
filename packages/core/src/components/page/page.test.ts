@@ -24,6 +24,8 @@ describe("renderClbrPage", () => {
     expect(page.tagName).toBe("DIV");
     expect(page.className).toBe("clbr-page");
     expect(page.hasAttribute("data-center-main")).toBe(true);
+    expect(page.hasAttribute("data-header-border")).toBe(false);
+    expect(page.getAttribute("data-header-size")).toBe("md");
     expect(page.hasAttribute("data-sticky-header")).toBe(false);
     expect(page.firstElementChild?.className).toBe("page-banner");
     expect(page.querySelector("header")?.textContent).toBe("Header");
@@ -78,6 +80,21 @@ describe("renderClbrPage", () => {
     expect(root.querySelector(".clbr-page")?.firstElementChild?.tagName).toBe(
       "HEADER",
     );
+  });
+
+  it("emits data-header-border when provided", () => {
+    const root = mountPage(
+      renderClbrPage({
+        children: "Main",
+        footer: "<div>Footer</div>",
+        header: "<div>Header</div>",
+        headerBorder: "scroll",
+      }),
+    );
+
+    expect(
+      root.querySelector(".clbr-page")?.getAttribute("data-header-border"),
+    ).toBe("scroll");
   });
 
   it("emits data-sticky-header when provided", () => {
