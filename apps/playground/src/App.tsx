@@ -67,10 +67,9 @@ function Header({ announce }: { announce: (message: string) => void }) {
             <Sidebar
               aboveNotebook="overlay"
               id="sidebar"
-              size="sm"
               header={
                 <Box background="panel" paddingBlock="none" paddingInline="sm">
-                  Header
+                  <Heading size="lg" text="Playground." />
                 </Box>
               }
               footer={
@@ -192,6 +191,7 @@ export function App() {
         <Page
           centerMain
           header={<Header announce={announce} />}
+          headerSize="md"
           footer={<Footer />}
           banner={
             <Banner

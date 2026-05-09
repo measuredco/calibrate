@@ -24,6 +24,7 @@ export function App() {
   return (
     <Root appOverscrollBehavior="none" appRoot>
       <Page
+        headerSize="lg"
         stickyHeader="always"
         header={
           <Container gutter="narrow" maxInlineSize="wide">

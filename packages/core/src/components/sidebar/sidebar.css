@@ -10,10 +10,14 @@
 
     [data-part="trigger"] {
       display: inline-flex;
-      margin-inline: calc(-1 * var(--clbr-spacing-vertical-300));
+      margin-inline: calc(-1 * var(--clbr-spacing-vertical-250));
 
-      .clbr-sidebar[data-size="sm"] & {
-        margin-inline: calc(-1 * var(--clbr-spacing-vertical-250));
+      .clbr-sidebar[data-button-size="sm"] & {
+        margin-inline: calc(-1 * var(--clbr-spacing-vertical-200));
+      }
+
+      .clbr-sidebar[data-button-size="lg"] & {
+        margin-inline: calc(-1 * var(--clbr-spacing-vertical-300));
       }
 
       @media (width >= 68em) {
@@ -32,6 +36,15 @@
       inline-size: var(--clbr-breakpoint-baseline);
       inset-block: 0;
       inset-inline-start: 0;
+
+      @media (width >= 68em) {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
+          /* stylelint-disable-next-line calibrate/clbr-known-tokens -- contract from Page, see page.css */
+          inset-block-start: var(--clbr-page-header-block-size, 0);
+        }
+      }
+
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-subtle);
       position: fixed;
@@ -42,7 +55,7 @@
         visibility var(--clbr-motion-duration-0) linear
           var(--clbr-motion-duration-150);
       visibility: hidden;
-      z-index: 1;
+      z-index: 2;
 
       .clbr-sidebar[data-open] & {
         box-shadow: var(--clbr-effect-shadow-default);
@@ -68,20 +81,23 @@
         border-block-end: var(--clbr-layout-border-width-default) solid
           var(--clbr-color-border-subtle);
         display: flex;
-        min-block-size: var(--clbr-spacing-vertical-1000);
-        padding-block: var(--clbr-layout-spacing-vertical-600)
+        /* stylelint-disable calibrate/clbr-known-tokens -- contract from Page, see page.css */
+        min-block-size: var(--clbr-page-header-block-size, auto);
+        /* stylelint-enable calibrate/clbr-known-tokens */
+        padding-block: var(--clbr-spacing-vertical-400)
           calc(
-            var(--clbr-layout-spacing-vertical-600) -
+            var(--clbr-spacing-vertical-400) -
               var(--clbr-layout-border-width-default)
           );
 
-        .clbr-sidebar[data-size="sm"] .sidebar > & {
-          min-block-size: var(--clbr-spacing-vertical-950);
-          padding-block: var(--clbr-spacing-vertical-500)
-            calc(
-              var(--clbr-spacing-vertical-500) -
-                var(--clbr-layout-border-width-default)
-            );
+        &:empty {
+          display: none;
+        }
+
+        @media (width >= 68em) {
+          .clbr-sidebar[data-above-notebook="persistent"] & {
+            display: none;
+          }
         }
 
         .clbr-sidebar[data-collapsed] & {
@@ -129,6 +145,7 @@
         visibility var(--clbr-motion-duration-0) linear
           var(--clbr-motion-duration-200);
       visibility: hidden;
+      z-index: 1;
 
       .clbr-sidebar[data-open] & {
         opacity: 1;

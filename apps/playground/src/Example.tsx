@@ -20,6 +20,7 @@ export function Example() {
     <Root appOverscrollBehavior="none" appRoot>
       <Page
         stickyHeader="always"
+        headerSize="lg"
         header={
           <Container gutter="narrow" maxInlineSize="wide">
             <Box paddingBlock="sm" paddingInline="none" responsive>

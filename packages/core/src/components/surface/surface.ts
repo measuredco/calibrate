@@ -1,6 +1,7 @@
 import { type ClbrNode, serializeClbrNode } from "../../helpers/node";
 import { normalizeOptionalHtmlId } from "../../helpers/string";
 import type { ClbrComponentSpec } from "../../spec";
+import type { ClbrTheme } from "../root/root";
 
 export type ClbrSurfaceVariant =
   | "default"
@@ -11,6 +12,8 @@ export type ClbrSurfaceVariant =
 export interface ClbrSurfaceProps {
   /** Trusted inner HTML. */
   children: string;
+  /** Absolute theme lock for content rendered inside this surface. */
+  contentTheme?: ClbrTheme;
   /** DOM id. */
   id?: string;
   /** Surface variant. @default "default" */
@@ -25,6 +28,7 @@ export interface ClbrSurfaceProps {
  */
 export function buildClbrSurface({
   children,
+  contentTheme,
   id,
   variant = "default",
 }: ClbrSurfaceProps): ClbrNode {
@@ -35,6 +39,7 @@ export function buildClbrSurface({
     tag: "div",
     attrs: {
       class: "clbr-surface",
+      "data-clbr-content-theme": contentTheme,
       "data-clbr-surface": variant,
       id: normalizedId,
     },
@@ -64,6 +69,11 @@ export const CLBR_SURFACE_SPEC: ClbrComponentSpec = {
       required: true,
       type: { kind: "html" },
     },
+    contentTheme: {
+      description:
+        "Absolute theme lock for content rendered inside the surface.",
+      type: { kind: "enum", values: ["light", "dark"] },
+    },
     id: {
       description: "DOM id.",
       type: { kind: "string" },
@@ -80,6 +90,12 @@ export const CLBR_SURFACE_SPEC: ClbrComponentSpec = {
   events: {},
   rules: {
     attributes: [
+      {
+        target: { on: "host" },
+        attribute: "data-clbr-content-theme",
+        condition: { kind: "when-provided", prop: "contentTheme" },
+        value: { kind: "prop", prop: "contentTheme" },
+      },
       {
         target: { on: "host" },
         attribute: "data-clbr-surface",

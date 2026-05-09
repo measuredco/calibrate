@@ -238,6 +238,7 @@ export {
 export {
   buildClbrPage,
   CLBR_PAGE_SPEC,
+  type ClbrPageHeaderSize,
   type ClbrPageProps,
   type ClbrPageStickyHeader,
   renderClbrPage,
@@ -316,7 +317,6 @@ export {
   CLBR_SIDEBAR_TAG_NAME,
   type ClbrSidebarAboveNotebook,
   type ClbrSidebarProps,
-  type ClbrSidebarSize,
   defineClbrSidebar,
   renderClbrSidebar,
 } from "./components/sidebar/sidebar";

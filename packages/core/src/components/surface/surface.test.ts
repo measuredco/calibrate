@@ -59,6 +59,25 @@ describe("renderClbrSurface", () => {
     expect(surface.getAttribute("data-clbr-surface")).toBe("brand-inverse");
   });
 
+  it("renders content theme attribute when contentTheme is provided", () => {
+    const root = mountSurface(
+      renderClbrSurface({
+        children: "<p>content</p>",
+        contentTheme: "dark",
+      }),
+    );
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.getAttribute("data-clbr-content-theme")).toBe("dark");
+  });
+
+  it("omits content theme attribute when contentTheme is not provided", () => {
+    const root = mountSurface(
+      renderClbrSurface({ children: "<p>content</p>" }),
+    );
+    const surface = root.querySelector(".clbr-surface") as HTMLElement;
+    expect(surface.hasAttribute("data-clbr-content-theme")).toBe(false);
+  });
+
   it("injects children HTML content", () => {
     const children = "<section><h2>Surface</h2><p>Body</p></section>";
     const root = mountSurface(renderClbrSurface({ children }));

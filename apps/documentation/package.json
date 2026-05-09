@@ -1,0 +1,26 @@
+{
+  "name": "@measured/calibrate-documentation",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/measuredco/calibrate.git",
+    "directory": "apps/documentation"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@measured/calibrate-assets": "workspace:*",
+    "@measured/calibrate-core": "workspace:*",
+    "@measured/calibrate-markdown": "workspace:*"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@measured/calibrate-config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

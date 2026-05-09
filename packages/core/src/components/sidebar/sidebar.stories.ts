@@ -33,9 +33,10 @@ export default meta;
 export const Default = {
   args: {
     aboveNotebook: "persistent",
+    buttonSize: "md",
     collapseLabel: "Collapse sidebar",
     id: "sidebar-id",
-    size: "md",
+    surface: undefined,
     triggerLabel: "Open sidebar",
     header: renderClbrBox({
       paddingBlock: "none",
@@ -54,8 +55,8 @@ export const Default = {
 export const Footer = {
   args: {
     aboveNotebook: "overlay",
+    buttonSize: "md",
     id: "footer-sidebar-id",
-    size: "sm",
     header: renderClbrBox({
       paddingBlock: "none",
       paddingInline: "xs",

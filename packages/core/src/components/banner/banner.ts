@@ -89,7 +89,8 @@ export function buildClbrBanner({
     tag: CLBR_BANNER_TAG_NAME,
     attrs: {
       class: "clbr-banner",
-      "data-clbr-surface": "inverse",
+      "data-clbr-content-theme": "dark",
+      "data-clbr-surface": "default",
       "data-dismissible": dismissible,
       "data-dismissible-label": dismissible
         ? normalizedDismissibleLabel
@@ -251,9 +252,15 @@ export const CLBR_BANNER_SPEC: ClbrComponentSpec = {
     attributes: [
       {
         target: { on: "host" },
+        attribute: "data-clbr-content-theme",
+        condition: { kind: "always" },
+        value: { kind: "literal", text: "dark" },
+      },
+      {
+        target: { on: "host" },
         attribute: "data-clbr-surface",
         condition: { kind: "always" },
-        value: { kind: "literal", text: "inverse" },
+        value: { kind: "literal", text: "default" },
       },
       {
         target: { on: "host" },

@@ -25,7 +25,7 @@ export default [
     language: "json/json",
   },
   {
-    files: ["**/*.mjs"],
+    files: ["**/*.{js,mjs}"],
     ...js.configs.recommended,
     languageOptions: { globals: { ...globals.node } },
   },

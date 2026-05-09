@@ -45,6 +45,7 @@ const simpleIcons = {
 export const Default = {
   args: {
     centerMain: false,
+    headerSize: "lg",
     id: "",
     stickyHeader: "always",
     banner: undefined,
@@ -180,7 +181,6 @@ export const Alt = {
                 renderClbrSidebar({
                   aboveNotebook: "overlay",
                   id: "alt-sidebar",
-                  size: "sm",
                   header: renderClbrBox({
                     background: "panel",
                     paddingBlock: "none",
