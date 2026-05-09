@@ -33,7 +33,7 @@ export default class Index {
             }),
             renderClbrText({
               as: "p",
-              children: "Measured Design Languauge System",
+              children: "Measured Design Language System",
             }),
           ].join(""),
         }),
