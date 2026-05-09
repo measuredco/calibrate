@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "@measured/calibrate-config": "workspace:*",
     "typescript": "catalog:"
   }
 }

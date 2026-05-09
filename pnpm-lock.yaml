@@ -99,9 +99,6 @@ importers:
       '@11ty/eleventy':
         specifier: ^3.0.0
         version: 3.1.5
-      '@measured/calibrate-config':
-        specifier: workspace:*
-        version: link:../../packages/config
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

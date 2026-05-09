@@ -118,9 +118,9 @@ export default class Base {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>${title}</title>
-<link rel="icon" href="/assets/favicons/favicon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="/assets/favicons/favicon.ico">
-<link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png">
+<link href="/assets/favicons/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="/assets/favicons/favicon.ico" rel="icon" sizes="32x32">
+<link href="/assets/favicons/favicon.svg" rel="icon" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/calibrate-core.css">
 </head>
