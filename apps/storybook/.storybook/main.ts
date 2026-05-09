@@ -8,6 +8,12 @@ const config: StorybookConfig = {
   ],
   framework: "@storybook/web-components-vite",
   stories: ["../stories/**/*.mdx", "../../../packages/*/src/**/*.stories.ts"],
+  viteFinal: async (viteConfig, { configType }) => {
+    if (configType === "PRODUCTION") {
+      viteConfig.base = "/storybook/";
+    }
+    return viteConfig;
+  },
 };
 
 export default config;
