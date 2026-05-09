@@ -103,7 +103,7 @@ export default class Base {
       children: data.content ?? "",
       footer,
       header,
-      headerBorder: "scroll",
+      headerBorder: "always",
       headerSize: "sm",
       stickyHeader: "always",
     });
