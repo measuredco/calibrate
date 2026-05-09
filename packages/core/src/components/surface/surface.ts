@@ -12,7 +12,7 @@ export type ClbrSurfaceVariant =
 export interface ClbrSurfaceProps {
   /** Trusted inner HTML. */
   children: string;
-  /** Absolute theme lock for content rendered inside this surface. */
+  /** Absolute theme lock for content rendered inside the surface. */
   contentTheme?: ClbrTheme;
   /** DOM id. */
   id?: string;

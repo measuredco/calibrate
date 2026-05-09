@@ -238,6 +238,7 @@ export {
 export {
   buildClbrPage,
   CLBR_PAGE_SPEC,
+  type ClbrPageHeaderBorder,
   type ClbrPageHeaderSize,
   type ClbrPageProps,
   type ClbrPageStickyHeader,
