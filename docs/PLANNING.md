@@ -26,33 +26,29 @@ Stand up a docs site at `calibrate.msrd.dev` (Cloudflare Pages) that consumes th
 - **All msrd, neutral by default.** The docs site is rendered entirely in the `msrd` brand. Docs chrome and prose use neutral tones (and other low-saturation primitives) so brand colour stays reserved for embedded examples that genuinely need to express it. `wrfr` is not surfaced in the docs site — it remains available via the Storybook brand switcher only, for now.
 - **Color scheme follows the user.** Don't pin light/dark. The site respects `prefers-color-scheme`, so a reader sees the brand the way they'd actually use it — and gets a free demonstration of how msrd handles both modes without us building a toggle.
 - **Generate from the system.** Reference pages (tokens, skills, package versions) read from source-of-truth packages so they stay correct by construction. Enhanced showcases (easing curves, swatches across themes, type scale at viewport) are hand-authored where a list can't teach what they teach.
-- **Versioning is reserved, not built.** Multi-version rendering is deferred, but the URL shape, chrome slot, and build pipeline assume it from day one so we don't paint ourselves in. See _Versioning architecture_ below.
+- **Versioning is deferred, not designed-in.** Until first release, the docs site is a single rolling tier at `/`. URL versioning, version selector, and per-release archives are all post-first-release work. See _Versioning architecture_ below.
 - **Dogfood until it doesn't fit, then choose.** Build the docs from existing Calibrate primitives wherever they reach. When they don't, the gap is a fork: if the need is **tightly coupled to docs use cases** (token swatch grid, easing-curve visualiser, type-scale ruler, version selector chrome) build it locally inside `apps/documentation`. If the need is **generally useful** (code block with copy, sticky TOC, doc-flavoured callouts) promote it to `@measured/calibrate-core` as a first-class component. Bias slightly toward "local first, promote later" — easier to harvest a proven local component than to retract a premature first-class one.
 
-#### Versioning architecture (reserved)
+#### Versioning architecture (deferred)
 
-Three tiers, npm-idiomatic naming:
+URL versioning is deferred until we have an actual released version to distinguish from `main`. Until then, the docs site serves a single rolling tier from `/` (built from `main`). Storybook follows the same model — single rolling artifact at `/storybook/`, not version-archived.
 
-- **Latest** — built from the most recent released package versions. Canonical for shared links and SEO. Lives at `/`.
+**When versioning lands** (post first release), three tiers, npm-idiomatic naming:
+
+- **Latest** — most recent released version. Canonical for shared links and SEO. Lives at `/`.
 - **Next** — built from `main`. May include unreleased changes. Lives at `/next/*`.
-- **Pinned** — built from older release tags. Lives at `/v0.3/*`, `/v0.2/*`, etc.
+- **Pinned** — older releases. Lives at `/v0.3/*`, `/v0.2/*`, etc.
 
-Branch / PR builds use Cloudflare Pages branch previews (ephemeral preview URLs); they don't get a slot in the public site.
+At that cutover, current `/` content shifts from "main rolling" to "most recent release", and main moves to `/next/*`. Some shared links to `/foo` will shift in meaning (rolling-main → release-pinned-latest). We accept that — pre-release URLs aren't a stable contract.
 
-**v1 implementation:** ship only `/next/*` (built from `main`). `/` redirects to `/next/*` during the no-release phase. Fast-follow: cut a release tag, build pinned, deploy under `/v0.x.y/*`, flip `/` to canonical Latest content. Don't over-orchestrate the cutover — getting `/next/*` correct and architecture-shaped is the v1 goal.
+**Build pipeline at release time:** each release builds the docs **once** and publishes the static output to an immutable archive (R2 bucket, dedicated CF Pages project, or equivalent). The archive is never rebuilt — its lifetime contract is fixed. The main docs site's `_redirects` maps `/v0.x/*` to that archive origin via rewrite proxy, the same pattern we now use for storybook. Branch / PR builds use Cloudflare Pages branch previews (ephemeral) — same as today.
 
-**Architectural commitments to honour in v1 even though we don't build the feature:**
+**Held over from the deferred work:**
 
-- URL prefixing convention is decided and applied (`/next/*`, `/v0.x/*`) — no v1 page lives at an un-prefixed path expecting to stay there.
-- Version selector slot is reserved in the chrome (top-bar / sidebar header) — non-interactive label like "next" in v1, becomes a real selector once Latest exists.
-- Build pipeline can run against an arbitrary git ref. v1 only runs against `main`, but the build script doesn't hardcode workspace assumptions that would break when checked out at a tag.
-- Generated pages read package data from installed package versions (`@measured/calibrate-tokens`, etc.) rather than reaching into workspace `src/` paths — same reading interface works at any tag.
-- Sitemap, canonical, and og tags interpolate the active version from day one.
-
-#### Other shapes worth reserving
-
-- **Search**: `/search` (per-version, so `/v0.3/search` is a thing). Even if not built v1.
-- **i18n**: if ever in scope, lang prefix outside version: `/en/v0.3/...` (default lang elided).
+- Version selector slot in the chrome — not yet placed; add when Latest exists alongside Next
+- Sitemap, canonical, og tag interpolation per active version
+- Search per-version under `/search`
+- i18n lang prefix decision outside version (deferred)
 
 #### IA
 
@@ -92,7 +88,7 @@ Branch / PR builds use Cloudflare Pages branch previews (ephemeral preview URLs)
 - Brand switcher (docs site is msrd-only; `wrfr` lives in Storybook's switcher only for now)
 - Iframed Storybook components inline (link-out is fine; revisit if reading flow suffers)
 - Search (URL shape reserved — see _Other shapes worth reserving_)
-- Multi-version rendering (URL shape and build pipeline reserved — see _Versioning architecture_)
+- Multi-version rendering (deferred — see _Versioning architecture_)
 - Changelog page (GitHub releases / changeset PRs already cover this)
 - Color-scheme toggle (architecture handles this — site follows `prefers-color-scheme`)
 

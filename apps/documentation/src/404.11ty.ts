@@ -2,16 +2,18 @@ import {
   renderClbrBox,
   renderClbrContainer,
   renderClbrHeading,
+  renderClbrLink,
   renderClbrStack,
   renderClbrText,
 } from "@measured/calibrate-core";
 
-export default class Index {
+export default class NotFound {
   data() {
     return {
-      title: "Home",
+      title: "Not found",
       layout: "base.11ty.ts",
-      permalink: "/",
+      permalink: "/404.html",
+      eleventyExcludeFromCollections: true,
     };
   }
 
@@ -29,11 +31,14 @@ export default class Index {
               responsive: true,
               size: "5xl",
               opticalAlign: true,
-              text: "Calibrate",
+              text: "Not found",
             }),
             renderClbrText({
               as: "p",
-              children: "Measured Design Language System",
+              children: `That page doesn't exist. ${renderClbrLink({
+                href: "/",
+                label: "Go home",
+              })}`,
             }),
           ].join(""),
         }),
