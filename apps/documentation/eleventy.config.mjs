@@ -11,7 +11,7 @@ export default function (eleventyConfig) {
     "node_modules/@measured/calibrate-assets/src/favicons": "assets/favicons",
     "node_modules/@measured/calibrate-assets/src/fonts": "assets/fonts",
     "node_modules/@measured/calibrate-assets/src/fonts.css": "assets/fonts.css",
-    functions: "functions",
+    "../storybook/storybook-static": "storybook",
   });
 
   eleventyConfig.setLibrary("md", {
