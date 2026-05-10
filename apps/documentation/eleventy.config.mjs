@@ -9,9 +9,9 @@ export default function (eleventyConfig) {
     "node_modules/@measured/calibrate-core/dist/index.js":
       "assets/calibrate-core.js",
     "node_modules/@measured/calibrate-assets/src/favicons": "assets/favicons",
-    "src/_redirects": "_redirects",
     "node_modules/@measured/calibrate-assets/src/fonts": "assets/fonts",
     "node_modules/@measured/calibrate-assets/src/fonts.css": "assets/fonts.css",
+    functions: "functions",
   });
 
   eleventyConfig.setLibrary("md", {
