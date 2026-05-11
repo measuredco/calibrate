@@ -45,6 +45,7 @@
     }
 
     & .icon-wrapper {
+      aspect-ratio: 1 / 1;
       block-size: var(--clbr-layout-icon-size-xs);
       display: flex;
       margin-inline: calc(
