@@ -36,15 +36,6 @@
       inline-size: var(--clbr-breakpoint-baseline);
       inset-block: 0;
       inset-inline-start: 0;
-
-      @media (width >= 68em) {
-        .clbr-sidebar[data-above-notebook="collapsible"] &,
-        .clbr-sidebar[data-above-notebook="persistent"] & {
-          /* stylelint-disable-next-line calibrate/clbr-known-tokens -- contract from Page, see page.css */
-          inset-block-start: var(--clbr-page-header-block-size, 0);
-        }
-      }
-
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-subtle);
       position: fixed;
@@ -56,6 +47,14 @@
           var(--clbr-motion-duration-150);
       visibility: hidden;
       z-index: 2;
+
+      @media (width >= 68em) {
+        .clbr-sidebar[data-above-notebook="collapsible"] &,
+        .clbr-sidebar[data-above-notebook="persistent"] & {
+          /* stylelint-disable-next-line calibrate/clbr-known-tokens -- contract from Page, see page.css */
+          inset-block-start: var(--clbr-page-header-block-size, 0);
+        }
+      }
 
       .clbr-sidebar[data-open] & {
         box-shadow: var(--clbr-effect-shadow-default);
@@ -74,6 +73,12 @@
 
       .clbr-sidebar[data-collapsed] & {
         inline-size: var(--clbr-spacing-horizontal-900);
+      }
+
+      @media (width >= 68em) {
+        .clbr-sidebar[data-above-notebook="persistent"] & {
+          transition: none;
+        }
       }
 
       > .header {

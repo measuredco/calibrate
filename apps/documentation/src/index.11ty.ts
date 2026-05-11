@@ -9,7 +9,7 @@ import {
 export default class Index {
   data() {
     return {
-      title: "Home",
+      title: "",
       layout: "base.11ty.ts",
       permalink: "/",
     };
@@ -17,23 +17,25 @@ export default class Index {
 
   render(): string {
     return renderClbrContainer({
+      maxInlineSize: "none",
       children: renderClbrBox({
-        paddingBlock: "md",
+        paddingBlock: "2xs",
         paddingInline: "none",
         responsive: true,
         children: renderClbrStack({
-          gap: "sm",
+          gap: "none",
           children: [
             renderClbrHeading({
               level: 1,
               responsive: true,
-              size: "5xl",
+              size: "2xl",
               opticalAlign: true,
-              text: "Calibrate",
+              text: "Calibrate.",
             }),
             renderClbrText({
               as: "p",
               children: "Measured Design Language System",
+              size: "xs",
             }),
           ].join(""),
         }),

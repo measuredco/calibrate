@@ -3,6 +3,7 @@ import {
   renderClbrContainer,
   renderClbrDivider,
   renderClbrHeading,
+  renderClbrIcon,
   renderClbrInline,
   renderClbrLink,
   renderClbrPage,
@@ -14,11 +15,12 @@ import {
 } from "@measured/calibrate-core";
 
 const sidebarItems = [
-  { href: "/next/", label: "Home" },
-  { href: "/next/getting-started/", label: "Getting started" },
-  { href: "/next/foundations/", label: "Foundations" },
-  { href: "/next/skills/", label: "Skills" },
-  { href: "/next/components/", label: "Components" },
+  { href: "/storybook/", label: "Storybook" },
+  {
+    href: "https://github.com/measuredco/calibrate",
+    label: "GitHub",
+    external: true,
+  },
 ];
 
 const sidebarStack = renderClbrBox({
@@ -29,8 +31,19 @@ const sidebarStack = renderClbrBox({
     align: "start",
     gap: "xs",
     children: sidebarItems
-      .map(({ href, label }) =>
-        renderClbrLink({ href, label, tone: "neutral" }),
+      .map(({ href, label, external }) =>
+        renderClbrLink({
+          href,
+          label,
+          tone: "neutral",
+          ...(external
+            ? {
+                target: "_blank",
+                icon: renderClbrIcon({ name: "ExternalLink", size: "2xs" }),
+                iconPlacement: "end",
+              }
+            : {}),
+        }),
       )
       .join(""),
   }),
@@ -49,7 +62,7 @@ const sidebar = renderClbrSidebar({
   surface: "default",
 });
 
-const logo = `<a href="/next/" style="display: block; margin-block: var(--clbr-spacing-vertical-250)">${renderClbrHeading({ text: "Calibrate.", size: "md" })}</a>`;
+const logo = `<a href="/" style="display: block; margin-block: var(--clbr-spacing-vertical-250)">${renderClbrHeading({ text: "Calibrate.", size: "md" })}</a>`;
 
 const header = renderClbrSurface({
   contentTheme: "dark",
@@ -77,6 +90,7 @@ const header = renderClbrSurface({
 const footer = [
   renderClbrDivider({ tone: "subtle" }),
   renderClbrContainer({
+    maxInlineSize: "none",
     children: [
       renderClbrBox({
         paddingBlock: "xs",
@@ -95,11 +109,13 @@ const footer = [
 interface PageData {
   content?: string;
   title?: string;
+  centerMain?: boolean;
 }
 
 export default class Base {
   render(data: PageData): string {
     const page = renderClbrPage({
+      centerMain: data.centerMain,
       children: data.content ?? "",
       footer,
       header,
@@ -115,7 +131,7 @@ export default class Base {
       children: page,
     });
 
-    const title = data.title ? `${data.title} — Calibrate` : "Calibrate";
+    const title = data.title ? `${data.title} | Calibrate` : "Calibrate";
 
     return `<!doctype html>
 <html lang="en">

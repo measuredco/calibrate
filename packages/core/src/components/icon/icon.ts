@@ -30,6 +30,7 @@ export const CLBR_ICON_RECOMMENDED = [
   "corner-up-right",
   "dice-5",
   "download",
+  "external-link",
   "info",
   "layers",
   "link",
