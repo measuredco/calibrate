@@ -2,7 +2,6 @@ import {
   renderClbrBox,
   renderClbrContainer,
   renderClbrHeading,
-  renderClbrLink,
   renderClbrStack,
   renderClbrText,
 } from "@measured/calibrate-core";
@@ -11,9 +10,10 @@ export default class NotFound {
   data() {
     return {
       title: "Not found",
+      centerMain: true,
+      eleventyExcludeFromCollections: true,
       layout: "base.11ty.ts",
       permalink: "/404.html",
-      eleventyExcludeFromCollections: true,
     };
   }
 
@@ -24,21 +24,19 @@ export default class NotFound {
         paddingInline: "none",
         responsive: true,
         children: renderClbrStack({
-          gap: "sm",
+          gap: "none",
           children: [
             renderClbrHeading({
+              align: "center",
               level: 1,
               responsive: true,
-              size: "5xl",
-              opticalAlign: true,
-              text: "Not found",
+              size: "2xl",
+              text: "404",
             }),
             renderClbrText({
+              align: "center",
               as: "p",
-              children: `That page doesn't exist. ${renderClbrLink({
-                href: "/",
-                label: "Go home",
-              })}`,
+              children: "This page could not be found.",
             }),
           ].join(""),
         }),

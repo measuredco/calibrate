@@ -1,4 +1,4 @@
-/* stylelint-disable declaration-property-value-allowed-list, declaration-property-unit-allowed-list -- demo placeholder styles for stories; raw values are the point */
+/* stylelint-disable color-no-hex, declaration-property-unit-disallowed-list -- demo placeholder styles for stories; raw values are the point */
 
 :where(.example-content, .example-content-item) {
   background: #ff69b450;
