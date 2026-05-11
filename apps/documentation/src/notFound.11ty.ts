@@ -6,6 +6,12 @@ import {
   renderClbrText,
 } from "@measured/calibrate-core";
 
+import type { NotFoundData } from "./_data/notFound";
+
+interface PageData {
+  notFound: NotFoundData;
+}
+
 export default class NotFound {
   data() {
     return {
@@ -17,7 +23,8 @@ export default class NotFound {
     };
   }
 
-  render(): string {
+  render(data: PageData): string {
+    const { notFound } = data;
     return renderClbrContainer({
       children: renderClbrBox({
         paddingBlock: "md",
@@ -31,12 +38,12 @@ export default class NotFound {
               level: 1,
               responsive: true,
               size: "2xl",
-              text: "404",
+              text: notFound.headline,
             }),
             renderClbrText({
               align: "center",
               as: "p",
-              children: "This page could not be found.",
+              children: notFound.message,
             }),
           ].join(""),
         }),

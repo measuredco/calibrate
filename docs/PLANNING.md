@@ -8,7 +8,7 @@ What we're working on now.
 
 ### Documentation website (`apps/documentation`)
 
-Stand up a docs site at `calibrate.msrd.dev` (Cloudflare Pages) that consumes the published packages and serves as the canonical reference for usage, contracts, and examples. The `apps/storybook` subdomain (`calibrate-storybook.msrd.dev`) stays as the component playground, reverse-proxied under the docs site so component links are first-party.
+Stand up a docs site at `calibrate.msrd.dev` (Cloudflare Pages) that consumes the published packages and serves as the canonical reference for usage, contracts, and examples. Storybook is bundled into the same deploy at `/storybook/*` — single CF Pages project, single custom domain, no cross-origin proxy. The standalone `calibrate-storybook.msrd.dev` project has been retired.
 
 #### Done means (v1)
 
@@ -31,7 +31,7 @@ Stand up a docs site at `calibrate.msrd.dev` (Cloudflare Pages) that consumes th
 
 #### Versioning architecture (deferred)
 
-URL versioning is deferred until we have an actual released version to distinguish from `main`. Until then, the docs site serves a single rolling tier from `/` (built from `main`). Storybook follows the same model — single rolling artifact at `/storybook/`, not version-archived.
+URL versioning is deferred until we have an actual released version to distinguish from `main`. Until then, the docs site serves a single rolling tier from `/` (built from `main`). Storybook follows the same model — single rolling artifact at `/storybook/`, bundled into the docs deploy, not version-archived.
 
 **When versioning lands** (post first release), three tiers, npm-idiomatic naming:
 
@@ -73,8 +73,8 @@ At that cutover, current `/` content shifts from "main rolling" to "most recent 
 - Build tool: **Eleventy**. Template-agnostic, registers `renderClbr*` as a renderer, plugs `calibrate-markdown` for `.md`, no client framework imposed. We're hand-rolling enough already (rendering, neutral-tone chrome, versioning); Eleventy buys us routing, watch-mode, and incremental builds without imposing a component model.
 - Rendering: `@measured/calibrate-core` for page chrome (string-emitting SSR), `@measured/calibrate-markdown` for prose
 - Islands: `defineClbr*` web components, hand-picked per page
-- Hosting: Cloudflare Pages (matches Storybook deploy)
-- Storybook reverse-proxy path: `/storybook/*` — keeps `/components/*` open for a future first-party component reference
+- Hosting: Cloudflare Pages (single project — bundles docs + storybook)
+- Storybook integration: built with base `/storybook/`, copied into the docs deploy via Eleventy passthrough. Manager UI and docs view themed in Calibrate's idiom (msrd light/dark via `prefers-color-scheme`, InterVariable + Roboto Mono, brand mark as outlined SVG, brand-support tinted sidebar icons). `/components/*` URL is left open for a future first-party component reference.
 
 #### Showcases earning their bundle in v1
 

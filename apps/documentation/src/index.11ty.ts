@@ -6,6 +6,12 @@ import {
   renderClbrText,
 } from "@measured/calibrate-core";
 
+import type { SiteData } from "./_data/site";
+
+interface PageData {
+  site: SiteData;
+}
+
 export default class Index {
   data() {
     return {
@@ -15,7 +21,8 @@ export default class Index {
     };
   }
 
-  render(): string {
+  render(data: PageData): string {
+    const { site } = data;
     return renderClbrContainer({
       maxInlineSize: "none",
       children: renderClbrBox({
@@ -30,11 +37,11 @@ export default class Index {
               responsive: true,
               size: "2xl",
               opticalAlign: true,
-              text: "Calibrate.",
+              text: `${site.title}.`,
             }),
             renderClbrText({
               as: "p",
-              children: "Measured Design Language System",
+              children: site.tagline,
               size: "xs",
             }),
           ].join(""),
