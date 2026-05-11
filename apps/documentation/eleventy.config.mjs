@@ -1,7 +1,17 @@
+import { pathToFileURL } from "node:url";
+
 import { processMarkdown } from "@measured/calibrate-markdown";
 
 export default function (eleventyConfig) {
   eleventyConfig.addExtension("11ty.ts", { key: "11ty.js" });
+
+  eleventyConfig.addDataExtension("ts", {
+    read: false,
+    parser: async (filePath) => {
+      const mod = await import(pathToFileURL(filePath).href);
+      return mod.default;
+    },
+  });
 
   eleventyConfig.addPassthroughCopy({
     "node_modules/@measured/calibrate-core/dist/core.css":
