@@ -138,7 +138,7 @@ Theme and surface are part of the component model. By default, Calibrate follows
 ```ts
 import { renderClbrRoot, renderClbrSurface } from "@measured/calibrate-core";
 
-renderClbrRoot({
+const html = renderClbrRoot({
   theme: "dark",
   children: renderClbrSurface({
     variant: "brand",
@@ -151,11 +151,15 @@ renderClbrRoot({
 ```tsx
 import { Root, Surface } from "@measured/calibrate-react";
 
-<Root theme="dark">
-  <Surface variant="brand" contentTheme="light">
-    ...
-  </Surface>
-</Root>;
+export function Example() {
+  return (
+    <Root theme="dark">
+      <Surface variant="brand" contentTheme="light">
+        ...
+      </Surface>
+    </Root>
+  );
+}
 ```
 
 ## Compose first

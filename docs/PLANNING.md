@@ -38,7 +38,7 @@ URL versioning is deferred until we have an actual released version to distingui
 
 At that cutover, current `/` content shifts from "main rolling" to "most recent release", and main moves to `/next/*`. Some shared links to `/foo` will shift in meaning (rolling-main → release-pinned-latest). We accept that — pre-release URLs aren't a stable contract.
 
-**Build pipeline at release time:** each release builds the docs **once** and publishes the static output to an immutable archive (R2 bucket, dedicated CF Pages project, or equivalent). The archive is never rebuilt — its lifetime contract is fixed. The main docs site's `_redirects` maps `/v0.x/*` to that archive origin via rewrite proxy, the same pattern we now use for storybook. Branch / PR builds use Cloudflare Pages branch previews (ephemeral) — same as today.
+**Build pipeline at release time:** each release builds the docs **once** and publishes the static output to an immutable archive (R2 bucket, dedicated CF Pages project, or equivalent). The archive is never rebuilt — its lifetime contract is fixed. The main docs site's `_redirects` maps `/v0.x/*` to that archive origin via rewrite proxy. Branch / PR builds use Cloudflare Pages branch previews (ephemeral) — same as today.
 
 **Held over from the deferred work:**
 
