@@ -143,7 +143,7 @@ const renderBasePage = (data: PageData): string => {
     ? renderClbrContainer({
         maxInlineSize: "none",
         children: renderClbrBox({
-          paddingBlock: "md",
+          paddingBlock: "lg",
           paddingInline: "none",
           responsive: true,
           children: renderClbrGrid({

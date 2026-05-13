@@ -40,7 +40,7 @@ export default class GettingStarted {
     return renderClbrContainer({
       maxInlineSize: "none",
       children: renderClbrBox({
-        paddingBlock: "md",
+        paddingBlock: "lg",
         paddingInline: "none",
         responsive: true,
         children: renderClbrGrid({
