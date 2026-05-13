@@ -21,6 +21,7 @@ export default function (eleventyConfig) {
     "node_modules/@measured/calibrate-assets/src/fonts.css": "assets/fonts.css",
     "../storybook/storybook-static": "storybook",
     "src/images": "images",
+    "src/styles": "assets/styles",
   });
 
   return {

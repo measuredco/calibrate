@@ -16,7 +16,8 @@
   "dependencies": {
     "@measured/calibrate-assets": "workspace:*",
     "@measured/calibrate-core": "workspace:*",
-    "@measured/calibrate-markdown": "workspace:*"
+    "@measured/calibrate-markdown": "workspace:*",
+    "@measured/calibrate-tokens": "workspace:*"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
