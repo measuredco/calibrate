@@ -232,6 +232,12 @@ For `package.json`, use the equivalent query:
 }
 ```
 
+For Vite or other esbuild-based tooling, use the esbuild target:
+
+```ts
+import target from "@measured/calibrate-config/browserslist/esbuild";
+```
+
 ## Configure CSS token variable autocomplete
 
 `@measured/calibrate-config/clbr.catalog.css` exposes the published `--clbr-*` CSS custom property catalog for editor autocomplete.

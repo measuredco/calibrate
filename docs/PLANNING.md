@@ -8,17 +8,14 @@ What we're working on now.
 
 ### Documentation website (`apps/documentation`)
 
-Stand up a docs site at `calibrate.msrd.dev` (Cloudflare Pages) that consumes the published packages and serves as the canonical reference for usage, contracts, and examples. Storybook is bundled into the same deploy at `/storybook/*` — single CF Pages project, single custom domain, no cross-origin proxy. The standalone `calibrate-storybook.msrd.dev` project has been retired.
+Docs site is live at `calibrate.msrd.dev` (Cloudflare Pages), consuming the published packages and bundling Storybook at `/storybook/*`. Remaining v1 work is content: foundations, concepts, getting started prose, skills index.
 
-#### Done means (v1)
+#### Outstanding for v1
 
-- Public site live at `calibrate.msrd.dev`
 - Foundations pages for every token category, generated from the system
-- Getting started flow takes a reader from install → first composition
-- Concepts copy in place (compositional model, how to think about Calibrate — folds in current `skills/README` orientation)
+- Getting started flow takes a reader from install → first composition (page scaffolded; prose still minimal)
+- Concepts copy (compositional model, how to think about Calibrate — folds in current `skills/README` orientation)
 - Skills index linking to the published `@measured/calibrate-skills` content
-- Components section links out to Storybook (full reference deferred to v2)
-- Site build wired into CI; deploys on every branch
 
 #### Principles
 
@@ -67,14 +64,6 @@ At that cutover, current `/` content shifts from "main rolling" to "most recent 
   - Typography
 - Skills
 - Components (v1 links out to Storybook)
-
-#### Stack
-
-- Build tool: **Eleventy**. Template-agnostic, registers `renderClbr*` as a renderer, plugs `calibrate-markdown` for `.md`, no client framework imposed. We're hand-rolling enough already (rendering, neutral-tone chrome, versioning); Eleventy buys us routing, watch-mode, and incremental builds without imposing a component model.
-- Rendering: `@measured/calibrate-core` for page chrome (string-emitting SSR), `@measured/calibrate-markdown` for prose
-- Islands: `defineClbr*` web components, hand-picked per page
-- Hosting: Cloudflare Pages (single project — bundles docs + storybook)
-- Storybook integration: built with base `/storybook/`, copied into the docs deploy via Eleventy passthrough. Manager UI and docs view themed in Calibrate's idiom (msrd light/dark via `prefers-color-scheme`, InterVariable + Roboto Mono, brand mark as outlined SVG, brand-support tinted sidebar icons). `/components/*` URL is left open for a future first-party component reference.
 
 #### Showcases earning their bundle in v1
 
