@@ -5,17 +5,11 @@
 export interface NavItem {
   href: string;
   label: string;
-  /** Open in new tab + trailing external-link icon. */
-  external?: boolean;
 }
 
 const sidebar: NavItem[] = [
+  { href: "/getting-started/", label: "Getting started" },
   { href: "/storybook/", label: "Storybook" },
-  {
-    href: "https://github.com/measuredco/calibrate",
-    label: "GitHub",
-    external: true,
-  },
 ];
 
 export default { sidebar };

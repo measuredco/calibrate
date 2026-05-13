@@ -1,6 +1,5 @@
 @layer clbr.components {
   :where(.clbr) .clbr-container {
-    block-size: 100%;
     inline-size: 100%;
     margin-inline: auto;
     max-inline-size: var(--clbr-layout-container-max-width-default);

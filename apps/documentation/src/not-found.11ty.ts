@@ -6,28 +6,28 @@ import {
   renderClbrText,
 } from "@measured/calibrate-core";
 
-import type { NotFoundData } from "./_data/notFound";
+import type { NotFoundData } from "./_data/not-found";
+import notFoundData from "./_data/not-found";
 
 interface PageData {
-  notFound: NotFoundData;
+  "not-found": NotFoundData;
 }
 
 export default class NotFound {
   data() {
     return {
-      title: "Not found",
       centerMain: true,
       eleventyExcludeFromCollections: true,
       layout: "base.11ty.ts",
       permalink: "/404.html",
+      title: notFoundData.title,
     };
   }
 
   render(data: PageData): string {
-    const { notFound } = data;
+    const notFound = data["not-found"];
     return renderClbrContainer({
       children: renderClbrBox({
-        paddingBlock: "md",
         paddingInline: "none",
         responsive: true,
         children: renderClbrStack({

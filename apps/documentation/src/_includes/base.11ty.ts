@@ -2,43 +2,40 @@ import {
   renderClbrBox,
   renderClbrContainer,
   renderClbrDivider,
+  renderClbrGrid,
+  renderClbrGridItem,
   renderClbrHeading,
-  renderClbrIcon,
   renderClbrInline,
   renderClbrLink,
+  renderClbrLogo,
   renderClbrPage,
+  renderClbrProse,
   renderClbrRoot,
   renderClbrSidebar,
   renderClbrStack,
-  renderClbrSurface,
-  renderClbrText,
 } from "@measured/calibrate-core";
 
+import type { FooterData, FooterLink } from "../_data/footer";
 import type { NavData, NavItem } from "../_data/nav";
 import type { SiteData } from "../_data/site";
 
-interface PageData {
-  content?: string;
-  title?: string;
+export interface PageData {
   centerMain?: boolean;
-  site: SiteData;
+  content?: string;
+  footer: FooterData;
   nav: NavData;
+  prose?: boolean;
+  site: SiteData;
+  title?: string;
 }
 
 const renderSidebarItems = (items: NavItem[]): string =>
   items
-    .map(({ href, label, external }) =>
+    .map(({ href, label }) =>
       renderClbrLink({
         href,
         label,
         tone: "neutral",
-        ...(external
-          ? {
-              target: "_blank",
-              icon: renderClbrIcon({ name: "ExternalLink", size: "2xs" }),
-              iconPlacement: "end",
-            }
-          : {}),
       }),
     )
     .join("");
@@ -52,7 +49,6 @@ const buildSidebar = (nav: NavData, site: SiteData): string =>
       paddingBlock: "sm",
       paddingInline: "md",
       children: renderClbrStack({
-        align: "start",
         gap: "xs",
         children: renderSidebarItems(nav.sidebar),
       }),
@@ -60,82 +56,130 @@ const buildSidebar = (nav: NavData, site: SiteData): string =>
     header: renderClbrBox({
       paddingBlock: "none",
       paddingInline: "sm",
-      children: `<a href="/">${renderClbrHeading({ text: `${site.title}.`, size: "md" })}</a>`,
+      children: `<a href="/">
+        ${renderClbrHeading({ text: site.title, size: "md" })}
+      </a>`,
     }),
     id: "docs-sidebar",
-    surface: "default",
   });
 
 const buildHeader = (nav: NavData, site: SiteData): string => {
+  const logo = `<a
+    href="/"
+    style="display: block; margin-block: var(--clbr-spacing-vertical-250)"
+  >${renderClbrHeading({ text: site.title, size: "md" })}</a>`;
   const sidebar = buildSidebar(nav, site);
-  const logo = `<a href="/" style="display: block; margin-block: var(--clbr-spacing-vertical-250)">${renderClbrHeading({ text: `${site.title}.`, size: "md" })}</a>`;
 
-  return renderClbrSurface({
-    contentTheme: "dark",
-    variant: "default",
-    children: renderClbrBox({
-      paddingBlock: "none",
-      paddingInline: "none",
-      background: "panel",
-      children: renderClbrContainer({
-        gutter: "narrow",
-        maxInlineSize: "none",
-        children: renderClbrBox({
-          paddingBlock: "2xs",
-          paddingInline: "none",
-          background: "transparent",
-          children: renderClbrInline({
-            gap: "lg",
-            children: [sidebar, logo].join(""),
-          }),
+  return renderClbrBox({
+    background: "panel",
+    paddingBlock: "none",
+    paddingInline: "none",
+    children: renderClbrContainer({
+      gutter: "narrow",
+      maxInlineSize: "none",
+      children: renderClbrBox({
+        paddingBlock: "2xs",
+        paddingInline: "none",
+        background: "transparent",
+        children: renderClbrInline({
+          gap: "sm",
+          children: [sidebar, logo].join(""),
         }),
       }),
     }),
   });
 };
 
-const buildFooter = (site: SiteData): string =>
+const renderFooterLinks = (items: FooterLink[]): string =>
+  items
+    .map(
+      ({ href, label }) =>
+        `<li>${renderClbrLink({
+          href,
+          label,
+          tone: "neutral",
+        })}</li>`,
+    )
+    .join("");
+
+const buildFooter = (footer: FooterData, site: SiteData): string =>
   [
     renderClbrDivider({ tone: "subtle" }),
     renderClbrContainer({
+      gutter: "narrow",
       maxInlineSize: "none",
       children: renderClbrBox({
         paddingBlock: "xs",
         paddingInline: "none",
-        children: renderClbrText({
-          as: "p",
-          size: "xs",
-          tone: "muted",
-          children: site.copyright,
+        children: renderClbrInline({
+          align: "end",
+          gap: "xs",
+          justify: "between",
+          children: [
+            `<a
+              href="#"
+              style="margin-block-end: var(--clbr-spacing-vertical-400)"
+            >${renderClbrLogo({
+              label: site.organization,
+              size: "sm",
+              tone: "neutral",
+              variant: "graphic",
+            })}</a>`,
+            renderClbrInline({
+              align: "end",
+              as: "ul",
+              gap: "sm",
+              children: renderFooterLinks(footer.links),
+            }),
+          ].join(""),
         }),
       }),
     }),
   ].join("");
 
-export default class Base {
-  render(data: PageData): string {
-    const { site, nav } = data;
+const renderBasePage = (data: PageData): string => {
+  const { footer, site, nav } = data;
+  const mainContent = data.prose
+    ? renderClbrContainer({
+        maxInlineSize: "none",
+        children: renderClbrBox({
+          paddingBlock: "md",
+          paddingInline: "none",
+          responsive: true,
+          children: renderClbrGrid({
+            children: renderClbrGridItem({
+              colStart: 2,
+              colSpan: 11,
+              children: renderClbrProse({
+                children: data.content ?? "",
+                hangingPunctuation: "notebook",
+                responsive: true,
+              }),
+            }),
+          }),
+        }),
+      })
+    : (data.content ?? "");
 
-    const page = renderClbrPage({
-      centerMain: data.centerMain,
-      children: data.content ?? "",
-      footer: buildFooter(site),
-      header: buildHeader(nav, site),
-      headerBorder: "always",
-      headerSize: "sm",
-      stickyHeader: "always",
-    });
+  const page = renderClbrPage({
+    centerMain: data.centerMain,
+    children: mainContent,
+    footer: buildFooter(footer, site),
+    header: buildHeader(nav, site),
+    headerBorder: "always",
+    headerSize: "sm",
+    stickyHeader: "always",
+  });
 
-    const root = renderClbrRoot({
-      appOverscrollBehavior: "none",
-      appRoot: true,
-      brand: "msrd",
-      children: page,
-    });
+  const root = renderClbrRoot({
+    appOverscrollBehavior: "none",
+    appRoot: true,
+    children: page,
+  });
 
-    const title = data.title ? `${data.title} | ${site.title}` : site.title;
+  const title = data.title ? `${data.title} | ${site.title}` : site.title;
 
-    return `<!doctype html>
+  return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -154,5 +198,10 @@ import { defineClbrComponents } from "/assets/calibrate-core.js";
 defineClbrComponents();
 </script></body>
 </html>`;
+};
+
+export default class Base {
+  render(data: PageData): string {
+    return renderBasePage(data);
   }
 }
