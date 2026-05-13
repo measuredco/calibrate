@@ -97,5 +97,5 @@ Pick the flavor matching your project.
 
 - Token catalog (CSS, browseable in your editor): `@measured/calibrate-config/clbr.catalog.css`
 - Token data (JSON, for agents and tooling): `@measured/calibrate-tokens/msrd`, `@measured/calibrate-tokens/base`
-- Component catalog (live): <https://calibrate-storybook.msrd.dev/>
+- Component catalog (live): <https://calibrate.msrd.dev/storybook>
 - Component SPECs: imported from `@measured/calibrate-core` (e.g. `CLBR_BUTTON_SPEC`) — runtime values with top-level `description` and per-prop documentation. Confirms what each component does before you reach for raw HTML.

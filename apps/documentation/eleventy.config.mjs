@@ -1,10 +1,6 @@
 import { pathToFileURL } from "node:url";
 
-import { processMarkdown } from "@measured/calibrate-markdown";
-
 export default function (eleventyConfig) {
-  eleventyConfig.addExtension("11ty.ts", { key: "11ty.js" });
-
   eleventyConfig.addDataExtension("ts", {
     read: false,
     parser: async (filePath) => {
@@ -12,6 +8,8 @@ export default function (eleventyConfig) {
       return mod.default;
     },
   });
+
+  eleventyConfig.addExtension("11ty.ts", { key: "11ty.js" });
 
   eleventyConfig.addPassthroughCopy({
     "node_modules/@measured/calibrate-core/dist/core.css":
@@ -22,10 +20,7 @@ export default function (eleventyConfig) {
     "node_modules/@measured/calibrate-assets/src/fonts": "assets/fonts",
     "node_modules/@measured/calibrate-assets/src/fonts.css": "assets/fonts.css",
     "../storybook/storybook-static": "storybook",
-  });
-
-  eleventyConfig.setLibrary("md", {
-    render: (markdown) => processMarkdown(markdown),
+    "src/images": "images",
   });
 
   return {
@@ -35,7 +30,6 @@ export default function (eleventyConfig) {
       output: "dist",
     },
     htmlTemplateEngine: false,
-    markdownTemplateEngine: "md",
-    templateFormats: ["md", "11ty.ts"],
+    templateFormats: ["11ty.ts"],
   };
 }

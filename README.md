@@ -1,6 +1,6 @@
 # Calibrate
 
-Calibrate is a multi-brand design system: a token foundation, a component library, and the framework adapters that ship them.
+Calibrate is Measured’s brand design system for digital experiences, a reference implementation for our design systems practice, and a testbed for new approaches.
 
 This is a pnpm monorepo with lockstep versioning across publishable and private packages.
 

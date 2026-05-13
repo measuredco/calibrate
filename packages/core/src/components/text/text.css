@@ -48,6 +48,10 @@
 
     &[data-measured] {
       max-inline-size: var(--clbr-typography-measure-default);
+
+      &[data-size="lg"] {
+        max-inline-size: var(--clbr-typography-measure-tight);
+      }
     }
 
     &[data-tone="muted"] {
