@@ -1,5 +1,60 @@
 # @measured/calibrate-react
 
+## 0.3.0
+
+### Minor Changes
+
+- 4884b80: Banner: emit `data-clbr-content-theme="dark"` and switch `data-clbr-surface` from `"inverse"` to `"default"`. The banner has its own dark visual treatment regardless of surrounding surface or color scheme — the content-theme lock now expresses that directly rather than leaning on `inverse` semantics.
+- 4884b80: Page: add `headerBorder` prop, decoupling the header bottom border from `stickyHeader`.
+  - `headerBorder="always"` — persistent border
+  - `headerBorder="scroll"` — border fades in only when a sticky header is stuck (uses `@container scroll-state(stuck: block-start)`); falls back to always-on where the container query isn't supported. Has no visible effect without `stickyHeader`.
+  - omitted — no border (was: a border was implicitly emitted whenever `stickyHeader` was set)
+
+  **Visual change:** `stickyHeader` no longer implies a border. Pass `headerBorder="scroll"` (or `"always"`) explicitly to keep the previous look.
+
+- 4884b80: Page header now spans full width with the persistent / collapsible Sidebar opening below it. Previously the entire page (header included) shifted inline when a Sidebar was composed in; now only `main` and `footer` shift, leaving header and banner edge-to-edge.
+
+  New on Page:
+  - `headerSize` prop — `"sm" | "md" | "lg"`, default `"md"`. Reserves a minimum block size on the header and exposes `--clbr-page-header-block-size` to descendants. The Sidebar reads this variable for its panel's `inset-block-start`, so persistent panels open beneath the header band rather than overlapping it.
+  - `sm` = 3rem (48px); `md` = 3.75rem (60px); `lg` = 4.5rem (72px) at base and 5.25rem (84px) above the tablet breakpoint (48em).
+
+  This is a visual change for any consumer composing a Sidebar inside Page's header slot — the new layout is the default. Pages without a Sidebar are unaffected aside from the new minimum header height.
+
+- 4884b80: **Breaking:** Sidebar `size` prop renamed to `buttonSize`, accepts `"sm" | "md" | "lg"` (was `"sm" | "md"`), and now passes the value straight through to the trigger and collapse buttons. Previously the prop indirected (`sm → md`, `md → lg`); the prop only ever influenced the embedded button sizes, so the indirection has been removed and the surface made explicit.
+
+  Default is `"md"` (visual change: the previous default rendered an `lg` button via indirection). Pass `buttonSize: "lg"` explicitly to keep the old size. The `data-size` host attribute is now `data-button-size`. The exported `ClbrSidebarSize` type is removed — use `ClbrButtonSize` from the button module instead.
+
+  Migration:
+
+  ```diff
+  - renderClbrSidebar({ size: "md", ... })
+  + renderClbrSidebar({ buttonSize: "lg", ... })
+
+  - renderClbrSidebar({ size: "sm", ... })
+  + renderClbrSidebar({ buttonSize: "md", ... })
+  ```
+
+- 4884b80: Sidebar: add `surface` prop. Mirrors Card / etc. — accepts `"default" | "brand" | "inverse" | "brand-inverse"` and emits `data-clbr-surface` on the inner `.sidebar` panel (not the host) so the surface context applies to the panel chrome, not the trigger or backdrop.
+- 4884b80: Surface: add `contentTheme` prop. Mirrors Poster — accepts `"light" | "dark"` and emits `data-clbr-content-theme` on the host when provided. Use to lock content rendered inside a Surface to an absolute theme regardless of the inherited `prefers-color-scheme`.
+
+### Patch Changes
+
+- Updated dependencies [f206276]
+- Updated dependencies [7c52969]
+- Updated dependencies [4884b80]
+- Updated dependencies [15187c0]
+- Updated dependencies [62a4386]
+- Updated dependencies [6785dc4]
+- Updated dependencies [41b690d]
+- Updated dependencies [4884b80]
+- Updated dependencies [4884b80]
+- Updated dependencies [4884b80]
+- Updated dependencies [41b690d]
+- Updated dependencies [4884b80]
+- Updated dependencies [4884b80]
+- Updated dependencies [62a4386]
+  - @measured/calibrate-core@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

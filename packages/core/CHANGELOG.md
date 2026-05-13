@@ -1,5 +1,56 @@
 # @measured/calibrate-core
 
+## 0.3.0
+
+### Minor Changes
+
+- 4884b80: Banner: emit `data-clbr-content-theme="dark"` and switch `data-clbr-surface` from `"inverse"` to `"default"`. The banner has its own dark visual treatment regardless of surrounding surface or color scheme — the content-theme lock now expresses that directly rather than leaning on `inverse` semantics.
+- 4884b80: Page: add `headerBorder` prop, decoupling the header bottom border from `stickyHeader`.
+  - `headerBorder="always"` — persistent border
+  - `headerBorder="scroll"` — border fades in only when a sticky header is stuck (uses `@container scroll-state(stuck: block-start)`); falls back to always-on where the container query isn't supported. Has no visible effect without `stickyHeader`.
+  - omitted — no border (was: a border was implicitly emitted whenever `stickyHeader` was set)
+
+  **Visual change:** `stickyHeader` no longer implies a border. Pass `headerBorder="scroll"` (or `"always"`) explicitly to keep the previous look.
+
+- 4884b80: Page header now spans full width with the persistent / collapsible Sidebar opening below it. Previously the entire page (header included) shifted inline when a Sidebar was composed in; now only `main` and `footer` shift, leaving header and banner edge-to-edge.
+
+  New on Page:
+  - `headerSize` prop — `"sm" | "md" | "lg"`, default `"md"`. Reserves a minimum block size on the header and exposes `--clbr-page-header-block-size` to descendants. The Sidebar reads this variable for its panel's `inset-block-start`, so persistent panels open beneath the header band rather than overlapping it.
+  - `sm` = 3rem (48px); `md` = 3.75rem (60px); `lg` = 4.5rem (72px) at base and 5.25rem (84px) above the tablet breakpoint (48em).
+
+  This is a visual change for any consumer composing a Sidebar inside Page's header slot — the new layout is the default. Pages without a Sidebar are unaffected aside from the new minimum header height.
+
+- 4884b80: **Breaking:** Sidebar `size` prop renamed to `buttonSize`, accepts `"sm" | "md" | "lg"` (was `"sm" | "md"`), and now passes the value straight through to the trigger and collapse buttons. Previously the prop indirected (`sm → md`, `md → lg`); the prop only ever influenced the embedded button sizes, so the indirection has been removed and the surface made explicit.
+
+  Default is `"md"` (visual change: the previous default rendered an `lg` button via indirection). Pass `buttonSize: "lg"` explicitly to keep the old size. The `data-size` host attribute is now `data-button-size`. The exported `ClbrSidebarSize` type is removed — use `ClbrButtonSize` from the button module instead.
+
+  Migration:
+
+  ```diff
+  - renderClbrSidebar({ size: "md", ... })
+  + renderClbrSidebar({ buttonSize: "lg", ... })
+
+  - renderClbrSidebar({ size: "sm", ... })
+  + renderClbrSidebar({ buttonSize: "md", ... })
+  ```
+
+- 4884b80: Sidebar: add `surface` prop. Mirrors Card / etc. — accepts `"default" | "brand" | "inverse" | "brand-inverse"` and emits `data-clbr-surface` on the inner `.sidebar` panel (not the host) so the surface context applies to the panel chrome, not the trigger or backdrop.
+- 4884b80: Surface: add `contentTheme` prop. Mirrors Poster — accepts `"light" | "dark"` and emits `data-clbr-content-theme` on the host when provided. Use to lock content rendered inside a Surface to an absolute theme regardless of the inherited `prefers-color-scheme`.
+
+### Patch Changes
+
+- f206276: Bump `lucide` from `0.577.0` to `1.14.0`. Major version of upstream — usage in `Icon` is limited to the `icons` registry export and is unaffected. Pinned exact (no caret) so future minors land via Dependabot review rather than implicit `pnpm install` upgrades.
+- 7c52969: Set `min-block-size: 100dvb` on the Root element when `appRoot` is true. Apps wrapping their tree in `<Root appRoot>` (or `renderClbrRoot({ appRoot: true })`) now fill at least the dynamic viewport's block dimension by default — so a sticky footer sits at the viewport edge rather than mid-content when the page body is short. Uses dynamic viewport units (`dvb`) so mobile browser chrome is respected.
+- 15187c0: Button: fix Safari layout bug where fill icons inside icon-only buttons blew out the inline size. The `.icon-wrapper` had only `block-size` defined, leaving Safari free to size the inline axis to whatever the SVG's intrinsic aspect ratio suggested — which for `fill` icons (sized to fill their host) becomes "as wide as available". `aspect-ratio: 1 / 1` constrains the wrapper to a square so the inline size tracks the block size correctly. Same render in Chrome and Safari now.
+- 62a4386: Container: drop `block-size: 100%`. Forcing every Container to fill its parent's block axis was overreach — it caused Containers in contexts that don't define a fixed block size (e.g. inside a flowing main region) to render at 0 height or stretch unexpectedly. Removing it lets Container size naturally to its content on the block axis, matching how it already sized on the inline axis.
+- 6785dc4: Container: drop `container-type: inline-size`. In older Safari (still implementing the original CSS Containment spec where `container-type` implied `layout` containment), `position: fixed` descendants of a Container were getting clipped because Container was acting as their containing block. The spec change agreed in [CSSWG #10544](https://github.com/w3c/csswg-drafts/issues/10544#issuecomment-2248438355) (Jul 2024) decouples `layout` containment from container queries, but isn't yet available in older Safari versions even though `container-type` itself shows as baseline-widely-available.
+
+  Nothing in core uses `@container` queries against `.clbr-container` — Grid establishes its own container, Page's `scroll-state` query targets the header element. Removing it from Container is safe.
+
+- 41b690d: Icon: add `external-link` to the recommended icon list. Useful for marking outbound links in navigation, footers, etc.
+- 41b690d: Sidebar: disable the slide-in transition for persistent sidebars above the notebook breakpoint. Persistent sidebars are static structural chrome — animating their reveal on every initial paint felt off. Collapsible and overlay modes still animate as before.
+- 62a4386: Text: `data-measured` paragraphs at `size="lg"` now use the tight measure (`--clbr-typography-measure-tight`) instead of the default measure. Large prose was reading long; tighter measure keeps line lengths balanced at that size.
+
 ## 0.2.0
 
 ### Minor Changes

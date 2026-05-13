@@ -1,5 +1,19 @@
 # @measured/calibrate-skills
 
+## 0.3.0
+
+### Patch Changes
+
+- f08a227: Add an "About Calibrate" orientation section to the package README. Brief context for AI agents (and humans) reading skills cold: what the system is, the compositional + multi-context model, brand context disambiguation (`msrd` for production, `wrfr` for wireframes / sketches / internal tools, `base` as a structural foundation that consumers don't pick), and the brand voice for content / copy / naming decisions.
+
+  A standalone design-language skill was considered and deliberately not authored — most of its actionable content was already encoded in tokens, components, and the operational `compose-first` / `custom-with-tokens` skills.
+
+- 7c52969: Compose-first full-page example now passes `appOverscrollBehavior="none"` on the Root, matching app-shell layout best practice (prevents iOS/macOS rubber-band overscroll at the document root). Both flavors updated together.
+- 7c52969: Polish the compose-first full-page example: switch the header `Logo` from `variant="primary"` to `variant="secondary"` (the more common pairing for compact site furniture), and tighten the footer `Box paddingBlock` from `md` to `sm`. Both flavors (`examples/core/full-page.md`, `examples/react/full-page.md`) updated together.
+- 4884b80: compose-first: pass `headerBorder: "scroll"` (core) / `headerBorder="scroll"` (react) on Page in the full-page examples. Restores the bottom-border-on-stuck behaviour now that Page has decoupled border from sticky.
+- 4884b80: compose-first: pass `headerSize: "lg"` (core) / `headerSize="lg"` (react) on Page in the full-page examples to match the new Page default behaviour. The previous default mapped to ~72/84px header band; under the new `"sm" | "md" | "lg"` enum, that height now requires `"lg"` explicitly.
+- 62a4386: Update the live component catalog URL in `compose-first` and `custom-with-tokens` skills from `calibrate-storybook.msrd.dev` (retired) to `calibrate.msrd.dev/storybook` (the bundled docs-site deploy).
+
 ## 0.2.0
 
 ### Minor Changes
