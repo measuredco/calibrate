@@ -6,6 +6,9 @@ const config: StorybookConfig = {
     "@storybook/addon-docs",
     "@storybook/addon-vitest",
   ],
+  features: {
+    outline: false,
+  },
   framework: "@storybook/web-components-vite",
   staticDirs: [
     { from: "../../../packages/assets/src", to: "/calibrate-assets" },
