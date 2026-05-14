@@ -160,20 +160,18 @@ const colorTokenGroups: ColorTokenGroup[] = Array.from(
 
 const renderSwatch = (token: ColorTokenRow, context: ColorContext): string => {
   return `
-  <div class="swatch">
-    <div
-      class="swatch-surface"
-      data-clbr-content-theme="${escapeHtml(context.contentTheme)}"
-      data-clbr-surface="${escapeHtml(context.variant)}"
-    >
-      <span
-        class="swatch-color"
-        style="background-color: var(${escapeHtml(token.cssVariable)})"
-      ></span>
-      <span class="swatch-hex">
-        ${escapeHtml(token.hexByContext[context.themeKey] ?? "")}
-      </span>
-    </div>
+  <div
+    class="swatch"
+    data-clbr-content-theme="${escapeHtml(context.contentTheme)}"
+    data-clbr-surface="${escapeHtml(context.variant)}"
+  >
+    <span
+      class="swatch-color"
+      style="background-color: var(${escapeHtml(token.cssVariable)})"
+    ></span>
+    <span class="swatch-hex">
+      ${escapeHtml(token.hexByContext[context.themeKey] ?? "")}
+    </span>
   </div>`;
 };
 
