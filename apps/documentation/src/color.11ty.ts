@@ -27,6 +27,7 @@ interface ColorTokenValue {
 interface ColorToken {
   $description?: string;
   $value?: ColorTokenValue;
+  byContext?: Record<string, { $value?: ColorTokenValue }>;
   byTheme?: Record<string, { $value?: ColorTokenValue }>;
   layer?: string;
 }
@@ -99,7 +100,9 @@ const getColorValue = (
   token: ColorToken,
   context: ColorContext,
 ): ColorTokenValue | undefined =>
-  token.byTheme?.[context.themeKey]?.$value ?? token.$value;
+  token.byTheme?.[context.themeKey]?.$value ??
+  token.byContext?.[`theme=${context.themeKey},forcedColors=off`]?.$value ??
+  token.$value;
 
 const formatHexValue = (value: ColorTokenValue | undefined): string => {
   if (!value?.hex) return "";

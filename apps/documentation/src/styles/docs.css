@@ -82,6 +82,7 @@
       border-radius: calc(
         var(--clbr-spacing-vertical-1000) * var(--clbr-radius-ratio-default)
       );
+      forced-color-adjust: none;
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
