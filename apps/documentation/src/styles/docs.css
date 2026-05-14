@@ -41,7 +41,11 @@
     .swatches {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--clbr-spacing-horizontal-500);
+      gap: var(--clbr-spacing-horizontal-400);
+
+      @container (inline-size >=24rem) {
+        gap: var(--clbr-spacing-horizontal-500);
+      }
 
       @container (inline-size >=48rem) {
         flex-wrap: nowrap;
