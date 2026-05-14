@@ -8,14 +8,12 @@ What we're working on now.
 
 ### Documentation website (`apps/documentation`)
 
-Docs site is live at `calibrate.msrd.dev` (Cloudflare Pages), consuming the published packages and bundling Storybook at `/storybook/*`. Remaining v1 work is content: foundations, concepts, getting started prose, skills index.
+Docs site is live at `calibrate.msrd.dev` (Cloudflare Pages), consuming the published packages and bundling Storybook at `/storybook/*`. Remaining v1 work is content: foundations and skills.
 
 #### Outstanding for v1
 
 - Foundations pages for every token category, generated from the system
-- Getting started flow takes a reader from install → first composition (page scaffolded; prose still minimal)
-- Concepts copy (compositional model, how to think about Calibrate — folds in current `skills/README` orientation)
-- Skills index linking to the published `@measured/calibrate-skills` content
+- Skills section — compositional model (folds in current `skills/README` orientation) + index of published `@measured/calibrate-skills` content; covers the "first composition" arc
 
 #### Principles
 
@@ -52,16 +50,14 @@ At that cutover, current `/` content shifts from "main rolling" to "most recent 
 - Home
 - Getting started
 - Foundations
-  - Breakpoints
   - Color
-  - Opacity
-  - Shadow
-  - Stroke offset (open question, if how to represent: this is not focus ring, it's the offset stroke effect seen on card)
-  - Layout (open question how to break this down, as includes border, focus ring, grid, etc.)
+  - Typography
+  - Spacing
+  - Layout
   - Motion
   - Radius
-  - Spacing
-  - Typography
+  - Breakpoints
+  - Effects
 - Skills
 - Components (v1 links out to Storybook)
 
