@@ -9,6 +9,7 @@ export interface NavItem {
 
 const sidebar: NavItem[] = [
   { href: "/getting-started/", label: "Getting started" },
+  { href: "/color/", label: "Color" },
   { href: "/storybook/", label: "Storybook" },
 ];
 

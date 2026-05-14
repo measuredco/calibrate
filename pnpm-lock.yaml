@@ -95,6 +95,9 @@ importers:
       '@measured/calibrate-markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
+      '@measured/calibrate-tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
     devDependencies:
       '@11ty/eleventy':
         specifier: ^3.0.0
