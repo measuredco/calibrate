@@ -2950,138 +2950,6 @@
       "$description": "Bold font weight. Use for strong text emphasis (semantic `strong`/`b` elements, small headings).",
       "$value": 566
     },
-    "typography.leading.700": {
-      "layer": "semantic",
-      "$description": "Default leading dimension. A block size representing the line-height; divide by font size to derive a line-height ratio. An escape hatch for aligning line-heights across elements with different font sizes (e.g. a small counter beside a large heading) — reach for text composites or typeStep pairs first.",
-      "$value": "24px"
-    },
-    "typography.leading.750": {
-      "layer": "semantic",
-      "$description": "Leading step 750.",
-      "$value": "27px"
-    },
-    "typography.leading.775": {
-      "layer": "semantic",
-      "$description": "Leading step 775.",
-      "$value": "30px"
-    },
-    "typography.leading.800": {
-      "layer": "semantic",
-      "$description": "Leading step 800.",
-      "$value": "36px"
-    },
-    "typography.leading.850": {
-      "layer": "semantic",
-      "$description": "Leading step 850.",
-      "$value": "42px"
-    },
-    "typography.leading.900": {
-      "layer": "semantic",
-      "$description": "Leading step 900.",
-      "$value": "48px"
-    },
-    "typography.leading.925": {
-      "layer": "semantic",
-      "$description": "Leading step 925.",
-      "$value": "54px"
-    },
-    "typography.leading.950": {
-      "layer": "semantic",
-      "$description": "Leading step 950.",
-      "$value": "60px"
-    },
-    "typography.leading.1000": {
-      "layer": "semantic",
-      "$description": "Leading step 1000.",
-      "$value": "72px"
-    },
-    "typography.leading.1200": {
-      "layer": "semantic",
-      "$description": "Leading step 1200.",
-      "$value": "96px"
-    },
-    "typography.leading.1300": {
-      "layer": "semantic",
-      "$description": "Leading step 1300.",
-      "$value": "120px"
-    },
-    "typography.measure.default": {
-      "layer": "semantic",
-      "$description": "Default measure (line length, in em). Use as the comfortable maximum width to keep line lengths readable.",
-      "$value": 35.25
-    },
-    "typography.measure.tight": {
-      "layer": "semantic",
-      "$description": "Tighter measure (line length, in em). A more constrained alternative to the default.",
-      "$value": 31.75
-    },
-    "typography.paragraph.spacing.default": {
-      "layer": "semantic",
-      "$description": "Default vertical spacing between paragraphs.",
-      "$value": "24px"
-    },
-    "typography.paragraph.spacing.sm": {
-      "layer": "semantic",
-      "$description": "Tighter paragraph spacing. Use in dense layouts or compact prose.",
-      "$value": "12px"
-    },
-    "typography.paragraph.spacing.lg": {
-      "layer": "semantic",
-      "$description": "Looser paragraph spacing. Use in editorial layouts where extra breathing room aids reading.",
-      "$value": "36px"
-    },
-    "typography.prose.code.padding.block.default": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Default block padding for inline `code`. Use at smaller viewports.",
-      "$value": 0.055
-    },
-    "typography.prose.code.padding.block.lg": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Larger block padding for inline `code`. Use at larger viewports.",
-      "$value": 0.2
-    },
-    "typography.prose.code.padding.inline.default": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Inline (horizontal) padding for inline `code`.",
-      "$value": 0.25
-    },
-    "typography.prose.link.default.decoration.line": {
-      "layer": "semantic",
-      "$description": "Default decoration line for prose links.",
-      "$value": "none"
-    },
-    "typography.prose.link.default.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Default decoration offset for prose links, in em.",
-      "$value": 0.24
-    },
-    "typography.prose.link.default.decoration.thickness": {
-      "layer": "semantic",
-      "$type": "dimension",
-      "$description": "Default decoration thickness for prose links.",
-      "$value": "2px"
-    },
-    "typography.prose.link.hover.decoration.line": {
-      "layer": "semantic",
-      "$description": "Decoration line for prose links on hover.",
-      "$value": "underline"
-    },
-    "typography.prose.link.hover.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Decoration offset for prose links on hover, in em.",
-      "$value": 0.29
-    },
-    "typography.prose.link.active.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Decoration offset for prose links during active (pressed) state, in em.",
-      "$value": 0.34
-    },
     "typography.text.body.xs": {
       "layer": "semantic",
       "$description": "Extra small body text. Use for the smallest body copy (microtext).",
@@ -4044,6 +3912,86 @@
         }
       }
     },
+    "typography.paragraph.spacing.sm": {
+      "layer": "semantic",
+      "$description": "Tighter paragraph spacing. Use in dense layouts or compact prose.",
+      "$value": "12px"
+    },
+    "typography.paragraph.spacing.default": {
+      "layer": "semantic",
+      "$description": "Default vertical spacing between paragraphs.",
+      "$value": "24px"
+    },
+    "typography.paragraph.spacing.lg": {
+      "layer": "semantic",
+      "$description": "Looser paragraph spacing. Use in editorial layouts where extra breathing room aids reading.",
+      "$value": "36px"
+    },
+    "typography.leading.700": {
+      "layer": "semantic",
+      "$description": "Default leading dimension. A block size representing the line-height; divide by font size to derive a line-height ratio. An escape hatch for aligning line-heights across elements with different font sizes (e.g. a small counter beside a large heading) — reach for text composites or typeStep pairs first.",
+      "$value": "24px"
+    },
+    "typography.leading.750": {
+      "layer": "semantic",
+      "$description": "Leading step 750.",
+      "$value": "27px"
+    },
+    "typography.leading.775": {
+      "layer": "semantic",
+      "$description": "Leading step 775.",
+      "$value": "30px"
+    },
+    "typography.leading.800": {
+      "layer": "semantic",
+      "$description": "Leading step 800.",
+      "$value": "36px"
+    },
+    "typography.leading.850": {
+      "layer": "semantic",
+      "$description": "Leading step 850.",
+      "$value": "42px"
+    },
+    "typography.leading.900": {
+      "layer": "semantic",
+      "$description": "Leading step 900.",
+      "$value": "48px"
+    },
+    "typography.leading.925": {
+      "layer": "semantic",
+      "$description": "Leading step 925.",
+      "$value": "54px"
+    },
+    "typography.leading.950": {
+      "layer": "semantic",
+      "$description": "Leading step 950.",
+      "$value": "60px"
+    },
+    "typography.leading.1000": {
+      "layer": "semantic",
+      "$description": "Leading step 1000.",
+      "$value": "72px"
+    },
+    "typography.leading.1200": {
+      "layer": "semantic",
+      "$description": "Leading step 1200.",
+      "$value": "96px"
+    },
+    "typography.leading.1300": {
+      "layer": "semantic",
+      "$description": "Leading step 1300.",
+      "$value": "120px"
+    },
+    "typography.measure.default": {
+      "layer": "semantic",
+      "$description": "Default measure (line length, in em). Use as the comfortable maximum width to keep line lengths readable.",
+      "$value": 35.25
+    },
+    "typography.measure.tight": {
+      "layer": "semantic",
+      "$description": "Tighter measure (line length, in em). A more constrained alternative to the default.",
+      "$value": 31.75
+    },
     "typography.type-step.50.font-size": {
       "layer": "semantic",
       "$type": "dimension",
@@ -4235,6 +4183,58 @@
       "$type": "number",
       "$description": "Type-step 1300 line height.",
       "$value": 1
+    },
+    "typography.prose.code.padding.block.default": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Default block padding for inline `code`. Use at smaller viewports.",
+      "$value": 0.055
+    },
+    "typography.prose.code.padding.block.lg": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Larger block padding for inline `code`. Use at larger viewports.",
+      "$value": 0.2
+    },
+    "typography.prose.code.padding.inline.default": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Inline (horizontal) padding for inline `code`.",
+      "$value": 0.25
+    },
+    "typography.prose.link.default.decoration.line": {
+      "layer": "semantic",
+      "$description": "Default decoration line for prose links.",
+      "$value": "none"
+    },
+    "typography.prose.link.default.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Default decoration offset for prose links, in em.",
+      "$value": 0.24
+    },
+    "typography.prose.link.default.decoration.thickness": {
+      "layer": "semantic",
+      "$type": "dimension",
+      "$description": "Default decoration thickness for prose links.",
+      "$value": "2px"
+    },
+    "typography.prose.link.hover.decoration.line": {
+      "layer": "semantic",
+      "$description": "Decoration line for prose links on hover.",
+      "$value": "underline"
+    },
+    "typography.prose.link.hover.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Decoration offset for prose links on hover, in em.",
+      "$value": 0.29
+    },
+    "typography.prose.link.active.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Decoration offset for prose links during active (pressed) state, in em.",
+      "$value": 0.34
     },
     "effect.filter.image": {
       "layer": "semantic",

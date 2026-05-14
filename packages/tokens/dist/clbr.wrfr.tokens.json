@@ -1578,117 +1578,6 @@
       "layer": "semantic",
       "$value": 566
     },
-    "typography.leading.700": {
-      "layer": "semantic",
-      "$value": "24px"
-    },
-    "typography.leading.750": {
-      "layer": "semantic",
-      "$value": "27px"
-    },
-    "typography.leading.775": {
-      "layer": "semantic",
-      "$value": "30px"
-    },
-    "typography.leading.800": {
-      "layer": "semantic",
-      "$value": "36px"
-    },
-    "typography.leading.850": {
-      "layer": "semantic",
-      "$value": "42px"
-    },
-    "typography.leading.900": {
-      "layer": "semantic",
-      "$value": "48px"
-    },
-    "typography.leading.925": {
-      "layer": "semantic",
-      "$value": "54px"
-    },
-    "typography.leading.950": {
-      "layer": "semantic",
-      "$value": "60px"
-    },
-    "typography.leading.1000": {
-      "layer": "semantic",
-      "$value": "72px"
-    },
-    "typography.leading.1200": {
-      "layer": "semantic",
-      "$value": "96px"
-    },
-    "typography.leading.1300": {
-      "layer": "semantic",
-      "$value": "120px"
-    },
-    "typography.leading.default": {
-      "layer": "semantic",
-      "$value": "24px"
-    },
-    "typography.measure.default": {
-      "layer": "semantic",
-      "$value": 35.25
-    },
-    "typography.measure.tight": {
-      "layer": "semantic",
-      "$value": 31.75
-    },
-    "typography.paragraph.spacing.default": {
-      "layer": "semantic",
-      "$value": "24px"
-    },
-    "typography.paragraph.spacing.sm": {
-      "layer": "semantic",
-      "$value": "12px"
-    },
-    "typography.paragraph.spacing.lg": {
-      "layer": "semantic",
-      "$value": "36px"
-    },
-    "typography.prose.code.padding.block.default": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.06
-    },
-    "typography.prose.code.padding.block.lg": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.08
-    },
-    "typography.prose.code.padding.inline.default": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.25
-    },
-    "typography.prose.link.default.decoration.line": {
-      "layer": "semantic",
-      "$value": "underline"
-    },
-    "typography.prose.link.default.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.29
-    },
-    "typography.prose.link.default.decoration.thickness": {
-      "layer": "semantic",
-      "$type": "dimension",
-      "$value": "2px"
-    },
-    "typography.prose.link.hover.decoration.line": {
-      "layer": "semantic",
-      "$value": "underline"
-    },
-    "typography.prose.link.hover.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.315
-    },
-    "typography.prose.link.active.decoration.offset": {
-      "layer": "semantic",
-      "$type": "number",
-      "$value": 0.34
-    },
     "typography.text.body.xs": {
       "layer": "semantic",
       "$value": {
@@ -2625,6 +2514,74 @@
         }
       }
     },
+    "typography.paragraph.spacing.sm": {
+      "layer": "semantic",
+      "$value": "12px"
+    },
+    "typography.paragraph.spacing.default": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "typography.paragraph.spacing.lg": {
+      "layer": "semantic",
+      "$value": "36px"
+    },
+    "typography.leading.700": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "typography.leading.750": {
+      "layer": "semantic",
+      "$value": "27px"
+    },
+    "typography.leading.775": {
+      "layer": "semantic",
+      "$value": "30px"
+    },
+    "typography.leading.800": {
+      "layer": "semantic",
+      "$value": "36px"
+    },
+    "typography.leading.850": {
+      "layer": "semantic",
+      "$value": "42px"
+    },
+    "typography.leading.900": {
+      "layer": "semantic",
+      "$value": "48px"
+    },
+    "typography.leading.925": {
+      "layer": "semantic",
+      "$value": "54px"
+    },
+    "typography.leading.950": {
+      "layer": "semantic",
+      "$value": "60px"
+    },
+    "typography.leading.1000": {
+      "layer": "semantic",
+      "$value": "72px"
+    },
+    "typography.leading.1200": {
+      "layer": "semantic",
+      "$value": "96px"
+    },
+    "typography.leading.1300": {
+      "layer": "semantic",
+      "$value": "120px"
+    },
+    "typography.leading.default": {
+      "layer": "semantic",
+      "$value": "24px"
+    },
+    "typography.measure.default": {
+      "layer": "semantic",
+      "$value": 35.25
+    },
+    "typography.measure.tight": {
+      "layer": "semantic",
+      "$value": 31.75
+    },
     "typography.type-step.50.font-size": {
       "layer": "semantic",
       "$type": "dimension",
@@ -2784,6 +2741,49 @@
       "layer": "semantic",
       "$type": "number",
       "$value": 1
+    },
+    "typography.prose.code.padding.block.default": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.06
+    },
+    "typography.prose.code.padding.block.lg": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.08
+    },
+    "typography.prose.code.padding.inline.default": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.25
+    },
+    "typography.prose.link.default.decoration.line": {
+      "layer": "semantic",
+      "$value": "underline"
+    },
+    "typography.prose.link.default.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.29
+    },
+    "typography.prose.link.default.decoration.thickness": {
+      "layer": "semantic",
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "typography.prose.link.hover.decoration.line": {
+      "layer": "semantic",
+      "$value": "underline"
+    },
+    "typography.prose.link.hover.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.315
+    },
+    "typography.prose.link.active.decoration.offset": {
+      "layer": "semantic",
+      "$type": "number",
+      "$value": 0.34
     },
     "effect.filter.image": {
       "layer": "semantic",
