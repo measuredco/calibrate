@@ -195,6 +195,7 @@ const renderColorToken = (token: ColorTokenRow): string =>
 const renderColorGroup = (group: ColorTokenGroup): string =>
   `<div class="section">
     ${renderClbrHeading({
+      id: group.label.toLowerCase(),
       level: 2,
       responsive: true,
       size: "lg",
