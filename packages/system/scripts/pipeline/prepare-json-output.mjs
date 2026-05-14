@@ -265,6 +265,22 @@ function capitalize(s) {
 }
 
 /**
+ * Normalises one token path segment to the same kebab-case form used by CSS
+ * custom property output.
+ *
+ * @param {string} segment
+ * @returns {string}
+ */
+function toKebab(segment) {
+  return segment
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z]+)([A-Z][a-z0-9]+)/g, "$1-$2")
+    .replace(/[^A-Za-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+/**
  * Walks a resolved token tree and accumulates token entries in a flat map
  * keyed by dotted path. Each token entry collects per-context values plus
  * stable metadata (`$type`, `$description`, `layer`).
@@ -289,7 +305,7 @@ function walkTokens(node, ctxKey, accumulator, layerConfig, pathStack = []) {
   if (!isObject(node)) return;
 
   if (isTokenObject(node)) {
-    const dottedPath = pathStack.join(".");
+    const dottedPath = pathStack.map(toKebab).join(".");
     const layer = layerConfig.privateLayers.has(pathStack[0])
       ? pathStack[0]
       : layerConfig.publicLayer;
@@ -366,10 +382,16 @@ async function main() {
     modifiers,
     modifierBuildDefs,
   );
+  const contexts = [
+    defaultContext,
+    ...allContexts.filter(
+      (ctx) => contextId(ctx, modifierOrder) !== defaultContextId,
+    ),
+  ];
 
   const accumulator = new Map();
 
-  for (const ctx of allContexts) {
+  for (const ctx of contexts) {
     const id = contextId(ctx, modifierOrder);
     const sources = await resolveContextSources({
       cwd,
@@ -390,10 +412,10 @@ async function main() {
     walkTokens(resolved, id, accumulator, layerConfig);
   }
 
-  const sortedKeys = Array.from(accumulator.keys()).sort();
+  const orderedKeys = Array.from(accumulator.keys());
   const tokens = {};
 
-  for (const key of sortedKeys) {
+  for (const key of orderedKeys) {
     const entry = accumulator.get(key);
     const tokenOut = { layer: entry.layer };
 
