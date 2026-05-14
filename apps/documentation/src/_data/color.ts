@@ -3,7 +3,7 @@
  */
 export default {
   strapline:
-    "Explore the semantic color tokens across Calibrate's light, dark, default, and brand surface contexts.",
+    "Calibrate’s semantic color system automatically adapts to theme and surface context. Always use the tokens, never raw color values.",
   title: "Color",
 } as const;
 
