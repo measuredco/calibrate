@@ -19,7 +19,7 @@ html {
       margin-block: var(--clbr-spacing-vertical-600)
         var(--clbr-spacing-vertical-700);
 
-      @container (inline-size >=48rem) {
+      @container (inline-size >=46rem) {
         display: flex;
         gap: var(--clbr-spacing-horizontal-700);
         margin-block-end: var(--clbr-spacing-vertical-500);
@@ -38,7 +38,7 @@ html {
       margin-block-end: var(--clbr-spacing-vertical-500);
       order: 2;
 
-      @container (inline-size >=48rem) {
+      @container (inline-size >=46rem) {
         margin-block-end: 0;
       }
     }
@@ -117,9 +117,14 @@ html {
     .row {
       margin-block: var(--clbr-spacing-vertical-600)
         var(--clbr-spacing-vertical-700);
+      max-inline-size: 28rem;
+
+      @container (inline-size >=46rem) {
+        max-inline-size: none;
+      }
 
       &:has(.preview):not(:has(.preview[style^="max-inline-size"])) {
-        @container (inline-size >=48rem) {
+        @container (inline-size >=46rem) {
           display: flex;
           gap: var(--clbr-spacing-horizontal-700);
           margin-block-end: var(--clbr-spacing-vertical-500);
@@ -141,7 +146,7 @@ html {
       order: 2;
 
       &:has(+ .preview):not(:has(+ .preview[style^="max-inline-size"])) {
-        @container (inline-size >=48rem) {
+        @container (inline-size >=46rem) {
           margin-block-end: 0;
         }
       }
@@ -166,7 +171,7 @@ html {
       display: flex;
       font: var(--clbr-typography-text-body-responsive-lg);
       justify-content: center;
-      max-inline-size: var(--clbr-breakpoint-baseline);
+      max-inline-size: 28rem;
       min-inline-size: var(--clbr-layout-grid-item-min-width);
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-subtle);
@@ -177,7 +182,6 @@ html {
       }
 
       @media (width >=48em) {
-        max-inline-size: 28rem;
         min-inline-size: 28rem;
       }
     }
