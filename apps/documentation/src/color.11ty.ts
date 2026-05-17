@@ -185,7 +185,7 @@ const renderColorToken = (token: ColorTokenRow): string =>
         size: "sm",
       })}
     </div>
-    <div class="swatches">
+    <div class="preview">
       ${colorContexts.map((context) => renderSwatch(token, context)).join("")}
     </div>
   </div>`;
@@ -241,7 +241,7 @@ export default class Color {
                   size: "lg",
                 }),
                 renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-color">
+                `<div class="docs-foundations docs-color">
                   ${colorTokenGroups.map(renderColorGroup).join("")}
                 </div>`,
               ].join(""),

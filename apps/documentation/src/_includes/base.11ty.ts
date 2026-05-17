@@ -194,7 +194,7 @@ const renderBasePage = (data: PageData): string => {
 <link rel="stylesheet" href="/assets/calibrate-core.css">
 <link rel="stylesheet" href="/assets/styles/docs.css">
 </head>
-<body>${root}<script type="module">
+<body class="docs">${root}<script type="module">
 import { defineClbrComponents } from "/assets/calibrate-core.js";
 defineClbrComponents();
 </script></body>
