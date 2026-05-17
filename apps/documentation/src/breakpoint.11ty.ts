@@ -37,11 +37,11 @@ const breakpointTokens = Object.entries(baseTokens.tokens)
   }))
   .sort((a, b) => a.px - b.px);
 
-// Single flat section; preview spans the row capped at the breakpoint —
-// same stacked treatment as the layout container max-width preview.
+// Single unlabelled section (the heading would just repeat the page
+// title); preview spans the row capped at the breakpoint — same stacked
+// treatment as the layout container max-width preview.
 const groups: FoundationsGroup[] = [
   {
-    label: "Breakpoint",
     rows: breakpointTokens.map((token) => ({
       entries: [
         { cssVariable: token.cssVariable, description: token.description },

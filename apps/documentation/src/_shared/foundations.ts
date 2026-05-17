@@ -73,7 +73,9 @@ export interface FoundationsRow {
 }
 
 export interface FoundationsGroup {
-  label: string;
+  /** Section heading. Omit for a single-section page where it would just
+   * repeat the page title. */
+  label?: string;
   rows: FoundationsRow[];
 }
 
@@ -101,13 +103,17 @@ const renderRow = (row: FoundationsRow): string =>
 
 const renderGroup = (group: FoundationsGroup): string =>
   `<div class="section">
-    ${renderClbrHeading({
-      id: group.label.toLowerCase().replaceAll(" ", "-"),
-      level: 2,
-      responsive: true,
-      size: "lg",
-      text: group.label,
-    })}
+    ${
+      group.label
+        ? renderClbrHeading({
+            id: group.label.toLowerCase().replaceAll(" ", "-"),
+            level: 2,
+            responsive: true,
+            size: "lg",
+            text: group.label,
+          })
+        : ""
+    }
     ${group.rows.map(renderRow).join("")}
   </div>`;
 
