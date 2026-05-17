@@ -1,19 +1,14 @@
 import { createRequire } from "node:module";
 
-import {
-  renderClbrBox,
-  renderClbrContainer,
-  renderClbrDivider,
-  renderClbrGrid,
-  renderClbrGridItem,
-  renderClbrHeading,
-  renderClbrStack,
-  renderClbrText,
-} from "@measured/calibrate-core";
-import { processMarkdownInline } from "@measured/calibrate-markdown";
-
 import type { TypographyData } from "./_data/typography";
 import typographyData from "./_data/typography";
+import {
+  escapeHtml,
+  type FoundationsGroup,
+  renderFoundationsPage,
+  type TokenDocument,
+  tokenNameToCssVariable,
+} from "./_shared/foundations";
 
 interface PageData {
   typography: TypographyData;
@@ -33,10 +28,6 @@ interface TypographyToken {
   layer?: string;
 }
 
-interface TokenDocument {
-  tokens: Record<string, TypographyToken>;
-}
-
 interface TypographyTokenRow {
   cssVariable: string;
   description: string;
@@ -54,17 +45,8 @@ interface TypographyTokenGroup {
 }
 
 const require = createRequire(import.meta.url);
-const msrdTokens = require("@measured/calibrate-tokens/msrd") as TokenDocument;
-
-const escapeHtml = (value: string): string =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-
-const tokenNameToCssVariable = (name: string): string =>
-  `--clbr-${name.replaceAll(".", "-")}`;
+const msrdTokens =
+  require("@measured/calibrate-tokens/msrd") as TokenDocument<TypographyToken>;
 
 // Split text into two sections — "text" (static) and "text-responsive" — so
 // each section holds one kind. Sorting by size is then unambiguous within a
@@ -207,30 +189,15 @@ const renderPreview = (token: TypographyTokenRow): string => {
   >${content}</div>`;
 };
 
-const renderTypographyToken = (token: TypographyTokenRow): string =>
-  `<div class="row">
-    <div class="meta">
-      <h3 class="title">var(${escapeHtml(token.cssVariable)})</h3>
-      ${renderClbrText({
-        as: "p",
-        children: processMarkdownInline(token.description),
-        size: "sm",
-      })}
-    </div>
-    ${renderPreview(token)}
-  </div>`;
-
-const renderTypographyGroup = (group: TypographyTokenGroup): string =>
-  `<div class="section">
-    ${renderClbrHeading({
-      id: group.label.toLowerCase().replaceAll(" ", "-"),
-      level: 2,
-      responsive: true,
-      size: "lg",
-      text: group.label,
-    })}
-    ${group.tokens.map(renderTypographyToken).join("")}
-  </div>`;
+const groups: FoundationsGroup[] = typographyTokenGroups.map((group) => ({
+  label: group.label,
+  rows: group.tokens.map((token) => ({
+    entries: [
+      { cssVariable: token.cssVariable, description: token.description },
+    ],
+    preview: renderPreview(token),
+  })),
+}));
 
 export default class Typography {
   data() {
@@ -242,43 +209,11 @@ export default class Typography {
   }
 
   render(data: PageData): string {
-    const typography = data.typography;
-
-    return renderClbrContainer({
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "lg",
-        paddingInline: "none",
-        responsive: true,
-        children: renderClbrGrid({
-          children: renderClbrGridItem({
-            colStart: 2,
-            colSpan: 10,
-            children: renderClbrStack({
-              gap: "md",
-              children: [
-                renderClbrHeading({
-                  level: 1,
-                  opticalAlign: true,
-                  responsive: true,
-                  size: "2xl",
-                  text: typography.title,
-                }),
-                renderClbrText({
-                  as: "p",
-                  children: typography.strapline,
-                  responsive: true,
-                  size: "lg",
-                }),
-                renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-foundations docs-typography">
-                  ${typographyTokenGroups.map(renderTypographyGroup).join("")}
-                </div>`,
-              ].join(""),
-            }),
-          }),
-        }),
-      }),
+    return renderFoundationsPage({
+      docsClass: "docs-typography",
+      groups,
+      strapline: data.typography.strapline,
+      title: data.typography.title,
     });
   }
 }

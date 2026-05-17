@@ -1,31 +1,18 @@
 import { createRequire } from "node:module";
 
-import {
-  renderClbrBox,
-  renderClbrContainer,
-  renderClbrDivider,
-  renderClbrGrid,
-  renderClbrGridItem,
-  renderClbrHeading,
-  renderClbrStack,
-  renderClbrText,
-} from "@measured/calibrate-core";
-import { processMarkdownInline } from "@measured/calibrate-markdown";
-
 import type { SpacingData } from "./_data/spacing";
 import spacingData from "./_data/spacing";
+import {
+  escapeHtml,
+  type FoundationsGroup,
+  renderFoundationsPage,
+  reportDroppedTokens,
+  type TokenDocument,
+  tokenNameToCssVariable,
+} from "./_shared/foundations";
 
 interface PageData {
   spacing: SpacingData;
-}
-
-interface SpacingToken {
-  $description?: string;
-  layer?: string;
-}
-
-interface TokenDocument {
-  tokens: Record<string, SpacingToken>;
 }
 
 type SpacingGroup = "horizontal" | "vertical" | "vertical-responsive";
@@ -41,25 +28,10 @@ interface SpacingTokenRow {
   step: number;
 }
 
-interface SpacingTokenGroup {
-  label: string;
-  tokens: SpacingTokenRow[];
-}
-
 // Spacing and layout tokens are brand-independent — they live in the `base`
 // export, not the per-brand ones.
 const require = createRequire(import.meta.url);
 const baseTokens = require("@measured/calibrate-tokens/base") as TokenDocument;
-
-const escapeHtml = (value: string): string =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-
-const tokenNameToCssVariable = (name: string): string =>
-  `--clbr-${name.replaceAll(".", "-")}`;
 
 // Standard spacing lives under `spacing.{axis}.{step}`. The responsive
 // vertical variants live under `layout.spacing.vertical.{step}` (a separate
@@ -110,6 +82,17 @@ const spacingTokens: SpacingTokenRow[] = Object.entries(
   ];
 });
 
+// `parseSpacingTokenName` only recognises the known name shapes; a new
+// spacing-scope token/group would be silently dropped without this.
+reportDroppedTokens(
+  "spacing",
+  baseTokens,
+  (name, token) =>
+    (name.startsWith("spacing.") || name.startsWith("layout.spacing.")) &&
+    token.layer === "semantic",
+  new Set(spacingTokens.map((token) => token.name)),
+);
+
 // One section per group, in this order; each is single-kind so a plain
 // step-ascending sort reads correctly at every viewport.
 const groupOrder: { group: SpacingGroup; label: string }[] = [
@@ -117,15 +100,6 @@ const groupOrder: { group: SpacingGroup; label: string }[] = [
   { group: "vertical-responsive", label: "Vertical responsive" },
   { group: "horizontal", label: "Horizontal" },
 ];
-
-const spacingTokenGroups: SpacingTokenGroup[] = groupOrder
-  .map(({ group, label }) => ({
-    label,
-    tokens: spacingTokens
-      .filter((token) => token.group === group)
-      .sort((a, b) => a.step - b.step),
-  }))
-  .filter((group) => group.tokens.length > 0);
 
 const renderPreview = (token: SpacingTokenRow): string => {
   const property = token.axis === "vertical" ? "block-size" : "inline-size";
@@ -138,30 +112,20 @@ const renderPreview = (token: SpacingTokenRow): string => {
   </div>`;
 };
 
-const renderSpacingToken = (token: SpacingTokenRow): string =>
-  `<div class="row">
-    <div class="meta">
-      <h3 class="title">var(${escapeHtml(token.cssVariable)})</h3>
-      ${renderClbrText({
-        as: "p",
-        children: processMarkdownInline(token.description),
-        size: "sm",
-      })}
-    </div>
-    ${renderPreview(token)}
-  </div>`;
-
-const renderSpacingGroup = (group: SpacingTokenGroup): string =>
-  `<div class="section">
-    ${renderClbrHeading({
-      id: group.label.toLowerCase().replaceAll(" ", "-"),
-      level: 2,
-      responsive: true,
-      size: "lg",
-      text: group.label,
-    })}
-    ${group.tokens.map(renderSpacingToken).join("")}
-  </div>`;
+const groups: FoundationsGroup[] = groupOrder
+  .map(({ group, label }) => ({
+    label,
+    rows: spacingTokens
+      .filter((token) => token.group === group)
+      .sort((a, b) => a.step - b.step)
+      .map((token) => ({
+        entries: [
+          { cssVariable: token.cssVariable, description: token.description },
+        ],
+        preview: renderPreview(token),
+      })),
+  }))
+  .filter((group) => group.rows.length > 0);
 
 export default class Spacing {
   data() {
@@ -173,43 +137,11 @@ export default class Spacing {
   }
 
   render(data: PageData): string {
-    const spacing = data.spacing;
-
-    return renderClbrContainer({
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "lg",
-        paddingInline: "none",
-        responsive: true,
-        children: renderClbrGrid({
-          children: renderClbrGridItem({
-            colStart: 2,
-            colSpan: 10,
-            children: renderClbrStack({
-              gap: "md",
-              children: [
-                renderClbrHeading({
-                  level: 1,
-                  opticalAlign: true,
-                  responsive: true,
-                  size: "2xl",
-                  text: spacing.title,
-                }),
-                renderClbrText({
-                  as: "p",
-                  children: spacing.strapline,
-                  responsive: true,
-                  size: "lg",
-                }),
-                renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-foundations docs-spacing">
-                  ${spacingTokenGroups.map(renderSpacingGroup).join("")}
-                </div>`,
-              ].join(""),
-            }),
-          }),
-        }),
-      }),
+    return renderFoundationsPage({
+      docsClass: "docs-spacing",
+      groups,
+      strapline: data.spacing.strapline,
+      title: data.spacing.title,
     });
   }
 }

@@ -1,19 +1,15 @@
 import { createRequire } from "node:module";
 
-import {
-  renderClbrBox,
-  renderClbrContainer,
-  renderClbrDivider,
-  renderClbrGrid,
-  renderClbrGridItem,
-  renderClbrHeading,
-  renderClbrStack,
-  renderClbrText,
-} from "@measured/calibrate-core";
-import { processMarkdownInline } from "@measured/calibrate-markdown";
-
 import type { ColorData } from "./_data/color";
 import colorData from "./_data/color";
+import {
+  escapeHtml,
+  type FoundationsGroup,
+  renderFoundationsPage,
+  reportDroppedTokens,
+  type TokenDocument,
+  tokenNameToCssVariable,
+} from "./_shared/foundations";
 
 interface PageData {
   color: ColorData;
@@ -32,10 +28,6 @@ interface ColorToken {
   layer?: string;
 }
 
-interface TokenDocument {
-  tokens: Record<string, ColorToken>;
-}
-
 interface ColorTokenRow {
   cssVariable: string;
   description: string;
@@ -44,19 +36,15 @@ interface ColorTokenRow {
   name: string;
 }
 
-interface ColorTokenGroup {
-  label: string;
-  tokens: ColorTokenRow[];
-}
-
 interface ColorContext {
-  contentTheme: "light" | "dark";
+  contentTheme: "dark" | "light";
   themeKey: string;
-  variant: "default" | "brand";
+  variant: "brand" | "default";
 }
 
 const require = createRequire(import.meta.url);
-const msrdTokens = require("@measured/calibrate-tokens/msrd") as TokenDocument;
+const msrdTokens =
+  require("@measured/calibrate-tokens/msrd") as TokenDocument<ColorToken>;
 
 const colorContexts: ColorContext[] = [
   {
@@ -64,32 +52,10 @@ const colorContexts: ColorContext[] = [
     themeKey: "contentLightDefault",
     variant: "default",
   },
-  {
-    contentTheme: "light",
-    themeKey: "contentLightBrand",
-    variant: "brand",
-  },
-  {
-    contentTheme: "dark",
-    themeKey: "contentDarkDefault",
-    variant: "default",
-  },
-  {
-    contentTheme: "dark",
-    themeKey: "contentDarkBrand",
-    variant: "brand",
-  },
+  { contentTheme: "light", themeKey: "contentLightBrand", variant: "brand" },
+  { contentTheme: "dark", themeKey: "contentDarkDefault", variant: "default" },
+  { contentTheme: "dark", themeKey: "contentDarkBrand", variant: "brand" },
 ];
-
-const escapeHtml = (value: string): string =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-
-const tokenNameToCssVariable = (name: string): string =>
-  `--clbr-${name.replaceAll(".", "-")}`;
 
 const getColorGroup = (name: string): string => name.split(".")[1] ?? "";
 
@@ -143,7 +109,16 @@ const colorTokens: ColorTokenRow[] = Object.entries(msrdTokens.tokens)
     };
   });
 
-const colorTokenGroups: ColorTokenGroup[] = Array.from(
+// Semantic color tokens are dropped if they have no renderable `$value.hex`
+// (e.g. a new non-hex color group) — surface that instead of vanishing.
+reportDroppedTokens(
+  "color",
+  msrdTokens,
+  (name, token) => name.startsWith("color.") && token.layer === "semantic",
+  new Set(colorTokens.map((token) => token.name)),
+);
+
+const colorTokenGroups = Array.from(
   colorTokens.reduce<Map<string, ColorTokenRow[]>>((groups, token) => {
     const group = groups.get(token.group);
 
@@ -152,14 +127,11 @@ const colorTokenGroups: ColorTokenGroup[] = Array.from(
 
     return groups;
   }, new Map()),
-  ([group, tokens]) => ({
-    label: formatColorGroupLabel(group),
-    tokens,
-  }),
+  ([group, tokens]) => ({ label: formatColorGroupLabel(group), tokens }),
 );
 
-const renderSwatch = (token: ColorTokenRow, context: ColorContext): string => {
-  return `
+const renderSwatch = (token: ColorTokenRow, context: ColorContext): string =>
+  `
   <div
     class="swatch"
     data-clbr-content-theme="${escapeHtml(context.contentTheme)}"
@@ -173,34 +145,21 @@ const renderSwatch = (token: ColorTokenRow, context: ColorContext): string => {
       ${escapeHtml(token.hexByContext[context.themeKey] ?? "")}
     </span>
   </div>`;
-};
 
-const renderColorToken = (token: ColorTokenRow): string =>
-  `<div class="row">
-    <div class="meta">
-      <h3 class="title">var(${escapeHtml(token.cssVariable)})</h3>
-      ${renderClbrText({
-        as: "p",
-        children: processMarkdownInline(token.description),
-        size: "sm",
-      })}
-    </div>
-    <div class="preview">
+const renderPreview = (token: ColorTokenRow): string =>
+  `<div class="preview">
       ${colorContexts.map((context) => renderSwatch(token, context)).join("")}
-    </div>
-  </div>`;
+    </div>`;
 
-const renderColorGroup = (group: ColorTokenGroup): string =>
-  `<div class="section">
-    ${renderClbrHeading({
-      id: group.label.toLowerCase(),
-      level: 2,
-      responsive: true,
-      size: "lg",
-      text: group.label,
-    })}
-    ${group.tokens.map(renderColorToken).join("")}
-  </div>`;
+const groups: FoundationsGroup[] = colorTokenGroups.map((group) => ({
+  label: group.label,
+  rows: group.tokens.map((token) => ({
+    entries: [
+      { cssVariable: token.cssVariable, description: token.description },
+    ],
+    preview: renderPreview(token),
+  })),
+}));
 
 export default class Color {
   data() {
@@ -212,43 +171,11 @@ export default class Color {
   }
 
   render(data: PageData): string {
-    const color = data.color;
-
-    return renderClbrContainer({
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "lg",
-        paddingInline: "none",
-        responsive: true,
-        children: renderClbrGrid({
-          children: renderClbrGridItem({
-            colStart: 2,
-            colSpan: 10,
-            children: renderClbrStack({
-              gap: "md",
-              children: [
-                renderClbrHeading({
-                  level: 1,
-                  opticalAlign: true,
-                  responsive: true,
-                  size: "2xl",
-                  text: color.title,
-                }),
-                renderClbrText({
-                  as: "p",
-                  children: color.strapline,
-                  responsive: true,
-                  size: "lg",
-                }),
-                renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-foundations docs-color">
-                  ${colorTokenGroups.map(renderColorGroup).join("")}
-                </div>`,
-              ].join(""),
-            }),
-          }),
-        }),
-      }),
+    return renderFoundationsPage({
+      docsClass: "docs-color",
+      groups,
+      strapline: data.color.strapline,
+      title: data.color.title,
     });
   }
 }
