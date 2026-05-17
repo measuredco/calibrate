@@ -4,6 +4,8 @@ html {
 
 :where(.clbr) {
   .docs-foundations {
+    --docs-foundations-row-max-inline-size: 29rem;
+
     container-type: inline-size;
 
     .section {
@@ -18,7 +20,7 @@ html {
     .row {
       margin-block: var(--clbr-spacing-vertical-600)
         var(--clbr-spacing-vertical-700);
-      max-inline-size: 28rem;
+      max-inline-size: var(--docs-foundations-row-max-inline-size);
 
       @container (inline-size >=46rem) {
         max-inline-size: none;
@@ -81,11 +83,9 @@ html {
       --docs-color-swatch-surface-gap: 0.5rem;
 
       align-items: center;
-      background-color: var(--clbr-color-background-panel);
-      border-radius: calc(
-        var(--docs-color-swatch-surface-inline-size) *
-          var(--clbr-radius-ratio-default)
-      );
+      background-color: var(--clbr-color-background-default);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
       color: var(--clbr-color-foreground-default);
       display: flex;
       flex-direction: column;
@@ -100,9 +100,7 @@ html {
     .swatch-color {
       aspect-ratio: 1 / 1;
       block-size: var(--clbr-spacing-vertical-1000);
-      border-radius: calc(
-        var(--clbr-spacing-vertical-1000) * var(--clbr-radius-ratio-default)
-      );
+      border-radius: var(--clbr-radius-2xs);
       forced-color-adjust: none;
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
@@ -119,13 +117,6 @@ html {
 
   .docs-typography {
     .row {
-      /* Flexing rows get a min height so short samples don't collapse. */
-      &:has(.preview):not(:has(.preview[style^="max-inline-size"])) {
-        @container (inline-size >=46rem) {
-          min-block-size: var(--clbr-spacing-vertical-1200);
-        }
-      }
-
       /* measure previews span the full row width — keep them stacked. */
       &:has(.preview[style^="max-inline-size"]) {
         @container (inline-size >=46rem) {
@@ -138,30 +129,38 @@ html {
     .preview {
       background-color: var(--clbr-color-background-subtle);
       block-size: fit-content;
-      border-radius: calc(1lh * var(--clbr-radius-ratio-default));
+      border-radius: var(--clbr-radius-sm);
       color: var(--clbr-color-foreground-default);
       display: flex;
-      font: var(--clbr-typography-text-body-responsive-lg);
-      justify-content: center;
-      max-inline-size: 28rem;
+      font: var(--clbr-typography-text-body-md);
+      max-inline-size: var(--docs-foundations-row-max-inline-size);
       min-inline-size: var(--clbr-layout-grid-item-min-width);
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-subtle);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
-
-      &[style^="max-inline-size"] {
-        font: var(--clbr-typography-text-body-sm);
-      }
+      overflow-block: hidden;
+      overflow-inline: scroll;
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
 
       @media (width >=48em) {
-        min-inline-size: 28rem;
+        &:not(:has(.bar)) {
+          min-inline-size: var(--docs-foundations-row-max-inline-size);
+        }
       }
+    }
+
+    .bar {
+      background-color: var(--clbr-color-foreground-default);
+      border-radius: var(--clbr-radius-2xs);
+      inline-size: var(--clbr-spacing-horizontal-1000);
     }
   }
 
   .docs-spacing {
     .preview {
       background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
       border-radius: var(--clbr-radius-sm);
       display: flex;
       min-inline-size: var(--clbr-layout-grid-item-min-width);
@@ -170,14 +169,6 @@ html {
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
       padding: var(--clbr-spacing-vertical-500)
         var(--clbr-spacing-horizontal-500);
-
-      &[data-axis="vertical"] {
-        align-items: flex-start;
-      }
-
-      &[data-axis="horizontal"] {
-        align-items: center;
-      }
     }
 
     .bar {
@@ -191,6 +182,61 @@ html {
       .docs-spacing [data-axis="horizontal"] & {
         block-size: var(--clbr-spacing-vertical-1000);
       }
+    }
+  }
+
+  .docs-layout {
+    /* stacked-width previews (container max-width, grid item min-width)
+       span the full row width — keep them stacked, same as the typography
+       measure preview. */
+    .row:has(.preview[style^="max-inline-size"]) {
+      @container (inline-size >=46rem) {
+        display: block;
+        margin-block-end: var(--clbr-spacing-vertical-700);
+      }
+    }
+
+    .preview {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+
+    .icon-box {
+      aspect-ratio: 1 / 1;
+      background-color: var(--clbr-color-foreground-default);
+      border-radius: var(--clbr-radius-2xs);
+    }
+
+    /* Unitless tokens with no spatial form (grid columns, viewBox ratios) —
+       show the raw value. */
+    .value-text {
+      font: var(--clbr-typography-text-body-sm);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .border-bar {
+      background-color: var(--clbr-color-foreground-default);
+      border-radius: var(--clbr-radius-2xs);
+      inline-size: var(--clbr-spacing-horizontal-1000);
+    }
+
+    .inline-bar {
+      background-color: var(--clbr-color-foreground-default);
+      block-size: var(--clbr-spacing-vertical-1000);
+      border-radius: var(--clbr-radius-2xs);
+    }
+
+    .divider-bar {
+      background-color: var(--clbr-color-foreground-default);
+      border-radius: var(--clbr-radius-2xs);
     }
   }
 }

@@ -3,13 +3,13 @@
   "container": {
     "gutter": {
       "$type": "dimension",
-      "default": {
-        "$description": "Default container gutter. The inline padding between page edge and content.",
-        "$value": "{spacing.horizontal.600}"
-      },
       "narrow": {
         "$description": "Narrow container gutter. Use in tight responsive layouts where the default gutter consumes too much horizontal space.",
         "$value": "{container.gutter.default}"
+      },
+      "default": {
+        "$description": "Default container gutter. The inline padding between page edge and content.",
+        "$value": "{spacing.horizontal.600}"
       }
     }
   },

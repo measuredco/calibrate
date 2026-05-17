@@ -28,17 +28,20 @@ interface TokenDocument {
   tokens: Record<string, SpacingToken>;
 }
 
+type SpacingGroup = "horizontal" | "vertical" | "vertical-responsive";
+
 interface SpacingTokenRow {
+  // Axis drives the preview (vertical → block-size, horizontal → inline-size);
+  // group drives sectioning (responsive vertical is its own section).
   axis: "horizontal" | "vertical";
   cssVariable: string;
   description: string;
-  isResponsive: boolean;
+  group: SpacingGroup;
   name: string;
   step: number;
 }
 
 interface SpacingTokenGroup {
-  axis: "horizontal" | "vertical";
   label: string;
   tokens: SpacingTokenRow[];
 }
@@ -60,8 +63,8 @@ const tokenNameToCssVariable = (name: string): string =>
 
 // Standard spacing lives under `spacing.{axis}.{step}`. The responsive
 // vertical variants live under `layout.spacing.vertical.{step}` (a separate
-// size context), so they're pulled in here and interleaved with their
-// standard counterpart — same treatment as typography's text/responsive.
+// size context); they get their own section, same split as typography's
+// text / text-responsive.
 const parseSpacingTokenName = (
   name: string,
 ):
@@ -86,38 +89,41 @@ const parseSpacingTokenName = (
   return undefined;
 };
 
-const spacingTokens: SpacingTokenRow[] = Object.entries(baseTokens.tokens)
-  .filter(
-    ([name, token]) =>
-      token.layer === "semantic" && parseSpacingTokenName(name),
-  )
-  .map(([name, token]) => {
-    const parsed = parseSpacingTokenName(name)!;
+const spacingTokens: SpacingTokenRow[] = Object.entries(
+  baseTokens.tokens,
+).flatMap(([name, token]) => {
+  if (token.layer !== "semantic") return [];
+  const parsed = parseSpacingTokenName(name);
+  if (!parsed) return [];
 
-    return {
+  return [
+    {
       axis: parsed.axis,
       cssVariable: tokenNameToCssVariable(name),
       description: token.$description ?? "",
-      isResponsive: parsed.isResponsive,
+      group: parsed.isResponsive
+        ? ("vertical-responsive" as const)
+        : parsed.axis,
       name,
       step: parsed.step,
-    };
-  });
+    },
+  ];
+});
 
-// Group by axis (vertical first), then sort numerically by step with each
-// standard step immediately followed by its responsive counterpart.
-const axisOrder: SpacingTokenRow["axis"][] = ["vertical", "horizontal"];
+// One section per group, in this order; each is single-kind so a plain
+// step-ascending sort reads correctly at every viewport.
+const groupOrder: { group: SpacingGroup; label: string }[] = [
+  { group: "vertical", label: "Vertical" },
+  { group: "vertical-responsive", label: "Vertical responsive" },
+  { group: "horizontal", label: "Horizontal" },
+];
 
-const spacingTokenGroups: SpacingTokenGroup[] = axisOrder
-  .map((axis) => ({
-    axis,
-    label: `${axis[0]!.toUpperCase()}${axis.slice(1)}`,
+const spacingTokenGroups: SpacingTokenGroup[] = groupOrder
+  .map(({ group, label }) => ({
+    label,
     tokens: spacingTokens
-      .filter((token) => token.axis === axis)
-      .sort((a, b) => {
-        if (a.step !== b.step) return a.step - b.step;
-        return Number(a.isResponsive) - Number(b.isResponsive);
-      }),
+      .filter((token) => token.group === group)
+      .sort((a, b) => a.step - b.step),
   }))
   .filter((group) => group.tokens.length > 0);
 
@@ -148,7 +154,7 @@ const renderSpacingToken = (token: SpacingTokenRow): string =>
 const renderSpacingGroup = (group: SpacingTokenGroup): string =>
   `<div class="section">
     ${renderClbrHeading({
-      id: group.label.toLowerCase(),
+      id: group.label.toLowerCase().replaceAll(" ", "-"),
       level: 2,
       responsive: true,
       size: "lg",
