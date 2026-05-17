@@ -2785,10 +2785,6 @@
       "$type": "number",
       "$value": 0.34
     },
-    "effect.filter.image": {
-      "layer": "semantic",
-      "$value": 1
-    },
     "effect.opacity.disabled": {
       "layer": "semantic",
       "$value": 0.4,
@@ -2905,6 +2901,10 @@
     "effect.stroke.outset": {
       "layer": "semantic",
       "$value": "0px"
+    },
+    "effect.filter.image": {
+      "layer": "semantic",
+      "$value": 1
     },
     "color.brand.primary": {
       "layer": "semantic",

@@ -4236,11 +4236,6 @@
       "$description": "Decoration offset for prose links during active (pressed) state, in em.",
       "$value": 0.34
     },
-    "effect.filter.image": {
-      "layer": "semantic",
-      "$description": "Image filter. Use on imagery (photos, illustrations) to apply a styled image treatment.",
-      "$value": 0
-    },
     "effect.opacity.disabled": {
       "layer": "semantic",
       "$description": "Opacity for disabled controls. A fallback for when color treatments (e.g. muted foreground, subtle background) can't fully convey the state.",
@@ -4362,6 +4357,11 @@
       "layer": "semantic",
       "$description": "Outset stroke. Use with inset to create a decorative offset stroke effect (e.g. on cards). Applied at the block-start and inline-start edges.",
       "$value": "-4px"
+    },
+    "effect.filter.image": {
+      "layer": "semantic",
+      "$description": "Image filter. Use on imagery (photos, illustrations) to apply a styled image treatment.",
+      "$value": 0
     },
     "color.brand.primary": {
       "layer": "semantic",

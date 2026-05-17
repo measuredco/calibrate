@@ -1,10 +1,5 @@
 {
   "$schema": "../../../../../../schemas/2025.10/schema/format.json",
-  "filter": {
-    "image": {
-      "$value": "{primitive.effect.filter.grayscale.100}"
-    }
-  },
   "opacity": {
     "$type": "number",
     "disabled": {
@@ -33,6 +28,11 @@
     },
     "outset": {
       "$value": "{primitive.effect.stroke.outset}"
+    }
+  },
+  "filter": {
+    "image": {
+      "$value": "{primitive.effect.filter.grayscale.100}"
     }
   }
 }
