@@ -13,6 +13,7 @@ const sidebar: NavItem[] = [
   { href: "/typography/", label: "Typography" },
   { href: "/spacing/", label: "Spacing" },
   { href: "/layout/", label: "Layout" },
+  { href: "/breakpoint/", label: "Breakpoint" },
   { href: "/storybook/", label: "Storybook" },
 ];
 

@@ -38,6 +38,23 @@ html {
         }
       }
 
+      /* Block-width previews (container max-width, measure, grid item
+         min-width, breakpoint): stack meta over preview and let the preview
+         use the full available width, capped only by its own token. The
+         readable-width cap moves to the meta so the prose still wraps. */
+      &:has(.preview[style^="max-inline-size"]) {
+        max-inline-size: none;
+
+        .meta {
+          max-inline-size: var(--docs-foundations-row-max-inline-size);
+        }
+
+        @container (inline-size >=46rem) {
+          display: block;
+          margin-block-end: var(--clbr-spacing-vertical-700);
+        }
+      }
+
       .docs-foundations .section:last-child &:last-child {
         margin-block-end: 0;
       }
@@ -116,16 +133,6 @@ html {
   }
 
   .docs-typography {
-    .row {
-      /* measure previews span the full row width — keep them stacked. */
-      &:has(.preview[style^="max-inline-size"]) {
-        @container (inline-size >=46rem) {
-          display: block;
-          margin-block-end: var(--clbr-spacing-vertical-700);
-        }
-      }
-    }
-
     .preview {
       background-color: var(--clbr-color-background-subtle);
       block-size: fit-content;
@@ -186,16 +193,6 @@ html {
   }
 
   .docs-layout {
-    /* stacked-width previews (container max-width, grid item min-width)
-       span the full row width — keep them stacked, same as the typography
-       measure preview. */
-    .row:has(.preview[style^="max-inline-size"]) {
-      @container (inline-size >=46rem) {
-        display: block;
-        margin-block-end: var(--clbr-spacing-vertical-700);
-      }
-    }
-
     .preview {
       background-color: var(--clbr-color-background-subtle);
       block-size: fit-content;
@@ -237,6 +234,21 @@ html {
     .divider-bar {
       background-color: var(--clbr-color-foreground-default);
       border-radius: var(--clbr-radius-2xs);
+    }
+  }
+
+  .docs-breakpoint {
+    .preview {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
     }
   }
 }
