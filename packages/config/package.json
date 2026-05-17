@@ -1,6 +1,6 @@
 {
   "name": "@measured/calibrate-config",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Shared developer-tooling config for Calibrate. ESLint, Stylelint, Prettier, browserslist presets plus the --clbr-* token catalog for editor autocomplete and tooling.",
   "repository": {
     "type": "git",

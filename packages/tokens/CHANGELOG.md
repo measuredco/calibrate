@@ -1,5 +1,19 @@
 # @measured/calibrate-tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- cd56da4: Normalise dotted token paths in `clbr.*.tokens.json` to kebab-case (matching the CSS custom property form) and emit contexts with the default context first, preserving source order instead of sorting alphabetically. Token values are unchanged; the dotted key shape and key order are.
+
+### Patch Changes
+
+- ef80527: Order the semantic `effect.*` keys (`opacity`, `shadow`, `stroke`, `filter`) so the dist JSON reads in a more natural order. Token names, values, and descriptions are unchanged.
+- ef80527: Order the `radius.ratio` keys (`default` before `lg`) so the dist JSON reads naturally, and tighten the `layout.spacing.vertical.700` description ("Default layout vertical step"). Token names and values are unchanged.
+- 7d1eda0: Clarify the `layout.spacing.vertical.*` and `container.gutter.narrow` token descriptions to state explicitly that these are the responsive layout variants. Token names and values are unchanged.
+- e1147f8: Reorder a few semantic token keys so the dist JSON reads in a more natural order: `typography.measure` now lists `default` before `tight`, and `layout.container.gutter` lists `default` before `narrow`. Token names, values, and descriptions are unchanged.
+- b08006c: Reorder typography token groups in the semantic source (and matching dist JSON output) to a more readable order — `paragraph` moves ahead of `leading`. Token names and values are unchanged.
+
 ## 0.3.0
 
 ## 0.2.0
