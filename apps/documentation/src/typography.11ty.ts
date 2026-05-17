@@ -239,7 +239,7 @@ export default class Typography {
                   size: "lg",
                 }),
                 renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-typography">
+                `<div class="docs-foundations docs-typography">
                   ${typographyTokenGroups.map(renderTypographyGroup).join("")}
                 </div>`,
               ].join(""),

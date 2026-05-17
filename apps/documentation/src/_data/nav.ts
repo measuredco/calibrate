@@ -11,6 +11,7 @@ const sidebar: NavItem[] = [
   { href: "/getting-started/", label: "Getting started" },
   { href: "/color/", label: "Color" },
   { href: "/typography/", label: "Typography" },
+  { href: "/spacing/", label: "Spacing" },
   { href: "/storybook/", label: "Storybook" },
 ];
 

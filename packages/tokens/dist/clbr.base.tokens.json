@@ -452,7 +452,7 @@
     },
     "layout.container.gutter.narrow": {
       "layer": "semantic",
-      "$description": "Narrow container gutter. Use in tight layouts where the default gutter consumes too much horizontal space.",
+      "$description": "Narrow container gutter. Use in tight responsive layouts where the default gutter consumes too much horizontal space.",
       "$value": "16px",
       "varyingModifiers": [
         "size"
@@ -562,7 +562,7 @@
     },
     "layout.spacing.vertical.250": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 250. Minimal vertical block gap.",
+      "$description": "Responsive layout vertical spacing 250. Minimal vertical block gap.",
       "$value": "3px",
       "varyingModifiers": [
         "size"
@@ -578,7 +578,7 @@
     },
     "layout.spacing.vertical.400": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 400.",
+      "$description": "Responsive layout vertical spacing 400.",
       "$value": "6px",
       "varyingModifiers": [
         "size"
@@ -594,7 +594,7 @@
     },
     "layout.spacing.vertical.500": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 500.",
+      "$description": "Responsive layout vertical spacing 500.",
       "$value": "12px",
       "varyingModifiers": [
         "size"
@@ -610,7 +610,7 @@
     },
     "layout.spacing.vertical.600": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 600.",
+      "$description": "Responsive layout vertical spacing 600.",
       "$value": "18px",
       "varyingModifiers": [
         "size"
@@ -626,7 +626,7 @@
     },
     "layout.spacing.vertical.700": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 700. Default layout vertical step.",
+      "$description": "Responsive layout vertical spacing 700. Default responsive layout vertical step.",
       "$value": "24px",
       "varyingModifiers": [
         "size"
@@ -642,7 +642,7 @@
     },
     "layout.spacing.vertical.800": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 800.",
+      "$description": "Responsive layout vertical spacing 800.",
       "$value": "36px",
       "varyingModifiers": [
         "size"
@@ -658,7 +658,7 @@
     },
     "layout.spacing.vertical.900": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 900.",
+      "$description": "Responsive layout vertical spacing 900.",
       "$value": "48px",
       "varyingModifiers": [
         "size"
@@ -674,7 +674,7 @@
     },
     "layout.spacing.vertical.950": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 950.",
+      "$description": "Responsive layout vertical spacing 950.",
       "$value": "60px",
       "varyingModifiers": [
         "size"
@@ -690,7 +690,7 @@
     },
     "layout.spacing.vertical.1000": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 1000.",
+      "$description": "Responsive layout vertical spacing 1000.",
       "$value": "72px",
       "varyingModifiers": [
         "size"
@@ -706,7 +706,7 @@
     },
     "layout.spacing.vertical.1100": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 1100.",
+      "$description": "Responsive layout vertical spacing 1100.",
       "$value": "84px",
       "varyingModifiers": [
         "size"
@@ -722,7 +722,7 @@
     },
     "layout.spacing.vertical.1200": {
       "layer": "semantic",
-      "$description": "Layout vertical spacing 1200. Largest vertical block gap.",
+      "$description": "Responsive layout vertical spacing 1200. Largest vertical block gap.",
       "$value": "96px",
       "varyingModifiers": [
         "size"
