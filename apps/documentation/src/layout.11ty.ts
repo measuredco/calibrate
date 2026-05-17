@@ -1,19 +1,14 @@
 import { createRequire } from "node:module";
 
-import {
-  renderClbrBox,
-  renderClbrContainer,
-  renderClbrDivider,
-  renderClbrGrid,
-  renderClbrGridItem,
-  renderClbrHeading,
-  renderClbrStack,
-  renderClbrText,
-} from "@measured/calibrate-core";
-import { processMarkdownInline } from "@measured/calibrate-markdown";
-
 import type { LayoutPageData } from "./_data/layoutPage";
 import layoutPageData from "./_data/layoutPage";
+import {
+  escapeHtml,
+  type FoundationsGroup,
+  renderFoundationsPage,
+  type TokenDocument,
+  tokenNameToCssVariable,
+} from "./_shared/foundations";
 
 interface PageData {
   layoutPage: LayoutPageData;
@@ -23,10 +18,6 @@ interface LayoutToken {
   $description?: string;
   $value?: unknown;
   layer?: string;
-}
-
-interface TokenDocument {
-  tokens: Record<string, LayoutToken>;
 }
 
 interface LayoutTokenRow {
@@ -45,21 +36,13 @@ interface LayoutTokenGroup {
 // Layout tokens are mostly brand-independent (base); the brand divider
 // dimensions live in the per-brand export, so merge both.
 const require = createRequire(import.meta.url);
-const baseTokens = require("@measured/calibrate-tokens/base") as TokenDocument;
-const msrdTokens = require("@measured/calibrate-tokens/msrd") as TokenDocument;
-const allTokens: TokenDocument = {
+const baseTokens =
+  require("@measured/calibrate-tokens/base") as TokenDocument<LayoutToken>;
+const msrdTokens =
+  require("@measured/calibrate-tokens/msrd") as TokenDocument<LayoutToken>;
+const allTokens: TokenDocument<LayoutToken> = {
   tokens: { ...baseTokens.tokens, ...msrdTokens.tokens },
 };
-
-const escapeHtml = (value: string): string =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-
-const tokenNameToCssVariable = (name: string): string =>
-  `--clbr-${name.replaceAll(".", "-")}`;
 
 const getLayoutGroup = (name: string): string => name.split(".")[1] ?? "";
 
@@ -167,26 +150,20 @@ const renderPreview = (token: LayoutTokenRow): string => {
   ></div>`;
 };
 
-const renderMeta = (token: LayoutTokenRow): string =>
-  `<h3 class="title">var(${escapeHtml(token.cssVariable)})</h3>
-    ${renderClbrText({
-      as: "p",
-      children: processMarkdownInline(token.description),
-      size: "sm",
-    })}`;
-
-const renderLayoutToken = (token: LayoutTokenRow): string =>
-  `<div class="row">
-    <div class="meta">${renderMeta(token)}</div>
-    ${renderPreview(token)}
-  </div>`;
+const toEntry = (token: LayoutTokenRow) => ({
+  cssVariable: token.cssVariable,
+  description: token.description,
+});
 
 // Divider documents two tokens (brand size + thickness) but they describe one
 // element, so render a single row: both tokens in the meta, one preview
 // driven by both vars.
-const renderDividerRow = (tokens: LayoutTokenRow[]): string => {
+const dividerRow = (tokens: LayoutTokenRow[]) => {
   const size = tokens.find((t) => t.name.endsWith(".size"));
   const thickness = tokens.find((t) => t.name.endsWith(".thickness"));
+  const entries = [size, thickness].filter((t): t is LayoutTokenRow =>
+    Boolean(t),
+  );
   const style = [
     size ? `inline-size: var(${escapeHtml(size.cssVariable)})` : "",
     thickness ? `block-size: var(${escapeHtml(thickness.cssVariable)})` : "",
@@ -194,34 +171,23 @@ const renderDividerRow = (tokens: LayoutTokenRow[]): string => {
     .filter(Boolean)
     .join("; ");
 
-  return `<div class="row">
-    <div class="meta">
-      ${[size, thickness]
-        .filter((t): t is LayoutTokenRow => Boolean(t))
-        .map(renderMeta)
-        .join("")}
-    </div>
-    <div class="preview">
+  return {
+    entries: entries.map(toEntry),
+    preview: `<div class="preview">
       <span class="divider-bar" style="${style}"></span>
-    </div>
-  </div>`;
+    </div>`,
+  };
 };
 
-const renderLayoutGroup = (group: LayoutTokenGroup): string =>
-  `<div class="section">
-    ${renderClbrHeading({
-      id: group.label.toLowerCase().replaceAll(" ", "-"),
-      level: 2,
-      responsive: true,
-      size: "lg",
-      text: group.label,
-    })}
-    ${
-      isDividerGroup(group.tokens)
-        ? renderDividerRow(group.tokens)
-        : group.tokens.map(renderLayoutToken).join("")
-    }
-  </div>`;
+const groups: FoundationsGroup[] = layoutTokenGroups.map((group) => ({
+  label: group.label,
+  rows: isDividerGroup(group.tokens)
+    ? [dividerRow(group.tokens)]
+    : group.tokens.map((token) => ({
+        entries: [toEntry(token)],
+        preview: renderPreview(token),
+      })),
+}));
 
 export default class Layout {
   data() {
@@ -233,43 +199,11 @@ export default class Layout {
   }
 
   render(data: PageData): string {
-    const layout = data.layoutPage;
-
-    return renderClbrContainer({
-      maxInlineSize: "none",
-      children: renderClbrBox({
-        paddingBlock: "lg",
-        paddingInline: "none",
-        responsive: true,
-        children: renderClbrGrid({
-          children: renderClbrGridItem({
-            colStart: 2,
-            colSpan: 10,
-            children: renderClbrStack({
-              gap: "md",
-              children: [
-                renderClbrHeading({
-                  level: 1,
-                  opticalAlign: true,
-                  responsive: true,
-                  size: "2xl",
-                  text: layout.title,
-                }),
-                renderClbrText({
-                  as: "p",
-                  children: layout.strapline,
-                  responsive: true,
-                  size: "lg",
-                }),
-                renderClbrDivider({ tone: "brand" }),
-                `<div class="docs-foundations docs-layout">
-                  ${layoutTokenGroups.map(renderLayoutGroup).join("")}
-                </div>`,
-              ].join(""),
-            }),
-          }),
-        }),
-      }),
+    return renderFoundationsPage({
+      docsClass: "docs-layout",
+      groups,
+      strapline: data.layoutPage.strapline,
+      title: data.layoutPage.title,
     });
   }
 }
