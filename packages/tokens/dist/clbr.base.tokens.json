@@ -626,7 +626,7 @@
     },
     "layout.spacing.vertical.700": {
       "layer": "semantic",
-      "$description": "Responsive layout vertical spacing 700. Default responsive layout vertical step.",
+      "$description": "Responsive layout vertical spacing 700. Default layout vertical step.",
       "$value": "24px",
       "varyingModifiers": [
         "size"

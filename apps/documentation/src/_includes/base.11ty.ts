@@ -13,10 +13,11 @@ import {
   renderClbrRoot,
   renderClbrSidebar,
   renderClbrStack,
+  renderClbrText,
 } from "@measured/calibrate-core";
 
 import type { FooterData, FooterLink } from "../_data/footer";
-import type { NavData, NavItem } from "../_data/nav";
+import type { NavData, NavEntry, NavItem } from "../_data/nav";
 import type { SiteData } from "../_data/site";
 
 export interface PageData {
@@ -29,14 +30,24 @@ export interface PageData {
   title?: string;
 }
 
-const renderSidebarItems = (items: NavItem[]): string =>
-  items
-    .map(({ href, label }) =>
-      renderClbrLink({
-        href,
-        label,
-        tone: "neutral",
-      }),
+const renderNavLink = ({ href, label }: NavItem): string =>
+  renderClbrLink({ href, label, tone: "neutral" });
+
+// A group is introduced by a muted, non-link label above its links.
+const renderSidebarItems = (entries: NavEntry[]): string =>
+  entries
+    .map((entry) =>
+      "items" in entry
+        ? [
+            renderClbrText({
+              as: "p",
+              children: entry.label,
+              size: "sm",
+              tone: "muted",
+            }),
+            ...entry.items.map(renderNavLink),
+          ].join("")
+        : renderNavLink(entry),
     )
     .join("");
 

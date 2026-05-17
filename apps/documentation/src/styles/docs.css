@@ -38,6 +38,23 @@ html {
         }
       }
 
+      /* Block-width previews (container max-width, measure, grid item
+         min-width, breakpoint): stack meta over preview and let the preview
+         use the full available width, capped only by its own token. The
+         readable-width cap moves to the meta so the prose still wraps. */
+      &:has(.preview[style^="max-inline-size"]) {
+        max-inline-size: none;
+
+        .meta {
+          max-inline-size: var(--docs-foundations-row-max-inline-size);
+        }
+
+        @container (inline-size >=46rem) {
+          display: block;
+          margin-block-end: var(--clbr-spacing-vertical-700);
+        }
+      }
+
       .docs-foundations .section:last-child &:last-child {
         margin-block-end: 0;
       }
@@ -62,39 +79,26 @@ html {
       font: var(--clbr-typography-text-body-sm);
       font-family: var(--clbr-typography-font-family-mono);
       font-weight: var(--clbr-typography-font-weight-bold);
-      margin-block: 0 var(--clbr-spacing-vertical-250);
+      margin-block: 0;
     }
   }
 
   .docs-color {
     .preview {
-      display: grid;
-      gap: var(--clbr-spacing-horizontal-400);
-      grid-template-columns: repeat(2, max-content);
-
-      @container (inline-size >=24rem) {
-        gap: var(--clbr-spacing-horizontal-500);
-        grid-template-columns: repeat(4, max-content);
-      }
+      display: flex;
+      gap: var(--clbr-spacing-horizontal-500);
     }
 
     .swatch {
-      --docs-color-swatch-surface-inline-size: 5.5rem;
-      --docs-color-swatch-surface-gap: 0.5rem;
-
-      align-items: center;
       background-color: var(--clbr-color-background-default);
       block-size: fit-content;
       border-radius: var(--clbr-radius-sm);
-      color: var(--clbr-color-foreground-default);
       display: flex;
-      flex-direction: column;
-      gap: var(--docs-color-swatch-surface-gap);
-      inline-size: var(--docs-color-swatch-surface-inline-size);
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
-      padding-block: var(--docs-color-swatch-surface-gap);
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
     }
 
     .swatch-color {
@@ -106,23 +110,12 @@ html {
         var(--clbr-color-border-default);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
     }
-
-    .swatch-hex {
-      font-family: var(--clbr-typography-font-family-mono);
-      font-size: var(--clbr-typography-type-step-50-font-size);
-      font-weight: var(--clbr-typography-font-weight-regular-plus);
-      line-height: 1;
-    }
   }
 
   .docs-typography {
-    .row {
-      /* measure previews span the full row width — keep them stacked. */
-      &:has(.preview[style^="max-inline-size"]) {
-        @container (inline-size >=46rem) {
-          display: block;
-          margin-block-end: var(--clbr-spacing-vertical-700);
-        }
+    .row:has(.preview):not(:has(.bar)) {
+      @media (width >=48em) {
+        min-block-size: var(--clbr-spacing-vertical-1200);
       }
     }
 
@@ -186,13 +179,9 @@ html {
   }
 
   .docs-layout {
-    /* stacked-width previews (container max-width, grid item min-width)
-       span the full row width — keep them stacked, same as the typography
-       measure preview. */
-    .row:has(.preview[style^="max-inline-size"]) {
-      @container (inline-size >=46rem) {
-        display: block;
-        margin-block-end: var(--clbr-spacing-vertical-700);
+    .row:has(.icon-box) {
+      @media (width >=48em) {
+        min-block-size: var(--clbr-spacing-vertical-1200);
       }
     }
 
@@ -215,8 +204,6 @@ html {
       border-radius: var(--clbr-radius-2xs);
     }
 
-    /* Unitless tokens with no spatial form (grid columns, viewBox ratios) —
-       show the raw value. */
     .value-text {
       font: var(--clbr-typography-text-body-sm);
       font-variant-numeric: tabular-nums;
@@ -237,6 +224,87 @@ html {
     .divider-bar {
       background-color: var(--clbr-color-foreground-default);
       border-radius: var(--clbr-radius-2xs);
+    }
+  }
+
+  .docs-breakpoint {
+    .preview {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+  }
+
+  .docs-radius {
+    .preview {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+
+    .radius-box {
+      aspect-ratio: 1 / 1;
+      background-color: var(--clbr-color-foreground-default);
+      block-size: var(--clbr-spacing-vertical-1000);
+    }
+  }
+
+  .docs-effect {
+    .preview {
+      align-items: center;
+      background-color: var(--clbr-color-background-subtle);
+      block-size: var(--clbr-spacing-vertical-1200);
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+
+    .opacity-box {
+      aspect-ratio: 1 / 1;
+      background-color: var(--clbr-color-foreground-default);
+      block-size: var(--clbr-spacing-vertical-1000);
+      border-radius: var(--clbr-radius-2xs);
+    }
+
+    /* The inset/outset arrive as custom props set inline on the preview. */
+    .preview[style*="--docs-effect-stroke"] {
+      --docs-effect-stroke-inset: 0;
+      --docs-effect-stroke-outset: 0;
+
+      box-shadow: none;
+      outline: none;
+      position: relative;
+
+      &::after {
+        border: var(--clbr-layout-border-width-default) solid
+          var(--clbr-color-border-default);
+        border-radius: var(--clbr-radius-sm);
+        content: "";
+        inset-block: var(--docs-effect-stroke-outset)
+          var(--docs-effect-stroke-inset);
+        inset-inline: var(--docs-effect-stroke-outset)
+          var(--docs-effect-stroke-inset);
+        position: absolute;
+      }
     }
   }
 }
