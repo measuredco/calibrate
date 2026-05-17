@@ -15,6 +15,7 @@ const sidebar: NavItem[] = [
   { href: "/layout/", label: "Layout" },
   { href: "/breakpoint/", label: "Breakpoint" },
   { href: "/radius/", label: "Radius" },
+  { href: "/effects/", label: "Effects" },
   { href: "/storybook/", label: "Storybook" },
 ];
 

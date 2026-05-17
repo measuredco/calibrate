@@ -23,6 +23,9 @@ const require = createRequire(import.meta.url);
 const msrdTokens =
   require("@measured/calibrate-tokens/msrd") as TokenDocument<RadiusToken>;
 
+// Ratio tokens are unitless, so they're previewed as calc(box × ratio).
+// This MUST stay equal to the .radius-box block-size in docs.css, or the
+// proportional rounding won't match the rendered box.
 const RADIUS_BOX = "var(--clbr-spacing-vertical-1000)";
 
 const radiusTokens = Object.entries(msrdTokens.tokens)

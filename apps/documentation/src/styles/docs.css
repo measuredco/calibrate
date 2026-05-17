@@ -262,4 +262,49 @@ html {
       block-size: var(--clbr-spacing-vertical-1000);
     }
   }
+
+  .docs-effect {
+    .preview {
+      align-items: center;
+      background-color: var(--clbr-color-background-subtle);
+      block-size: var(--clbr-spacing-vertical-1200);
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+
+    .opacity-box {
+      aspect-ratio: 1 / 1;
+      background-color: var(--clbr-color-foreground-default);
+      block-size: var(--clbr-spacing-vertical-1000);
+      border-radius: var(--clbr-radius-2xs);
+    }
+
+    /* The inset/outset arrive as custom props set inline on the preview. */
+    .preview[style*="--docs-effect-stroke"] {
+      --docs-effect-stroke-inset: 0;
+      --docs-effect-stroke-outset: 0;
+
+      box-shadow: none;
+      outline: none;
+      position: relative;
+
+      &::after {
+        border: var(--clbr-layout-border-width-default) solid
+          var(--clbr-color-border-default);
+        border-radius: var(--clbr-radius-sm);
+        content: "";
+        inset-block: var(--docs-effect-stroke-outset)
+          var(--docs-effect-stroke-inset);
+        inset-inline: var(--docs-effect-stroke-outset)
+          var(--docs-effect-stroke-inset);
+        position: absolute;
+      }
+    }
+  }
 }
