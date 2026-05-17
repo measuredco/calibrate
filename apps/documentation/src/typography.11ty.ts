@@ -19,8 +19,17 @@ interface PageData {
   typography: TypographyData;
 }
 
+interface TextValue {
+  fontSize?: string;
+  fontWeight?: number;
+}
+
 interface TypographyToken {
   $description?: string;
+  $value?: TextValue | unknown;
+  // Responsive text tokens carry larger per-viewport values here; the base
+  // $value is the minimum (narrow screens).
+  bySize?: Record<string, { $value?: TextValue }>;
   layer?: string;
 }
 
@@ -32,7 +41,11 @@ interface TypographyTokenRow {
   cssVariable: string;
   description: string;
   group: string;
+  // Sort keys for the text sections (0 for non-text groups).
+  maxPx: number;
+  minPx: number;
   name: string;
+  weight: number;
 }
 
 interface TypographyTokenGroup {
@@ -53,7 +66,19 @@ const escapeHtml = (value: string): string =>
 const tokenNameToCssVariable = (name: string): string =>
   `--clbr-${name.replaceAll(".", "-")}`;
 
-const getTypographyGroup = (name: string): string => name.split(".")[1] ?? "";
+// Split text into two sections — "text" (static) and "text-responsive" — so
+// each section holds one kind. Sorting by size is then unambiguous within a
+// section (static: min === max; responsive-only: no min/max crossovers).
+const getTypographyGroup = (name: string): string => {
+  const segment = name.split(".")[1] ?? "";
+  if (segment === "text" && name.includes(".responsive.")) {
+    return "text-responsive";
+  }
+  return segment;
+};
+
+const isTextGroup = (group: string): boolean =>
+  group === "text" || group === "text-responsive";
 
 const formatTypographyGroupLabel = (group: string): string => {
   if (group.length === 0) return group;
@@ -63,21 +88,48 @@ const formatTypographyGroupLabel = (group: string): string => {
 const SAMPLE_TEXT = "Calibrate";
 
 interface PreviewConfig {
+  // Render a vertical-spacing-style bar sized to the token (block-size),
+  // instead of applying a CSS property to a text sample.
+  bar?: boolean;
+  // Render the preview on an inverse surface (measure only).
+  inverse?: boolean;
   noSample?: boolean;
-  property: string;
+  property?: string;
 }
 
 const previewByGroup: Record<string, PreviewConfig | undefined> = {
   "font-family": { property: "font-family" },
   "font-weight": { property: "font-weight" },
-  leading: { noSample: true, property: "line-height" },
-  measure: { noSample: true, property: "max-inline-size" },
-  paragraph: { noSample: true, property: "line-height" },
+  leading: { bar: true },
+  measure: { inverse: true, noSample: true, property: "max-inline-size" },
+  paragraph: { bar: true },
   text: { property: "font" },
+  "text-responsive": { property: "font" },
 };
 
 const getPreviewConfig = (group: string): PreviewConfig | undefined =>
   previewByGroup[group];
+
+// Responsive tokens scale from a narrow min (base $value) to a wide max
+// (bySize); static tokens have min === max.
+const pxOf = (value: TextValue | undefined): number => {
+  const px = Number.parseFloat(String(value?.fontSize));
+  return Number.isFinite(px) ? px : 0;
+};
+
+const textValue = (
+  token: TypographyToken,
+): { maxPx: number; minPx: number; weight: number } => {
+  const base =
+    token.$value && typeof token.$value === "object"
+      ? (token.$value as TextValue)
+      : undefined;
+  const minPx = pxOf(base);
+  const bySizeValues = Object.values(token.bySize ?? {}).map((s) => s.$value);
+  const maxPx = Math.max(minPx, ...bySizeValues.map((v) => pxOf(v)));
+
+  return { maxPx, minPx, weight: Number(base?.fontWeight) || 0 };
+};
 
 const typographyTokens: TypographyTokenRow[] = Object.entries(msrdTokens.tokens)
   .filter(
@@ -91,58 +143,27 @@ const typographyTokens: TypographyTokenRow[] = Object.entries(msrdTokens.tokens)
       throw new Error(`Unsupported typography token group: ${name}`);
     }
 
+    const { maxPx, minPx, weight } = textValue(token);
+
     return {
       cssVariable: tokenNameToCssVariable(name),
       description: token.$description ?? "",
       group,
+      maxPx,
+      minPx,
       name,
+      weight,
     };
   });
 
-const parseTextTokenName = (
-  name: string,
-): { category: string; isResponsive: boolean; size: string } | undefined => {
-  const parts = name.split(".");
-  if (parts.length < 4 || parts[0] !== "typography" || parts[1] !== "text")
-    return undefined;
-  const category = parts[2]!;
-  if (parts[3] === "responsive") {
-    return { category, isResponsive: true, size: parts[4] ?? "" };
-  }
-  return { category, isResponsive: false, size: parts[3]! };
-};
-
-const sortTextRows = (rows: TypographyTokenRow[]): TypographyTokenRow[] => {
-  const categoryOrder = new Map<string, number>();
-  const sizeOrderByCategory = new Map<string, Map<string, number>>();
-
-  for (const row of rows) {
-    const parsed = parseTextTokenName(row.name);
-    if (!parsed) continue;
-    if (!categoryOrder.has(parsed.category)) {
-      categoryOrder.set(parsed.category, categoryOrder.size);
-    }
-    const sizes =
-      sizeOrderByCategory.get(parsed.category) ??
-      sizeOrderByCategory.set(parsed.category, new Map()).get(parsed.category)!;
-    if (!sizes.has(parsed.size)) sizes.set(parsed.size, sizes.size);
-  }
-
-  return [...rows].sort((a, b) => {
-    const ap = parseTextTokenName(a.name);
-    const bp = parseTextTokenName(b.name);
-    if (!ap || !bp) return 0;
-    const aCat = categoryOrder.get(ap.category) ?? Infinity;
-    const bCat = categoryOrder.get(bp.category) ?? Infinity;
-    if (aCat !== bCat) return aCat - bCat;
-    const aSize =
-      sizeOrderByCategory.get(ap.category)?.get(ap.size) ?? Infinity;
-    const bSize =
-      sizeOrderByCategory.get(bp.category)?.get(bp.size) ?? Infinity;
-    if (aSize !== bSize) return aSize - bSize;
-    return Number(ap.isResponsive) - Number(bp.isResponsive);
-  });
-};
+// Sort a text section by value: size asc (wide, then narrow), then weight
+// asc (body before heading at equal size). Each section holds one kind, so
+// this reads ascending at every viewport — splitting static and responsive
+// is what avoids the cross-breakpoint ambiguity of a combined list.
+const sortTextRows = (rows: TypographyTokenRow[]): TypographyTokenRow[] =>
+  [...rows].sort(
+    (a, b) => a.maxPx - b.maxPx || a.minPx - b.minPx || a.weight - b.weight,
+  );
 
 const typographyTokenGroups: TypographyTokenGroup[] = Array.from(
   typographyTokens.reduce<Map<string, TypographyTokenRow[]>>(
@@ -158,7 +179,7 @@ const typographyTokenGroups: TypographyTokenGroup[] = Array.from(
   ),
   ([group, tokens]) => ({
     label: formatTypographyGroupLabel(group),
-    tokens: group === "text" ? sortTextRows(tokens) : tokens,
+    tokens: isTextGroup(group) ? sortTextRows(tokens) : tokens,
   }),
 );
 
@@ -166,11 +187,22 @@ const renderPreview = (token: TypographyTokenRow): string => {
   const config = getPreviewConfig(token.group);
   if (!config) return "";
 
-  const content = config.noSample ? "&nbsp;" : escapeHtml(SAMPLE_TEXT);
+  if (config.bar) {
+    return `<div class="preview">
+      <span
+        class="bar"
+        style="block-size: var(${escapeHtml(token.cssVariable)})"
+      ></span>
+    </div>`;
+  }
+
+  if (!config.property) return "";
+
+  const content = config.noSample ? "" : escapeHtml(SAMPLE_TEXT);
+  const surface = config.inverse ? ' data-clbr-surface="inverse"' : "";
 
   return `<div
-    class="preview"
-    data-clbr-surface="inverse"
+    class="preview"${surface}
     style="${escapeHtml(config.property)}: var(${escapeHtml(token.cssVariable)})"
   >${content}</div>`;
 };
