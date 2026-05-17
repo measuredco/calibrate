@@ -79,7 +79,7 @@ html {
       font: var(--clbr-typography-text-body-sm);
       font-family: var(--clbr-typography-font-family-mono);
       font-weight: var(--clbr-typography-font-weight-bold);
-      margin-block: 0 var(--clbr-spacing-vertical-250);
+      margin-block: 0;
     }
   }
 
@@ -113,6 +113,12 @@ html {
   }
 
   .docs-typography {
+    .row:has(.preview):not(:has(.bar)) {
+      @media (width >=48em) {
+        min-block-size: var(--clbr-spacing-vertical-1200);
+      }
+    }
+
     .preview {
       background-color: var(--clbr-color-background-subtle);
       block-size: fit-content;
@@ -173,6 +179,12 @@ html {
   }
 
   .docs-layout {
+    .row:has(.icon-box) {
+      @media (width >=48em) {
+        min-block-size: var(--clbr-spacing-vertical-1200);
+      }
+    }
+
     .preview {
       background-color: var(--clbr-color-background-subtle);
       block-size: fit-content;
@@ -192,8 +204,6 @@ html {
       border-radius: var(--clbr-radius-2xs);
     }
 
-    /* Unitless tokens with no spatial form (grid columns, viewBox ratios) —
-       show the raw value. */
     .value-text {
       font: var(--clbr-typography-text-body-sm);
       font-variant-numeric: tabular-nums;
@@ -229,6 +239,27 @@ html {
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
       padding: var(--clbr-spacing-vertical-500)
         var(--clbr-spacing-horizontal-500);
+    }
+  }
+
+  .docs-radius {
+    .preview {
+      background-color: var(--clbr-color-background-subtle);
+      block-size: fit-content;
+      border-radius: var(--clbr-radius-sm);
+      display: flex;
+      min-inline-size: var(--clbr-layout-grid-item-min-width);
+      outline: var(--clbr-layout-border-width-default) solid
+        var(--clbr-color-border-subtle);
+      outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
+    }
+
+    .radius-box {
+      aspect-ratio: 1 / 1;
+      background-color: var(--clbr-color-foreground-default);
+      block-size: var(--clbr-spacing-vertical-1000);
     }
   }
 }

@@ -93,6 +93,7 @@ const renderEntry = (entry: FoundationsEntry): string =>
       as: "p",
       children: processMarkdownInline(entry.description),
       size: "sm",
+      tone: "muted",
     })}`;
 
 const renderRow = (row: FoundationsRow): string =>
