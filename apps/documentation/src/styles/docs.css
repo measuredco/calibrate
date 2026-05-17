@@ -85,33 +85,20 @@ html {
 
   .docs-color {
     .preview {
-      display: grid;
-      gap: var(--clbr-spacing-horizontal-400);
-      grid-template-columns: repeat(2, max-content);
-
-      @container (inline-size >=24rem) {
-        gap: var(--clbr-spacing-horizontal-500);
-        grid-template-columns: repeat(4, max-content);
-      }
+      display: flex;
+      gap: var(--clbr-spacing-horizontal-500);
     }
 
     .swatch {
-      --docs-color-swatch-surface-inline-size: 5.5rem;
-      --docs-color-swatch-surface-gap: 0.5rem;
-
-      align-items: center;
       background-color: var(--clbr-color-background-default);
       block-size: fit-content;
       border-radius: var(--clbr-radius-sm);
-      color: var(--clbr-color-foreground-default);
       display: flex;
-      flex-direction: column;
-      gap: var(--docs-color-swatch-surface-gap);
-      inline-size: var(--docs-color-swatch-surface-inline-size);
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
-      padding-block: var(--docs-color-swatch-surface-gap);
+      padding: var(--clbr-spacing-vertical-500)
+        var(--clbr-spacing-horizontal-500);
     }
 
     .swatch-color {
@@ -122,13 +109,6 @@ html {
       outline: var(--clbr-layout-border-width-default) solid
         var(--clbr-color-border-default);
       outline-offset: calc(-1 * var(--clbr-layout-border-width-default));
-    }
-
-    .swatch-hex {
-      font-family: var(--clbr-typography-font-family-mono);
-      font-size: var(--clbr-typography-type-step-50-font-size);
-      font-weight: var(--clbr-typography-font-weight-regular-plus);
-      line-height: 1;
     }
   }
 

@@ -15,16 +15,9 @@ interface PageData {
   color: ColorData;
 }
 
-interface ColorTokenValue {
-  alpha?: number;
-  hex?: string;
-}
-
 interface ColorToken {
   $description?: string;
-  $value?: ColorTokenValue;
-  byContext?: Record<string, { $value?: ColorTokenValue }>;
-  byTheme?: Record<string, { $value?: ColorTokenValue }>;
+  $value?: { hex?: string };
   layer?: string;
 }
 
@@ -32,54 +25,23 @@ interface ColorTokenRow {
   cssVariable: string;
   description: string;
   group: string;
-  hexByContext: Record<string, string>;
   name: string;
 }
 
-interface ColorContext {
-  contentTheme: "dark" | "light";
-  themeKey: string;
-  variant: "brand" | "default";
-}
+// Surfaces only — swatches inherit the OS colour scheme (no pinned
+// content-theme), so a token is shown once per surface, not per theme.
+type ColorSurface = "brand" | "default";
 
 const require = createRequire(import.meta.url);
 const msrdTokens =
   require("@measured/calibrate-tokens/msrd") as TokenDocument<ColorToken>;
 
-const colorContexts: ColorContext[] = [
-  {
-    contentTheme: "light",
-    themeKey: "contentLightDefault",
-    variant: "default",
-  },
-  { contentTheme: "light", themeKey: "contentLightBrand", variant: "brand" },
-  { contentTheme: "dark", themeKey: "contentDarkDefault", variant: "default" },
-  { contentTheme: "dark", themeKey: "contentDarkBrand", variant: "brand" },
-];
+const colorSurfaces: ColorSurface[] = ["default", "brand"];
 
 const getColorGroup = (name: string): string => name.split(".")[1] ?? "";
 
 const formatColorGroupLabel = (group: string): string =>
   group.length === 0 ? group : `${group[0].toUpperCase()}${group.slice(1)}`;
-
-const getColorValue = (
-  token: ColorToken,
-  context: ColorContext,
-): ColorTokenValue | undefined =>
-  token.byTheme?.[context.themeKey]?.$value ??
-  token.byContext?.[`theme=${context.themeKey},forcedColors=off`]?.$value ??
-  token.$value;
-
-const formatHexValue = (value: ColorTokenValue | undefined): string => {
-  if (!value?.hex) return "";
-  if (value.alpha === undefined) return value.hex;
-
-  const alpha = Math.round(value.alpha * 255)
-    .toString(16)
-    .padStart(2, "0");
-
-  return `${value.hex}${alpha}`;
-};
 
 const colorTokens: ColorTokenRow[] = Object.entries(msrdTokens.tokens)
   .filter(
@@ -99,12 +61,6 @@ const colorTokens: ColorTokenRow[] = Object.entries(msrdTokens.tokens)
       cssVariable: tokenNameToCssVariable(name),
       description: token.$description ?? "",
       group,
-      hexByContext: Object.fromEntries(
-        colorContexts.map((context) => [
-          context.themeKey,
-          formatHexValue(getColorValue(token, context)),
-        ]),
-      ),
       name,
     };
   });
@@ -130,25 +86,17 @@ const colorTokenGroups = Array.from(
   ([group, tokens]) => ({ label: formatColorGroupLabel(group), tokens }),
 );
 
-const renderSwatch = (token: ColorTokenRow, context: ColorContext): string =>
-  `
-  <div
-    class="swatch"
-    data-clbr-content-theme="${escapeHtml(context.contentTheme)}"
-    data-clbr-surface="${escapeHtml(context.variant)}"
-  >
+const renderSwatch = (token: ColorTokenRow, surface: ColorSurface): string =>
+  `<div class="swatch" data-clbr-surface="${escapeHtml(surface)}">
     <span
       class="swatch-color"
       style="background-color: var(${escapeHtml(token.cssVariable)})"
     ></span>
-    <span class="swatch-hex">
-      ${escapeHtml(token.hexByContext[context.themeKey] ?? "")}
-    </span>
   </div>`;
 
 const renderPreview = (token: ColorTokenRow): string =>
   `<div class="preview">
-      ${colorContexts.map((context) => renderSwatch(token, context)).join("")}
+      ${colorSurfaces.map((surface) => renderSwatch(token, surface)).join("")}
     </div>`;
 
 const groups: FoundationsGroup[] = colorTokenGroups.map((group) => ({
