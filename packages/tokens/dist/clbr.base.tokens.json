@@ -431,25 +431,6 @@
       "$description": "Wide container max-width. Use for content that benefits from more horizontal space on wider screens (e.g. site furniture).",
       "$value": "1440px"
     },
-    "layout.container.gutter.default": {
-      "layer": "semantic",
-      "$description": "Default container gutter. The inline padding between page edge and content.",
-      "$value": "16px",
-      "varyingModifiers": [
-        "size"
-      ],
-      "bySize": {
-        "laptop": {
-          "$value": "32px"
-        },
-        "notebook": {
-          "$value": "32px"
-        },
-        "tablet": {
-          "$value": "32px"
-        }
-      }
-    },
     "layout.container.gutter.narrow": {
       "layer": "semantic",
       "$description": "Narrow container gutter. Use in tight responsive layouts where the default gutter consumes too much horizontal space.",
@@ -466,6 +447,25 @@
         },
         "tablet": {
           "$value": "24px"
+        }
+      }
+    },
+    "layout.container.gutter.default": {
+      "layer": "semantic",
+      "$description": "Default container gutter. The inline padding between page edge and content.",
+      "$value": "16px",
+      "varyingModifiers": [
+        "size"
+      ],
+      "bySize": {
+        "laptop": {
+          "$value": "32px"
+        },
+        "notebook": {
+          "$value": "32px"
+        },
+        "tablet": {
+          "$value": "32px"
         }
       }
     },

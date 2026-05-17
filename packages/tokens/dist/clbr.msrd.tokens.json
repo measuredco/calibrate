@@ -3982,15 +3982,15 @@
       "$description": "Leading step 1300.",
       "$value": "120px"
     },
-    "typography.measure.default": {
-      "layer": "semantic",
-      "$description": "Default measure (line length, in em). Use as the comfortable maximum width to keep line lengths readable.",
-      "$value": 35.25
-    },
     "typography.measure.tight": {
       "layer": "semantic",
       "$description": "Tighter measure (line length, in em). A more constrained alternative to the default.",
       "$value": 31.75
+    },
+    "typography.measure.default": {
+      "layer": "semantic",
+      "$description": "Default measure (line length, in em). Use as the comfortable maximum width to keep line lengths readable.",
+      "$value": 35.25
     },
     "typography.type-step.50.font-size": {
       "layer": "semantic",

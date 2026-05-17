@@ -2574,13 +2574,13 @@
       "layer": "semantic",
       "$value": "24px"
     },
-    "typography.measure.default": {
-      "layer": "semantic",
-      "$value": 35.25
-    },
     "typography.measure.tight": {
       "layer": "semantic",
       "$value": 31.75
+    },
+    "typography.measure.default": {
+      "layer": "semantic",
+      "$value": 35.25
     },
     "typography.type-step.50.font-size": {
       "layer": "semantic",
