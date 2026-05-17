@@ -2658,17 +2658,17 @@
       "$description": "Radius lg. Pronounced rounding for large surfaces (cards, panels).",
       "$value": "18px"
     },
-    "radius.ratio.default": {
-      "layer": "semantic",
-      "$type": "number",
-      "$description": "Default radius ratio. Multiplier for computing radius from a known element dimension (e.g. shortest side × ratio). Prefer ratio-based calculation over t-shirt sizes when the element's shortest side is known.",
-      "$value": 0.16
-    },
     "radius.ratio.lg": {
       "layer": "semantic",
       "$type": "number",
       "$description": "Large radius ratio. For more pronounced proportional rounding.",
       "$value": 0.311
+    },
+    "radius.ratio.default": {
+      "layer": "semantic",
+      "$type": "number",
+      "$description": "Default radius ratio. Multiplier for computing radius from a known element dimension (e.g. shortest side × ratio). Prefer ratio-based calculation over t-shirt sizes when the element's shortest side is known.",
+      "$value": 0.16
     },
     "shape.logo.primary.view-box": {
       "layer": "semantic",

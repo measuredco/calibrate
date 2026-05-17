@@ -32,7 +32,7 @@
         "$value": "{spacing.vertical.600}"
       },
       "700": {
-        "$description": "Responsive layout vertical spacing 700. Default responsive layout vertical step.",
+        "$description": "Responsive layout vertical spacing 700. Default layout vertical step.",
         "$value": "{spacing.vertical.700}"
       },
       "800": {

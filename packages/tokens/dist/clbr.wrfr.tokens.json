@@ -1316,12 +1316,12 @@
       "layer": "semantic",
       "$value": "0px"
     },
-    "radius.ratio.default": {
+    "radius.ratio.lg": {
       "layer": "semantic",
       "$type": "number",
       "$value": 0
     },
-    "radius.ratio.lg": {
+    "radius.ratio.default": {
       "layer": "semantic",
       "$type": "number",
       "$value": 0
